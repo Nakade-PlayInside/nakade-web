@@ -2,8 +2,12 @@
 return array(
     'modules' => array(
         'Application',
-        'Album',
         'Training',
+        //'PhlyContact',
+        'Impressum',
+        //'Kontakt',
+        //'Album',
+        
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(
