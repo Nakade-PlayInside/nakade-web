@@ -1,6 +1,6 @@
 <?php
-// module/Training/Module.php
-namespace Training;
+// module/Impressum/Module.php
+namespace Impressum;
 
 // Add these import statements:
 use Zend\Db\ResultSet\ResultSet;
