@@ -1,12 +1,12 @@
 <?php
 
-// module/Training/src/Training/Controller/TrainingController.php:
-namespace Training\Controller;
+// module/Kontakt/src/Kontakt/Controller/KontaktController.php:
+namespace Kontakt\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class TrainingController extends AbstractActionController
+class KontaktController extends AbstractActionController
 {
   
     

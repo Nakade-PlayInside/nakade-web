@@ -1,10 +1,37 @@
 <?php
-// module/Training/view/training/training/index.phtml:
+// module/Impressum/view/impressum/impressum/index.phtml:
 
-$title = 'Training';
+$title = $this->translate("Impressum");
+$club  = $this->escapeHtml("Berliner Baduk Club e. V.");
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
-<p>Dienstag ab 17:00-21:30</p>
 
-<p>Kupferpfanne</p>
+<dl>
+<dt><?php echo $club ?></dt>    
+<dd>Dr. Holger Maerz (<?php echo $this->translate("Präsident"); ?>)</dd>
+<dd>Radelandstr. 70a</dd>
+<dd>13589 Berlin</dd>
+</dl>
+
+<dl>
+<dt style="float:left;padding-right:1em;"><?php echo $this->translate("Registergericht:"); ?></dt>
+<dd>Amtsgericht Charlottenburg</dd>
+<dt style="float:left;padding-right:1em;"><?php echo $this->translate("Registernummer:"); ?></dt>
+<dd>VR 31852 B</dd>
+</dl>
+
+<dl>
+<dt><?php echo $this->translate("Bankverbindung:"); ?></dt>
+<dd>Berliner Baduk Club e. V.</dd>
+<dd>Postbank</dd>
+<dd>Kto: 244739105</dd>
+<dd>BLZ: 10010010</dd>
+</dl>
+
+
+
+<dl>
+<dt><?php echo $this->translate("Haftungshinweis:"); ?></dt> 
+<dd><?php echo $this->translate("Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich."); ?></dd>
+</dl>

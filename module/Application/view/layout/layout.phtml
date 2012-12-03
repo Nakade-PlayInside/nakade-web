@@ -30,7 +30,8 @@
                     <div class="nav-collapse">
                         <ul class="nav">
                             <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-                            
+                            <li><a href="<?php echo $this->url('training') ?>"><?php echo $this->translate("Training"); ?></a></li>
+                            <li><a href="<?php echo $this->url('impressum') ?>"><?php echo $this->translate("Impressum"); ?></a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
@@ -40,7 +41,7 @@
             <?php echo $this->content; ?>
             <hr>
             <footer>
-                <p>&copy; 2006 - 2012 by Dr. Holger Maerz <?php echo $this->translate('All rights reserved.') ?></p>
+                <p>&copy; 2006 - 2012 by Dr. Holger Maerz.<?php echo $this->translate('All rights reserved.') ?></p>
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>

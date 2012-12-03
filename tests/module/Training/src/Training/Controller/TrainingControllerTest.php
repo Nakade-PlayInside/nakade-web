@@ -32,7 +32,7 @@ class TrainingControllerTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $bootstrap        = \Zend\Mvc\Application::init(include 'config/application.config.php');
-        $this->controller = new AlbumController();
+        $this->controller = new TrainingController();
         $this->request    = new Request();
         $this->routeMatch = new RouteMatch(array('controller' => 'index'));
         $this->event      = $bootstrap->getMvcEvent();

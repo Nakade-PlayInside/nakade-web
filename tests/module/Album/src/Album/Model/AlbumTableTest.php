@@ -4,6 +4,7 @@
 namespace Album\Model;
 
 use PHPUnit_Framework_TestCase;
+use Zend\Db\ResultSet\ResultSet;
 
 class AlbumTableTest extends PHPUnit_Framework_TestCase
 {

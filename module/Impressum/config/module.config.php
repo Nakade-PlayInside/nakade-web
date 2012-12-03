@@ -1,25 +1,25 @@
 <?php
-// module/Training/config/module.config.php:
+// module/Impressum/config/module.config.php:
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Training\Controller\Training' => 'Training\Controller\TrainingController',
+            'Impressum\Controller\Impressum' => 'Impressum\Controller\ImpressumController',
         ),
     ),
 
     // The following section is new and should be added to your file
     'router' => array(
         'routes' => array(
-            'training' => array(
+            'impressum' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/training[/:action][/:id]',
+                    'route'    => '/impressum[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'Training\Controller\Training',
+                        'controller' => 'Impressum\Controller\Impressum',
                         'action'     => 'index',
                     ),
                 ),
@@ -29,7 +29,7 @@ return array(
 
     'view_manager' => array(
         'template_path_stack' => array(
-            'training' => __DIR__ . '/../view',
+            'impressum' => __DIR__ . '/../view',
         ),
     ),
 );

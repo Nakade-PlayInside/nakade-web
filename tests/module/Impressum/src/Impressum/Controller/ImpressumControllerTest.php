@@ -1,15 +1,15 @@
 <?php
 
-namespace Training\Controller;
+namespace Impressum\Controller;
 
-use Training\Controller\TrainingController;
+use Impressum\Controller\ImpressumController;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 use PHPUnit_Framework_TestCase;
 
-class TrainingControllerTest extends PHPUnit_Framework_TestCase
+class ImpressumControllerTest extends PHPUnit_Framework_TestCase
 {
     protected $controller;
     protected $request;
@@ -32,7 +32,7 @@ class TrainingControllerTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $bootstrap        = \Zend\Mvc\Application::init(include 'config/application.config.php');
-        $this->controller = new AlbumController();
+        $this->controller = new ImpressumController();
         $this->request    = new Request();
         $this->routeMatch = new RouteMatch(array('controller' => 'index'));
         $this->event      = $bootstrap->getMvcEvent();
