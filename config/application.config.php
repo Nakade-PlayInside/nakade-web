@@ -3,10 +3,8 @@ return array(
     'modules' => array(
         'Application',
         'Training',
-        //'PhlyContact',
         'Impressum',
-        //'Kontakt',
-        //'Album',
+        'PhlyContact',
         
     ),
     'module_listener_options' => array(
