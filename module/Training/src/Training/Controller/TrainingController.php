@@ -1,4 +1,9 @@
 <?php
+/**
+ * Controller Training
+ *
+ * @author Dr. Holger Maerz <holger@spandaugo.de>
+ */
 
 // module/Training/src/Training/Controller/TrainingController.php:
 namespace Training\Controller;

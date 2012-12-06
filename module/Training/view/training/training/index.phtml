@@ -1,18 +1,18 @@
 <?php
 // module/Training/view/training/training/index.phtml:
-
-$title = $this->translate("Training");
+namespace Training;
+$title = $this->translate("Training",__NAMESPACE__);
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
-<p><?php echo $this->translate("jeden Dienstag ab 17:00-21:00"); ?></p>
+<p><?php echo $this->translate("jeden Dienstag ab 17:00-21:00", __NAMESPACE__); ?></p>
 
-<p><?php echo $this->translate("übergangsweise bis Weihnachten in der Altstadt Spandau.");?><br/>
-   <?php echo $this->translate("Offizielles Training des Bundesligateams Nakade.");?> 
+<p><?php echo $this->translate("übergangsweise bis Weihnachten in der Altstadt Spandau.", __NAMESPACE__);?><br/>
+   <?php echo $this->translate("Offizielles Training des Bundesligateams Nakade.", __NAMESPACE__);?> 
 </p>
 
 <p style="font-weight:bold;"><?php echo $this->escapeHtml("Kupferpfanne"); ?></p>
 
 
 <iframe width="450" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.de/maps?f=q&amp;source=s_q&amp;hl=de&amp;geocode=&amp;q=Kupferpfanne,+Havelstra%C3%9Fe+4,+Berlin&amp;aq=0&amp;oq=kup&amp;sll=52.482578,13.479092&amp;sspn=0.115623,0.338173&amp;ie=UTF8&amp;hq=Kupferpfanne,&amp;hnear=Havelstra%C3%9Fe+4,+13597+Berlin&amp;t=m&amp;z=16&amp;iwloc=A&amp;output=embed"></iframe>
-<br /><small><a href="https://maps.google.de/maps?f=q&amp;source=embed&amp;hl=de&amp;geocode=&amp;q=Kupferpfanne,+Havelstra%C3%9Fe+4,+Berlin&amp;aq=0&amp;oq=kup&amp;sll=52.482578,13.479092&amp;sspn=0.115623,0.338173&amp;ie=UTF8&amp;hq=Kupferpfanne,&amp;hnear=Havelstra%C3%9Fe+4,+13597+Berlin&amp;t=m&amp;z=16&amp;iwloc=A" style="color:#0000FF;text-align:left"><?php echo $this->translate("Größere Kartenansicht"); ?></a></small>
+<br /><small><a href="https://maps.google.de/maps?f=q&amp;source=embed&amp;hl=de&amp;geocode=&amp;q=Kupferpfanne,+Havelstra%C3%9Fe+4,+Berlin&amp;aq=0&amp;oq=kup&amp;sll=52.482578,13.479092&amp;sspn=0.115623,0.338173&amp;ie=UTF8&amp;hq=Kupferpfanne,&amp;hnear=Havelstra%C3%9Fe+4,+13597+Berlin&amp;t=m&amp;z=16&amp;iwloc=A" style="color:#0000FF;text-align:left"><?php echo $this->translate("Größere Kartenansicht", __NAMESPACE__); ?></a></small>

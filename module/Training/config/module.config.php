@@ -1,13 +1,21 @@
 <?php
+/**
+ * Module Training Config
+ *
+ * @author Dr. Holger Maerz <holger@spandaugo.de>
+ */
+namespace Training;
 // module/Training/config/module.config.php:
 return array(
+    
+    //controller
     'controllers' => array(
         'invokables' => array(
             'Training\Controller\Training' => 'Training\Controller\TrainingController',
         ),
     ),
 
-    // The following section is new and should be added to your file
+    //Routes and defaults
     'router' => array(
         'routes' => array(
             'training' => array(
@@ -27,6 +35,21 @@ return array(
         ),
     ),
 
+    //I18n multilanguage
+    'translator' => array(
+        'translation_file_patterns' => array(
+            array(
+                'type'     => 'gettext',
+                'base_dir' => __DIR__ . '/../language',
+                'pattern'  => '%s.mo',
+                'text_domain' => __NAMESPACE__,
+            ),
+        ),
+    ),
+    
+    
+   
+    //view
     'view_manager' => array(
         'template_path_stack' => array(
             'training' => __DIR__ . '/../view',
