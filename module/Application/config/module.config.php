@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
-
+namespace Application;
 return array(
     'router' => array(
         'routes' => array(
@@ -58,12 +58,12 @@ return array(
         ),
     ),
     'translator' => array(
-        'locale' => 'de_DE',
         'translation_file_patterns' => array(
             array(
                 'type'     => 'gettext',
                 'base_dir' => __DIR__ . '/../language',
                 'pattern'  => '%s.mo',
+                'text_domain' => __NAMESPACE__,
             ),
         ),
     ),
