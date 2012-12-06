@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-03 00:22+0100\n"
-"PO-Revision-Date: 2012-12-03 00:22+0100\n"
+"POT-Creation-Date: 2012-12-06 12:23+0100\n"
+"PO-Revision-Date: 2012-12-06 12:25+0100\n"
 "Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: ../view/application/index/index.phtml:15
 msgid "Spieltreff"
-msgstr ""
+msgstr "Spieltreff"
 
 #: ../view/error/404.phtml:1
 msgid "A 404 error occurred"
@@ -99,7 +99,15 @@ msgstr ""
 msgid "Home"
 msgstr "Startseite"
 
-#: ../view/layout/layout.phtml:43
+#: ../view/layout/layout.phtml:33
+msgid "Training"
+msgstr "Training"
+
+#: ../view/layout/layout.phtml:34
+msgid "Impressum"
+msgstr "Impressum"
+
+#: ../view/layout/layout.phtml:44
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
 
