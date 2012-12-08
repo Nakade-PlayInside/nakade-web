@@ -1,7 +1,7 @@
 <?php
 // module/Impressum/view/impressum/impressum/index.phtml:
-namespace Impressum;
-$title = $this->translate("Impressum",__NAMESPACE__);
+$this->plugin('translate')->setTranslatorTextDomain('Impressum'); 
+$title = $this->translate("Imprint");
 $club  = $this->escapeHtml("Berliner Baduk Club e. V.");
 $this->headTitle($title);
 ?>
@@ -9,20 +9,20 @@ $this->headTitle($title);
 
 <dl>
 <dt><?php echo $club ?></dt>    
-<dd>Dr. Holger Maerz (<?php echo $this->translate("Präsident",__NAMESPACE__); ?>)</dd>
-<dd>Radelandstr. 70a</dd>
+<dd>Dr. Holger Maerz (<?php echo $this->translate("President"); ?>)</dd>
+<dd>Radelandstr. 70a</dd>,
 <dd>13589 Berlin</dd>
 </dl>
 
 <dl>
-<dt style="float:left;padding-right:1em;"><?php echo $this->translate("Registergericht:",__NAMESPACE__); ?></dt>
+<dt style="float:left;padding-right:1em;"><?php echo $this->translate("Court of registration:"); ?></dt>
 <dd>Amtsgericht Charlottenburg</dd>
-<dt style="float:left;padding-right:1em;"><?php echo $this->translate("Registernummer:",__NAMESPACE__); ?></dt>
+<dt style="float:left;padding-right:1em;"><?php echo $this->translate("Number of registration::" ); ?></dt>
 <dd>VR 31852 B</dd>
 </dl>
 
 <dl>
-<dt><?php echo $this->translate("Bankverbindung:",__NAMESPACE__); ?></dt>
+<dt><?php echo $this->translate("Bank:"); ?></dt>
 <dd>Berliner Baduk Club e. V.</dd>
 <dd>Postbank</dd>
 <dd>Kto: 244739105</dd>
@@ -32,6 +32,6 @@ $this->headTitle($title);
 
 
 <dl>
-<dt><?php echo $this->translate("Haftungshinweis:",__NAMESPACE__); ?></dt> 
-<dd><?php echo $this->translate("Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.",__NAMESPACE__); ?></dd>
+<dt><?php echo $this->translate("Disclaimer:"); ?></dt> 
+<dd><?php echo $this->translate("According to the German law and despite careful control, we assume no liability for the content of external links. For the content of linked pages their operators are responsible."); ?></dd>
 </dl>

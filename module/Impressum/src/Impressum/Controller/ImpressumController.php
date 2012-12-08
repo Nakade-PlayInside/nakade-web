@@ -1,4 +1,9 @@
 <?php
+/**
+ * Controller Impressum
+ *
+ * @author Dr. Holger Maerz <holger@spandaugo.de>
+ */
 
 // module/Impressum/src/Impressum/Controller/ImpressumController.php:
 namespace Impressum\Controller;

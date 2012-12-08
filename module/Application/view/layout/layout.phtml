@@ -1,5 +1,4 @@
-<?php namespace Application?>
-<?php echo $this->doctype();?>
+<?php echo $this->doctype(); ?>
 
 <html lang="en">
     <head>
@@ -30,10 +29,10 @@
                     <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Berliner Baduk Club e.V.') ?></a>
                     <div class="nav-collapse">
                         <ul class="nav">
-                            <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-                            <li><a href="<?php echo $this->url('training') ?>"><?php echo $this->translate("Training",__NAMESPACE__); ?></a></li>
-                            <li><a href="<?php echo $this->url('impressum') ?>"><?php echo $this->translate("Impressum",__NAMESPACE__); ?></a></li>
-                            <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate("Kontakt",__NAMESPACE__); ?></a></li>
+                            <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home', 'Application') ?></a></li>
+                            <li><a href="<?php echo $this->url('training') ?>"><?php echo $this->translate("Training", 'Application'); ?></a></li>
+                            <li><a href="<?php echo $this->url('impressum') ?>"><?php echo $this->translate("Imprint", 'Application'); ?></a></li>
+                            <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate("Contact", 'Application'); ?></a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
@@ -43,7 +42,7 @@
             <?php echo $this->content; ?>
             <hr>
             <footer>
-                <p>&copy; 2006 - 2012 by Dr. Holger Maerz. <?php echo $this->translate('All rights reserved.') ?></p>
+                <p>&copy; 2006 - 2012 by Dr. Holger Maerz. <?php echo $this->translate('All rights reserved.', 'Application') ?></p>
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript() ?>

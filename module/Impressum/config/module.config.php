@@ -27,8 +27,9 @@ return array(
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'Impressum\Controller\Impressum',
-                        'action'     => 'index',
+                        '__NAMESPACE__' => 'Impressum\Controller',
+                        'controller'    => 'Impressum\Controller\Impressum',
+                        'action'        => 'index',
                     ),
                 ),
             ),
@@ -37,20 +38,25 @@ return array(
 
     //I18n multilanguage
     'translator' => array(
+        
         'translation_file_patterns' => array(
             array(
-                'type'     => 'gettext',
-                'base_dir' => __DIR__ . '/../language',
-                'pattern'  => '%s.mo',
-                'text_domain' => __NAMESPACE__,
+                'type'          => 'gettext',
+                'base_dir'      => __DIR__ . '/../language',
+                'pattern'       => '%s.mo',
+                'text_domain'   => 'Impressum',
             ),
         ),
     ),
     
     //view
     'view_manager' => array(
-        'template_path_stack' => array(
-            'impressum' => __DIR__ . '/../view',
+        'display_not_found_reason' => true,
+        'display_exceptions'       => true,
+        'doctype'                  => 'HTML5',
+                
+        'template_path_stack'   => array(
+            __DIR__ . '/../view',
         ),
     ),
 );

@@ -27,8 +27,9 @@ return array(
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'Training\Controller\Training',
-                        'action'     => 'index',
+                        '__NAMESPACE__' => 'Training\Controller',
+                        'controller'    => 'Training\Controller\Training',
+                        'action'        => 'index',
                     ),
                 ),
             ),
@@ -39,18 +40,20 @@ return array(
     'translator' => array(
         'translation_file_patterns' => array(
             array(
-                'type'     => 'gettext',
-                'base_dir' => __DIR__ . '/../language',
-                'pattern'  => '%s.mo',
-                'text_domain' => __NAMESPACE__,
+                'type'          => 'gettext',
+                'base_dir'      => __DIR__ . '/../language',
+                'pattern'       => '%s.mo',
+                'text_domain'   => 'Training',
             ),
         ),
     ),
     
-    
-   
     //view
     'view_manager' => array(
+         'display_not_found_reason' => true,
+        'display_exceptions'       => true,
+        'doctype'                  => 'HTML5',
+                
         'template_path_stack' => array(
             'training' => __DIR__ . '/../view',
         ),

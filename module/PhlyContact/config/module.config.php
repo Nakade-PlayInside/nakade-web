@@ -76,6 +76,19 @@ return array(
             'PhlyContactMailTransport' => 'PhlyContact\Service\ContactMailTransportFactory',
         ),
     ),
+    
+     //I18n multilanguage
+    'translator' => array(
+        'translation_file_patterns' => array(
+            array(
+                'type'          => 'gettext',
+                'base_dir'      => __DIR__ . '/../language',
+                'pattern'       => '%s.mo',
+                'text_domain'   => 'Contact',
+            ),
+        ),
+    ),
+    
     'view_manager' => array(
         'template_map' => array(
             'phly-contact/contact/index'     => __DIR__ . '/../view/phly-contact/contact/index.phtml',

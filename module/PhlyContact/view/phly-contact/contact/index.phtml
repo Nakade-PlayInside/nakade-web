@@ -1,11 +1,11 @@
-<?php $this->headTitle()->prepend('Contact'); ?>
+<?php $this->plugin('translate')->setTranslatorTextDomain('Contact'); 
+$title = $this->translate("Contact");
+$this->headTitle()->prepend($title); ?>
 <section class="contact">
-<h2>Contact Me</h2>
+<h2><?php echo $title ?></h2>
 
 <p>
-    Feel free to contact me. Please note, however, that I likely will not 
-    respond to recruiters, nor to questions that could be asked in public
-    forums.
+     <?php echo $this->translate("Feel free to contact us."); ?>
 </p>
 
 <?php if ($this->error): ?>

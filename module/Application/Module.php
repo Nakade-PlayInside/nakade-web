@@ -21,7 +21,8 @@ class Module
         //->setLocale(\Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']))
         $translator
           ->setLocale('de_DE')      
-          ->setFallbackLocale('de_DE');
+          ->setFallbackLocale('en_US');
+        
       
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
