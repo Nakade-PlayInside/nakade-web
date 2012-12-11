@@ -20,7 +20,7 @@ use Zend\Mvc\ModuleRouteListener;
 
 class Module
 {
-    
+   
        
     public function getAutoloaderConfig()
     {

@@ -1,4 +1,7 @@
 <?php $this->plugin('translate')->setTranslatorTextDomain('Contact'); 
+$this->plugin('formLabel')->setTranslatorTextDomain('Contact');
+
+
 $title = $this->translate("Contact");
 $this->headTitle()->prepend($title); ?>
 <section class="contact">
@@ -10,8 +13,8 @@ $this->headTitle()->prepend($title); ?>
 
 <?php if ($this->error): ?>
 <p class="error">
-    There were one or more isues with your submission. Please correct them as 
-    indicated below.
+   <?php echo $this->translate("There were one or more isues with your submission. Please correct them as 
+    indicated below."); ?>
 </p>
 <?php endif ?>
 
@@ -22,9 +25,11 @@ $form->setAttribute('action', $this->url('contact/process'));
 $form->setAttribute('method', 'post');
 
 echo $this->form()->openTag($form);
+
 ?>
+
 <dl class="zend_form">
-<dt><?php echo $this->formLabel($form->get('from')); ?></dt>
+<dt><?php echo  $this->formLabel($form->get('from')); ?></dt>
 <dd><?php 
     echo $this->formInput($form->get('from'));
     echo $this->formElementErrors($form->get('from'));

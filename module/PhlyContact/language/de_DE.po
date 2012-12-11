@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-08 02:29+0100\n"
-"PO-Revision-Date: 2012-12-08 02:30+0100\n"
+"POT-Creation-Date: 2012-12-10 00:33+0100\n"
+"PO-Revision-Date: 2012-12-10 01:40+0100\n"
 "Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -16,13 +16,48 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: D:\\projekte\\Nakade\\module\\PhlyContact\n"
 
-#: D:\projekte\Nakade\module\PhlyContact/view/phly-contact/contact/index.phtml:2
+#: D:\projekte\Nakade\module\PhlyContact/src/PhlyContact/Form/ContactForm.php:62
+msgid "From:"
+msgstr "Von:"
+
+#: D:\projekte\Nakade\module\PhlyContact/src/PhlyContact/Form/ContactForm.php:70
+msgid "Subject:"
+msgstr "Betreff:"
+
+#: D:\projekte\Nakade\module\PhlyContact/src/PhlyContact/Form/ContactForm.php:79
+msgid "Your message:"
+msgstr "Deine Anfrage:"
+
+#: D:\projekte\Nakade\module\PhlyContact/src/PhlyContact/Form/ContactForm.php:85
+msgid "Please verify you are human."
+msgstr "Bitte löse das Captcha."
+
+#: D:\projekte\Nakade\module\PhlyContact/src/PhlyContact/Form/ContactForm.php:94
+msgid "Send"
+msgstr "Abschicken"
+
+#: D:\projekte\Nakade\module\PhlyContact/view/phly-contact/contact/index.phtml:5
 msgid "Contact"
 msgstr "Kontakt"
 
-#: D:\projekte\Nakade\module\PhlyContact/view/phly-contact/contact/index.phtml:8
+#: D:\projekte\Nakade\module\PhlyContact/view/phly-contact/contact/index.phtml:11
 msgid "Feel free to contact us."
 msgstr "Wir freuen uns über deine Anfrage."
+
+#: D:\projekte\Nakade\module\PhlyContact/view/phly-contact/contact/index.phtml:16
+msgid ""
+"There were one or more isues with your submission. Please correct them as \n"
+"    indicated below."
+msgstr ""
+"Es gibt Probleme mit deinen Eingaben. Bitte korrigiere diese entsprechend "
+"der Hinweise."
+
+#~ msgid "Hi"
+#~ msgstr "GU"
+
+#, fuzzy
+#~ msgid "me"
+#~ msgstr "Startseite"
 
 #~ msgid "Training"
 #~ msgstr "Training"
@@ -87,17 +122,11 @@ msgstr "Wir freuen uns über deine Anfrage."
 #~ msgid "File"
 #~ msgstr "Datei"
 
-#~ msgid "Message"
-#~ msgstr "Meldung"
-
 #~ msgid "Previous exceptions"
 #~ msgstr "Vorherige Ausnahme"
 
 #~ msgid "No Exception available"
 #~ msgstr "Es ist keine Ausnahme verfügbar"
-
-#~ msgid "Home"
-#~ msgstr "Startseite"
 
 #~ msgid "All rights reserved."
 #~ msgstr "Alle Rechte vorbehalten."

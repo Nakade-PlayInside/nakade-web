@@ -74,11 +74,14 @@ return array(
             'PhlyContactForm'          => 'PhlyContact\Service\ContactFormFactory',
             'PhlyContactMailMessage'   => 'PhlyContact\Service\ContactMailMessageFactory',
             'PhlyContactMailTransport' => 'PhlyContact\Service\ContactMailTransportFactory',
+            'translator'               => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
     
+   
      //I18n multilanguage
     'translator' => array(
+       
         'translation_file_patterns' => array(
             array(
                 'type'          => 'gettext',
@@ -86,6 +89,12 @@ return array(
                 'pattern'       => '%s.mo',
                 'text_domain'   => 'Contact',
             ),
+             array( 
+                'type'        => 'phparray', 
+                'base_dir'    => __DIR__ . '/../resources/languages', 
+                'pattern'     => '%s.php',
+             
+             ), 
         ),
     ),
     
