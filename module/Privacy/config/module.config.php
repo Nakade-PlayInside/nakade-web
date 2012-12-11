@@ -1,34 +1,34 @@
 <?php
 /**
- * Module Impressum Config
+ * Module Privacy Config
  *
  * @author Dr. Holger Maerz <holger@spandaugo.de>
  */
-namespace Impressum;
-// module/Impressum/config/module.config.php:
+namespace Privacy;
+// module/Privacy/config/module.config.php:
 return array(
     
     //controller
     'controllers' => array(
         'invokables' => array(
-            'Impressum\Controller\Impressum' => 'Impressum\Controller\ImpressumController',
+            'Privacy\Controller\Privacy' => 'Privacy\Controller\PrivacyController',
         ),
     ),
 
     // routes & defaults
     'router' => array(
         'routes' => array(
-            'impressum' => array(
+            'disclaimer' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/impressum[/:action][/:id]',
+                    'route'    => '/privacy[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Impressum\Controller',
-                        'controller'    => 'Impressum\Controller\Impressum',
+                        '__NAMESPACE__' => 'Privacy\Controller',
+                        'controller'    => 'Privacy\Controller\Privacy',
                         'action'        => 'index',
                     ),
                 ),
@@ -44,7 +44,7 @@ return array(
                 'type'          => 'gettext',
                 'base_dir'      => __DIR__ . '/../language',
                 'pattern'       => '%s.mo',
-                'text_domain'   => 'Impressum',
+                'text_domain'   => 'Privacy',
             ),
         ),
     ),

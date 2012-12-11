@@ -1,17 +1,17 @@
 <?php
 /**
- * Controller Impressum
+ * Controller Privacy
  *
  * @author Dr. Holger Maerz <holger@spandaugo.de>
  */
 
-// module/Impressum/src/Impressum/Controller/ImpressumController.php:
-namespace Impressum\Controller;
+// module/Privacy/src/Privacy/Controller/PrivacyController.php:
+namespace Privacy\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class ImpressumController extends AbstractActionController
+class PrivacyController extends AbstractActionController
 {
   
     

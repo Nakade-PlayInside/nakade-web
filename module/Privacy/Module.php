@@ -1,6 +1,6 @@
 <?php
 /**
- * Module Impressum
+ * Module Privacy
  * 
  * Content site showing imprint and contacte data.
  * laguage file set in bootstrap 
@@ -9,8 +9,8 @@
  *  
  */
 
-// module/Impressum/Module.php
-namespace Impressum;
+// module/Privacy/Module.php
+namespace Privacy;
 
 // Add these import statements:
 use Zend\Db\ResultSet\ResultSet;
