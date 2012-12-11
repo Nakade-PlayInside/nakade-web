@@ -1,0 +1,37 @@
+<?php
+// module/Impressum/view/impressum/impressum/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('Impressum'); 
+$title = $this->translate("Imprint");
+$club  = $this->escapeHtml("Berliner Baduk Club e. V.");
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<dl>
+<dt><?php echo $club ?></dt>    
+<dd>Dr. Holger Maerz (<?php echo $this->translate("President"); ?>)</dd>
+<dd>Radelandstr. 70a</dd>,
+<dd>13589 Berlin</dd>
+</dl>
+
+<dl>
+<dt style="float:left;padding-right:1em;"><?php echo $this->translate("Court of registration:"); ?></dt>
+<dd>Amtsgericht Charlottenburg</dd>
+<dt style="float:left;padding-right:1em;"><?php echo $this->translate("Number of registration::" ); ?></dt>
+<dd>VR 31852 B</dd>
+</dl>
+
+<dl>
+<dt><?php echo $this->translate("Bank:"); ?></dt>
+<dd>Berliner Baduk Club e. V.</dd>
+<dd>Postbank</dd>
+<dd>Kto: 244739105</dd>
+<dd>BLZ: 10010010</dd>
+</dl>
+
+
+
+<dl>
+<dt><?php echo $this->translate("Disclaimer:"); ?></dt> 
+<dd><?php echo $this->translate("According to the German law and despite careful control, we assume no liability for the content of external links. For the content of linked pages their operators are responsible."); ?></dd>
+</dl>
