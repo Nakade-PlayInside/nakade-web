@@ -5,6 +5,7 @@ return array(
         'Training',
         'Impressum',
         'PhlyContact',
+        'Privacy',
         
     ),
     'module_listener_options' => array(
@@ -16,4 +17,6 @@ return array(
             './vendor',
         ),
     ),
+   
+    
 );

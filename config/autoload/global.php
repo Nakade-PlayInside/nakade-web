@@ -25,7 +25,13 @@ return array(
         'factories' => array(
             'Zend\Db\Adapter\Adapter'
                     => 'Zend\Db\Adapter\AdapterServiceFactory',
+            'translator' 
+                    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
+    'translator' => array(
+         'locale'   => 'de_DE',
+         'fallback' => 'en_US',
+    )
 
 );

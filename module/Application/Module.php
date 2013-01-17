@@ -18,14 +18,8 @@ class Module
      
         //use browser language for locale (i18n)
         $translator = $e->getApplication()->getServiceManager()->get('translator');
-        //->setLocale(\Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']))
-        //echo \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-        //echo locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-        
-        $translator
-          ->setLocale('de_DE')      
-          ->setFallbackLocale('en_US');
-        
+        $translator->setLocale(\Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']));
+                
       
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
