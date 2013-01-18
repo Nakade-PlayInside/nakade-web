@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-08 01:31+0100\n"
-"PO-Revision-Date: 2012-12-08 01:33+0100\n"
+"POT-Creation-Date: 2013-01-18 14:40+0100\n"
+"PO-Revision-Date: 2013-01-18 14:40+0100\n"
 "Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -17,24 +17,31 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../view/training/training/index.phtml:4
-msgid "Training"
+msgid "Meeting"
 msgstr "Training"
 
 #: ../view/training/training/index.phtml:8
-msgid "Every Tuesday from 5:00 p.m. to 9:00 p.m."
-msgstr "jeden Dienstag ab 17:00-21:00"
+msgid "Every Tuesday from 5:00 p.m. to 10:00 p.m."
+msgstr "jeden Dienstag ab 17:00-22:00"
 
-#: ../view/training/training/index.phtml:10
-msgid "on a transitional basis until Christmas in the Old Town of Spandau."
-msgstr "übergangsweise bis Weihnachten in der Altstadt Spandau."
+#: ../view/training/training/index.phtml:9
+msgid "Official training of the Bundesliga team Nakade. Guests are welcome."
+msgstr ""
+"Offizielles Training des Bundesligateams Nakade. Gäste sind herzlich "
+"willkommen."
 
-#: ../view/training/training/index.phtml:11
-msgid "Official training of the Bundesliga team Nakade."
-msgstr "Offizielles Training des Bundesligateams Nakade."
+#: ../view/training/training/index.phtml:17
+msgid "show on a larger map"
+msgstr "auf einer größeren Karte anzeigen"
 
-#: ../view/training/training/index.phtml:18
-msgid "Larger view"
-msgstr "Größere Kartenansicht"
+#~ msgid "Training"
+#~ msgstr "Training"
+
+#~ msgid "on a transitional basis until Christmas in the Old Town of Spandau."
+#~ msgstr "übergangsweise bis Weihnachten in der Altstadt Spandau."
+
+#~ msgid "Larger view"
+#~ msgstr "Größere Kartenansicht"
 
 #~ msgid "A 404 error occurred"
 #~ msgstr "Es trat ein 404 Fehler auf"

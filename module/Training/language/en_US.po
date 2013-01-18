@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Nakade\n"
-"POT-Creation-Date: 2012-12-08 01:30+0100\n"
-"PO-Revision-Date: 2012-12-08 01:31+0100\n"
+"POT-Creation-Date: 2013-01-18 14:40+0100\n"
+"PO-Revision-Date: 2013-01-18 14:40+0100\n"
 "Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
 "Language-Team: Nakade <info@spandauGo.de>\n"
 "Language: en_US\n"
@@ -16,23 +16,19 @@ msgstr ""
 "X-Poedit-SearchPath-0: D:\\projekte\\Nakade\\module\\Training\n"
 
 #: D:\projekte\Nakade\module\Training/view/training/training/index.phtml:4
-msgid "Training"
+msgid "Meeting"
 msgstr ""
 
 #: D:\projekte\Nakade\module\Training/view/training/training/index.phtml:8
-msgid "Every Tuesday from 5:00 p.m. to 9:00 p.m."
+msgid "Every Tuesday from 5:00 p.m. to 10:00 p.m."
 msgstr ""
 
-#: D:\projekte\Nakade\module\Training/view/training/training/index.phtml:10
-msgid "on a transitional basis until Christmas in the Old Town of Spandau."
+#: D:\projekte\Nakade\module\Training/view/training/training/index.phtml:9
+msgid "Official training of the Bundesliga team Nakade. Guests are welcome."
 msgstr ""
 
-#: D:\projekte\Nakade\module\Training/view/training/training/index.phtml:11
-msgid "Official training of the Bundesliga team Nakade."
-msgstr ""
-
-#: D:\projekte\Nakade\module\Training/view/training/training/index.phtml:18
-msgid "Larger view"
+#: D:\projekte\Nakade\module\Training/view/training/training/index.phtml:17
+msgid "show on a larger map"
 msgstr ""
 
 #~ msgid "jeden Dienstag ab 17:00-21:00"
