@@ -16,6 +16,19 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        return new ViewModel();
+        return new ViewModel(array(
+            'blog' => $this->getBlogTable()->fetchAll(),
+        ));
     }
+    
+    
+    public function getBlogTable()
+   {
+        if (!$this->blogTable) {
+            $sm = $this->getServiceLocator();
+            $this->blogTable = $sm->get('Application\Model\BlogTable');
+        }
+        return $this->blogTable;
+   }
+    
 }

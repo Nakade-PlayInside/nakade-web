@@ -11,6 +11,12 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 
+// Add these import statements:
+use Application\Model\Blog;
+use Application\Model\BlogTable;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+
 class Module
 {
     public function onBootstrap($e)
@@ -38,6 +44,26 @@ class Module
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
+            ),
+        );
+    }
+    
+    // Add this method:
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Application\Model\BlogTable' =>  function($sm) {
+                    $tableGateway = $sm->get('BlogTableGateway');
+                    $table = new BlogTable($tableGateway);
+                    return $table;
+                },
+                'BlogTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Blog());
+                    return new TableGateway('wp_posts', $dbAdapter, null, $resultSetPrototype);
+                },
             ),
         );
     }

@@ -24,3 +24,11 @@
        <p><a class="btn btn-success" href="" target="_blank">Mitglied werden &raquo;</a></p>
    </div>
 </div>
+<hr>
+<?php foreach ($blog as $post) : ?>
+<div style="padding:.5em;">
+    <h3><?php echo $post->title;?></h3>
+    <p><?php echo $post->content;?></p>
+    <span style="color:grey; font-size:smaller;">gepostet am <?php echo $post->date;?></span>
+</div>
+<?php endforeach; ?>
