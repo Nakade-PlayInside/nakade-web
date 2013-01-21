@@ -6,6 +6,7 @@ return array(
         'Impressum',
         'PhlyContact',
         'Privacy',
+        'Blog',
         
     ),
     'module_listener_options' => array(
