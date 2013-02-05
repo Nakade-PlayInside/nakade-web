@@ -14,22 +14,24 @@ use Zend\View\Model\ViewModel;
 class BlogController extends AbstractActionController
 {
   
-   protected $blogTable;
+   protected $_blogTable;
     
    public function indexAction()
    {
-        return new ViewModel(array(
-            'blog' => $this->getBlogTable()->fetchAll(),
-        ));
+        return new ViewModel(
+            array(
+               'blog' => $this->getBlogTable()->fetchAll(),
+            )
+        );
    }
 
    public function getBlogTable()
    {
-        if (!$this->blogTable) {
-            $sm = $this->getServiceLocator();
-            $this->blogTable = $sm->get('Blog\Model\BlogTable');
+        if (!$this->_blogTable) {
+            $serviceManager = $this->getServiceLocator();
+            $this->_blogTable = $serviceManager->get('Blog\Model\BlogTable');
         }
-        return $this->blogTable;
+        return $this->_blogTable;
    }
     
     

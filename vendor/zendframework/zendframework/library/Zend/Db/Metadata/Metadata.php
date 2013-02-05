@@ -8,6 +8,7 @@
  * @package   Zend_Db
  */
 
+
 namespace Zend\Db\Metadata;
 
 use Zend\Db\Adapter\Adapter;

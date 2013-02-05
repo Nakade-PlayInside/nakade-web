@@ -11,8 +11,8 @@
 return array(
     'phly_contact' => array(
         // This is simply configuration to pass to Zend\Captcha\Factory
-	//global-key.spandaugo.de
-		
+        //global-key.spandaugo.de
+
         'captcha' => array(
             'class'   => 'recaptcha',
             'options' => array(
@@ -20,7 +20,7 @@ return array(
                 'privkey' => '6Lcc-9kSAAAAAHQ3sXqzQGLQ1ujIsWj5u_rrdr5B',
             ),
         ),
-		
+
         // This sets the default "to" and "sender" headers for your message
         'message' => array(
             

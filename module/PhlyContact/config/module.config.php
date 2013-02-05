@@ -29,7 +29,8 @@ return array(
     ),
     'controllers' => array(
         'factories' => array(
-            'PhlyContact\Controller\Contact' => 'PhlyContact\Service\ContactControllerFactory',
+            'PhlyContact\Controller\Contact' => 
+                    'PhlyContact\Service\ContactControllerFactory',
         ),
     ),
     'router' => array(
@@ -70,11 +71,16 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
-            'PhlyContactCaptcha'       => 'PhlyContact\Service\ContactCaptchaFactory',
-            'PhlyContactForm'          => 'PhlyContact\Service\ContactFormFactory',
-            'PhlyContactMailMessage'   => 'PhlyContact\Service\ContactMailMessageFactory',
-            'PhlyContactMailTransport' => 'PhlyContact\Service\ContactMailTransportFactory',
-            'translator'               => 'Zend\I18n\Translator\TranslatorServiceFactory',
+            'PhlyContactCaptcha'       => 
+                    'PhlyContact\Service\ContactCaptchaFactory',
+            'PhlyContactForm'          => 
+                    'PhlyContact\Service\ContactFormFactory',
+            'PhlyContactMailMessage'   => 
+                    'PhlyContact\Service\ContactMailMessageFactory',
+            'PhlyContactMailTransport' => 
+                    'PhlyContact\Service\ContactMailTransportFactory',
+            'translator'               => 
+                    'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
     
@@ -100,8 +106,10 @@ return array(
     
     'view_manager' => array(
         'template_map' => array(
-            'phly-contact/contact/index'     => __DIR__ . '/../view/phly-contact/contact/index.phtml',
-            'phly-contact/contact/thank-you' => __DIR__ . '/../view/phly-contact/contact/thank-you.phtml',
+            'phly-contact/contact/index'     => __DIR__ . 
+                          '/../view/phly-contact/contact/index.phtml',
+            'phly-contact/contact/thank-you' => __DIR__ . 
+                          '/../view/phly-contact/contact/thank-you.phtml',
         ),
         'template_path_stack' => array(
             'phly-contact' => __DIR__ . '/../view',

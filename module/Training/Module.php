@@ -3,7 +3,8 @@
  * Module Training
  * 
  * Content site showing adress and dates of the gaming place. Place is shown
- * by Google Maps. Site is supporting I18n. Default language is set on Bootstrap. 
+ * by Google Maps. Site is supporting I18n. Default language is set 
+ * on Bootstrap. 
  * 
  * @author  Dr. Holger Maerz <holger@spandaugo.de>
  *  

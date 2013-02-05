@@ -8,25 +8,28 @@ use Zend\I18n\Translator\Translator;
 
 class ContactForm extends Form
 {
-    protected $captchaAdapter;
-    protected $csrfToken;
-    protected $translator;
-    protected $text_domain;
+    protected $_captchaAdapter;
+    protected $_csrfToken;
+    protected $_translator;
+    protected $_textDomain;
    
-    public function __construct($name = null, CaptchaAdapter $captchaAdapter = null, Translator $translator = null, $text_domain = null)
+    public function __construct($name = null, 
+            CaptchaAdapter $captchaAdapter = null, 
+            Translator $translator = null, 
+            $textDomain = null)
     {
         parent::__construct($name);
 
         if (null !== $captchaAdapter) {
-            $this->captchaAdapter = $captchaAdapter;
+            $this->_captchaAdapter = $captchaAdapter;
         }
         
         if (null !== $translator) {
-            $this->translator = $translator;
+            $this->_translator = $translator;
         }
       
-        if (null !== $text_domain) {
-            $this->text_domain = $text_domain;
+        if (null !== $textDomain) {
+            $this->_textDomain = $textDomain;
         }
         
                
@@ -36,15 +39,15 @@ class ContactForm extends Form
     private function translate($message, $textDomain = null, $locale = null)
     {
        
-        if (null === $this->translator) {
+        if (null === $this->_translator) {
             //@todo: Exception einfügen
             throw new Exception\RuntimeException('Translator has not been set');
         }
         if (null === $textDomain) {
-            $textDomain = $this->text_domain;
+            $textDomain = $this->_textDomain;
         }
         
-        return $this->translator->translate($message, $textDomain, $locale);
+        return $this->_translator->translate($message, $textDomain, $locale);
     
     }
    
@@ -56,45 +59,57 @@ class ContactForm extends Form
         }
         
               
-        $this->add(array(
+        $this->add(
+            array(
             'name' => 'from',
             'type' => 'Zend\Form\Element\Text',
             'options' => array(
                 'label' =>  $this->translate('From:'),
             ),
-        ));
+        )
+        );
 
-        $this->add(array(
+        $this->add(
+            array(
             'name'  => 'subject',
             'type' => 'Zend\Form\Element\Text',
             'options' => array(
                 'label' => $this->translate('Subject:'),
             ),
-        ));
+        )
+        );
 
 
-        $this->add(array(
+        $this->add(
+            array(
             'name'  => 'body',
             'type'  => 'Zend\Form\Element\Textarea',
             'options' => array(
                 'label' => $this->translate('Your message:'),
             ),
-        ));
+        )
+        );
 
         $captcha = new Element\Captcha('captcha');
-        $captcha->setCaptcha($this->captchaAdapter);
-        $captcha->setOptions(array('label' => $this->translate('Please verify you are human.')));
+        $captcha->setCaptcha($this->_captchaAdapter);
+        $captcha->setOptions(
+            array('label' => $this->translate(
+                'Please verify you are human.'
+            )
+            )
+        );
         $this->add($captcha);
-		
         $this->add(new Element\Csrf('csrf'));
 
-        $this->add(array(
-            'name' => 'Send',
-            'type'  => 'Zend\Form\Element\Submit',
-            'attributes' => array(
+        $this->add(
+            array(
+                'name' => 'Send',
+                'type'  => 'Zend\Form\Element\Submit',
+                'attributes' => array(
                 'value' =>  $this->translate('Send'),
 
             ),
-        ));
+        )
+        );
     }
 }

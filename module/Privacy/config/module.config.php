@@ -11,7 +11,8 @@ return array(
     //controller
     'controllers' => array(
         'invokables' => array(
-            'Privacy\Controller\Privacy' => 'Privacy\Controller\PrivacyController',
+            'Privacy\Controller\Privacy' => 
+                 'Privacy\Controller\PrivacyController',
         ),
     ),
 

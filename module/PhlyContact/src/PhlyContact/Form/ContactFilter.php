@@ -8,27 +8,28 @@ class ContactFilter extends InputFilter
 {
     public function __construct()
     {
-        $this->add(array(
-            'name'       => 'from',
-            'required'   => true,
-            'validators' => array(
+        $this->add(
+            array(
+                'name'       => 'from',
+                'required'   => true,
+                'validators' => array(
                 array(
                     'name'    => 'EmailAddress',
                     'options' => array(
                         'allow'  => HostnameValidator::ALLOW_DNS,
                         'domain' => true,
+                        ),
                     ),
                 ),
-            ),
-        ));
+            )
+        );
 
-        $this->add(array(
-            'name'       => 'subject',
-            'required'   => true,
-            'filters'    => array(
-                array(
-                    'name'    => 'StripTags',
-                ),
+        $this->add(
+            array(
+                   'name'       => 'subject',
+                   'required'   => true,
+                   'filters'    => array(
+                   array('name'    => 'StripTags',),
             ),
             'validators' => array(
                 array(
@@ -40,11 +41,14 @@ class ContactFilter extends InputFilter
                     ),
                 ),
             ),
-        ));
+          )
+        );
 
-        $this->add(array(
-            'name'       => 'body',
-            'required'   => true,
-        ));
+        $this->add(
+            array(
+                   'name'       => 'body',
+                   'required'   => true,
+                 )
+        );
     }
 }

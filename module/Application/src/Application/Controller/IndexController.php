@@ -2,8 +2,10 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for 
+ * the canonical source repository
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. 
+ * (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -14,21 +16,26 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
+    private $_blogTable=false;
+    
     public function indexAction()
     {
-        return new ViewModel(array(
-            'blog' => $this->getBlogTable()->fetchAll(),
-        ));
+        return new ViewModel(
+            array(
+                 'blog' => $this->getBlogTable()->fetchAll(),
+            )
+        );
     }
     
     
     public function getBlogTable()
-   {
-        if (!$this->blogTable) {
-            $sm = $this->getServiceLocator();
-            $this->blogTable = $sm->get('Application\Model\BlogTable');
+    {
+        if (!$this->_blogTable) {
+            $serviceManager = $this->getServiceLocator();
+            $this->_blogTable = 
+                $serviceManager->get('Application\Model\BlogTable');
         }
-        return $this->blogTable;
-   }
+        return $this->_blogTable;
+    }
     
 }

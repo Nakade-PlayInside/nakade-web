@@ -10,24 +10,24 @@ use Zend\View\Model\ViewModel;
 
 class ContactController extends AbstractActionController
 {
-    protected $form;
-    protected $message;
-    protected $transport;
+    protected $_form;
+    protected $_message;
+    protected $_transport;
 
     public function setMessage(Message $message)
     {
-        $this->message = $message;
+        $this->_message = $message;
     }
 
     public function setMailTransport(Transport\TransportInterface $transport)
     {
-        $this->transport = $transport;
+        $this->_transport = $transport;
     }
 
     public function indexAction()
     {
         return array(
-            'form' => $this->form,
+            'form' => $this->_form,
         );
     }
 
@@ -38,13 +38,15 @@ class ContactController extends AbstractActionController
         }
 
         $post = $this->request->getPost();
-        $form = $this->form;
+        $form = $this->_form;
         $form->setData($post);
         if (!$form->isValid()) {
-            $model = new ViewModel(array(
-                'error' => true,
-                'form'  => $form,
-            ));
+            $model = new ViewModel(
+                array(
+                    'error' => true,
+                    'form'  => $form,
+                )
+            );
             $model->setTemplate('phly-contact/contact/index');
             return $model;
         }
@@ -59,7 +61,9 @@ class ContactController extends AbstractActionController
     {
         $headers = $this->request->getHeaders();
         if (!$headers->has('Referer')
-            || !preg_match('#/contact$#', $headers->get('Referer')->getFieldValue())
+           || !preg_match(
+               '#/contact$#', $headers->get('Referer')->getFieldValue()
+           )
         ) {
             return $this->redirect()->toRoute('contact');
         }
@@ -69,7 +73,7 @@ class ContactController extends AbstractActionController
 
     public function setContactForm(ContactForm $form)
     {
-        $this->form = $form;
+        $this->_form = $form;
     }
 
     protected function sendEmail(array $data)
@@ -78,10 +82,10 @@ class ContactController extends AbstractActionController
         $subject = '[BBC] ' . $data['subject'];
         $body    = $data['body'];
 
-        $this->message->addFrom($from)
+        $this->_message->addFrom($from)
                       ->addReplyTo($from)
                       ->setSubject($subject)
                       ->setBody($body);
-        $this->transport->send($this->message);
+        $this->_transport->send($this->_message);
     }
 }

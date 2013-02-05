@@ -11,8 +11,8 @@
 return array(
     'phly_contact' => array(
         // This is simply configuration to pass to Zend\Captcha\Factory
-		//global-key.spandaugo.de
-		/**
+        //global-key.spandaugo.de
+        /**
         'captcha' => array(
             'class'   => 'recaptcha',
             'options' => array(

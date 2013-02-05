@@ -8,6 +8,7 @@
  * ReCaptcha CAPTCHA adapter, and setting the to and sender addresses for the
  * mail message.
  */
+
 return array(
     'db' => array(
         'dsn'      => 'mysql:dbname=bbc-blog;host=localhost',

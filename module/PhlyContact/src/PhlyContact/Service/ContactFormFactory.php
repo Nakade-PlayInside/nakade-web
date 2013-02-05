@@ -17,12 +17,13 @@ class ContactFormFactory implements FactoryInterface
         if ($config instanceof Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
-        $text_domain=$config['translator']['translation_file_patterns']['text_domain'];
+        $textDomain=$config['translator']['translation_file_patterns']
+             ['text_domain'];
         $name    = $config['phly_contact']['form']['name'];
         $captcha = $services->get('PhlyContactCaptcha');
         $translator = $services->get('translator');
         $filter  = new ContactFilter();
-        $form    = new ContactForm($name, $captcha, $translator, $text_domain);
+        $form    = new ContactForm($name, $captcha, $translator, $textDomain);
         $form->setInputFilter($filter);
         return $form;
     }

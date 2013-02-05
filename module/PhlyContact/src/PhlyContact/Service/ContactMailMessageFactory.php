@@ -30,7 +30,8 @@ class ContactMailMessageFactory implements FactoryInterface
 
         if (isset($config['sender']) && isset($config['sender']['address'])) {
             $address = $config['sender']['address'];
-            $name    = isset($config['sender']['name']) ? $config['sender']['name'] : null;
+            $name    = isset($config['sender']['name']) ? 
+                       $config['sender']['name'] : null;
             $message->setSender($address, $name);
         }
 

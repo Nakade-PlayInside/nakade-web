@@ -39,10 +39,11 @@ class ContactMailTransportFactory implements FactoryInterface
                 $transport = new Transport\File($options);
                 break;
             default:
-                throw new \DomainException(sprintf(
-                    'Unknown mail transport type provided ("%s")',
-                    $class
-                ));
+                throw new \DomainException(
+                    sprintf(
+                        'Unknown mail transport type provided ("%s")', $class
+                    )
+                );
         }
 
         return $transport;

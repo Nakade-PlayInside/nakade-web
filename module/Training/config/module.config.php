@@ -11,7 +11,8 @@ return array(
     //controller
     'controllers' => array(
         'invokables' => array(
-            'Training\Controller\Training' => 'Training\Controller\TrainingController',
+            'Training\Controller\Training' => 
+                  'Training\Controller\TrainingController',
         ),
     ),
 

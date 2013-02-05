@@ -116,7 +116,8 @@ class PhpExtensions
             $this->system(sprintf("tar -xzf %s > /dev/null 2>&1", $file));
             $folder = basename($file, ".tgz");
             $folder = basename($folder, ".tar.gz");
-            $this->system(sprintf(
+            $this->system(
+                    sprintf(
                 'sh -c "cd %s && phpize && ./configure %s && make && sudo make install" > /dev/null 2>&1',
                 $folder,
                 implode(' ', $extension['cfg'])

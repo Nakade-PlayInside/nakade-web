@@ -11,7 +11,8 @@ return array(
     //controller
     'controllers' => array(
         'invokables' => array(
-            'Impressum\Controller\Impressum' => 'Impressum\Controller\ImpressumController',
+            'Impressum\Controller\Impressum' => 
+                  'Impressum\Controller\ImpressumController',
         ),
     ),
 
