@@ -9,33 +9,93 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application\Controller;
+namespace User\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
+class UserController extends AbstractActionController
 {
-    private $_blogTable=false;
+    protected $_userTable;
+    
+    /**
+   * @var EntityManager
+   */
+   protected $_entityManager;
     
     public function indexAction()
     {
+        
+        $repository = $this->getEntityManager()->getRepository(
+            'User\Entity\User'
+        );
+        $posts      = $repository->findAll();
+        
         return new ViewModel(
             array(
-                 'blog' => $this->getBlogTable()->fetchAll(),
+                
+              'users' => $repository->findAll(),
+             // 'users' => $this->getUserTable()->fetchAll(),
             )
         );
     }
     
-    
-    public function getBlogTable()
+    public function addAction()
     {
-        if (!$this->_blogTable) {
-            $serviceManager = $this->getServiceLocator();
-            $this->_blogTable = 
-                $serviceManager->get('Application\Model\BlogTable');
-        }
-        return $this->_blogTable;
     }
+
+    public function editAction()
+    {
+    }
+
+    public function deleteAction()
+    {
+    }
+    
+    public function getUserTable()
+    {
+        if (!$this->_userTable) {
+            $servman = $this->getServiceLocator();
+            $this->_userTable = $servman->get('User\Model\UserTable');
+        }
+        return $this->_userTable;
+    }
+    
+    /**
+   * Sets the EntityManager
+   *
+   * @param EntityManager $em
+   * @access protected
+   * @return UserController
+   */
+   protected function setEntityManager($em)
+   {
+       
+      $this->_entityManager = $em;
+      return $this;
+   }
+
+  /**
+   * Returns the EntityManager
+   *
+   * Fetches the EntityManager from ServiceLocator if it has not been initiated
+   * and then returns it
+   *
+   * @access protected
+   * @return EntityManager
+   */
+   protected function getEntityManager()
+   {
+      
+      if (null === $this->_entityManager) {
+         
+          
+         $em =  $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+         $this->setEntityManager($em);
+         return $em;
+      }
+      
+      return $this->_entityManager;
+   }
     
 }

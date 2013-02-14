@@ -63,6 +63,7 @@ class Module
     {
         return array(
             'factories' => array(
+                               
                 'Application\Model\BlogTable' =>  function($serviceManager) {
                     $tableGateway = $serviceManager->get('BlogTableGateway');
                     $table = new BlogTable($tableGateway);

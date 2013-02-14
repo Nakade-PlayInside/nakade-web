@@ -16,11 +16,21 @@ return array(
     
    'db' => array(
         'driver'         => 'Pdo',
-        'dsn'            => 'mysql:dbname=zf2tutorial;host=127.0.0.1',
+        'dsn'            => 'mysql:dbname=bbc-blog;host=127.0.0.1',
         'driver_options' => array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
     ),
+    'db_user' => array(
+        'driver'         => 'Pdo',
+        'dsn'            => 'mysql:dbname=zf2tutorial;host=127.0.0.1',
+         'username' => 'root',
+        'password' => 'holger27',
+        'driver_options' => array(
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+        ),
+    ),
+    
     'service_manager' => array(
         'factories' => array(
             'Zend\Db\Adapter\Adapter'

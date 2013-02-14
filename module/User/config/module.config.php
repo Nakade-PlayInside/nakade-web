@@ -1,64 +1,70 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication 
- * for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. 
- * (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * The config information is passed to the relevant components by the 
+ * ServiceManager. The controllers section provides a list of all the 
+ * controllers provided by the module. 
+ * 
+ * Within the view_manager section, we add our view directory to the 
+ * TemplatePathStack configuration. 
+ * 
+ * @return array 
  */
-namespace Application;
+namespace User;
+
 return array(
+    
+    'controllers' => array(
+        'invokables' => array(
+            'User\Controller\User' => 
+                     'User\Controller\UserController'
+        ),
+    ),
+    //The name of the route is ‘user’ and has a type of ‘segment’. The segment 
+    //route allows us to specify placeholders in the URL pattern (route) that 
+    //will be mapped to named parameters in the matched route. 
+    //In this case, the route is ``/user[/:action][/:id]`` which will match any 
+    //URL that starts with /user. 
+    //The next segment will be an optional action name, and then finally the 
+    //next segment will be mapped to an optional id. 
+    //The square brackets indicate that a segment is optional. 
+    //The constraints section allows us to ensure that the characters within a 
+    //segment are as expected, so we have limited actions to starting with a 
+    //letter and then subsequent characters only being alphanumeric, underscore 
+    //or hyphen. We also limit the id to a number.
     'router' => array(
         'routes' => array(
-            'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
+            'user' => array(
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/',
+                    'route'    => '/user[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
+                        'controller' => 'User\Controller\User',
                         'action'     => 'index',
-                    ),
-                ),
-            ),
-            // The following is a route to simplify getting started creating
-            // new controllers and actions without needing to create a new
-            // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
-            'application' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/application',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
                     ),
                 ),
             ),
         ),
     ),
+    
+    
+    'view_manager' => array(
+        //@todo: view doctype, ect ... s. Application
+                
+        'template_path_stack' => array(
+            __DIR__ . '/../view',
+        ),
+    ),
+    
     'service_manager' => array(
         'factories' => array(
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
+    
     'translator' => array(
         'translation_file_patterns' => array(
             array(
@@ -69,30 +75,22 @@ return array(
             ),
         ),
     ),
-    'controllers' => array(
-        'invokables' => array(
-            'Application\Controller\Index' => 
-                     'Application\Controller\IndexController'
-        ),
+    
+    //Doctrine2 
+    'doctrine' => array(
+        'driver' => array(
+            __NAMESPACE__ . '_driver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(
+                    __DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
+           ),
+           'orm_default' => array(
+               'drivers' => array(
+                __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+               )
+           )
+        )
     ),
-    'view_manager' => array(
-        'display_not_found_reason' => true,
-        'display_exceptions'       => true,
-        'doctype'                  => 'HTML5',
-        'not_found_template'       => 'error/404',
-        'exception_template'       => 'error/index',
-        'template_map' => array(
-            'layout/layout'           => __DIR__ . 
-                  '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . 
-                  '/../view/application/index/index.phtml',
-            'error/404'               => __DIR__ . 
-                  '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . 
-                  '/../view/error/index.phtml',
-        ),
-        'template_path_stack' => array(
-            __DIR__ . '/../view',
-        ),
-    ),
+    
 );
