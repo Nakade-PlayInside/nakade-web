@@ -6,11 +6,11 @@
     }
   ],
   "require": {
+      
 	"zendframework/zendframework": "2.*",
 	"doctrine/common": "2.*",
-    "zendframework/zendpdf": "2.*",
-    "zendframework/zendservice-recaptcha": "2.*"
+        "zendframework/zendpdf": "2.*",
+        "zendframework/zendservice-recaptcha": "2.*",
+        "doctrine/doctrine-orm-module": "0.*"
   }
 }
-
-
