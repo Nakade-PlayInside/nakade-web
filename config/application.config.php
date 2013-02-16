@@ -9,7 +9,9 @@ return array(
         'Blog',
         'User',
         'DoctrineModule',
-        'DoctrineORMModule'
+        'DoctrineORMModule',
+        'Nakade',
+     
         ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(

@@ -4,8 +4,6 @@ namespace User\Controller;
 
 use User\Controller\UserController;
 use Zend\Http\Request;
-//use Zend\Http\Response;
-//use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 use PHPUnit_Framework_TestCase;
 

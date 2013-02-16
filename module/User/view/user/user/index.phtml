@@ -1,30 +1,26 @@
 <?php
-// module/Album/view/user/user/index.phtml:
+// module/user/view/user/user/index.phtml:
 
-$title = 'My users';
+$title = 'Registered Users';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
-<p>
-    <a href="<?php echo $this->url('user', array('action'=>'add'));?>">Add new user</a>
-</p>
+
 
 <table class="table">
 <tr>
-    <th>Title</th>
-    <th>Artist</th>
-    <th>&nbsp;</th>
+
+    <th>First  Name</th>
+    <th>Family Name</th>
+    <th>Nick Name</th>
+   
 </tr>
 <?php foreach ($users as $user) : ?>
 <tr>
-    <td><?php echo $this->escapeHtml($user->getTitle());?></td>
-    <td><?php echo $this->escapeHtml($user->getArtist());?></td>
-    <td>
-        <a href="<?php echo $this->url('user',
-            array('action'=>'edit', 'id' => $user->getId()));?>">Edit</a>
-        <a href="<?php echo $this->url('user',
-            array('action'=>'delete', 'id' => $user->getId()));?>">Delete</a>
-    </td>
+    <td><?php echo $this->escapeHtml($user->getFirstName());?></td>
+    <td><?php echo $this->escapeHtml($user->getLastName());?></td>
+    <td><?php echo $this->escapeHtml($user->getNickName());?></td>
+    
 </tr>
 <?php endforeach; ?>
 </table>
