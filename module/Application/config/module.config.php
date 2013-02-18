@@ -11,7 +11,21 @@
 namespace Application;
 return array(
     'router' => array(
-        'routes' => array(
+            'routes' => array(
+
+                'league' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'       => '/league[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'league',
+                        'action'     => 'index',
+                    ),
+                )
+            ),
             'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(

@@ -9,12 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="user")
  * @property int $uid
- * @property string $vorname
- * @property string $nachname
- * @property string $nick
- * @property string $title
- * @property char   $sex
- * @property date   $birthday
+ * @property string $_vorname
+ * @property string $_nachname
+ * @property string $_nick
+ * @property string $_title
+ * @property char   $_sex
+ * @property date   $_birthday
  */
 class User
 {

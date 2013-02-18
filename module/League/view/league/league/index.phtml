@@ -1,0 +1,30 @@
+<?php
+// module/user/view/user/user/index.phtml:
+
+$title = 'Top-Liga Sommer 2013';
+$this->headTitle($title);
+?>
+<h3><?php echo $this->escapeHtml($title); ?></h3>
+
+
+<table class="table" style="width:8em;margin-top: 0.5em;">
+<tr>
+
+    <th title="Position">P</th>
+    <th>Name</th>
+    <th title="gespielte Partien">GP</th>
+    <th title="Siegpunkte">SP</th>
+    <th title="Tie-Breaker">Hahn</th>
+   
+</tr>
+<?php $i=1; foreach ($users as $user) : ?>
+<tr>
+    <td><?php if($user->getGamesPlayed() > 0) echo $i++;?></td>
+    <td><?php echo $this->escapeHtml($user->getPlayer()->getFirstName());?></td>
+    <td><?php echo $this->escapeHtml($user->getGamesPlayed());?></td>
+    <td><?php echo $this->escapeHtml($user->getWin());?></td>
+    <td><?php echo $this->escapeHtml($user->getTiebreaker1());?></td>
+    
+</tr>
+<?php endforeach; ?>
+</table>
