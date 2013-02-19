@@ -108,7 +108,7 @@ class Position
    * @var float
    * @access protected
    */
-   protected $_tiebreaker1;
+   protected $_tiebreakerA;
    
    /**
    * Tiebreaker 2
@@ -117,7 +117,7 @@ class Position
    * @var float
    * @access protected
    */
-   protected $_tiebreaker2;
+   protected $_tiebreakerB;
   
    /**
    * League Entity
@@ -127,7 +127,7 @@ class Position
    * @var League
    * @access protected
    */
-   protected $_League;
+   protected $_league;
    
    /**
    * User Entity
@@ -137,7 +137,7 @@ class Position
    * @var User
    * @access protected
    */
-   protected $_Player;
+   protected $_player;
    
    
   /**
@@ -210,7 +210,7 @@ class Position
    */
   public function getUid()
   {
-    return $this->$uid;
+    return $this->_uid;
   }
   
   /**
@@ -343,7 +343,7 @@ class Position
    */
   public function setTiebreaker1($tie)
   {
-    $this->_tiebreaker1 = $tie;
+    $this->_tiebreakerA = $tie;
     return $this;
   }
 
@@ -355,7 +355,7 @@ class Position
    */
   public function getTiebreaker1()
   {
-    return $this->_tiebreaker1;
+    return $this->_tiebreakerA;
   }
 
   /**
@@ -367,7 +367,7 @@ class Position
    */
   public function setTiebreaker2($tie)
   {
-    $this->_tiebreaker2 = $tie;
+    $this->_tiebreakerB = $tie;
     return $this;
   }
 
@@ -379,7 +379,7 @@ class Position
    */
   public function getTiebreaker2()
   {
-    return $this->_tiebreaker2;
+    return $this->_tiebreakerB;
   }
   
   
@@ -391,7 +391,7 @@ class Position
    */
   public function setLeague($league)
   {
-    $this->_League = $league;
+    $this->_league = $league;
     return $this;
   } 
   
@@ -403,7 +403,7 @@ class Position
    */
   public function getLeague()
   {
-    return $this->_League;
+    return $this->_league;
   }
   
   /**
@@ -414,7 +414,7 @@ class Position
    */
   public function setPlayer($uid)
   {
-    $this->_Player = $uid;
+    $this->_player = $uid;
     return $this;
   } 
   
@@ -426,7 +426,7 @@ class Position
    */
   public function getPlayer()
   {
-    return $this->_Player;
+    return $this->_player;
   }
   
   

@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @property string $_title
  * @property char   $_sex
  * @property date   $_birthday
+ * @property bool   $_anonym
  */
 class User
 {
@@ -83,6 +84,15 @@ class User
    * @access protected
    */
   protected $_birthday;
+  
+  /**
+   * if flag is set the nickname is shown
+   *
+   * @ORM\Column(name="anonym", type="boolean")
+   * @var bool
+   * @access protected
+   */
+  protected $_anonym;
 
   /**
    * Sets the Identifier
@@ -251,6 +261,31 @@ class User
   {
     
       return $this->_birthday;
+  }
+  
+  /**
+   * Sets anonymimizer
+   *
+   * @param bool $anonym
+   * @access public
+   * @return User
+   */
+  public function setAnonym($anonym)
+  {
+    $this->_anonym = $anonym;
+    return $this;
+  }
+
+  /**
+   * Returns the flag anonym
+   *
+   * @access public
+   * @return bool
+   */
+  public function isAnonym()
+  {
+    
+      return $this->_anonym;
   }
   
 }

@@ -21,20 +21,20 @@ class LeagueController extends AbstractEntityManagerController
     {
         
        return new ViewModel(
-            array(
+           array(
               'users' => $this->getTopTable()
-            )
-        );
+           )
+       );
     }
     
     public function comingNextAction()
     {
         
        return new ViewModel(
-            array(
+           array(
               'users' => $this->getNextGame()
-            )
-        );
+           )
+       );
     }
     
     
@@ -50,12 +50,12 @@ class LeagueController extends AbstractEntityManagerController
            array('_lid' => 1), 
            array(
               '_win'=> 'DESC', 
-              '_tiebreaker1'=> 'DESC',
-              '_tiebreaker2'=> 'DESC',
+              '_tiebreakerA'=> 'DESC',
+              '_tiebreakerB'=> 'DESC',
               '_gamesPlayed'=> 'DESC',
               '_id'=> 'DESC'
               )
-           );
+       );
        
        return $position;
        
@@ -80,7 +80,7 @@ class LeagueController extends AbstractEntityManagerController
               '_date'=> 'ASC', 
               ),
            1    
-           );
+       );
        
        return $position;
        

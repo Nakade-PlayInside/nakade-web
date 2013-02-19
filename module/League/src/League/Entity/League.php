@@ -1,4 +1,5 @@
 <?php
+
 namespace League\Entity;
 
 use League\Entity\Season;
@@ -85,10 +86,10 @@ class League
    *
    * @ORM\OneToOne(targetEntity="Season")
    * @ORM\JoinColumn(name="sid", referencedColumnName="sid")
-   * @var Season
+   * @var season
    * @access protected
    */
-   protected $_Season;
+   protected $_season;
    
     
   /**
@@ -245,7 +246,7 @@ class League
    */
   public function setSeason($season)
   {
-    $this->_Season = $season;
+    $this->_season = $season;
     return $this;
   } 
   
@@ -257,7 +258,7 @@ class League
    */
   public function getSeason()
   {
-    return $this->_Season;
+    return $this->_season;
   }
   
 }

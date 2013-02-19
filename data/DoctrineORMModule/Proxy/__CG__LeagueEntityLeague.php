@@ -129,7 +129,7 @@ class League extends \League\Entity\League implements \Doctrine\ORM\Proxy\Proxy
 
     public function __sleep()
     {
-        return array('__isInitialized__', '_id', '_sid', '_order', '_division', '_title', '_rulesetId', '_Season');
+        return array('__isInitialized__', '_id', '_sid', '_order', '_division', '_title', '_rulesetId', '_season');
     }
 
     public function __clone()

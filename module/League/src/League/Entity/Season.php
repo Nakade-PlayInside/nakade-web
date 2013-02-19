@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="leagueSeason")
- * @property int $_sid
+ * @property int $_id
  * @property int $_number
  * @property string $_title
  * @property string $_abbreviation
@@ -166,7 +166,7 @@ class Season
    * @access public
    * @return boolean
    */
-  public function geActive()
+  public function isActive()
   {
     return $this->_active;
   }

@@ -13,6 +13,14 @@ namespace League;
 
 return array(
     
+    'view_helpers' => array(  
+        'invokables' => array(  
+            'position' => 'League\View\Helper\Position', 
+            'player' => 'League\View\Helper\Player',
+            // more helpers here ...  
+        )  
+    ),
+    
     'controllers' => array(
         'invokables' => array(
             'League\Controller\League' => 

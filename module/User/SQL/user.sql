@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `vorname` varchar(20) NOT NULL COMMENT 'first name',
   `nachname` varchar(30) NOT NULL COMMENT 'family name',
   `nick` varchar(10) DEFAULT NULL COMMENT 'nick name',
+  `anonym` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'flag: name=nick ',
   `titel` varchar(10) DEFAULT NULL COMMENT 'title: dr, graf, sir',
   `sex` char(1) DEFAULT NULL COMMENT 'sex (m | f)',
   `geburtsdatum` date DEFAULT NULL COMMENT 'birthday',

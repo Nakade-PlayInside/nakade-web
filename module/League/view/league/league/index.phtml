@@ -17,10 +17,11 @@ $this->headTitle($title);
     <th title="Tie-Breaker">Hahn</th>
    
 </tr>
-<?php $i=1; foreach ($users as $user) : ?>
-<tr>
-    <td><?php if($user->getGamesPlayed() > 0) echo $i++;?></td>
-    <td><?php echo $this->escapeHtml($user->getPlayer()->getFirstName());?></td>
+<?php foreach ($users as $user) : ?>
+<tr style="background-color:<?php 
+    echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+    <td><?php echo $this->position($user); ?></td>
+    <td><?php echo $this->escapeHtml($this->player($user));?></td>
     <td><?php echo $this->escapeHtml($user->getGamesPlayed());?></td>
     <td><?php echo $this->escapeHtml($user->getWin());?></td>
     <td><?php echo $this->escapeHtml($user->getTiebreaker1());?></td>

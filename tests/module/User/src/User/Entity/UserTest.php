@@ -39,6 +39,10 @@ class UserTest extends PHPUnit_Framework_TestCase
             $user->getBirthday(), 
             '"birthday" should initially be null'
         );
+        $this->assertNull(
+            $user->isAnonym(), 
+            '"anonym" should initially be null'
+        );
     }
 
     public function testSetsPropertiesCorrectly()
@@ -53,6 +57,7 @@ class UserTest extends PHPUnit_Framework_TestCase
             'nickname' => 'Whopper',
             'sex' => 'f',
             'birthday' => new \DateTime("now"),
+            'anonym' => TRUE,
             
         );
         
@@ -64,6 +69,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $user->setNickName($data['nickname']);
         $user->setSex($data['sex']);
         $user->setBirthday($data['birthday']);
+        $user->setAnonym($data['anonym']);
 
        
         $this->assertSame(
@@ -96,6 +102,11 @@ class UserTest extends PHPUnit_Framework_TestCase
             $data['birthday'], 
             $user->getBirthday(), 
             '"Birthday" was not set correctly'
+        );
+        $this->assertSame(
+            $data['anonym'], 
+            $user->isAnonym(), 
+            '"Anonym" was not set correctly'
         );
          
     }

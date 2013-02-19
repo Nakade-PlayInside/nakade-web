@@ -126,10 +126,22 @@ class User extends \User\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::getBirthday();
     }
 
+    public function setAnonym($anonym)
+    {
+        $this->__load();
+        return parent::setAnonym($anonym);
+    }
+
+    public function isAnonym()
+    {
+        $this->__load();
+        return parent::isAnonym();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', '_id', '_title', '_firstname', '_lastname', '_nickname', '_sex', '_birthday');
+        return array('__isInitialized__', '_id', '_title', '_firstname', '_lastname', '_nickname', '_sex', '_birthday', '_anonym');
     }
 
     public function __clone()
