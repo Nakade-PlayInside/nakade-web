@@ -1,0 +1,28 @@
+<?php
+// module/user/view/user/user/index.phtml:
+
+$title = 'Nächtes Partie';
+$this->headTitle($title);
+?>
+<h3><?php echo $this->escapeHtml($title); ?></h3>
+
+
+<table class="table" style="width:25em;margin-top: 0.5em;">
+<tr>
+
+    <th>Datum</th>
+    <th>Schwarz</th>
+    <th></th>
+    <th>Weiß</th>
+    
+   
+</tr>
+<?php $i=1; foreach ($users as $user) : ?>
+<tr>
+    <td><?php echo $user->getDate()->format('D, d. M Y');?></td>
+    <td><?php echo $this->escapeHtml($user->getBlack()->getFirstName());?></td>
+    <td style="width:1em">-</td>
+    <td><?php echo $this->escapeHtml($user->getWhite()->getFirstName());?></td>
+</tr>
+<?php endforeach; ?>
+</table>
