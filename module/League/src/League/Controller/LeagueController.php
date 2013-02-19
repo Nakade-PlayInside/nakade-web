@@ -21,10 +21,10 @@ class LeagueController extends AbstractEntityManagerController
     {
         
        return new ViewModel(
-            array(
+           array(
               'users' => $this->getTopTable()
             )
-        );
+       );
     }
     
     protected function getTopTable()
@@ -44,7 +44,7 @@ class LeagueController extends AbstractEntityManagerController
               '_gamesPlayed'=> 'DESC',
               '_id'=> 'DESC'
               )
-           );
+       );
        
        return $position;
        

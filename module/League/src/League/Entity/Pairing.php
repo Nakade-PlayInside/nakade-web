@@ -111,7 +111,7 @@ class Pairing
    * @var League
    * @access protected
    */
-   protected $_League;
+   protected $_league;
    
    /**
    * User Entity
@@ -121,7 +121,7 @@ class Pairing
    * @var User
    * @access protected
    */
-   protected $_Black;
+   protected $_black;
    
    /**
    * User Entity
@@ -131,7 +131,7 @@ class Pairing
    * @var User
    * @access protected
    */
-   protected $_White;
+   protected $_white;
    
    /**
    * User Entity
@@ -141,7 +141,7 @@ class Pairing
    * @var User
    * @access protected
    */
-   protected $_Winner;
+   protected $_winner;
    
    /**
    * Result Entity
@@ -151,7 +151,7 @@ class Pairing
    * @var Result
    * @access protected
    */
-   protected $_Result;
+   protected $_result;
    
   /**
    * Sets the Identifier
@@ -355,7 +355,7 @@ class Pairing
    */
   public function setLeague($league)
   {
-    $this->_League = $league;
+    $this->_league = $league;
     return $this;
   } 
   
@@ -367,7 +367,7 @@ class Pairing
    */
   public function getLeague()
   {
-    return $this->_League;
+    return $this->_league;
   }
   
   /**
@@ -378,7 +378,7 @@ class Pairing
    */
   public function setBlack($uid)
   {
-    $this->_Black = $uid;
+    $this->_black = $uid;
     return $this;
   } 
   
@@ -390,7 +390,7 @@ class Pairing
    */
   public function getBlack()
   {
-    return $this->_Black;
+    return $this->_black;
   }
   
   /**
@@ -401,7 +401,7 @@ class Pairing
    */
   public function setWhite($uid)
   {
-    $this->_White = $uid;
+    $this->_white = $uid;
     return $this;
   } 
   
@@ -413,7 +413,7 @@ class Pairing
    */
   public function getWhite()
   {
-    return $this->_White;
+    return $this->_white;
   }
   
   /**
@@ -424,7 +424,7 @@ class Pairing
    */
   public function setWinner($uid)
   {
-    $this->_Winner = $uid;
+    $this->_winner = $uid;
     return $this;
   } 
   
@@ -436,7 +436,7 @@ class Pairing
    */
   public function getWinner()
   {
-    return $this->_Winner;
+    return $this->_winner;
   }
   
   /**
@@ -447,7 +447,7 @@ class Pairing
    */
   public function setResult($resultId)
   {
-    $this->_Result = $resultId;
+    $this->_result = $resultId;
     return $this;
   } 
   
@@ -459,7 +459,7 @@ class Pairing
    */
   public function getResult()
   {
-    return $this->_Result;
+    return $this->_result;
   }
   
 }

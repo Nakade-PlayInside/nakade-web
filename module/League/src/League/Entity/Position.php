@@ -127,7 +127,7 @@ class Position
    * @var League
    * @access protected
    */
-   protected $_League;
+   protected $_league;
    
    /**
    * User Entity
@@ -137,7 +137,7 @@ class Position
    * @var User
    * @access protected
    */
-   protected $_Player;
+   protected $_player;
    
    
   /**
@@ -391,7 +391,7 @@ class Position
    */
   public function setLeague($league)
   {
-    $this->_League = $league;
+    $this->_league = $league;
     return $this;
   } 
   
@@ -403,7 +403,7 @@ class Position
    */
   public function getLeague()
   {
-    return $this->_League;
+    return $this->_league;
   }
   
   /**
@@ -414,7 +414,7 @@ class Position
    */
   public function setPlayer($uid)
   {
-    $this->_Player = $uid;
+    $this->_player = $uid;
     return $this;
   } 
   
@@ -426,7 +426,7 @@ class Position
    */
   public function getPlayer()
   {
-    return $this->_Player;
+    return $this->_player;
   }
   
   
