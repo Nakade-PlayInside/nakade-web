@@ -1,4 +1,10 @@
 <?php
+/**
+ * Autoloading the classmap files. No need during developing... 
+ * 
+ * @return array
+ */
 
-// module/Training/autoload_classmap.php:
-return array();
+return array(
+   
+);
