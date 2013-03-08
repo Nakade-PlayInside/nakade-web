@@ -21,11 +21,23 @@ $this->headTitle($title);
 <tr style="background-color:<?php 
     echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
     <td><?php echo $this->position($user); ?></td>
-    <td><?php echo $this->escapeHtml($this->player($user));?></td>
+    <td><?php echo $this->escapeHtml($this->player($user->getPlayer()));?></td>
     <td><?php echo $this->escapeHtml($user->getGamesPlayed());?></td>
     <td><?php echo $this->escapeHtml($user->getWin());?></td>
     <td><?php echo $this->escapeHtml($user->getTiebreaker1());?></td>
     
+</tr>
+<?php endforeach; ?>
+</table>
+
+<h3>Die nächsten Termine:</h3>
+<table style="width:25em;margin-top: 0.5em;">
+<?php foreach ($nextGames as $game) : ?>
+<tr>
+    <td><?php echo $game->getDate()->format('d.m.Y   H');?>h</td>
+    <td><?php echo $this->escapeHtml($this->player($game->getBlack()));?></td>
+    <td style="width:1em">-</td>
+    <td><?php echo $this->escapeHtml($this->player($game->getWhite()));?></td>
 </tr>
 <?php endforeach; ?>
 </table>

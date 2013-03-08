@@ -429,6 +429,76 @@ class Position
     return $this->_player;
   }
   
+  /**
+    * Magic getter to expose protected properties.
+    *
+    * @param string $property
+    * @return mixed
+    */
+    public function __get($property) 
+    {
+        return $this->$property;
+    }
+ 
+    /**
+     * Magic setter to save protected properties.
+     *
+     * @param string $property
+     * @param mixed $value
+     */
+    public function __set($property, $value) 
+    {
+        $this->$property = $value;
+    }
+ 
+    /**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy() 
+    {
+        return get_object_vars($this);
+    }
+    
+   /**
+    * Populate from an array.
+    * Provide all values by its absolute value, e.g. if subtracted
+    * value have to be minus.
+    *
+    * @param array $data
+    */
+    public function populate($data = array()) 
+    {
+        
+        //game played
+        $this->_gamesPlayed += isset($data['gamesPlayed'])? 
+            $data['gamesPlayed']:0;
+                
+        //game suspended
+        $this->_gamesSuspended += isset($data['gamesSuspended'])?
+            $data['gamesSuspended']:0;
+        
+        //jigo
+        $this->_jigo += isset($data['jigo'])?
+            $data['jigo']:0;
+        
+        //win
+        $this->_win += isset($data['win'])?
+            $data['win']:0;
+        
+        //loss
+        $this->_loss += isset($data['loss'])?
+            $data['loss']:0;
+        
+        //tiebreaker1
+        $this->_tiebreakerA += isset($data['tiebreaker1'])?
+            $data['tiebreaker1']:0;
+        
+        //tiebreaker2
+        $this->_tiebreakerB += isset($data['tiebreaker2'])?
+            $data['tiebreaker2']:0;
+    }
   
   
 }

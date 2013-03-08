@@ -1,0 +1,23 @@
+<?php
+// module/user/view/user/user/index.phtml:
+
+$title = 'Offene Resultate';
+$this->headTitle($title);
+?>
+<h3><?php echo $this->escapeHtml($title); ?></h3>
+
+
+<table style="width:25em;margin-top: 0.5em;">
+<?php foreach ($pairings as $game) : ?>
+<tr>
+    <td><?php echo $game->getDate()->format('d.m.Y   H');?>h</td>
+    <td><?php echo $this->escapeHtml($this->player($game->getBlack()));?></td>
+    <td style="width:1em">-</td>
+    <td><?php echo $this->escapeHtml($this->player($game->getWhite()));?></td>
+    <td><a href="<?php echo $this->url(
+            'league', 
+            array('action'=>'add','id'=>$game->getId())
+            ) ; ?>">Resultat eintragen</a></td>
+</tr>
+<?php endforeach; ?>
+</table>

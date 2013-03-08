@@ -3,6 +3,8 @@ namespace League\Controller;
 
 use Nakade\Controller\AbstractEntityManagerController;
 use Zend\View\Model\ViewModel;
+use League\Form\ResultForm;
+use League\Helper\PositionCalculator;
 
 /**
  * Manages a round-robin league. Registered players are connected to the 
@@ -22,7 +24,8 @@ class LeagueController extends AbstractEntityManagerController
         
        return new ViewModel(
            array(
-              'users' => $this->getTopTable()
+              'users' => $this->getTopTable(),
+              'nextGames' => $this->getNextThreeGames(),
            )
        );
     }
@@ -33,6 +36,16 @@ class LeagueController extends AbstractEntityManagerController
        return new ViewModel(
            array(
               'users' => $this->getNextGame()
+           )
+       );
+    }
+    
+    public function openResultsAction()
+    {
+        
+       return new ViewModel(
+           array(
+              'pairings' => $this->getAllOpenResults()
            )
        );
     }
@@ -61,6 +74,39 @@ class LeagueController extends AbstractEntityManagerController
        
     }
     
+    protected function getNextThreeGames()
+    {
+       
+       
+       $query="SELECT u FROM League\Entity\Pairing u 
+           WHERE u._lid=1 AND u._resultId IS NULL 
+           AND u._date >= :today ORDER BY u._date ASC";
+       
+       $pairings = $this->getEntityManager()->createQuery($query);
+       $pairings->setParameter('today', new \DateTime());
+       $pairings->setMaxResults(3);
+       
+       
+       return $pairings->getResult();
+       
+    }
+    
+    protected function getAllOpenResults()
+    {
+       
+       
+       $query="SELECT u FROM League\Entity\Pairing u 
+           WHERE u._lid=1 AND u._resultId IS NULL 
+           AND u._date < :today ORDER BY u._date ASC";
+       
+       $pairings = $this->getEntityManager()->createQuery($query);
+       $pairings->setParameter('today', new \DateTime());
+              
+       return $pairings->getResult();
+       
+    }
+    
+    
     protected function getNextGame()
     {
        
@@ -86,8 +132,72 @@ class LeagueController extends AbstractEntityManagerController
        
     }
     
+    protected function getResultlist()
+    {
+       
+        
+       $repository = $this->getEntityManager()->getRepository(
+           'League\Entity\Result'
+       );
+       
+       
+       //@todo: datumsvergleich jetzt zu nächsten termin
+       //@todo: nur aktuelle Termine, nicht die Spiele,
+       //die noch nicht eingetragen sind 
+       
+       $game = $repository->findAll();
+       
+       return $game;
+       
+    }
+    
     public function addAction()
     {
+        
+        $pid = (int) $this->params()->fromRoute('id', 0);
+        $game= (object) $this->getEntityManager()->find('League\Entity\Pairing',
+                $pid);
+        
+        $repository = $this->getEntityManager()->getRepository(
+           'League\Entity\Position');
+        
+        $black= $repository->findOneBy(
+                array('_uid' => $game->getBlackId())
+                );
+        $white= $repository->findOneBy(
+                array('_uid' => $game->getWhiteId())
+                );
+        
+        $form = new ResultForm($game, $this->getResultlist());
+        $form->setBindOnValidate(false);
+        $form->bind($game);
+        
+         
+        $request = $this->getRequest();
+               
+        if ($request->isPost()) {
+            
+            $form->setData($request->getPost());
+            
+            if ($form->isValid()) {
+                
+                $form->bindValues();
+                $this->getEntityManager()->flush();
+                
+                $calc = new PositionCalculator($request->getPost());     
+                $calc->bindEntity($black);
+                $calc->bindEntity($white);
+               
+                $this->getEntityManager()->flush($black);
+                $this->getEntityManager()->flush($white);
+                
+                // Redirect to list of albums
+                return $this->redirect()->toRoute('league');
+            }
+        }
+        
+          
+        return array('id' => $pid, 'game' => $game, 'form' => $form);
     }
 
     public function editAction()

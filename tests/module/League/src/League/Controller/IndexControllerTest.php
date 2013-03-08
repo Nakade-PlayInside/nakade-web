@@ -31,17 +31,7 @@ class LeagueControllerTest extends PHPUnit_Framework_TestCase
         $this->_controller->setEventManager($bootstrap->getEventManager());
         $this->_controller->setServiceLocator($bootstrap->getServiceManager());
     }
-    
-    public function testAddActionCanBeAccessed()
-    {
-        $this->_routeMatch->setParam('action', 'add');
-
-        $result   = $this->_controller->dispatch($this->_request);
-        $response = $this->_controller->getResponse();
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $result);
-    }
+  
 
     public function testDeleteActionCanBeAccessed()
     {
