@@ -30,7 +30,8 @@ return array(
     
     'router' => array(
         'routes' => array(
-            'user' => array(
+            
+            'league' => array(
                 'type'    => 'segment',
                 'options' => array(
                     'route'    => '/league[/:action][/:id]',
@@ -43,6 +44,7 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
+               
             ),
         ),
     ),

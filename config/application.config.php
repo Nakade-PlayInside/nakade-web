@@ -12,6 +12,7 @@ return array(
         'DoctrineORMModule',
         'Nakade',
         'League',
+        'Authentication',
      
         ),
     'module_listener_options' => array(

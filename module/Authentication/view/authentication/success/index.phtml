@@ -1,0 +1,16 @@
+<!-- //module/Authentication/view/auth/success/index.phtml -->
+
+
+<?php
+if ($user = $this->identity()) {
+        echo 'Logged in as ' . $this->escapeHtml($user->getUsername());?>
+  <a href="<?php echo $this->url('login/process', 
+              array('action'=>'logout')); ?>">Logout</a>
+<?php
+        } 
+else {
+        echo 'Not logged in';
+    }
+?>    
+
+

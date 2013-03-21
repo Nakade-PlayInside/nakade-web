@@ -34,6 +34,27 @@
                             <li><a href="<?php echo $this->url('impressum') ?>"><?php echo $this->translate("Imprint", 'Application'); ?></a></li>
                             <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate("Contact", 'Application'); ?></a></li>
                             <li><a href="http://blog.nakade.de"><?php echo $this->translate("Dev", 'Application'); ?></a></li>
+<?php
+     if ($user = $this->identity()) {
+        echo "<li><a href=\"".
+             $this->url('league', array('action'=>'openresults'))   .
+             "\">Results</a></li>" ; 
+         
+        echo "<li style='color:lightblue;line-height:19px;
+                padding:10px; padding-left:20px;'>" .
+                $this->translate('Logged in as ', 'Application') .
+                $this->escapeHtml($user->getUsername()) .   
+             "</li><li><a href=\"" . 
+             $this->url('login/process', array('action'=>'logout')) . 
+             "\">Logout</a></li>" ; 
+     } 
+     else {
+    
+        echo "<li><a href=\"" . 
+             $this->url('login') .
+             "\">LogIn</a></li>";
+    }
+?>    
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
