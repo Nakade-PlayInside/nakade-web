@@ -1,7 +1,7 @@
 <?php
 
-//module/Authentication/src/Authentication/Helper/NakadeAuthStorage.php
-namespace Authentication\Helper;
+//module/Authentication/src/Authentication/Services/AuthStorage.php
+namespace Authentication\Services;
 
 use Zend\Authentication\Storage;
 

@@ -6,7 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\View\Model\ViewModel;
 
-use Authentication\Model\User;
+use Authentication\Form\AuthForm;
 
 /**
  * Authentication controller for login of registered users.
@@ -38,7 +38,20 @@ class AuthController extends AbstractActionController
         return $this->authservice;
     }
     
-    
+    /**
+     * As configured in Module.php the authService returns the authentication
+     * adapter from doctrine. Using the specific Zend name of the service 
+     * is supported and recognized by ZF2 View helper 
+     * 
+     * @return AuthenticationService
+     */
+    public function getFormService()
+    {
+        
+       return $this->getServiceLocator()
+                     ->get('AuthForm');
+        
+    }
     
     /**
      * Using the annotation builder, a form is created from a model.
@@ -47,14 +60,16 @@ class AuthController extends AbstractActionController
      */
     public function getForm()
     {
+       
         if (! $this->form) {
-            $user       = new User();
-            $builder    = new AnnotationBuilder();
-            $this->form = $builder->createForm($user);
+            $this->form =                     
+                $this->getServiceLocator()->get('AuthForm');
         }
         
         return $this->form;
     }
+    
+    
     
     /**
      * If not loggedIn this action method shows a login form.
@@ -118,7 +133,8 @@ class AuthController extends AbstractActionController
      
                 //authentication
                 $authResult = $this->getAuthService()->authenticate();
-        
+                
+               
                 //save message temporary into flashmessenger
                 foreach($authResult->getMessages() as $message) {
                     $this->flashmessenger()->addMessage($message);
@@ -126,6 +142,15 @@ class AuthController extends AbstractActionController
        
                 if ($authResult->isValid()) {
                     return $this->redirect()->toRoute('success');
+                }
+                //fraud protection
+                else {
+                   /*@todo login attempts, IP, Datetime
+                   * after some attempts captcha,
+                   * further more deactivate account, set verified flag,
+                   * new verify mail 
+                   * 
+                   */
                 }
             }
         }    

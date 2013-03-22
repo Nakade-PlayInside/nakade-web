@@ -40,14 +40,25 @@ class LeagueController extends AbstractEntityManagerController
        );
     }
     
+    /**
+     * 
+     * @return \Zend\View\Model\ViewModel
+     */
     public function openResultsAction()
     {
+       
+       if ($this->identity()) {
         
-       return new ViewModel(
-           array(
-              'pairings' => $this->getAllOpenResults()
-           )
-       );
+           return new ViewModel(
+               array('pairings' => $this->getAllOpenResults())
+           );
+       } 
+    
+       else {
+           return $this->redirect()->toRoute('login');
+       }
+    
+       
     }
     
     

@@ -14,6 +14,7 @@ namespace Authentication;
 return array(
     
     'controllers' => array(
+        
         'invokables' => array(
             'Authentication\Controller\Auth' => 
                 'Authentication\Controller\AuthController',
@@ -97,7 +98,10 @@ return array(
     
     'service_manager' => array(
         'factories' => array(
-            'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
+            'AuthForm'   => 
+                'Authentication\Services\AuthFormFactory',
+            'translator'        => 
+                'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
     
@@ -107,9 +111,16 @@ return array(
                 'type'          => 'gettext',
                 'base_dir'      => __DIR__ . '/../language',
                 'pattern'       => '%s.mo',
-                'text_domain'   => 'Authentication',
+                'text_domain'   => 'Auth',
             ),
+             array( 
+                'type'        => 'phparray', 
+                'base_dir'    => __DIR__ . '/../resources/languages', 
+                'pattern'     => '%s.php',
+             
+             ), 
         ),
+        
     ),
     
     //Doctrine Authentication provided by DoctrineModule\Options\Authentication
@@ -133,7 +144,7 @@ return array(
         'authentication' => array(
             'orm_default' => array(
                 'object_manager' => 'Doctrine\ORM\EntityManager',
-                'identity_class' => 'Authentication\Entity\User',
+                'identity_class' => 'Authentication\Entity\Credential',
                 'identity_property' => 'username',
                 'credential_property' => 'password',
             ),

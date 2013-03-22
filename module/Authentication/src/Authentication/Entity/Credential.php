@@ -8,15 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="credentials")
- * @property int $_id
- * @property string $_username
- * @property string $_password
- * @property boolean $_active
- * @property boolean $_verified
- * @property DateTime   $_lastLogin
- * @property DateTime   $_firstLogin
  */
-class User
+class Credential
 {
   
   /**
@@ -28,8 +21,16 @@ class User
    * @var integer
    * @access protected
    */
-  protected $id;
+  protected $pid;
 
+  /**
+   * UserID - foreign key to table user 
+   *
+   * @ORM\Column(name="uid", type="integer")
+   * @var int
+   * @access protected
+   */
+  protected $uid;
   
   /**
    * UserName
@@ -48,6 +49,15 @@ class User
    * @access protected
    */
   protected $password;
+  
+  /**
+   * email
+   *
+   * @ORM\Column(name="email", type="string")
+   * @var string
+   * @access protected
+   */
+  protected $email;
   
   /**
    * verified
@@ -89,13 +99,13 @@ class User
   /**
    * Sets the Identifier
    *
-   * @param int $uid
+   * @param int $pid
    * @access public
    * @return User
    */
-  public function setId($uid)
+  public function setId($pid)
   {
-    $this->id = $uid;
+    $this->pid = $pid;
     return $this;
   }
 
@@ -107,7 +117,31 @@ class User
    */
   public function getId()
   {
-    return $this->id;
+    return $this->pid;
+  }
+  
+  /**
+   * Sets the UserID
+   *
+   * @param int $uid
+   * @access public
+   * @return Credential
+   */
+  public function setUid($uid)
+  {
+    $this->uid = $uid;
+    return $this;
+  }
+
+  /**
+   * Returns the UserID
+   *
+   * @access public
+   * @return int
+   */
+  public function getUid()
+  {
+    return $this->uid;
   }
 
 
@@ -157,6 +191,30 @@ class User
   public function getPassword()
   {
     return $this->password;
+  }
+  
+  /**
+   * Sets the email
+   *
+   * @param string $email
+   * @access public
+   * @return Credential
+   */
+  public function setEmail($email)
+  {
+    $this->email = $email;
+    return $this;
+  }
+
+  /**
+   * Returns the email
+   *
+   * @access public
+   * @return string
+   */
+  public function getEmail()
+  {
+    return $this->email;
   }
   
   /**

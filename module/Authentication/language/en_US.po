@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-08 00:54+0100\n"
-"PO-Revision-Date: 2012-12-08 00:54+0100\n"
-"Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
+"POT-Creation-Date: 2013-03-22 12:26+0100\n"
+"PO-Revision-Date: 2013-03-22 12:26+0100\n"
+"Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
@@ -15,95 +15,20 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../view/error/404.phtml:1
-msgid "A 404 error occurred"
+#: ../src/Authentication/Form/MyAuthForm.php:64
+msgid "Username:"
 msgstr ""
 
-#: ../view/error/404.phtml:10
-msgid "The requested controller was unable to dispatch the request."
+#: ../src/Authentication/Form/MyAuthForm.php:75
+msgid "Password:"
 msgstr ""
 
-#: ../view/error/404.phtml:13
-msgid ""
-"The requested controller could not be mapped to an existing controller class."
+#: ../src/Authentication/Form/MyAuthForm.php:87
+msgid "Remember Me ?:"
 msgstr ""
 
-#: ../view/error/404.phtml:16
-msgid "The requested controller was not dispatchable."
-msgstr ""
-
-#: ../view/error/404.phtml:19
-msgid "The requested URL could not be matched by routing."
-msgstr ""
-
-#: ../view/error/404.phtml:22
-msgid "We cannot determine at this time why a 404 was generated."
-msgstr ""
-
-#: ../view/error/404.phtml:34
-msgid "Controller"
-msgstr ""
-
-#: ../view/error/404.phtml:41
-#, php-format
-msgid "resolves to %s"
-msgstr ""
-
-#: ../view/error/404.phtml:51
-msgid "Exception"
-msgstr ""
-
-#: ../view/error/404.phtml:55 ../view/error/index.phtml:19
-#: ../view/error/index.phtml:43
-msgid "Stack trace"
-msgstr ""
-
-#: ../view/error/index.phtml:1
-msgid "An error occurred"
-msgstr ""
-
-#: ../view/error/index.phtml:8
-msgid "Additional information"
-msgstr ""
-
-#: ../view/error/index.phtml:11 ../view/error/index.phtml:35
-msgid "File"
-msgstr ""
-
-#: ../view/error/index.phtml:15 ../view/error/index.phtml:39
-msgid "Message"
-msgstr ""
-
-#: ../view/error/index.phtml:29
-msgid "Previous exceptions"
-msgstr ""
-
-#: ../view/error/index.phtml:58
-msgid "No Exception available"
-msgstr ""
-
-#: ../view/layout/layout.phtml:29
-msgid "Berliner Baduk Club e.V."
-msgstr ""
-
-#: ../view/layout/layout.phtml:32
-msgid "Home"
-msgstr ""
-
-#: ../view/layout/layout.phtml:33
-msgid "Training"
-msgstr ""
-
-#: ../view/layout/layout.phtml:34
-msgid "Imprint"
-msgstr ""
-
-#: ../view/layout/layout.phtml:35
-msgid "Contact"
-msgstr ""
-
-#: ../view/layout/layout.phtml:45
-msgid "All rights reserved."
+#: ../src/Authentication/Form/MyAuthForm.php:112
+msgid "Submit"
 msgstr ""
 
 #~ msgid "Skeleton Application"

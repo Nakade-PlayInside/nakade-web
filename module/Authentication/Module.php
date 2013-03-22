@@ -3,7 +3,7 @@
 namespace Authentication;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Authentication\Helper\AuthServiceFactory;
+use Authentication\Services\AuthServiceFactory;
 
 /**
  * User module for collecting contact data and the application's ACL.
@@ -55,6 +55,14 @@ class Module implements AutoloaderProviderInterface
                        $auth = new AuthServiceFactory($serviceManager);
                        return $auth->createService();
            	    },
+                            
+                'AuthForm' => 
+                    function($serviceManager) {
+           
+                       return new Services\AuthFormFactory(); 
+                       
+           	    },
+                            
                 
             ),
         );

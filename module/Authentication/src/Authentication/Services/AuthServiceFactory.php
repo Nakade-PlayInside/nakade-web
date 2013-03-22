@@ -1,15 +1,15 @@
 <?php
-//module/Authentication/src/Authentication/Helper/AuthServiceFactory.php
-namespace Authentication\Helper;
+//module/Authentication/src/Authentication/Services/AuthServiceFactory.php
+namespace Authentication\Services;
 
-use Authentication\Helper\AuthAdapter;
-use Authentication\Helper\AuthStorage;
+use Authentication\Services\AuthAdapter;
+use Authentication\Services\AuthStorage;
 use Zend\Authentication\AuthenticationService;
 use DoctrineModule\Options\Authentication as AuthOptions;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Factory for creating the Zend Authentication Service. Using customized
+ * Adapter and Storage instances. 
  */
 class AuthServiceFactory  {
    
@@ -23,10 +23,10 @@ class AuthServiceFactory  {
      * 
      * @param array $sm serviceManager
      */
-    public function __construct($sm) {
+    public function __construct($servMan) {
         
-        $this->_entityManager = $sm->get('Doctrine\ORM\EntityManager');
-        $this->setOptions($sm->get('config'));
+        $this->_entityManager = $servMan->get('Doctrine\ORM\EntityManager');
+        $this->setOptions($servMan->get('config'));
         
     }
     

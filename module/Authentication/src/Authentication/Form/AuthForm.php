@@ -1,14 +1,14 @@
 <?php
-//module/Authentication/src/Authentication/Model/User.php
-namespace Authentication\Model;
+//module/Authentication/src/Authentication/Model/AuthForm.php
+namespace Authentication\Form;
 
 use Zend\Form\Annotation;
 
 /**
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
- * @Annotation\Name("User")
+ * @Annotation\Name("AuthForm")
  */
-class User
+class AuthForm
 {
     /**
      * @Annotation\Type("Zend\Form\Element\Text")

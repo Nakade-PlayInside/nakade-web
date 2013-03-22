@@ -1,5 +1,6 @@
 <?php
-namespace Authentication\Helper;
+//module/Authentication/src/Authentication/Services/AuthAdapter.php
+namespace Authentication\Services;
 
 use DoctrineModule\Authentication\Adapter\ObjectRepository;
 use Zend\Authentication\Adapter\Exception;
