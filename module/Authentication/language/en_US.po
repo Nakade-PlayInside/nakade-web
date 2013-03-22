@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-22 12:26+0100\n"
-"PO-Revision-Date: 2013-03-22 12:26+0100\n"
+"POT-Creation-Date: 2013-03-22 13:36+0100\n"
+"PO-Revision-Date: 2013-03-22 13:36+0100\n"
 "Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -15,19 +15,23 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Authentication/Form/MyAuthForm.php:64
+#: ../src/Authentication/Form/AuthForm.php:72
 msgid "Username:"
 msgstr ""
 
-#: ../src/Authentication/Form/MyAuthForm.php:75
+#: ../src/Authentication/Form/AuthForm.php:83
 msgid "Password:"
 msgstr ""
 
-#: ../src/Authentication/Form/MyAuthForm.php:87
+#: ../src/Authentication/Form/AuthForm.php:95
 msgid "Remember Me ?:"
 msgstr ""
 
-#: ../src/Authentication/Form/MyAuthForm.php:112
+#: ../src/Authentication/Form/AuthForm.php:104
+msgid "Please verify you are human."
+msgstr ""
+
+#: ../src/Authentication/Form/AuthForm.php:117
 msgid "Submit"
 msgstr ""
 

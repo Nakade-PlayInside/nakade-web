@@ -2,9 +2,6 @@
 //module/SanAuth/view/san-auth/auth/login.phtml
 $this->plugin('translate')->setTranslatorTextDomain('Auth'); 
 
-echo $this->translate("Feel free to contact us.");
-
-
 $form = $this->form;
 $form->setAttribute('action', $this->url(
     'login/process',

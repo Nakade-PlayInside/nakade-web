@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-22 11:37+0100\n"
-"PO-Revision-Date: 2013-03-22 11:43+0100\n"
+"POT-Creation-Date: 2013-03-22 13:35+0100\n"
+"PO-Revision-Date: 2013-03-22 13:36+0100\n"
 "Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -15,21 +15,28 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Authentication/Form/MyAuthForm.php:67
+#: ../src/Authentication/Form/AuthForm.php:72
 msgid "Username:"
 msgstr "Benutzername:"
 
-#: ../src/Authentication/Form/MyAuthForm.php:78
+#: ../src/Authentication/Form/AuthForm.php:83
 msgid "Password:"
 msgstr "Passwort:"
 
-#: ../src/Authentication/Form/MyAuthForm.php:90
+#: ../src/Authentication/Form/AuthForm.php:95
 msgid "Remember Me ?:"
 msgstr "eingeloggt bleiben?:"
 
-#: ../src/Authentication/Form/MyAuthForm.php:115
+#: ../src/Authentication/Form/AuthForm.php:104
+msgid "Please verify you are human."
+msgstr "Bitte löse das Captcha."
+
+#: ../src/Authentication/Form/AuthForm.php:117
 msgid "Submit"
 msgstr "Abschicken"
+
+#~ msgid "Feel free to contact us."
+#~ msgstr "Abschicken"
 
 #~ msgid "A 404 error occurred"
 #~ msgstr "Es trat ein 404 Fehler auf"

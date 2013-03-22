@@ -98,6 +98,8 @@ return array(
     
     'service_manager' => array(
         'factories' => array(
+            'AuthCaptcha'       => 
+                'Authentication\Services\AuthCaptchaFactory',
             'AuthForm'   => 
                 'Authentication\Services\AuthFormFactory',
             'translator'        => 

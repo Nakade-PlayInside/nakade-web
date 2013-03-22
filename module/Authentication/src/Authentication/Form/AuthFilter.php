@@ -2,7 +2,6 @@
 namespace Authentication\Form;
 
 use Zend\InputFilter\InputFilter;
-use Zend\Validator\Hostname as HostnameValidator;
 
 class AuthFilter extends InputFilter
 {
@@ -10,45 +9,25 @@ class AuthFilter extends InputFilter
     {
         $this->add(
             array(
-                'name'       => 'from',
+                'name'       => 'identity',
                 'required'   => true,
-                'validators' => array(
-                array(
-                    'name'    => 'EmailAddress',
-                    'options' => array(
-                        'allow'  => HostnameValidator::ALLOW_DNS,
-                        'domain' => true,
-                        ),
-                    ),
+                'filters'    => array(
+                    array('name'    => 'StripTags'),
+                ),    
+            )    
+        );
+
+        $this->add(
+            array(
+                'name'       => 'password',
+                'required'   => true,
+                'filters'    => array(
+                    array('name'    => 'StripTags'),
                 ),
+            
             )
         );
 
-        $this->add(
-            array(
-                   'name'       => 'subject',
-                   'required'   => true,
-                   'filters'    => array(
-                   array('name'    => 'StripTags',),
-            ),
-            'validators' => array(
-                array(
-                    'name'    => 'StringLength',
-                    'options' => array(
-                        'encoding' => 'UTF-8',
-                        'min'      => 2,
-                        'max'      => 140,
-                    ),
-                ),
-            ),
-          )
-        );
-
-        $this->add(
-            array(
-                   'name'       => 'body',
-                   'required'   => true,
-                 )
-        );
+       
     }
 }
