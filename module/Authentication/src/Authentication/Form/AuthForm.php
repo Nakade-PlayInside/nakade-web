@@ -6,63 +6,79 @@ use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\I18n\Translator\Translator;
 use Zend\InputFilter\InputFilter;
-use Zend\Captcha\ReCaptcha;
 
+/**
+ * Authentication form with ReCaptcha, translation option and
+ * csrf token.  
+ */
 class AuthForm extends Form
 {
     protected $_captchaAdapter;
     protected $_csrfToken;
     protected $_translator;
-    protected $_textDomain="Auth";
+    protected $_textDomain="default";
     protected $_filter=null;
    
+    /**
+     * Expecting an CaptchaAdapter and optional Translator and 
+     * corresponding text domain. 
+     * 
+     * @param \Zend\Captcha\AdapterInterface $captchaAdapter
+     * @param \Zend\I18n\Translator\Translator $translator
+     * @param type $textDomain
+     */
     public function __construct(
-            CaptchaAdapter $captchaAdapter = null, 
-            Translator $translator = null)
+            CaptchaAdapter $captchaAdapter, 
+            Translator $translator = null,
+            $textDomain = null
+            ) 
     {
+        
+        //form name is AuthForm
         parent::__construct($name='AuthForm');
-
-        if (null !== $captchaAdapter) {
-            $this->_captchaAdapter = $captchaAdapter;
-        }
+        $this->_captchaAdapter = $captchaAdapter;
+        
         
         if (null !== $translator) {
             $this->_translator = $translator;
         }
         
+        if (null !== $textDomain) {
+            $this->_textDomain = $textDomain;
+        }
+        
         $this->init();
     }
 
-    public function setFilter(InputFilter $filter) {
-        
+    /**
+     * Setter for filtering the form input
+     * @param \Zend\InputFilter\InputFilter $filter
+     */
+    public function setFilter(InputFilter $filter) 
+    {
         $this->_filter = $filter;
-        
     }
     
     
     private function translate($message, $locale = null)
     {
-       
         if (null === $this->_translator) {
            return $message;
         }
-       
         
         return $this->_translator->translate(
                 $message, 
                 $this->_textDomain, 
                 $locale
                 );
-    
     }
    
+    /**
+     * initializing the form. this method called by the constructor 
+     */
     public function init()
     {
-        $name = $this->getName();
-        if (null === $name) {
-            $this->setName('AuthForm');
-        }
-        
+               
         //identity
         $this->add(
             array(
@@ -101,11 +117,12 @@ class AuthForm extends Form
         $captcha = new Element\Captcha('captcha');
         $captcha->setCaptcha($this->_captchaAdapter);
         $captcha->setOptions(
-            array('label' => $this->translate('Please verify you are human.')
-            )
+            array('label' => $this->translate('Please verify you are human.'))
         );
-        $this->add($captcha);
-       
+      //  $this->add($captcha);
+        
+        
+        //cross-site scripting hash protection
         $this->add(new Element\Csrf('csrf'));
        
         //submit button
@@ -116,8 +133,8 @@ class AuthForm extends Form
                 'attributes' => array(
                     'value' =>   $this->translate('Submit'),
 
-            ),
-        )
+                ),
+            )
         );
     }
 }

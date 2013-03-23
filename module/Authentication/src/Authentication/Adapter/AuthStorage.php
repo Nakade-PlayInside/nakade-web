@@ -1,13 +1,13 @@
 <?php
-
-//module/Authentication/src/Authentication/Services/AuthStorage.php
-namespace Authentication\Services;
+//module/Authentication/src/Authentication/Adapter/AuthStorage.php
+namespace Authentication\Adapter;
 
 use Zend\Authentication\Storage;
 
 /**
  * Handling the session lifetime. By default session lifetime is set to 14 days.
- * 
+ * This storage is based on the Login Example by Abdul Malik Iksan.  
+ * Fur further information see his blog https://samsonasik.wordpress.com/
  * 
  */
 class AuthStorage extends Storage\Session

@@ -2,47 +2,49 @@
 //module/Authentication/src/Authentication/Services/AuthServiceFactory.php
 namespace Authentication\Services;
 
-use Authentication\Services\AuthAdapter;
-use Authentication\Services\AuthStorage;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Stdlib\ArrayUtils;
+use RuntimeException;
+
+use Authentication\Adapter\AuthAdapter;
+use Authentication\Adapter\AuthStorage;
 use Zend\Authentication\AuthenticationService;
 use DoctrineModule\Options\Authentication as AuthOptions;
 
-/*
+/**
  * Factory for creating the Zend Authentication Service. Using customized
  * Adapter and Storage instances. 
+ * 
+ * @author Dr. Holger Maerz <grrompf@gmail.com>
  */
-class AuthServiceFactory  {
+class AuthServiceFactory implements FactoryInterface {
    
     
-    protected $_entityManager;
-    protected $_options;
-
     /**
-     * The constructor is setting the options from the service manager
-     * configuration and the Doctrine Entity Manager.
+     * Creating Zend Authentication Service for logIn and logOut action.
+     * Making use of customized adapters for more action as by default.
+     * Integration of optional translation feature (i18N)
      * 
-     * @param array $sm serviceManager
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
+     * @return \Zend\Authentication\AuthenticationService
+     * @throws RuntimeException
+     * 
      */
-    public function __construct($servMan) {
+    public function createService(ServiceLocatorInterface $services)
+    {
+      
+        $config  = $services->get('config');
+        if ($config instanceof Traversable) {
+            $config = ArrayUtils::iteratorToArray($config);
+        }
         
-        $this->_entityManager = $servMan->get('Doctrine\ORM\EntityManager');
-        $this->setOptions($servMan->get('config'));
+        //EntityManager for database access by doctrine
+        $EntityManager = $services->get('Doctrine\ORM\EntityManager');
         
-    }
-    
-    /**
-     * Sets options from configuration based on given keys "doctrine", 
-     * "authentication" and "orm_default".
-     * This configuration has to exist in the module.config file
-     *
-     * @param  array                        $config
-     * @throws \RuntimeException
-     */
-    protected function setOptions($config){
-        
+        //configuration options as set in module.config
         $key  = 'authentication';
         $name = 'orm_default';
-        
         $options = isset($config['doctrine'][$key][$name]) ? 
             $config['doctrine'][$key][$name] : null;
 
@@ -54,46 +56,26 @@ class AuthServiceFactory  {
             ));
         }
         
-        $this->_options=$options;
-    }
-    
-    /**
-     * returns an instance of the zend authenticaion service. This service is
-     * setup with doctrine adapters.
-     * 
-     * @return \Zend\Authentication\AuthenticationService
-     */
-    public function createService()
-    {
-        $options = $this->getOptions();
-       
-        $adapter = new AuthAdapter($options);
-        $storage = new AuthStorage($options);
+        //auth Options instance and setting the entityManager
+        $AuthOptions = new AuthOptions($options);
+        $AuthOptions->setObjectManager($EntityManager);
         
+        //optional translator
+        $translator = $services->get('translator');
+        
+         //get text domain from module config
+        $textDomain = $config['NakadeAuth']['text_domain'];
+        
+        //creating authentication and storage adapter
+        $adapter = new AuthAdapter($AuthOptions,$translator, $textDomain);
+        $storage = new AuthStorage($AuthOptions);
+        
+        //Zend Authentication Service
         return new AuthenticationService($storage,$adapter );
+        
     }
     
     
-    /**
-     * Gets options from configuration creating an Doctrine
-     * options object.
-     *
-     * @return \Zend\Stdlib\AbstractOptions
-     */
-    protected function getOptions()
-    {
-        
-        $options = new AuthOptions($this->_options);
-        
-        //usually the object manager option is a string from the configuration
-        if (is_string($options->getObjectManager())) {
-           
-            $options->setObjectManager($this->_entityManager);
-        }
-        
-        return $options;
-       
-    }
     
     
 }

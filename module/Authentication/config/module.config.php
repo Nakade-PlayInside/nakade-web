@@ -13,13 +13,23 @@ namespace Authentication;
 
 return array(
     
+    'NakadeAuth' => array(
+        
+        'text_domain'   => 'Auth',
+        'captcha' => array(
+            'class'   => 'dump',
+        )    
+    ),
+    
     'controllers' => array(
+        'factories' => array(
+            'Authentication\Controller\Auth' => 
+                    'Authentication\Services\AuthControllerFactory',
+        ),
         
         'invokables' => array(
-            'Authentication\Controller\Auth' => 
-                'Authentication\Controller\AuthController',
             'Authentication\Controller\Success' => 
-                'Authentication\Controller\SuccessController'
+                'Authentication\Controller\SuccessController',
             ),
         ),
     //The name of the route is ‘login’ and has a type of ‘literal’. The literal 
@@ -57,6 +67,7 @@ return array(
                 ),
             ),
             
+            
             'success' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -89,15 +100,22 @@ return array(
     
     
     'view_manager' => array(
-        //@todo: view doctype, ect ... s. Application
+        'display_not_found_reason' => true,
+        'display_exceptions'       => true,
+        'doctype'                  => 'HTML5',
                 
-        'template_path_stack' => array(
-           'Authentication' => __DIR__ . '/../view',
+        'template_path_stack'   => array(
+            __DIR__ . '/../view',
         ),
+        
     ),
     
     'service_manager' => array(
         'factories' => array(
+            
+            //neccessary for using authentication in ViewHelper and Controller
+            'Zend\Authentication\AuthenticationService'       => 
+                'Authentication\Services\AuthServiceFactory',
             'AuthCaptcha'       => 
                 'Authentication\Services\AuthCaptchaFactory',
             'AuthForm'   => 

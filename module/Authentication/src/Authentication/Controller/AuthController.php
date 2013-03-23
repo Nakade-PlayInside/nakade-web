@@ -3,70 +3,56 @@
 namespace Authentication\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\View\Model\ViewModel;
 
 use Authentication\Form\AuthForm;
+use Zend\Authentication\AuthenticationService;
 
 /**
  * Authentication controller for login of registered users.
- * Controller is using Doctrine and the Zend Annotation builder
- * for the form. 
+ * Controller is using Doctrine for data base access and customized
+ * authentication.
  */
 class AuthController extends AbstractActionController
 {
-    protected $form;
-    protected $authservice;
-   
+    protected $_form;
+    protected $_authservice;
    
     /**
-     * As configured in Module.php the authService returns the authentication
-     * adapter from doctrine. Using the specific Zend name of the service 
-     * is supported and recognized by ZF2 View helper 
+     * constructor initializes a form and the authentication service
+     * 
+     * @param \Zend\Authentication\AuthenticationService $service
+     * @param \Authentication\Form\AuthForm $form
+     */
+    public function __construct(
+            AuthenticationService $service,
+            AuthForm $form
+            ) 
+    {
+        
+        $this->_authservice = $service;
+        $this->_form = $form;
+        
+    }
+   
+    /**
+     * gets the authentication service. 
      * 
      * @return AuthenticationService
      */
     public function getAuthService()
     {
-        if (! $this->authservice) {
-            $this->authservice = 
-                    
-                     $authAdapter = $this->getServiceLocator()
-                     ->get('Zend\Authentication\AuthenticationService');
-        }
-        
-        return $this->authservice;
+        return $this->_authservice;
     }
     
     /**
-     * As configured in Module.php the authService returns the authentication
-     * adapter from doctrine. Using the specific Zend name of the service 
-     * is supported and recognized by ZF2 View helper 
-     * 
-     * @return AuthenticationService
-     */
-    public function getFormService()
-    {
-        
-       return $this->getServiceLocator()
-                     ->get('AuthForm');
-        
-    }
-    
-    /**
-     * Using the annotation builder, a form is created from a model.
+     * get the authentication form 
      * 
      * @return \Zend\Form\Form
      */
     public function getForm()
     {
-       
-        if (! $this->form) {
-            $this->form =                     
-                $this->getServiceLocator()->get('AuthForm');
-        }
-        
-        return $this->form;
+        return $this->_form;
     }
     
     

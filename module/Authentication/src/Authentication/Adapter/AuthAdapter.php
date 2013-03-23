@@ -1,10 +1,11 @@
 <?php
-//module/Authentication/src/Authentication/Services/AuthAdapter.php
-namespace Authentication\Services;
+//module/Authentication/src/Authentication/Adapter/AuthAdapter.php
+namespace Authentication\Adapter;
 
 use DoctrineModule\Authentication\Adapter\ObjectRepository;
 use Zend\Authentication\Adapter\Exception;
 use Zend\Authentication\Result as AuthenticationResult;
+use Zend\I18n\Translator\Translator;
 
 /**
  * Doctrine authentication with md5 encryption, checking verified and active
@@ -13,6 +14,41 @@ use Zend\Authentication\Result as AuthenticationResult;
  * @author Dr. Holger Maerz
  */
 class AuthAdapter extends ObjectRepository {
+    
+    protected $_translator;
+    protected $_textDomain="Auth";
+    
+    
+    public function __construct(
+            $options = array(),
+            Translator $translator=null,
+            $textDomain=null
+            ) 
+    {
+        
+        parent::__construct($options);
+        
+        if($translator!=null) {
+            $this->_translator=$translator;
+        }
+        
+        if($textDomain!=null) {
+            $this->_textDomain=$textDomain;
+        }
+    }
+    
+    private function translate($message, $locale = null)
+    {
+        if (null === $this->_translator) {
+           return $message;
+        }
+        
+        return $this->_translator->translate(
+                $message, 
+                $this->_textDomain, 
+                $locale
+                );
+    }
     
     /**
      * Set the credential value to be used.
@@ -50,7 +86,8 @@ class AuthAdapter extends ObjectRepository {
             $documentCredential = $identity->{$credentialProperty};
         } else {
             throw new Exception\UnexpectedValueException(sprintf(
-                'Property (%s) in (%s) is not accessible. You should implement %s::%s()',
+                'Property (%s) in (%s) is not accessible. 
+                You should implement %s::%s()',
                 $credentialProperty,
                 get_class($identity),
                 get_class($identity),
@@ -65,9 +102,12 @@ class AuthAdapter extends ObjectRepository {
             $credentialValue = call_user_func($callable, $identity, $credentialValue);
         }
 
-        if ($credentialValue !== true && $credentialValue != $documentCredential) {
-            $this->authenticationResultInfo['code'] = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
-            $this->authenticationResultInfo['messages'][] = 'Supplied credential is invalid.';
+        if ($credentialValue !== true && 
+                $credentialValue != $documentCredential) {
+            $this->authenticationResultInfo['code'] = 
+                AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
+            $this->authenticationResultInfo['messages'][] = 
+                $this->translate('Supplied credential is invalid.');
 
             return $this->createAuthenticationResult();
         }
@@ -78,8 +118,8 @@ class AuthAdapter extends ObjectRepository {
             $this->authenticationResultInfo['code'] = 
                     AuthenticationResult::FAILURE_UNCATEGORIZED ;
             $this->authenticationResultInfo['messages'][] = 
-                    'Account is not verified. '.
-                    'Please check your email.';
+                $this->translate('Account is not verified. '.
+                    'Please check your email.');
             
             return $this->createAuthenticationResult();
         }
@@ -90,8 +130,8 @@ class AuthAdapter extends ObjectRepository {
             $this->authenticationResultInfo['code'] = 
                     AuthenticationResult::FAILURE_UNCATEGORIZED ;
             $this->authenticationResultInfo['messages'][] = 
-                     "Account is not active. " .
-                     "Please refer an administrator.";
+                $this->translate("Account is not active. " .
+                     "Please refer an administrator.");
             
             return $this->createAuthenticationResult();
         }
@@ -109,9 +149,12 @@ class AuthAdapter extends ObjectRepository {
         $entityManager->flush($identity);
         
         
-        $this->authenticationResultInfo['code']       = AuthenticationResult::SUCCESS;
-        $this->authenticationResultInfo['identity']   = $identity;
-        $this->authenticationResultInfo['messages'][] = 'Authentication successful.';
+        $this->authenticationResultInfo['code']       = 
+                AuthenticationResult::SUCCESS;
+        $this->authenticationResultInfo['identity']   = 
+                $identity;
+        $this->authenticationResultInfo['messages'][] = 
+                $this->translate('Authentication successful.');
 
         return $this->createAuthenticationResult();
     }

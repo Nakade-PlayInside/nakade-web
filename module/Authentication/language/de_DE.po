@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-22 13:35+0100\n"
-"PO-Revision-Date: 2013-03-22 13:36+0100\n"
+"POT-Creation-Date: 2013-03-23 15:29+0100\n"
+"PO-Revision-Date: 2013-03-23 15:30+0100\n"
 "Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -15,23 +15,39 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Authentication/Form/AuthForm.php:72
+#: ../src/Authentication/Adapter/AuthAdapter.php:110
+msgid "Supplied credential is invalid."
+msgstr "Zugangsdaten sind ungültig."
+
+#: ../src/Authentication/Adapter/AuthAdapter.php:121
+msgid "Account is not verified. Please check your email."
+msgstr "Dein Account ist noch nicht verifiziert. Bitte überprüfe deine emails. "
+
+#: ../src/Authentication/Adapter/AuthAdapter.php:133
+msgid "Account is not active. Please refer an administrator."
+msgstr "Der Account wurde deaktiviert. Bitte kontaktiere einen Administrator."
+
+#: ../src/Authentication/Adapter/AuthAdapter.php:157
+msgid "Authentication successful."
+msgstr "Anmeldung erfolgreich."
+
+#: ../src/Authentication/Form/AuthForm.php:88
 msgid "Username:"
 msgstr "Benutzername:"
 
-#: ../src/Authentication/Form/AuthForm.php:83
+#: ../src/Authentication/Form/AuthForm.php:99
 msgid "Password:"
 msgstr "Passwort:"
 
-#: ../src/Authentication/Form/AuthForm.php:95
+#: ../src/Authentication/Form/AuthForm.php:111
 msgid "Remember Me ?:"
 msgstr "eingeloggt bleiben?:"
 
-#: ../src/Authentication/Form/AuthForm.php:104
+#: ../src/Authentication/Form/AuthForm.php:120
 msgid "Please verify you are human."
 msgstr "Bitte löse das Captcha."
 
-#: ../src/Authentication/Form/AuthForm.php:117
+#: ../src/Authentication/Form/AuthForm.php:134
 msgid "Submit"
 msgstr "Abschicken"
 

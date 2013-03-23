@@ -3,6 +3,9 @@ namespace Authentication\Form;
 
 use Zend\InputFilter\InputFilter;
 
+/**
+ * Filter for the form.
+ */
 class AuthFilter extends InputFilter
 {
     public function __construct()
