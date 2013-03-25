@@ -14,7 +14,6 @@ namespace Authentication;
 return array(
     
     'NakadeAuth' => array(
-        
         'text_domain'   => 'Auth',
         'captcha' => array(
             'class'   => 'dump',

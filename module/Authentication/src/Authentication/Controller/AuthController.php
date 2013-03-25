@@ -70,8 +70,11 @@ class AuthController extends AbstractActionController
         if ($this->getAuthService()->hasIdentity()){
             return $this->redirect()->toRoute('success');
         }
-                
-        
+       
+       //toggles captcha
+       $this->_form->setShowCaptcha(false);
+       $this->_form->init();
+    
        return new ViewModel( 
                
            array(
@@ -94,6 +97,7 @@ class AuthController extends AbstractActionController
     {
        
         $form       = $this->getForm();
+       
         $request = $this->getRequest();
         
         //proving if method is post

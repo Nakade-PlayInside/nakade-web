@@ -15,7 +15,7 @@ return array(
         //your text domain for translation
         'text_domain' => 'Auth',
         
-        //google ReCaptcha data
+        //example google ReCaptcha data
         'captcha' => array(
             'class'   => 'recaptcha',
             'options' => array(

@@ -18,7 +18,8 @@ class AuthForm extends Form
     protected $_translator;
     protected $_textDomain="default";
     protected $_filter=null;
-   
+    protected $_isCaptchaShowing = false;
+    
     /**
      * Expecting an CaptchaAdapter and optional Translator and 
      * corresponding text domain. 
@@ -47,7 +48,7 @@ class AuthForm extends Form
             $this->_textDomain = $textDomain;
         }
         
-        $this->init();
+      //  $this->init();
     }
 
     /**
@@ -59,6 +60,14 @@ class AuthForm extends Form
         $this->_filter = $filter;
     }
     
+    /**
+     * Setter for filtering the form input
+     * @param \Zend\InputFilter\InputFilter $filter
+     */
+    public function setShowCaptcha($show) 
+    {
+        $this->_isCaptchaShowing = $show;
+    }
     
     private function translate($message, $locale = null)
     {
@@ -74,7 +83,8 @@ class AuthForm extends Form
     }
    
     /**
-     * initializing the form. this method called by the constructor 
+     * Initializing the form. Call this method for receiving the formular.
+     * This enables toggling the Captcha 
      */
     public function init()
     {
@@ -119,11 +129,26 @@ class AuthForm extends Form
         $captcha->setOptions(
             array('label' => $this->translate('Please verify you are human.'))
         );
-      //  $this->add($captcha);
+        
+        //showing captcha
+        if($this->_isCaptchaShowing) {
+         
+            $this->add($captcha);
+        }   
         
         
         //cross-site scripting hash protection
-        $this->add(new Element\Csrf('csrf'));
+        $this->add(
+            array(
+                'name' => 'csrf',
+                'type'  => 'Zend\Form\Element\Csrf',
+                'options' => array(
+                    'csrf_options' => array(
+                        'timeout' => 600
+                    )
+                )
+            )    
+        );
        
         //submit button
         $this->add(
