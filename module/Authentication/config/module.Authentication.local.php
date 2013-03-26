@@ -15,32 +15,15 @@ return array(
         //your text domain for translation
         'text_domain' => 'Auth',
         
+        //show captcha after n failed attempts 
+        'max_auth_attempts' => 5,
+        
         //example google ReCaptcha data
         'captcha' => array(
             'class'   => 'recaptcha',
             'options' => array(
                 'pubkey'  => 'PUT YOUR PUBLIC KEY HERE',
                 'privkey' => 'PUT YOUR PRIVATE KEY HERE',
-            ),
-        ),
-
-        // Transport consists of two keys: 
-        // - "class", the mail tranport class to use, and
-        // - "options", any options to use to configure the 
-        //   tranpsort. Usually these will be passed to the 
-        //   transport-specific options class
-        // This example configures GMail as your SMTP server
-        'mail_transport' => array(
-            'class'   => 'Zend\Mail\Transport\Smtp',
-            'options' => array(
-                'host'             => 'smtp.gmail.com',
-                'port'             => 587,
-                'connectionClass'  => 'login',
-                'connectionConfig' => array(
-                    'ssl'      => 'tls',
-                    'username' => 'grrompf@gmail.com',
-                    'password' => 'holger27',
-                ),
             ),
         ),
     ),

@@ -7,6 +7,7 @@ use Zend\View\Model\ViewModel;
 
 use Authentication\Form\AuthForm;
 use Zend\Authentication\AuthenticationService;
+use Authentication\Session\FailureContainer;
 
 /**
  * Authentication controller for login of registered users.
@@ -17,6 +18,8 @@ class AuthController extends AbstractActionController
 {
     protected $_form;
     protected $_authservice;
+    protected $_session;
+    protected $_max_failed_attempts=5;
    
     /**
      * constructor initializes a form and the authentication service
@@ -26,12 +29,14 @@ class AuthController extends AbstractActionController
      */
     public function __construct(
             AuthenticationService $service,
-            AuthForm $form
+            AuthForm $form,
+            FailureContainer $container
             ) 
     {
         
         $this->_authservice = $service;
         $this->_form = $form;
+        $this->_session = $container;
         
     }
    
@@ -55,7 +60,18 @@ class AuthController extends AbstractActionController
         return $this->_form;
     }
     
+    /**
+     * sets the max authentication attempts 
+     * 
+     * @param int $attempts
+     */
+    public function setMaxAuthAttempts($attempts) 
+    {
     
+        if(is_numeric($attempts))
+           $this->_max_failed_attempts = $attempts;
+        
+    }
     
     /**
      * If not loggedIn this action method shows a login form.
@@ -67,14 +83,19 @@ class AuthController extends AbstractActionController
         
        
         //if already login, redirect to success page 
-        if ($this->getAuthService()->hasIdentity()){
-            return $this->redirect()->toRoute('success');
-        }
-       
-       //toggles captcha
-       $this->_form->setShowCaptcha(false);
-       $this->_form->init();
+       if ($this->getAuthService()->hasIdentity()){
+           return $this->redirect()->toRoute('success');
+       }
+      
+       $this->_session->addAuthFailure();  
     
+       //show captcha after n failed auth attempts
+       if($this->_session->getAuthFailure() > $this->_max_failed_attempts) {
+           $this->_form->setShowCaptcha(true);
+       }
+
+       $this->_form->init();
+       
        return new ViewModel( 
                
            array(
@@ -135,6 +156,9 @@ class AuthController extends AbstractActionController
                 }
                 //fraud protection
                 else {
+                    
+                    
+                  // $this->_test->write($this->_test->get()+1);  
                    /*@todo login attempts, IP, Datetime
                    * after some attempts captcha,
                    * further more deactivate account, set verified flag,

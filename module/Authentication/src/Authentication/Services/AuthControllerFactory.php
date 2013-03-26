@@ -3,6 +3,7 @@
 namespace Authentication\Services;
 
 use Authentication\Controller\AuthController;
+use Authentication\Session\FailureContainer;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -27,12 +28,23 @@ class AuthControllerFactory implements FactoryInterface
     {
       
         $serviceLocator = $services->getServiceLocator();
+        
+        $config  = $serviceLocator->get('config');
+        if ($config instanceof Traversable) {
+            $config = ArrayUtils::iteratorToArray($config);
+        }
+        
+        $maxAuthAttempts = isset($config['NakadeAuth']['max_auth_attempts']) ? 
+           $maxAuthAttempts['NakadeAuth']['max_auth_attempts][$name'] : null;
+
         $form           = $serviceLocator->get('AuthForm');
         $auth           = $serviceLocator->get(
                 'Zend\Authentication\AuthenticationService');
-
-        $controller = new AuthController($auth, $form);
-       
+        
+        $container      = new FailureContainer();
+        $controller = new AuthController($auth, $form, $container);
+        
+        $controller->setMaxAuthAttempts($maxAuthAttempts);
         
         return $controller;
     }
