@@ -28,7 +28,7 @@ class AuthFormFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $services)
     {
       
-        $config  = $services->get('config');
+        $config     = $services->get('config');
         if ($config instanceof Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
@@ -36,11 +36,14 @@ class AuthFormFactory implements FactoryInterface
         //get text domain from module config
         $textDomain = $config['NakadeAuth']['text_domain'];
         
-        $captcha = $services->get('AuthCaptcha');
+        $captcha    = $services->get('AuthCaptcha');
         $translator = $services->get('translator');
-        $form    = new AuthForm($captcha, $translator, $textDomain);
+        $filter     = new AuthFilter();
+        $form       = new AuthForm($textDomain);
         
-        $filter  = new AuthFilter();
+        $form->setCaptcha($captcha);
+        $form->setTranslator($translator);
+        $form->setTextDomain($textDomain);
         $form->setInputFilter($filter);
       
         return $form;

@@ -20,7 +20,7 @@ return array(
         
         //example google ReCaptcha data
         'captcha' => array(
-            'class'   => 'recaptcha',
+            'class'   => 'recaptcha', 
             'options' => array(
                 'pubkey'  => 'PUT YOUR PUBLIC KEY HERE',
                 'privkey' => 'PUT YOUR PRIVATE KEY HERE',

@@ -62,13 +62,15 @@ class AuthServiceFactory implements FactoryInterface {
         
         //optional translator
         $translator = $services->get('translator');
-        
-         //get text domain from module config
         $textDomain = $config['NakadeAuth']['text_domain'];
         
         //creating authentication and storage adapter
-        $adapter = new AuthAdapter($AuthOptions,$translator, $textDomain);
+        $adapter = new AuthAdapter($AuthOptions);
         $storage = new AuthStorage($AuthOptions);
+        
+        //set translator
+        $adapter->setTranslator($translator);
+        $adapter->setTextDomain($textDomain);
         
         //Zend Authentication Service
         return new AuthenticationService($storage,$adapter );

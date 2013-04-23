@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS `leaguePositions` (
   `L` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'losses',
   `J` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'jigo',
   `GS` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'games suspended',
-  `Tiebreaker_1` decimal(3,1) unsigned NOT NULL DEFAULT '0.0' COMMENT 'primary tiebreak condition',
-  `Tiebreaker_2` decimal(3,1) unsigned NOT NULL DEFAULT '0.0' COMMENT 'second tiebreak condition',
+  `Tiebreaker_1` decimal(4,1) unsigned NOT NULL DEFAULT '0.0' COMMENT 'primary tiebreak condition',
+  `Tiebreaker_2` decimal(4,1) unsigned NOT NULL DEFAULT '0.0' COMMENT 'second tiebreak condition',
   PRIMARY KEY (`id`),
   KEY `lid` (`lid`),
   KEY `uid` (`uid`)

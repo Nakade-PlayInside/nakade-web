@@ -27,14 +27,14 @@ class AuthCaptchaFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $services)
     {
-        $config  = $services->get('config');
+        $config     = $services->get('config');
         if ($config instanceof Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
         
-        $spec    = $config['NakadeAuth']['captcha'];
+        $spec       = $config['NakadeAuth']['captcha'];
         
-        $captcha = CaptchaFactory::factory($spec);
+        $captcha    = CaptchaFactory::factory($spec);
         
         return $captcha;
     }

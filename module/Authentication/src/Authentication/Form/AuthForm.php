@@ -6,6 +6,7 @@ use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\I18n\Translator\Translator;
 use Zend\InputFilter\InputFilter;
+use Zend\Captcha\Factory as CaptchaFactory;
 
 /**
  * Authentication form with ReCaptcha, translation option and
@@ -16,39 +17,18 @@ class AuthForm extends Form
     protected $_captchaAdapter;
     protected $_csrfToken;
     protected $_translator;
-    protected $_textDomain="default";
+    protected $_textDomain="Auth";
     protected $_filter=null;
     protected $_isCaptchaShowing = false;
     
     /**
-     * Expecting an CaptchaAdapter and optional Translator and 
-     * corresponding text domain. 
-     * 
-     * @param \Zend\Captcha\AdapterInterface $captchaAdapter
-     * @param \Zend\I18n\Translator\Translator $translator
-     * @param type $textDomain
+     * Constructor
      */
-    public function __construct(
-            CaptchaAdapter $captchaAdapter, 
-            Translator $translator = null,
-            $textDomain = null
-            ) 
+    public function __construct() 
     {
-        
         //form name is AuthForm
         parent::__construct($name='AuthForm');
-        $this->_captchaAdapter = $captchaAdapter;
-        
-        
-        if (null !== $translator) {
-            $this->_translator = $translator;
-        }
-        
-        if (null !== $textDomain) {
-            $this->_textDomain = $textDomain;
-        }
-        
-      //  $this->init();
+       
     }
 
     /**
@@ -61,6 +41,87 @@ class AuthForm extends Form
     }
     
     /**
+     * getter
+     * 
+     * @return \Zend\InputFilter\InputFilter $filter
+     */
+    public function getFilter() 
+    {
+        return $this->_filter;
+    }
+    
+    /**
+     * Setter for translator in form. Enables the usage of i18N.
+     * 
+     * @param \Zend\I18n\Translator\Translator $translator
+     */
+    public function setTranslator(Translator $translator)
+    {
+        $this->_translator = $translator;
+    }
+    
+    /**
+    * getter 
+    * 
+    * @return \Zend\I18n\Translator\Translator $translator
+    */
+    public function getTranslator()
+    {
+        return $this->_translator;
+    }
+    
+    /**
+     * Setter for text domain neccessary for translation.
+     * Default value is 'Auth'. 
+     * 
+     * @param string $textDomain
+     */
+    public function setTextDomain($textDomain)
+    {
+        if (null !== $textDomain) {
+            $this->_textDomain = $textDomain;
+        }
+    }
+    
+    /**
+    * getter 
+    * 
+    * @return string $textDomain
+    */
+    public function getTextDomain()
+    {
+        return $this->_textDomain;
+    }
+    
+    /**
+     * Setter for Captcha in form
+     * @param \Zend\Captcha\AdapterInterface $captchaAdapter
+     */
+    public function setCaptcha(CaptchaAdapter $captchaAdapter)
+    {
+        $this->_captchaAdapter = $captchaAdapter;
+    }
+    
+    /**
+     * getter for Captcha in form. If no captcha is set, a dumb captcha is
+     * set.
+     * 
+     * @return \Zend\Captcha\AdapterInterface $captchaAdapter
+     */
+    public function getCaptcha()
+    {
+        
+        if(!$this->_captchaAdapter) {
+            
+          $this->_captchaAdapter=CaptchaFactory::factory(
+              array('class' => 'dumb')
+          );
+        }
+        
+        return $this->_captchaAdapter;
+    }
+    
+    /**
      * Setter for filtering the form input
      * @param \Zend\InputFilter\InputFilter $filter
      */
@@ -69,7 +130,22 @@ class AuthForm extends Form
         $this->_isCaptchaShowing = $show;
     }
     
-    private function translate($message, $locale = null)
+    /**
+     * getter
+     * @return bool $_isCaptchaShowing
+     */
+    public function isCaptcha() 
+    {
+        return $this->_isCaptchaShowing;
+    }
+    
+    /**
+     * translator function. l18n
+     * 
+     * @param type $message
+     * @return string $message
+     */
+    public function translate($message)
     {
         if (null === $this->_translator) {
            return $message;
@@ -77,9 +153,8 @@ class AuthForm extends Form
         
         return $this->_translator->translate(
                 $message, 
-                $this->_textDomain, 
-                $locale
-                );
+                $this->_textDomain
+        );
     }
    
     /**
@@ -124,20 +199,23 @@ class AuthForm extends Form
         );
 
         //captcha
+        // DO NOT CHANGE THE NAME. IT IS IMPORTANT FOR TESTING 
         $captcha = new Element\Captcha('captcha');
-        $captcha->setCaptcha($this->_captchaAdapter);
+        $captcha->setCaptcha($this->getCaptcha());
         $captcha->setOptions(
             array('label' => $this->translate('Please verify you are human.'))
         );
         
         //showing captcha
-        if($this->_isCaptchaShowing) {
+        if($this->isCaptcha()) {
          
             $this->add($captcha);
         }   
         
         
         //cross-site scripting hash protection
+        //this is handled by ZF2 in the background - no need for server-side 
+        //validation 
         $this->add(
             array(
                 'name' => 'csrf',

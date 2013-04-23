@@ -3,7 +3,7 @@
 <phpunit bootstrap="bootstrap.php">
     <testsuites>
         <testsuite name="zf2tutorial">
-            <directory>./</directory>
+            <directory>.</directory>
         </testsuite>
     </testsuites>
 </phpunit>

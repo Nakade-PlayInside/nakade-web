@@ -5,9 +5,6 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 
 /**
  * Module for customized authentication.
- *  
- * @author Dr. Holger Maerz 
- * 
  */
 class Module implements AutoloaderProviderInterface
 {

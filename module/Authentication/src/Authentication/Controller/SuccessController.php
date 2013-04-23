@@ -12,15 +12,9 @@ class SuccessController extends AbstractActionController
 {
     public function indexAction()
     {
-       /** if (! $this->getServiceLocator()
-                 ->get('AuthService')->hasIdentity()){
-            return $this->redirect()->toRoute('login');
-        }**/
-        if($this->identity()){
-            $mes= "loggedIn";
-        }
-        else $mes="loggedOut";
-        
-        return new ViewModel( array('loggedIn' => $mes ));
+       return new ViewModel();
     }
+    
+    
+   
 }

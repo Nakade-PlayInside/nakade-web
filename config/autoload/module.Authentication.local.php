@@ -12,7 +12,7 @@ return array(
     
     'NakadeAuth' => array(
         'text_domain' => 'Auth',
-        'max_auth_attempts' => 15,
+        'max_auth_attempts' => 5,
         'captcha' => array(
         //google ReCaptcha data
         //global-key.spandaugo.de

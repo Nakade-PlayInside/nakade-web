@@ -19,25 +19,68 @@ class AuthAdapter extends ObjectRepository {
     protected $_textDomain="Auth";
     
     
-    public function __construct(
-            $options = array(),
-            Translator $translator=null,
-            $textDomain=null
-            ) 
+    public function __construct($options = array()) 
     {
         
         parent::__construct($options);
-        
-        if($translator!=null) {
-            $this->_translator=$translator;
-        }
-        
-        if($textDomain!=null) {
-            $this->_textDomain=$textDomain;
-        }
+       
     }
     
-    private function translate($message, $locale = null)
+    
+     /**
+     * Setter for translator in form. Enables the usage of i18N.
+     * 
+     * @param \Zend\I18n\Translator\Translator $translator
+     * @return ObjectRepository
+     */
+    public function setTranslator(Translator $translator)
+    {
+        $this->_translator = $translator;
+        return $this;
+    }
+    
+    /**
+    * getter 
+    * 
+    * @return \Zend\I18n\Translator\Translator $translator
+    */
+    public function getTranslator()
+    {
+        return $this->_translator;
+    }
+    
+    /**
+     * Setter for text domain neccessary for translation.
+     * Default value is 'Auth'. 
+     * 
+     * @param string $textDomain
+     * @return ObjectRepository
+     */
+    public function setTextDomain($textDomain)
+    {
+        if (null !== $textDomain) {
+            $this->_textDomain = $textDomain;
+        }
+        return $this;
+    }
+    
+    /**
+    * getter 
+    * 
+    * @return string $textDomain
+    */
+    public function getTextDomain()
+    {
+        return $this->_textDomain;
+    }
+    
+    /**
+     * l18n translation.
+     * 
+     * @param type $message
+     * @return string
+     */
+    public function translate($message)
     {
         if (null === $this->_translator) {
            return $message;
@@ -45,9 +88,8 @@ class AuthAdapter extends ObjectRepository {
         
         return $this->_translator->translate(
                 $message, 
-                $this->_textDomain, 
-                $locale
-                );
+                $this->_textDomain 
+        );
     }
     
     /**
@@ -65,9 +107,8 @@ class AuthAdapter extends ObjectRepository {
     
     
     /**
-     * This method attempts to validate that the record in the resultset 
-     * is indeed a record that matched the identity provided to this adapter.
-     * In addition, validation proves if the account is verified and active. 
+     * Overwritten method for validating the record in the resultset. 
+     * Additional action proves if the account is verified and active. 
      *
      * @param  object $identity
      * @throws Exception\UnexpectedValueException

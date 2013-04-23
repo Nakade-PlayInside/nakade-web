@@ -4,7 +4,6 @@ namespace Authentication\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-
 use Authentication\Form\AuthForm;
 use Zend\Authentication\AuthenticationService;
 use Authentication\Session\FailureContainer;
@@ -27,16 +26,15 @@ class AuthController extends AbstractActionController
      * @param \Zend\Authentication\AuthenticationService $service
      * @param \Authentication\Form\AuthForm $form
      */
+     
     public function __construct(
             AuthenticationService $service,
-            AuthForm $form,
-            FailureContainer $container
+            AuthForm $form
             ) 
     {
         
         $this->_authservice = $service;
         $this->_form = $form;
-        $this->_session = $container;
         
     }
    
@@ -61,6 +59,19 @@ class AuthController extends AbstractActionController
     }
     
     /**
+     * get session
+     * 
+     * @return \Authentication\Session\FailureContainer $container
+     */
+    public function getSession()
+    {
+        if (null === $this->_session) {
+            $this->_session = new FailureContainer();
+        }
+        return $this->_session;
+    }
+    
+    /**
      * sets the max authentication attempts 
      * 
      * @param int $attempts
@@ -74,9 +85,20 @@ class AuthController extends AbstractActionController
     }
     
     /**
+     * get the max authentication attempts 
+     * 
+     * @return int $_max_failed_attempts
+     */
+    public function getMaxAuthAttempts() 
+    {
+          return $this->_max_failed_attempts;
+        
+    }
+    
+    /**
      * If not loggedIn this action method shows a login form.
      * 
-     * @return array
+     * @return ViewModel
      */
     public function loginAction()
     {
@@ -87,14 +109,12 @@ class AuthController extends AbstractActionController
            return $this->redirect()->toRoute('success');
        }
       
-       $this->_session->addAuthFailure();  
-    
        //show captcha after n failed auth attempts
-       if($this->_session->getAuthFailure() > $this->_max_failed_attempts) {
-           $this->_form->setShowCaptcha(true);
+       if($this->getSession()->getAuthFailure() >= $this->_max_failed_attempts) {
+           $this->getForm()->setShowCaptcha(true);
        }
 
-       $this->_form->init();
+       $this->getForm()->init();
        
        return new ViewModel( 
                
@@ -111,14 +131,14 @@ class AuthController extends AbstractActionController
      * the authentication adapter is requested with the given credentials. If
      * sucessfull, the identity is stored in the session. If the flag is set,
      * session lifetime is elonged to 14d.
+     * CSFR Token is automatically validated on server-side by ZF2.
      * 
      * @return Response
      */
     public function authenticateAction()
     {
        
-        $form       = $this->getForm();
-       
+        $form    = $this->getForm();
         $request = $this->getRequest();
         
         //proving if method is post
@@ -152,17 +172,19 @@ class AuthController extends AbstractActionController
                 }
        
                 if ($authResult->isValid()) {
+                    
+                    $this->getSession()->clear();
                     return $this->redirect()->toRoute('success');
                 }
                 //fraud protection
                 else {
                     
                     
-                  // $this->_test->write($this->_test->get()+1);  
+                    $this->getSession()->addAuthFailure();   
+                  //   
                    /*@todo login attempts, IP, Datetime
-                   * after some attempts captcha,
-                   * further more deactivate account, set verified flag,
-                   * new verify mail 
+                   * deactivate account, set verified flag,
+                   * new verify mail, GEO IP  
                    * 
                    */
                 }

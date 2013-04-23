@@ -26,24 +26,24 @@ class AuthControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $services)
     {
-      
-        $serviceLocator = $services->getServiceLocator();
+     
+        $serviceManager = $services->getServiceLocator();
         
-        $config  = $serviceLocator->get('config');
+        $config  = $serviceManager->get('config');
         if ($config instanceof Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
         
         $maxAuthAttempts = isset($config['NakadeAuth']['max_auth_attempts']) ? 
-           $maxAuthAttempts['NakadeAuth']['max_auth_attempts][$name'] : null;
+              $config['NakadeAuth']['max_auth_attempts'] : 0;
 
-        $form           = $serviceLocator->get('AuthForm');
-        $auth           = $serviceLocator->get(
+        $form           = $serviceManager->get('AuthForm');
+        $auth           = $serviceManager->get(
                 'Zend\Authentication\AuthenticationService');
         
-        $container      = new FailureContainer();
-        $controller = new AuthController($auth, $form, $container);
+        $controller = new AuthController($auth, $form);
         
+        //set max auth attempts as configured before showing up captcha
         $controller->setMaxAuthAttempts($maxAuthAttempts);
         
         return $controller;

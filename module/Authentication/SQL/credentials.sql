@@ -44,22 +44,6 @@ CREATE TABLE IF NOT EXISTS `credentials` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
 
---
--- Daten für Tabelle `credentials`
---
-
-INSERT INTO `credentials` (`id`, `uid`, `username`, `password`, `email`, `created`, `verifyString`, `verified`, `active`, `firstLogin`, `lastLogin`) VALUES
-(1, 1, 'grrompf', '53de57d99acc289d4e5445a5b541068d', 'holger@nakade.de', '0000-00-00 00:00:00', 'qwertzuiopüasdfg', 1, 1, '2013-03-19 13:04:05', '2013-03-22 13:37:59');
-
---
--- Constraints der exportierten Tabellen
---
-
---
--- Constraints der Tabelle `credentials`
---
-ALTER TABLE `credentials`
-  ADD CONSTRAINT `credentials_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

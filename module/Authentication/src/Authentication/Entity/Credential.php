@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Credential
 {
   
+    
   /**
    * Primary Identifier
    * 
@@ -95,6 +96,20 @@ class Credential
    */
   protected $firstLogin;
   
+  /**
+   * Constructor with optional array of properties.
+   * Provide properties with key and value. Key is the 
+   * name of the property without underline.
+   * 
+   *  
+   * @param array $options
+   */
+  public function __construct(array $options = null)
+  {
+        if (is_array($options)) {
+            $this->setOptions($options);
+        }
+  }
 
   /**
    * Sets the Identifier
@@ -313,6 +328,59 @@ class Credential
   public function isVerified()
   {
     
-      return $this->verified==1? TRUE:FALSE;
+      return $this->verified;
   }
+  
+  /**
+   * Magical setter for convenience
+   * 
+   * @param type $name
+   * @param type $value
+   * @throws Exception
+   */
+  public function __set($name, $value)
+  {
+        $method = 'set' . $name;
+        if (!method_exists($this, $method)) {
+            throw new Exception('Invalid property');
+        }
+        $this->$method($value);
+  }
+ 
+  /**
+   * Magical getter for convenience
+   * 
+   * @param type $name
+   * @return type
+   * @throws Exception
+   */
+  public function __get($name)
+  {
+        $method = 'get' . $name;
+        if (!method_exists($this, $method)) {
+            throw new Exception('Invalid property');
+        }
+        return $this->$method();
+  }
+ 
+  /**
+   * Options may optionally passed on construction.
+   * Sets properties by using key and data of an array.
+   * 
+   * @param array $options
+   * @return \Authentication\Entity\Credential
+   */
+  public function setOptions(array $options)
+  {
+        $methods = get_class_methods($this);
+        foreach ($options as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (in_array($method, $methods)) {
+                $this->$method($value);
+            }
+        }
+        return $this;
+  }
+    
+  
 }
