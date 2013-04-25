@@ -17,7 +17,6 @@ class ImpressumController extends AbstractActionController
     
     public function indexAction()
     {
-        isGranted('PERMISSION_MANAGE_NEWS');
         return new ViewModel();
     }
 
