@@ -16,16 +16,7 @@ class FailureContainerTest extends PHPUnit_Framework_TestCase
         
     }        
 
-
-    public function testInitialState()
-    {
-
-         $object = new FailureContainer();
-         $this->assertNull(
-                  $object->getAuthFailure(),
-                  '"failures" should initially be null'
-        ); 
-    }      
+   
 
     public function testFunctionality()
     {
