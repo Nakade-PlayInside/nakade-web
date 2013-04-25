@@ -24,7 +24,9 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'League\Controller\League' => 
-                     'League\Controller\LeagueController'
+                     'League\Controller\LeagueController',
+            'League\Controller\Schedule' => 
+                     'League\Controller\ScheduleController'
         ),
     ),
     
@@ -44,8 +46,35 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
-               
             ),
+            
+            'schedule' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/schedule',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'League\Controller',
+                        'controller'    => 'Schedule',
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:action]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            
         ),
     ),
     
@@ -70,9 +99,16 @@ return array(
                 'type'          => 'gettext',
                 'base_dir'      => __DIR__ . '/../language',
                 'pattern'       => '%s.mo',
-                'text_domain'   => 'Application',
+                'text_domain'   => 'League',
             ),
+             array( 
+                'type'        => 'phparray', 
+                'base_dir'    => __DIR__ . '/../resources/languages', 
+                'pattern'     => '%s.php',
+             
+             ), 
         ),
+        
     ),
     
     //Doctrine2 

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-08 00:41+0100\n"
-"PO-Revision-Date: 2012-12-08 00:49+0100\n"
-"Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
+"POT-Creation-Date: 2013-04-25 13:51+0100\n"
+"PO-Revision-Date: 2013-04-25 13:52+0100\n"
+"Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -15,101 +15,113 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../view/error/404.phtml:1
-msgid "A 404 error occurred"
-msgstr "Es trat ein 404 Fehler auf"
+#: ../src/League/Controller/ScheduleController.php:28
+msgid "Matchplan Top League Summer "
+msgstr "Spielplan Top-Liga Sommer"
 
-#: ../view/error/404.phtml:10
-msgid "The requested controller was unable to dispatch the request."
-msgstr ""
-"Der angeforderte Controller war nicht in der Lage die Anfrage zu verarbeiten."
+#~ msgid "Supplied credential is invalid."
+#~ msgstr "Zugangsdaten sind ungültig."
 
-#: ../view/error/404.phtml:13
-msgid ""
-"The requested controller could not be mapped to an existing controller class."
-msgstr ""
-"Der angeforderte Controller konnte keiner Controller Klasse zugeordnet "
-"werden."
+#~ msgid "Account is not verified. Please check your email."
+#~ msgstr ""
+#~ "Dein Account ist noch nicht verifiziert. Bitte überprüfe deine emails. "
 
-#: ../view/error/404.phtml:16
-msgid "The requested controller was not dispatchable."
-msgstr "Der angeforderte Controller ist nicht aufrufbar."
+#~ msgid "Account is not active. Please refer an administrator."
+#~ msgstr ""
+#~ "Der Account wurde deaktiviert. Bitte kontaktiere einen Administrator."
 
-#: ../view/error/404.phtml:19
-msgid "The requested URL could not be matched by routing."
-msgstr "Für die angeforderte URL konnte keine Übereinstimmung gefunden werden."
+#~ msgid "Authentication successful."
+#~ msgstr "Anmeldung erfolgreich."
 
-#: ../view/error/404.phtml:22
-msgid "We cannot determine at this time why a 404 was generated."
-msgstr ""
-"Zu diesem Zeitpunkt ist es uns nicht möglich zu bestimmen, warum ein 404 "
-"Fehler aufgetreten ist."
+#~ msgid "Username:"
+#~ msgstr "Benutzername:"
 
-#: ../view/error/404.phtml:34
-msgid "Controller"
-msgstr "Controller"
+#~ msgid "Password:"
+#~ msgstr "Passwort:"
 
-#: ../view/error/404.phtml:41
-#, php-format
-msgid "resolves to %s"
-msgstr "wird aufgelöst in %s"
+#~ msgid "Remember Me ?:"
+#~ msgstr "eingeloggt bleiben?:"
 
-#: ../view/error/404.phtml:51
-msgid "Exception"
-msgstr "Ausnahme"
+#~ msgid "Please verify you are human."
+#~ msgstr "Bitte löse das Captcha."
 
-#: ../view/error/404.phtml:55 ../view/error/index.phtml:19
-#: ../view/error/index.phtml:43
-msgid "Stack trace"
-msgstr "Stapelüberwachung"
+#~ msgid "Submit"
+#~ msgstr "Abschicken"
 
-#: ../view/error/index.phtml:1
-msgid "An error occurred"
-msgstr "Ein Fehler ist aufgetreten"
+#~ msgid "Feel free to contact us."
+#~ msgstr "Abschicken"
 
-#: ../view/error/index.phtml:8
-msgid "Additional information"
-msgstr "Zusätzliche Information"
+#~ msgid "A 404 error occurred"
+#~ msgstr "Es trat ein 404 Fehler auf"
 
-#: ../view/error/index.phtml:11 ../view/error/index.phtml:35
-msgid "File"
-msgstr "Datei"
+#~ msgid "The requested controller was unable to dispatch the request."
+#~ msgstr ""
+#~ "Der angeforderte Controller war nicht in der Lage die Anfrage zu "
+#~ "verarbeiten."
 
-#: ../view/error/index.phtml:15 ../view/error/index.phtml:39
-msgid "Message"
-msgstr "Meldung"
+#~ msgid ""
+#~ "The requested controller could not be mapped to an existing controller "
+#~ "class."
+#~ msgstr ""
+#~ "Der angeforderte Controller konnte keiner Controller Klasse zugeordnet "
+#~ "werden."
 
-#: ../view/error/index.phtml:29
-msgid "Previous exceptions"
-msgstr "Vorherige Ausnahme"
+#~ msgid "The requested controller was not dispatchable."
+#~ msgstr "Der angeforderte Controller ist nicht aufrufbar."
 
-#: ../view/error/index.phtml:58
-msgid "No Exception available"
-msgstr "Es ist keine Ausnahme verfügbar"
+#~ msgid "The requested URL could not be matched by routing."
+#~ msgstr ""
+#~ "Für die angeforderte URL konnte keine Übereinstimmung gefunden werden."
 
-#: ../view/layout/layout.phtml:29
-msgid "Berliner Baduk Club e.V."
-msgstr ""
+#~ msgid "We cannot determine at this time why a 404 was generated."
+#~ msgstr ""
+#~ "Zu diesem Zeitpunkt ist es uns nicht möglich zu bestimmen, warum ein 404 "
+#~ "Fehler aufgetreten ist."
 
-#: ../view/layout/layout.phtml:32
-msgid "Home"
-msgstr "Startseite"
+#~ msgid "Controller"
+#~ msgstr "Controller"
 
-#: ../view/layout/layout.phtml:33
-msgid "Training"
-msgstr "Training"
+#~ msgid "resolves to %s"
+#~ msgstr "wird aufgelöst in %s"
 
-#: ../view/layout/layout.phtml:34
-msgid "Imprint"
-msgstr "Impressum"
+#~ msgid "Exception"
+#~ msgstr "Ausnahme"
 
-#: ../view/layout/layout.phtml:35
-msgid "Contact"
-msgstr "Kontakt"
+#~ msgid "Stack trace"
+#~ msgstr "Stapelüberwachung"
 
-#: ../view/layout/layout.phtml:45
-msgid "All rights reserved."
-msgstr "Alle Rechte vorbehalten."
+#~ msgid "An error occurred"
+#~ msgstr "Ein Fehler ist aufgetreten"
+
+#~ msgid "Additional information"
+#~ msgstr "Zusätzliche Information"
+
+#~ msgid "File"
+#~ msgstr "Datei"
+
+#~ msgid "Message"
+#~ msgstr "Meldung"
+
+#~ msgid "Previous exceptions"
+#~ msgstr "Vorherige Ausnahme"
+
+#~ msgid "No Exception available"
+#~ msgstr "Es ist keine Ausnahme verfügbar"
+
+#~ msgid "Home"
+#~ msgstr "Startseite"
+
+#~ msgid "Training"
+#~ msgstr "Training"
+
+#~ msgid "Imprint"
+#~ msgstr "Impressum"
+
+#~ msgid "Contact"
+#~ msgstr "Kontakt"
+
+#~ msgid "All rights reserved."
+#~ msgstr "Alle Rechte vorbehalten."
 
 #~ msgid "Spieltreff"
 #~ msgstr "Spieltreff"

@@ -1,0 +1,28 @@
+<?php
+// module/user/view/user/user/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('League'); 
+
+$headline = $this->translate("Matchplan Top League Summer ") . " " . $year;
+$this->headTitle($headline);
+?>
+<h3><?php echo $this->escapeHtml($headline); ?></h3>
+
+<table style="width:25em;margin-top: 0.5em;">
+<?php foreach ($pairings as $match) : ?>
+<tr style="background-color:<?php 
+    echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+    <td><?php echo $match->getDate()->format('d.m.Y   H');?>h</td>
+    <td><?php echo $this->escapeHtml($this->player($match->getBlack()));?></td>
+    <td style="width:1em">-</td>
+    <td><?php echo $this->escapeHtml($this->player($match->getWhite()));?></td>
+    <td><?php 
+    
+       if( is_numeric($match->getResultId()) ) { 
+            echo ($match->getWinner()==$match->getBlack()? 1:0) . " - " .
+            ($match->getWinner()==$match->getWhite()? 1:0);
+       } 
+    
+    ?></td>
+</tr>
+<?php endforeach; ?>
+</table>
