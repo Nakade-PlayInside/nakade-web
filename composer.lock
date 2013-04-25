@@ -1,5 +1,9 @@
 {
-    "hash": "4260abecbc01e242339fe1007247a114",
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "0fef56402c51a5c98f592da8bd54ff9e",
     "packages": [
         {
             "name": "doctrine/common",
@@ -18,7 +22,6 @@
             "require": {
                 "php": ">=5.3.2"
             },
-            "time": "2012-09-19 22:55:18",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -62,32 +65,32 @@
             "description": "Common Library for Doctrine projects",
             "homepage": "http://www.doctrine-project.org",
             "keywords": [
-                "collections",
-                "spl",
-                "eventmanager",
                 "annotations",
-                "persistence"
-            ]
+                "collections",
+                "eventmanager",
+                "persistence",
+                "spl"
+            ],
+            "time": "2012-09-19 22:55:18"
         },
         {
             "name": "doctrine/dbal",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/doctrine/dbal",
-                "reference": "2.3.2"
+                "url": "https://github.com/doctrine/dbal.git",
+                "reference": "2.3.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/dbal/archive/2.3.2.zip",
-                "reference": "2.3.2",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/2.3.3",
+                "reference": "2.3.3",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2",
-                "doctrine/common": "2.3.*"
+                "doctrine/common": ">=2.3.0,<2.5-dev",
+                "php": ">=5.3.2"
             },
-            "time": "2013-01-07 20:03:43",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -127,10 +130,11 @@
             "homepage": "http://www.doctrine-project.org",
             "keywords": [
                 "database",
-                "persistence",
                 "dbal",
+                "persistence",
                 "queryobject"
-            ]
+            ],
+            "time": "2013-03-24 19:16:29"
         },
         {
             "name": "doctrine/doctrine-module",
@@ -147,21 +151,20 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
                 "doctrine/common": ">=2.3-dev,<2.5-dev",
+                "php": ">=5.3.3",
                 "symfony/console": ">=2.0.13",
                 "zendframework/zend-authentication": "2.*",
                 "zendframework/zend-cache": "2.*",
-                "zendframework/zend-paginator": "2.*",
-                "zendframework/zend-stdlib": "2.*",
                 "zendframework/zend-mvc": "2.*",
+                "zendframework/zend-paginator": "2.*",
                 "zendframework/zend-servicemanager": "2.*",
+                "zendframework/zend-stdlib": "2.*",
                 "zendframework/zend-validator": "2.*"
             },
             "suggest": {
                 "doctrine/data-fixtures": "Data Fixtures if you want to generate test data or bootstrap data for your deployments"
             },
-            "time": "2013-01-14 14:25:26",
             "bin": [
                 "bin/doctrine-module"
             ],
@@ -211,10 +214,11 @@
             "description": "Zend Framework 2 Module that provides Doctrine basic functionality required for ORM and ODM modules",
             "homepage": "http://www.doctrine-project.org/",
             "keywords": [
-                "zf2",
+                "doctrine",
                 "module",
-                "doctrine"
-            ]
+                "zf2"
+            ],
+            "time": "2013-01-14 14:25:26"
         },
         {
             "name": "doctrine/doctrine-orm-module",
@@ -231,24 +235,23 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
+                "doctrine/dbal": ">=2.3-dev,<2.5-dev",
                 "doctrine/doctrine-module": "0.7.*",
                 "doctrine/orm": ">=2.3-dev,<2.5-dev",
-                "doctrine/dbal": ">=2.3-dev,<2.5-dev",
-                "zendframework/zend-stdlib": "2.*",
+                "php": ">=5.3.3",
                 "zendframework/zend-form": "2.*",
                 "zendframework/zend-mvc": "2.*",
-                "zendframework/zend-servicemanager": "2.*"
+                "zendframework/zend-servicemanager": "2.*",
+                "zendframework/zend-stdlib": "2.*"
             },
             "require-dev": {
-                "zendframework/zend-developer-tools": "dev-master",
-                "doctrine/migrations": "1.*"
+                "doctrine/migrations": "1.*",
+                "zendframework/zend-developer-tools": "dev-master"
             },
             "suggest": {
-                "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development",
-                "doctrine/migrations": "doctrine migrations if you want to keep your schema definitions versioned"
+                "doctrine/migrations": "doctrine migrations if you want to keep your schema definitions versioned",
+                "zendframework/zend-developer-tools": "zend-developer-tools if you want to profile operations executed by the ORM during development"
             },
-            "time": "2013-01-13 19:47:34",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -290,36 +293,36 @@
             "description": "Zend Framework 2 Module that provides Doctrine ORM functionality",
             "homepage": "http://www.doctrine-project.org/",
             "keywords": [
-                "orm",
-                "zf2",
+                "doctrine",
                 "module",
-                "doctrine"
-            ]
+                "orm",
+                "zf2"
+            ],
+            "time": "2013-01-13 19:47:34"
         },
         {
             "name": "doctrine/orm",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
-                "url": "git://github.com/doctrine/doctrine2.git",
-                "reference": "2.3.2"
+                "url": "https://github.com/doctrine/doctrine2.git",
+                "reference": "2.3.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/doctrine2/archive/2.3.2.zip",
-                "reference": "2.3.2",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/2.3.3",
+                "reference": "2.3.3",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2",
-                "ext-pdo": "*",
                 "doctrine/dbal": "2.3.*",
+                "ext-pdo": "*",
+                "php": ">=5.3.2",
                 "symfony/console": "2.*"
             },
             "suggest": {
                 "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
             },
-            "time": "2013-01-07 20:05:04",
             "bin": [
                 "bin/doctrine",
                 "bin/doctrine.php"
@@ -364,31 +367,36 @@
             "keywords": [
                 "database",
                 "orm"
-            ]
+            ],
+            "time": "2013-03-24 20:43:58"
         },
         {
             "name": "symfony/console",
-            "version": "v2.1.7",
+            "version": "v2.2.1",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Console",
-                "reference": "v2.1.7"
+                "url": "https://github.com/symfony/Console.git",
+                "reference": "v2.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/v2.1.7",
-                "reference": "v2.1.7",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/v2.2.1",
+                "reference": "v2.2.1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2013-01-17 15:20:05",
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
-                    "Symfony\\Component\\Console": ""
+                    "Symfony\\Component\\Console\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -406,62 +414,27 @@
                 }
             ],
             "description": "Symfony Console Component",
-            "homepage": "http://symfony.com"
-        },
-        {
-            "name": "zendframework/zend-version",
-            "version": "2.1.1",
-            "target-dir": "Zend/Version",
-            "dist": {
-                "type": "zip",
-                "url": "http://packages.zendframework.com/composer/Zend_Version-2.1.1.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Zend\\Version\\": ""
-                }
-            },
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": " ",
-            "homepage": "http://packages.zendframework.com/",
-            "keywords": [
-                "zf2",
-                "version"
-            ],
-            "support": {
-                "email": "fw-general-subscribe@lists.zend.com",
-                "irc": "irc://irc.freenode.net/zftalk",
-                "issues": "https://github.com/zendframework/zf2/issues",
-                "source": "https://github.com/zendframework/zf2"
-            }
+            "homepage": "http://symfony.com",
+            "time": "2013-03-19 20:48:08"
         },
         {
             "name": "zendframework/zendframework",
-            "version": "2.1.1",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
-                "url": "git://github.com/zendframework/zf2.git",
-                "reference": "release-2.1.1"
+                "url": "https://github.com/zendframework/zf2.git",
+                "reference": "release-2.1.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://packages.zendframework.com/releases/ZendFramework-2.1.1/ZendFramework-2.1.1.zip",
-                "reference": "release-2.1.1",
-                "shasum": "9233f83104283a10e5625d1bf629be4d93277ce1"
+                "url": "https://packages.zendframework.com/composer/zendframework-zendframework-2.1.5-release-2.1.5-acb4f2.zip",
+                "reference": "2.1.5",
+                "shasum": "6a883d6e6facdb24998ab5ab53d2b941c8ec8995"
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "replace": {
-                "zendframework/zend-acl": "self.version",
                 "zendframework/zend-authentication": "self.version",
                 "zendframework/zend-barcode": "self.version",
                 "zendframework/zend-cache": "self.version",
@@ -471,6 +444,7 @@
                 "zendframework/zend-console": "self.version",
                 "zendframework/zend-crypt": "self.version",
                 "zendframework/zend-db": "self.version",
+                "zendframework/zend-debug": "self.version",
                 "zendframework/zend-di": "self.version",
                 "zendframework/zend-dom": "self.version",
                 "zendframework/zend-escaper": "self.version",
@@ -487,7 +461,6 @@
                 "zendframework/zend-loader": "self.version",
                 "zendframework/zend-log": "self.version",
                 "zendframework/zend-mail": "self.version",
-                "zendframework/zend-markup": "self.version",
                 "zendframework/zend-math": "self.version",
                 "zendframework/zend-memory": "self.version",
                 "zendframework/zend-mime": "self.version",
@@ -495,6 +468,8 @@
                 "zendframework/zend-mvc": "self.version",
                 "zendframework/zend-navigation": "self.version",
                 "zendframework/zend-paginator": "self.version",
+                "zendframework/zend-permissions-acl": "self.version",
+                "zendframework/zend-permissions-rbac": "self.version",
                 "zendframework/zend-progressbar": "self.version",
                 "zendframework/zend-serializer": "self.version",
                 "zendframework/zend-server": "self.version",
@@ -503,23 +478,38 @@
                 "zendframework/zend-soap": "self.version",
                 "zendframework/zend-stdlib": "self.version",
                 "zendframework/zend-tag": "self.version",
+                "zendframework/zend-test": "self.version",
                 "zendframework/zend-text": "self.version",
                 "zendframework/zend-uri": "self.version",
                 "zendframework/zend-validator": "self.version",
+                "zendframework/zend-version": "self.version",
                 "zendframework/zend-view": "self.version",
                 "zendframework/zend-xmlrpc": "self.version"
             },
             "require-dev": {
-                "doctrine/common": ">=2.1"
+                "doctrine/common": ">=2.1",
+                "ircmaxell/random-lib": "dev-master",
+                "ircmaxell/security-lib": "dev-master",
+                "phpunit/phpunit": "3.7.*"
             },
             "suggest": {
                 "doctrine/common": "Doctrine\\Common >=2.1 for annotation features",
                 "ext-intl": "ext/intl for i18n features",
+                "ircmaxell/random-lib": "Fallback random byte generator for Zend\\Math\\Rand if OpenSSL/Mcrypt extensions are unavailable",
                 "pecl-weakref": "Implementation of weak references for Zend\\Stdlib\\CallbackHandler",
                 "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
                 "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
             },
+            "bin": [
+                "bin/classmap_generator.php"
+            ],
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev",
+                    "dev-develop": "2.2-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Zend\\": "library/",
@@ -530,25 +520,30 @@
                 "BSD-3-Clause"
             ],
             "description": "Zend Framework 2",
+            "homepage": "http://framework.zend.com/",
             "keywords": [
                 "framework",
                 "zf2"
             ],
             "support": {
-                "email": "fw-general-subscribe@lists.zend.com",
-                "irc": "irc://irc.freenode.net/zftalk",
-                "issues": "https://github.com/zendframework/zf2/issues",
-                "source": "https://github.com/zendframework/zf2"
-            }
+                "source": "https://github.com/zendframework/zf2/tree/release-2.1.5",
+                "issues": "https://github.com/zendframework/zf2/issues"
+            },
+            "time": "2013-04-17 15:15:58"
         },
         {
             "name": "zendframework/zendpdf",
-            "version": "2.0.1",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/ZendPdf.git",
+                "reference": "release-2.0.2"
+            },
             "dist": {
                 "type": "zip",
-                "url": "http://packages.zendframework.com/composer/ZendPdf-2.0.1.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://packages.zendframework.com/composer/zendframework-zendpdf-2.0.2-release-2.0.2-91b73f.zip",
+                "reference": "2.0.2",
+                "shasum": "48e14889bc99d9659e0e620a9955ae23909596c2"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -563,7 +558,7 @@
             },
             "autoload": {
                 "psr-0": {
-                    "ZendPdf": "library/"
+                    "ZendPdf\\": "library/"
                 }
             },
             "license": [
@@ -572,15 +567,14 @@
             "description": "Zend Pdf Component",
             "homepage": "http://packages.zendframework.com/",
             "keywords": [
-                "zf2",
-                "pdf"
+                "pdf",
+                "zf2"
             ],
             "support": {
-                "email": "fw-general-subscribe@lists.zend.com",
-                "irc": "irc://irc.freenode.net/zftalk",
-                "issues": "https://github.com/zendframework/zf2/issues",
-                "source": "https://github.com/zendframework/zf2"
-            }
+                "source": "https://github.com/zendframework/ZendPdf/tree/master",
+                "issues": "https://github.com/zendframework/ZendPdf/issues"
+            },
+            "time": "2012-11-16 11:16:01"
         },
         {
             "name": "zendframework/zendservice-recaptcha",
@@ -614,8 +608,8 @@
             "description": "OOP wrapper for the ReCaptcha web service",
             "homepage": "http://packages.zendframework.com/",
             "keywords": [
-                "zf2",
-                "recaptcha"
+                "recaptcha",
+                "zf2"
             ],
             "support": {
                 "email": "fw-general-subscribe@lists.zend.com",
@@ -623,14 +617,65 @@
                 "issues": "https://github.com/zendframework/zf2/issues",
                 "source": "https://github.com/zendframework/zf2"
             }
+        },
+        {
+            "name": "zf-commons/zfc-rbac",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ZF-Commons/ZfcRbac.git",
+                "reference": "d173028fdf09f35b8ffe3fc57d961ed9f77743bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ZF-Commons/ZfcRbac/zipball/d173028fdf09f35b8ffe3fc57d961ed9f77743bc",
+                "reference": "d173028fdf09f35b8ffe3fc57d961ed9f77743bc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "zendframework/zend-mvc": ">=2.1",
+                "zendframework/zend-permissions-rbac": ">=2.1",
+                "zendframework/zend-servicemanager": ">=2.1",
+                "zendframework/zend-view": ">=2.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ZfcRbac\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Kyle Spraggs",
+                    "email": "theman@spiffyjr.me",
+                    "homepage": "http://www.spiffyjr.me/"
+                }
+            ],
+            "description": "Zend Framework 2 Module that provides a layer of features of Zend\\Permissions\\Rbac",
+            "homepage": "http://www.github.com/ZF-Commons/ZfcRbac/",
+            "keywords": [
+                "module",
+                "zf2"
+            ],
+            "time": "2013-03-30 15:22:02"
         }
     ],
-    "packages-dev": null,
+    "packages-dev": [
+
+    ],
     "aliases": [
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
+    "stability-flags": {
+        "zf-commons/zfc-rbac": 20
+    },
+    "platform": [
+
+    ],
+    "platform-dev": [
 
     ]
 }

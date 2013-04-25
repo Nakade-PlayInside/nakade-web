@@ -13,7 +13,7 @@ return array(
         'Nakade',
         'League',
         'Authentication',
-     
+        'ZfcRbac',
         ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(

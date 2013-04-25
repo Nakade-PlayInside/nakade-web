@@ -11,6 +11,7 @@
 	"doctrine/common": "2.*",
         "zendframework/zendpdf": "2.*",
         "zendframework/zendservice-recaptcha": "2.*",
-        "doctrine/doctrine-orm-module": "0.*"
+        "doctrine/doctrine-orm-module": "0.*",
+        "zf-commons/zfc-rbac": "dev-master"
   }
 }
