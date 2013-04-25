@@ -59,6 +59,20 @@ class AuthenticationTest extends PHPUnit_Framework_TestCase
        );
     }
     
+     /**
+    * proves expected authentication failure with inactive user
+    */
+    public function testAuthenticationWithInactiveUser()
+    {
+       $response = $this->isAuthenticated('InactiveUser', 'password');
+            
+       //identity was not set
+       $this->assertFalse(
+           $response,
+          '"authentication" should not be granted'         
+       );
+    }
+    
     /**
      * proves authentication success
      */
@@ -76,19 +90,7 @@ class AuthenticationTest extends PHPUnit_Framework_TestCase
     }
     
     
-    /**
-    * proves expected authentication failure with inactive user
-    */
-    public function testAuthenticationWithInactiveUser()
-    {
-       $response = $this->isAuthenticated('InactiveUser', 'password');
-            
-       //identity was not set
-       $this->assertFalse(
-           $response,
-          '"authentication" should not be granted'         
-       );
-    }
+   
     
      /**
       * proves authentication with the provided credentials.
