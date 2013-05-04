@@ -32,8 +32,8 @@ return array(
                      'League\Controller\LeagueController',
             'League\Controller\Schedule' => 
                      'League\Controller\ScheduleController',
-            //'League\Controller\Season' => 
-            //         'League\Controller\SeasonController'
+            'League\Controller\Table' => 
+                     'League\Controller\TableController'
         ),
     ),
     
@@ -137,7 +137,20 @@ return array(
                     
                 ),
             ),
-            
+           'table' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/table[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'League\Controller\Table',
+                        'action'     => 'index',
+                    ),
+                ),
+            ), 
         ),
     ),
     

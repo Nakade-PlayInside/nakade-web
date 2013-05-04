@@ -56,7 +56,7 @@ class Season
    * @var boolean
    * @access protected
    */
-  protected $_active=0;
+  protected $_active;
   
   /**
    * closed
@@ -65,7 +65,7 @@ class Season
    * @var boolean
    * @access protected
    */
-  protected $_closed=0;
+  protected $_closed;
   
   /**
    * Year

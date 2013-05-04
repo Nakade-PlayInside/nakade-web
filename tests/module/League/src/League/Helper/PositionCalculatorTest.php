@@ -4,7 +4,7 @@ namespace LeagueTest\Helper;
 
 use League\Helper\PositionCalculator;
 use PHPUnit_Framework_TestCase;
-use League\Entity\Position;
+use League\Entity\Table;
 
 class PositionCalculatorTest extends PHPUnit_Framework_TestCase
 {
@@ -110,7 +110,7 @@ class PositionCalculatorTest extends PHPUnit_Framework_TestCase
         foreach ($results as $resultId){
             
             $winnerId = 1;
-            $entity = new Position();
+            $entity = new Table();
             $entity->setUid($winnerId);
             $calc = new PositionCalculator(
                     array(
@@ -138,7 +138,7 @@ class PositionCalculatorTest extends PHPUnit_Framework_TestCase
         foreach ($results as $resultId){
             
             $winnerId = 1;
-            $entity = new Position();
+            $entity = new Table();
             $entity->setUid(2);
             $calc = new PositionCalculator(
                     array(
@@ -162,7 +162,7 @@ class PositionCalculatorTest extends PHPUnit_Framework_TestCase
     {
         
             $winnerId = 1;
-            $entity = new Position();
+            $entity = new Table();
             $entity->setUid($winnerId);
             $calc = new PositionCalculator(
                     array(
@@ -192,7 +192,7 @@ class PositionCalculatorTest extends PHPUnit_Framework_TestCase
             );
         
            
-            $entity = new Position();
+            $entity = new Table();
             $entity->setUid($myData['winner']);
             $calc = new PositionCalculator($myData);
             
@@ -219,7 +219,7 @@ class PositionCalculatorTest extends PHPUnit_Framework_TestCase
             );
         
            
-            $entity = new Position();
+            $entity = new Table();
             $entity->setUid(2);
             $calc = new PositionCalculator($myData);
             

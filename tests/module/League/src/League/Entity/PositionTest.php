@@ -2,7 +2,7 @@
 
 namespace LeagueTest\Entity;
 
-use League\Entity\Position;
+use League\Entity\Table;
 use PHPUnit_Framework_TestCase;
 
 class PositionTest extends PHPUnit_Framework_TestCase
@@ -24,9 +24,9 @@ class PositionTest extends PHPUnit_Framework_TestCase
     );
     
     
-    public function testPositionInitialState()
+    public function testTableInitialState()
     {
-        $object = new Position();
+        $object = new Table();
 
         foreach($this->data as $key => $value) {
             
@@ -42,7 +42,7 @@ class PositionTest extends PHPUnit_Framework_TestCase
 
     public function testSetsPropertiesCorrectly()
     {
-        $object = new Position();
+        $object = new Table();
         
         foreach($this->data as $key => $value) {
             
@@ -64,7 +64,7 @@ class PositionTest extends PHPUnit_Framework_TestCase
     
     public function testArrayCopy() 
     {
-        $object = new Position();
+        $object = new Table();
         
         //testing array copy
         $this->assertInternalType(
@@ -78,7 +78,7 @@ class PositionTest extends PHPUnit_Framework_TestCase
              
     public function testMagicMethods()
     {
-        $object = new Position();
+        $object = new Table();
         $object->_id=2;
         
         $this->assertSame(
@@ -96,7 +96,7 @@ class PositionTest extends PHPUnit_Framework_TestCase
     
     public function testPopulateMethod()
     {
-        $object = new Position();
+        $object = new Table();
         
         $data = array(
             'gamesPlayed' => 123,

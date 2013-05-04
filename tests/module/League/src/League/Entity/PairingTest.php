@@ -2,13 +2,13 @@
 
 namespace LeagueTest\Entity;
 
-use League\Entity\Pairing;
+use League\Entity\Match;
 use League\Entity\Result;
 use User\Entity\User;
 use PHPUnit_Framework_TestCase;
 use Zend\InputFilter\InputFilter;
 
-class PairingTest extends PHPUnit_Framework_TestCase
+class MatchTest extends PHPUnit_Framework_TestCase
 {
     protected $data=array();
     
@@ -31,9 +31,9 @@ class PairingTest extends PHPUnit_Framework_TestCase
         );
     }
     
-    public function testPairingInitialState()
+    public function testMatchInitialState()
     {
-        $object = new Pairing();
+        $object = new Match();
 
          foreach($this->data as $key => $value) {
             
@@ -49,7 +49,7 @@ class PairingTest extends PHPUnit_Framework_TestCase
 
     public function testSetsPropertiesCorrectly()
     {
-        $object = new Pairing();
+        $object = new Match();
         
         foreach($this->data as $key => $value) {
             
@@ -71,7 +71,7 @@ class PairingTest extends PHPUnit_Framework_TestCase
     
     public function testArrayCopy() 
     {
-        $object = new Pairing();
+        $object = new Match();
         
         //testing array copy
         $this->assertInternalType(
@@ -85,7 +85,7 @@ class PairingTest extends PHPUnit_Framework_TestCase
              
     public function testMagicMethods()
     {
-        $object = new Pairing();
+        $object = new Match();
         $object->_id=2;
         
         $this->assertSame(
@@ -103,7 +103,7 @@ class PairingTest extends PHPUnit_Framework_TestCase
     
     public function testPopulateMethod()
     {
-        $object = new Pairing();
+        $object = new Match();
         
         $data = array(
             '_id' => 1,
@@ -142,7 +142,7 @@ class PairingTest extends PHPUnit_Framework_TestCase
     
     public function testInputFilterMethods()
     {
-        $object = new Pairing();
+        $object = new Match();
         
         $this->assertInstanceOf(
            'Zend\InputFilter\InputFilter',     
@@ -156,7 +156,7 @@ class PairingTest extends PHPUnit_Framework_TestCase
      */
     public function testException()
     {
-        $object = new Pairing();
+        $object = new Match();
         $inputFilter = new InputFilter();
         $object->setInputFilter($inputFilter);
          

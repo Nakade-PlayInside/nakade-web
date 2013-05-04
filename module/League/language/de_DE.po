@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-03 19:13+0100\n"
-"PO-Revision-Date: 2013-05-03 19:13+0100\n"
+"POT-Creation-Date: 2013-05-04 14:38+0100\n"
+"PO-Revision-Date: 2013-05-04 14:51+0100\n"
 "Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -22,8 +22,47 @@ msgstr ""
 msgid "Matchplan Top League"
 msgstr "Top-Liga Spielplan"
 
+#: League/view/league/table/index.phtml:4
+msgid "Top League"
+msgstr "Top-Liga"
+
+#: League/view/league/table/index.phtml:12
+msgid "Position"
+msgstr "Platz"
+
+#: League/view/league/table/index.phtml:13
+msgid "Player"
+msgstr "Spieler"
+
+#: League/view/league/table/index.phtml:14
+msgid "Name"
+msgstr "Name"
+
+#: League/view/league/table/index.phtml:15
+msgid "Played games"
+msgstr "gespielte Partien"
+
+#: League/view/league/table/index.phtml:16
+msgid "GP"
+msgstr "GP"
+
+#: League/view/league/table/index.phtml:17
+msgid "Wins"
+msgstr "Siege"
+
+#: League/view/league/table/index.phtml:18
+msgid "W"
+msgstr "S"
+
+#: League/view/league/table/index.phtml:19
+msgid "Tie-breaker"
+msgstr "Tie-Breaker"
+
+#: League/view/league/table/index.phtml:20
+msgid "Hahn"
+msgstr "Hahn"
+
 #: League/view/league/season/showme.phtml:5
-#, fuzzy
 msgid "Actual Season "
 msgstr "Aktuelle Saison"
 
@@ -74,7 +113,6 @@ msgstr "Erste Partie:"
 
 #: League/view/league/season/edit.phtml:45
 #: League/view/league/season/index.phtml:45
-#, fuzzy
 msgid "Last Match:"
 msgstr "Letzte Partie:"
 
@@ -124,9 +162,8 @@ msgstr "Saison bearbeiten"
 msgid "Submit"
 msgstr "Abschicken"
 
-#: League/src/League/Controller/SeasonController.php:67
-msgid "No actual season found."
-msgstr "Keine laufende Saison gefunden."
+#~ msgid "No actual season found."
+#~ msgstr "Keine laufende Saison gefunden."
 
 #~ msgid "create new season"
 #~ msgstr "neue Saison anlegen"

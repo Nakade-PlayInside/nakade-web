@@ -1,35 +1,34 @@
 <div class="hero-unit">
     <h1>Willkommen beim <br/><span class="zf-green">Berliner Baduk Club e.V.</span></h1>
     <p>Diese Vereinsseite wird zZt. bearbeitet. Bitte schau bald wieder rein, um auf dem Laufenden zu bleiben.</p>
-     <?php echo $widgetContent;?>
+     <?php echo $this->blogWidget;?>
 </div>
 
 <div class="row">
 
+    <div class="span2" style="margin-top:0.5em; margin-right:3em;">
+        <?php echo $this->tableWidget;?>
+   </div>
+    
+    <div class="span3">
+       <h2>Liga</h2>
+       <p>Seit Februar läuft unsere erste Liga.</br> 
+          <table>
+          <tr><td>Bedenkzeit:</td><td>60 min</td></tr> 
+          <tr><td>Berliner Byoyomi:</td><td>30/10</td></tr>
+          <tr><td>Komi:</td><td>7.5</br></td></tr>
+          </table>
+       </br>
+           
+       Wir suchen Interessenten für die nächste Liga. Spielstärke von 1d-5k. Kostenlose Teilnahme.
+       Partien immer Dienstags in Charlottenburg.</p>
+   </div>
+    
     <div class="span4">
         <h2>Bundesliga</h2>
         <p>Unsere Mannschaft <span class="zf-green">Nakade Berlin</span> unter der Leitung von Maurice spielt in ihrer ersten Saison in der 5.Liga. Und das recht erfolgreich! Weitere Informationen zu nächsten Spieltag und unseren Erfolgen findet ihr auf unserer Facebook Seite. Alles zum aktuellem Tabellenstand und der Bundesliga findet ihr auf den Seiten des <a href="http://www.dgob.de">DGoB</a></p>
         <p><a class="btn btn-success" href="http://www.facebook.com/groups/327762630651096/" target="_blank">Nakade Berlin &raquo;</a></p>
     </div>
-
-    <div class="span4">
-        <h2 style="color:red;">Neuer Spieltreff</h2>
-        <p>Endlich sind wir in Charlottenburg angekommen. In zentraler Lage hinter der Deutschen Oper im Jugendhaus. Ab sofort wird dort jeden Dienstag Go gespielt. Neben dem offziellen Training ist freies Spiel möglich. Gäste sind bei uns gern gesehen.</p>
-        <p><a class="btn btn-success" href="<?php echo $this->url('training') ?>">Spieltreff &raquo;</a></p>
-   </div>
     
-   <div class="span4">
-       <h2>Liga</h2>
-       <p>Seit Februar läuft die erste Liga (1d-3k). Dauer bis Mitte Mai 2013, 6 Teilnehmer, 60min (30/10), 7.5 Komi. </br>
-           Wir suchen noch Interessenten für eine weitere Liga (4k-8k). Details dazu später hier...</p>
-       <p><a class="btn btn-success" href="<?php echo $this->url('league', array('action' => 'index')); ?>" target="_parent">Tabelle &raquo;</a></p>
-   </div>
+   
 </div>
-<hr>
-<?php foreach ($blog as $post) : ?>
-<div style="padding:.5em;">
-    <h3><?php echo $post->title;?></h3>
-    <p><?php echo $post->content;?></p>
-    <span style="color:grey; font-size:smaller;">gepostet am <?php echo $post->date;?></span>
-</div>
-<?php endforeach; ?>

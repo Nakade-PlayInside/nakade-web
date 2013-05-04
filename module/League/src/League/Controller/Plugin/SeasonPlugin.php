@@ -44,6 +44,21 @@ class SeasonPlugin extends AbstractEntityPlugin
    }
    
    /**
+   * Getting the Season short title as a string exposing
+   * the season number and the year eg. '01/2013'
+   * 
+   * @return string
+   */
+   public function getSeasonShortTitle(Season $season) {
+        
+       return sprintf(
+                  " %02d/%d",
+                  $season->getNumber(), 
+                  date_format($season->getYear(), 'Y')
+              );
+   }
+   
+   /**
     * Getting the last season number
     * 
     * @return int

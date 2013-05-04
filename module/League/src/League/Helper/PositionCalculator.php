@@ -1,6 +1,6 @@
 <?php
 namespace League\Helper;
-use League\Entity\Position as Position;
+use League\Entity\Table as Table;
 
 
 class PositionCalculator
@@ -57,7 +57,7 @@ class PositionCalculator
      * @param Position $entity object
      * 
      */
-    public function bindEntity(Position &$entity){
+    public function bindEntity(Table &$entity){
         
         $this->_Entity = $entity;
         $this->nomalize();
