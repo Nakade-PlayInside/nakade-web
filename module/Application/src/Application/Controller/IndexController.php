@@ -16,26 +16,15 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
-    private $_blogTable=false;
-    
+   
     public function indexAction()
     {
-        return new ViewModel(
-            array(
-                 'blog' => $this->getBlogTable()->fetchAll(),
-            )
-        );
-    }
-    
-    
-    public function getBlogTable()
-    {
-        if (!$this->_blogTable) {
-            $serviceManager = $this->getServiceLocator();
-            $this->_blogTable = 
-                $serviceManager->get('Application\Model\BlogTable');
-        }
-        return $this->_blogTable;
+        $blogWidget = $this->forward()->dispatch('/blog/controller/blog');
+        $page = new ViewModel();
+        $page->addChild($blogWidget, 'widgetContent');
+        
+        return $page;
+       
     }
     
 }

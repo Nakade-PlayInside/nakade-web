@@ -1,9 +1,8 @@
 <?php
 namespace League\Controller;
 
-use Nakade\Controller\AbstractEntityManagerController;
 use Zend\View\Model\ViewModel;
-
+use Zend\Mvc\Controller\AbstractActionController;
 
 /**
  * Match Schedule Controller. Shows actual matchplan of the leagues.
@@ -11,7 +10,7 @@ use Zend\View\Model\ViewModel;
  * 
  * @author Holger Maerz <holger@nakade.de>
  */
-class ScheduleController extends AbstractEntityManagerController
+class ScheduleController extends AbstractActionController
 {
     
     /**
@@ -19,82 +18,21 @@ class ScheduleController extends AbstractEntityManagerController
     */
     public function indexAction()
     {
-        
-       $saison = $this->getActualSeason();
-       $leagueId = $this->getLeague(
-           $saison->getId(),
-           1    
-           ); 
+       //plugin for database logic
+       $season = $this->season()->getActualSeason();
+       
+       if(is_null($season))
+               return $this->redirect ()->toRoute ('season/showme');
+       
+       $league = $this->league()->getTopLeague($season);
        
        return new ViewModel(
            array(
-              'year' => date_format($saison->getYear(), 'Y'),
-              'pairings' => $this->getPairings($leagueId),
+              'number'  => $this->season()->getSeasonTitle($season),
+              'matches' => $this->match()->getMatchesInLeague($league),
            )
        );
     }
 
-    /**
-     * helper for receiving the LeagueId 
-     * 
-     * @param int $seasonId
-     * @param int $order
-     * @return /League/Entity/Season $league
-     */
-    protected function getLeague($seasonId, $order) 
-    {
-        $repository = $this->getEntityManager()->getRepository(
-           'League\Entity\League'
-       );
-        
-       $league = $repository->findOneBy(
-           array('_sid'   => $seasonId ,
-                 '_order' => $order ,    
-           )
-       );
-       
-       return $league; 
-    }
-    
-
-    /**
-     * helper for getting the actual season
-     * 
-     * @return /League/Entity/Season $season
-     */
-    protected function getActualSeason() 
-    {
-        $repository = $this->getEntityManager()->getRepository(
-           'League\Entity\Season'
-       );
-        
-       $season = $repository->findOneBy(
-           array('_active' => 1), 
-           array('_year'=> 'DESC')
-           );
-       
-       return $season; 
-    }
-    
-    /**
-     * returns an array of matches
-     * 
-     * @param int $leagueId
-     * @return array $pairings
-     */
-    protected function getPairings($leagueId)
-    {
-       
-       $repository = $this->getEntityManager()->getRepository(
-           'League\Entity\Pairing'
-       );
    
-       $pairings = $repository->findby(
-           array('_lid' => $leagueId), 
-           array('_date'=> 'ASC')
-           );
-       
-       return $pairings;
-       
-    }
 }

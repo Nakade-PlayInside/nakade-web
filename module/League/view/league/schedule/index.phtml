@@ -2,13 +2,13 @@
 // module/user/view/user/user/index.phtml:
 $this->plugin('translate')->setTranslatorTextDomain('League'); 
 
-$headline = $this->translate("Matchplan Top League Summer ") . " " . $year;
+$headline = $this->translate("Matchplan Top League"). $this->number;
 $this->headTitle($headline);
 ?>
 <h3><?php echo $this->escapeHtml($headline); ?></h3>
 
 <table style="width:25em;margin-top: 0.5em;">
-<?php foreach ($pairings as $match) : ?>
+<?php foreach ($this->matches as $match) : ?>
 <tr style="background-color:<?php 
     echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
     <td><?php echo $match->getDate()->format('d.m.Y   H');?>h</td>

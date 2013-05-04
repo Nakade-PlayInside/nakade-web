@@ -1,12 +1,12 @@
 <?php
 namespace League\Controller;
 
-use League\Controller\LeagueController;
+use League\Controller\SeasonController;
 use Zend\Http\Request;
 use Zend\Mvc\Router\RouteMatch;
 use PHPUnit_Framework_TestCase;
 
-class LeagueControllerTest extends PHPUnit_Framework_TestCase
+class SeasonControllerTest extends PHPUnit_Framework_TestCase
 {
     protected $_controller;
     protected $_request;
@@ -21,7 +21,7 @@ class LeagueControllerTest extends PHPUnit_Framework_TestCase
         );
         
         
-        $this->_controller = new LeagueController();
+        $this->_controller = new SeasonController();
         $this->_request    = new Request();
         $this->_routeMatch = new RouteMatch(array('controller' => 'index'));
         $this->_event      = $bootstrap->getMvcEvent();
@@ -33,27 +33,6 @@ class LeagueControllerTest extends PHPUnit_Framework_TestCase
     }
   
 
-    public function testDeleteActionCanBeAccessed()
-    {
-        $this->_routeMatch->setParam('action', 'delete');
-
-        $result   = $this->_controller->dispatch($this->_request);
-        $response = $this->_controller->getResponse();
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $result);
-    }
-
-    public function testEditActionCanBeAccessed()
-    {
-        $this->_routeMatch->setParam('action', 'edit');
-        
-        $result   = $this->_controller->dispatch($this->_request);
-        $response = $this->_controller->getResponse();
-
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertInstanceOf('Zend\View\Model\ViewModel', $result);
-    }
     
     public function testIndexActionCanBeAccessed()
     {

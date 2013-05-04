@@ -16,19 +16,39 @@ return array(
     'view_helpers' => array(  
         'invokables' => array(  
             'position' => 'League\View\Helper\Position', 
-            'player' => 'League\View\Helper\Player',
+            'player'   => 'League\View\Helper\Player',
+            'dateformat' => 'League\View\Helper\DateFormat',
             // more helpers here ...  
         )  
     ),
     
     'controllers' => array(
+        'factories' => array(
+            'League\Controller\Season' => 
+                    'League\Services\SeasonControllerFactory',
+        ),
         'invokables' => array(
             'League\Controller\League' => 
                      'League\Controller\LeagueController',
             'League\Controller\Schedule' => 
-                     'League\Controller\ScheduleController'
+                     'League\Controller\ScheduleController',
+            //'League\Controller\Season' => 
+            //         'League\Controller\SeasonController'
         ),
     ),
+    
+    'controller_plugins' => array(
+      'invokables' => array(
+          'season'  => 'League\Controller\Plugin\SeasonPlugin',
+          'match'   => 'League\Controller\Plugin\MatchPlugin',
+          'league'  => 'League\Controller\Plugin\LeaguePlugin',
+          'player'  => 'League\Controller\Plugin\PlayerPlugin',
+          'table'   => 'League\Controller\Plugin\TablePlugin',
+          'form'    => 'League\Controller\Plugin\FormPlugin',
+          'result'  => 'League\Controller\Plugin\ResultPlugin',
+      ),  
+    ),
+    
     
     'router' => array(
         'routes' => array(
@@ -75,12 +95,57 @@ return array(
                 ),
             ),
             
+            
+            'season' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/season',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'League\Controller',
+                        'controller'    => 'Season',
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:action]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                    'process' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:action]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                    
+                    
+                    
+                ),
+            ),
+            
         ),
     ),
     
     
     'view_manager' => array(
-        //@todo: view doctype, ect ... s. Application
+        'display_not_found_reason' => true,
+        'display_exceptions'       => true,
+        'doctype'                  => 'HTML5',
                 
         'template_path_stack' => array(
             __DIR__ . '/../view',

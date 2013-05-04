@@ -1,7 +1,7 @@
 <?php
 namespace League\Controller;
 
-use Nakade\Controller\AbstractEntityManagerController;
+use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use League\Form\ResultForm;
 use League\Helper\PositionCalculator;
@@ -14,18 +14,22 @@ use League\Helper\PositionCalculator;
  * 
  * @author Holger Maerz <holger@nakade.de>
  */
-class LeagueController extends AbstractEntityManagerController
+class LeagueController extends AbstractActionController
 {
     /**
     * viewhelper to exhibit the standings of the top league 
     */
     public function indexAction()
     {
+       
+       //better to get the last season 
+       $actualSeason =  $this->season()->getActualSeason();
+       $league       =  $this->league()->getTopLeague($actualSeason);
         
        return new ViewModel(
            array(
-              'users' => $this->getTopTable(),
-              'nextGames' => $this->getNextThreeGames(),
+              'users' => $this->table()->getTable($league),
+              'nextGames' => $this->match()->getNextThreeGames($league),
            )
        );
     }
@@ -35,7 +39,7 @@ class LeagueController extends AbstractEntityManagerController
         
        return new ViewModel(
            array(
-              'users' => $this->getNextGame()
+              'users' => $this->match()->getNextGame()
            )
        );
     }
@@ -49,8 +53,11 @@ class LeagueController extends AbstractEntityManagerController
        
        if ($this->identity()) {
         
+           $actualSeason =  $this->season()->getActualSeason();
+           $matches     =  $this->match()->getAllOpenResults($actualSeason);
+           
            return new ViewModel(
-               array('pairings' => $this->getAllOpenResults())
+               array('matches' => $matches)
            );
        } 
     
@@ -60,132 +67,27 @@ class LeagueController extends AbstractEntityManagerController
     
        
     }
-    
-    
-    protected function getTopTable()
-    {
-       
-        
-       $repository = $this->getEntityManager()->getRepository(
-           'League\Entity\Position'
-       );
-       
-       $position = $repository->findBy(
-           array('_lid' => 1), 
-           array(
-              '_win'=> 'DESC', 
-              '_tiebreakerA'=> 'DESC',
-              '_tiebreakerB'=> 'DESC',
-              '_gamesPlayed'=> 'DESC',
-              '_id'=> 'DESC'
-              )
-       );
-       
-       return $position;
-       
-    }
-    
-    protected function getNextThreeGames()
-    {
-       
-       
-       $query="SELECT u FROM League\Entity\Pairing u 
-           WHERE u._lid=1 AND u._resultId IS NULL 
-           AND u._date >= :today ORDER BY u._date ASC";
-       
-       $pairings = $this->getEntityManager()->createQuery($query);
-       $pairings->setParameter('today', new \DateTime());
-       $pairings->setMaxResults(3);
-       
-       
-       return $pairings->getResult();
-       
-    }
-    
-    protected function getAllOpenResults()
-    {
-       
-       
-       $query="SELECT u FROM League\Entity\Pairing u 
-           WHERE u._lid=1 AND u._resultId IS NULL 
-           AND u._date < :today ORDER BY u._date ASC";
-       
-       $pairings = $this->getEntityManager()->createQuery($query);
-       $pairings->setParameter('today', new \DateTime());
-              
-       return $pairings->getResult();
-       
-    }
-    
-    
-    protected function getNextGame()
-    {
-       
-        
-       $repository = $this->getEntityManager()->getRepository(
-           'League\Entity\Pairing'
-       );
-       
-       
-       //@todo: datumsvergleich jetzt zu nächsten termin
-       //@todo: nur aktuelle Termine, nicht die Spiele,
-       //die noch nicht eingetragen sind 
-       
-       $position = $repository->findBy(
-           array('_lid' => 1, '_resultId' => NULL,), 
-           array(
-              '_date'=> 'ASC', 
-              ),
-           1    
-       );
-       
-       return $position;
-       
-    }
-    
-    protected function getResultlist()
-    {
-       
-        
-       $repository = $this->getEntityManager()->getRepository(
-           'League\Entity\Result'
-       );
-       
-       
-       //@todo: datumsvergleich jetzt zu nächsten termin
-       //@todo: nur aktuelle Termine, nicht die Spiele,
-       //die noch nicht eingetragen sind 
-       
-       $game = $repository->findAll();
-       
-       return $game;
-       
-    }
+
     
     public function addAction()
     {
-        
         $pid = (int) $this->params()->fromRoute('id', 0);
-        $game= (object) $this->getEntityManager()->find('League\Entity\Pairing',
-                $pid);
         
-        $repository = $this->getEntityManager()->getRepository(
-           'League\Entity\Position');
+        $game= $this->match()->getMatch($pid);
+        $lid = $game->getLid();
+        $blackId = $game->getBlackId();
+        $whiteId = $game->getWhiteId();
         
-        $black= $repository->findOneBy(
-                array('_uid' => $game->getBlackId())
-                );
-        $white= $repository->findOneBy(
-                array('_uid' => $game->getWhiteId())
-                );
+        $black=$this->table()->getPlayerStatsInLeague($blackId,$lid);
+        $white=$this->table()->getPlayerStatsInLeague($whiteId,$lid);
+        $resultList=$this->result()->getResultlist();
         
-        $form = new ResultForm($game, $this->getResultlist());
+      
+        $form = new ResultForm($game, $resultList);
         $form->setBindOnValidate(false);
         $form->bind($game);
-        
          
         $request = $this->getRequest();
-               
         if ($request->isPost()) {
             
             $form->setData($request->getPost());
@@ -193,15 +95,16 @@ class LeagueController extends AbstractEntityManagerController
             if ($form->isValid()) {
                 
                 $form->bindValues();
-                $this->getEntityManager()->flush();
+                $this->table()->save();
+              
                 
                 $calc = new PositionCalculator($request->getPost());     
                 $calc->bindEntity($black);
                 $calc->bindEntity($white);
                
-                $this->getEntityManager()->flush($black);
-                $this->getEntityManager()->flush($white);
-                
+                $this->table()->save($black);
+                $this->table()->save($white);
+              
                 // Redirect to list of albums
                 return $this->redirect()->toRoute('league');
             }
@@ -211,13 +114,6 @@ class LeagueController extends AbstractEntityManagerController
         return array('id' => $pid, 'game' => $game, 'form' => $form);
     }
 
-    public function editAction()
-    {
-    }
-
-    public function deleteAction()
-    {
-    }
     
     
 }

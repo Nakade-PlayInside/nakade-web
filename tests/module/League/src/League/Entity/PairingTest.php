@@ -6,72 +6,15 @@ use League\Entity\Pairing;
 use League\Entity\Result;
 use User\Entity\User;
 use PHPUnit_Framework_TestCase;
+use Zend\InputFilter\InputFilter;
 
 class PairingTest extends PHPUnit_Framework_TestCase
 {
-    public function testPairingInitialState()
+    protected $data=array();
+    
+    public function __construct()
     {
-        $pairing = new Pairing();
-
-        $this->assertNull(
-            $pairing->getId(), 
-            '"id" should initially be null'
-        );
-        $this->assertNull(
-            $pairing->getLid(), 
-            '"lid" should initially be null'
-        );
-        $this->assertNull(
-            $pairing->getBlackId(), 
-            '"blackId" should initially be null'
-        );
-        $this->assertNull(
-            $pairing->getWhiteId(),
-            '"whiteId" should initially be null'
-        );
-        $this->assertNull(
-            $pairing->getResultId(),
-            '"resultId" should initially be null'
-        );
-        $this->assertNull(
-            $pairing->getWinnerId(), 
-            '"winnerId" should initially be null'
-        );
-        $this->assertNull(
-            $pairing->getPoints(), 
-            '"points" should initially be null'
-        );
-        $this->assertNull(
-            $pairing->getDate(), 
-            '"date" should initially be null'
-        );
-        $this->assertNull(
-            $pairing->getLeague(), 
-            '"league" should initially be null'
-        );
-        $this->assertNull(
-            $pairing->getBlack(), 
-            '"black" should initially be null'
-        );
-        $this->assertNull(
-            $pairing->getWhite(), 
-            '"white" should initially be null'
-        );
-        $this->assertNull(
-            $pairing->getWinner(), 
-            '"winner" should initially be null'
-        ); 
-        $this->assertNull(
-            $pairing->getResult(), 
-            '"result" should initially be null'
-        ); 
-    }
-
-    public function testSetsPropertiesCorrectly()
-    {
-        $pairing = new Pairing();
-        
-        $data = array(
+         $this->data = array(
             'id' => 123,
             'lid'  => 232,
             'blackId' => 334,
@@ -80,85 +23,142 @@ class PairingTest extends PHPUnit_Framework_TestCase
             'winnerId' => 231,
             'points' => 44,
             'date' => new \DateTime('2000-01-01'),
-            'black' => new User(),
-            'white' => new User(),
-            'winner' => new User(),
-            'result' => new Result(),
+            'league' => 1,
+            'black' => 1,
+            'white' => 1,
+            'winner' => 1,
+            'result' => 1,
+        );
+    }
+    
+    public function testPairingInitialState()
+    {
+        $object = new Pairing();
+
+         foreach($this->data as $key => $value) {
             
+            $method = 'get'.ucfirst($key);
+            $this->assertNull(
+                $object->$method(), 
+                sprintf('"%s" should initially be null', $key)
+            );
+        } 
+        
+       
+    }
+
+    public function testSetsPropertiesCorrectly()
+    {
+        $object = new Pairing();
+        
+        foreach($this->data as $key => $value) {
+            
+            //setValue
+            $method = 'set'.ucfirst($key);
+            $object->$method($value);
+            
+            //getValue
+            $method = 'get'.ucfirst($key);
+            $this->assertSame(
+                $value, 
+                $object->$method(), 
+                sprintf('"%s" was not set correctly', $key)
+            );
+        } 
+       
+    }
+
+    
+    public function testArrayCopy() 
+    {
+        $object = new Pairing();
+        
+        //testing array copy
+        $this->assertInternalType(
+            'array',    
+            $object->getArrayCopy(), 
+            '"getArrayCopy()" do not work correctly'
         );
         
-
-        $pairing->setId($data['id']);
-        $pairing->setLid($data['lid']);
-        $pairing->setBlackId($data['blackId']);
-        $pairing->setWhiteId($data['whiteId']);
-        $pairing->setResultId($data['resultId']);
-        $pairing->setWinnerId($data['winnerId']);
-        $pairing->setPoints($data['points']);      
-        $pairing->setDate($data['date']);
-        $pairing->setBlack($data['black']);
-        $pairing->setWhite($data['white']);
-        $pairing->setWinner($data['winner']);
-        $pairing->setResult($data['result']);
-
-       
+    }
+             
+             
+    public function testMagicMethods()
+    {
+        $object = new Pairing();
+        $object->_id=2;
+        
         $this->assertSame(
-            $data['id'], $pairing->getId(), '"id" was not set correctly'
+           2,
+           $object->getId(),     
+           '"__set" do not work correctly'     
         );
+        
         $this->assertSame(
-            $data['lid'], $pairing->getLid(), '"lid" was not set correctly'
+           $object->_id,
+           $object->getId(),     
+           '"__get" do not work correctly'     
         );
-        $this->assertSame(
-            $data['points'], 
-            $pairing->getPoints(), 
-            '"sid" was not set correctly'
+    }
+    
+    public function testPopulateMethod()
+    {
+        $object = new Pairing();
+        
+        $data = array(
+            '_id' => 1,
+            'result' => 123,
+            'winner'  => 232,
+            'points'  => 232,
         );
+        
+        $object->populate($data);
+        
         $this->assertSame(
-            $data['blackId'], 
-            $pairing->getBlackId(), 
-            '"blackId" was not set correctly'
+                $data['_id'], 
+                $object->getId(), 
+                sprintf('"id" was not set correctly')
         );
+        
         $this->assertSame(
-            $data['whiteId'], 
-            $pairing->getWhiteId(), 
-            '"whiteId" was not set correctly'
+                $data['result'], 
+                $object->getResultId(), 
+                sprintf('"resultId" was not set correctly')
         );
+        
         $this->assertSame(
-            $data['resultId'], 
-            $pairing->getResultId(), 
-            '"resultId" was not set correctly'
+                $data['winner'], 
+                $object->getWinnerId(), 
+                sprintf('"winnerId" was not set correctly')
         );
+        
         $this->assertSame(
-            $data['winnerId'], 
-            $pairing->getWinnerId(), 
-            '"winnerId" was not set correctly'
-        );
-        $this->assertSame(
-            $data['date'], 
-            $pairing->getDate(), 
-            '"date" was not set correctly'
-        );
-        $this->assertSame(
-            $data['black'], 
-            $pairing->getBlack(), 
-            '"black" was not set correctly'
-        );
-        $this->assertSame(
-            $data['white'], 
-            $pairing->getWhite(), 
-            '"white" was not set correctly'
-        );
-        $this->assertSame(
-            $data['winner'], 
-            $pairing->getWinner(), 
-            '"winner" was not set correctly'
-        );
-        $this->assertSame(
-            $data['result'], 
-            $pairing->getResult(), 
-            '"result" was not set correctly'
+                $data['points'], 
+                $object->getPoints(), 
+                sprintf('"points" was not set correctly')
         );
          
     }
-
+    
+    public function testInputFilterMethods()
+    {
+        $object = new Pairing();
+        
+        $this->assertInstanceOf(
+           'Zend\InputFilter\InputFilter',     
+           $object->getInputFilter(),
+           '"getInputFilter()" do not work correctly'     
+        );
+    }
+    
+    /**
+     * @expectedException Exception
+     */
+    public function testException()
+    {
+        $object = new Pairing();
+        $inputFilter = new InputFilter();
+        $object->setInputFilter($inputFilter);
+         
+    }
 }

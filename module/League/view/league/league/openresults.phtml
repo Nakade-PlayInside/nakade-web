@@ -8,7 +8,7 @@ $this->headTitle($title);
 
 
 <table style="width:25em;margin-top: 0.5em;">
-<?php foreach ($pairings as $game) : ?>
+<?php foreach ($this->matches as $game) : ?>
 <tr>
     <td><?php echo $game->getDate()->format('d.m.Y   H');?>h</td>
     <td><?php echo $this->escapeHtml($this->player($game->getBlack()));?></td>

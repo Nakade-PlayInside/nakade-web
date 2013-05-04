@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @property string $_abbreviation
  * @property DateTime $_year
  * @property boolean $_active
+ * @property boolean $_closed
  */
 class Season
 {
@@ -47,15 +48,6 @@ class Season
    */
   protected $_number;
   
-  /**
-   * Abbreviation
-   *
-   * @ORM\Column(name="abbr", type="string")
-   * @var string
-   * @access protected
-   */
-  protected $_abbreviation;
-  
   
   /**
    * active
@@ -64,7 +56,16 @@ class Season
    * @var boolean
    * @access protected
    */
-  protected $_active;
+  protected $_active=0;
+  
+  /**
+   * closed
+   *
+   * @ORM\Column(name="closed", type="boolean")
+   * @var boolean
+   * @access protected
+   */
+  protected $_closed=0;
   
   /**
    * Year
@@ -124,30 +125,6 @@ class Season
   }
 
   /**
-   * Sets the Abbreviation
-   *
-   * @param string $abbreviation
-   * @access public
-   * @return Season
-   */
-  public function setAbbreviation($abbreviation)
-  {
-    $this->_abbreviation = $abbreviation;
-    return $this;
-  }
-
-  /**
-   * Returns the Abbreviation
-   *
-   * @access public
-   * @return string
-   */
-  public function getAbbreviation()
-  {
-    return $this->_abbreviation;
-  }
-  
-  /**
    * Sets the Active flag
    *
    * @param boolean $active
@@ -161,7 +138,9 @@ class Season
   }
 
   /**
-   * Returns the Active flag
+   * Returns the Active flag.
+   * True if all conditions are set to let the season
+   * begin ie leagues and players are bound.
    *
    * @access public
    * @return boolean
@@ -171,6 +150,31 @@ class Season
     return $this->_active;
   }
   
+  /**
+   * Sets the Closed flag 
+   *
+   * @param boolean $closed
+   * @access public
+   * @return Season
+   */
+  public function setClosed($closed)
+  {
+    $this->_closed = $closed;
+    return $this;
+  }
+
+  /**
+   * Returns the Closed flag.
+   * True if all games in this season 
+   * have been played. 
+   *
+   * @access public
+   * @return boolean
+   */
+  public function isClosed()
+  {
+    return $this->_closed;
+  }
   
   /**
    * Sets the Year  
@@ -220,4 +224,37 @@ class Season
     
       return $this->_number;
   }
+  
+  /**
+    * Magic getter to expose protected properties.
+    *
+    * @param string $property
+    * @return mixed
+    */
+    public function __get($property) 
+    {
+        return $this->$property;
+    }
+ 
+    /**
+     * Magic setter to save protected properties.
+     *
+     * @param string $property
+     * @param mixed $value
+     */
+    public function __set($property, $value) 
+    {
+        $this->$property = $value;
+    }
+ 
+    /**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy() 
+    {
+        return get_object_vars($this);
+    }
+    
 }

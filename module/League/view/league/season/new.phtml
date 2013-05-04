@@ -1,0 +1,28 @@
+<?php
+// module/user/view/user/user/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('League'); 
+
+$headline = $this->translate("Make New Season: No ");
+$this->headTitle($headline);
+
+?>
+<h3><?php echo $this->escapeHtml($headline) . $this->number; ?></h3>
+
+
+<?php
+$form = $this->form;
+
+$form->setAttribute('action', $this->url(
+    'season/process',
+    array(
+        'action'     => 'gammel',
+    )
+));
+$form->prepare();
+echo $this->form()->openTag($form);
+echo $this->formCollection($form);
+echo $this->form()->closeTag();
+
+?>
+
+

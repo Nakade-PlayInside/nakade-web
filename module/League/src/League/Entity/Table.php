@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @property League $_League
  * @property User $_Player
  */
-class Position
+class Table
 {
     
     
@@ -108,7 +108,7 @@ class Position
    * @var float
    * @access protected
    */
-   protected $_tiebreakerA;
+   protected $_tiebreaker1;
    
    /**
    * Tiebreaker 2
@@ -117,7 +117,7 @@ class Position
    * @var float
    * @access protected
    */
-   protected $_tiebreakerB;
+   protected $_tiebreaker2;
   
    /**
    * League Entity
@@ -145,7 +145,7 @@ class Position
    *
    * @param int $pid
    * @access public
-   * @return Position
+   * @return Table
    */
   public function setId($pid)
   {
@@ -169,7 +169,7 @@ class Position
    *
    * @param int $lid
    * @access public
-   * @return Position
+   * @return Table
    */
   public function setLid($lid)
   {
@@ -194,7 +194,7 @@ class Position
    *
    * @param int $uid
    * @access public
-   * @return Position
+   * @return Table
    */
   public function setUid($uid)
   {
@@ -218,7 +218,7 @@ class Position
    *
    * @param int $nogp
    * @access public
-   * @return Position
+   * @return Table
    */
   public function setGamesPlayed($nogp)
   {
@@ -242,7 +242,7 @@ class Position
    *
    * @param int $now
    * @access public
-   * @return Position
+   * @return Table
    */
   public function setWin($now)
   {
@@ -266,7 +266,7 @@ class Position
    *
    * @param int $nol
    * @access public
-   * @return Position
+   * @return Table
    */
   public function setLoss($nol)
   {
@@ -290,7 +290,7 @@ class Position
    *
    * @param int $noj
    * @access public
-   * @return Position
+   * @return Table
    */
   public function setJigo($noj)
   {
@@ -314,9 +314,9 @@ class Position
    *
    * @param int $noj
    * @access public
-   * @return Position
+   * @return Table
    */
-  public function setSuspendedGames($nosg)
+  public function setGamesSuspended($nosg)
   {
     $this->_gamesSuspended = $nosg;
     return $this;
@@ -329,7 +329,7 @@ class Position
    * @access public
    * @return int
    */
-  public function getSuspendedGames()
+  public function getGamesSuspended()
   {
     return $this->_gamesSuspended;
   }
@@ -339,11 +339,11 @@ class Position
    *
    * @param int $tie
    * @access public
-   * @return Position
+   * @return Table
    */
   public function setTiebreaker1($tie)
   {
-    $this->_tiebreakerA = $tie;
+    $this->_tiebreaker1 = $tie;
     return $this;
   }
 
@@ -355,7 +355,7 @@ class Position
    */
   public function getTiebreaker1()
   {
-    return $this->_tiebreakerA;
+    return $this->_tiebreaker1;
   }
 
   /**
@@ -363,11 +363,11 @@ class Position
    *
    * @param int $tie
    * @access public
-   * @return Position
+   * @return Table
    */
   public function setTiebreaker2($tie)
   {
-    $this->_tiebreakerB = $tie;
+    $this->_tiebreaker2 = $tie;
     return $this;
   }
 
@@ -379,7 +379,7 @@ class Position
    */
   public function getTiebreaker2()
   {
-    return $this->_tiebreakerB;
+    return $this->_tiebreaker2;
   }
   
   
@@ -387,7 +387,7 @@ class Position
    * Sets the League
    * @param int $league
    * @access public
-   * @return Position
+   * @return Table
    */
   public function setLeague($league)
   {
@@ -410,7 +410,7 @@ class Position
    * Sets the Player
    * @param int $uid
    * @access public
-   * @return Position
+   * @return Table
    */
   public function setPlayer($uid)
   {
@@ -492,11 +492,11 @@ class Position
             $data['loss']:0;
         
         //tiebreaker1
-        $this->_tiebreakerA += isset($data['tiebreaker1'])?
+        $this->_tiebreaker1 += isset($data['tiebreaker1'])?
             $data['tiebreaker1']:0;
         
         //tiebreaker2
-        $this->_tiebreakerB += isset($data['tiebreaker2'])?
+        $this->_tiebreaker2 += isset($data['tiebreaker2'])?
             $data['tiebreaker2']:0;
     }
   

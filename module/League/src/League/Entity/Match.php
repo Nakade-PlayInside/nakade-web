@@ -10,10 +10,11 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface; 
 
 /**
- * Entity Class representing a League
+ * Entity Class representing a Match
  *
  * @ORM\Entity
  * @ORM\Table(name="leaguePairings")
+ * @property int $_id
  * @property int $_lid
  * @property int $_blackId
  * @property int $_whiteId
@@ -27,7 +28,7 @@ use Zend\InputFilter\InputFilterInterface;
  * @property User $_Winner
  * @property Result $_Result
  */
-class Pairing implements InputFilterAwareInterface 
+class Match implements InputFilterAwareInterface 
 {
    
     protected $inputFilter;
@@ -142,7 +143,7 @@ class Pairing implements InputFilterAwareInterface
    * User Entity
    *
    * @ORM\OneToOne(targetEntity="User\Entity\User")
-   * @ORM\JoinColumn(name="winner", referencedColumnName="id")
+   * @ORM\JoinColumn(name="winner", referencedColumnName="uid")
    * @var User
    * @access protected
    */
@@ -163,7 +164,7 @@ class Pairing implements InputFilterAwareInterface
    *
    * @param int $pid
    * @access public
-   * @return Pairings
+   * @return Match
    */
   public function setId($pid)
   {
@@ -212,7 +213,7 @@ class Pairing implements InputFilterAwareInterface
    *
    * @param int $order
    * @access public
-   * @return Pairings
+   * @return Match
    */
   public function setBlackId($bid)
   {
@@ -236,7 +237,7 @@ class Pairing implements InputFilterAwareInterface
    *
    * @param int $wid
    * @access public
-   * @return Pairing
+   * @return Match
    */
   public function setWhiteId($wid)
   {
@@ -260,7 +261,7 @@ class Pairing implements InputFilterAwareInterface
    *
    * @param int $rid
    * @access public
-   * @return Pairing
+   * @return Match
    */
   public function setResultId($rid)
   {
@@ -284,7 +285,7 @@ class Pairing implements InputFilterAwareInterface
    *
    * @param int $wid
    * @access public
-   * @return Pairing
+   * @return Match
    */
   public function setWinnerId($wid)
   {
@@ -308,7 +309,7 @@ class Pairing implements InputFilterAwareInterface
    *
    * @param float $points
    * @access public
-   * @return Pairing
+   * @return Match
    */
   public function setPoints($points)
   {
@@ -333,7 +334,7 @@ class Pairing implements InputFilterAwareInterface
    *
    * @param DateTime $date
    * @access public
-   * @return Pairing
+   * @return Match
    */
   public function setDate($date)
   {
@@ -356,7 +357,7 @@ class Pairing implements InputFilterAwareInterface
    * Sets the League
    * @param int $league
    * @access public
-   * @return Pairing
+   * @return Match
    */
   public function setLeague($league)
   {
@@ -379,7 +380,7 @@ class Pairing implements InputFilterAwareInterface
    * Sets the black User
    * @param int $uid
    * @access public
-   * @return Pairing
+   * @return Match
    */
   public function setBlack($uid)
   {
@@ -402,7 +403,7 @@ class Pairing implements InputFilterAwareInterface
    * Sets the white User
    * @param int $uid
    * @access public
-   * @return Pairing
+   * @return Match
    */
   public function setWhite($uid)
   {
@@ -425,7 +426,7 @@ class Pairing implements InputFilterAwareInterface
    * Sets the winning User
    * @param int $uid
    * @access public
-   * @return Pairing
+   * @return Match
    */
   public function setWinner($uid)
   {
@@ -448,7 +449,7 @@ class Pairing implements InputFilterAwareInterface
    * Sets the Result
    * @param int $resultId
    * @access public
-   * @return Pairing
+   * @return Match
    */
   public function setResult($resultId)
   {
@@ -523,6 +524,10 @@ class Pairing implements InputFilterAwareInterface
         throw new \Exception("Not used");
     }
  
+    /**
+     * 
+     * @return type
+     */
     public function getInputFilter()
     {
         if (!$this->inputFilter) {
