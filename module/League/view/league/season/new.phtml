@@ -2,26 +2,37 @@
 // module/user/view/user/user/index.phtml:
 $this->plugin('translate')->setTranslatorTextDomain('League'); 
 
-$headline = $this->translate("Make New Season: No ");
+$headline = $this->translate("New Season: ");
 $this->headTitle($headline);
 
 ?>
 <h3><?php echo $this->escapeHtml($headline) . $this->number; ?></h3>
 
+<table style="width:20em;margin-top: 0.5em;">
+<tr>
+    <td><?php echo $this->translate("Leagues:");?></td>
+    <td><?php echo $this->noLeagues;?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Players:");?></td>
+    <td><?php echo $this->noPlayers;?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Total Matches:");?></td>
+    <td><?php echo $this->noGames;?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Season begin:");?></td>
+    <td><?php echo $this->dateformat($this->start);?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("State:");?></td>
+    <td><?php echo $this->state;?></td>
+</tr>
+</table>
 
 <?php
-$form = $this->form;
 
-$form->setAttribute('action', $this->url(
-    'season/process',
-    array(
-        'action'     => 'gammel',
-    )
-));
-$form->prepare();
-echo $this->form()->openTag($form);
-echo $this->formCollection($form);
-echo $this->form()->closeTag();
 
 ?>
 

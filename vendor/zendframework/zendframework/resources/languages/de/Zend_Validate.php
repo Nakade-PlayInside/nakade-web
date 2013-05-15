@@ -18,6 +18,7 @@
  * EN-Revision: 09.Sept.2012
  */
 return array(
+    
     // Zend_I18n_Validator_Alnum
     "Invalid type given. String, integer or float expected"                                                                     => 'Ungültiger Eingabewert eingegeben. String, Integer oder Float erwartet',
     "The input contains characters which are non alphabetic and no digits"                                                      => 'Der Eingabewert enthält nicht alphanumerische Zeichen',

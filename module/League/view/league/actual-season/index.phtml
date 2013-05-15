@@ -1,0 +1,41 @@
+<?php
+// module/user/view/user/user/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('League'); 
+$this->headTitle($this->title);
+?>
+
+<h3><?php echo $this->escapeHtml( $this->title); ?></h3>
+
+<?php $this->placeholder('standings')->captureStart();?>
+<table class="table" style="width:8em;margin-top: 0.5em;">
+<tr>
+    <th title="<?php echo $this->translate('Position')?>">P</th>
+    <th title="<?php echo $this->translate('Player')?>"><?php 
+        echo $this->translate('Name')?></th>
+    <th title="<?php echo $this->translate('Played games')?>"><?php 
+        echo $this->translate('GP')?></th>
+    <th title="<?php echo $this->translate('Wins')?>"><?php 
+        echo $this->translate('W')?></th>
+    <th title="<?php echo $this->translate('Tie-breaker')?>"><?php 
+        echo $this->translate('Hahn')?></th>
+</tr>
+<?php foreach ($this->table as $player) : ?>
+<tr style="background-color:<?php 
+    echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+    <td><?php echo $this->position($player); ?></td>
+    <td><?php echo $this->escapeHtml($this->player($player->getPlayer()));?></td>
+    <td><?php echo $this->escapeHtml($player->getGamesPlayed());?></td>
+    <td><?php echo $this->escapeHtml($player->getWin());?></td>
+    <td><?php echo $this->escapeHtml($player->getTiebreaker1());?></td>
+    
+</tr>
+<?php endforeach; ?>
+</table>
+<?php $this->placeholder('standings')->captureEnd(); 
+
+  if($this->table!=null)
+      echo $this->placeholder('standings');
+          
+        
+?>
+

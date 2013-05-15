@@ -1,36 +1,119 @@
 <?php
 namespace League\Form;
+use \DateTime;
 
-use Zend\Form\Form;
-
-class SeasonForm extends Form
+/**
+ * Form for making a new season
+ */
+class SeasonForm extends AbstractTranslatorForm
 {
    
-    protected $_translator;
-    protected $_textDomain="League";
-    protected $_today;
+    protected $_startDate;
+    protected $_minDate;
+    protected $_maxDate;
     protected $_title='Bundesliga';
+    protected $_number=1;
     
-            
-    public function __construct($title=null)
+    /**
+     * constructor 
+     */        
+    public function __construct()
     {
-   
-         //form name is AuthForm
+        //form name is SeasonForm
         parent::__construct($name='SeasonForm');
-       
+        
         $today=new \DateTime();
-        $this->_today=$today->format('Y-m-d');
-         
-        if(isset($title)) {
-            
-            $this->_title=$title;
-        }
-        
-        
-        $this->init();
+        $this->_minDate   = $today->format('Y-m-d');
+        $this->_startDate = $today->modify('+2 week')->format('Y-m-d');
+        $this->_maxDate   = $today->modify('+2 year')->format('Y-m-d');
         
     } 
     
+    /**
+     * set season number
+     * @param int $number
+     * @return \League\Form\SeasonForm
+     */
+    public function setNumber($number=1) 
+    {
+        $this->_number = $number;
+        return $this;
+    } 
+    
+    /**
+     * get season number
+     * @return int
+     */
+    public function getNumber() 
+    {
+        return $this->_number;
+    }  
+    
+    /**
+     * set season title
+     * @param string $title
+     * @return \League\Form\SeasonForm
+     */
+    public function setTitle($title='Bundesliga') 
+    {
+        $this->_title = $title;
+        return $this;
+    } 
+    
+    /**
+     * get season title
+     * @return string
+     */
+    public function getTitle() 
+    {
+        return $this->_title;
+    }
+    
+    /**
+     * set date. In detail start, minimum and maximum date
+     * @param DateTime $year
+     * @return \League\Form\SeasonForm
+     */
+    public function setDate(DateTime $year) 
+    {
+        $this->_startDate = $year->format('Y-m-d');
+        $this->_minDate   = $year->modify('-2 week')->format('Y-m-d');
+        $this->_maxDate   = $year->modify('+1 year')->format('Y-m-d');
+        
+        return $this;
+    } 
+    
+    /**
+     * get starting date
+     * @return DateTime
+     */
+    public function getStartDate() 
+    {
+        return $this->_startDate;
+    }
+    
+    /**
+     * get minimum date
+     * @return DateTime
+     */
+    public function getMinDate() 
+    {
+        return $this->_minDate;
+    }
+    
+    /**
+     * get maximum date
+     * @return DateTime
+     */
+    public function getMaxDate() 
+    {
+        return $this->_maxDate;
+    }
+    
+    /**
+     * init the form. It is neccessary to call this function
+     * before using the form.
+     */
     public function init() {
        
         //title
@@ -53,15 +136,14 @@ class SeasonForm extends Form
                 'type' => 'Zend\Form\Element\Date',
                 'name' => 'year',
                 'options' => array(
-                    'label' => 'Season Start',
+                    'label' => $this->translate('Season Start'),
                     'format' => 'Y-m-d',
-                    'value'  => '2013-10-12'
-                ),
+                 ),
                 'attributes' => array(
-                    'min' => '2013-01-01',
-                    'max' => '2023-01-01',
-                    'step' => '1', // days; default step interval is 1 day
-                    'value' => $this->_today,
+                    'min'   => $this->_minDate,
+                    'max'   => $this->_maxDate,
+                    'step'  => '1', // days; default step interval is 1 day
+                    'value' => $this->_startDate,
                 )
             )
         );
@@ -72,7 +154,7 @@ class SeasonForm extends Form
                 'type' => 'Zend\Form\Element\Hidden',
                 'name' => 'number',
                 'attributes' => array(
-                    'value'  => 3,
+                    'value'  => $this->_number,
                 )
             )
         );
@@ -106,44 +188,5 @@ class SeasonForm extends Form
         );
         
     } 
-    
-    /**
-     * translator function. l18n
-     * 
-     * @param type $message
-     * @return string $message
-     */
-    public function translate($message)
-    {
-        if (null === $this->_translator) {
-           return $message;
-        }
-        
-        return $this->_translator->translate(
-                $message, 
-                $this->_textDomain
-        );
-    }
-    
-    /**
-     * Setter for translator in form. Enables the usage of i18N.
-     * 
-     * @param \Zend\I18n\Translator\Translator $translator
-     */
-    public function setTranslator(Translator $translator)
-    {
-        $this->_translator = $translator;
-    }
-    
-    /**
-    * getter 
-    * 
-    * @return \Zend\I18n\Translator\Translator $translator
-    */
-    public function getTranslator()
-    {
-        return $this->_translator;
-    }
-    
 }
 ?>

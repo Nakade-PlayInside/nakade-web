@@ -1,6 +1,7 @@
 <?php
 namespace League\Entity;
 
+
 use League\Entity\League;
 use User\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
@@ -507,15 +508,10 @@ class Match implements InputFilterAwareInterface
      */
     public function populate($data = array()) 
     {
-        $this->_id       = $data['_id'];
-        $this->_resultId = (isset($data['result']) && $data['result']>0)? 
-                $data['result']:null;
-        $this->_winnerId = (isset($data['winner']) && $data['winner']>0)? 
-                $data['winner'] : null;
-        
-        
-        $this->_points   = (isset($data['points'])) ? 
-                $data['points'] : null;
+        $this->_id       = $data['pid'];
+        $this->_resultId = $data['result'];
+        $this->_winnerId = $data['winner'];
+        $this->_points   = $data['points'];
              
     }
     

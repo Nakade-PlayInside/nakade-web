@@ -1,29 +1,24 @@
 <?php
 namespace League\Controller\Plugin;
 
-use League\Entity\League;
-use League\Entity\Season;
-
+/*
+ * PlugIn for the result table of the database
+ */
 class ResultPlugin extends AbstractEntityPlugin
 {
+    /**
+     * get all kind of results 
+     * 
+     * @return array of Result entity
+     */
     public function getResultlist()
     {
-       
-        
-       $repository = $this->getEntityManager()->getRepository(
-           'League\Entity\Result'
-       );
-       
-       
-       //@todo: datumsvergleich jetzt zu nächsten termin
-       //@todo: nur aktuelle Termine, nicht die Spiele,
-       //die noch nicht eingetragen sind 
-       
-       $game = $repository->findAll();
-       
-       return $game;
+        return $this->getEntityManager()
+                    ->getRepository('League\Entity\Result')
+                    ->findAll();
        
     } 
+    
     
 }
 

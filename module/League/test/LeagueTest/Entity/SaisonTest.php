@@ -13,7 +13,6 @@ class SeasonTest extends PHPUnit_Framework_TestCase
         $this->data=array(
             'id' => 123,
             'title'  => 'sieg',
-            'abbreviation'  => 'sed',
             'active' => TRUE,
             'year'  => new \DateTime('now'),
             'number'  => 3,

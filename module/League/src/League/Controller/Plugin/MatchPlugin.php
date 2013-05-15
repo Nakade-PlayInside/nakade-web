@@ -3,7 +3,10 @@ namespace League\Controller\Plugin;
 
 use League\Entity\League;
 use League\Entity\Season;
-
+use League\Entity\Match;
+/**
+ * PlugIn for managing match database requests.
+ */
 class MatchPlugin extends AbstractEntityPlugin
 {
     /**
@@ -90,16 +93,17 @@ class MatchPlugin extends AbstractEntityPlugin
     */
     public function getLastGameInSeason(Season $season)
     {
-       $query="SELECT MAX(u._date) as last FROM League\Entity\Match u,
-           League\Entity\League l
-           WHERE u._lid=l._id
-           AND l._sid=:sid" ;
+       $dql = "SELECT MAX(u._date) as last FROM League\Entity\Match u,
+               League\Entity\League l
+               WHERE u._lid=l._id
+               AND l._sid=:sid" ;
        
-       $matches = $this->getEntityManager()->createQuery($query);
-       $matches->setParameter('sid', $season->getId())
-                ->setMaxResults(1);
-       
-       $result = $matches->getSingleResult();
+       $result = $this->getEntityManager()
+                      ->createQuery($dql)
+                      ->setParameter('sid', $season->getId())
+                      ->setMaxResults(1)
+                      ->getSingleResult();
+               
        return $result['last'];
        
     }
@@ -118,16 +122,16 @@ class MatchPlugin extends AbstractEntityPlugin
        $today = new \DateTime();
        $today->modify('+6 hour');
        
-       $query="SELECT u FROM League\Entity\Match u 
-           WHERE u._lid= :lid AND u._resultId IS NULL 
-           AND u._date >= :today ORDER BY u._date ASC";
+       $dql = "SELECT u FROM League\Entity\Match u 
+               WHERE u._lid= :lid AND u._resultId IS NULL 
+               AND u._date >= :today ORDER BY u._date ASC";
        
-       $matches = $this->getEntityManager()->createQuery($query);
-       $matches->setParameter('lid', $league->getId());
-       $matches->setParameter('today', $today);
-       $matches->setMaxResults(3);
-      
-       return $matches->getResult();
+       return $this->getEntityManager()
+                   ->createQuery($dql)
+                   ->setParameter('lid', $league->getId())
+                   ->setParameter('today', $today)
+                   ->setMaxResults(3)
+                   ->getResult();
        
     }
     
@@ -142,54 +146,84 @@ class MatchPlugin extends AbstractEntityPlugin
     public function getAllOpenResults(Season $season)
     {
         
-       $query="SELECT u FROM League\Entity\Match u,
-           League\Entity\League l
-           WHERE l._sid = :sid AND 
-           u._lid=l._id AND 
-           u._resultId IS NULL 
-           AND u._date < :today ORDER BY u._date ASC";
+       $dql = "SELECT u FROM 
+               League\Entity\Match u,
+               League\Entity\League l
+               WHERE l._sid = :sid AND 
+               u._lid=l._id AND 
+               u._resultId IS NULL 
+               AND u._date < :today 
+               ORDER BY u._date ASC";
        
-       $matches = $this->getEntityManager()->createQuery($query);
-       $matches->setParameter('today', new \DateTime());
-       $matches->setParameter('sid', $season->getId());
-              
-       return $matches->getResult();
-       
+       return $this->getEntityManager()
+                   ->createQuery($dql)
+                   ->setParameter('today', new \DateTime())
+                   ->setParameter('sid', $season->getId())        
+                   ->getResult();
     }
     
+    /**
+     * get next game
+     * 
+     * @return array of entities
+     */
     public function getNextGame()
     {
-       
-       $repository = $this->getEntityManager()->getRepository(
-           'League\Entity\Match'
-       );
-       
-       //@todo: datumsvergleich jetzt zu nächsten termin
-       //@todo: nur aktuelle Termine, nicht die Spiele,
-       //die noch nicht eingetragen sind 
-       
-       $position = $repository->findBy(
-           array('_lid' => 1, '_resultId' => NULL,), 
-           array(
-              '_date'=> 'ASC', 
-              ),
-           1    
-       );
-       
-       return $position;
+       //todo: leagueID
+       //todo: find only one result 
+       return $this->getEntityManager()
+                   ->getRepository('League\Entity\Match')
+                   ->findBy(
+                        array('_lid' => 1, '_resultId' => NULL), 
+                        array('_date'=> 'ASC'),
+                        1    
+                    );
        
     }
     
+    /**
+     * get the match by id
+     * 
+     * @param int $id
+     * @return League\Entity\Match
+     */
     public function getMatch($id)
     {
        
-       $repository = $this->getEntityManager()->getRepository(
-           'League\Entity\Match'
-       );
-        
-       return $repository->find($id);;
+       return $this->getEntityManager()
+                   ->getRepository('League\Entity\Match')
+                   ->find($id);
                
-    }        
+    }  
+    
+    /**
+     * set the match result
+     * 
+     * @param int $id
+     * @return League\Entity\Match
+     */
+    public function setMatchResult(
+            $matchId, 
+            $resultId, 
+            $winnerId, 
+            $points=null
+            )
+    {
+       
+        $match = $this->getMatch($matchId);
+        
+        if($match==null)
+            return;
+        
+        $match->setResultId($resultId);
+        $match->setWinnerId($winnerId);
+        
+        if(isset($points))
+            $match->setPoints($points);
+        
+        return $match;
+    }      
+    
     
 }
 

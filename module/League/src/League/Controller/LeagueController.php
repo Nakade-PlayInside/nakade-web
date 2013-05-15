@@ -1,7 +1,6 @@
 <?php
 namespace League\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use League\Form\ResultForm;
 use League\Helper\PositionCalculator;
@@ -14,16 +13,29 @@ use League\Helper\PositionCalculator;
  * 
  * @author Holger Maerz <holger@nakade.de>
  */
-class LeagueController extends AbstractActionController
+class LeagueController extends AbstractTranslatorController
 {
+    protected $_season_mapper_service;
+    
+    public function getSeasonMapperService()
+    {
+       return $this->_season_mapper_service;    
+    }
+    
+    public function setSeasonMapperService($service)
+    {
+        $this->_season_mapper_service = $service;
+        return $this;
+    }        
     /**
     * viewhelper to exhibit the standings of the top league 
     */
     public function indexAction()
     {
-       
+      
+      
        //better to get the last season 
-       $actualSeason =  $this->season()->getActualSeason();
+       $actualSeason =  $this->getSeasonMapperService()->getActualSeason();
        $league       =  $this->league()->getTopLeague($actualSeason);
         
        return new ViewModel(
@@ -95,13 +107,14 @@ class LeagueController extends AbstractActionController
             if ($form->isValid()) {
                 
                 $form->bindValues();
-                $this->table()->save();
+              //  $this->table()->save();
               
                 
                 $calc = new PositionCalculator($request->getPost());     
                 $calc->bindEntity($black);
                 $calc->bindEntity($white);
                
+                
                 $this->table()->save($black);
                 $this->table()->save($white);
               

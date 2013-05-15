@@ -59,7 +59,26 @@ class Participants
    */
   protected $_uid;
 
+  /**
+   * User Entity
+   *
+   * @ORM\OneToOne(targetEntity="User\Entity\User")
+   * @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+   * @var User
+   * @access protected
+   */
+   protected $_player;
   
+   protected $_games_played;
+   protected $_games_suspended;
+   protected $_games_win;
+   protected $_games_lost;
+   protected $_games_draw;
+   protected $_games_points;
+   protected $_first_tiebreak;
+   protected $_second_tiebreak;
+   
+   
   /**
    * Sets the Identifier
    *
@@ -157,6 +176,130 @@ class Participants
     return $this->_uid;
   }
   
+  /**
+   * Sets the Player
+   * @param int $uid
+   * @access public
+   * @return Table
+   */
+  public function setPlayer($uid)
+  {
+    $this->_player = $uid;
+    return $this;
+  } 
+  
+  /**
+   * Returns Player
+   *
+   * @access public
+   * @return User
+   */
+  public function getPlayer()
+  {
+    return $this->_player;
+  }
+  
+  /*****************************/
+  public function populate($data) 
+  {
+       foreach($data as $key => $value) {
+            
+           $method = 'set'.ucfirst($key);
+       
+            if(method_exists($this, $method))
+                $this->$method($value);
+       }
+       
+  }
+  
+  
+  public function setGamesPlayed($noGames)
+  {
+    $this->_games_played = $noGames;
+    return $this;
+  } 
+  
+  public function getGamesPlayed()
+  {
+    return $this->_games_played;
+  }
+  
+  public function setGamesSuspended($noGames)
+  {
+    $this->_games_suspended = $noGames;
+    return $this;
+  } 
+  
+  public function getGamesSuspended()
+  {
+    return $this->_games_suspended;
+  }
+  
+  public function setGamesDraw($noGames)
+  {
+    $this->_games_draw = $noGames;
+    return $this;
+  } 
+  
+  public function getGamesDraw()
+  {
+    return $this->_games_draw;
+  }
+  
+  public function setGamesWin($noGames)
+  {
+    $this->_games_win = $noGames;
+    return $this;
+  } 
+  
+  public function getGamesWin()
+  {
+    return $this->_games_win;
+  }
+  
+  public function setGamesLost($noGames)
+  {
+    $this->_games_lost = $noGames;
+    return $this;
+  } 
+  
+  public function getGamesLost()
+  {
+    return $this->_games_lost;
+  }
+  
+  public function setGamesPoints($points)
+  {
+    $this->_games_points = $points;
+    return $this;
+  } 
+  
+  public function getGamesPoints()
+  {
+    return $this->_games_points;
+  }
+  
+  public function setFirstTiebreak($points)
+  {
+    $this->_first_tiebreak = $points;
+    return $this;
+  } 
+  
+  public function getFirstTiebreak()
+  {
+    return $this->_first_tiebreak;
+  }
+  
+  public function setSecondTiebreak($points)
+  {
+    $this->_second_tiebreak = $points;
+    return $this;
+  } 
+  
+  public function getSecondTiebreak()
+  {
+    return $this->_second_tiebreak;
+  }
   
    /**
     * Magic getter to expose protected properties.

@@ -30,9 +30,10 @@ $form->setAttribute(
 $form->prepare();
 
 echo $this->form()->openTag($form);
-echo $this->formHidden($form->get('_id'));
+echo $this->formCollection($form);
+/*echo $this->formHidden($form->get('_id'));
 echo $this->formRow($form->get('result'));
 echo $this->formRow($form->get('winner'));
 echo $this->formRow($form->get('points'));
-echo $this->formSubmit($form->get('submit'));
+echo $this->formSubmit($form->get('submit'));*/
 echo $this->form()->closeTag();

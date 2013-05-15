@@ -34,11 +34,11 @@ class SeasonControllerFactory implements FactoryInterface
         }
         
         //get text domain from module config
-       // $textDomain = $config['NakadeAuth']['text_domain'];
+        $textDomain = $config['League']['text_domain'];
         $translator = $serviceManager->get('translator');
 
         $controller = new SeasonController();
-        $controller->setTranslator($translator);
+        $controller->setTranslator($translator,$textDomain);
         
         return $controller;
     }

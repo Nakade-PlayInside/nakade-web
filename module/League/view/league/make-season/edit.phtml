@@ -1,0 +1,54 @@
+<?php
+// module/user/view/user/user/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('League'); 
+
+$headline = $this->translate("New Season") . $this->number;
+$this->headTitle($headline);
+
+?>
+<h3><?php echo $this->escapeHtml($headline); ?></h3>
+
+<table style="width:15em;margin-top: 0.5em;">
+
+<tr>
+    <td><?php echo $this->translate("Title:");?></td>
+    <td><?php echo $this->title;?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Date:");?></td>
+    <td><?php echo $this->seasonDate;?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Leagues:");?></td>
+    <td><?php echo $this->noLeagues;?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Players:");?></td>
+    <td><?php echo $this->noPlayers;?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Matches:");?></td>
+    <td><?php echo $this->matches;?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Schedule:");?></td>
+    <td><?php $schedule=($this->schedule? 'Yes': 'No'); 
+               echo $schedule; 
+    ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("First Match:");?></td>
+    <td><?php echo $this->dateformat($this->firstMatch);?></td>
+</tr>
+
+<tr>
+    <td><?php echo $this->translate("Last Match:");?></td>
+    <td><?php echo $this->dateformat($this->lastMatch);?></td>
+</tr>
+</table>
+</br>
+<a style="display:block"><?php echo $this->translate("add league");?></a>
+<a style="display:block"><?php echo $this->translate("add player");?></a>
+     
+        
+

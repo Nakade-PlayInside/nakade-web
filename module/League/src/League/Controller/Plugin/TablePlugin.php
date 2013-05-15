@@ -3,19 +3,50 @@ namespace League\Controller\Plugin;
 
 use League\Entity\League;
 use League\Entity\Season;
+use League\Entity\Match;
+use League\Entity\Table;
 
+/**
+ * PlugIn for managing table database requests.
+ *  
+ */
 class TablePlugin extends AbstractEntityPlugin
 {
    
-    /**
-   * Getting table of the league
+   //maximum points hahn-system
+     protected $_max_points = 40; 
+    
+   /**
+   * Getting table of the league sorted by wins,
+   * tiebreakers and number of games played.
+   * 
+   * @param League $league League entity
+   * @return array Table entities
+   */
+   public function getTableByLeagueId($leagueId)
+   {
+       return $this->getEntityManager()
+                   ->getRepository('League\Entity\Table')
+                   ->findBy(
+                        array('_lid' => $leagueId), 
+                        array(
+                            '_win'=> 'DESC', 
+                            '_tiebreaker1'=> 'DESC',
+                            '_tiebreaker2'=> 'DESC',
+                         )
+                     );
+
+    }
+
+   /**
+   * Getting table of the league sorted by wins,
+   * tiebreakers and number of games played.
    * 
    * @param League $league League entity
    * @return array Table entities
    */
    public function getTable(League $league)
    {
-        
        return $this->getEntityManager()
                    ->getRepository('League\Entity\Table')
                    ->findBy(
@@ -24,12 +55,11 @@ class TablePlugin extends AbstractEntityPlugin
                             '_win'=> 'DESC', 
                             '_tiebreaker1'=> 'DESC',
                             '_tiebreaker2'=> 'DESC',
-                            '_gamesPlayed'=> 'DESC'
-                        )
+                         )
                      );
 
     }
-    
+
     
    /**
    * Get player statistics in league. 
@@ -51,7 +81,7 @@ class TablePlugin extends AbstractEntityPlugin
                     );
        
    }
-   
+
    /**
     * get top league in a season 
     * 
@@ -63,7 +93,7 @@ class TablePlugin extends AbstractEntityPlugin
        
        $dql =   "SELECT l FROM League\Entity\League l
                  WHERE l._sid=:sid
-                 AND l._order=1";
+                 AND l._number=1";
        
        return  $this->getEntityManager()
                     ->createQuery($dql)
@@ -170,6 +200,164 @@ class TablePlugin extends AbstractEntityPlugin
        
     }
    
+  
+    public function setBlackResults($match)
+    {
+        $leagueId = $match->getLid();
+        $uid      = $match->getBlackId();
+        $player   = $this->getPlayerStatsInLeague($uid, $leagueId);
+        
+        return $player;
+        return $this->setPlayerResult($match, $player);
+        
+    }
+  
+    public function setWhiteResults(Match $match)
+    {
+      
+        $leagueId = $match->getLid();
+        $uid      = $match->getWhiteId();
+        $player   = $this->getPlayerStatsInLeague($uid, $leagueId);
+        
+        return $this->setPlayerResult($match, $player);
+    }
+  /*
+    public function setPlayerResult(Match $match, Table $player)
+    {
+      
+        $resultId     = $match->getResultId();
+        $winnerId     = $match->getWinnerId();
+        $points       = 0.5;
+        
+        if(isset($match->getPoints()))
+                $points = $match->getPoints();
+        
+        $hasResult    = $resultId!=5;
+        $isJigo       = $resultId==3;
+        $hasWinner    = $hasResult && !$isJigo; //important
+        $isResigned   = ($resultId==1 || $resultId==4);
+        $tiebreaker1  = $player->getTiebreaker1();
+        
+        //game was played
+        if($this->isGamePlayed($resultId))
+            $this->setGamePlayed($player);
+        else 
+            $this->setGameSuspended($player);
+        
+        //jigo
+        if($this->isJigo($resultId))
+            $this->setJigoResult($player);
+        
+        //winner or looser
+        if($this->hasWinner($resultId))
+            $this->setWinnerResult($winnerId, $player);
+        
+        
+        //game was jigo
+        if($isJigo) {
+            //points for jigo
+            $tiebreaker1 += $this->getJigoPoints();
+        }
+        
+        //set winner point
+        if($isWinner) {
+            //points for resign
+            if($isResigned)
+                $tiebreaker1 += $this->getResignationPoints();
+            else //by points
+                $tiebreaker1 += $this->getPoints($points);
+        }
+        
+        //set looser point
+        if($isLooser) {
+            //points for resign
+            if($isResigned)
+                $tiebreaker1 += $this->getResignationPoints(false);
+            else //by points
+                $tiebreaker1 += $this->getPoints($points, false);
+        }
+       
+        //set tiebreaker 1
+        $player->setTiebreaker1($tiebreaker1);
+        
+        return $player;
+       
+    } 
+
+    public function getHahnPoints() 
+    {
+        ;
+    }        
+    
+    public function hasWinner($resultId)
+    {
+        switch($resultId) {
+            case 1:
+            case 2:
+            case 4: return true;
+        }
+        return false; 
+    }   
+    
+    public function setWinnerResult($winnerId, Table &$player)
+    {
+        //winner of the game or looser
+        if($player->getUid()==$winnerId) 
+            $player->setWin($player->getWin()++);
+        else
+            $player->setLoss($player->getLoss()++);
+           
+    }
+   
+    public function isJigo($resultId)
+    {
+        return $resultId==3;
+    }   
+    
+    public function setJigoResult(Table &$player)
+    {
+        //game was jigo
+        $player->setJigo ($player->getJigo()++);
+           
+    }
+    
+    public function isGamePlayed($resultId)
+    {
+        return $resultId!=5;
+    }
+    
+    public function setGamePlayed(Table &$player)
+    {
+        //game was played
+        $player->setGamesPlayed ($player->getGamesPlayed()++);
+    }
+    
+    public function setGameSuspended(Table &$player)
+    {
+        $player->setGamesSuspended ($player->getGamesSuspended()++);
+    }
+    
+    public function getJigoPoints()
+    {
+        return $this->_max_points/2;
+    }
+    
+    public function getResignationPoints($isWinner=true)
+    {
+        if($isWinner)
+            return $this->_max_points;
+        
+        return 0;
+    }
+    
+    public function getPoints($points, $isWinner=true)
+    {
+        if($isWinner)
+            return $this->_max_points/2 + $points;
+        
+        return $this->_max_points/2 - $points;
+    }
+*/
 }
 
-?>
+

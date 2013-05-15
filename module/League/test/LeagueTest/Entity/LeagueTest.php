@@ -14,10 +14,10 @@ class LeagueTest extends PHPUnit_Framework_TestCase
             'id' => 123,
             'title'  => 'some title',
             'sid' => 334,
-            'order' => 5,
+            'number' => 5,
             'division' => 'Seria B',
             'ruleId' => 231,
-            'season' => new \League\Entity\Season(),
+          //  'season' => new \League\Entity\Season(),
             
         );
         

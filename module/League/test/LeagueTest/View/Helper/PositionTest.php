@@ -2,7 +2,7 @@
 namespace League\View\Helper;
 
 use League\View\Helper\Position;
-use League\Entity\Position as Pos;
+use League\Entity\Table as Pos;
 use PHPUnit_Framework_TestCase;
  
 class PositionTest extends PHPUnit_Framework_TestCase

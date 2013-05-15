@@ -60,7 +60,8 @@ class AbstractEntityPlugin extends AbstractPlugin
    public function save($entity)
    {
        if($entity===null) {
-           $this->getEntityManager()->flush();
+           return $this->getEntityManager()->flush();
+           
        }
     
        $this->getEntityManager()->persist($entity);

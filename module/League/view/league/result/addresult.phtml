@@ -1,0 +1,43 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('League'); 
+
+$title = $this->translate('Neues Ergebnis');
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<table style="width:auto;margin: 1em 0;">
+<tr>
+    <td style="padding-right:1em"><?php 
+        echo $this->match->getDate()->format('d.m.Y   H:i');
+        ?></td>
+    <td><?php 
+        echo $this->escapeHtml(
+                $this->player($this->match->getBlack())
+        );
+        ?></td>
+    <td style="padding:0 1em">-</td>
+    <td><?php 
+        echo $this->escapeHtml(
+                $this->player($this->match->getWhite())
+        );
+        ?></td>
+</tr>
+</table>
+
+
+<?php
+
+/*
+$form->setAttribute(
+        'action', $this->url(
+                'league', 
+                array(
+                    'action' => 'add',
+                    'id' => $id,
+                )
+));*/
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();
