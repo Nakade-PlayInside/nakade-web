@@ -17,8 +17,6 @@ class LeagueTest extends PHPUnit_Framework_TestCase
             'number' => 5,
             'division' => 'Seria B',
             'ruleId' => 231,
-          //  'season' => new \League\Entity\Season(),
-            
         );
         
     }
@@ -71,25 +69,6 @@ class LeagueTest extends PHPUnit_Framework_TestCase
             '"getArrayCopy()" do not work correctly'
         );
         
-    }
-             
-             
-    public function testMagicMethods()
-    {
-        $object = new League();
-        $object->_id=2;
-        
-        $this->assertSame(
-           2,
-           $object->getId(),     
-           '"__set" do not work correctly'     
-        );
-        
-        $this->assertSame(
-           $object->_id,
-           $object->getId(),     
-           '"__get" do not work correctly'     
-        );
     }
     
 }

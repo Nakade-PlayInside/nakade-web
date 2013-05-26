@@ -16,7 +16,6 @@ return array(
     'view_helpers' => array(  
         'invokables' => array(  
             'position' => 'League\View\Helper\Position', 
-            'player'   => 'League\View\Helper\Player',
             'dateformat' => 'League\View\Helper\DateFormat',
             // more helpers here ...  
         )  
@@ -46,9 +45,8 @@ return array(
           'match'   => 'League\Controller\Plugin\MatchPlugin',
           'league'  => 'League\Controller\Plugin\LeaguePlugin',
           'player'  => 'League\Controller\Plugin\PlayerPlugin',
-          'table'   => 'League\Controller\Plugin\TablePlugin',
           'form'    => 'League\Controller\Plugin\FormPlugin',
-          'result'  => 'League\Controller\Plugin\ResultPlugin',
+          
       ),  
     ),
     
@@ -59,10 +57,12 @@ return array(
             'actual' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/actual[/:action][/:id]',
+                    'route'    => '/actual[/:action][/:id][/:sort]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
+                        'sort'   => '[a-zA-Z]+',
+                        'lid'    => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'League\Controller\ActualSeason',

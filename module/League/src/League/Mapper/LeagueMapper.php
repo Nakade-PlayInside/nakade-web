@@ -35,6 +35,18 @@ class LeagueMapper extends AbstractMapper
                      );
     }
     
+    /**
+     * Getting the League by Id
+     * 
+     * @param int $leagueId
+     * @return /League/Entity/League $league
+     */
+    public function getLeagueById($leagueId)  
+    {
+       return $this->getEntityManager()
+                   ->getRepository('League\Entity\League')
+                   ->find($leagueId);
+    }
 }
  
 ?>

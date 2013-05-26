@@ -139,26 +139,5 @@ class MatchTest extends PHPUnit_Framework_TestCase
         );
          
     }
-    
-    public function testInputFilterMethods()
-    {
-        $object = new Match();
-        
-        $this->assertInstanceOf(
-           'Zend\InputFilter\InputFilter',     
-           $object->getInputFilter(),
-           '"getInputFilter()" do not work correctly'     
-        );
-    }
-    
-    /**
-     * @expectedException Exception
-     */
-    public function testException()
-    {
-        $object = new Match();
-        $inputFilter = new InputFilter();
-        $object->setInputFilter($inputFilter);
-         
-    }
+   
 }

@@ -288,4 +288,26 @@ class User
       return $this->_anonym;
   }
   
+  
+  public function getShortName()
+  {
+      if($this->isAnonym() && strlen($this->getNickName())>0)
+          return $this->getNickName();
+      
+      return $this->getFirstName();
+  }
+  
+  public function getCompleteName()
+  {
+      if(strlen($this->getNickName())>0)
+          return $this->getName() . " (" . $this->getNickName() .")";
+      
+      return $this->getName();
+  }
+  
+  public function getName()
+  {
+      return $this->getLastName() . ", " . $this->getFirstName() ;
+  }
+  
 }

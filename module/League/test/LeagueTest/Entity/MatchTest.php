@@ -7,7 +7,6 @@ use League\Entity\Result;
 use User\Entity\User;
 use League\Entity\League;
 use PHPUnit_Framework_TestCase;
-use Zend\InputFilter\InputFilter;
 
 class MatchTest extends PHPUnit_Framework_TestCase
 {
@@ -23,12 +22,13 @@ class MatchTest extends PHPUnit_Framework_TestCase
             'resultId' => 99,
             'winnerId' => 231,
             'points' => 44,
+            'matchday' => 3,
             'date' => new \DateTime('2000-01-01'),
             'league' => new League(),
             'black' => new User(),
             'white' => new User(),
             'winner' => new User(),
-            'result' => new Result(),
+            
         );
     }
     
@@ -82,32 +82,14 @@ class MatchTest extends PHPUnit_Framework_TestCase
         );
         
     }
-             
-             
-    public function testMagicMethods()
-    {
-        $object = new Match();
-        $object->_id=2;
-        
-        $this->assertSame(
-           2,
-           $object->getId(),     
-           '"__set" do not work correctly'     
-        );
-        
-        $this->assertSame(
-           $object->_id,
-           $object->getId(),     
-           '"__get" do not work correctly'     
-        );
-    }
+    
     
     public function testPopulateMethod()
     {
         $object = new Match();
         
         $data = array(
-            '_id' => 1,
+            'pid' => 1,
             'result' => 123,
             'winner'  => 232,
             'points'  => 232,
@@ -116,7 +98,7 @@ class MatchTest extends PHPUnit_Framework_TestCase
         $object->populate($data);
         
         $this->assertSame(
-                $data['_id'], 
+                $data['pid'], 
                 $object->getId(), 
                 sprintf('"id" was not set correctly')
         );
@@ -141,25 +123,5 @@ class MatchTest extends PHPUnit_Framework_TestCase
          
     }
     
-    public function testInputFilterMethods()
-    {
-        $object = new Match();
-        
-        $this->assertInstanceOf(
-           'Zend\InputFilter\InputFilter',     
-           $object->getInputFilter(),
-           '"getInputFilter()" do not work correctly'     
-        );
-    }
     
-    /**
-     * @expectedException Exception
-     */
-    public function testException()
-    {
-        $object = new Match();
-        $inputFilter = new InputFilter();
-        $object->setInputFilter($inputFilter);
-         
-    }
 }

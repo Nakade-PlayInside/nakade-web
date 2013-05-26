@@ -1,22 +1,20 @@
 <?php
-//module/Authentication/src/Authentication/Services/AuthServiceFactory.php
-namespace League\Services;
+namespace League\Statistics;
 
 use Zend\I18n\Translator\Translator;
 use Zend\I18n\Translator\TranslatorAwareInterface;
 
-
 /**
- * Extend this class to have an optional translator service implemented.
- * 
- * @author Dr. Holger Maerz <grrompf@gmail.com>
+ * Description of AbstractTranslatorClass
+ *
+ * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class AbstractTranslationService implements TranslatorAwareInterface
+class AbstractTranslator implements TranslatorAwareInterface
 {
-   
+    
     protected $_translator;
     protected $_textDomain='League';
-   
+    
     /**
      * Sets translator to use in helper
      *
@@ -26,9 +24,7 @@ class AbstractTranslationService implements TranslatorAwareInterface
      *          Default is null, which skips setTranslatorTextDomain
      * @return TranslatorAwareInterface
      */
-    public function setTranslator(
-            Translator $translator = null, 
-            $textDomain = null) 
+    public function setTranslator(Translator $translator = null, $textDomain = null) 
     {
         if(isset($translator))
             $this->_translator=$translator;
@@ -64,22 +60,14 @@ class AbstractTranslationService implements TranslatorAwareInterface
      *                       Default is true.
      * @return TranslatorAwareInterface
      */
-    public function setTranslatorEnabled($enabled = true) 
-    {
-        ;
-    
-    }
+    public function setTranslatorEnabled($enabled = true) {;}
 
     /**
      * Returns whether translator is enabled and should be used
      *
      * @return bool
      */
-    public function isTranslatorEnabled() 
-    {
-        ;
-    
-    }
+    public function isTranslatorEnabled() {;}
 
     /**
      * Set translation text domain
@@ -122,8 +110,6 @@ class AbstractTranslationService implements TranslatorAwareInterface
               );
        
    }
-    
-    
 }
 
-
+?>

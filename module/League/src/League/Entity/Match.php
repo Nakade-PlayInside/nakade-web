@@ -5,10 +5,6 @@ namespace League\Entity;
 use League\Entity\League;
 use User\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\Factory as InputFactory;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface; 
 
 /**
  * Entity Class representing a Match
@@ -28,12 +24,11 @@ use Zend\InputFilter\InputFilterInterface;
  * @property User $_White
  * @property User $_Winner
  * @property Result $_Result
+ * @property Result $_matchday
  */
-class Match implements InputFilterAwareInterface 
+class Match
 {
    
-    protected $inputFilter;
-    
   /**
    * Primary Identifier
    *
@@ -150,15 +145,15 @@ class Match implements InputFilterAwareInterface
    */
    protected $_winner;
    
-   /**
-   * Result Entity
+   
+    /**
+   * matchday 
    *
-   * @ORM\OneToOne(targetEntity="Result")
-   * @ORM\JoinColumn(name="resultId", referencedColumnName="id")
-   * @var Result
+   * @ORM\Column(name="matchday", type="integer")
+   * @var int
    * @access protected
    */
-   protected $_result;
+   protected $_matchday;
    
   /**
    * Sets the Identifier
@@ -446,51 +441,33 @@ class Match implements InputFilterAwareInterface
     return $this->_winner;
   }
   
+  
+  
   /**
-   * Sets the Result
-   * @param int $resultId
+   * Sets the Matchday
+   *
+   * @param int $noday
    * @access public
    * @return Match
    */
-  public function setResult($resultId)
+  public function setMatchday($noday)
   {
-    $this->_result = $resultId;
+    $this->_matchday = $noday;
     return $this;
-  } 
-  
+  }
+
   /**
-   * Returns Result
+   * Returns the Matchday
    *
    * @access public
-   * @return Result
+   * @return int
    */
-  public function getResult()
+  public function getMatchday()
   {
-    return $this->_result;
+    return $this->_matchday;
   }
   
-   /**
-    * Magic getter to expose protected properties.
-    *
-    * @param string $property
-    * @return mixed
-    */
-    public function __get($property) 
-    {
-        return $this->$property;
-    }
- 
-    /**
-     * Magic setter to save protected properties.
-     *
-     * @param string $property
-     * @param mixed $value
-     */
-    public function __set($property, $value) 
-    {
-        $this->$property = $value;
-    }
- 
+  
     /**
      * Convert the object to an array.
      *
@@ -514,49 +491,6 @@ class Match implements InputFilterAwareInterface
         $this->_points   = $data['points'];
              
     }
-    
-    public function setInputFilter(InputFilterInterface $inputFilter)
-    {
-        throw new \Exception("Not used");
-    }
- 
-    /**
-     * 
-     * @return type
-     */
-    public function getInputFilter()
-    {
-        if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
- 
-            $factory = new InputFactory();
- 
-            $inputFilter->add($factory->createInput(array(
-                'name'       => '_id',
-                'required'   => true,
-                'filters' => array(
-                    array('name'    => 'Int'),
-                ),
-            )));
-            
-            $inputFilter->add($factory->createInput(array(
-                'name'       => 'points',
-                'required'   => false,
-                'filters'    => array(
-                  array('name' => 'StripTags'),  
-                  array('name' => 'StringTrim'),  
-                ),
-                'validators' => array(
-                    array('name'    => 'Float'),
-                ),
-            )));
- 
-            
-            $this->inputFilter = $inputFilter;        
-        }
- 
-        return $this->inputFilter;
-    } 
  
   
 }

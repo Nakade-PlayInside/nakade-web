@@ -3,7 +3,7 @@
 namespace League\Services;
 
 use Traversable;
-use League\Business\Results;
+use League\Statistics\Results;
 use League\Form\ResultForm;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;

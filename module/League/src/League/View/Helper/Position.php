@@ -1,8 +1,9 @@
 <?php
 namespace League\View\Helper;
 /**
- * Determines the position of players. Usally the position is given by the 
- * order of database request. Player who have not played games are given an 
+ * Determines the position of players. Usually the position is determined by 
+ * the order of sorted parameters. 
+ * Player who have not yet started in the league are given an 
  * even position.  
  */
 

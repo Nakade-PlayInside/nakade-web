@@ -43,10 +43,10 @@ class ActualSeasonControllerTest extends PHPUnit_Framework_TestCase
     {
         $this->_routeMatch->setParam('action', 'index');
 
-        
+        //setup a mock service with three methods
         $mock = $this->getMock(
                 'service',
-                array('getTableShortTitle','getTable')
+                array('getTopLeagueId','getTableShortTitle','getLeagueTable')
                 );
                
         $this->_controller->setService($mock);
@@ -60,12 +60,13 @@ class ActualSeasonControllerTest extends PHPUnit_Framework_TestCase
     
     public function testScheduleActionCanBeAccessed()
     {
+        
         $this->_routeMatch->setParam('action', 'schedule');
 
         
         $mock = $this->getMock(
                 'service',
-                array('getScheduleTitle','getSchedule')
+                array('getTopLeagueId', 'getScheduleTitle','getSchedule')
                 );
                
         $this->_controller->setService($mock);
@@ -75,16 +76,23 @@ class ActualSeasonControllerTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $result);
+       
     }
     
      public function testTableActionCanBeAccessed()
     {
+        
         $this->_routeMatch->setParam('action', 'table');
 
         
         $mock = $this->getMock(
                 'service',
-                array('getTableTitle','getTable')
+                array(
+                    'getLeagueTable',
+                    'getTiebreakerNames',
+                    'getTableTitle',
+                    'getTopLeagueId'
+                    )
                 );
                
         $this->_controller->setService($mock);
@@ -94,5 +102,6 @@ class ActualSeasonControllerTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $result);
+        
     }
 }

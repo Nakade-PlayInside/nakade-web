@@ -2,11 +2,11 @@
 //module/Authentication/src/Authentication/Services/AuthServiceFactory.php
 namespace League\Services;
 
-use League\Business\MatchStats;
+use League\Statistics\MatchStats;
+use League\Statistics\Sorting\PlayerSorting as SORT;
 use League\Mapper\SeasonMapper;
 use League\Mapper\LeagueMapper;
 use League\Mapper\MatchMapper;
-use League\Mapper\TableMapper;
 use League\Mapper\PlayerMapper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -15,8 +15,8 @@ use RuntimeException;
 
 
 /**
- * Factory for creating the Zend Authentication Service. Using customized
- * Adapter and Storage instances. 
+ * Factory for the actual season for receiving
+ * sorted league tables and schedules.
  * 
  * @author Dr. Holger Maerz <grrompf@gmail.com>
  */
@@ -28,69 +28,15 @@ class ActualSeasonServiceFactory
     protected $_season_mapper;
     protected $_league_mapper;
     protected $_match_mapper;
-    protected $_table_mapper;
     protected $_player_mapper;
-    
-    public function getPlayerMapper() 
-    {
-        return $this->_player_mapper;
-    }
-    
-    public function setPlayerMapper($mapper) 
-    {
-        $this->_player_mapper=$mapper;
-        return $this;
-    }
-    
-    public function getSeasonMapper() 
-    {
-        return $this->_season_mapper;
-    }
-    
-    public function setSeasonMapper($mapper) 
-    {
-        $this->_season_mapper=$mapper;
-        return $this;
-    }
-    
-    public function getLeagueMapper() 
-    {
-        return $this->_league_mapper;
-    }
-    public function setLeagueMapper($mapper) 
-    {
-        $this->_league_mapper=$mapper;
-        return $this;
-    }
-    
-    public function getMatchMapper() 
-    {
-        return $this->_match_mapper;
-    }
-    
-    public function setMatchMapper($mapper) 
-    {
-        $this->_match_mapper=$mapper;
-        return $this;
-    }
-    
-    public function getTableMapper() 
-    {
-        return $this->_table_mapper;
-    }
-    
-    public function setTableMapper($mapper) 
-    {
-        $this->_table_mapper=$mapper;
-        return $this;
-    }
+    protected $_match_stats;
+   
     /**
-     * Creating Zend Authentication Service for logIn and logOut action.
-     * Making use of customized adapters for more action as by default.
+     * Actual Season Service for league tables and schedules.
      * Integration of optional translation feature (i18N)
      * 
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
-     * @return \Zend\Authentication\AuthenticationService
+     * @return ActualSeasonService
      * @throws RuntimeException
      * 
      */
@@ -118,8 +64,8 @@ class ActualSeasonServiceFactory
         $this->_season_mapper = new SeasonMapper($entityManager);
         $this->_league_mapper = new LeagueMapper($entityManager);
         $this->_match_mapper  = new MatchMapper($entityManager);
-        $this->_table_mapper  = new TableMapper($entityManager);
         $this->_player_mapper = new PlayerMapper($entityManager);
+        $this->_match_stats   = new MatchStats();
         
         //optional translator
         $translator = $services->get('translator');
@@ -129,19 +75,29 @@ class ActualSeasonServiceFactory
         
     }
     
+    /**
+     * Get a translated message 
+     * @return string
+     */
     public function getNoSeasonFoundInfo()
     {
         return $this->translate("No ongoing season found.");
     }        
     
-    public function getScheduleTitle($number=1) {
+    /**
+     * Get the head title of the league schedule
+     * @param int $lid
+     * @return string
+     */
+    public function getScheduleTitle($lid) {
         
-        $season = $this->getSeasonMapper()->getActualSeason();
+        $season = $this->_season_mapper->getActualSeason();
         if($season==null)
             return $this->getNoSeasonFoundInfo ();
               
-        $league = $this->getLeagueMapper()
-                       ->getLeague($season->getId(), $number);
+        $league = $this->_league_mapper
+                      ->getLeagueById($lid);
+         
         return sprintf(
                   "%s %s %s %02d/%d",
                   $this->translate("Matchplan"),
@@ -153,27 +109,32 @@ class ActualSeasonServiceFactory
         
     }
     
-    public function getSchedule($number=1) {
+    /**
+     * Get the schedule of a league
+     * @param int $lid
+     * @return mixed
+     */
+    public function getSchedule($lid) {
         
-        $season = $this->getSeasonMapper()->getActualSeason();
-        if($season==null)
-            return null;
-        
-        $league = $this->getLeagueMapper()
-                       ->getLeague($season->getId(), $number);
-        return $this->getMatchMapper()
-                    ->getMatchesInLeague($league->getId());
+        return $this->_match_mapper
+                    ->getMatchesInLeague($lid);
         
     }
     
-    public function getTableShortTitle($number=1) {
+    /**
+     * Get a short title for a league table
+     * @param int $lid
+     * @return string
+     */
+    public function getTableShortTitle($lid) {
        
-       $season = $this->getSeasonMapper()->getActualSeason();
+       $season = $this->_season_mapper->getActualSeason();
        if($season==null)
            return $this->getNoSeasonFoundInfo ();
        
-       $league = $this->getLeagueMapper()
-                      ->getLeague($season->getId(), $number);
+       $league = $this->_league_mapper
+                      ->getLeagueById($lid);
+       
        return sprintf(
                   "%s %02d/%d",
                   $league->getTitle(),
@@ -182,14 +143,20 @@ class ActualSeasonServiceFactory
               );
     }
     
-    public function getTableTitle($number=1) {
+    /**
+     * Get the head title for a league
+     * @param int $lid
+     * @return string
+     */
+    public function getTableTitle($lid) {
        
-       $season = $this->getSeasonMapper()->getActualSeason();
+       $season = $this->_season_mapper->getActualSeason();
        if($season==null)
            return $this->getNoSeasonFoundInfo ();
        
-       $league = $this->getLeagueMapper()
-                      ->getLeague($season->getId(), $number);
+       $league = $this->_league_mapper
+                      ->getLeagueById($lid);
+       
        return sprintf(
                   "%s %s %02d/%d",
                   $season->getTitle(),
@@ -199,59 +166,75 @@ class ActualSeasonServiceFactory
               );
     }
    
-    public function getTable($number=1) {
-       
-       $season = $this->getSeasonMapper()->getActualSeason();
-       if($season==null)
-            return null;
-       
-       $league = $this->getLeagueMapper()
-                      ->getLeague($season->getId(), $number);
-       
-       return $this->getTableMapper()
-                   ->getTableByLeagueId($league->getId());
-        
-    }
-    
-    
-    public function getCalculatedTable($number=1)
+    /**
+     * Get the top league of the actual season
+     * @return mixed
+     */
+    public function getTopLeagueId()
     {
-         
-       $season = $this->getSeasonMapper()->getActualSeason();
+       $season = $this->_season_mapper->getActualSeason();
        if($season==null)
             return null;
        
-       $league = $this->getLeagueMapper()
-                      ->getLeague($season->getId(), $number);
+       return $this->_league_mapper
+                   ->getLeague($season->getId(), 1)
+                   ->getId();
        
-       $playersInLeague = $this->getPlayerMapper()
-                               ->getAllPlayersInLeague($league->getId());
+    }        
+
+
+    /**
+     * Get a sorted league table.
+     * @param int $lid
+     * @param string $sort
+     * @return array
+     */
+    public function getLeagueTable($lid, $sort=SORT::BY_POINTS)
+    {
+       $playersInLeague = $this->_player_mapper
+                               ->getAllPlayersInLeague($lid);
       
+       $allMatches = $this->_match_mapper
+                          ->getAllMatchesWithResult($lid);
        
-       $allMatches = $this->getMatchMapper()
-                          ->getAllMatchesWithResult($league->getId());
+       $season = $this->_season_mapper
+                      ->getSeasonByLeagueId($lid); 
        
-       $match = new MatchStats($allMatches);
+       $this->_match_stats->populateRules($season->getRules()
+                                                 ->getArrayCopy()
+       );
+       $this->_match_stats->setMatches($allMatches);
+       $this->_match_stats->setPlayers($playersInLeague);
        
-       foreach ($playersInLeague as $player) {
-           $data = $match->getGamesStats($player->getUid());
-           $player->populate($data);
-          
-       }    
+       $players = $this->_match_stats->getMatchStats();
+       $sorting = SORT::getInstance();
+       $sorting->sorting($players, $sort);
        
-       usort($playersInLeague, function($a, $b)
-       {
-            if($a->getGamesPoints()==$b->getGamesPoints())
-                return ($a->getFirstTiebreak()>$b->getFirstTiebreak())?-1:1;
+       return $players;
        
-            return ($a->getGamesPoints()>$b->getGamesPoints())?-1:1;
-       });
-       return $playersInLeague;
-    }    
+    }  
     
+    /**
+     * getting the names of all tiebreakers as an array.
+     * make sure you have previously requested the league table dependend
+     * on this.
+     * @return array
+     */
+    public function getTiebreakerNames($lid) 
+    {
+        $names = array();
+        
+        $season = $this->_season_mapper
+                      ->getSeasonByLeagueId($lid); 
+        
+        $names[] = $season->getRules()->getTiebreaker1();
+        $names[] = $season->getRules()->getTiebreaker2();
+        $names[] = $season->getRules()->getTiebreaker3();
+        return $names;
+    }
    
    
-    
+ 
 }
 
 

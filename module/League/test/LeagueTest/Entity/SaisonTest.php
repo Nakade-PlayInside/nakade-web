@@ -80,25 +80,5 @@ class SeasonTest extends PHPUnit_Framework_TestCase
         );
         
     }
-             
-             
-    public function testMagicMethods()
-    {
-        $object = new Season();
-        $object->_id=2;
-        
-        $this->assertSame(
-           2,
-           $object->getId(),     
-           '"__set" do not work correctly'     
-        );
-        
-        $this->assertSame(
-           $object->_id,
-           $object->getId(),     
-           '"__get" do not work correctly'     
-        );
-    }
-    
-
+  
 }

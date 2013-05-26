@@ -1,6 +1,7 @@
 <?php
 namespace League\Entity;
 
+use League\Entity\Rules;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -76,6 +77,26 @@ class Season
    */
   protected $_year;
 
+  /**
+   * rulesId
+   *
+   * @ORM\Column(name="rulesId", type="integer")
+   * @var int
+   * @access protected
+   */
+   protected $_rulesId;
+   
+  /**
+   * rulesId: Foreign Key
+   * Rules Entity
+   *
+   * @ORM\OneToOne(targetEntity="League\Entity\Rules")
+   * @ORM\JoinColumn(name="rulesId", referencedColumnName="id")
+   * @var Rules
+   * @access protected
+   */
+   protected $_rules;
+   
   /**
    * Sets the Identifier
    *
@@ -226,27 +247,53 @@ class Season
   }
   
   /**
-    * Magic getter to expose protected properties.
-    *
-    * @param string $property
-    * @return mixed
-    */
-    public function __get($property) 
-    {
-        return $this->$property;
-    }
- 
-    /**
-     * Magic setter to save protected properties.
-     *
-     * @param string $property
-     * @param mixed $value
-     */
-    public function __set($property, $value) 
-    {
-        $this->$property = $value;
-    }
- 
+   * Sets the rulesId
+   * @param int $rulesId
+   * @access public
+   * @return Season
+   */
+  public function setRulesId($rid)
+  {
+    $this->_rulesId = $rid;
+    return $this;
+  }
+
+  /**
+   * Returns the rulesId
+   *
+   * @access public
+   * @return int
+   */
+  public function getRulesId()
+  {
+    
+      return $this->_rulesId;
+  }
+  
+  /**
+   * Sets the Rules entity
+   * @param int $rulesId
+   * @access public
+   * @return Season
+   */
+  public function setRules($rules)
+  {
+    $this->_rules = $rules;
+    return $this;
+  }
+
+  /**
+   * Returns the Rules entity
+   *
+   * @access public
+   * @return Rules
+   */
+  public function getRules()
+  {
+    
+      return $this->_rules;
+  }
+  
     /**
      * Convert the object to an array.
      *

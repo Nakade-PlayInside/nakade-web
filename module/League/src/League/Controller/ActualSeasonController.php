@@ -5,11 +5,10 @@ use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
 
 /**
- * Manages a round-robin league. Registered players are connected to the 
- * User Module. The league contains league tables with tie-breakers and is part
- * of a season. The pairings have a given date to play and collecting the 
- * results. The ruleset decides which tie-breakers are used for the placement.
- * 
+ * League tables and schedules of the actual season.
+ * Top league table is presented by the default action index.
+ * ActionSesaonServiceFactory is needed to be set.
+ *   
  * @author Holger Maerz <holger@nakade.de>
  */
 class ActualSeasonController 
@@ -28,59 +27,69 @@ class ActualSeasonController
         return $this;
     }       
     
-     /**
-    * viewhelper to exhibit the standings of the top league 
+    /**
+    * Default action showing up the Top League table
+    * in a short and compact version. This can be used as a widget.  
     */
     public function indexAction()
     {
-    
+        $lid=$this->getService()->getTopLeagueId();
+            
         return new ViewModel(
            array(
-              'title'     => $this->getService()->getTableShortTitle(),
-              'table'     => $this->getService()->getTable(),
+              'title'     => $this->getService()->getTableShortTitle($lid),
+              'table'     => $this->getService()
+                                  ->getLeagueTable($lid)
            
            )
         );
     }
     
     /**
-    * shows actual matchplan and results of the top league 
+    * Shows actual matchplan and results of the league. 
     */
     public function scheduleAction()
     {
+       //get param or top leagueId in actual season
+       $lid  = $this->params()->fromRoute(
+                  'lid', 
+                  $this->getService()->getTopLeagueId()
+               );
        
        return new ViewModel(
            array(
-              'title'   => $this->getService()->getScheduleTitle(),
-              'matches' => $this->getService()->getSchedule(),
+              'title'   => $this->getService()->getScheduleTitle($lid),
+              'matches' => $this->getService()->getSchedule($lid),
            )
        );
     }
     
     /**
-    * shows actual table of the top league 
+    * Shows detailed version of the league table. The Table is sortable.
+    * Expected params for sorting and LeagueId. If no League Id is provided,
+    * the Top League of the actual season is shown. 
     */
     public function tableAction()
     {
       
-       return new ViewModel(
-           array(
-              'title'     => $this->getService()->getTableTitle(),
-              'table'     => $this->getService()->getTable(),
-           
-           )
-       );
-    }
-   
-    /**
-    * shows actual table of the top league 
-    */
-    public function calctableAction()
-    {
+       //get param or top leagueId in actual season
+       $lid  = $this->params()->fromRoute(
+                  'lid', 
+                  $this->getService()->getTopLeagueId()
+               );
+       
+       //sorting the table
+       $sorting  = $this->params()->fromRoute('sort', null);
       
+       
        return new ViewModel(
            array(
-              'table'     => $this->getService()->getCalculatedTable(),
+              'table'       => $this->getService()
+                                    ->getLeagueTable($lid, $sorting),
+              'tiebreakers' => $this->getService()
+                                    ->getTiebreakerNames($lid),
+              'title'       => $this->getService()
+                                    ->getTableTitle($lid),
               
            )
        );
