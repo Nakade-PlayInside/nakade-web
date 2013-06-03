@@ -64,6 +64,26 @@ class SeasonMapper  extends AbstractMapper
      
    }
    
+   /**
+   * Getting the Season of a league.
+   * 
+   * @return /League/Entity/Season $season
+   */
+   public function getActualSeasonInfos() 
+   {
+      
+      $dql = "SELECT s._number as number, s._year as year, s._title as title 
+              FROM League\Entity\Season s
+              WHERE s._active=1";
+      
+      $result = $this->getEntityManager()
+                     ->createQuery($dql)
+                     ->getOneOrNullResult();
+      
+      return $result;
+     
+   }
+   
 }
 
 ?>

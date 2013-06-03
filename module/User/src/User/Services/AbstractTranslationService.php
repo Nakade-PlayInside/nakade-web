@@ -1,71 +1,22 @@
 <?php
-namespace League\Mapper;
+//module/Authentication/src/Authentication/Services/AuthServiceFactory.php
+namespace User\Services;
 
 use Zend\I18n\Translator\Translator;
 use Zend\I18n\Translator\TranslatorAwareInterface;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
- * Description of AbstractMapper
- *
- * @author Dr.Holger Maerz <holger@nakade.de>
+ * Extend this class to have an optional translator service implemented.
+ * 
+ * @author Dr. Holger Maerz <grrompf@gmail.com>
  */
-class AbstractMapper implements TranslatorAwareInterface
+class AbstractTranslationService implements TranslatorAwareInterface
 {
    
-   protected $_entity_manager; 
-   protected $_translator;
-   protected $_textDomain='League';
-      
+    protected $_translator;
+    protected $_textDomain='League';
    
-   /**
-   * Sets the EntityManager
-   *
-   * @param EntityManager $entitymanager
-   * @access protected
-   * @return ActionController
-   */
-   public function setEntityManager($em)
-   {
-      $this->_entity_manager = $em;
-      return $this;
-   }
-
-  /**
-   * Returns the EntityManager
-   *
-   * Fetches the EntityManager from ServiceLocator if it has not been initiated
-   * and then returns it
-   *
-   * @access protected
-   * @return EntityManager
-   */
-   public function getEntityManager()
-   {
-      return $this->_entity_manager;
-   }
-   
-   /**
-    * saves the entity. 
-    * 
-    * @param Entity $entity
-    */
-   public function save($entity)
-   {
-       if($entity===null) {
-           return $this->getEntityManager()->flush();
-           
-       }
-    
-       $this->getEntityManager()->persist($entity);
-       $this->getEntityManager()->flush($entity);
-   }
-   
-    
     /**
      * Sets translator to use in helper
      *
@@ -75,7 +26,9 @@ class AbstractMapper implements TranslatorAwareInterface
      *          Default is null, which skips setTranslatorTextDomain
      * @return TranslatorAwareInterface
      */
-    public function setTranslator(Translator $translator = null, $textDomain = null) 
+    public function setTranslator(
+            Translator $translator = null, 
+            $textDomain = null) 
     {
         if(isset($translator))
             $this->_translator=$translator;
@@ -111,14 +64,22 @@ class AbstractMapper implements TranslatorAwareInterface
      *                       Default is true.
      * @return TranslatorAwareInterface
      */
-    public function setTranslatorEnabled($enabled = true) {;}
+    public function setTranslatorEnabled($enabled = true) 
+    {
+        ;
+    
+    }
 
     /**
      * Returns whether translator is enabled and should be used
      *
      * @return bool
      */
-    public function isTranslatorEnabled() {;}
+    public function isTranslatorEnabled() 
+    {
+        ;
+    
+    }
 
     /**
      * Set translation text domain
@@ -162,6 +123,7 @@ class AbstractMapper implements TranslatorAwareInterface
        
    }
     
+    
 }
 
-?>
+

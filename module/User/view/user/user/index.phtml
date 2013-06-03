@@ -6,21 +6,28 @@ $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
-
-<table class="table">
+<a href="user/add">add user</a>
+<table class="table" style="width:auto">
 <tr>
-
-    <th>First  Name</th>
+    <th>Sex</th>
+    <th>Title</th>
     <th>Family Name</th>
-    <th>Nick Name</th>
-   
+    <th>First Name</th>
+    <th>Nick</th>
+    <th>Birthday</th>
+        
 </tr>
-<?php foreach ($users as $user) : ?>
-<tr>
-    <td><?php echo $this->escapeHtml($user->getFirstName());?></td>
-    <td><?php echo $this->escapeHtml($user->getLastName());?></td>
-    <td><?php echo $this->escapeHtml($user->getNickName());?></td>
-    
+<?php foreach ($this->users as $user) : ?>
+<tr style="background-color:<?php 
+    echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+    <td style="width:5em"><?php echo $this->salutation($user->getSex()); ?></td>
+    <td style="width:5em"><?php  echo $user->getTitle();?></td>
+    <td style="width:10em"><?php echo $this->escapeHtml($user->getLastName());?></td>
+    <td style="width:10em"><?php echo $this->escapeHtml($user->getFirstName());?></td>
+    <td style="width:5em"><?php echo $this->escapeHtml($user->getNickName());?></td>
+    <td style="width:5em"><?php echo $this->birthday($user->getBirthday()); ?></td>
+    <td><a href="user/edit/uid/<?php echo $user->getId();?>">edit</a></td>
+    <td><a href="user/delete/uid/<?php echo $user->getId();?>">deactivate</a></td>
 </tr>
 <?php endforeach; ?>
 </table>

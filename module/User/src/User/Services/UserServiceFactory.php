@@ -1,13 +1,8 @@
 <?php
-//module/Authentication/src/Authentication/Services/AuthServiceFactory.php
-namespace League\Services;
+namespace User\Services;
 
-use League\Statistics\Results as RESULT;
-use League\Statistics\Tiebreaker\HahnPoints as HAHN;
-use League\Form\WinnerFilter;
-use League\Form\PointsFilter;
-use League\Mapper\SeasonMapper;
-use League\Mapper\MatchMapper;
+
+use User\Mapper\UserMapper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
@@ -20,60 +15,36 @@ use RuntimeException;
  * 
  * @author Dr. Holger Maerz <grrompf@gmail.com>
  */
-class ResultServiceFactory 
+class UserServiceFactory 
     extends AbstractTranslationService 
     implements FactoryInterface 
 {
    
-    protected $_season_mapper;
-    protected $_match_mapper;
-    protected $_result_form;
-    protected $_match;
+    protected $_user_mapper;
+    protected $_form;
     
-    public function getSeasonMapper() 
+    
+    public function getUserMapper() 
     {
-        return $this->_season_mapper;
+        return $this->_user_mapper;
     }
     
-    public function setSeasonMapper($mapper) 
+    public function setUserMapper($mapper) 
     {
-        $this->_season_mapper=$mapper;
+        $this->_user_mapper=$mapper;
         return $this;
     }
     
-    public function getResultForm() 
+    public function getForm() 
     {
-        return $this->_result_form;
+        return $this->_form;
     }
-    public function setResultForm($form) 
+    
+    public function setForm($form) 
     {
-        $this->_result_form=$form;
+        $this->_form=$form;
         return $this;
     }
-    
-    public function getMatchMapper() 
-    {
-        return $this->_match_mapper;
-    }
-    
-    public function setMatchMapper($mapper) 
-    {
-        $this->_match_mapper=$mapper;
-        return $this;
-    }
-    
-    public function getMatch() 
-    {
-        return $this->_match;
-    }
-    
-    public function setMatch($match) 
-    {
-        $this->_match=$match;
-        return $this;
-    }
-    
-   
     /**
      * Creating Zend Authentication Service for logIn and logOut action.
      * Making use of customized adapters for more action as by default.
@@ -109,10 +80,10 @@ class ResultServiceFactory
         $translator = $services->get('translator');
         $this->setTranslator($translator, $textDomain);
         
-        $this->_season_mapper = new SeasonMapper($entityManager);
-        $this->_match_mapper  = new MatchMapper($entityManager);
-        $this->_result_form = $services->get('result_form');
-      
+        $this->_user_mapper = new UserMapper($entityManager);
+        $this->_form = $services->get('user_form');
+        
+        
         return $this;
         
     }
@@ -123,13 +94,10 @@ class ResultServiceFactory
      * A link is provided for each match to enter a result.
      * @return mixed
      */
-    public function getOpenResult() {
+    public function getAllUser() {
        
-        $season = $this->getSeasonMapper()->getActualSeason();
-        if($season==null)
-            return null;
+        return $this->getUserMapper()->getAllUser();
         
-        return $this->getMatchMapper()->getAllOpenResults($season->getId());
     }
     
     /**

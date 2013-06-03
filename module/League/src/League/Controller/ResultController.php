@@ -24,7 +24,9 @@ class ResultController
     {
         $this->_service = $service;
         return $this;
-    }       
+    }
+    
+    
    
    /**
     * showing the top league standings
@@ -41,24 +43,6 @@ class ResultController
        
     }
     
-    /**
-     * shows all open results to enter
-     * 
-     * @return \Zend\View\Model\ViewModel
-     */
-    public function openAction()
-    {
-       
-        return new ViewModel(
-                
-            array(
-                'title'   =>  $this->getService()->getOpenResultTitle(),
-                'matches' =>  $this->getService()->getOpenResult()
-            )
-        );
-    }
-
-    
     public function addresultAction()
     {
         
@@ -67,27 +51,20 @@ class ResultController
        
         if ($this->getRequest()->isPost()) {
             
-            //data to form for validating
-            $form->setData($this->getRequest()->getPost());
+            //get post data, set data to from, prepare for validation
+            $postData =  $this->getRequest()->getPost();
+            $this->getService()->prepareFormForValidation($form, $postData);
             
-            //set filter and validator dependant on values 
-            $this->getService()->setResultFormValidators($form);
-            
-            
-            if ($form->isValid()) {
-             
-                //process and save validated data
-                $this->getService()->processResultData($form->getData());
-
-                return $this->redirect()->toRoute('actual');
+            //if validated data are saved to database
+            if ($this->getService()->processResultData($form)) {
+                  return $this->redirect()->toRoute('actual');
             }
         }
-        
           
        return new ViewModel(
            array(
               'id'      => $pid, 
-              'match'   => $this->getService()->getMatch($pid), 
+              'match'   => $this->getService()->getMatch(), 
               'form'    => $form
            )
        );

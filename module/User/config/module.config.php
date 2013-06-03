@@ -13,10 +13,18 @@ namespace User;
 
 return array(
     
+     'view_helpers' => array(  
+        'invokables' => array(  
+            'salutation' => 'User\View\Helper\Salutation', 
+            'birthday'   => 'User\View\Helper\Birthday',
+            // more helpers here ...  
+        )  
+    ),
+    
     'controllers' => array(
-        'invokables' => array(
+        'factories' => array(
             'User\Controller\User' => 
-                     'User\Controller\UserController'
+                     'User\Services\UserControllerFactory'
         ),
     ),
     //The name of the route is ‘user’ and has a type of ‘segment’. The segment 
@@ -61,6 +69,8 @@ return array(
     
     'service_manager' => array(
         'factories' => array(
+            'user_srv'    => 'User\Services\UserServiceFactory',
+            'user_form'   => 'User\Services\UserFormFactory',
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

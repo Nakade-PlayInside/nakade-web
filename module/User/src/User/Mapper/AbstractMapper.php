@@ -1,5 +1,5 @@
 <?php
-namespace League\Mapper;
+namespace User\Mapper;
 
 use Zend\I18n\Translator\Translator;
 use Zend\I18n\Translator\TranslatorAwareInterface;
@@ -20,7 +20,7 @@ class AbstractMapper implements TranslatorAwareInterface
    protected $_entity_manager; 
    protected $_translator;
    protected $_textDomain='League';
-      
+  
    
    /**
    * Sets the EntityManager

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-08 00:41+0100\n"
-"PO-Revision-Date: 2012-12-08 00:49+0100\n"
-"Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
+"POT-Creation-Date: 2013-06-02 02:13+0100\n"
+"PO-Revision-Date: 2013-06-03 12:57+0100\n"
+"Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -21,15 +21,11 @@ msgstr "Es trat ein 404 Fehler auf"
 
 #: ../view/error/404.phtml:10
 msgid "The requested controller was unable to dispatch the request."
-msgstr ""
-"Der angeforderte Controller war nicht in der Lage die Anfrage zu verarbeiten."
+msgstr "Der angeforderte Controller war nicht in der Lage die Anfrage zu verarbeiten."
 
 #: ../view/error/404.phtml:13
-msgid ""
-"The requested controller could not be mapped to an existing controller class."
-msgstr ""
-"Der angeforderte Controller konnte keiner Controller Klasse zugeordnet "
-"werden."
+msgid "The requested controller could not be mapped to an existing controller class."
+msgstr "Der angeforderte Controller konnte keiner Controller Klasse zugeordnet werden."
 
 #: ../view/error/404.phtml:16
 msgid "The requested controller was not dispatchable."
@@ -41,9 +37,7 @@ msgstr "Für die angeforderte URL konnte keine Übereinstimmung gefunden werden.
 
 #: ../view/error/404.phtml:22
 msgid "We cannot determine at this time why a 404 was generated."
-msgstr ""
-"Zu diesem Zeitpunkt ist es uns nicht möglich zu bestimmen, warum ein 404 "
-"Fehler aufgetreten ist."
+msgstr "Zu diesem Zeitpunkt ist es uns nicht möglich zu bestimmen, warum ein 404 Fehler aufgetreten ist."
 
 #: ../view/error/404.phtml:34
 msgid "Controller"
@@ -58,7 +52,8 @@ msgstr "wird aufgelöst in %s"
 msgid "Exception"
 msgstr "Ausnahme"
 
-#: ../view/error/404.phtml:55 ../view/error/index.phtml:19
+#: ../view/error/404.phtml:55
+#: ../view/error/index.phtml:19
 #: ../view/error/index.phtml:43
 msgid "Stack trace"
 msgstr "Stapelüberwachung"
@@ -71,11 +66,13 @@ msgstr "Ein Fehler ist aufgetreten"
 msgid "Additional information"
 msgstr "Zusätzliche Information"
 
-#: ../view/error/index.phtml:11 ../view/error/index.phtml:35
+#: ../view/error/index.phtml:11
+#: ../view/error/index.phtml:35
 msgid "File"
 msgstr "Datei"
 
-#: ../view/error/index.phtml:15 ../view/error/index.phtml:39
+#: ../view/error/index.phtml:15
+#: ../view/error/index.phtml:39
 msgid "Message"
 msgstr "Meldung"
 
@@ -107,9 +104,141 @@ msgstr "Impressum"
 msgid "Contact"
 msgstr "Kontakt"
 
-#: ../view/layout/layout.phtml:45
+#: ../view/layout/layout.phtml:36
+msgid "Dev"
+msgstr ""
+
+#: ../view/layout/layout.phtml:46
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
+
+#: ../view/user/user/add.phtml:4
+msgid "Add User"
+msgstr "Benutzer hinzufügen"
+
+#: ../src/User/Form/UserForm.php:58
+msgid "Submit"
+msgstr "Abschicken"
+
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:44
+msgid "Profile"
+msgstr "Profil"
+
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:51
+msgid "Salutation:"
+msgstr "Anrede:"
+
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:53
+msgid "Herr"
+msgstr "Herr"
+
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:54
+msgid "Frau"
+msgstr "Frau"
+
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:66
+msgid "Title (opt.):"
+msgstr "Titel (opt.):"
+
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:77
+msgid "First Name:"
+msgstr "Vorname:"
+
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:88
+msgid "Family Name:"
+msgstr "Nachname:"
+
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:99
+msgid "Nick (opt.):"
+msgstr "Spitzname (opt.):"
+
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:110
+msgid "use nick always (anonymizer):"
+msgstr "immer Spitznamen verwenden (anonym)"
+
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:122
+msgid "Birthday (opt.):"
+msgstr "Geburtsdatum (opt.):"
+
+#: ../src/User/Form/Fieldset/OptionsFieldset.php:34
+msgid "Options"
+msgstr "Optionen"
+
+#: ../src/User/Form/Fieldset/OptionsFieldset.php:42
+msgid "language:"
+msgstr "Sprache:"
+
+#: ../src/User/Form/Fieldset/OptionsFieldset.php:54
+msgid "Twitter Messages:"
+msgstr "Twitter Nachrichten:"
+
+#: ../src/User/Form/Fieldset/CredentialsFieldset.php:34
+msgid "Credentials"
+msgstr "Zugangsdaten"
+
+#: ../src/User/Form/Fieldset/CredentialsFieldset.php:42
+msgid "User Name:"
+msgstr "Benutzername:"
+
+#: ../src/User/Form/Fieldset/CredentialsFieldset.php:57
+msgid "Password (generated if empty):"
+msgstr "Passwort (generiert falls leer): "
+
+#: ../src/User/Form/Fieldset/CredentialsFieldset.php:70
+msgid "email:"
+msgstr "Email:"
+
+#: ../src/User/Form/Fieldset/CredentialsFieldset.php:105
+msgid "allowed: a-Z0-9_.@"
+msgstr "erlaubt: a-Z, 0-9, _.@"
+
+#: ../src/User/Form/Fieldset/ContactFieldset.php:40
+msgid "Phone (@home):"
+msgstr "Telefon (privat):"
+
+#: ../src/User/Form/Fieldset/ContactFieldset.php:51
+msgid "Phone (@other):"
+msgstr "Telefon (sonstig):"
+
+#: ../src/User/Form/Fieldset/ContactFieldset.php:62
+msgid "Mobile:"
+msgstr "Handy:"
+
+#: ../src/User/Form/Fieldset/ContactFieldset.php:74
+msgid "Skype:"
+msgstr "Skype:"
+
+#: ../src/User/Form/Fieldset/AdressFieldset.php:32
+msgid "Adress"
+msgstr "Adresse:"
+
+#: ../src/User/Form/Fieldset/AdressFieldset.php:40
+msgid "Street:"
+msgstr "Strasse:"
+
+#: ../src/User/Form/Fieldset/AdressFieldset.php:51
+msgid "PO Box:"
+msgstr "PLZ:"
+
+#: ../src/User/Form/Fieldset/AdressFieldset.php:63
+msgid "City:"
+msgstr "Stadt:"
+
+#: ../src/User/Form/Fieldset/AdressFieldset.php:75
+msgid "Country:"
+msgstr "Land:"
+
+#: ../src/User/Services/UserServiceFactory.php:113
+msgid "No ongoing season found."
+msgstr "keine laufende Saison gefunden."
+
+#: ../src/User/Services/UserServiceFactory.php:117
+msgid "Open Results"
+msgstr "Offene Ergebnisse"
+
+#: ../src/User/Services/UserServiceFactory.php:118
+msgid "Season"
+msgstr "Saison"
 
 #~ msgid "Spieltreff"
 #~ msgstr "Spieltreff"

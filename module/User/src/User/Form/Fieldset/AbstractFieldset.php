@@ -1,28 +1,25 @@
 <?php
-namespace League\Mapper;
+namespace User\Form\Fieldset;
 
+use \Zend\Form\Fieldset;
 use Zend\I18n\Translator\Translator;
 use Zend\I18n\Translator\TranslatorAwareInterface;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of AbstractMapper
- *
- * @author Dr.Holger Maerz <holger@nakade.de>
+ * Abstract form implementing a translator.
+ * Using the translate method will return the given string if
+ * no translator is set.
  */
-class AbstractMapper implements TranslatorAwareInterface
+class AbstractFieldset 
+            extends Fieldset 
+            implements TranslatorAwareInterface
 {
    
-   protected $_entity_manager; 
-   protected $_translator;
-   protected $_textDomain='League';
-      
-   
-   /**
+    protected $_translator;
+    protected $_textDomain="User";
+    protected $_entity_manager;
+    
+    /**
    * Sets the EntityManager
    *
    * @param EntityManager $entitymanager
@@ -49,23 +46,6 @@ class AbstractMapper implements TranslatorAwareInterface
       return $this->_entity_manager;
    }
    
-   /**
-    * saves the entity. 
-    * 
-    * @param Entity $entity
-    */
-   public function save($entity)
-   {
-       if($entity===null) {
-           return $this->getEntityManager()->flush();
-           
-       }
-    
-       $this->getEntityManager()->persist($entity);
-       $this->getEntityManager()->flush($entity);
-   }
-   
-    
     /**
      * Sets translator to use in helper
      *
@@ -75,7 +55,10 @@ class AbstractMapper implements TranslatorAwareInterface
      *          Default is null, which skips setTranslatorTextDomain
      * @return TranslatorAwareInterface
      */
-    public function setTranslator(Translator $translator = null, $textDomain = null) 
+    public function setTranslator(
+            Translator $translator = null, 
+            $textDomain = null
+            ) 
     {
         if(isset($translator))
             $this->_translator=$translator;
@@ -112,7 +95,7 @@ class AbstractMapper implements TranslatorAwareInterface
      * @return TranslatorAwareInterface
      */
     public function setTranslatorEnabled($enabled = true) {;}
-
+    
     /**
      * Returns whether translator is enabled and should be used
      *
@@ -163,5 +146,4 @@ class AbstractMapper implements TranslatorAwareInterface
    }
     
 }
-
 ?>

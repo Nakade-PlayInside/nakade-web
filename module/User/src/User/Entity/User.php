@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="user")
- * @property int $uid
+ * @property int $_id
  * @property string $_vorname
  * @property string $_nachname
  * @property string $_nick
@@ -245,7 +245,7 @@ class User
    * @access public
    * @return User
    */
-  public function setBirthday($birthday)
+  public function setDateOfBirth($birthday)
   {
     $this->_birthday = $birthday;
     return $this;
@@ -257,7 +257,7 @@ class User
    * @access public
    * @return DateTime
    */
-  public function getBirthday()
+  public function getDateOfBirth()
   {
     
       return $this->_birthday;
@@ -310,4 +310,35 @@ class User
       return $this->getLastName() . ", " . $this->getFirstName() ;
   }
   
+  
+  /**
+   * populating data as an array.
+   * key of the array is getter methods name. 
+   * 
+   * @param array $data
+   */
+  
+  public function populate($data) 
+  {
+       foreach($data as $key => $value) {
+            
+           $method = 'set'.ucfirst($key);
+       
+            if(method_exists($this, $method))
+                $this->$method($value);
+       }
+       
+  }
+  
+  
+  /**
+    * Convert the object to an array.
+    *
+    * @return array
+    */
+    public function getArrayCopy() 
+    {
+        return get_object_vars($this);
+    }
+    
 }
