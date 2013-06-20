@@ -11,38 +11,20 @@
 
 namespace User\Controller;
 
-use User\Entity\User;
-use Authentication\Entity\Credential;
-use User\Form\UserForm;
-use User\Mail\MyMail;
-use User\Business\VerifyStringGenerator;
-use User\Form\ProfileFieldSet;
+use Zend\Form\FormInterface;
 use Zend\View\Model\ViewModel;
-use Zend\Mvc\Controller\AbstractActionController;
+use Nakade\Abstracts\AbstractController;
 
-class UserController extends AbstractActionController 
-    implements MyServiceInterface
+class UserController extends AbstractController 
 {
-    
-    protected $_service;
-    
-    public function getService()
-    {
-       return $this->_service;    
-    }
-    
-    public function setService($service)
-    {
-        $this->_service = $service;
-        return $this;
-    }
-    
     
     public function indexAction()
     {
         return new ViewModel(
             array(
-              'users' => $this->getService()->getAllUser()
+              'users' => $this->getService()
+                              ->getMapper()
+                              ->getAllUser()
             )
         );
     }
@@ -50,47 +32,24 @@ class UserController extends AbstractActionController
     public function addAction()
     {
        
-        $form = $this->getService()->getForm();
+        $form = $this->getForm('user');
         
         if ($this->getRequest()->isPost()) {
             
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
             $form->setData($postData);
-          
-          
             
             if ($form->isValid()) {
-            
-                $validatedData = $form->getData();
                 
-                $user = new User();
-                $user->populate($validatedData['profile']);
+                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
+                $data['request'] = $this->getRequest();
+                $this->getService()->addUser($data);
                 
-                $data = $validatedData['credentials'];
-                $data['verified']=0;
-                $data['active']=1;
-                $data['created']=0;
-                $data['verifyString']='abc';
-                
-                $credential= new Credential();
-                $credential->populate($data);
-                
-                $obj = VerifyStringGenerator::getInstance();
-                var_dump($obj->generateVerifyString());
-                
-                new MyMail();
-                
-                //var_dump($credential);
-               // var_dump($validatedData['profile']);
-                return;
                 return $this->redirect()->toRoute('user');
             }
-            
-          
         }
-        
-        
+
         return new ViewModel(
            array(
               'form'    => $form
@@ -98,14 +57,100 @@ class UserController extends AbstractActionController
        );
        
     }
+    
+     public function verifyAction()
+    {
+       $email          = $this->params()->fromQuery('email', null);
+       $verifyString   = $this->params()->fromQuery('verify' ,null);
+       $response       = new \Zend\Http\PhpEnvironment\Response;
+      
+      
+       //no params -> 404 error
+       if(!isset($email) || !isset($verifyString)) {
+           
+           $response->setStatusCode(404);
+           return $response;
+       }
+      
+       //OK!
+       return new ViewModel(
+           array( 
+              'isActivated' => $this->getService()->activateUser(
+                  $email, 
+                  $verifyString
+               ),
+           )
+       );
+       
+       //@todo: eigene error pages
+       //@todo: doctrine save funktioniert?
+       //@todo: szenarie: wiederholte aktivierung
+       //@todo: persönliche ANrede bei aktivierung
+       
+    }
 
+    public function resetPasswordAction()
+    {
+          //get param 
+       $uid  = $this->params()->fromRoute('id', null);
+       
+       $data['uid'] = $uid;
+       $data['request'] = $this->getRequest();
+       $this->getService()->resetPassword($data);
+      
+       return $this->redirect()->toRoute('user');
+    }
+    
     public function editAction()
     {
+        
+        //get param 
+       $uid  = $this->params()->fromRoute('id', null);
+       
+       $user=$this->getService()->getMapper()->getUserById($uid);
+       
+       $form = $this->getForm('user');
+       $form->bindEntity($user);
+       
+       if ($this->getRequest()->isPost()) {
+            
+            //get post data, set data to from, prepare for validation
+            $postData =  $this->getRequest()->getPost();
+            $form->setData($postData);
+           
+            if ($form->isValid()) {
+           
+                $data = $form->getData();
+                $this->getService()->editUser($data);
+      
+                return $this->redirect()->toRoute('user');
+            }
+        }
+
+        return new ViewModel(
+           array(
+              'form'    => $form
+           )
+       );
+        
     }
 
     public function deleteAction()
     {
+       //get param 
+       $uid  = $this->params()->fromRoute('id', null);
+       $this->getService()->deleteUser($uid);
+       
+       return $this->redirect()->toRoute('user');
     }
     
+    public function undeleteAction()
+    {
+       //get param 
+       $uid  = $this->params()->fromRoute('id', null);
+       $this->getService()->undeleteUser($uid);
+       
+       return $this->redirect()->toRoute('user');
+    }
     
 }

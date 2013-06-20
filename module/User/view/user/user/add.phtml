@@ -12,13 +12,13 @@ echo $this->form()->openTag($this->form);
 ?>
 <table>
 <tr>    
-<td style="vertical-align: top;padding-right: 1em;"><?php echo $this->formCollection($this->form->get('profile')); ?></td>
-<td style="vertical-align: top;"><?php echo $this->formCollection($this->form->get('credentials')); ?></td>
+<td style="vertical-align: top;padding-right: 1em;"><?php //echo $this->formCollection($this->form); ?></td>
+<td style="vertical-align: top;"><?php //echo $this->formCollection($this->form->get('credentials')); ?></td>
 </tr>
 </table>
 <?php
-
-echo $this->formHidden($this->form->get('csrf'));
-echo $this->formElement($this->form->get('Send'));
+echo $this->formCollection($this->form);
+//echo $this->formHidden($this->form->get('csrf'));
+//echo $this->formElement($this->form->get('Send'));
 echo $this->form()->closeTag();
 ?>

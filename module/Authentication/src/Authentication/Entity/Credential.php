@@ -1,6 +1,7 @@
 <?php
 namespace Authentication\Entity;
 
+use User\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,6 +35,16 @@ class Credential
   protected $uid;
   
   /**
+   * User Entity
+   *
+   * @ORM\OneToOne(targetEntity="User\Entity\User")
+   * @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+   * @var User
+   * @access protected
+   */
+   protected $user;
+   
+  /**
    * UserName
    *
    * @ORM\Column(name="username", type="string")
@@ -59,6 +70,24 @@ class Credential
    * @access protected
    */
   protected $email;
+  
+  /**
+   * created
+   *
+   * @ORM\Column(name="created", type="datetime")
+   * @var DateTime
+   * @access protected
+   */
+  protected $created;
+  
+  /**
+   * verifyString
+   *
+   * @ORM\Column(name="verifyString", type="string")
+   * @var string
+   * @access protected
+   */
+  protected $verifyString;
   
   /**
    * verified
@@ -159,6 +188,29 @@ class Credential
     return $this->uid;
   }
 
+  /**
+   * Sets the UserID
+   *
+   * @param int $user
+   * @access public
+   * @return User
+   */
+  public function setUser($user)
+  {
+    $this->user = $user;
+    return $this;
+  }
+
+  /**
+   * Returns the User
+   *
+   * @access public
+   * @return User
+   */
+  public function getUser()
+  {
+    return $this->user;
+  }
 
   /**
    * Sets the Username
@@ -231,6 +283,55 @@ class Credential
   {
     return $this->email;
   }
+  
+  /**
+   * Sets the verify string
+   *
+   * @param string $verify
+   * @access public
+   * @return Credential
+   */
+  public function setVerifyString($verify)
+  {
+    $this->verifyString = $verify;
+    return $this;
+  }
+
+  /**
+   * Returns the verify string
+   *
+   * @access public
+   * @return string
+   */
+  public function getVerifyString()
+  {
+    return $this->verifyString;
+  }
+  
+  /**
+   * Sets the Date of creation
+   *
+   * @param string $datetime
+   * @access public
+   * @return Credential
+   */
+  public function setCreated($datetime)
+  {
+    $this->created = $datetime;
+    return $this;
+  }
+
+  /**
+   * Returns the Date  of creation
+   *
+   * @access public
+   * @return DateTime
+   */
+  public function getCreated()
+  {
+    return $this->created;
+  }
+  
   
   /**
    * Sets the Date of the last Login

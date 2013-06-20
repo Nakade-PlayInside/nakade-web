@@ -20,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
   
+     
   /**
    * Primary Identifier
    *
@@ -29,7 +30,7 @@ class User
    * @var integer
    * @access protected
    */
-  protected $_id;
+  protected $id;
 
   /**
    * Title
@@ -38,7 +39,7 @@ class User
    * @var string
    * @access protected
    */
-  protected $_title;
+  protected $title;
 
   /**
    * First Name
@@ -47,7 +48,7 @@ class User
    * @var string
    * @access protected
    */
-  protected $_firstname;
+  protected $firstname;
   
   /**
    * Family Name
@@ -56,7 +57,7 @@ class User
    * @var string
    * @access protected
    */
-  protected $_lastname;
+  protected $lastname;
   
   /**
    * Nick Name
@@ -65,7 +66,7 @@ class User
    * @var string
    * @access protected
    */
-  protected $_nickname;
+  protected $nickname;
   
   /**
    * Sex
@@ -74,7 +75,7 @@ class User
    * @var char
    * @access protected
    */
-  protected $_sex;
+  protected $sex;
   
   /**
    * Birthday
@@ -83,7 +84,7 @@ class User
    * @var DateTime
    * @access protected
    */
-  protected $_birthday;
+  protected $birthday;
   
   /**
    * if flag is set the nickname is shown
@@ -92,8 +93,108 @@ class User
    * @var bool
    * @access protected
    */
-  protected $_anonym;
+  protected $anonym;
 
+  /**
+   * username
+   *
+   * @ORM\Column(name="username", type="string")
+   * @var string
+   * @access protected
+   */
+  protected $username;
+  
+  /**
+   * password
+   *
+   * @ORM\Column(name="password", type="string")
+   * @var string
+   * @access protected
+   */
+  protected $password;
+  
+  /**
+   * email
+   *
+   * @ORM\Column(name="email", type="string")
+   * @var string
+   * @access protected
+   */
+  protected $email;
+  
+  /**
+   * verifyString
+   *
+   * @ORM\Column(name="verifyString", type="string")
+   * @var string
+   * @access protected
+   */
+  protected $verifyString;
+  
+  /**
+   * verified
+   *
+   * @ORM\Column(name="verified", type="boolean")
+   * @var bool
+   * @access protected
+   */
+  protected $verified;
+  
+  /**
+   * active
+   *
+   * @ORM\Column(name="active", type="boolean")
+   * @var bool
+   * @access protected
+   */
+  protected $active;
+  
+  /**
+   * lastLogin
+   *
+   * @ORM\Column(name="lastLogin", type="datetime")
+   * @var DateTime
+   * @access protected
+   */
+  protected $lastLogin;
+  
+  /**
+   * firstLogin
+   *
+   * @ORM\Column(name="firstLogin", type="datetime")
+   * @var DateTime
+   * @access protected
+   */
+  protected $firstLogin;
+  
+  
+  /**
+   * created
+   *
+   * @ORM\Column(name="created", type="datetime")
+   * @var DateTime
+   * @access protected
+   */
+  protected $created;
+  
+  
+  /**
+   * due date
+   *
+   * @ORM\Column(name="due", type="datetime")
+   * @var DateTime
+   * @access protected
+   */
+  protected $due;
+  
+  /**
+   * generated password is set for mail methods
+   *
+   * @var string
+   * @access protected
+   */
+  protected $generated;
+  
   /**
    * Sets the Identifier
    *
@@ -103,7 +204,7 @@ class User
    */
   public function setId($uid)
   {
-    $this->_id = $uid;
+    $this->id = $uid;
     return $this;
   }
 
@@ -115,11 +216,12 @@ class User
    */
   public function getId()
   {
-    return $this->_id;
+    return $this->id;
   }
 
   /**
-   * Sets the Title
+   * Sets the Title. 
+   * If empty string, null is set
    *
    * @param string $title
    * @access public
@@ -127,7 +229,8 @@ class User
    */
   public function setTitle($title)
   {
-    $this->_title = $title;
+    $temp = empty($title)? null:$title;
+    $this->title = $temp;
     return $this;
   }
 
@@ -139,7 +242,7 @@ class User
    */
   public function getTitle()
   {
-    return $this->_title;
+    return $this->title;
   }
 
   /**
@@ -149,9 +252,9 @@ class User
    * @access public
    * @return User
    */
-  public function setFirstName($firstname)
+  public function setFirstname($firstname)
   {
-    $this->_firstname = $firstname;
+    $this->firstname = $firstname;
     return $this;
   }
 
@@ -161,9 +264,9 @@ class User
    * @access public
    * @return string
    */
-  public function getFirstName()
+  public function getFirstname()
   {
-    return $this->_firstname;
+    return $this->firstname;
   }
   
   /**
@@ -173,9 +276,9 @@ class User
    * @access public
    * @return User
    */
-  public function setLastName($lastname)
+  public function setLastname($lastname)
   {
-    $this->_lastname = $lastname;
+    $this->lastname = $lastname;
     return $this;
   }
 
@@ -185,21 +288,23 @@ class User
    * @access public
    * @return string
    */
-  public function getLastName()
+  public function getLastname()
   {
-    return $this->_lastname;
+    return $this->lastname;
   }
   
   /**
-   * Sets the Nick Name
+   * Sets the Nick Name.
+   * if empty string, null is set
    *
    * @param string $nickname
    * @access public
    * @return User
    */
-  public function setNickName($nickname)
+  public function setNickname($nickname)
   {
-    $this->_nickname = $nickname;
+    $temp = empty($nickname)? null:$nickname;  
+    $this->nickname = $temp;
     return $this;
   }
 
@@ -209,9 +314,105 @@ class User
    * @access public
    * @return string
    */
-  public function getNickName()
+  public function getNickname()
   {
-    return $this->_nickname;
+    return $this->nickname;
+  }
+  
+  /**
+   * Sets the User Name
+   *
+   * @param string $name
+   * @access public
+   * @return User
+   */
+  public function setUsername($name)
+  {
+    $this->username = $name;
+    return $this;
+  }
+
+  /**
+   * Returns the userName
+   *
+   * @access public
+   * @return string
+   */
+  public function getUsername()
+  {
+    return $this->username;
+  }
+  
+  /**
+   * Sets the password
+   *
+   * @param string $lastname
+   * @access public
+   * @return user
+   */
+  public function setPassword($lastname)
+  {
+    $this->password = $lastname;
+    return $this;
+  }
+
+  /**
+   * Returns the password
+   *
+   * @access public
+   * @return string
+   */
+  public function getPassword()
+  {
+    return $this->password;
+  }
+  
+  /**
+   * Sets the generated password
+   *
+   * @param string $lastname
+   * @access public
+   * @return user
+   */
+  public function setGenerated($password)
+  {
+    $this->generated = $password;
+    return $this;
+  }
+
+  /**
+   * Returns the generated password
+   *
+   * @access public
+   * @return string
+   */
+  public function getGenerated()
+  {
+    return $this->generated;
+  }
+  
+  /**
+   * Sets the email
+   *
+   * @param string $email
+   * @access public
+   * @return user
+   */
+  public function setEmail($email)
+  {
+    $this->email = $email;
+    return $this;
+  }
+
+  /**
+   * Returns the email
+   *
+   * @access public
+   * @return string
+   */
+  public function getEmail()
+  {
+    return $this->email;
   }
   
   /**
@@ -223,7 +424,7 @@ class User
    */
   public function setSex($sex)
   {
-    $this->_sex = $sex;
+    $this->sex = $sex;
     return $this;
   }
 
@@ -235,19 +436,25 @@ class User
    */
   public function getSex()
   {
-    return $this->_sex;
+    return $this->sex;
   }
   
+  
   /**
-   * Sets the birthday
+   * Sets the birthday.
+   * Converts to DateTime if string is provided
    *
-   * @param DateTime $birthday
+   * @param mixed DateTime|string $datetime
    * @access public
    * @return User
    */
-  public function setDateOfBirth($birthday)
+  public function setBirthday($datetime)
   {
-    $this->_birthday = $birthday;
+    $temp = empty($datetime)? null : $datetime; 
+    if(is_string($temp)) {
+        $temp = new \DateTime($temp); 
+    }  
+    $this->birthday = $temp;
     return $this;
   }
 
@@ -257,10 +464,10 @@ class User
    * @access public
    * @return DateTime
    */
-  public function getDateOfBirth()
+  public function getBirthday()
   {
     
-      return $this->_birthday;
+      return $this->birthday;
   }
   
   /**
@@ -272,7 +479,7 @@ class User
    */
   public function setAnonym($anonym)
   {
-    $this->_anonym = $anonym;
+    $this->anonym = $anonym;
     return $this;
   }
 
@@ -282,32 +489,255 @@ class User
    * @access public
    * @return bool
    */
+  public function getAnonym()
+  {
+    
+      return $this->anonym;
+  }
+  
+  /**
+   * Returns the flag anonym
+   *
+   * @access public
+   * @return bool
+   */
   public function isAnonym()
   {
     
-      return $this->_anonym;
+      return $this->anonym;
+  }
+  
+  /**
+   * Sets the verify string
+   *
+   * @param string $verify
+   * @access public
+   * @return user
+   */
+  public function setVerifyString($verify)
+  {
+    $this->verifyString = $verify;
+    return $this;
+  }
+
+  /**
+   * Returns the verify string
+   *
+   * @access public
+   * @return string
+   */
+  public function getVerifyString()
+  {
+    return $this->verifyString;
+  }
+  
+  /**
+   * Sets the Date of creation
+   * 
+   * @param  DateTime $datetime
+   * @access public
+   * @return user
+   */
+  public function setCreated($datetime)
+  {
+      $this->created = $datetime;
+      return $this;
+  }
+
+  /**
+   * Returns the Date  of creation
+   *
+   * @access public
+   * @return DateTime
+   */
+  public function getCreated()
+  {
+    return $this->created;
+  }
+  
+  /**
+   * Sets the due date.
+   *
+   * @param  DateTime $datetime
+   * @access public
+   * @return user
+   */
+  public function setDue($datetime)
+  {
+        
+    $this->due = $datetime;
+    return $this;
+  }
+
+  /**
+   * Returns the due date
+   *
+   * @access public
+   * @return DateTime
+   */
+  public function getDue()
+  {
+    return $this->due;
+  }
+  
+  /**
+   * returns true if dueDate is not expired
+   * 
+   * @return boolean
+   */
+  public function isDue()
+  {
+      $expired = $this->getDue();    
+      if($expired===null)
+          return false;
+      
+      return $expired > new \DateTime();
+  }
+  
+  /**
+   * Sets the Date of the last Login.
+   *
+   * @param  DateTime $datetime
+   * @access public
+   * @return user
+   */
+  public function setLastLogin($datetime)
+  {
+     
+      $this->lastLogin = $datetime;
+      return $this;
+  }
+
+  /**
+   * Returns the Date of the last Login
+   *
+   * @access public
+   * @return DateTime
+   */
+  public function getLastLogin()
+  {
+    return $this->lastLogin;
+  }
+  
+  /**
+   * Sets the Date of the first Login.
+   * 
+   * @param  DateTime $datetime
+   * @access public
+   * @return user
+   */
+  public function setFirstLogin($datetime)
+  {
+      $this->firstLogin = $datetime;
+      return $this;
+  }
+
+  /**
+   * Returns the Date of the first Login
+   *
+   * @access public
+   * @return DateTime
+   */
+  public function getFirstLogin()
+  {
+    return $this->firstLogin;
+  }
+  
+  /**
+   * Sets active flag
+   *
+   * @param bool $active
+   * @access public
+   * @return user
+   */
+  public function setActive($active)
+  {
+    $this->active = $active;
+    return $this;
+  }
+
+  /**
+   * Returns the flag active
+   *
+   * @access public
+   * @return bool
+   */
+  public function isActive()
+  {
+    
+      return $this->active;
   }
   
   
+  /**
+   * Sets verified flag
+   *
+   * @param bool $verified
+   * @access public
+   * @return user
+   */
+  public function setVerified($verified)
+  {
+    $this->verified = $verified;
+    return $this;
+  }
+
+  /**
+   * Returns the flag verified
+   *
+   * @access public
+   * @return bool
+   */
+  public function isVerified()
+  {
+    
+      return $this->verified;
+  }
+  
+  /**
+   * gets nickname if existing and anonymized or 
+   * firstname instead
+   * @return string
+   */
   public function getShortName()
   {
-      if($this->isAnonym() && strlen($this->getNickName())>0)
-          return $this->getNickName();
+      $nick = $this->getNickname();
+      if($this->isAnonym()  && !empty($nick)) 
+          return $nick;
       
-      return $this->getFirstName();
+      $lastname = $this->getLastname();
+      return $this->getFirstname() . " " . $lastname[0] . ".";
   }
   
+  /**
+   * get complete name with nickname if existing
+   * @return string
+   */
   public function getCompleteName()
   {
-      if(strlen($this->getNickName())>0)
-          return $this->getName() . " (" . $this->getNickName() .")";
+      $nick = $this->getNickname();
+      if($this->isAnonym()  && !empty($nick)) {
+          return sprintf("%s %s '%s' %s",
+              $this->getTitle(),
+              $this->getFirstname(),
+              $nick,
+              $this->getLastname()
+          );
+          
+      }    
       
       return $this->getName();
   }
   
+  /**
+   * get name and title 
+   * @return string
+   */
   public function getName()
   {
-      return $this->getLastName() . ", " . $this->getFirstName() ;
+      return $this->getTitle() . " " .  
+          $this->getFirstname() . " " . 
+          $this->getLastname();
   }
   
   
@@ -323,15 +753,31 @@ class User
        foreach($data as $key => $value) {
             
            $method = 'set'.ucfirst($key);
-       
             if(method_exists($this, $method))
                 $this->$method($value);
        }
        
   }
   
-  
   /**
+   * usage for creating a NEW user. Provide all neccessary values 
+   * in an array. Verified, active flag and created date are 
+   * generated automatically. 
+   *    
+   * @param array $data
+   */
+  public function exchangeArray($data)
+  {
+        $this->populate($data);
+      
+        //defaults
+        $this->verified  = 0;
+        $this->active    = 1;
+        $this->created   = new \DateTime();
+        
+   }
+  
+   /**
     * Convert the object to an array.
     *
     * @return array

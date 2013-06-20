@@ -28,17 +28,13 @@ class UserControllerFactory implements FactoryInterface
      
         $serviceManager = $services->getServiceLocator();
         
-        $config  = $serviceManager->get('config');
-        if ($config instanceof Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
-        }
-   
-        $service    = $serviceManager->get('user_srv');
-     
+        $factory    = $serviceManager->get('User\Factory\FormFactory');
+        $service    = $serviceManager->get('User\Services\UserService');
+        
         $controller = new UserController();
         $controller->setService($service);
+        $controller->setFormFactory($factory);
        
-     
         return $controller;
     }
 }

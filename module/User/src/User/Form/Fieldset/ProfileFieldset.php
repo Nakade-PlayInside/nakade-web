@@ -1,8 +1,10 @@
 <?php
 namespace User\Form\Fieldset;
 
-use \Zend\InputFilter\InputFilterProviderInterface;
+use Zend\InputFilter\InputFilterProviderInterface;
 use User\Form\Fieldset\AbstractFieldset;
+use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
+use User\Entity\User;
 
 /**
  * Form for adding a new User
@@ -20,6 +22,9 @@ class ProfileFieldset extends AbstractFieldset
         $this->_entity_manager = $em;
         
         parent::__construct('profile');
+        $this->setHydrator(new Hydrator())
+             ->setObject(new User());
+         
         $this->prepare();
     } 
    
@@ -93,7 +98,7 @@ class ProfileFieldset extends AbstractFieldset
         //nick name
         $this->add(
             array(
-                'name' => 'nickName',
+                'name' => 'nickname',
                 'type' => 'Zend\Form\Element\Text',
                 'options' => array(
                     'label' =>  $this->translate('Nick (opt.):'),
@@ -116,7 +121,7 @@ class ProfileFieldset extends AbstractFieldset
          //birthday
         $this->add(
             array(
-                'name' => 'dateOfBirth',
+                'name' => 'birthday',
                 'type' => 'Zend\Form\Element\Date',
                 'options' => array(
                     'label' =>  $this->translate('Birthday (opt.):'),
@@ -129,11 +134,13 @@ class ProfileFieldset extends AbstractFieldset
                 )
             )
         );
+        
        
     } 
     
+    
     public function getInputFilterSpecification() {
-        
+       
         return array(
             'title' => array(
                 'required' => false,
@@ -184,7 +191,7 @@ class ProfileFieldset extends AbstractFieldset
                     ),
                 )    
             ),
-            'nickName' => array(
+            'nickname' => array(
                 'required' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
@@ -203,15 +210,17 @@ class ProfileFieldset extends AbstractFieldset
                         'name'     => 'User\Form\Validator\DBNoRecordExist',
                         'options' => array( 
                             'entity'    => 'User\Entity\User',
-                            'property' => '_nickname',
+                            'property' => 'nickname',
                             'adapter'  => $this->getEntityManager(),
                         )
                     )
                  )   
             ),
-            'dateOfBirth' => array(
+            'birthday' => array(
                 'required' => false,
             ),
+           
+          
         );
     }
 }

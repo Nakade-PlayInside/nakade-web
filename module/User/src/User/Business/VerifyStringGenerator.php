@@ -11,33 +11,24 @@ namespace User\Business;
  */
 class VerifyStringGenerator {
     
-    private static $instance =null;
-    
-   /**
-    * Singleton Pattern for preventing object inflation.
-    * @return AbstractGameStats
-    */
-    public static function getInstance()
-    {
-        if(self::$instance == null) {
-            self::$instance = new VerifyStringGenerator();
-        }
-        
-        return self::$instance;
-    }      
     
     /**
-     * generates a randomized password with 8 chars in length by default. 
+     * generates a randomized verify String. 
      * 
-     * @param int $length optional password length
-     * @return string random password
+     * @param int $length optional string length
+     * @return string random verify string
      */
-    public function generateVerifyString($length=16)
+    public static function generateVerifyString($length=16)
     {
        
+        $letters = "abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@";
         $verify_string = "";
+        $base = str_shuffle($letters);
+        
         for ($i = 0; $i < $length; $i++) {
-            $verify_string .= chr(mt_rand(36,126));
+        
+            $index = mt_rand(0, strlen($base)-1);
+            $verify_string .= $base[$index];
         }
         
         return $verify_string;

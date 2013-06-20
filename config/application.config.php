@@ -11,6 +11,7 @@ return array(
         'DoctrineModule',
         'DoctrineORMModule',
         'Nakade',
+        'Mail',
         'League',
         'Authentication',
       

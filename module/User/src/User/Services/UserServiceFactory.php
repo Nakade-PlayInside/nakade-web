@@ -1,13 +1,14 @@
 <?php
 namespace User\Services;
 
-
-use User\Mapper\UserMapper;
-use Zend\ServiceManager\FactoryInterface;
+use Nakade\Abstracts\AbstractService;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
 use RuntimeException;
 
+use User\Business\PasswordGenerator;
+use User\Business\VerifyStringGenerator;
+use User\Entity\User;
 
 /**
  * Factory for creating the Zend Authentication Service. Using customized
@@ -15,36 +16,10 @@ use RuntimeException;
  * 
  * @author Dr. Holger Maerz <grrompf@gmail.com>
  */
-class UserServiceFactory 
-    extends AbstractTranslationService 
-    implements FactoryInterface 
+class UserServiceFactory extends AbstractService
 {
+    protected $_expire=72;
    
-    protected $_user_mapper;
-    protected $_form;
-    
-    
-    public function getUserMapper() 
-    {
-        return $this->_user_mapper;
-    }
-    
-    public function setUserMapper($mapper) 
-    {
-        $this->_user_mapper=$mapper;
-        return $this;
-    }
-    
-    public function getForm() 
-    {
-        return $this->_form;
-    }
-    
-    public function setForm($form) 
-    {
-        $this->_form=$form;
-        return $this;
-    }
     /**
      * Creating Zend Authentication Service for logIn and logOut action.
      * Making use of customized adapters for more action as by default.
@@ -63,194 +38,158 @@ class UserServiceFactory
             $config = ArrayUtils::iteratorToArray($config);
         }
         
-        //configuration 
-        $textDomain = isset($config['League']['text_domain']) ? 
-            $config['League']['text_domain'] : null;
-         
-        //EntityManager for database access by doctrine
-        $entityManager = $services->get('Doctrine\ORM\EntityManager');
+        //expire verification in hours: default 72h
+        $this->_expire = isset($config['User']['email_options']['expire']) ? 
+            $config['User']['email_options']['expire'] : 72;
         
-        if (null === $entityManager) {
-            throw new RuntimeException(
-                sprintf('Entity manager could not be found in service.')
-            );
-        }
-        
-        //optional translator
-        $translator = $services->get('translator');
-        $this->setTranslator($translator, $textDomain);
-        
-        $this->_user_mapper = new UserMapper($entityManager);
-        $this->_form = $services->get('user_form');
+        $this->_mailFactory = $services->get('User\Factory\MailFactory');
+       
+        $mapper = $services->get('User\Factory\MapperFactory');
+        $this->_mapper = $mapper->getMapper('user');
         
         
         return $this;
         
     }
     
-   
     /**
-     * shows all open results in a season.
-     * A link is provided for each match to enter a result.
-     * @return mixed
-     */
-    public function getAllUser() {
-       
-        return $this->getUserMapper()->getAllUser();
-        
-    }
-    
-    /**
-     * Get the title for open results.
-     * If no season is found it will return a not found information.
+     * adding an user 
      * 
-     * @return string
+     * @param Request $request
+     * @param array $data
      */
-    public function getOpenResultTitle() {
-       
-       $infos=$this->getSeasonMapper()->getActualSeasonInfos();
-       if($infos==null)
-           return $this->translate("No ongoing season found.");
-       
-       return sprintf(
-                  "%s %s %02d/%d",
-                  $this->translate('Open Results'),
-                  $this->translate('Season'),
-                  $infos['number'], 
-                  date_format($infos['year'], 'y')
-              );
-    }
-   
-    public function prepareFormForValidation($form, $data)
+    public function addUser($data)
     {
-        $form->setData($data);
-            
-        //set filter and validator dependant on values 
-        $this->setResultFormValidators($form);
+         //sets pwd, verifyStr etc
+         $this->prepareData($data); 
         
+         //make new user
+         $user = new User();
+         $user->exchangeArray($data);
+         $this->getMapper()->save($user);
+     
+         //send verify mail to user
+         $mail = $this->getMailFactory()->getMail('verify');
+         $mail->setData($data);
+         $mail->setRecipient($user->getEmail(), $user->getName());
+         $mail->send();
         
     }
     
-    /**
-     * Returns a result form.
-     * Before returning it, match data and the ID are set.
-     *  
-     * @param int $pid
-     * @return Form
-     */
-    public function setResultFormValues($pid) {
-       
-       //match to enter a result
-        $this->_match = $this->getMatchMapper()->getMatchById($pid);
+    private  function prepareData(&$data)
+    {
+         $key = 'request';
+         if(!array_key_exists($key,$data)) {
+             throw new RuntimeException(
+                   __METHOD__ . ' expects an array key: ' . $key
+             );
+         }    
+                 
+         $request = $data[$key]; 
+         $uri       = $request->getUri();
+         $verifyUrl = sprintf('%s://%s',$uri->getScheme(), $uri->getHost());
+         
+         $data['verifyString'] = VerifyStringGenerator::generateVerifyString();
+         $data['verifyUrl']    = $verifyUrl;
         
-        //form
-        $form = $this->getResultForm();
-        $form->setPairing($this->_match);
-        $form->setId($pid);
-        $form->init();
-        $this->setResultForm($form);
-             
-        return $form;
+         $password             = PasswordGenerator::generatePassword(12);
+         $data['generated']    = $password;
+         $data['password']     = md5($password);
+         
+         //expire verification 
+         $now  = new \DateTime();
+         $duetime  = sprintf('+ %s hour', $this->_expire);
+         $data['due']    = $now->modify($duetime);
+         
+         $data['verified'] = 0;
     }
-   
-    /**
-     * Activates the filter and validator for points 
-     * or winner in the form provided dependant on the result input.
-     * This has to be set before validation. 
-     * 
-     * @param type $form
-     */
-    public function setResultFormValidators(&$form)
-    {
-            $result = $form->get('result')->getValue();
-            
-            switch($result) {
-            
-                case RESULT::BYPOINTS: 
-                    
-                        $filter  = new PointsFilter();
-                        break;
-                    
-                case RESULT::DRAW:
-                case RESULT::SUSPENDED: 
-                    
-                        $filter  = new WinnerFilter(); 
-                        break;
-                    
-                default: return;    
-            }
-            
-            $form->setInputFilter($filter);
-            
-            
-    }        
     
-    
-    /**
-     * processing and save match data to database
-     *  
-     * @param Form $form
-     * @return boolean 
-     */
-    public function processResultData($form)
+    public function editUser($user)
     {
+        // to fulfill the created value @deprecated
+        $created = $user->getCreated();
+        $data['created'] = empty($created)? new \DateTime():$created;
         
-        if($form->isValid()) {
-            
-            $validatedData = $form->getData();
-            $this->filterResultWinner($validatedData);
-            $this->filterResultPoints($validatedData);
+        $user->populate($data);  
+        $this->getMapper()->save($user);
+    }
+    
+    public function activateUser($email, $verifyString) 
+    {
+        $user = $this->getMapper()
+                           ->getActivateUser($email, $verifyString); 
         
-            $match = $this->getMatchMapper()->getMatchById($validatedData['pid']);
-            $match->populate($validatedData);
-        
-            $this->getMatchMapper()->save($match);
-            return true;
+        if(null===$user) {
+            return false;
         }
         
-        return false;
+        $user->setVerified(true);
+        $this->getMapper()->save($user);
+        return true;
+        
     }
     
-    /**
-     * unset the winner if the match is a draw or suspended
-     * @param array $validatedData
-     */
-    protected function filterResultWinner(&$validatedData)
+    public function resetPassword($data) 
     {
-        switch($validatedData['result']) {
-            
-           case RESULT::DRAW: 
-           case RESULT::SUSPENDED:  
-                    $validatedData['winner']=null;
-                    
-        }
+         $key = 'uid';
+         if(!array_key_exists($key,$data)) {
+             throw new RuntimeException(
+                   __METHOD__ . ' expects an array key: ' . $key
+             );
+         }    
+        
+         $user = $this->getMapper()->getUserById($data[$key]); 
+         
+         if(null===$user) {
+             throw new RuntimeException(
+                   sprintf("User with id:%s not found", $data[$key])
+             );
+         }
+        
+         $this->prepareData($data);
+         $user->populate($data);
+         $this->getMapper()->save($user);
+       
+         $mailData = array_merge($data, $user->getArrayCopy());
+         
+        //send verify mail to user
+         $mail = $this->getMailFactory()->getMail('password');
+         $mail->setData($mailData);
+         $mail->setRecipient($user->getEmail(), $user->getName());
+         $mail->send();
+        
     }
     
-    /**
-     * Unset points if result is not by points. If the offset
-     * points are exceeded, result is set to resignation.
-     *  
-     * @param array $validatedData
-     */
-    protected function filterResultPoints(&$validatedData)
+    public function deleteUser($uid) 
     {
+        $user = $this->getMapper()->getUserById($uid); 
         
-        switch($validatedData['result']) {
-            
-           case RESULT::BYPOINTS:
-               
-               if($validatedData['points']>=HAHN::OFFSET_POINTS) {
-                   $validatedData['points']='';
-                   $validatedData['result']=1;
-               }
-               break;
-               
-           default: 
-               
-               $validatedData['points']='';
-               break;
+        if(null===$user) {
+            return false;
         }
         
+        $user->setActive(false);
+        $this->getMapper()->save($user);
+        return true;
+    }
+    
+    public function undeleteUser($uid) 
+    {
+        $user = $this->getMapper()->getUserById($uid); 
+        
+        if(null===$user) {
+            return false;
+        }
+        
+        $user->setActive(true);
+        $this->getMapper()->save($user);
+        return true;
+    }
+    
+    public function getProfile($uid) 
+    {
+        $user = $this->getMapper()->getUserById($uid); 
+        return $user;
     }
     
 }

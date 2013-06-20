@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-02 02:13+0100\n"
-"PO-Revision-Date: 2013-06-03 12:57+0100\n"
+"POT-Creation-Date: 2013-06-19 07:59+0100\n"
+"PO-Revision-Date: 2013-06-19 08:00+0100\n"
 "Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -15,150 +15,116 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../view/error/404.phtml:1
-msgid "A 404 error occurred"
-msgstr "Es trat ein 404 Fehler auf"
+#: ../view/user/profile/index.phtml:11
+msgid "Name:"
+msgstr "Name:"
 
-#: ../view/error/404.phtml:10
-msgid "The requested controller was unable to dispatch the request."
-msgstr "Der angeforderte Controller war nicht in der Lage die Anfrage zu verarbeiten."
+#: ../view/user/profile/index.phtml:15
+msgid "Birthday:"
+msgstr "Geburtstag:"
 
-#: ../view/error/404.phtml:13
-msgid "The requested controller could not be mapped to an existing controller class."
-msgstr "Der angeforderte Controller konnte keiner Controller Klasse zugeordnet werden."
+#: ../view/user/profile/index.phtml:19
+msgid "Nick:"
+msgstr "Spitzname:"
 
-#: ../view/error/404.phtml:16
-msgid "The requested controller was not dispatchable."
-msgstr "Der angeforderte Controller ist nicht aufrufbar."
+#: ../view/user/profile/index.phtml:23
+#: ../src/User/Form/UserForm.php:145
+msgid "email:"
+msgstr "Email:"
 
-#: ../view/error/404.phtml:19
-msgid "The requested URL could not be matched by routing."
-msgstr "Für die angeforderte URL konnte keine Übereinstimmung gefunden werden."
+#: ../view/user/profile/index.phtml:27
+msgid "Username:"
+msgstr "Benutzername:"
 
-#: ../view/error/404.phtml:22
-msgid "We cannot determine at this time why a 404 was generated."
-msgstr "Zu diesem Zeitpunkt ist es uns nicht möglich zu bestimmen, warum ein 404 Fehler aufgetreten ist."
+#: ../view/user/profile/index.phtml:31
+msgid "Password"
+msgstr "Passwort"
 
-#: ../view/error/404.phtml:34
-msgid "Controller"
-msgstr "Controller"
+#: ../view/user/user/verify.phtml:4
+msgid "Account Activation"
+msgstr "Konto Aktivierung"
 
-#: ../view/error/404.phtml:41
-#, php-format
-msgid "resolves to %s"
-msgstr "wird aufgelöst in %s"
+#: ../view/user/user/verify.phtml:12
+msgid "Thank you for your activation."
+msgstr "Vielen Dank für deine Aktivierung."
 
-#: ../view/error/404.phtml:51
-msgid "Exception"
-msgstr "Ausnahme"
+#: ../view/user/user/verify.phtml:13
+msgid "You can logIn using your credentials."
+msgstr "Du kannst dich  mit deinen Zugangsdaten anmelden. "
 
-#: ../view/error/404.phtml:55
-#: ../view/error/index.phtml:19
-#: ../view/error/index.phtml:43
-msgid "Stack trace"
-msgstr "Stapelüberwachung"
+#: ../view/user/user/verify.phtml:15
+msgid "Activation failed."
+msgstr "Aktivierung fehlgeschlagen."
 
-#: ../view/error/index.phtml:1
-msgid "An error occurred"
-msgstr "Ein Fehler ist aufgetreten"
+#: ../view/user/user/verify.phtml:16
+msgid "Probably your credentials are expired."
+msgstr "Möglicherweise sind deine Zugangsdaten ungültig."
 
-#: ../view/error/index.phtml:8
-msgid "Additional information"
-msgstr "Zusätzliche Information"
-
-#: ../view/error/index.phtml:11
-#: ../view/error/index.phtml:35
-msgid "File"
-msgstr "Datei"
-
-#: ../view/error/index.phtml:15
-#: ../view/error/index.phtml:39
-msgid "Message"
-msgstr "Meldung"
-
-#: ../view/error/index.phtml:29
-msgid "Previous exceptions"
-msgstr "Vorherige Ausnahme"
-
-#: ../view/error/index.phtml:58
-msgid "No Exception available"
-msgstr "Es ist keine Ausnahme verfügbar"
-
-#: ../view/layout/layout.phtml:29
-msgid "Berliner Baduk Club e.V."
-msgstr ""
-
-#: ../view/layout/layout.phtml:32
-msgid "Home"
-msgstr "Startseite"
-
-#: ../view/layout/layout.phtml:33
-msgid "Training"
-msgstr "Training"
-
-#: ../view/layout/layout.phtml:34
-msgid "Imprint"
-msgstr "Impressum"
-
-#: ../view/layout/layout.phtml:35
-msgid "Contact"
-msgstr "Kontakt"
-
-#: ../view/layout/layout.phtml:36
-msgid "Dev"
-msgstr ""
-
-#: ../view/layout/layout.phtml:46
-msgid "All rights reserved."
-msgstr "Alle Rechte vorbehalten."
+#: ../view/user/user/edit.phtml:4
+msgid "Edit User"
+msgstr "Benutzer bearbeiten"
 
 #: ../view/user/user/add.phtml:4
 msgid "Add User"
 msgstr "Benutzer hinzufügen"
 
-#: ../src/User/Form/UserForm.php:58
-msgid "Submit"
-msgstr "Abschicken"
-
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:44
-msgid "Profile"
-msgstr "Profil"
-
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:51
+#: ../src/User/Form/UserForm.php:42
 msgid "Salutation:"
 msgstr "Anrede:"
 
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:53
+#: ../src/User/Form/UserForm.php:44
 msgid "Herr"
 msgstr "Herr"
 
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:54
+#: ../src/User/Form/UserForm.php:45
 msgid "Frau"
 msgstr "Frau"
 
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:66
+#: ../src/User/Form/UserForm.php:57
 msgid "Title (opt.):"
 msgstr "Titel (opt.):"
 
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:77
+#: ../src/User/Form/UserForm.php:68
 msgid "First Name:"
 msgstr "Vorname:"
 
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:88
+#: ../src/User/Form/UserForm.php:79
 msgid "Family Name:"
 msgstr "Nachname:"
 
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:99
+#: ../src/User/Form/UserForm.php:90
 msgid "Nick (opt.):"
 msgstr "Spitzname (opt.):"
 
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:110
+#: ../src/User/Form/UserForm.php:101
 msgid "use nick always (anonymizer):"
 msgstr "immer Spitznamen verwenden (anonym)"
 
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:122
+#: ../src/User/Form/UserForm.php:113
 msgid "Birthday (opt.):"
 msgstr "Geburtsdatum (opt.):"
+
+#: ../src/User/Form/UserForm.php:130
+msgid "User Name:"
+msgstr "Benutzername:"
+
+#: ../src/User/Form/UserForm.php:176
+msgid "Submit"
+msgstr "Abschicken"
+
+#: ../src/User/Form/UserFilter.php:121
+msgid "allowed: a-Z0-9_.@"
+msgstr "erlaubt: a-Z, 0-9, _.@"
+
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:49
+#: ../src/User/Form/Fieldset/UserFieldset.php:49
+msgid "Profile"
+msgstr "Profil"
+
+#: ../src/User/Form/Fieldset/UserFieldset.php:161
+#: ../src/User/Form/Fieldset/CredentialsFieldset.php:60
+msgid "Password (generated if empty):"
+msgstr "Passwort (generiert falls leer): "
 
 #: ../src/User/Form/Fieldset/OptionsFieldset.php:34
 msgid "Options"
@@ -172,25 +138,13 @@ msgstr "Sprache:"
 msgid "Twitter Messages:"
 msgstr "Twitter Nachrichten:"
 
-#: ../src/User/Form/Fieldset/CredentialsFieldset.php:34
+#: ../src/User/Form/Fieldset/CredentialsFieldset.php:37
 msgid "Credentials"
 msgstr "Zugangsdaten"
 
-#: ../src/User/Form/Fieldset/CredentialsFieldset.php:42
-msgid "User Name:"
-msgstr "Benutzername:"
-
-#: ../src/User/Form/Fieldset/CredentialsFieldset.php:57
-msgid "Password (generated if empty):"
-msgstr "Passwort (generiert falls leer): "
-
-#: ../src/User/Form/Fieldset/CredentialsFieldset.php:70
-msgid "email:"
-msgstr "Email:"
-
-#: ../src/User/Form/Fieldset/CredentialsFieldset.php:105
-msgid "allowed: a-Z0-9_.@"
-msgstr "erlaubt: a-Z, 0-9, _.@"
+#: ../src/User/Form/Fieldset/ContactFieldset.php:32
+msgid "Contact"
+msgstr "Kontakt"
 
 #: ../src/User/Form/Fieldset/ContactFieldset.php:40
 msgid "Phone (@home):"
@@ -228,26 +182,185 @@ msgstr "Stadt:"
 msgid "Country:"
 msgstr "Land:"
 
-#: ../src/User/Services/UserServiceFactory.php:113
-msgid "No ongoing season found."
-msgstr "keine laufende Saison gefunden."
+#: ../src/User/Mail/VerifyMail.php:97
+#: ../src/User/Mail/PasswordMail.php:16
+msgid "Welcome %firstname%"
+msgstr "Willkommen %firstname%"
 
-#: ../src/User/Services/UserServiceFactory.php:117
-msgid "Open Results"
-msgstr "Offene Ergebnisse"
+#: ../src/User/Mail/VerifyMail.php:98
+msgid "Thank you for your registration at nakade.de"
+msgstr "Vielen Dank, dass du dich für nakade.de entschieden hast."
 
-#: ../src/User/Services/UserServiceFactory.php:118
-msgid "Season"
-msgstr "Saison"
+#: ../src/User/Mail/VerifyMail.php:102
+#: ../src/User/Mail/PasswordMail.php:21
+msgid "Your Credentials"
+msgstr "Deine Zugangsdaten"
+
+#: ../src/User/Mail/VerifyMail.php:103
+#: ../src/User/Mail/PasswordMail.php:22
+msgid "username"
+msgstr "Benutzername"
+
+#: ../src/User/Mail/VerifyMail.php:104
+#: ../src/User/Mail/PasswordMail.php:23
+msgid "password"
+msgstr "Passwort"
+
+#: ../src/User/Mail/VerifyMail.php:108
+#: ../src/User/Mail/PasswordMail.php:27
+msgid "Your account requires activation during the next %expire% hours."
+msgstr "Dein Konto muss binnen der nächsten %expire% Stunden aktiviert werden."
+
+#: ../src/User/Mail/VerifyMail.php:109
+#: ../src/User/Mail/PasswordMail.php:28
+msgid "Please click on the link for activation."
+msgstr "Bitte klicke auf den  Link für die Aktivierung."
+
+#: ../src/User/Mail/VerifyMail.php:110
+#: ../src/User/Mail/PasswordMail.php:29
+msgid "If you fail to activate your account in time, you have to reset your password using the 'forgot password' option."
+msgstr "Falls du deinen Zugang nicht innerhalb der gegebenen Frist aktivierst, musst du dein Passwort über die 'Passwort vergessen' Option zurücksetzen."
+
+#: ../src/User/Mail/VerifyMail.php:114
+#: ../src/User/Mail/PasswordMail.php:33
+msgid "May the stones be with you."
+msgstr "Mit 361 Grüßen"
+
+#: ../src/User/Mail/VerifyMail.php:115
+#: ../src/User/Mail/PasswordMail.php:34
+msgid "Your %signature%."
+msgstr "Dein %signature%"
+
+#: ../src/User/Mail/VerifyMail.php:119
+#: ../src/User/Mail/PasswordMail.php:38
+msgid "Court of Registration"
+msgstr "Amtsgericht"
+
+#: ../src/User/Mail/VerifyMail.php:120
+#: ../src/User/Mail/PasswordMail.php:39
+msgid "Register No."
+msgstr "Registernummer"
+
+#: ../src/User/Mail/VerifyMail.php:123
+msgid "%prefix% - Your Credentials"
+msgstr "%prefix% - Deine Zugangsdaten"
+
+#: ../src/User/Mail/PasswordMail.php:17
+msgid "Your password at nakade.de was reset."
+msgstr "Dein Passwort auf nakade.de  wurde neu gesetzt."
+
+#: ../src/User/Mail/PasswordMail.php:42
+msgid "%prefix% - Your New Credentials"
+msgstr "%prefix% - Deine neuen Zugangsdaten"
+
+#: ../src/User/View/Helper/AbstractProfileEditHelper.php:21
+msgid "edit"
+msgstr "bearbeiten"
+
+#: ../src/User/View/Helper/EditNick.php:23
+msgid "Incognito"
+msgstr "Inkognito"
+
+#~ msgid "test"
+#~ msgstr "gammel"
+
+#~ msgid "Welcome"
+#~ msgstr "Willkommen"
+
+#~ msgid "a Berlin Baduk Club e.V. service"
+#~ msgstr "ein Webdienst des BBC eV"
+
+#~ msgid "Your Nakade Team"
+#~ msgstr "Dein Nakade-Team"
+
+#~ msgid "No ongoing season found."
+#~ msgstr "keine laufende Saison gefunden."
+
+#~ msgid "Open Results"
+#~ msgstr "Offene Ergebnisse"
+
+#~ msgid "Season"
+#~ msgstr "Saison"
+
+#~ msgid "A 404 error occurred"
+#~ msgstr "Es trat ein 404 Fehler auf"
+
+#~ msgid "The requested controller was unable to dispatch the request."
+#~ msgstr ""
+#~ "Der angeforderte Controller war nicht in der Lage die Anfrage zu "
+#~ "verarbeiten."
+
+#~ msgid ""
+#~ "The requested controller could not be mapped to an existing controller "
+#~ "class."
+#~ msgstr ""
+#~ "Der angeforderte Controller konnte keiner Controller Klasse zugeordnet "
+#~ "werden."
+
+#~ msgid "The requested controller was not dispatchable."
+#~ msgstr "Der angeforderte Controller ist nicht aufrufbar."
+
+#~ msgid "The requested URL could not be matched by routing."
+#~ msgstr ""
+#~ "Für die angeforderte URL konnte keine Übereinstimmung gefunden werden."
+
+#~ msgid "We cannot determine at this time why a 404 was generated."
+#~ msgstr ""
+#~ "Zu diesem Zeitpunkt ist es uns nicht möglich zu bestimmen, warum ein 404 "
+#~ "Fehler aufgetreten ist."
+
+#~ msgid "Controller"
+#~ msgstr "Controller"
+
+#~ msgid "resolves to %s"
+#~ msgstr "wird aufgelöst in %s"
+
+#~ msgid "Exception"
+#~ msgstr "Ausnahme"
+
+#~ msgid "Stack trace"
+#~ msgstr "Stapelüberwachung"
+
+#~ msgid "An error occurred"
+#~ msgstr "Ein Fehler ist aufgetreten"
+
+#~ msgid "Additional information"
+#~ msgstr "Zusätzliche Information"
+
+#~ msgid "File"
+#~ msgstr "Datei"
+
+#~ msgid "Message"
+#~ msgstr "Meldung"
+
+#~ msgid "Previous exceptions"
+#~ msgstr "Vorherige Ausnahme"
+
+#~ msgid "No Exception available"
+#~ msgstr "Es ist keine Ausnahme verfügbar"
+
+#~ msgid "Home"
+#~ msgstr "Startseite"
+
+#~ msgid "Training"
+#~ msgstr "Training"
+
+#~ msgid "Imprint"
+#~ msgstr "Impressum"
+
+#~ msgid "All rights reserved."
+#~ msgstr "Alle Rechte vorbehalten."
+
+#~ msgid ""
+#~ "Your account requires verification. \n"
+#~ "            Please click on the link below."
+#~ msgstr "Dein Konto muss verifiziert werden. Bitte klicke auf den Link."
 
 #~ msgid "Spieltreff"
 #~ msgstr "Spieltreff"
 
 #~ msgid "Impressum"
 #~ msgstr "Impressum"
-
-#~ msgid "Welcome to %sZend Framework 2%s"
-#~ msgstr "Willkommen zu dem %sZend Framework 2%s"
 
 #~ msgid ""
 #~ "Congratulations! You have successfully installed the %sZF2 Skeleton "

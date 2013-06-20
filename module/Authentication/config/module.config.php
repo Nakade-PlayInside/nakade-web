@@ -163,7 +163,7 @@ return array(
         'authentication' => array(
             'orm_default' => array(
                 'object_manager' => 'Doctrine\ORM\EntityManager',
-                'identity_class' => 'Authentication\Entity\Credential',
+                'identity_class' => 'User\Entity\User',
                 'identity_property' => 'username',
                 'credential_property' => 'password',
             ),

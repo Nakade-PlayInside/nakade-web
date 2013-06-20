@@ -3,6 +3,8 @@ namespace User\Form\Fieldset;
 
 use \Zend\InputFilter\InputFilterProviderInterface;
 use User\Form\Fieldset\AbstractFieldset;
+use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
+
 
 /**
  * Form for adding a new User
@@ -21,6 +23,7 @@ class CredentialsFieldset extends AbstractFieldset
         
         //form name is LeagueForm
         parent::__construct('credentials');
+        $this->setHydrator(new Hydrator());
         $this->prepare();
     } 
    
@@ -77,7 +80,6 @@ class CredentialsFieldset extends AbstractFieldset
             )
         );
         
-        
        
     } 
     
@@ -109,7 +111,7 @@ class CredentialsFieldset extends AbstractFieldset
                     array(
                         'name'     => 'User\Form\Validator\DBNoRecordExist',
                         'options' => array( 
-                            'entity'    => 'Authentication\Entity\Credential',
+                            'entity'    => 'User\Entity\User',
                             'property'  => 'username',
                             'adapter'  => $this->getEntityManager(),
                         )
@@ -181,7 +183,7 @@ class CredentialsFieldset extends AbstractFieldset
                     array(
                         'name'     => 'User\Form\Validator\DBNoRecordExist',
                         'options' => array( 
-                            'entity'    => 'Authentication\Entity\Credential',
+                            'entity'    => 'User\Entity\User',
                             'property'  => 'email',
                             'adapter'  => $this->getEntityManager(),
                         )

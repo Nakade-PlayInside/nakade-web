@@ -17,6 +17,14 @@ return array(
         'invokables' => array(  
             'salutation' => 'User\View\Helper\Salutation', 
             'birthday'   => 'User\View\Helper\Birthday',
+            'showActive'    => 'User\View\Helper\ShowActive',
+            'showTrigger'   => 'User\View\Helper\ShowTrigger',
+            'showVerified'  => 'User\View\Helper\ShowVerified',
+            'showEdit'  => 'User\View\Helper\ShowEdit',
+            'editBirthday'  => 'User\View\Helper\EditBirthday',
+            'editNick'      => 'User\View\Helper\EditNick',
+            'editEmail'      => 'User\View\Helper\EditEmail',
+            'editPassword'      => 'User\View\Helper\EditPassword',
             // more helpers here ...  
         )  
     ),
@@ -24,7 +32,9 @@ return array(
     'controllers' => array(
         'factories' => array(
             'User\Controller\User' => 
-                     'User\Services\UserControllerFactory'
+                     'User\Services\UserControllerFactory',
+            'User\Controller\Profile' => 
+                     'User\Services\ProfileControllerFactory',
         ),
     ),
     //The name of the route is ‘user’ and has a type of ‘segment’. The segment 
@@ -46,7 +56,7 @@ return array(
                 'options' => array(
                     'route'    => '/user[/:action][/:id]',
                     'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action' =>  '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
@@ -55,13 +65,27 @@ return array(
                     ),
                 ),
             ),
+            'profile' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/profile[/:action][/:id]',
+                    'constraints' => array(
+                        'action' =>  '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'User\Controller\Profile',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            
         ),
     ),
     
     
     'view_manager' => array(
-        //@todo: view doctype, ect ... s. Application
-                
+        'doctype'                  => 'HTML5',
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
@@ -69,9 +93,21 @@ return array(
     
     'service_manager' => array(
         'factories' => array(
-            'user_srv'    => 'User\Services\UserServiceFactory',
-            'user_form'   => 'User\Services\UserFormFactory',
-            'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
+            'MailMessage'   => 
+                    'Mail\Service\MailMessageFactory',
+            'MailTransport' => 
+                    'Mail\Service\MailTransportFactory',
+            'User\Factory\MailFactory'    => 
+                    'User\Factory\MailFactory',
+            'User\Factory\MapperFactory'  => 
+                    'User\Factory\MapperFactory',
+            'User\Factory\FormFactory'  => 
+                    'User\Factory\FormFactory',
+            'User\Services\ProfileService' => 
+                    'User\Services\ProfileServiceFactory',
+            'User\Services\UserService'    => 
+                    'User\Services\UserServiceFactory',
+            'translator'  => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
     
@@ -81,7 +117,7 @@ return array(
                 'type'          => 'gettext',
                 'base_dir'      => __DIR__ . '/../language',
                 'pattern'       => '%s.mo',
-                'text_domain'   => 'Application',
+                'text_domain'   => 'User',
             ),
         ),
     ),

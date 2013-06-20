@@ -2,7 +2,6 @@
 
 namespace User;
 
-
 /**
  * User module for collecting contact data and the application's ACL.
  * The ModuleManager will call automatically the methods.
@@ -12,6 +11,8 @@ namespace User;
  */
 class Module
 {
+ 
+    
     /**
      * Adds a class map to the ClassmapAutoloader and the namespace to the 
      * StandardAutoloader. If no files provided in the ClassmapAutoloader, fall

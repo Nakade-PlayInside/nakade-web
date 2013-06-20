@@ -10,14 +10,145 @@ use Zend\I18n\Translator\TranslatorAwareInterface;
  * Using the translate method will return the given string if
  * no translator is set.
  */
-class AbstractForm 
+abstract class AbstractForm 
             extends Form 
             implements TranslatorAwareInterface
 {
    
     protected $_translator;
-    protected $_textDomain="User";
+    protected $_textDomain="default";
+    protected $_entity_manager=null;
+    protected $_id;
+    
+    
+   /**
+   * Sets the EntityManager
+   *
+   * @param EntityManager $entitymanager
+   * @access public
+   * @return ActionController
+   */
+   public function setEntityManager($em)
+   {
+      $this->_entity_manager = $em;
+      return $this;
+   }
+
+  /**
+   * Returns the EntityManager
+   *
+   * Fetches the EntityManager from ServiceLocator if it has not been initiated
+   * and then returns it
+   *
+   * @access public
+   * @return EntityManager
+   */
+   public function getEntityManager()
+   {
+      return $this->_entity_manager;
+   }
+   
+   /**
+   * Returns true if EntityManager is set
+   *
+   * @access public
+   * @return bool
+   */
+   public function hasEntityManager()
+   {
+      return isset($this->_entity_manager);
+   }
+   
+   /**
+    * Returns the primary key of the given
+    * entity or null if the entity manager is not set.
+    * 
+    * @param entity $object
+    * @return null|string
+    */
+   public function getIdentifierKey($object)
+   {
+       if($this->hasEntityManager()) {
+           return $this->getEntityManager()
+                 ->getClassMetaData(get_class($object))
+                 ->getSingleIdentifierFieldName();
+       }
+       return null;
        
+   }
+   
+   /**
+    * get the id value
+    * 
+    * @return int
+    */
+   public function getIdentifierValue()
+    {
+        return $this->_id;
+    }  
+    
+    /**
+     * set the id value
+     * 
+     * @param int $value
+     * @return \User\Form\AbstractForm
+     */
+    public function setIdentifierValue($value)
+    {
+        $this->_id=$value;
+        return $this;
+    }       
+   
+    /**
+     * Binds an entitiy object to the form, populating
+     * the form values. The identifier of the 
+     * entity is set and the filter are reset. This is mandatory
+     * if the DBNoRecordExist validator is used with the exclude 
+     * option.
+     * 
+     * @param Entity $object
+     */
+    public function bindEntity($object)
+    {
+        $this->bind($object);
+        $identifier = $this->getIdentifierKey($object);
+            
+        $method = 'get'.ucfirst($identifier);
+        if(method_exists($object, $method)) {
+              $value = $object->$method();
+              $this->setIdentifierValue($value);
+        }
+        
+        $filter = $this->getFilter();
+        $this->setInputFilter($filter);
+    }        
+    
+    /**
+     * You have to implement this for setting the filter
+     * and validators
+     */
+    abstract public function getFilter();
+
+
+    /**
+    * saves the entity. 
+    * return true on success
+    * 
+    * @param Entity $entity
+    */
+   public function save($entity)
+   {
+       
+       if($entity===null) {
+           return $this->getEntityManager()->flush();
+       }
+    
+       $this->getEntityManager()->persist($entity);
+       $this->getEntityManager()->flush($entity);
+       
+   }
+   
+    
     /**
      * Sets translator to use in helper
      *

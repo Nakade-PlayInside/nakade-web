@@ -45,6 +45,11 @@ abstract class AbstractDoctrine extends AbstractValidator{
      * @var Doctrine\ORM\Mapping\Driver\AnnotationDriver
      */
     protected $adapter = null;
+    
+    /**
+     *  @var int
+     */
+    protected $exclude = null;
 
     /**
      * Provides basic configuration for use with Zend\Validator\Db Validators
@@ -53,6 +58,7 @@ abstract class AbstractDoctrine extends AbstractValidator{
      * The following option keys are supported:
      * 'entity'   => The doctrine entity to validate against
      * 'property' => The property to check for a match
+     * 'exclude'  => Entity to exclude. Provide the primary key value
      * 'adapter'  => An optional doctrine adapter to use
      *
      * @param array|Traversable|Select $options Options to use for this validator
@@ -63,41 +69,31 @@ abstract class AbstractDoctrine extends AbstractValidator{
        
         parent::__construct($options);
 
-        
         if ($options instanceof Traversable) {
             $options = ArrayUtils::iteratorToArray($options);
-        } elseif (func_num_args() > 1) {
-            $options       = func_get_args();
-            $firstArgument = array_shift($options);
-            if (is_array($firstArgument)) {
-                $temp = ArrayUtils::iteratorToArray($firstArgument);
-            } else {
-                $temp['entity'] = $firstArgument;
-            }
-
-            $temp['property'] = array_shift($options);
-
-            if (!empty($options)) {
-                $temp['adapter'] = array_shift($options);
-            }
-
-            $options = $temp;
+        } elseif (!is_array($options)) {
+            throw new Exception\InvalidArgumentException(
+                'The options parameter must be an array or a Traversable'
+            );
         }
-
+        
         if (!array_key_exists('entity', $options)) {
             throw new Exception\InvalidArgumentException('Entity option missing!');
         }
-
+        $this->setEntity($options['entity']);
+        
         if (!array_key_exists('property', $options)) {
             throw new Exception\InvalidArgumentException('Property option missing!');
         }
-
+        $this->setProperty($options['property']);
+        
         if (array_key_exists('adapter', $options)) {
             $this->setAdapter($options['adapter']);
         }
-
-        $this->setProperty($options['property']);
-        $this->setEntity($options['entity']);
+        
+        if (array_key_exists('exclude', $options)) {
+            $this->setExclude($options['exclude']);
+        }
         
     }
 
@@ -167,8 +163,68 @@ abstract class AbstractDoctrine extends AbstractValidator{
         $this->entity = (string) $entity;
         return $this;
     }
+    
+    /**
+     * Returns the set excluded Id
+     *
+     * @return string
+     */
+    public function getExclude()
+    {
+        return $this->exclude;
+    }
 
+    /**
+     * Sets a new excluded Id
+     *
+     * @param int $value
+     * @return self Provides a fluent interface
+     */
+    public function setExclude($value)
+    {
+        if(is_int($value)) {
+            $this->exclude = $value;
+        }
+        return $this;
+    }
+    
+    /**
+     * is an exlusion set
+     *
+     * @return bool
+     */
+    public function hasExclude()
+    {
+        return (bool) isset($this->exclude);
+    }
 
+    /**
+     * Returns the identifier of the provided entity.
+     * Does not work on composite primary keys
+     * @return string
+     */
+    protected function getIdentifier()
+    {
+        return $this->getAdapter()
+                    ->getClassMetaData($this->getEntity())
+                    ->getSingleIdentifierFieldName();
+    }
+
+    /**
+     * return the exclusion query. Has to be concated 
+     * to the regular query
+     * 
+     * @return string
+     */
+    protected function getExludingQuery() 
+    {
+        return sprintf(" AND q.%s!=%s", 
+            $this->getIdentifier(),
+            $this->getExclude()    
+        );
+        
+    }
+    
     /**
      * Run query and returns matches, or null if no matches are found.
      *
@@ -177,12 +233,16 @@ abstract class AbstractDoctrine extends AbstractValidator{
      */
     protected function query($value)
     {
-        
+     
          $dql = sprintf("SELECT q as query FROM %s q WHERE q.%s=:value", 
                     $this->getEntity(), 
                     $this->getProperty()
                 );
       
+         if($this->hasExclude()) {
+            $dql .= $this->getExludingQuery();
+         }
+         
          $result = $this->getAdapter()
                         ->createQuery($dql)
                         ->setParameter('value', $value)
