@@ -1,35 +1,42 @@
 <?php
 namespace User\View\Helper;
-/**
- * Determines the position of players. Usually the position is determined by 
- * the order of sorted parameters. 
- * Player who have not yet started in the league are given an 
- * even position.  
- */
 
-use Zend\View\Helper\AbstractHelper;
- 
-class ShowTrigger extends AbstractHelper
+use Nakade\Abstracts\AbstractViewHelper;
+use User\Entity\User;
+
+/**
+ * shows active/inactive image link to trigger the user state
+ */
+class ShowTrigger extends AbstractViewHelper
 {
     
-    public function __invoke($uid, $active)
+    public function __invoke(User $user)
     {
-        
-        
-        $action = $active?'delete':'undelete';
-        $info   = $active?'deactivate':'activate';
-        $img    = $active?'deactivate.png':'activate.png';
-        
-        return sprintf('<a title="%s" href="user/%s/%s">
-            <img alt="%s" src="images/%s"></a>',
-            $info,
-            $action,       
-            $uid, 
-            $info,  
-            $img
+        if($user===null)
+            return;
+          
+        //default
+        $placeholder = array(
+            'info'   => $this->translate('activate'),
+            'image'  => '/images/deactivate.png',
+            'action' => 'user/undelete',
         );
+        
+        if($user->isActive()) {
+            $placeholder['info']   = $this->translate('deactivate');
+            $placeholder['image']  = '/images/activate.png';
+            $placeholder['action'] = 'user/delete';
+        }
+        
+        $link  = '<a title="%info%" href="%action%/';
+        $link .= $user->getId() . '">';
+        $link .= '<img alt="%info%" src="%image%"></a>';
+        
+        return $this->setPlaceholders($link, $placeholder);
+       
        
     }
+    
     
    
 }

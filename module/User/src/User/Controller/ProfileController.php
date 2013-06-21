@@ -11,8 +11,8 @@
 
 namespace User\Controller;
 
+use Zend\Form\FormInterface;
 use Zend\View\Model\ViewModel;
-use User\Form;
 use Nakade\Abstracts\AbstractController;
 
 class ProfileController extends AbstractController 
@@ -30,22 +30,15 @@ class ProfileController extends AbstractController
            array(
               'profile'    => $profile, 
               'name'       => $profile->getName(),
-              'birthday'   => $profile->getBirthday(),
-              'id'         => $profile->getId(), 
-              'nick'       => $profile->getNickname(),  
               'username'   => $profile->getUsername(),  
-              'email'      => $profile->getEmail(),   
+              
            )
        );
     }
     
     public function birthdayAction()
     {
-        $profile = $this->identity();
-        
-        if($profile === null) {
-            return $this->redirect()->toRoute('login');
-        }
+        $profile = $this->getProfile();
         
         $form = $this->getForm('birthday');
         $form->bindEntity($profile);
@@ -58,8 +51,9 @@ class ProfileController extends AbstractController
            
             if ($form->isValid()) {
            
-                $data = $form->getData();
-                //$this->getService()->editUser($data);
+                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
+                $data['uid']=$this->getProfile()->getId();
+                $this->getService()->editProfile($data);
       
                 return $this->redirect()->toRoute('profile');
             }
@@ -75,11 +69,7 @@ class ProfileController extends AbstractController
     
     public function nickAction()
     {
-        $profile = $this->identity();
-        
-        if($profile === null) {
-            return $this->redirect()->toRoute('login');
-        }
+        $profile = $this->getProfile();
         
         $form = $this->getForm('nick');
         $form->bindEntity($profile);
@@ -92,8 +82,9 @@ class ProfileController extends AbstractController
            
             if ($form->isValid()) {
            
-                $data = $form->getData();
-                //$this->getService()->editUser($data);
+                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
+                $data['uid']=$this->getProfile()->getId();
+                $this->getService()->editProfile($data);
       
                 return $this->redirect()->toRoute('profile');
             }
@@ -108,11 +99,7 @@ class ProfileController extends AbstractController
     
     public function emailAction()
     {
-        $profile = $this->identity();
-        
-        if($profile === null) {
-            return $this->redirect()->toRoute('login');
-        }
+        $profile = $this->getProfile();
         
         $form = $this->getForm('email');
         $form->bindEntity($profile);
@@ -125,8 +112,9 @@ class ProfileController extends AbstractController
            
             if ($form->isValid()) {
            
-                $data = $form->getData();
-                //$this->getService()->editUser($data);
+                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
+                $data['uid']=$this->getProfile()->getId();
+                $this->getService()->editProfile($data);
       
                 return $this->redirect()->toRoute('profile');
             }
@@ -141,12 +129,6 @@ class ProfileController extends AbstractController
     
     public function passwordAction()
     {
-        $profile = $this->identity();
-        
-        if($profile === null) {
-            return $this->redirect()->toRoute('login');
-        }
-        
         $form = $this->getForm('password');
         
         if ($this->getRequest()->isPost()) {
@@ -157,8 +139,9 @@ class ProfileController extends AbstractController
            
             if ($form->isValid()) {
            
-                $data = $form->getData();
-                //$this->getService()->editUser($data);
+                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
+                $data['uid']=$this->getProfile()->getId();
+                $this->getService()->editPassword($data);
       
                 return $this->redirect()->toRoute('profile');
             }
@@ -169,5 +152,16 @@ class ProfileController extends AbstractController
               'form'    => $form
            )
        );
+    }
+    
+    protected function getProfile()
+    {
+        $profile = $this->identity();
+        
+        if($profile === null) {
+            return $this->redirect()->toRoute('login');
+        }
+        
+        return $profile;
     }
 }

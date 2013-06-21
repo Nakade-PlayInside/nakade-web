@@ -1,7 +1,7 @@
 <?php
 // module/user/view/user/user/index.phtml:
 $this->plugin('translate')->setTranslatorTextDomain('User'); 
-$title = 'Profile';
+$title = $this->translate('Profile');
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>

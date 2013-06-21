@@ -118,7 +118,7 @@ abstract class AbstractForm
               $value = $object->$method();
               $this->setIdentifierValue($value);
         }
-        
+      
         $filter = $this->getFilter();
         $this->setInputFilter($filter);
     }        

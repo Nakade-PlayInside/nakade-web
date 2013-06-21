@@ -150,6 +150,24 @@ class User
   protected $active;
   
   /**
+   * pwdChange
+   *
+   * @ORM\Column(name="pwdChange", type="datetime")
+   * @var DateTime
+   * @access protected
+   */
+  protected $pwdChange;
+  
+  /**
+   * edit
+   *
+   * @ORM\Column(name="edit", type="datetime")
+   * @var DateTime
+   * @access protected
+   */
+  protected $edit;
+  
+  /**
    * lastLogin
    *
    * @ORM\Column(name="lastLogin", type="datetime")
@@ -554,6 +572,55 @@ class User
   {
     return $this->created;
   }
+  
+  /**
+   * Sets the Date of last time editing
+   * 
+   * @param  DateTime $datetime
+   * @access public
+   * @return user
+   */
+  public function setEdit($datetime)
+  {
+      $this->edit = $datetime;
+      return $this;
+  }
+
+  /**
+   * Returns the Date  of last time editing
+   *
+   * @access public
+   * @return DateTime
+   */
+  public function getEdit()
+  {
+    return $this->edit;
+  }
+  
+  /**
+   * Sets the Date of last time pwd change
+   * 
+   * @param  DateTime $datetime
+   * @access public
+   * @return user
+   */
+  public function setPwdChange($datetime)
+  {
+      $this->pwdChange = $datetime;
+      return $this;
+  }
+
+  /**
+   * Returns the Date  of last time pwd change
+   *
+   * @access public
+   * @return DateTime
+   */
+  public function getPwdChange()
+  {
+    return $this->pwdChange;
+  }
+  
   
   /**
    * Sets the due date.

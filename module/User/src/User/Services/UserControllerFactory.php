@@ -7,9 +7,7 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Creates the controller used for authentication.
- * make sure, you have configured the factory in the module configuration
- * file as a controller factory. 
+ * Creates the controller
  * 
  * @author Dr.Holger Maerz <grrompf@gmail.com>
  */
@@ -17,11 +15,13 @@ class UserControllerFactory implements FactoryInterface
 {
     
     /**
-     * creates the authController. Binds the authentication service and
-     * the authentication form.
+     * creates the controller and sets a service.
+     * Logic eg database action is found in the service. 
+     * In addition, a form factory is set to receive all the many different
+     * forms.
      *   
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
-     * @return \Authentication\Controller\AuthController
+     * @return UserController
      */
     public function createService(ServiceLocatorInterface $services)
     {

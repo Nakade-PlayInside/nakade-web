@@ -1,7 +1,7 @@
 <?php
 // module/user/view/user/user/index.phtml:
 $this->plugin('translate')->setTranslatorTextDomain('User'); 
-$title = 'Profile - Birthday';
+$title = $this->translate('Edit Profile');
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
@@ -9,16 +9,6 @@ $this->headTitle($title);
 <?php
 $this->form->prepare();
 echo $this->form()->openTag($this->form);
-?>
-<table>
-<tr>    
-<td style="vertical-align: top;padding-right: 1em;"><?php //echo $this->formCollection($this->form->get('profile')); ?></td>
-<td style="vertical-align: top;"><?php //echo $this->formCollection($this->form->get('credentials')); ?></td>
-</tr>
-</table>
-<?php
 echo $this->formCollection($this->form);
-//echo $this->formHidden($this->form->get('csrf'));
-//echo $this->formElement($this->form->get('Send'));
 echo $this->form()->closeTag();
 ?>

@@ -43,10 +43,9 @@ class FormFactory extends AbstractFormFactory
             'default',
             'de_DE'    
         );
-        
-        $this->setTranslator($translator);
-        $this->setTranslatorTextDomain($textDomain);
        
+        $this->setTranslator($translator, $textDomain);
+        
         //EntityManager for database access by doctrine
         $entityManager = $services->get('Doctrine\ORM\EntityManager');
         $this->setEntityManager($entityManager);
@@ -65,23 +64,23 @@ class FormFactory extends AbstractFormFactory
     public function getForm($typ)
     {
        
-        $entityManager = $this->getEntityManager();
+        
         
         switch (strtolower($typ)) {
            
            case "birthday": $form = new Form\BirthdayForm();
                             break;
                
-           case "email":    $form = new Form\EmailForm($entityManager);
+           case "email":    $form = new Form\EmailForm();
                             break;
                         
-           case "nick":     $form = new Form\NickForm($entityManager);
+           case "nick":     $form = new Form\NickForm();
                             break;                          
                         
-           case "password": $form = new Form\PasswordForm($entityManager);
+           case "password": $form = new Form\PasswordForm();
                             break;
            
-           case "user":     $form = new Form\UserForm($entityManager);
+           case "user":     $form = new Form\UserForm();
                             break;             
                         
            default      :   throw new RuntimeException(
@@ -89,11 +88,20 @@ class FormFactory extends AbstractFormFactory
            );              
         }
         
+        //em 
+        $entityManager = $this->getEntityManager();
+        $form->setEntityManager($entityManager);
+   
+        //translator
         $form->setTranslator(
             $this->getTranslator(), 
             $this->getTranslatorTextDomain()
         );
-   
+        
+        //init + filter
+        $form->init();
+        $form->setInputFilter($form->getFilter());
+        
         return $form;
     }      
 }

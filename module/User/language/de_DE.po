@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-19 07:59+0100\n"
-"PO-Revision-Date: 2013-06-19 08:00+0100\n"
+"POT-Creation-Date: 2013-06-21 14:36+0100\n"
+"PO-Revision-Date: 2013-06-21 14:37+0100\n"
 "Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -14,6 +14,17 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../view/user/profile/birthday.phtml:4
+#: ../view/user/profile/password.phtml:4
+#: ../view/user/profile/nick.phtml:4
+#: ../view/user/profile/email.phtml:4
+msgid "Edit Profile"
+msgstr "Profil ändern"
+
+#: ../view/user/profile/index.phtml:4
+msgid "Profile"
+msgstr "Profil"
 
 #: ../view/user/profile/index.phtml:11
 msgid "Name:"
@@ -28,7 +39,6 @@ msgid "Nick:"
 msgstr "Spitzname:"
 
 #: ../view/user/profile/index.phtml:23
-#: ../src/User/Form/UserForm.php:145
 msgid "email:"
 msgstr "Email:"
 
@@ -68,58 +78,137 @@ msgstr "Benutzer bearbeiten"
 msgid "Add User"
 msgstr "Benutzer hinzufügen"
 
-#: ../src/User/Form/UserForm.php:42
-msgid "Salutation:"
-msgstr "Anrede:"
+#: ../view/user/user/index.phtml:4
+msgid "Registered Users"
+msgstr "Registrierte Benutzer"
 
-#: ../src/User/Form/UserForm.php:44
-msgid "Herr"
-msgstr "Herr"
+#: ../view/user/user/index.phtml:9
+msgid "add user"
+msgstr "Benutzer hinzufügen"
 
-#: ../src/User/Form/UserForm.php:45
-msgid "Frau"
-msgstr "Frau"
+#: ../view/user/user/index.phtml:12
+msgid "Sex"
+msgstr "Anrede"
 
-#: ../src/User/Form/UserForm.php:57
-msgid "Title (opt.):"
-msgstr "Titel (opt.):"
+#: ../view/user/user/index.phtml:13
+msgid "Name"
+msgstr "Name"
 
-#: ../src/User/Form/UserForm.php:68
-msgid "First Name:"
-msgstr "Vorname:"
+#: ../view/user/user/index.phtml:14
+msgid "Nick"
+msgstr "Spitzname"
 
-#: ../src/User/Form/UserForm.php:79
-msgid "Family Name:"
-msgstr "Nachname:"
+#: ../view/user/user/index.phtml:15
+msgid "Username"
+msgstr "Benutzername"
 
-#: ../src/User/Form/UserForm.php:90
+#: ../view/user/user/index.phtml:16
+msgid "email"
+msgstr "Email"
+
+#: ../view/user/user/index.phtml:17
+msgid "verified"
+msgstr "bestätigt"
+
+#: ../view/user/user/index.phtml:18
+msgid "active"
+msgstr "aktiv"
+
+#: ../view/user/user/index.phtml:19
+msgid "edit"
+msgstr "bearbeiten"
+
+#: ../view/user/user/index.phtml:20
+msgid "access"
+msgstr "Zugang"
+
+#: ../view/user/user/index.phtml:21
+msgid "pwd"
+msgstr "Pwd"
+
+#: ../src/User/Form/NickForm.php:37
+#: ../src/User/Form/UserForm.php:84
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:104
+#: ../src/User/Form/Fieldset/UserFieldset.php:104
 msgid "Nick (opt.):"
 msgstr "Spitzname (opt.):"
 
-#: ../src/User/Form/UserForm.php:101
+#: ../src/User/Form/NickForm.php:48
+#: ../src/User/Form/UserForm.php:95
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:115
+#: ../src/User/Form/Fieldset/UserFieldset.php:115
 msgid "use nick always (anonymizer):"
 msgstr "immer Spitznamen verwenden (anonym)"
 
-#: ../src/User/Form/UserForm.php:113
-msgid "Birthday (opt.):"
-msgstr "Geburtsdatum (opt.):"
-
-#: ../src/User/Form/UserForm.php:130
-msgid "User Name:"
-msgstr "Benutzername:"
-
-#: ../src/User/Form/UserForm.php:176
+#: ../src/User/Form/NickForm.php:75
+#: ../src/User/Form/BirthdayForm.php:70
+#: ../src/User/Form/UserForm.php:170
+#: ../src/User/Form/PasswordForm.php:76
+#: ../src/User/Form/EmailForm.php:68
 msgid "Submit"
 msgstr "Abschicken"
 
+#: ../src/User/Form/UserForm.php:36
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:56
+#: ../src/User/Form/Fieldset/UserFieldset.php:56
+msgid "Salutation:"
+msgstr "Anrede:"
+
+#: ../src/User/Form/UserForm.php:38
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:58
+#: ../src/User/Form/Fieldset/UserFieldset.php:58
+msgid "Herr"
+msgstr "Herr"
+
+#: ../src/User/Form/UserForm.php:39
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:59
+#: ../src/User/Form/Fieldset/UserFieldset.php:59
+msgid "Frau"
+msgstr "Frau"
+
+#: ../src/User/Form/UserForm.php:51
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:71
+#: ../src/User/Form/Fieldset/UserFieldset.php:71
+msgid "Title (opt.):"
+msgstr "Titel (opt.):"
+
+#: ../src/User/Form/UserForm.php:62
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:82
+#: ../src/User/Form/Fieldset/UserFieldset.php:82
+msgid "First Name:"
+msgstr "Vorname:"
+
+#: ../src/User/Form/UserForm.php:73
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:93
+#: ../src/User/Form/Fieldset/UserFieldset.php:93
+msgid "Family Name:"
+msgstr "Nachname:"
+
+#: ../src/User/Form/UserForm.php:107
+#: ../src/User/Form/Fieldset/ProfileFieldset.php:127
+#: ../src/User/Form/Fieldset/UserFieldset.php:127
+msgid "Birthday (opt.):"
+msgstr "Geburtsdatum (opt.):"
+
+#: ../src/User/Form/UserForm.php:124
+#: ../src/User/Form/Fieldset/UserFieldset.php:146
+#: ../src/User/Form/Fieldset/CredentialsFieldset.php:45
+msgid "User Name:"
+msgstr "Benutzername:"
+
 #: ../src/User/Form/UserFilter.php:121
+#: ../src/User/Form/Fieldset/UserFieldset.php:289
+#: ../src/User/Form/Fieldset/CredentialsFieldset.php:108
 msgid "allowed: a-Z0-9_.@"
 msgstr "erlaubt: a-Z, 0-9, _.@"
 
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:49
-#: ../src/User/Form/Fieldset/UserFieldset.php:49
-msgid "Profile"
-msgstr "Profil"
+#: ../src/User/Form/PasswordForm.php:36
+msgid "enter new password:"
+msgstr "Neues Passwort:"
+
+#: ../src/User/Form/PasswordForm.php:48
+msgid "repeat new password:"
+msgstr "Eingabe wiederholen:"
 
 #: ../src/User/Form/Fieldset/UserFieldset.php:161
 #: ../src/User/Form/Fieldset/CredentialsFieldset.php:60
@@ -253,13 +342,41 @@ msgstr "Dein Passwort auf nakade.de  wurde neu gesetzt."
 msgid "%prefix% - Your New Credentials"
 msgstr "%prefix% - Deine neuen Zugangsdaten"
 
-#: ../src/User/View/Helper/AbstractProfileEditHelper.php:21
-msgid "edit"
-msgstr "bearbeiten"
-
-#: ../src/User/View/Helper/EditNick.php:23
+#: ../src/User/View/Helper/AbstractProfileEditHelper.php:77
 msgid "Incognito"
 msgstr "Inkognito"
+
+#: ../src/User/View/Helper/AbstractProfileEditHelper.php:78
+msgid "password was never changed"
+msgstr "Passwort wurde noch nie geändert"
+
+#: ../src/User/View/Helper/AbstractProfileEditHelper.php:80
+msgid "last time edited on %pwdChangeDate%"
+msgstr "letzte Änderung am %pwdChangeDate%"
+
+#: ../src/User/View/Helper/ShowTrigger.php:20
+msgid "activate"
+msgstr "aktivieren"
+
+#: ../src/User/View/Helper/ShowTrigger.php:26
+msgid "deactivate"
+msgstr "deaktivieren"
+
+#: ../src/User/View/Helper/ShowPwdReset.php:16
+msgid "reset password"
+msgstr "Password zurücksetzen"
+
+#: ../src/User/View/Helper/ShowVerified.php:21
+msgid "not verified"
+msgstr "unbestätigt"
+
+#: ../src/User/View/Helper/ShowVerified.php:31
+msgid "waiting for verification"
+msgstr "warte auf Bestätigung"
+
+#: ../src/User/View/Helper/ShowActive.php:16
+msgid "inactive"
+msgstr "inaktiv"
 
 #~ msgid "test"
 #~ msgstr "gammel"

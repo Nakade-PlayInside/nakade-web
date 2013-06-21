@@ -16,13 +16,9 @@ class BirthdayForm extends AbstractForm
      */        
     public function __construct()
     {
-        
-        //form name is LeagueForm
         parent::__construct($name='BirthdayForm');
         $this->setObject(new User());
         $this->setHydrator(new Hydrator());
-        $this->init();
-        $this->setInputFilter($this->getFilter());
     } 
    
     /**
@@ -38,7 +34,7 @@ class BirthdayForm extends AbstractForm
                 'name' => 'birthday',
                 'type' => 'Zend\Form\Element\Date',
                 'options' => array(
-                    'label' =>  $this->translate('Birthday (opt.):'),
+                    'label' =>  $this->translate('Birthday:'),
                     'format' => 'Y-m-d',
                  ),
                 'attributes' => array(

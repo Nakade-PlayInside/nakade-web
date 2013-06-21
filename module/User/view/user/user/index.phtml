@@ -1,27 +1,26 @@
 <?php
 // module/user/view/user/user/index.phtml:
 $this->plugin('translate')->setTranslatorTextDomain('User'); 
-$title = 'Registered Users';
+$title = $this->translate('Registered Users');
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<a href="user/add">add user</a>
+<a href="user/add"><?php echo $this->translate("add user"); ?></a>
 <table class="table" style="width:auto">
 <tr>
-    <th>Sex</th>
-    <th>Name</th>
-    <th>Nick</th>
-    <th>Username</th>     
-    <th>email</th>  
-    <th>verified</th>     
-    <th>active</th>
-    <th>edit</th>    
-    <th>access</th>
-    <th>pwd</th>
+    <th><?php echo $this->translate("Sex"); ?></th>
+    <th><?php echo $this->translate("Name"); ?></th>
+    <th><?php echo $this->translate("Nick"); ?></th>
+    <th><?php echo $this->translate("Username"); ?></th>     
+    <th><?php echo $this->translate("email"); ?></th>  
+    <th><?php echo $this->translate("verified"); ?></th>     
+    <th><?php echo $this->translate("active"); ?></th>
+    <th><?php echo $this->translate("edit"); ?></th>    
+    <th><?php echo $this->translate("access"); ?></th>
+    <th><?php echo $this->translate("pwd"); ?></th>
 </tr>
 <?php 
-
 
 foreach ($this->users as $user) : ?>
 <tr style="background-color:<?php 
@@ -31,11 +30,11 @@ foreach ($this->users as $user) : ?>
     <td><?php echo $this->escapeHtml($user->getNickname());?></td>
     <td><?php echo $this->escapeHtml($user->getUsername()); ?></td>
     <td><?php echo $this->escapeHtml($user->getEmail()); ?></td>
-    <td style="width:1em;text-align:center"><?php echo $this->showVerified($user->isVerified(), $user->isDue()); ?></td>
+    <td style="width:1em;text-align:center"><?php echo $this->showVerified($user); ?></td>
     <td style="width:1em;text-align:center"><?php echo $this->showActive($user->isActive()); ?></td>
-    <td style="text-align:center"><a title="edit" href="user/edit/<?php echo $user->getId();?>"><img alt="edit" src="images/edit.png"></a></td>
-    <td style="text-align:center"><?php echo $this->showTrigger($user->getId(), $user->isActive());?></td>
-    <td style="text-align:center"><a title="reset password" href="user/resetPassword/<?php echo $user->getId();?>"><img alt="reset" src="images/key_add.png" width="16px" height="16px"></a></td>
+    <td style="text-align:center"><?php echo $this->showEdit($user->getId()); ?></td>
+    <td style="text-align:center"><?php echo $this->showTrigger($user);?></td>
+    <td style="text-align:center"><?php echo $this->showPwdReset($user->getId()); ?></td>
 </tr>
 <?php endforeach; ?>
 </table>

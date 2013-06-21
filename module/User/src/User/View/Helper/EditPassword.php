@@ -2,25 +2,29 @@
 namespace User\View\Helper;
 use User\Entity\User;
 
-
+/**
+ * Helper for editing the password.
+ * Provides an information when the password was editied the laste time
+ */
 class EditPassword extends AbstractProfileEditHelper
 {
     
+    protected $_vars = array('pwdChangeDate' => 'pwdChangeDate',);
+    protected $pwdChangeDate;
+    
     public function __invoke(User $profile)
     {
-        $value = null; 
         
-        $css_link  = self::CSS_LINK;
-        $css_value = self::CSS_VALUE;
-        $css_edit  = self::CSS_EDIT;
-        $method    = $this->getMethod();
+        $this->pwdChangeDate= $this->convertDate($profile->getPwdChange());
+        $this->_url = "profile/password";
         
-        $url = "profile/password";
+        $value = isset($this->pwdChangeDate)? 
+            $this->getMessage(self::PWD_CHANGE) : $this->getMessage(self::PWD_NEVER);
         
-        return "<a href=\"$url\" title=\"$method\" style=\"$css_link\">".
-               "<span style=\"$css_value\">$value</span>".
-               "<span style=\"$css_edit\">$method</span>".
-               "</a>";
+        //set pwd style
+        $this->setStyle(self::CSS_VALUE, self::CSS_PWD);
+        
+        return $this->getLink($value);
     }
     
        

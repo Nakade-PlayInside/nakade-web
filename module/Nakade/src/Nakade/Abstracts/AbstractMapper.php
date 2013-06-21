@@ -1,6 +1,8 @@
 <?php
 namespace Nakade\Abstracts;
 
+
+use Doctrine\ORM\EntityManager;
 /**
  * Extending for having the doctrine entity manager involved
  * In addition an optional translator can be set
@@ -20,7 +22,7 @@ class AbstractMapper extends AbstractTranslation
    * @access public
    * @return ActionController
    */
-   public function setEntityManager($em)
+   public function setEntityManager(EntityManager $em)
    {
       $this->_entity_manager = $em;
       return $this;
@@ -86,6 +88,19 @@ class AbstractMapper extends AbstractTranslation
        $this->getEntityManager()->flush($entity);
        
    }
+   
+   public function update($entity)
+   {
+       
+       if($entity===null) {
+           return $this->getEntityManager()->flush();
+       }
+    
+       $this->getEntityManager()->persist($entity); 
+       $this->getEntityManager()->flush($entity);
+       
+   }
+   
    
 }
 

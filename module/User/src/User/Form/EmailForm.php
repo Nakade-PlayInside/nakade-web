@@ -14,17 +14,12 @@ class EmailForm extends AbstractForm
     /**
      * Constructor
      */        
-    public function __construct($em)
+    public function __construct()
     {
-        
-        $this->_entity_manager=$em;
-        
-        //form name is LeagueForm
         parent::__construct($name='UserForm');
         $this->setObject(new User());
         $this->setHydrator(new Hydrator());
-        $this->init();
-        $this->setInputFilter($this->getFilter());
+        
     } 
    
     /**

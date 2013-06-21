@@ -11,23 +11,26 @@ use User\Business\VerifyStringGenerator;
 use User\Entity\User;
 
 /**
- * Factory for creating the Zend Authentication Service. Using customized
- * Adapter and Storage instances. 
+ * Service for controller. A mapper is set for database action.
  * 
  * @author Dr. Holger Maerz <grrompf@gmail.com>
  */
 class UserServiceFactory extends AbstractService
 {
+    /**
+     * time in hours before expiring the verification 
+     * 
+     * @var int 
+     */
     protected $_expire=72;
    
     /**
-     * Creating Zend Authentication Service for logIn and logOut action.
-     * Making use of customized adapters for more action as by default.
-     * Integration of optional translation feature (i18N)
+     * Creating service for the controller. 
+     * Setting a mapper for database action and a mail factory for
+     * sending mails.
      * 
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
-     * @return \Zend\Authentication\AuthenticationService
-     * @throws RuntimeException
+     * @return UserServiceFactory
      * 
      */
     public function createService(ServiceLocatorInterface $services)
@@ -76,6 +79,13 @@ class UserServiceFactory extends AbstractService
         
     }
     
+    /**
+     * prepraring data before filling the entity.
+     * Params is given by reference..
+     * 
+     * @param array $data
+     * @throws RuntimeException
+     */
     private  function prepareData(&$data)
     {
          $key = 'request';
@@ -104,6 +114,11 @@ class UserServiceFactory extends AbstractService
          $data['verified'] = 0;
     }
     
+    /**
+     * edit user entity and saving. 
+     *  
+     * @param User $user
+     */
     public function editUser($user)
     {
         // to fulfill the created value @deprecated
@@ -114,6 +129,15 @@ class UserServiceFactory extends AbstractService
         $this->getMapper()->save($user);
     }
     
+    /**
+     * Activates the user by its provided string code and email.
+     * This is the link send to the new user by email. By clicking
+     * the link the user verifies his email adress
+     * 
+     * @param string $email
+     * @param string $verifyString
+     * @return boolean
+     */
     public function activateUser($email, $verifyString) 
     {
         $user = $this->getMapper()
@@ -129,6 +153,14 @@ class UserServiceFactory extends AbstractService
         
     }
     
+    /**
+     * Reset the password of a user. The new generated password 
+     * is send to the user by email and needs to be verified. 
+     * This is triggered by an administrator, so pwd change date is not set.
+     * 
+     * @param array $data
+     * @throws RuntimeException
+     */
     public function resetPassword($data) 
     {
          $key = 'uid';
@@ -160,6 +192,12 @@ class UserServiceFactory extends AbstractService
         
     }
     
+    /**
+     * Deactivate a user but not deleting. This is for database consistancy
+     *  
+     * @param int $uid
+     * @return boolean
+     */
     public function deleteUser($uid) 
     {
         $user = $this->getMapper()->getUserById($uid); 
@@ -173,6 +211,12 @@ class UserServiceFactory extends AbstractService
         return true;
     }
     
+    /**
+     * Activate a deactivated user.
+     *  
+     * @param int $uid
+     * @return boolean
+     */
     public function undeleteUser($uid) 
     {
         $user = $this->getMapper()->getUserById($uid); 
@@ -186,12 +230,7 @@ class UserServiceFactory extends AbstractService
         return true;
     }
     
-    public function getProfile($uid) 
-    {
-        $user = $this->getMapper()->getUserById($uid); 
-        return $user;
-    }
-    
+   
 }
 
 
