@@ -5,13 +5,17 @@ use Nakade\Abstracts\AbstractMail;
 use Zend\Mime;
 
 /**
- * Description of Mail
+ * Used for sending a verification mail to the registered user.
+ * Mail has an expiration date and contents credentials and an 
+ * activation link. Mail is translated.
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
 class VerifyMail extends AbstractMail {
    
-    
+    /**
+     * mail template keys as constants
+     */
     const SALUTATION   = 'emailSalutation';
     const ACCOUNT      = 'emailAccount';
     const VERIFY       = 'emailVerify';
@@ -21,6 +25,8 @@ class VerifyMail extends AbstractMail {
     const SUBJECT      = 'emailSubject';
    
     /**
+     * mail template
+     * 
      * @var array
      */
     protected $_mailTemplates = array(
@@ -35,6 +41,7 @@ class VerifyMail extends AbstractMail {
     
     
     /**
+     * used placeholder vars 
      * @var array
      */
     protected $_mailVariables = array(
@@ -50,6 +57,11 @@ class VerifyMail extends AbstractMail {
         'prefix'    => 'prefix',
     );
     
+
+    /**
+     * properties 
+     * @var mixed 
+     */
     protected $firstname;
     protected $username;
     protected $password;
@@ -89,7 +101,11 @@ class VerifyMail extends AbstractMail {
       
     }    
     
-    
+    /**
+     * Translated mail template. Needed for Poedit usage. 
+     * 
+     * @return array
+     */
     public function getTranslatedMailTemplate()
     {
         //just for translation using PoE
@@ -138,6 +154,17 @@ class VerifyMail extends AbstractMail {
     }
 
 
+    /**
+     * Set the mandatory mail data. Use this prior to sending mails.
+     * Keys:  - 'verifyUrl'     => URL for the activation link
+     *        - 'verifyString'  => generated code for activation
+     *        - 'firstname'     => user's first name
+     *        - 'lastname'      => user's last name
+     *        - 'generated'     => pwd in clear text for credentials
+     *        - 'email'         => email adress for sending to
+     *  
+     * @param array $data
+     */
     public function setData($data)
     {
         
@@ -179,7 +206,7 @@ class VerifyMail extends AbstractMail {
     
     
     /**
-     * get the mail subject
+     * Get the mail subject
      * 
      * @return string
      */
@@ -191,6 +218,12 @@ class VerifyMail extends AbstractMail {
         return $this->setPlaceholder($subject);
     }
     
+    /**
+     * Composing the mail content by templates
+     * 
+     * @param array $template
+     * @return string
+     */
     protected function createMail($template=null)
     {
        
@@ -210,13 +243,12 @@ class VerifyMail extends AbstractMail {
     }
     
     /**
-     * get the mail body
+     * Get the HTML mail body
+     * 
      * @return \Zend\Mime\Message
      */
     public function getBody()
     {
-        // $rawbody       = $this->createMail();
-        // $text = $this->getTextMessage($rawbody);
          
          $template    =  $this->getTranslatedMailTemplate();
          $translation = $this->createMail($template);

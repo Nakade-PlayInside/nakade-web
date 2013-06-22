@@ -8,20 +8,26 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 
 /**
- * Creates the form with a translator, filter and validator.
- * Adds the translation file for validation messages from zend ressources.
+ * Creates a mapper factory for doctrine database access.
+ * Use the fabric method for getting the mapper required.
  */
 class MapperFactory implements FactoryInterface
 {
     
-    protected $entityManager;
+    protected $_entityManager;
     
+    /**
+     * implemented ServiceLocator
+     * 
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
+     * @return \User\Services\MapperFactory
+     */
     public function createService(ServiceLocatorInterface $services)
     {
         //EntityManager for database access by doctrine
-        $this->entityManager = $services->get('Doctrine\ORM\EntityManager');
+        $this->_entityManager = $services->get('Doctrine\ORM\EntityManager');
         
-        if (null === $this->entityManager) {
+        if (null === $this->_entityManager) {
             throw new RuntimeException(
                 sprintf('Entity manager could not be found in service.')
             );
@@ -31,7 +37,10 @@ class MapperFactory implements FactoryInterface
     }
     
     /**
-     * receives the points of the provided game statistics
+     * fabric method for getting the mail needed. expecting the mail name as
+     * string. Throws an exception if provided typ is unknown.
+     * Typ: - 'user'    => users and profile
+     *  
      * @param string $typ
      * @return string
      * @throws RuntimeException
@@ -49,7 +58,7 @@ class MapperFactory implements FactoryInterface
            );              
         }
         
-        $mapper->setEntityManager($this->entityManager);
+        $mapper->setEntityManager($this->_entityManager);
         
         return $mapper;
     }      

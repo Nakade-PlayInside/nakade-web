@@ -2,8 +2,9 @@
 namespace User\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
+
 /**
- * Description of UserMapper
+ * Requesting database using doctrine
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */

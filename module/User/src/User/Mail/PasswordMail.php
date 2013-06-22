@@ -2,13 +2,18 @@
 namespace User\Mail;
 
 /**
- * Description of Mail
+ * New verification mail after resetting the user's password.
+ * Same procedure as in VerifyMail just with minor changes in the text.
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
 class PasswordMail extends VerifyMail {
    
-   
+    /**
+     * Translated mail template. Needed for Poedit usage. 
+     * 
+     * @return array
+     */
     public function getTranslatedMailTemplate()
     {
         //just for translation using PoE

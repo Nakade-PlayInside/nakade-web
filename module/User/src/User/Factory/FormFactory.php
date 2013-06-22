@@ -56,6 +56,11 @@ class FormFactory extends AbstractFormFactory
     /**
      * fabric method for getting the form needed. expecting the form name as
      * string. Throws an exception if provided typ is unknown.
+     * Typ:  - 'birthday'   => profile
+     *       - 'email'      => profile
+     *       - 'nick'       => profile
+     *       - 'password'   => profile
+     *       - 'user'       => adminstration 
      * 
      * @param string $typ
      * @return Form

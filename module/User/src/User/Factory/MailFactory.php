@@ -9,18 +9,24 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
 
 /**
- * Creates the form with a translator, filter and validator.
- * Adds the translation file for validation messages from zend ressources.
+ * Creates a translated mail for sending verification mails.
+ * Use the fabric method for getting the mailclass required.
  */
 class MailFactory implements FactoryInterface
 {
     
-    protected $emailOptions;
-    protected $transport;
-    protected $message;
-    protected $translator;
-    protected $textDomain;
+    protected $_emailOptions;
+    protected $_transport;
+    protected $_message;
+    protected $_translator;
+    protected $_textDomain;
     
+    /**
+     * implemented ServiceLocator
+     * 
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
+     * @return \User\Services\MailFactory
+     */
     public function createService(ServiceLocatorInterface $services)
     {
         $config  = $services->get('config');
@@ -29,25 +35,29 @@ class MailFactory implements FactoryInterface
         }
         
         //configuration 
-        $this->textDomain = isset($config['User']['text_domain']) ? 
+        $this->_textDomain = isset($config['User']['text_domain']) ? 
             $config['User']['text_domain'] : null;
         
         //email
-        $this->emailOptions = isset($config['User']['email_options']) ? 
+        $this->_emailOptions = isset($config['User']['email_options']) ? 
             $config['User']['email_options'] : null;
        
         //optional translator
-        $this->translator = $services->get('translator');
+        $this->_translator = $services->get('translator');
         
         //mandatory
-        $this->transport = $services->get('MailTransport');
-        $this->message   = $services->get('MailMessage');
+        $this->_transport = $services->get('MailTransport');
+        $this->_message   = $services->get('MailMessage');
         
         return $this;
     }
     
     /**
-     * receives the points of the provided game statistics
+     * fabric method for getting the mail needed. expecting the mail name as
+     * string. Throws an exception if provided typ is unknown.
+     * Typ: - 'verify'   => new users
+     *      - 'password' => reset password
+     * 
      * @param string $typ
      * @return string
      * @throws RuntimeException
@@ -57,10 +67,10 @@ class MailFactory implements FactoryInterface
        
         switch (strtolower($typ)) {
            
-           case "verify":   $mail = new Mail\VerifyMail($this->emailOptions);
+           case "verify":   $mail = new Mail\VerifyMail($this->_emailOptions);
                             break;
                
-           case "password": $mail = new Mail\PasswordMail($this->emailOptions);
+           case "password": $mail = new Mail\PasswordMail($this->_emailOptions);
                             break;
                     
                         
@@ -69,10 +79,10 @@ class MailFactory implements FactoryInterface
            );              
         }
         
-        $mail->setMessage($this->message);
-        $mail->setTransport($this->transport);
-        $mail->setTranslator($this->translator, $this->textDomain);
-        var_dump($this->textDomain);
+        $mail->setMessage($this->_message);
+        $mail->setTransport($this->_transport);
+        $mail->setTranslator($this->_translator, $this->_textDomain);
+        
         return $mail;
     }      
     

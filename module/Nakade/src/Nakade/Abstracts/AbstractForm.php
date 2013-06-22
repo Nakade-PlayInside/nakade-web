@@ -1,5 +1,5 @@
 <?php
-namespace User\Form;
+namespace Nakade\Abstracts;
 
 use Zend\Form\Form;
 use Zend\I18n\Translator\Translator;
@@ -9,6 +9,7 @@ use Zend\I18n\Translator\TranslatorAwareInterface;
  * Abstract form implementing a translator.
  * Using the translate method will return the given string if
  * no translator is set.
+ * Using bindingEntity for setting values will reset the filter.
  */
 abstract class AbstractForm 
             extends Form 

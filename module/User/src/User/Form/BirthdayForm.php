@@ -1,12 +1,15 @@
 <?php
 namespace User\Form;
 
-
+use Nakade\Abstracts\AbstractForm;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use User\Entity\User;
 
 /**
- * Form for adding or editing a new User
+ * Form for editing the user's birthday.
+ * Use a factory for needed settings after constructing.
+ * Successive settings: setEntityManager(), setInputFilter(), init().
+ * Use bindingEntity for setting values. 
  */
 class BirthdayForm extends AbstractForm
 {
