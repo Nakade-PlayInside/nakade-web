@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-21 14:36+0100\n"
-"PO-Revision-Date: 2013-06-21 14:37+0100\n"
+"POT-Creation-Date: 2013-06-23 15:25+0100\n"
+"PO-Revision-Date: 2013-06-23 15:29+0100\n"
 "Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -14,6 +14,42 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../view/user/forgot/success.phtml:4
+msgid "Success"
+msgstr "Erfolg"
+
+#: ../view/user/forgot/success.phtml:8
+msgid "Your new credentials were send to you."
+msgstr "Deine neuen Zugangsdaten wurden dir zugeschickt."
+
+#: ../view/user/forgot/success.phtml:9
+msgid "Please do not forget to activate your account."
+msgstr "Vergiss bitte nicht deinen Zugang zu aktivieren."
+
+#: ../view/user/forgot/failure.phtml:4
+msgid "Failure"
+msgstr "Fehler"
+
+#: ../view/user/forgot/failure.phtml:9
+msgid "The given email adress was not found."
+msgstr "Die eingegebene email-Adresse wurde nicht gefunden."
+
+#: ../view/user/forgot/failure.phtml:11
+msgid "Please try again with the registered mail."
+msgstr "Bitte versuch es nochmal mit der registrierten email-Adresse."
+
+#: ../view/user/forgot/index.phtml:3
+msgid "Forgot Password"
+msgstr "Passwort vergessen"
+
+#: ../view/user/forgot/index.phtml:7
+msgid "Please enter your registered mail adress."
+msgstr "Bitte gib deine bestätigte email-Adresse ein."
+
+#: ../view/user/forgot/index.phtml:8
+msgid "We will send your new credentials immediatley to that adress."
+msgstr "Wir werden dir deine neuen Zugangsdaten sofort an deine email-Adresse schicken."
 
 #: ../view/user/profile/birthday.phtml:4
 #: ../view/user/profile/password.phtml:4
@@ -126,94 +162,114 @@ msgstr "Zugang"
 msgid "pwd"
 msgstr "Pwd"
 
-#: ../src/User/Form/NickForm.php:37
-#: ../src/User/Form/UserForm.php:84
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:104
-#: ../src/User/Form/Fieldset/UserFieldset.php:104
+#: ../src/User/Form/NickForm.php:40
+#: ../src/User/Form/UserForm.php:87
 msgid "Nick (opt.):"
 msgstr "Spitzname (opt.):"
 
-#: ../src/User/Form/NickForm.php:48
-#: ../src/User/Form/UserForm.php:95
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:115
-#: ../src/User/Form/Fieldset/UserFieldset.php:115
+#: ../src/User/Form/NickForm.php:51
+#: ../src/User/Form/UserForm.php:98
 msgid "use nick always (anonymizer):"
 msgstr "immer Spitznamen verwenden (anonym)"
 
-#: ../src/User/Form/NickForm.php:75
-#: ../src/User/Form/BirthdayForm.php:70
-#: ../src/User/Form/UserForm.php:170
-#: ../src/User/Form/PasswordForm.php:76
-#: ../src/User/Form/EmailForm.php:68
+#: ../src/User/Form/NickForm.php:78
+#: ../src/User/Form/BirthdayForm.php:73
+#: ../src/User/Form/UserForm.php:171
+#: ../src/User/Form/ForgotPasswordForm.php:70
+#: ../src/User/Form/PasswordForm.php:79
+#: ../src/User/Form/EmailForm.php:71
 msgid "Submit"
 msgstr "Abschicken"
 
-#: ../src/User/Form/UserForm.php:36
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:56
-#: ../src/User/Form/Fieldset/UserFieldset.php:56
+#: ../src/User/Form/NickForm.php:90
+#: ../src/User/Form/BirthdayForm.php:85
+#: ../src/User/Form/UserForm.php:183
+#: ../src/User/Form/ForgotPasswordForm.php:82
+#: ../src/User/Form/PasswordForm.php:91
+#: ../src/User/Form/EmailForm.php:83
+msgid "Cancel"
+msgstr "Abbruch"
+
+#: ../src/User/Form/UserForm.php:39
 msgid "Salutation:"
 msgstr "Anrede:"
 
-#: ../src/User/Form/UserForm.php:38
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:58
-#: ../src/User/Form/Fieldset/UserFieldset.php:58
+#: ../src/User/Form/UserForm.php:41
 msgid "Herr"
 msgstr "Herr"
 
-#: ../src/User/Form/UserForm.php:39
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:59
-#: ../src/User/Form/Fieldset/UserFieldset.php:59
+#: ../src/User/Form/UserForm.php:42
 msgid "Frau"
 msgstr "Frau"
 
-#: ../src/User/Form/UserForm.php:51
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:71
-#: ../src/User/Form/Fieldset/UserFieldset.php:71
+#: ../src/User/Form/UserForm.php:54
 msgid "Title (opt.):"
 msgstr "Titel (opt.):"
 
-#: ../src/User/Form/UserForm.php:62
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:82
-#: ../src/User/Form/Fieldset/UserFieldset.php:82
+#: ../src/User/Form/UserForm.php:65
 msgid "First Name:"
 msgstr "Vorname:"
 
-#: ../src/User/Form/UserForm.php:73
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:93
-#: ../src/User/Form/Fieldset/UserFieldset.php:93
+#: ../src/User/Form/UserForm.php:76
 msgid "Family Name:"
 msgstr "Nachname:"
 
-#: ../src/User/Form/UserForm.php:107
-#: ../src/User/Form/Fieldset/ProfileFieldset.php:127
-#: ../src/User/Form/Fieldset/UserFieldset.php:127
+#: ../src/User/Form/UserForm.php:110
 msgid "Birthday (opt.):"
 msgstr "Geburtsdatum (opt.):"
 
-#: ../src/User/Form/UserForm.php:124
-#: ../src/User/Form/Fieldset/UserFieldset.php:146
-#: ../src/User/Form/Fieldset/CredentialsFieldset.php:45
+#: ../src/User/Form/UserForm.php:127
 msgid "User Name:"
 msgstr "Benutzername:"
 
-#: ../src/User/Form/UserFilter.php:121
-#: ../src/User/Form/Fieldset/UserFieldset.php:289
-#: ../src/User/Form/Fieldset/CredentialsFieldset.php:108
-msgid "allowed: a-Z0-9_.@"
-msgstr "erlaubt: a-Z, 0-9, _.@"
-
-#: ../src/User/Form/PasswordForm.php:36
+#: ../src/User/Form/PasswordForm.php:39
 msgid "enter new password:"
 msgstr "Neues Passwort:"
 
-#: ../src/User/Form/PasswordForm.php:48
+#: ../src/User/Form/PasswordForm.php:51
 msgid "repeat new password:"
 msgstr "Eingabe wiederholen:"
 
-#: ../src/User/Form/Fieldset/UserFieldset.php:161
-#: ../src/User/Form/Fieldset/CredentialsFieldset.php:60
-msgid "Password (generated if empty):"
-msgstr "Passwort (generiert falls leer): "
+#: ../src/User/Form/Validator/CommonPassword.php:39
+#: ../src/User/Form/Validator/PasswordComplexity.php:68
+msgid "Invalid type given. String expected."
+msgstr "Ungültiger Typ. Zeichenkette wird erwartet. "
+
+#: ../src/User/Form/Validator/CommonPassword.php:41
+msgid "Do not use common password: %value%."
+msgstr "Keines der bekanntesten Passwörter verwenden: %value%"
+
+#: ../src/User/Form/Validator/PasswordComplexity.php:70
+msgid "Optimal password length: '%length%'."
+msgstr "Optimale Passwortlänge: '%length%'."
+
+#: ../src/User/Form/Validator/PasswordComplexity.php:72
+msgid "No digits found."
+msgstr "Keine Zahlen verwendet."
+
+#: ../src/User/Form/Validator/PasswordComplexity.php:74
+msgid "No uppercase letters found."
+msgstr "Keine Großbuchstaben gefunden."
+
+#: ../src/User/Form/Validator/PasswordComplexity.php:76
+msgid "No lowercase letters found."
+msgstr "Keine Kleinbuchstaben gefunden."
+
+#: ../src/User/Form/Validator/PasswordComplexity.php:78
+msgid "No special chars found."
+msgstr "Keine Sonderzeichen verwendet."
+
+#: ../src/User/Form/Validator/PasswordComplexity.php:80
+msgid "No umlauts found."
+msgstr "Keine Umlaute gefunden."
+
+#: ../src/User/Form/Validator/PasswordComplexity.php:82
+msgid "Do not repeat letters."
+msgstr "Keine Buchstabenwiederholung."
+
+#: ../src/User/Form/Validator/PasswordComplexity.php:84
+msgid "Do not repeat words."
+msgstr "Wiederhole keine Wörter"
 
 #: ../src/User/Form/Fieldset/OptionsFieldset.php:34
 msgid "Options"
@@ -226,10 +282,6 @@ msgstr "Sprache:"
 #: ../src/User/Form/Fieldset/OptionsFieldset.php:54
 msgid "Twitter Messages:"
 msgstr "Twitter Nachrichten:"
-
-#: ../src/User/Form/Fieldset/CredentialsFieldset.php:37
-msgid "Credentials"
-msgstr "Zugangsdaten"
 
 #: ../src/User/Form/Fieldset/ContactFieldset.php:32
 msgid "Contact"
@@ -271,74 +323,63 @@ msgstr "Stadt:"
 msgid "Country:"
 msgstr "Land:"
 
-#: ../src/User/Mail/VerifyMail.php:97
-#: ../src/User/Mail/PasswordMail.php:16
+#: ../src/User/Mail/VerifyMail.php:113
 msgid "Welcome %firstname%"
 msgstr "Willkommen %firstname%"
 
-#: ../src/User/Mail/VerifyMail.php:98
+#: ../src/User/Mail/VerifyMail.php:114
 msgid "Thank you for your registration at nakade.de"
 msgstr "Vielen Dank, dass du dich für nakade.de entschieden hast."
 
-#: ../src/User/Mail/VerifyMail.php:102
-#: ../src/User/Mail/PasswordMail.php:21
+#: ../src/User/Mail/VerifyMail.php:118
 msgid "Your Credentials"
 msgstr "Deine Zugangsdaten"
 
-#: ../src/User/Mail/VerifyMail.php:103
-#: ../src/User/Mail/PasswordMail.php:22
+#: ../src/User/Mail/VerifyMail.php:119
 msgid "username"
 msgstr "Benutzername"
 
-#: ../src/User/Mail/VerifyMail.php:104
-#: ../src/User/Mail/PasswordMail.php:23
+#: ../src/User/Mail/VerifyMail.php:120
 msgid "password"
 msgstr "Passwort"
 
-#: ../src/User/Mail/VerifyMail.php:108
-#: ../src/User/Mail/PasswordMail.php:27
+#: ../src/User/Mail/VerifyMail.php:124
 msgid "Your account requires activation during the next %expire% hours."
 msgstr "Dein Konto muss binnen der nächsten %expire% Stunden aktiviert werden."
 
-#: ../src/User/Mail/VerifyMail.php:109
-#: ../src/User/Mail/PasswordMail.php:28
+#: ../src/User/Mail/VerifyMail.php:125
 msgid "Please click on the link for activation."
 msgstr "Bitte klicke auf den  Link für die Aktivierung."
 
-#: ../src/User/Mail/VerifyMail.php:110
-#: ../src/User/Mail/PasswordMail.php:29
+#: ../src/User/Mail/VerifyMail.php:126
 msgid "If you fail to activate your account in time, you have to reset your password using the 'forgot password' option."
 msgstr "Falls du deinen Zugang nicht innerhalb der gegebenen Frist aktivierst, musst du dein Passwort über die 'Passwort vergessen' Option zurücksetzen."
 
-#: ../src/User/Mail/VerifyMail.php:114
-#: ../src/User/Mail/PasswordMail.php:33
+#: ../src/User/Mail/VerifyMail.php:130
 msgid "May the stones be with you."
 msgstr "Mit 361 Grüßen"
 
-#: ../src/User/Mail/VerifyMail.php:115
-#: ../src/User/Mail/PasswordMail.php:34
+#: ../src/User/Mail/VerifyMail.php:131
 msgid "Your %signature%."
 msgstr "Dein %signature%"
 
-#: ../src/User/Mail/VerifyMail.php:119
-#: ../src/User/Mail/PasswordMail.php:38
+#: ../src/User/Mail/VerifyMail.php:135
 msgid "Court of Registration"
 msgstr "Amtsgericht"
 
-#: ../src/User/Mail/VerifyMail.php:120
-#: ../src/User/Mail/PasswordMail.php:39
+#: ../src/User/Mail/VerifyMail.php:136
 msgid "Register No."
 msgstr "Registernummer"
 
-#: ../src/User/Mail/VerifyMail.php:123
+#: ../src/User/Mail/VerifyMail.php:139
 msgid "%prefix% - Your Credentials"
 msgstr "%prefix% - Deine Zugangsdaten"
 
-#: ../src/User/Mail/PasswordMail.php:17
+#: ../src/User/Mail/PasswordMail.php:22
 msgid "Your password at nakade.de was reset."
 msgstr "Dein Passwort auf nakade.de  wurde neu gesetzt."
 
-#: ../src/User/Mail/PasswordMail.php:42
+#: ../src/User/Mail/PasswordMail.php:47
 msgid "%prefix% - Your New Credentials"
 msgstr "%prefix% - Deine neuen Zugangsdaten"
 
@@ -378,6 +419,15 @@ msgstr "warte auf Bestätigung"
 msgid "inactive"
 msgstr "inaktiv"
 
+#~ msgid "allowed: a-Z0-9_.@"
+#~ msgstr "erlaubt: a-Z, 0-9, _.@"
+
+#~ msgid "Password (generated if empty):"
+#~ msgstr "Passwort (generiert falls leer): "
+
+#~ msgid "Credentials"
+#~ msgstr "Zugangsdaten"
+
 #~ msgid "test"
 #~ msgstr "gammel"
 
@@ -389,9 +439,6 @@ msgstr "inaktiv"
 
 #~ msgid "Your Nakade Team"
 #~ msgstr "Dein Nakade-Team"
-
-#~ msgid "No ongoing season found."
-#~ msgstr "keine laufende Saison gefunden."
 
 #~ msgid "Open Results"
 #~ msgstr "Offene Ergebnisse"

@@ -8,19 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="user")
- * @property int $_id
- * @property string $_vorname
- * @property string $_nachname
- * @property string $_nick
- * @property string $_title
- * @property char   $_sex
- * @property date   $_birthday
- * @property bool   $_anonym
+ * 
  */
 class User
 {
-  
-     
   /**
    * Primary Identifier
    *

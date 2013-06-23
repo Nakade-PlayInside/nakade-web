@@ -153,10 +153,27 @@ class UserServiceFactory extends AbstractService
         
     }
     
+     /**
+     * User requesting a new password. If registered, password is 
+     * generated and all credentials are sent to the given email. 
+     * 
+     * @param array $data
+     * @return boolean
+     */
+    public function forgotPassword($data)
+    {
+        $user = $this->getMapper()->getUserByEmail($data['email']);
+        if(null === $user)
+            return false;
+       
+        $data['uid'] = $user->getId();
+        return $this->resetPassword($data);
+        
+    }
+    
     /**
      * Reset the password of a user. The new generated password 
      * is send to the user by email and needs to be verified. 
-     * This is triggered by an administrator, so pwd change date is not set.
      * 
      * @param array $data
      * @throws RuntimeException
@@ -178,6 +195,8 @@ class UserServiceFactory extends AbstractService
              );
          }
         
+         $data['pwdChange'] = new \DateTime();
+         
          $this->prepareData($data);
          $user->populate($data);
          $this->getMapper()->save($user);
@@ -188,7 +207,7 @@ class UserServiceFactory extends AbstractService
          $mail = $this->getMailFactory()->getMail('password');
          $mail->setData($mailData);
          $mail->setRecipient($user->getEmail(), $user->getName());
-         $mail->send();
+         return $mail->send();
         
     }
     

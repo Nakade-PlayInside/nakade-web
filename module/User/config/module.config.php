@@ -36,6 +36,8 @@ return array(
                      'User\Services\UserControllerFactory',
             'User\Controller\Profile' => 
                      'User\Services\ProfileControllerFactory',
+            'User\Controller\Forgot' => 
+                     'User\Services\ForgotControllerFactory',
         ),
     ),
     //The name of the route is ‘user’ and has a type of ‘segment’. The segment 
@@ -76,6 +78,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'User\Controller\Profile',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'forgot' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/forgot[/:action][/:id]',
+                    'constraints' => array(
+                        'action' =>  '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'User\Controller\Forgot',
                         'action'     => 'index',
                     ),
                 ),

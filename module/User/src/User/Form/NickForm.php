@@ -72,10 +72,22 @@ class NickForm extends AbstractForm
         //submit button
         $this->add(
             array(
-                'name' => 'Send',
+                'name' => 'send',
                 'type'  => 'Zend\Form\Element\Submit',
                 'attributes' => array(
                     'value' =>   $this->translate('Submit'),
+
+                ),
+            )
+        );
+        
+         //cancel button
+        $this->add(
+            array(
+                'name' => 'cancel',
+                'type'  => 'Zend\Form\Element\Submit',
+                'attributes' => array(
+                    'value' =>   $this->translate('Cancel'),
 
                 ),
             )

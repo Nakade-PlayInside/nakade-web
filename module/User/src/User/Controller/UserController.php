@@ -15,9 +15,18 @@ use Zend\Form\FormInterface;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
+/**
+ * Adminstrative user action for adding a new user, edit and resetting pwd.
+ * 
+ */
 class UserController extends AbstractController 
 {
     
+    /**
+     * shows all users for adding and editing
+     * 
+     * @return \Zend\View\Model\ViewModel
+     */
     public function indexAction()
     {
         return new ViewModel(
@@ -29,6 +38,11 @@ class UserController extends AbstractController
         );
     }
     
+    /**
+     * add new user 
+     * 
+     * @return \Zend\View\Model\ViewModel
+     */
     public function addAction()
     {
        
@@ -38,6 +52,12 @@ class UserController extends AbstractController
             
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
+            
+            //cancel
+            if($postData['cancel']) {
+                return $this->redirect()->toRoute('user');
+            }
+            
             $form->setData($postData);
             
             if ($form->isValid()) {
@@ -58,7 +78,14 @@ class UserController extends AbstractController
        
     }
     
-     public function verifyAction()
+    
+    /**
+     * Verification action. A direct link to this action is provided
+     * in the user's verifiaction mail. 
+     * 
+     * @return \Zend\Http\PhpEnvironment\Response|\Zend\View\Model\ViewModel
+     */
+    public function verifyAction()
     {
        $email          = $this->params()->fromQuery('email', null);
        $verifyString   = $this->params()->fromQuery('verify' ,null);
@@ -82,16 +109,22 @@ class UserController extends AbstractController
            )
        );
        
-       //@todo: eigene error pages
-       //@todo: doctrine save funktioniert?
-       //@todo: szenarie: wiederholte aktivierung
-       //@todo: persönliche ANrede bei aktivierung
-       
     }
 
+    
+    
+    
+    /**
+     * reset the user's password (send mail)
+     * 
+     * @return type
+     */
     public function resetPasswordAction()
     {
-          //get param 
+        
+       //@todo: nachfrage double_opt passwort zurücksetzen?YN
+       
+       //get param 
        $uid  = $this->params()->fromRoute('id', null);
        
        $data['uid'] = $uid;
@@ -101,6 +134,11 @@ class UserController extends AbstractController
        return $this->redirect()->toRoute('user');
     }
     
+    /**
+     * edit a user
+     * 
+     * @return \Zend\View\Model\ViewModel
+     */
     public function editAction()
     {
         
@@ -116,6 +154,11 @@ class UserController extends AbstractController
             
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
+            //cancel
+            if($postData['cancel']) {
+                return $this->redirect()->toRoute('user');
+            }
+            
             $form->setData($postData);
            
             if ($form->isValid()) {
@@ -135,6 +178,11 @@ class UserController extends AbstractController
         
     }
 
+    /**
+     * deactivate a user
+     * 
+     * @return type
+     */
     public function deleteAction()
     {
        //get param 
@@ -144,6 +192,11 @@ class UserController extends AbstractController
        return $this->redirect()->toRoute('user');
     }
     
+    /**
+     * reactivate a user
+     * 
+     * @return type
+     */
     public function undeleteAction()
     {
        //get param 

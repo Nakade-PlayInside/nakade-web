@@ -2,8 +2,9 @@
 namespace User\Form\Validator;
 
 use Traversable;
-use Zend\Validator\AbstractValidator;
 use Zend\Validator\Exception;
+use Nakade\Abstracts\AbstractNakadeValidator;
+
 
 /**
  * Validating password against a list of common passwords.
@@ -13,7 +14,8 @@ use Zend\Validator\Exception;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class CommonPassword extends AbstractValidator {
+class CommonPassword extends AbstractNakadeValidator 
+{
     
     const INVALID    = 'invalidType';
     const NO_COMMON  = 'NoCommonPassword';
@@ -29,6 +31,19 @@ class CommonPassword extends AbstractValidator {
         
     );
 
+     public function getTranslatedTemplate()
+    {
+        //just for translation using PoE
+        $template = array(
+            self::INVALID           => $this->translate(
+                "Invalid type given. String expected."),
+            self::NO_COMMON            => $this->translate(
+                "Do not use common password: %value%."),
+           
+        );
+        return $template;
+    }
+ 
    
     /**
      * Sets validator options
@@ -38,7 +53,8 @@ class CommonPassword extends AbstractValidator {
      */
     public function __construct($options)
     {
-      
+       //@todo: Übersetzung
+        
         if (!is_array($options)) {
             throw new Exception\InvalidArgumentException(
                 "Invalid options provided to constructor"
@@ -50,11 +66,8 @@ class CommonPassword extends AbstractValidator {
                 "Missing option 'commons'"
             );
         }
-        
-        $this->setDefaultTranslatorTextDomain('user');
-        
+       
         $this->setCommons($options['commons']);
-
         parent::__construct($options);
     }
 
@@ -89,6 +102,7 @@ class CommonPassword extends AbstractValidator {
      */
     public function isValid($value)
     {
+        
         if (!is_string($value)) {
             $this->error(self::INVALID);
             return false;

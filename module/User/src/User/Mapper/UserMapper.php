@@ -51,7 +51,7 @@ class UserMapper extends AbstractMapper
     }
     
     /**
-     * Get User by its email and verifystring 
+     * Get User by its uid
      * 
      * @return User\Entity\User $user|null
      */
@@ -64,6 +64,26 @@ class UserMapper extends AbstractMapper
       $result = $this->getEntityManager()
                      ->createQuery($dql)
                      ->setParameter('uid', $uid)
+                     ->getOneOrNullResult();
+      
+      return $result['user'];
+     
+    }
+    
+    /**
+     * Get User by its email 
+     * 
+     * @return User\Entity\User $user|null
+     */
+    public function getUserByEmail($email)  
+    {
+       $dql = "SELECT u as user 
+               FROM User\Entity\User u
+               WHERE u.email=:email";
+      
+      $result = $this->getEntityManager()
+                     ->createQuery($dql)
+                     ->setParameter('email', $email)
                      ->getOneOrNullResult();
       
       return $result['user'];

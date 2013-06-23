@@ -127,8 +127,7 @@ class UserForm extends AbstractForm
                     'label' =>  $this->translate('User Name:'),
                 ),
                 'attributes' => array(
-                    'required' => 'required',
-                   
+                    
                 )
             )
         );
@@ -144,7 +143,6 @@ class UserForm extends AbstractForm
                 ),
                 'attributes' => array(
                     'multiple' => false,
-                    'required' => 'required',
                 )
             )
         );
@@ -167,7 +165,7 @@ class UserForm extends AbstractForm
         //submit button
         $this->add(
             array(
-                'name' => 'Send',
+                'name' => 'send',
                 'type'  => 'Zend\Form\Element\Submit',
                 'attributes' => array(
                     'value' =>   $this->translate('Submit'),
@@ -176,6 +174,17 @@ class UserForm extends AbstractForm
             )
         );
        
+         //cancel button
+        $this->add(
+            array(
+                'name' => 'cancel',
+                'type'  => 'Zend\Form\Element\Submit',
+                'attributes' => array(
+                    'value' =>   $this->translate('Cancel'),
+
+                ),
+            )
+        );
     } 
     
     
@@ -281,7 +290,7 @@ class UserForm extends AbstractForm
          $filter->add(
              array(
                  'name' => 'username',
-                 'required' => false,
+                 'required' => true,
                  'filters'  => array(
                      array('name' => 'StripTags'),
                      array('name' => 'StringTrim'),

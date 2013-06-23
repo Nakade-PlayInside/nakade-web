@@ -15,11 +15,21 @@ use Zend\Form\FormInterface;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
+/**
+ * Editing the user's own profile
+ */
 class ProfileController extends AbstractController 
 {
     
+    /**
+     * Showing the user's profile
+     * 
+     * @return \Zend\View\Model\ViewModel
+     */
     public function indexAction()
     {
+        //reditection does not work here if the 
+        //protected method is provided!  
         $profile = $this->identity();
         
         if($profile === null) {
@@ -36,6 +46,11 @@ class ProfileController extends AbstractController
        );
     }
     
+    /**
+     * edit the birthday
+     * 
+     * @return \Zend\View\Model\ViewModel
+     */
     public function birthdayAction()
     {
         $profile = $this->getProfile();
@@ -47,6 +62,12 @@ class ProfileController extends AbstractController
             
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
+            
+            //cancel
+            if($postData['cancel']) {
+                return $this->redirect()->toRoute('profile');
+            }
+            
             $form->setData($postData);
            
             if ($form->isValid()) {
@@ -67,6 +88,11 @@ class ProfileController extends AbstractController
        
     }
     
+    /**
+     * edit the nickname
+     * 
+     * @return \Zend\View\Model\ViewModel
+     */
     public function nickAction()
     {
         $profile = $this->getProfile();
@@ -78,6 +104,12 @@ class ProfileController extends AbstractController
             
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
+            
+            //cancel
+            if($postData['cancel']) {
+                return $this->redirect()->toRoute('profile');
+            }
+            
             $form->setData($postData);
            
             if ($form->isValid()) {
@@ -97,6 +129,11 @@ class ProfileController extends AbstractController
        );
     }
     
+    /**
+     * edit the email
+     * 
+     * @return \Zend\View\Model\ViewModel
+     */
     public function emailAction()
     {
         $profile = $this->getProfile();
@@ -108,6 +145,12 @@ class ProfileController extends AbstractController
             
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
+            
+            //cancel
+            if($postData['cancel']) {
+                return $this->redirect()->toRoute('profile');
+            }
+            
             $form->setData($postData);
            
             if ($form->isValid()) {
@@ -127,14 +170,29 @@ class ProfileController extends AbstractController
        );
     }
     
+    /**
+     * change the password. No email is send.
+     * 
+     * @return \Zend\View\Model\ViewModel
+     */
     public function passwordAction()
     {
-        $form = $this->getForm('password');
         
+        if($this->identity() === null) {
+            return $this->redirect()->toRoute('login');
+        }
+        
+        $form = $this->getForm('password');
         if ($this->getRequest()->isPost()) {
             
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
+            
+            //cancel
+            if($postData['cancel']) {
+                return $this->redirect()->toRoute('profile');
+            }    
+            
             $form->setData($postData);
            
             if ($form->isValid()) {
@@ -154,6 +212,11 @@ class ProfileController extends AbstractController
        );
     }
     
+    /**
+     * get the user's profile. Redirect to the login if not logged in.
+     * 
+     * @return mixed
+     */
     protected function getProfile()
     {
         $profile = $this->identity();
@@ -164,4 +227,6 @@ class ProfileController extends AbstractController
         
         return $profile;
     }
+    
+    
 }

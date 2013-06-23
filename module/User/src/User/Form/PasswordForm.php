@@ -73,10 +73,22 @@ class PasswordForm extends AbstractForm
         //submit button
         $this->add(
             array(
-                'name' => 'Send',
+                'name' => 'send',
                 'type'  => 'Zend\Form\Element\Submit',
                 'attributes' => array(
                     'value' =>   $this->translate('Submit'),
+
+                ),
+            )
+        );
+        
+        //cancel button
+        $this->add(
+            array(
+                'name' => 'cancel',
+                'type'  => 'Zend\Form\Element\Submit',
+                'attributes' => array(
+                    'value' =>   $this->translate('Cancel'),
 
                 ),
             )
@@ -124,6 +136,7 @@ class PasswordForm extends AbstractForm
                           'options' => array (
                               'length'   => '8',
                               'treshold' => '80',
+                            
                           )
                     ),
                     array('name' => 'User\Form\Validator\CommonPassword',

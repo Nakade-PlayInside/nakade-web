@@ -1,10 +1,10 @@
 <?php
-namespace User\Form\Validator;
+namespace Nakade\Abstracts;
 
 use Traversable;
 use Zend\Stdlib\ArrayUtils;
-use Zend\Validator\AbstractValidator;
 use Zend\Validator\Exception;
+use Nakade\Abstracts\AbstractNakadeValidator;
 
 /**
  * Class for Database record validation.
@@ -13,7 +13,8 @@ use Zend\Validator\Exception;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-abstract class AbstractDoctrine extends AbstractValidator{
+abstract class AbstractDoctrineValidator extends AbstractNakadeValidator
+{
     
     /**
      * Error constants
@@ -25,8 +26,8 @@ abstract class AbstractDoctrine extends AbstractValidator{
      * @var array Message templates
      */
     protected $messageTemplates = array(
-        self::ERROR_NO_RECORD_FOUND => "No record matching the input was found",
-        self::ERROR_RECORD_FOUND    => "A record matching the input was found",
+        self::ERROR_NO_RECORD_FOUND => "No record matching the input was found.",
+        self::ERROR_RECORD_FOUND    => "A record matching the input was found.",
     );
 
     /**
@@ -51,6 +52,20 @@ abstract class AbstractDoctrine extends AbstractValidator{
      */
     protected $exclude = null;
 
+     public function getTranslatedTemplate()
+    {
+        //just for translation using PoE
+        $template = array(
+            self::ERROR_NO_RECORD_FOUND => $this->translate(
+                "No record matching the input was found."),
+            self::ERROR_RECORD_FOUND    => $this->translate(
+                "A record matching the input was found."),
+           
+        );
+        return $template;
+    }
+
+    
     /**
      * Provides basic configuration for use with Zend\Validator\Db Validators
      * A database adapter may optionally be supplied to avoid using the registered default adapter.

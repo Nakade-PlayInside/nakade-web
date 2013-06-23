@@ -3,8 +3,8 @@ namespace User\Form\Validator;
 
 use Traversable;
 use Zend\Stdlib\ArrayUtils;
-use Zend\Validator\AbstractValidator;
 use Zend\Validator\Exception;
+use Nakade\Abstracts\AbstractNakadeValidator;
 
 /**
  * Validating password complexity against a treshold.
@@ -18,7 +18,7 @@ use Zend\Validator\Exception;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class PasswordComplexity extends AbstractValidator {
+class PasswordComplexity extends AbstractNakadeValidator {
     
     const INVALID   = 'invalidType';
     const LENGTH    = 'optimal password length';
@@ -60,7 +60,33 @@ class PasswordComplexity extends AbstractValidator {
         'length' => 'length',
     );
 
-   
+    public function getTranslatedTemplate()
+    {
+        //just for translation using PoE
+        $template = array(
+            self::INVALID           => $this->translate(
+                "Invalid type given. String expected."),
+            self::LENGTH            => $this->translate(
+                "Optimal password length: '%length%'."),
+            self::NO_DIGITS         => $this->translate(
+                "No digits found."),
+            self::NO_UPPER          => $this->translate(
+                "No uppercase letters found."),
+            self::NO_LOWER          => $this->translate(
+                "No lowercase letters found."),
+            self::NO_SPECIAL        => $this->translate(
+                "No special chars found."),
+            self::NO_UMLAUT         => $this->translate(
+                "No umlauts found."),
+            self::NO_REPEAT_CHARS   =>  $this->translate(
+                "Do not repeat letters."),
+            self::NO_REPEAT_WORDS   => $this->translate(
+                "Do not repeat words."),
+        );
+        return $template;
+    }
+
+    
     /**
      * Sets validator options
      *
@@ -69,7 +95,8 @@ class PasswordComplexity extends AbstractValidator {
      */
     public function __construct($options = null)
     {
-       
+     //@todo: Übersetzung
+        
         if ($options instanceof Traversable) {
             $options = ArrayUtils::iteratorToArray($options);
         }
@@ -156,6 +183,7 @@ class PasswordComplexity extends AbstractValidator {
      */
     public function isValid($value)
     {
+        
         if (!is_string($value)) {
             $this->error(self::INVALID);
             return false;
@@ -367,7 +395,8 @@ class PasswordComplexity extends AbstractValidator {
         $pattern = '/([a-zA-Z]{3,})(.)*\1\z/';
         return (bool) preg_match($pattern, $value);
     }
-    
+   
+   
 }
 
 ?>

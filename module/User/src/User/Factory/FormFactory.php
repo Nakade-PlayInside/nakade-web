@@ -7,6 +7,8 @@ use Traversable;
 use User\Form;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
+use Zend\Validator\AbstractValidator;
+use Zend\Mvc\I18n\Translator;
 
 
 /**
@@ -36,6 +38,8 @@ class FormFactory extends AbstractFormFactory
         
         $translator = $services->get('translator');
        
+        //@todo: Übersetzung der Std Validatoren
+        
        //needed for translating validation messages
         $translator->addTranslationFile( 
             'phpArray', 
@@ -43,7 +47,6 @@ class FormFactory extends AbstractFormFactory
             'default',
             'de_DE'    
         );
-       
         $this->setTranslator($translator, $textDomain);
         
         //EntityManager for database access by doctrine
@@ -86,7 +89,10 @@ class FormFactory extends AbstractFormFactory
                             break;
            
            case "user":     $form = new Form\UserForm();
-                            break;             
+                            break; 
+                        
+           case "forgot":   $form = new Form\ForgotPasswordForm();
+                            break;              
                         
            default      :   throw new RuntimeException(
                 sprintf('An unknown form type was provided.')

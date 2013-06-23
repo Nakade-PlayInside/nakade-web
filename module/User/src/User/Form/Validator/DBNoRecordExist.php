@@ -1,7 +1,7 @@
 <?php
 namespace User\Form\Validator;
 
-
+use Nakade\Abstracts\AbstractDoctrineValidator;
 /**
  * Validating a value against an existing database record using
  * doctrine. Doctrine has to be installed and configured.
@@ -14,10 +14,12 @@ namespace User\Form\Validator;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class DBNoRecordExist extends AbstractDoctrine {
+class DBNoRecordExist extends AbstractDoctrineValidator {
     
     public function isValid($value)
     {
+        //@todo: Übersetzung
+        
         /*
          * Check for an adapter being defined. If not, throw an exception.
          */

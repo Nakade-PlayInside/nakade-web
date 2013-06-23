@@ -1,12 +1,12 @@
 <?php
-namespace User\Form\Fieldset;
+namespace Nakade\Abstracts\Fieldset;
 
 use \Zend\Form\Fieldset;
 use Zend\I18n\Translator\Translator;
 use Zend\I18n\Translator\TranslatorAwareInterface;
 
 /**
- * Abstract form implementing a translator.
+ * Abstract fieldset implementing a translator.
  * Using the translate method will return the given string if
  * no translator is set.
  */

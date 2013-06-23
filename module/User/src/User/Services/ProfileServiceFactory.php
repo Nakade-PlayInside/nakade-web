@@ -3,7 +3,7 @@ namespace User\Services;
 
 use Nakade\Abstracts\AbstractService;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use RuntimeException;
+
 
 
 /**
@@ -68,6 +68,8 @@ class ProfileServiceFactory extends AbstractService
         return $this->editProfile($data);
         
     }
+    
+   
     
     
     

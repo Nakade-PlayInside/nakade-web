@@ -11,7 +11,7 @@ use User\Entity\User;
  * Successive settings: setEntityManager(), setInputFilter(), init().
  * Use bindingEntity for setting values.
  */
-class EmailForm extends AbstractForm
+class ForgotPasswordForm extends AbstractForm
 {
   
     /**
@@ -42,7 +42,6 @@ class EmailForm extends AbstractForm
                 ),
                 'attributes' => array(
                     'multiple' => false,
-                    'required' => 'required',
                 )
             )
         );
@@ -119,15 +118,6 @@ class EmailForm extends AbstractForm
                     array('name' => 'EmailAddress',
                           'break_chain_on_failure' => true,
                     ),
-                    array(
-                        'name'     => 'User\Form\Validator\DBNoRecordExist',
-                        'options' => array( 
-                            'entity'    => 'User\Entity\User',
-                            'property'  => 'email',
-                            'exclude'  => $this->getIdentifierValue(),
-                            'adapter'  => $this->getEntityManager(),
-                        )
-                    )
                      
                  )
              )
