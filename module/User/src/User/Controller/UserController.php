@@ -80,41 +80,6 @@ class UserController extends AbstractController
     
     
     /**
-     * Verification action. A direct link to this action is provided
-     * in the user's verifiaction mail. 
-     * 
-     * @return \Zend\Http\PhpEnvironment\Response|\Zend\View\Model\ViewModel
-     */
-    public function verifyAction()
-    {
-       $email          = $this->params()->fromQuery('email', null);
-       $verifyString   = $this->params()->fromQuery('verify' ,null);
-       $response       = new \Zend\Http\PhpEnvironment\Response;
-      
-      
-       //no params -> 404 error
-       if(!isset($email) || !isset($verifyString)) {
-           
-           $response->setStatusCode(404);
-           return $response;
-       }
-      
-       //OK!
-       return new ViewModel(
-           array( 
-              'isActivated' => $this->getService()->activateUser(
-                  $email, 
-                  $verifyString
-               ),
-           )
-       );
-       
-    }
-
-    
-    
-    
-    /**
      * reset the user's password (send mail)
      * 
      * @return type

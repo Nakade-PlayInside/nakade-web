@@ -179,7 +179,7 @@ class VerifyMail extends AbstractMail {
         $this->password  = isset($data['generated']) ? $data['generated'] : null;
         
         $email = isset($data['email']) ? $data['email'] : null;
-        $this->activationLink = sprintf('%s/user/verify?email=%s&verify=%s',
+        $this->activationLink = sprintf('%s/verify?email=%s&verify=%s',
             $this->verifyUrl,    
             $email,
             $this->verifyString    

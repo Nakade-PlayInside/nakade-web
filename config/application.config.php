@@ -14,7 +14,8 @@ return array(
         'Mail',
         'League',
         'Authentication',
-      
+        'Permission',
+        
         ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(

@@ -9,27 +9,23 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application\Controller;
+namespace Permission\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
+/**
+ * Error controller for showing 403 error
+ */
+class ForbiddenController extends AbstractActionController
 {
    
     public function indexAction()
     {
        
-        $blogWidget = $this->forward()->dispatch('/blog/controller/blog');
-        $tableWidget = $this->forward()->dispatch('/league/controller/actualseason');
-        
-        
-        $page = new ViewModel();
-        $page->addChild($blogWidget, 'blogWidget');
-        $page->addChild($tableWidget, 'tableWidget');
-        
-        return $page;
-       
+         return new ViewModel(
+            array()
+        );
     }
     
 }

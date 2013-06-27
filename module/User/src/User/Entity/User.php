@@ -197,6 +197,15 @@ class User
   protected $due;
   
   /**
+   * user's role
+   * @ORM\Column(name="role", type="string")
+   * 
+   * @var string
+   * @access protected
+   */
+  protected $role;
+  
+  /**
    * generated password is set for mail methods
    *
    * @var string
@@ -612,6 +621,30 @@ class User
     return $this->pwdChange;
   }
   
+  /**
+   * Set user's role.
+   *
+   * @param  string $role
+   * @access public
+   * @return user
+   */
+  public function setRole($role)
+  {
+        
+    $this->role = $role;
+    return $this;
+  }
+
+  /**
+   * get user's role
+   *
+   * @access public
+   * @return string
+   */
+  public function getRole()
+  {
+    return $this->role;
+  }
   
   /**
    * Sets the due date.

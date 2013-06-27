@@ -149,8 +149,8 @@ class AuthController extends AbstractActionController
             //proving valid data
             if ($form->isValid()){
         
-                $identity = $request->getPost('identity');
-                $password = $request->getPost('password');
+                $identity   = $request->getPost('identity');
+                $password   = $request->getPost('password');
                 $rememberMe = $request->getPost('rememberme');
                 
                 //set values to adapter

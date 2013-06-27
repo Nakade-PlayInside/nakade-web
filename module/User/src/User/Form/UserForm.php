@@ -147,6 +147,32 @@ class UserForm extends AbstractForm
             )
         );
         
+        //roles
+        $this->add(
+            array(
+                'name' => 'role',
+                'type' => 'Zend\Form\Element\Select',
+                'options' => array(
+                    'label' => $this->translate('Role'),
+                    'value_options' => array(
+                        'guest'     => $this->translate('Guest'),
+                        'user'      => $this->translate('User'),
+                        'member'    => $this->translate('Member'),
+                        'moderator' => $this->translate('Moderator'),
+                        'admin'     => $this->translate('Administrator'),
+                        
+                    )
+                ),
+                'attributes' => array(
+                    'value' => 'user'
+                )
+                
+            )
+                
+                
+        );
+        
+        
         //cross-site scripting hash protection
         //this is handled by ZF2 in the background - no need for server-side 
         //validation 

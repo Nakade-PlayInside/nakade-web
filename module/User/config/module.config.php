@@ -31,6 +31,7 @@ return array(
     ),
     
     'controllers' => array(
+        
         'factories' => array(
             'User\Controller\User' => 
                      'User\Services\UserControllerFactory',
@@ -38,6 +39,9 @@ return array(
                      'User\Services\ProfileControllerFactory',
             'User\Controller\Forgot' => 
                      'User\Services\ForgotControllerFactory',
+            'User\Controller\Verify' => 
+                     'User\Services\VerifyControllerFactory',
+            
         ),
     ),
     //The name of the route is ‘user’ and has a type of ‘segment’. The segment 
@@ -92,6 +96,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'User\Controller\Forgot',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'verify' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/verify[/:action][/:id]',
+                    'constraints' => array(
+                        'action' =>  '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'User\Controller\Verify',
                         'action'     => 'index',
                     ),
                 ),

@@ -36,6 +36,7 @@ return array(
                     ),
                 ),
             ),
+            
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -86,7 +87,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 
-                     'Application\Controller\IndexController'
+                     'Application\Controller\IndexController',
+           
         ),
     ),
     'view_manager' => array(
@@ -100,6 +102,8 @@ return array(
                   '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . 
                   '/../view/application/index/index.phtml',
+            'error/403'               => __DIR__ . 
+                  '/../view/error/403.phtml',
             'error/404'               => __DIR__ . 
                   '/../view/error/404.phtml',
             'error/index'             => __DIR__ . 
