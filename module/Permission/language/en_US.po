@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-22 13:36+0100\n"
-"PO-Revision-Date: 2013-03-22 13:36+0100\n"
+"POT-Creation-Date: 2013-06-27 12:18+0100\n"
+"PO-Revision-Date: 2013-06-27 12:18+0100\n"
 "Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -15,24 +15,17 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Authentication/Form/AuthForm.php:72
-msgid "Username:"
+#: ../view/permission/forbidden/index.phtml:3
+#: ../view/permission/forbidden/index.phtml:7
+msgid "A 403 error occurred"
 msgstr ""
 
-#: ../src/Authentication/Form/AuthForm.php:83
-msgid "Password:"
+#: ../view/permission/forbidden/index.phtml:8
+msgid "Forbidden."
 msgstr ""
 
-#: ../src/Authentication/Form/AuthForm.php:95
-msgid "Remember Me ?:"
-msgstr ""
-
-#: ../src/Authentication/Form/AuthForm.php:104
-msgid "Please verify you are human."
-msgstr ""
-
-#: ../src/Authentication/Form/AuthForm.php:117
-msgid "Submit"
+#: ../view/permission/forbidden/index.phtml:9
+msgid "You do not have the permission to access the ressource."
 msgstr ""
 
 #~ msgid "Skeleton Application"

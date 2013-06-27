@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-08 00:41+0100\n"
-"PO-Revision-Date: 2012-12-08 00:49+0100\n"
-"Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
+"POT-Creation-Date: 2013-06-27 12:50+0100\n"
+"PO-Revision-Date: 2013-06-27 12:53+0100\n"
+"Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -15,53 +15,61 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../view/error/404.phtml:1
-msgid "A 404 error occurred"
-msgstr "Es trat ein 404 Fehler auf"
+#: ../view/error/403.phtml:1
+msgid "A 403 error occurred"
+msgstr "Es trat ein 403 Fehler auf"
 
+#: ../view/error/403.phtml:10
 #: ../view/error/404.phtml:10
 msgid "The requested controller was unable to dispatch the request."
-msgstr ""
-"Der angeforderte Controller war nicht in der Lage die Anfrage zu verarbeiten."
+msgstr "Der angeforderte Controller war nicht in der Lage die Anfrage zu verarbeiten."
 
+#: ../view/error/403.phtml:13
 #: ../view/error/404.phtml:13
-msgid ""
-"The requested controller could not be mapped to an existing controller class."
-msgstr ""
-"Der angeforderte Controller konnte keiner Controller Klasse zugeordnet "
-"werden."
+msgid "The requested controller could not be mapped to an existing controller class."
+msgstr "Der angeforderte Controller konnte keiner Controller Klasse zugeordnet werden."
 
+#: ../view/error/403.phtml:16
 #: ../view/error/404.phtml:16
 msgid "The requested controller was not dispatchable."
 msgstr "Der angeforderte Controller ist nicht aufrufbar."
 
+#: ../view/error/403.phtml:19
 #: ../view/error/404.phtml:19
 msgid "The requested URL could not be matched by routing."
 msgstr "Für die angeforderte URL konnte keine Übereinstimmung gefunden werden."
 
+#: ../view/error/403.phtml:22
 #: ../view/error/404.phtml:22
 msgid "We cannot determine at this time why a 404 was generated."
-msgstr ""
-"Zu diesem Zeitpunkt ist es uns nicht möglich zu bestimmen, warum ein 404 "
-"Fehler aufgetreten ist."
+msgstr "Zu diesem Zeitpunkt ist es uns nicht möglich zu bestimmen, warum ein 404 Fehler aufgetreten ist."
 
+#: ../view/error/403.phtml:34
 #: ../view/error/404.phtml:34
 msgid "Controller"
 msgstr "Controller"
 
+#: ../view/error/403.phtml:41
 #: ../view/error/404.phtml:41
 #, php-format
 msgid "resolves to %s"
 msgstr "wird aufgelöst in %s"
 
+#: ../view/error/403.phtml:51
 #: ../view/error/404.phtml:51
 msgid "Exception"
 msgstr "Ausnahme"
 
-#: ../view/error/404.phtml:55 ../view/error/index.phtml:19
+#: ../view/error/403.phtml:55
+#: ../view/error/404.phtml:55
+#: ../view/error/index.phtml:19
 #: ../view/error/index.phtml:43
 msgid "Stack trace"
 msgstr "Stapelüberwachung"
+
+#: ../view/error/404.phtml:1
+msgid "A 404 error occurred"
+msgstr "Es trat ein 404 Fehler auf"
 
 #: ../view/error/index.phtml:1
 msgid "An error occurred"
@@ -71,11 +79,13 @@ msgstr "Ein Fehler ist aufgetreten"
 msgid "Additional information"
 msgstr "Zusätzliche Information"
 
-#: ../view/error/index.phtml:11 ../view/error/index.phtml:35
+#: ../view/error/index.phtml:11
+#: ../view/error/index.phtml:35
 msgid "File"
 msgstr "Datei"
 
-#: ../view/error/index.phtml:15 ../view/error/index.phtml:39
+#: ../view/error/index.phtml:15
+#: ../view/error/index.phtml:39
 msgid "Message"
 msgstr "Meldung"
 
@@ -96,8 +106,8 @@ msgid "Home"
 msgstr "Startseite"
 
 #: ../view/layout/layout.phtml:33
-msgid "Training"
-msgstr "Training"
+msgid "Location"
+msgstr "Spielort"
 
 #: ../view/layout/layout.phtml:34
 msgid "Imprint"
@@ -107,9 +117,44 @@ msgstr "Impressum"
 msgid "Contact"
 msgstr "Kontakt"
 
-#: ../view/layout/layout.phtml:45
+#: ../view/layout/layout.phtml:44
+msgid "User"
+msgstr "Benutzer"
+
+#: ../view/layout/layout.phtml:51
+msgid "Profile"
+msgstr "Profil"
+
+#: ../view/layout/layout.phtml:56
+msgid "Schedule"
+msgstr "Spielplan"
+
+#: ../view/layout/layout.phtml:61
+msgid "Standings"
+msgstr "Tabelle"
+
+#: ../view/layout/layout.phtml:66
+msgid "Results"
+msgstr "Ergebnisse"
+
+#: ../view/layout/layout.phtml:71
+msgid "Logged in as "
+msgstr "angemeldet als"
+
+#: ../view/layout/layout.phtml:77
+msgid "Logout"
+msgstr "Abmelden"
+
+#: ../view/layout/layout.phtml:85
+msgid "LogIn"
+msgstr "Login"
+
+#: ../view/layout/layout.phtml:99
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
+
+#~ msgid "Training"
+#~ msgstr "Training"
 
 #~ msgid "Spieltreff"
 #~ msgstr "Spieltreff"

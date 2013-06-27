@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-27 11:57+0100\n"
-"PO-Revision-Date: 2013-06-27 12:01+0100\n"
+"POT-Creation-Date: 2013-06-27 12:18+0100\n"
+"PO-Revision-Date: 2013-06-27 12:18+0100\n"
 "Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -16,11 +16,8 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../view/permission/forbidden/index.phtml:3
-msgid "A 403 error occurred"
-msgstr "Es trat ein 403 Fehler auf"
-
 #: ../view/permission/forbidden/index.phtml:7
-msgid "A 403 error occured"
+msgid "A 403 error occurred"
 msgstr "Es trat ein 403 Fehler auf"
 
 #: ../view/permission/forbidden/index.phtml:8
@@ -30,6 +27,9 @@ msgstr "Verboten."
 #: ../view/permission/forbidden/index.phtml:9
 msgid "You do not have the permission to access the ressource."
 msgstr "Keine Zugangsberechtigung."
+
+#~ msgid "A 403 error occured"
+#~ msgstr "Es trat ein 403 Fehler auf"
 
 #~ msgid "Supplied credential is invalid."
 #~ msgstr "Zugangsdaten sind ungültig."

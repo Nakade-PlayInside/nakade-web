@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-23 15:25+0100\n"
-"PO-Revision-Date: 2013-06-23 15:29+0100\n"
+"POT-Creation-Date: 2013-06-27 12:18+0100\n"
+"PO-Revision-Date: 2013-06-27 12:22+0100\n"
 "Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -14,6 +14,54 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../view/user/verify/failure.phtml:4
+msgid "Verification Failed"
+msgstr "Bestätigung fehlgeschlagen."
+
+#: ../view/user/verify/failure.phtml:9
+msgid "Activation of your account failed."
+msgstr "Aktivierung des Zugangs fehlgeschlagen."
+
+#: ../view/user/verify/failure.phtml:11
+msgid "Probably your credentials are expired."
+msgstr "Möglicherweise sind deine Zugangsdaten ungültig."
+
+#: ../view/user/verify/failure.phtml:13
+msgid "Read your activation mail for more information."
+msgstr ""
+
+#: ../view/user/verify/failure.phtml:16
+msgid "YOU DO NOT HAVE TO REGISTER."
+msgstr ""
+
+#: ../view/user/verify/failure.phtml:18
+msgid "Just request a new password by using the 'forgot password' option."
+msgstr "Fordere ein neues Passwort über die 'Passwort vergessen' Option an."
+
+#: ../view/user/verify/error.phtml:4
+msgid "Data Transmission Error"
+msgstr ""
+
+#: ../view/user/verify/error.phtml:9
+msgid "Expected data not found."
+msgstr "Daten nicht gefunden."
+
+#: ../view/user/verify/error.phtml:11
+msgid "Hint: click the link provided in your email."
+msgstr "Hinweis: verwende den Link in deiner email."
+
+#: ../view/user/verify/index.phtml:4
+msgid "Account Verified"
+msgstr "Zugang bestätigt"
+
+#: ../view/user/verify/index.phtml:9
+msgid "Thank you for your activation."
+msgstr "Vielen Dank für deine Aktivierung."
+
+#: ../view/user/verify/index.phtml:11
+msgid "You can now sign in using your credentials."
+msgstr "Du kannst dich  jetzt mit deinen Zugangsdaten anmelden. "
 
 #: ../view/user/forgot/success.phtml:4
 msgid "Success"
@@ -86,26 +134,6 @@ msgstr "Benutzername:"
 msgid "Password"
 msgstr "Passwort"
 
-#: ../view/user/user/verify.phtml:4
-msgid "Account Activation"
-msgstr "Konto Aktivierung"
-
-#: ../view/user/user/verify.phtml:12
-msgid "Thank you for your activation."
-msgstr "Vielen Dank für deine Aktivierung."
-
-#: ../view/user/user/verify.phtml:13
-msgid "You can logIn using your credentials."
-msgstr "Du kannst dich  mit deinen Zugangsdaten anmelden. "
-
-#: ../view/user/user/verify.phtml:15
-msgid "Activation failed."
-msgstr "Aktivierung fehlgeschlagen."
-
-#: ../view/user/user/verify.phtml:16
-msgid "Probably your credentials are expired."
-msgstr "Möglicherweise sind deine Zugangsdaten ungültig."
-
 #: ../view/user/user/edit.phtml:4
 msgid "Edit User"
 msgstr "Benutzer bearbeiten"
@@ -174,7 +202,7 @@ msgstr "immer Spitznamen verwenden (anonym)"
 
 #: ../src/User/Form/NickForm.php:78
 #: ../src/User/Form/BirthdayForm.php:73
-#: ../src/User/Form/UserForm.php:171
+#: ../src/User/Form/UserForm.php:197
 #: ../src/User/Form/ForgotPasswordForm.php:70
 #: ../src/User/Form/PasswordForm.php:79
 #: ../src/User/Form/EmailForm.php:71
@@ -183,7 +211,7 @@ msgstr "Abschicken"
 
 #: ../src/User/Form/NickForm.php:90
 #: ../src/User/Form/BirthdayForm.php:85
-#: ../src/User/Form/UserForm.php:183
+#: ../src/User/Form/UserForm.php:209
 #: ../src/User/Form/ForgotPasswordForm.php:82
 #: ../src/User/Form/PasswordForm.php:91
 #: ../src/User/Form/EmailForm.php:83
@@ -221,6 +249,30 @@ msgstr "Geburtsdatum (opt.):"
 #: ../src/User/Form/UserForm.php:127
 msgid "User Name:"
 msgstr "Benutzername:"
+
+#: ../src/User/Form/UserForm.php:156
+msgid "Role"
+msgstr "Rolle"
+
+#: ../src/User/Form/UserForm.php:158
+msgid "Guest"
+msgstr "Gast"
+
+#: ../src/User/Form/UserForm.php:159
+msgid "User"
+msgstr "Benutzer"
+
+#: ../src/User/Form/UserForm.php:160
+msgid "Member"
+msgstr "Mitglied"
+
+#: ../src/User/Form/UserForm.php:161
+msgid "Moderator"
+msgstr "Moderator"
+
+#: ../src/User/Form/UserForm.php:162
+msgid "Administrator"
+msgstr "Administrator"
 
 #: ../src/User/Form/PasswordForm.php:39
 msgid "enter new password:"
@@ -324,6 +376,7 @@ msgid "Country:"
 msgstr "Land:"
 
 #: ../src/User/Mail/VerifyMail.php:113
+#: ../src/User/Mail/PasswordMail.php:21
 msgid "Welcome %firstname%"
 msgstr "Willkommen %firstname%"
 
@@ -332,42 +385,52 @@ msgid "Thank you for your registration at nakade.de"
 msgstr "Vielen Dank, dass du dich für nakade.de entschieden hast."
 
 #: ../src/User/Mail/VerifyMail.php:118
+#: ../src/User/Mail/PasswordMail.php:26
 msgid "Your Credentials"
 msgstr "Deine Zugangsdaten"
 
 #: ../src/User/Mail/VerifyMail.php:119
+#: ../src/User/Mail/PasswordMail.php:27
 msgid "username"
 msgstr "Benutzername"
 
 #: ../src/User/Mail/VerifyMail.php:120
+#: ../src/User/Mail/PasswordMail.php:28
 msgid "password"
 msgstr "Passwort"
 
 #: ../src/User/Mail/VerifyMail.php:124
+#: ../src/User/Mail/PasswordMail.php:32
 msgid "Your account requires activation during the next %expire% hours."
 msgstr "Dein Konto muss binnen der nächsten %expire% Stunden aktiviert werden."
 
 #: ../src/User/Mail/VerifyMail.php:125
+#: ../src/User/Mail/PasswordMail.php:33
 msgid "Please click on the link for activation."
 msgstr "Bitte klicke auf den  Link für die Aktivierung."
 
 #: ../src/User/Mail/VerifyMail.php:126
+#: ../src/User/Mail/PasswordMail.php:34
 msgid "If you fail to activate your account in time, you have to reset your password using the 'forgot password' option."
 msgstr "Falls du deinen Zugang nicht innerhalb der gegebenen Frist aktivierst, musst du dein Passwort über die 'Passwort vergessen' Option zurücksetzen."
 
 #: ../src/User/Mail/VerifyMail.php:130
+#: ../src/User/Mail/PasswordMail.php:38
 msgid "May the stones be with you."
 msgstr "Mit 361 Grüßen"
 
 #: ../src/User/Mail/VerifyMail.php:131
+#: ../src/User/Mail/PasswordMail.php:39
 msgid "Your %signature%."
 msgstr "Dein %signature%"
 
 #: ../src/User/Mail/VerifyMail.php:135
+#: ../src/User/Mail/PasswordMail.php:43
 msgid "Court of Registration"
 msgstr "Amtsgericht"
 
 #: ../src/User/Mail/VerifyMail.php:136
+#: ../src/User/Mail/PasswordMail.php:44
 msgid "Register No."
 msgstr "Registernummer"
 
@@ -418,6 +481,9 @@ msgstr "warte auf Bestätigung"
 #: ../src/User/View/Helper/ShowActive.php:16
 msgid "inactive"
 msgstr "inaktiv"
+
+#~ msgid "Account Activation"
+#~ msgstr "Konto Aktivierung"
 
 #~ msgid "allowed: a-Z0-9_.@"
 #~ msgstr "erlaubt: a-Z, 0-9, _.@"
