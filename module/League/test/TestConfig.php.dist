@@ -4,6 +4,8 @@ return array(
         'League',
         'User',
         'Nakade',
+        'Permission',
+        'Authentication',
         'DoctrineModule',
         'DoctrineORMModule',
     ),
