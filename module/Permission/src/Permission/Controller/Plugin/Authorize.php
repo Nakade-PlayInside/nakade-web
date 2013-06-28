@@ -6,7 +6,6 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin,
     Zend\Permissions\Acl\Role\GenericRole as Role,
     Zend\Mvc\MvcEvent,    
     Zend\Permissions\Acl\Resource\GenericResource as Resource;
-use Zend\Authentication\AuthenticationService;
 
 
 /**
@@ -21,24 +20,43 @@ class Authorize extends AbstractPlugin
 {
     
     protected $_event;
-    protected $_authentication_service;
+    protected $_role;
+    protected $_ressource;
+    protected $_identity;
+    protected $_acl;
     protected $_default_role = 'everyone';//unsigned user
  
     /**
-     * get the authentication service
+     * get default role
+     * 
+     * @return string
      */
-    private function createService() 
+    public function getDefaultRole()
     {
-        $event = $this->getEvent();
-        
-         //set authentication service
-        $manager = $event->getApplication()->getServiceManager();
-        
-        if($manager->has('Zend\Authentication\AuthenticationService')) {
-            $authService = 
-                $manager->get('Zend\Authentication\AuthenticationService');
-            $this->setAuthenticationService($authService);
+        return $this->_default_role;
+    }
+    
+    /**
+     * get role
+     * 
+     * @return string
+     */
+    public function getRole()
+    {
+        if(null === $this->_role) {
+            $this->initRole();
         }
+        return $this->_role;
+    }
+
+    /**
+     * set role
+     * 
+     * @param string $role
+     */
+    public function setRole($role)
+    {
+        $this->_role = $role;
     }
     
     /**
@@ -61,45 +79,78 @@ class Authorize extends AbstractPlugin
         $this->_event = $event;
     }
 
-    
-    
     /**
-     * get AuthServcice
+     * get Acl
      * 
-     * @return AuthenticationService
+     * @return Acl
      */
-    public function getAuthenticationService()
+    public function getAcl()
     {
-        return $this->_authentication_service;
+        if(null === $this->_acl) {
+            $this->initAcl();
+        }
+        
+        return $this->_acl;
     }
 
     /**
-     *  set AuthServcice
+     * set Acl
      * 
-     * @param AuthenticationService $authenticationService
+     * @param string $acl
      */
-    public function setAuthenticationService(AuthenticationService $authenticationService)
+    public function setAcl(Acl $acl)
     {
-        $this->_authentication_service = $authenticationService;
+        $this->_acl = $acl;
+    }
+    
+    /**
+     * get Ressource
+     * 
+     * @return string
+     */
+    public function getRessource()
+    {
+        if(null === $this->_ressource) {
+            $this->initRessource();
+        }
+        
+        return $this->_ressource;
     }
 
+    /**
+     * set Ressource
+     * 
+     * @param string $ressource
+     */
+    public function setRessource($ressource)
+    {
+        $this->_ressource = $ressource;
+    }
+    
+    /**
+     * set Identity
+     * 
+     * @param type $identity
+     * @return \Permission\Controller\Plugin\Authorize
+     */
+    public function setIdentity($identity) 
+    {
+        $this->_identity = $identity;
+        return $this;
+    }
+    
     /**
      * get Identity if signed in
      * 
      * @return null|Identity
      */
-    private function getIdentity() 
+    public function getIdentity() 
     {
-        if ($this->_authentication_service===null) {
-            return null;
+        if(null === $this->_identity) {
+            $this->initIdentity();
         }
-        
-        //set identity
-        if (!$this->_authentication_service->hasIdentity()) {
-            return null;
-        }
-        
-        return $this->_authentication_service->getIdentity();
+            
+        return $this->_identity;
     }
     
     /**
@@ -109,24 +160,109 @@ class Authorize extends AbstractPlugin
      */
     public function hasIdentity() 
     {
-        $identity = $this->getIdentity();
-        return isset($identity);
+        return isset($this->_identity);
     }
  
+  
+    
     /**
-     * get hardcoded ACL, its roles and ressources.
+     * Proves authorization. If ressource is not restricted, do nothing.
+     * Otherwise proves authentication and permission.  
+     * 
+     * @param \Zend\Mvc\MvcEvent $event
+     * @return Response
+     */
+    public function doAuthorization(MvcEvent $event)
+    {
+        $this->setEvent($event);
+             
+        $role       = $this->getRole();
+        $acl        = $this->getAcl(); 
+        $ressouce   = $this->getRessource();     
+        
+      
+        //unknown ressource is free to everyone
+        if( ! $acl->hasResource($ressouce)) 
+            return $event->getResponse();
+       
+        if ( ! $this->hasIdentity()) {
+            return $this->redirectToRoute('login');
+        }
+        
+        if ( ! $acl->isAllowed($role, $ressouce)) {
+            return $this->redirectToRoute('forbidden');
+        }
+        
+        return $event->getResponse();
+    }
+    
+     /**
+     * set user's role from identity if signed in, otherwise
+     * default role is set by default.
+     * 
+     * @return string
+     */
+    private function initRole()
+    {
+        $default    = $this->getDefaultRole();
+        $identity   = $this->getIdentity();
+        
+        if( ! $this->hasIdentity()) {   
+            return $this->setRole($default);
+            
+        }    
+        
+        $method = 'getRole';
+        if(method_exists($identity, $method)) {
+             
+             $temp = $identity->$method(); 
+             $role = empty($temp) ? $default : $temp; 
+             return $this->setRole($role); 
+        }
+        
+        $this->setRole($default); 
+        
+    }
+    
+    /**
+     * set the identity using the authentication service.
+     * Requires a logged in user. 
+     */
+    //initRessource //get+setRessource
+    private function initIdentity() 
+    {
+        $event = $this->getEvent();
+        
+            //set authentication service
+        $manager = $event->getApplication()->getServiceManager();
+        
+        if($manager->has('Zend\Authentication\AuthenticationService')) {
+            $authService = 
+                $manager->get('Zend\Authentication\AuthenticationService');
+           
+            if ($authService->hasIdentity()) {
+                $identity = $authService->getIdentity();
+                $this->setIdentity($identity);
+            }    
+        }
+    }
+    
+     /**
+     * set hardcoded ACL, its roles and ressources.
+     * returns fluent interface.
      * edit this method for your need
      *  
      * @return \Zend\Permissions\Acl\Acl
      */
-    private function getAcl()
+    private function initAcl()
     {
         //setting ACL...
         $acl = new Acl();
         
+        $defaultRole = $this->getDefaultRole();
         //add roles ..
-        $acl->addRole(new Role($this->_default_role)); 
-        $acl->addRole(new Role('guest'),  $this->_default_role);
+        $acl->addRole(new Role($defaultRole)); 
+        $acl->addRole(new Role('guest'),  $defaultRole);
         $acl->addRole(new Role('user'),  'guest');
         $acl->addRole(new Role('member'),  'guest');
         $acl->addRole(new Role('moderator'),  'member');
@@ -147,39 +283,15 @@ class Authorize extends AbstractPlugin
         $acl->addResource(new Resource('User\Controller\Profile'));
         $acl->allow('guest', 'User\Controller\Profile' );
         
-        return $acl;
-    }
+        
+        $this->setAcl($acl);
+     }
     
     /**
-     * returns user's role from identity if signed in, otherwise
-     * default role is returned by default.
+     * set the actual ressource from the request
      * 
-     * @return string
      */
-    private function getRole()
-    {
-        
-        $identity   = $this->getIdentity();
-        if($identity === null) {   
-            return  $this->_default_role;
-        }    
-           
-        if(method_exists($identity, getRole)) {
-             
-             $temp = $identity->getRole(); 
-             $role = empty($temp) ? $this->_default_role : $temp; 
-             return $role;
-        }
-        return $this->_default_role;
-        
-    }
-   
-    /**
-     * get the actual ressource from the request
-     * 
-     * @return string
-     */
-    private function getRessource()
+    private function initRessource()
     {
         $event = $this->getEvent();
         
@@ -195,12 +307,12 @@ class Authorize extends AbstractPlugin
         //$action         = $routeMatch->getParam('action');
     
         //the ressouce to request 
-        $requestedRessouce = $controller;
         //$requestedRessouce = $controller . "\\" . $action; 
         
-        return $requestedRessouce;
+        $this->setRessource($controller);
+        
     }
-  
+    
     /**
      * set the redirection and stops the propagation
      * 
@@ -208,7 +320,7 @@ class Authorize extends AbstractPlugin
      */
     private function redirectToRoute($route)
     {
-        $event = $this->getEvent();
+        $event  = $this->getEvent();
         $router = $event->getRouter();
         $url    = $router->assemble(array(), array('name' => $route));
          
@@ -219,38 +331,11 @@ class Authorize extends AbstractPlugin
         /* change with header('location: '.$url); if code below not working */
         $response->getHeaders()->addHeaderLine('Location', $url);
         $event->stopPropagation();
+     
+        return $response;
         
     }
     
-    /**
-     * Proves authorization. If ressource is not restricted, do nothing.
-     * Otherwise proves authentication and permission.  
-     * 
-     * @param \Zend\Mvc\MvcEvent $event
-     * @return mixed
-     */
-    public function doAuthorization(MvcEvent $event)
-    {
-        $this->setEvent($event);
-        
-        $this->createService();
-        $role = $this->getRole();
-        $acl = $this->getAcl(); 
-        
-        $requestedRessouce = $this->getRessource();     
-        
-        //unknown ressource is free to everyone
-        if( ! $acl->hasResource($requestedRessouce)) 
-            return;
-        
-        if ( ! $this->hasIdentity()) {
-            return $this->redirectToRoute('login');
-        }
-        
-        if ( ! $acl->isAllowed($role, $requestedRessouce)) {
-            return $this->redirectToRoute('forbidden');
-        }
-    }
 }
 
 ?>
