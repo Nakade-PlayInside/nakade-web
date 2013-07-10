@@ -277,6 +277,9 @@ class Authorize extends AbstractPlugin
          */
         
         //add ressources  
+        $acl->addResource(new Resource('nav-admin'));
+        $acl->allow('admin', 'nav-admin' );
+        
         $acl->addResource(new Resource('User\Controller\User'));
         $acl->allow('admin', 'User\Controller\User' );
         

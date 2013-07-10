@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-27 12:50+0100\n"
-"PO-Revision-Date: 2013-06-27 12:53+0100\n"
+"POT-Creation-Date: 2013-07-10 10:28+0100\n"
+"PO-Revision-Date: 2013-07-10 10:29+0100\n"
 "Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -97,61 +97,76 @@ msgstr "Vorherige Ausnahme"
 msgid "No Exception available"
 msgstr "Es ist keine Ausnahme verfügbar"
 
-#: ../view/layout/layout.phtml:29
+#: ../view/layout/layout.phtml:36
 msgid "Berliner Baduk Club e.V."
 msgstr ""
 
-#: ../view/layout/layout.phtml:32
+#: ../view/layout/layout.phtml:39
 msgid "Home"
 msgstr "Startseite"
 
-#: ../view/layout/layout.phtml:33
+#: ../view/layout/layout.phtml:40
 msgid "Location"
 msgstr "Spielort"
 
-#: ../view/layout/layout.phtml:34
+#: ../view/layout/layout.phtml:41
 msgid "Imprint"
 msgstr "Impressum"
 
-#: ../view/layout/layout.phtml:35
+#: ../view/layout/layout.phtml:42
 msgid "Contact"
 msgstr "Kontakt"
 
-#: ../view/layout/layout.phtml:44
-msgid "User"
-msgstr "Benutzer"
+#: ../view/layout/layout.phtml:52
+msgid "User overview"
+msgstr "Benutzer Übersicht"
 
-#: ../view/layout/layout.phtml:51
+#: ../view/layout/layout.phtml:55
+msgid "add user"
+msgstr "Benutzer hinzufügen"
+
+#: ../view/layout/layout.phtml:58
+msgid "all open results"
+msgstr "alle offenen Ergebnisse"
+
+#: ../view/layout/layout.phtml:70
 msgid "Profile"
 msgstr "Profil"
 
-#: ../view/layout/layout.phtml:56
+#: ../view/layout/layout.phtml:76
 msgid "Schedule"
 msgstr "Spielplan"
 
-#: ../view/layout/layout.phtml:61
+#: ../view/layout/layout.phtml:79
 msgid "Standings"
 msgstr "Tabelle"
 
-#: ../view/layout/layout.phtml:66
-msgid "Results"
-msgstr "Ergebnisse"
+#: ../view/layout/layout.phtml:82
+msgid "open results"
+msgstr "offene Ergebnisse"
 
-#: ../view/layout/layout.phtml:71
+#: ../view/layout/layout.phtml:88
+msgid "League"
+msgstr "Liga"
+
+#: ../view/layout/layout.phtml:94
 msgid "Logged in as "
 msgstr "angemeldet als"
 
-#: ../view/layout/layout.phtml:77
+#: ../view/layout/layout.phtml:100
 msgid "Logout"
 msgstr "Abmelden"
 
-#: ../view/layout/layout.phtml:85
+#: ../view/layout/layout.phtml:108
 msgid "LogIn"
 msgstr "Login"
 
-#: ../view/layout/layout.phtml:99
+#: ../view/layout/layout.phtml:122
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
+
+#~ msgid "User"
+#~ msgstr "Benutzer"
 
 #~ msgid "Training"
 #~ msgstr "Training"

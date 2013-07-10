@@ -28,7 +28,7 @@ class ProfileController extends AbstractController
      */
     public function indexAction()
     {
-        //reditection does not work here if the 
+        //redirection does not work here if the 
         //protected method is provided!  
         $profile = $this->identity();
         

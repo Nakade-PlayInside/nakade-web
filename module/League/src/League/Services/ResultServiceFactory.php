@@ -92,6 +92,7 @@ class ResultServiceFactory
             $config = ArrayUtils::iteratorToArray($config);
         }
         
+        
         //configuration 
         $textDomain = isset($config['League']['text_domain']) ? 
             $config['League']['text_domain'] : null;
@@ -109,12 +110,27 @@ class ResultServiceFactory
         $translator = $services->get('translator');
         $this->setTranslator($translator, $textDomain);
         
+           
         $this->_season_mapper = new SeasonMapper($entityManager);
         $this->_match_mapper  = new MatchMapper($entityManager);
         $this->_result_form = $services->get('result_form');
-      
+    
         return $this;
         
+    }
+    
+    /**
+     * shows all open results in a season.
+     * A link is provided for each match to enter a result.
+     * @return mixed
+     */
+    public function getMyOpenResult($uid) {
+       
+        $season = $this->getSeasonMapper()->getActualSeason();
+        if($season==null)
+            return null;
+        
+        return $this->getMatchMapper()->getMyOpenResults($season->getId(), $uid);
     }
     
    

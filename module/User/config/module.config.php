@@ -58,20 +58,99 @@ return array(
     //or hyphen. We also limit the id to a number.
     'router' => array(
         'routes' => array(
+            //USER
             'user' => array(
-                'type'    => 'segment',
+              
+                'type'  => 'Literal',
                 'options' => array(
-                    'route'    => '/user[/:action][/:id]',
-                    'constraints' => array(
-                        'action' =>  '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
+                     'route'    => '/user',  
+                     'defaults' => array(
                         'controller' => 'User\Controller\User',
                         'action'     => 'index',
                     ),
                 ),
+           
+                'may_terminate' => true,
+                'child_routes' => array(
+                    
+                    //add user
+                    'add' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/add',
+                            'defaults' => array(
+                                'action' => 'add',
+                            ),
+                        ),
+                    ),
+                
+                    //edit user
+                    'edit' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/edit[/:id]',
+                            'constraints' => array(
+                                'id'     => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'edit',
+                                'id'     => '0',
+                            ),
+                        ),
+                    ),
+                    
+                    //deactivate user
+                    'delete' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/delete[/:id]',
+                            'constraints' => array(
+                                'id'     => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'delete',
+                                'id'     => '0',
+                            ),
+                        ),
+                    ),
+                    
+                    //activate user
+                    'undelete' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/undelete[/:id]',
+                            'constraints' => array(
+                                'id'     => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'undelete',
+                                'id'     => '0',
+                            ),
+                        ),
+                    ),
+                    
+                    //reset password
+                    'resetPassword' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/resetPassword[/:id]',
+                            'constraints' => array(
+                                'id'     => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'resetPassword',
+                                'id'     => '0',
+                            ),
+                        ),
+                    ),
+                    
+                ),
             ),
+            
+            
+            
+            
+            //PROFILE
             'profile' => array(
                 'type'    => 'segment',
                 'options' => array(
@@ -86,6 +165,7 @@ return array(
                     ),
                 ),
             ),
+            //FORGOT PWD
             'forgot' => array(
                 'type'    => 'segment',
                 'options' => array(
@@ -100,6 +180,7 @@ return array(
                     ),
                 ),
             ),
+            //VERFIFY EMAIL
             'verify' => array(
                 'type'    => 'segment',
                 'options' => array(

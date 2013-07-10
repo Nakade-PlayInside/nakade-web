@@ -20,11 +20,14 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
        
-        $blogWidget = $this->forward()->dispatch('/blog/controller/blog');
-        $tableWidget = $this->forward()->dispatch('/league/controller/actualseason');
+        $blogWidget  = $this->forward()
+                            ->dispatch('/Blog/Controller/Blog');
         
+        $tableWidget = $this->forward()
+                            ->dispatch('/League/Controller/ActualSeason');
         
         $page = new ViewModel();
+        
         $page->addChild($blogWidget, 'blogWidget');
         $page->addChild($tableWidget, 'tableWidget');
         

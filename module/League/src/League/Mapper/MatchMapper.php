@@ -39,6 +39,38 @@ class MatchMapper  extends AbstractMapper
                      );
     }
     
+    /**
+     * Get all open results of the season.
+     * It may happen to be more than one league only 
+     * 
+     * @param int $seasonId
+     * @return array objects Match
+     */
+    public function getMyOpenResults($seasonId, $uid)
+    {
+        
+       $dql = "SELECT m FROM 
+               League\Entity\Match m,
+               League\Entity\League l
+               WHERE l._sid = :sid AND 
+               m._lid=l._id AND 
+               (m._blackId = :uid OR m._whiteId = :uid) AND 
+               m._resultId IS NULL 
+               AND m._date < :today 
+               ORDER BY m._date ASC";
+       
+       $today = new \DateTime();
+       $today->modify('-6 hours');
+          
+       return $this->getEntityManager()
+                   ->createQuery($dql)
+                   ->setParameter('today', $today)
+                   ->setParameter('uid', $uid)
+                   ->setParameter('sid', $seasonId)        
+                   ->getResult();
+    }
+    
+    
      /**
      * Get all open results of the season.
      * It may happen to be more than one league only 

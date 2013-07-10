@@ -54,21 +54,90 @@ return array(
     'router' => array(
         'routes' => array(
             
+            //actual season
             'actual' => array(
-                'type'    => 'segment',
+                'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/actual[/:action][/:id][/:sort]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                        'sort'   => '[a-zA-Z]+',
-                        'lid'    => '[0-9]+',
-                    ),
+                    'route'    => '/actual',
                     'defaults' => array(
                         'controller' => 'League\Controller\ActualSeason',
                         'action'     => 'index',
                     ),
                 ),
+                
+                'may_terminate' => true,
+                'child_routes' => array(
+                    
+                    //league schedule
+                    'schedule' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/schedule[/:lid]',
+                            'constraints' => array(
+                                'lid'    => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'schedule',
+                            ),
+                        ),
+                    ),
+                    
+                    //league table
+                    'table' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/table[/:lid][/:sort]',
+                            'constraints' => array(
+                                'lid'    => '[0-9]+',
+                                'sort'   => '[a-zA-Z]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'table',
+                            ),
+                        ),
+                    ),
+                    
+                )    
+            ),
+       
+            'result' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/result',
+                    'defaults' => array(
+                        'controller' => 'League\Controller\Result',
+                        'action'     => 'index',
+                    ),
+                ),
+                
+                'may_terminate' => true,
+                'child_routes' => array(
+                    
+                    //add a result
+                    'add' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/add[/:id]',
+                            'constraints' => array(
+                                'id'    => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'add',
+                            ),
+                        ),
+                    ),
+                    
+                    //open results of a user
+                    'myopen' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/myopen',
+                            'defaults' => array(
+                                'action' => 'myopen',
+                            ),
+                        ),
+                    ),
+                )
             ),
             
             'season' => array(
@@ -114,20 +183,7 @@ return array(
             ),
            
             
-            'result' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/result[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'League\Controller\Result',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),
+            
             
             'newleague' => array(
                 'type'    => 'Literal',
@@ -240,10 +296,10 @@ return array(
     
     'service_manager' => array(
         'factories' => array(
-            'actual_season'    => 'League\Services\ActualSeasonServiceFactory',
-            'result_form'    => 'League\Services\ResultFormFactory',
-            'match_result'    => 'League\Services\ResultServiceFactory',
-            'translator'  => 'Zend\I18n\Translator\TranslatorServiceFactory',
+            'actual_season'     => 'League\Services\ActualSeasonServiceFactory',
+            'result_form'       => 'League\Services\ResultFormFactory',
+            'match_result'      => 'League\Services\ResultServiceFactory',
+            'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
     

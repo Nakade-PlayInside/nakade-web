@@ -33,6 +33,7 @@ class ResultController
     */
     public function indexAction()
     {
+        
        return new ViewModel(
                 
             array(
@@ -43,7 +44,30 @@ class ResultController
        
     }
     
-    public function addresultAction()
+    /**
+    * showing open results of the actual user
+    */
+    public function myopenAction()
+    {
+        $profile = $this->identity();
+        
+        if($profile === null) {
+            return $this->redirect()->toRoute('login');
+        }
+       
+        
+       return new ViewModel(
+                
+            array(
+                'title'   =>  $this->getService()->getOpenResultTitle(),
+                'matches' =>  $this->getService()->getMyOpenResult($profile->getId())
+            )
+        );
+       
+    }
+    
+    
+    public function addAction()
     {
         
         $pid  = (int) $this->params()->fromRoute('id', 0);

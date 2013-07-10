@@ -10,11 +10,40 @@ $this->headTitle($this->title);
 <table style="width:25em;margin-top: 0.5em;">
 <?php foreach ($this->matches as $match) : ?>
 <tr style="background-color:<?php 
-    echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+    
+        $color = $this->cycle(array("#F0F0F0","transparent"))->next();
+        
+        if( $this->identity()->getId() == $match->getBlackId() || 
+            $this->identity()->getId() == $match->getWhiteId()    
+        ) {
+            $color = "#FFC4C4";
+        }    
+        
+        echo $color;
+            
+    ?>">
     <td><?php echo $match->getDate()->format('d.m.Y   H');?>h</td>
-    <td><?php echo $this->escapeHtml($match->getBlack()->getShortName());?></td>
+    <td><?php 
+            if($this->identity()->getId() == $match->getBlackId()) {
+                  echo '<span style="font-weight:bold">';
+            }
+            echo $this->escapeHtml($match->getBlack()->getShortName());
+            if($this->identity()->getId() == $match->getBlackId()) {
+                  echo '<span>';
+            }
+    ?>
+    </td>
     <td style="width:1em">-</td>
-    <td><?php echo $this->escapeHtml($match->getWhite()->getShortName());?></td>
+    <td><?php 
+        if($this->identity()->getId() == $match->getWhiteId()) {
+                  echo '<span style="font-weight:bold">';
+        }    
+        echo $this->escapeHtml($match->getWhite()->getShortName());
+        if($this->identity()->getId() == $match->getWhiteId()) {
+                  echo '<span>';
+        }
+    ?>
+    </td>
     <td><?php 
     
        if( is_numeric($match->getResultId()) ) { 

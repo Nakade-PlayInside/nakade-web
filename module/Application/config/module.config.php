@@ -10,67 +10,114 @@
  */
 namespace Application;
 return array(
+    
+    'view_helpers' => array(  
+        'invokables' => array(  
+            'Submenu' => 'Application\View\Helper\Submenu', 
+            // more helpers here ...  
+        )  
+    ),
+    
+    
     'router' => array(
             'routes' => array(
 
-                'league' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'       => '/league[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'league',
-                        'action'     => 'index',
-                    ),
-                )
-            ),
-            'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/',
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),
-            
-            // The following is a route to simplify getting started creating
-            // new controllers and actions without needing to create a new
-            // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
-            'application' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/application',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
+                'home' => array(
+                    'type' => 'Literal',
+                    'options' => array(
+                        'route'    => '/',
+                        'defaults' => array(
+                            'controller' => 'Application\Controller\Index',
+                            'action'     => 'index',
                         ),
                     ),
                 ),
-            ),
+                
         ),
     ),
+    /*
+    //navigation
+    'navigation' => array(
+       
+             
+       'default' => array(
+            'home' => array(
+                'label'=>'Home',
+                'route'=>'/'
+            ),
+           
+            'location' => array(
+                'label' => 'Location',
+                'route' => 'training',
+            ),
+           
+           'contact' => array(
+                'label' => 'Contact',
+                'route' => 'contact',
+            ),
+           
+           'imprint' => array(
+                'label' => 'Imprint',
+                'route' => 'impressum',
+                'controller' => 'Impressum\Controller\Impressum',
+                'action' => 'index'
+            ),
+           
+           'admin' => array(
+                'label' => 'Admin',
+                'uri' => '#acl-admin',
+                'resource' => 'nav-admin',
+                'pages' => array(
+                    
+                    'user' => array(
+                        'label' => 'User',
+                        'route' => 'user',
+                        'resource' => 'User\Controller\User',
+                    ),
+                )
+            ),
+           
+           'profile' => array(
+                'label' => 'Profile',
+                'route' => 'profile',
+                
+            ),
+           
+           'league' => array(
+                'label' => 'League',
+                'route' => 'actual',
+                'controller' => 'League\Controller\ActualSeason',
+               
+                'pages' => array(
+                    
+                    'results' => array(
+                        'label' => 'Results',
+                        'action' => 'opensesults'
+                    ),
+                    
+                    'schedule' => array(
+                        'label' => 'Schedule',
+                        'action' => 'schedule'
+                    ),
+                    
+                    'table' => array(
+                        'label' => 'Standings',
+                        'action' => 'table'
+                    ),
+                    
+                    
+                )
+            ),
+           
+       ),
+       
+        
+        
+    ),*/
+    
     'service_manager' => array(
         'factories' => array(
+            //'app_navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

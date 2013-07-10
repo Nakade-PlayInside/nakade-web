@@ -50,6 +50,9 @@ class ActualSeasonController
     */
     public function scheduleAction()
     {
+      
+      //@todo: show table of the loggedIn user only
+        
        //get param or top leagueId in actual season
        $lid  = $this->params()->fromRoute(
                   'lid', 
@@ -71,7 +74,8 @@ class ActualSeasonController
     */
     public function tableAction()
     {
-      
+     //@todo: show table of the loggedIn user only
+        
        //get param or top leagueId in actual season
        $lid  = $this->params()->fromRoute(
                   'lid', 

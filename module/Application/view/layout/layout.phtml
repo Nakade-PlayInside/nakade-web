@@ -14,11 +14,18 @@
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
         <!-- Scripts -->
-        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-                                      ->prependFile($this->basePath() . '/js/jquery-1.7.2.min.js') ?>
+        <?php echo $this->headScript()
+                        ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', 
+                                array('conditional' => 'lt IE 9',))
+                        ->prependFile('/js/bootstrap-collapse.js') 
+                        ->prependFile('/js/bootstrap.min.js') 
+                        ->prependFile('/js/jquery-2.0.3.min.js') 
+                ?>
+        
     </head>
     <body>
         <div class="navbar navbar-fixed-top">
+             
             <div class="navbar-inner">
                 <div class="container">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -32,17 +39,29 @@
                             <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home', 'Application') ?></a></li>
                             <li><a href="<?php echo $this->url('training') ?>"><?php echo $this->translate("Location", 'Application'); ?></a></li>
                             <li><a href="<?php echo $this->url('impressum') ?>"><?php echo $this->translate("Imprint", 'Application'); ?></a></li>
-                            <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate("Contact", 'Application'); ?></a></li>
+                            <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate("Contact", 'Application'); ?></a></li> 
+                            
       
-<?php
+<?php 
      if ($user = $this->identity()) {
-        
+       
         if($user->getRole()=='admin') {
             
-            echo sprintf('<li><a href="%s">%s</a></li>',
-                    $this->url('user'),
-                    $this->translate('User', 'Application')
-            );
+            $admin = array(
+            
+            $this->translate('User overview', 'Application')   => 
+                $this->url('user'),
+            
+            $this->translate('add user', 'Application')  => 
+                $this->url('user/add'),
+            
+            $this->translate('all open results', 'Application')    => 
+                $this->url('result'),
+                
+            ); 
+        
+            echo $this->Submenu('Admin', $admin);
+      
             
         } 
         
@@ -50,22 +69,26 @@
                     $this->url('profile'),
                     $this->translate('Profile', 'Application')
         );
+              
         
-        echo sprintf('<li><a href="%s">%s</a></li>',
-                    $this->url('actual', array('action'=>'schedule')),
-                    $this->translate('Schedule', 'Application')
-        );
-         
-        echo sprintf('<li><a href="%s">%s</a></li>',
-                    $this->url('actual', array('action'=>'table')),
-                    $this->translate('Standings', 'Application')
-        );
+        $league = array(
+            
+            $this->translate('Schedule', 'Application')   => 
+                $this->url('actual/schedule'),
+            
+            $this->translate('Standings', 'Application')  => 
+                $this->url('actual/table'),
+            
+            $this->translate('open results', 'Application')    => 
+                $this->url('result/myopen'),
+                
+        ); 
         
-        echo sprintf('<li><a href="%s">%s</a></li>',
-                    $this->url('league', array('action'=>'openresults')),
-                    $this->translate('Results', 'Application')
-        );
-       
+        echo $this->Submenu(
+                $this->translate('League', 'Application'), 
+                $league
+             );
+      
         echo sprintf('<li style="color:lightblue;line-height:19px;
                 padding:10px; padding-left:20px;">%s %s</li>',
                     $this->translate('Logged in as ', 'Application'),
@@ -83,8 +106,8 @@
         echo sprintf('<li><a href="%s">%s</a></li>',
                     $this->url('login'),
                     $this->translate('LogIn', 'Application') 
-        );
-        
+         );
+       
     }
 ?>    
                         </ul>
@@ -96,9 +119,10 @@
             <?php echo $this->content; ?>
             <hr>
             <footer>
-                <p>&copy; 2006 - 2012 by Dr. Holger Maerz. <?php echo $this->translate('All rights reserved.', 'Application') ?></p>
+                <p>&copy; 2006 - 2013 by Dr. Holger Maerz. <?php echo $this->translate('All rights reserved.', 'Application') ?></p>
             </footer>
         </div> <!-- /container -->
-        <?php echo $this->inlineScript() ?>
+        <?php //echo $this->inlineScript() ?>
+     
     </body>
 </html>

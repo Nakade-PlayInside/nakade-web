@@ -8,7 +8,7 @@ use League\Form\ResultForm;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
-use Zend\Validator\AbstractValidator;
+
 
 /**
  * Creates the form with a translator, filter and validator.
@@ -36,7 +36,7 @@ class ResultFormFactory implements FactoryInterface
             'default',
             'de_DE'    
         );
-        AbstractValidator::setDefaultTranslator($translator);
+  
         $form    = new ResultForm();
         $form->setTranslator($translator, $textDomain);
         

@@ -25,16 +25,15 @@ class ResultControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $services)
     {
-     
         $serviceManager = $services->getServiceLocator();
         
         $config  = $serviceManager->get('config');
         if ($config instanceof Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
-       
+        
         $service    = $serviceManager->get('match_result');
-       
+        
         $controller = new ResultController();
         $controller->setService($service);
        
