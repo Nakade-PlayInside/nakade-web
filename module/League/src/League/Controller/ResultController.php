@@ -29,7 +29,7 @@ class ResultController
     
    
    /**
-    * showing the top league standings
+    * showing all open results of the actual season
     */
     public function indexAction()
     {
@@ -37,8 +37,29 @@ class ResultController
        return new ViewModel(
                 
             array(
-                'title'   =>  $this->getService()->getOpenResultTitle(),
                 'matches' =>  $this->getService()->getOpenResult()
+            )
+        );
+       
+    }
+    
+    /**
+    * showing all results of the actual user. All open matches are indicated.
+    */
+    public function myresultAction()
+    {
+        $profile = $this->identity();
+        
+        if($profile === null) {
+            return $this->redirect()->toRoute('login');
+        }
+       
+        
+       return new ViewModel(
+                
+            array(
+               'matches' =>  $this->getService()
+                                  ->getMyResult( $profile->getId() )
             )
         );
        
@@ -59,14 +80,16 @@ class ResultController
        return new ViewModel(
                 
             array(
-                'title'   =>  $this->getService()->getOpenResultTitle(),
-                'matches' =>  $this->getService()->getMyOpenResult($profile->getId())
+                'matches' => $this->getService()
+                                  ->getMyOpenResult( $profile->getId() )
             )
         );
        
     }
     
-    
+    /**
+    * Form for adding a result
+    */
     public function addAction()
     {
         

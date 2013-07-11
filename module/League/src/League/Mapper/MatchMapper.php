@@ -70,6 +70,24 @@ class MatchMapper  extends AbstractMapper
                    ->getResult();
     }
     
+     public function getMyResults($seasonId, $uid)
+    {
+        
+       $dql = "SELECT m FROM 
+               League\Entity\Match m,
+               League\Entity\League l
+               WHERE l._sid = :sid AND 
+               m._lid=l._id AND 
+               (m._blackId = :uid OR m._whiteId = :uid) 
+               ORDER BY m._date ASC";
+                 
+       return $this->getEntityManager()
+                   ->createQuery($dql)
+                   ->setParameter('uid', $uid)
+                   ->setParameter('sid', $seasonId)        
+                   ->getResult();
+    }
+    
     
      /**
      * Get all open results of the season.

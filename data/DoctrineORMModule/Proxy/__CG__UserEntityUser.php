@@ -50,6 +50,9 @@ class User extends \User\Entity\User implements \Doctrine\ORM\Proxy\Proxy
 
     public function getId()
     {
+        if ($this->__isInitialized__ === false) {
+            return (int) $this->_identifier["id"];
+        }
         $this->__load();
         return parent::getId();
     }
@@ -66,40 +69,88 @@ class User extends \User\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::getTitle();
     }
 
-    public function setFirstName($firstname)
+    public function setFirstname($firstname)
     {
         $this->__load();
-        return parent::setFirstName($firstname);
+        return parent::setFirstname($firstname);
     }
 
-    public function getFirstName()
+    public function getFirstname()
     {
         $this->__load();
-        return parent::getFirstName();
+        return parent::getFirstname();
     }
 
-    public function setLastName($lastname)
+    public function setLastname($lastname)
     {
         $this->__load();
-        return parent::setLastName($lastname);
+        return parent::setLastname($lastname);
     }
 
-    public function getLastName()
+    public function getLastname()
     {
         $this->__load();
-        return parent::getLastName();
+        return parent::getLastname();
     }
 
-    public function setNickName($nickname)
+    public function setNickname($nickname)
     {
         $this->__load();
-        return parent::setNickName($nickname);
+        return parent::setNickname($nickname);
     }
 
-    public function getNickName()
+    public function getNickname()
     {
         $this->__load();
-        return parent::getNickName();
+        return parent::getNickname();
+    }
+
+    public function setUsername($name)
+    {
+        $this->__load();
+        return parent::setUsername($name);
+    }
+
+    public function getUsername()
+    {
+        $this->__load();
+        return parent::getUsername();
+    }
+
+    public function setPassword($lastname)
+    {
+        $this->__load();
+        return parent::setPassword($lastname);
+    }
+
+    public function getPassword()
+    {
+        $this->__load();
+        return parent::getPassword();
+    }
+
+    public function setGenerated($password)
+    {
+        $this->__load();
+        return parent::setGenerated($password);
+    }
+
+    public function getGenerated()
+    {
+        $this->__load();
+        return parent::getGenerated();
+    }
+
+    public function setEmail($email)
+    {
+        $this->__load();
+        return parent::setEmail($email);
+    }
+
+    public function getEmail()
+    {
+        $this->__load();
+        return parent::getEmail();
     }
 
     public function setSex($sex)
@@ -114,10 +165,10 @@ class User extends \User\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::getSex();
     }
 
-    public function setBirthday($birthday)
+    public function setBirthday($datetime)
     {
         $this->__load();
-        return parent::setBirthday($birthday);
+        return parent::setBirthday($datetime);
     }
 
     public function getBirthday()
@@ -132,16 +183,184 @@ class User extends \User\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::setAnonym($anonym);
     }
 
+    public function getAnonym()
+    {
+        $this->__load();
+        return parent::getAnonym();
+    }
+
     public function isAnonym()
     {
         $this->__load();
         return parent::isAnonym();
     }
 
+    public function setVerifyString($verify)
+    {
+        $this->__load();
+        return parent::setVerifyString($verify);
+    }
+
+    public function getVerifyString()
+    {
+        $this->__load();
+        return parent::getVerifyString();
+    }
+
+    public function setCreated($datetime)
+    {
+        $this->__load();
+        return parent::setCreated($datetime);
+    }
+
+    public function getCreated()
+    {
+        $this->__load();
+        return parent::getCreated();
+    }
+
+    public function setEdit($datetime)
+    {
+        $this->__load();
+        return parent::setEdit($datetime);
+    }
+
+    public function getEdit()
+    {
+        $this->__load();
+        return parent::getEdit();
+    }
+
+    public function setPwdChange($datetime)
+    {
+        $this->__load();
+        return parent::setPwdChange($datetime);
+    }
+
+    public function getPwdChange()
+    {
+        $this->__load();
+        return parent::getPwdChange();
+    }
+
+    public function setRole($role)
+    {
+        $this->__load();
+        return parent::setRole($role);
+    }
+
+    public function getRole()
+    {
+        $this->__load();
+        return parent::getRole();
+    }
+
+    public function setDue($datetime)
+    {
+        $this->__load();
+        return parent::setDue($datetime);
+    }
+
+    public function getDue()
+    {
+        $this->__load();
+        return parent::getDue();
+    }
+
+    public function isDue()
+    {
+        $this->__load();
+        return parent::isDue();
+    }
+
+    public function setLastLogin($datetime)
+    {
+        $this->__load();
+        return parent::setLastLogin($datetime);
+    }
+
+    public function getLastLogin()
+    {
+        $this->__load();
+        return parent::getLastLogin();
+    }
+
+    public function setFirstLogin($datetime)
+    {
+        $this->__load();
+        return parent::setFirstLogin($datetime);
+    }
+
+    public function getFirstLogin()
+    {
+        $this->__load();
+        return parent::getFirstLogin();
+    }
+
+    public function setActive($active)
+    {
+        $this->__load();
+        return parent::setActive($active);
+    }
+
+    public function isActive()
+    {
+        $this->__load();
+        return parent::isActive();
+    }
+
+    public function setVerified($verified)
+    {
+        $this->__load();
+        return parent::setVerified($verified);
+    }
+
+    public function isVerified()
+    {
+        $this->__load();
+        return parent::isVerified();
+    }
+
+    public function getShortName()
+    {
+        $this->__load();
+        return parent::getShortName();
+    }
+
+    public function getCompleteName()
+    {
+        $this->__load();
+        return parent::getCompleteName();
+    }
+
+    public function getName()
+    {
+        $this->__load();
+        return parent::getName();
+    }
+
+    public function populate($data)
+    {
+        $this->__load();
+        return parent::populate($data);
+    }
+
+    public function exchangeArray($data)
+    {
+        $this->__load();
+        return parent::exchangeArray($data);
+    }
+
+    public function getArrayCopy()
+    {
+        $this->__load();
+        return parent::getArrayCopy();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', '_id', '_title', '_firstname', '_lastname', '_nickname', '_sex', '_birthday', '_anonym');
+        return array('__isInitialized__', 'id', 'title', 'firstname', 'lastname', 'nickname', 'sex', 'birthday', 'anonym', 'username', 'password', 'email', 'verifyString', 'verified', 'active', 'pwdChange', 'edit', 'lastLogin', 'firstLogin', 'created', 'due', 'role');
     }
 
     public function __clone()

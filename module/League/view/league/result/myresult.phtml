@@ -1,7 +1,7 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('League'); 
 
-$title = $this->translate('My open results');
+$title = $this->translate('My results');
 $this->headTitle($title);
 ?>
 <h3><?php echo $this->escapeHtml($title); ?></h3>
@@ -9,19 +9,29 @@ $this->headTitle($title);
 <?php $this->placeholder('openresults')->captureStart();?>
 <table style="margin-top: 0.5em;">
 <?php foreach ($this->matches as $game) : ?>
-<tr>
+<tr style="background-color:<?php 
+        $color = $this->cycle(array("#F0F0F0","transparent"))->next();
+        if( $this->isOpen($game)){ $color = "#FFC4C4"; }    
+        echo $color;          
+    ?>">
     <td style="padding-right: 10px"><?php echo $game->getDate()->format('d.m.y H');?>h</td>
-    <td><?php echo $this->escapeHtml($game->getBlack()->getShortName());?></td>
+    <td <?php $this->isWinner($game, $game->getBlackId()); ?>>
+        <?php echo $this->escapeHtml($game->getBlack()->getShortName());?></td>
     <td style="padding: 0 6px">-</td>
-    <td style="padding-right: 10px"><?php echo $this->escapeHtml($game->getWhite()->getShortName());?></td>
-    <td><?php
-       
-        echo   sprintf('<a href="%s" title="%s">%s</a>',
+    <td style="padding-right:10px;" <?php $this->isWinner($game, $game->getWhiteId()); ?>>
+        <?php echo $this->escapeHtml($game->getWhite()->getShortName());?></td>
+    <td><?php  if($this->isOpen($game)) {
+                  
+      echo   sprintf('<a href="%s" title="%s">%s</a>',
                  $this->url('result/add', array('action'=>'add', 'id'=>$game->getId()) ),
                  $this->translate("Enter Result"),
                  $this->translate("open")
              );
-    ?></td>
+     }
+     else echo $this->result($game);
+     
+        ?>
+    </td>
 </tr>
 <?php endforeach; ?>
 </table>

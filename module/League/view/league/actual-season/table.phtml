@@ -9,7 +9,7 @@ $this->plugin('translate')->setTranslatorTextDomain('League');
   $route  =  'actual/table';
   $action =  'table';
 ?>
-<table class="table" style="width:auto;margin-top: 0.5em;">
+<table class="table" style="margin-top: 0.5em;">
 <tr>
     <th title="<?php echo $this->translate('Position');?>">P</th>
     <th title="<?php echo $this->translate('Player');?>">
@@ -76,7 +76,7 @@ $this->plugin('translate')->setTranslatorTextDomain('League');
         
      ?>">
     <td><?php echo $this->position($player) ?></td>
-    <td><?php echo $this->escapeHtml($player->getPlayer()->getShortName());?></td>
+    <td style="white-space:nowrap"><?php echo $this->escapeHtml($player->getPlayer()->getShortName());?></td>
     <td><?php echo $player->getGamesPlayed(); ?></td>
     <td><?php echo $player->getGamesSuspended(); ?></td>
     <td><?php echo $player->getGamesWin();?></td>

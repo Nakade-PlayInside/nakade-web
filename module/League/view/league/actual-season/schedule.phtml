@@ -7,53 +7,26 @@ $this->headTitle($this->title);
 ?>
 <h3><?php echo $this->escapeHtml($this->title); ?></h3>
 
-<table style="width:25em;margin-top: 0.5em;">
+<table style="margin-top: 0.5em;">
 <?php foreach ($this->matches as $match) : ?>
 <tr style="background-color:<?php 
-    
         $color = $this->cycle(array("#F0F0F0","transparent"))->next();
-        
-        if( $this->identity()->getId() == $match->getBlackId() || 
-            $this->identity()->getId() == $match->getWhiteId()    
-        ) {
-            $color = "#FFC4C4";
-        }    
-        
-        echo $color;
-            
+        if( $this->isActive($match)){ $color = "#FFC4C4"; }    
+        echo $color;          
     ?>">
-    <td><?php echo $match->getDate()->format('d.m.Y   H');?>h</td>
-    <td><?php 
-            if($this->identity()->getId() == $match->getBlackId()) {
-                  echo '<span style="font-weight:bold">';
-            }
+    <td  style="padding-right: 10px"><?php echo $match->getDate()->format('d.m.y H');?>h</td>
+    <td style="width:20px;background: url('/images/black.png') no-repeat center center"></td>
+    <td <?php $this->isWinner($match, $match->getBlackId()); ?>><?php 
             echo $this->escapeHtml($match->getBlack()->getShortName());
-            if($this->identity()->getId() == $match->getBlackId()) {
-                  echo '<span>';
-            }
     ?>
     </td>
-    <td style="width:1em">-</td>
-    <td><?php 
-        if($this->identity()->getId() == $match->getWhiteId()) {
-                  echo '<span style="font-weight:bold">';
-        }    
+    <td style="padding: 0 6px">-</td>
+    <td style="width:20px;background: url('/images/white4.png') no-repeat center center"></td>
+    <td style="padding-right: 10px"<?php $this->isWinner($match, $match->getWhiteId()); ?>><?php 
         echo $this->escapeHtml($match->getWhite()->getShortName());
-        if($this->identity()->getId() == $match->getWhiteId()) {
-                  echo '<span>';
-        }
     ?>
     </td>
-    <td><?php 
-    
-       if( is_numeric($match->getResultId()) ) { 
-           
-            echo ($match->getWinner()==$match->getBlack()? 1:0) . 
-                  " - " .
-                 ($match->getWinner()==$match->getWhite()? 1:0);
-       } 
-    
-    ?></td>
+    <td><?php echo $this->result($match); ?></td>
 </tr>
 <?php endforeach; ?>
 </table>

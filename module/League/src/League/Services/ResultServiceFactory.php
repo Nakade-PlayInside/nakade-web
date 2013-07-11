@@ -124,6 +124,21 @@ class ResultServiceFactory
      * A link is provided for each match to enter a result.
      * @return mixed
      */
+    public function getMyResult($uid) {
+       
+        $season = $this->getSeasonMapper()->getActualSeason();
+        if($season==null)
+            return null;
+        
+        return $this->getMatchMapper()->getMyResults($season->getId(), $uid);
+    }
+    
+    
+    /**
+     * shows all open results in a season.
+     * A link is provided for each match to enter a result.
+     * @return mixed
+     */
     public function getMyOpenResult($uid) {
        
         $season = $this->getSeasonMapper()->getActualSeason();

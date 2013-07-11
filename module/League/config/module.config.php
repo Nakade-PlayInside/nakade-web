@@ -15,8 +15,12 @@ return array(
     
     'view_helpers' => array(  
         'invokables' => array(  
-            'position' => 'League\View\Helper\Position', 
+            'position'  => 'League\View\Helper\Position', 
             'dateformat' => 'League\View\Helper\DateFormat',
+            'isWinner'  => 'League\View\Helper\Winner',
+            'result'    => 'League\View\Helper\Result',
+            'isActive'  => 'League\View\Helper\Active',
+            'isOpen'    => 'League\View\Helper\Open',
             // more helpers here ...  
         )  
     ),
@@ -123,6 +127,17 @@ return array(
                             ),
                             'defaults' => array(
                                 'action' => 'add',
+                            ),
+                        ),
+                    ),
+                    
+                    //results of a user
+                    'myresult' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/myresult',
+                            'defaults' => array(
+                                'action' => 'myresult',
                             ),
                         ),
                     ),

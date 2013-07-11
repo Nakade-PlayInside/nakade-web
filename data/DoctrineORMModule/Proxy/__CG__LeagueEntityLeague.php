@@ -66,22 +66,22 @@ class League extends \League\Entity\League implements \Doctrine\ORM\Proxy\Proxy
         return parent::getSid();
     }
 
-    public function setOrder($order)
+    public function setNumber($number)
     {
         $this->__load();
-        return parent::setOrder($order);
+        return parent::setNumber($number);
     }
 
-    public function getOrder()
+    public function getNumber()
     {
         $this->__load();
-        return parent::getOrder();
+        return parent::getNumber();
     }
 
-    public function setDivision($division)
+    public function setDivision($divisionId)
     {
         $this->__load();
-        return parent::setDivision($division);
+        return parent::setDivision($divisionId);
     }
 
     public function getDivision()
@@ -114,22 +114,16 @@ class League extends \League\Entity\League implements \Doctrine\ORM\Proxy\Proxy
         return parent::getRuleId();
     }
 
-    public function setSeason($season)
+    public function getArrayCopy()
     {
         $this->__load();
-        return parent::setSeason($season);
-    }
-
-    public function getSeason()
-    {
-        $this->__load();
-        return parent::getSeason();
+        return parent::getArrayCopy();
     }
 
 
     public function __sleep()
     {
-        return array('__isInitialized__', '_id', '_sid', '_order', '_division', '_title', '_rulesetId', '_season');
+        return array('__isInitialized__', '_id', '_sid', '_number', '_divisionId', '_title', '_rulesetId');
     }
 
     public function __clone()
