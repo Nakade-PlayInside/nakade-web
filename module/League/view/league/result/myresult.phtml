@@ -7,18 +7,18 @@ $this->headTitle($title);
 <h3><?php echo $this->escapeHtml($title); ?></h3>
 
 <?php $this->placeholder('openresults')->captureStart();?>
-<table style="margin-top: 0.5em;">
+<table class="league">
 <?php foreach ($this->matches as $game) : ?>
 <tr style="background-color:<?php 
         $color = $this->cycle(array("#F0F0F0","transparent"))->next();
         if( $this->isOpen($game)){ $color = "#FFC4C4"; }    
         echo $color;          
     ?>">
-    <td style="padding-right: 10px"><?php echo $game->getDate()->format('d.m.y H');?>h</td>
+    <td class="space"><?php echo $game->getDate()->format('d.m.y H');?>h</td>
     <td <?php $this->isWinner($game, $game->getBlackId()); ?>>
         <?php echo $this->escapeHtml($game->getBlack()->getShortName());?></td>
-    <td style="padding: 0 6px">-</td>
-    <td style="padding-right:10px;" <?php $this->isWinner($game, $game->getWhiteId()); ?>>
+    <td class="versus">-</td>
+    <td class="space" <?php $this->isWinner($game, $game->getWhiteId()); ?>>
         <?php echo $this->escapeHtml($game->getWhite()->getShortName());?></td>
     <td><?php  if($this->isOpen($game)) {
                   

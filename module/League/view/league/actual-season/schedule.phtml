@@ -7,22 +7,22 @@ $this->headTitle($this->title);
 ?>
 <h3><?php echo $this->escapeHtml($this->title); ?></h3>
 
-<table style="margin-top: 0.5em;">
+<table class="league">
 <?php foreach ($this->matches as $match) : ?>
 <tr style="background-color:<?php 
         $color = $this->cycle(array("#F0F0F0","transparent"))->next();
         if( $this->isActive($match)){ $color = "#FFC4C4"; }    
         echo $color;          
     ?>">
-    <td  style="padding-right: 10px"><?php echo $match->getDate()->format('d.m.y H');?>h</td>
-    <td style="width:20px;background: url('/images/black.png') no-repeat center center"></td>
+    <td class="space"><?php echo $match->getDate()->format('d.m.y H');?>h</td>
+    <td class="black"></td>
     <td <?php $this->isWinner($match, $match->getBlackId()); ?>><?php 
             echo $this->escapeHtml($match->getBlack()->getShortName());
     ?>
     </td>
-    <td style="padding: 0 6px">-</td>
-    <td style="width:20px;background: url('/images/white4.png') no-repeat center center"></td>
-    <td style="padding-right: 10px"<?php $this->isWinner($match, $match->getWhiteId()); ?>><?php 
+    <td class="versus">-</td>
+    <td class="white"></td>
+    <td class="space"<?php $this->isWinner($match, $match->getWhiteId()); ?>><?php 
         echo $this->escapeHtml($match->getWhite()->getShortName());
     ?>
     </td>

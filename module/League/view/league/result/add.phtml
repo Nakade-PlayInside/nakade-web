@@ -6,9 +6,9 @@ $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<table style="width:auto;margin: 1em 0;">
+<table class="league">
 <tr>
-    <td style="padding-right:1em"><?php 
+    <td class="space"><?php 
         echo $this->match->getDate()->format('d.m.Y   H:i');
         ?></td>
     <td><?php 
@@ -16,8 +16,8 @@ $this->headTitle($title);
                 $this->match->getBlack()->getShortName()
         );
         ?></td>
-    <td style="padding:0 1em">-</td>
-    <td><?php 
+    <td class="versus">-</td>
+    <td class="space"><?php 
         echo $this->escapeHtml(
                 $this->match->getWhite()->getShortName()
         );

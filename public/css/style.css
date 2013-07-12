@@ -3,6 +3,29 @@ body {
     padding-bottom: 40px;
 }
 
+.league {
+    margin-top: 0.5em;
+}
+
+.league .versus {
+    padding: 0 6px;
+}
+
+.league .space {
+   padding-right: 10px; 
+}
+
+.league .black {
+   width: 20px;
+   background: url('/images/black.png') no-repeat center center; 
+}
+
+.league .white {
+   width: 20px;
+   background: url('/images/white.png') no-repeat center center; 
+}
+
+
 .zf-green {
     color: #68b604;
 }
