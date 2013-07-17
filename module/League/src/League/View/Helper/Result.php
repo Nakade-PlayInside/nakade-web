@@ -20,6 +20,9 @@ class Result extends AbstractHelper
     {
         $result=$match->getResultId();
         
+        if(null ===$result)
+            return '';
+        
         if($this->isSuspended($result))
             return '0-0';
         

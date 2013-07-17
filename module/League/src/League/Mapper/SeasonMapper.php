@@ -1,12 +1,6 @@
 <?php
 namespace League\Mapper;
 
-use League\Entity\Season; 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of SeasonMapper
  *
@@ -22,23 +16,54 @@ class SeasonMapper  extends AbstractMapper
     }
     
    /**
-   * Getting the Actual Season which is ongoing season where  
-   * matches are still to be played.
-   * Probably, the actual season is not the last season.
+   * Actual Season has one or more leagues, players and a match schedule.
+   * The latter is the major property of a season. A season is active 
+   * if matches are open to be played. If all matches played, the season is 
+   * active unless no new season with a match schedule exists.
+   * There can be only one active season.
    * 
    * @return /League/Entity/Season $season
    */
    public function getActualSeason() 
    {
+         
+      $dql = "SELECT s as actual FROM League\Entity\Season s,
+              League\Entity\League l,
+              League\Entity\Match m
+              WHERE s._id=l._sid AND
+              l._id=m._lid AND 
+              m._resultId IS NULL";
       
-      $dql = "SELECT s as actual FROM League\Entity\Season s
-              WHERE s._active=1";
       
       $result = $this->getEntityManager()
                      ->createQuery($dql)
                      ->getOneOrNullResult();
       
       return $result['actual'];
+     
+   }
+   
+   /**
+   * The last season is the max number of all seasons with all matches played.
+   * 
+   * @return /League/Entity/Season $season
+   */
+   public function getLastSeason() 
+   {
+      
+      $dql = "SELECT s FROM League\Entity\Season s,
+              League\Entity\League l,
+              League\Entity\Match m
+              WHERE s._id=l._sid AND
+              l._id=m._lid
+              ORDER BY s._number DESC";
+      
+      $result = $this->getEntityManager()
+                     ->createQuery($dql)
+                     ->setMaxResults(1)
+                     ->getOneOrNullResult();
+      
+      return $result;
      
    }
    
@@ -72,6 +97,28 @@ class SeasonMapper  extends AbstractMapper
    public function getActualSeasonInfos() 
    {
       
+      $dql = "SELECT s._number as number, s._year as year, s._title as title 
+              FROM League\Entity\Season s
+              WHERE s._active=1";
+      
+      $result = $this->getEntityManager()
+                     ->createQuery($dql)
+                     ->getOneOrNullResult();
+      
+      return $result;
+     
+   }
+   
+   /**
+   * Getting the Season of a league.
+   * 
+   * @return /League/Entity/Season $season
+   */
+   public function getNextSeason() 
+   {
+      /**
+actual = last season where  
+**/
       $dql = "SELECT s._number as number, s._year as year, s._title as title 
               FROM League\Entity\Season s
               WHERE s._active=1";

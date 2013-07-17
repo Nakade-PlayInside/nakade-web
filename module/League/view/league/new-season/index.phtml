@@ -1,0 +1,29 @@
+<?php
+// module/user/view/user/user/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('League'); 
+$title = $this->translate('Season Overview');
+$this->headTitle($title);
+?>
+
+<h3><?php echo $this->escapeHtml( $title); ?></h3>
+
+actual Season: <?php echo  $this->actual->getTitle() . ' No.'. $this->actual->getNumber(); ?><br>
+ - status: open | ongoing | ended | closed<br>
+ - open matches:  <?php echo  $this->open ?><br>
+ - ending: <?php echo  $this->dateformat($this->last) ?><br>
+ - empfehlung: starten | schliessen | offene ergbnisse eintragen<br>
+ 
+ <br><br><br>
+ next Season: name<br>
+ - status: no leagues | noplayers | start date exceeded | closed<br>
+ - open matches:  2<br>
+ - open results:  1<br>
+ - ending: datum<br>
+ - empfehlung: add league | add players | move start date<br>
+
+<?php $this->placeholder('standings')->captureStart();?>
+
+<?php $this->placeholder('standings')->captureEnd(); 
+
+ 
+?>

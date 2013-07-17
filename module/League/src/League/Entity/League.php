@@ -13,9 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @property int $_id
  * @property int $_sid
  * @property int $_number
- * @property int $_divisionId
  * @property string $_title
- * @property int $_ruleId
+ 
  */
 class League
 {
@@ -53,16 +52,7 @@ class League
    */
   protected $_number;
   
-  /**
-   * League Division
-   * bei geteilten Ligen
-   *
-   * @ORM\Column(name="divisionId", type="integer")
-   * @var int
-   * @access protected
-   */
-  protected $_divisionId;
-  
+   
   /**
    * Title
    *
@@ -72,14 +62,6 @@ class League
    */
   protected $_title;
 
-  /**
-   * Ruleset Id
-   *
-   * @ORM\Column(name="ruleId", type="integer")
-   * @var int
-   * @access protected
-   */
-   protected $_rulesetId;
   
   /**
    * Sets the Identifier
@@ -153,30 +135,6 @@ class League
     return $this->_number;
   }
   
-  /**
-   * Sets the Division
-   *
-   * @param int $divisionId
-   * @access public
-   * @return League
-   */
-  public function setDivision($divisionId)
-  {
-    $this->_divisionId = $divisionId;
-    return $this;
-  }
-
-  /**
-   * Returns the DevisionId
-   *
-   * @access public
-   * @return string
-   */
-  public function getDivision()
-  {
-    return $this->_divisionId;
-  }
-  
   
   /**
    * Sets the Title
@@ -202,31 +160,6 @@ class League
     return $this->_title;
   }
 
-  /**
-   * Sets the RulesetId 
-   * @param int $rid
-   * @access public
-   * @return League
-   */
-  public function setRuleId($rid)
-  {
-    $this->_rulesetId = $rid;
-    return $this;
-  }
-
-  /**
-   * Returns the RulesetId
-   *
-   * @access public
-   * @return int
-   */
-  public function getRuleId()
-  {
-    
-      return $this->_rulesetId;
-  }
-  
-  
    /**
     * Convert the object to an array.
     *

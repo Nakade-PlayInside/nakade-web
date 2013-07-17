@@ -119,6 +119,29 @@ class MatchMapper  extends AbstractMapper
     }
     
     /**
+     * get number of open matches in a season 
+     * 
+     * @param int $seasonId
+     * @return int
+     */
+    public function getOpenMatches($seasonId)
+    {
+       
+        $dql = "SELECT count(m) as number FROM 
+               League\Entity\Match m,
+               League\Entity\League l
+               WHERE l._sid = :sid AND 
+               m._lid=l._id AND 
+               m._resultId IS NULL";
+       
+        return $this->getEntityManager()
+                    ->createQuery($dql)
+                    ->setParameter('sid', $seasonId)        
+                    ->getSingleScalarResult();
+       
+    }
+    
+    /**
      * get the match by id
      * 
      * @param int $id
@@ -154,7 +177,21 @@ class MatchMapper  extends AbstractMapper
                
     }  
     
-  
+    public function getLastMatchDate($seasonId)
+    {
+       
+        $dql = "SELECT max(m._date) as datum FROM 
+               League\Entity\Match m,
+               League\Entity\League l
+               WHERE l._sid = :sid AND 
+               m._lid=l._id";
+       
+        return $this->getEntityManager()
+                    ->createQuery($dql)
+                    ->setParameter('sid', $seasonId)        
+                    ->getSingleScalarResult();
+       
+    }
 }
 
 ?>

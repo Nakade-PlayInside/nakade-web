@@ -34,7 +34,7 @@ class ActualSeasonController
     public function indexAction()
     {
         $lid=$this->getService()->getTopLeagueId();
-            
+                 
         return new ViewModel(
            array(
               'title'     => $this->getService()->getTableShortTitle($lid),

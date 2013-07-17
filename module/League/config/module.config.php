@@ -31,6 +31,8 @@ return array(
                     'League\Services\ActualSeasonControllerFactory',
             'League\Controller\Result' => 
                     'League\Services\ResultControllerFactory',
+            'League\Controller\NewSeason' => 
+                    'League\Services\NewSeasonControllerFactory',
         ),
         'invokables' => array(
             
@@ -155,6 +157,36 @@ return array(
                 )
             ),
             
+            'newseason' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/newseason',
+                    'defaults' => array(
+                        'controller' => 'League\Controller\NewSeason',
+                        'action'     => 'index',
+                    ),
+                ),
+                
+                'may_terminate' => true,
+                'child_routes' => array(
+                    
+                    //add a result
+                    'add' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/add[/:id]',
+                            'constraints' => array(
+                                'id'    => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'add',
+                            ),
+                        ),
+                    ),
+                    
+                )
+            ),
+            
             'season' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -254,10 +286,10 @@ return array(
                 ),
             ),
             
-            'newseason' => array(
+            'newseason2' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/newseason',
+                    'route'    => '/newseason2',
                     'defaults' => array(
                         '__NAMESPACE__' => 'League\Controller',
                         'controller'    => 'League\Controller\MakeSeason',
@@ -312,6 +344,7 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'actual_season'     => 'League\Services\ActualSeasonServiceFactory',
+            'new_season'        => 'League\Services\NewSeasonServiceFactory',
             'result_form'       => 'League\Services\ResultFormFactory',
             'match_result'      => 'League\Services\ResultServiceFactory',
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
