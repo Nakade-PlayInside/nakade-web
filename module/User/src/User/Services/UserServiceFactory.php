@@ -48,7 +48,7 @@ class UserServiceFactory extends AbstractService
         $this->_mailFactory = $services->get('User\Factory\MailFactory');
        
         $mapper = $services->get('User\Factory\MapperFactory');
-        $this->_mapper = $mapper->getMapper('user');
+        $this->setMapperFactory($mapper);
         
         
         return $this;
@@ -69,7 +69,7 @@ class UserServiceFactory extends AbstractService
          //make new user
          $user = new User();
          $user->exchangeArray($data);
-         $this->getMapper()->save($user);
+         $this->getMapper('user')->save($user);
      
          //send verify mail to user
          $mail = $this->getMailFactory()->getMail('verify');
@@ -126,7 +126,7 @@ class UserServiceFactory extends AbstractService
         $data['created'] = empty($created)? new \DateTime():$created;
         
         $user->populate($data);  
-        $this->getMapper()->save($user);
+        $this->getMapper('user')->save($user);
     }
     
     /**
@@ -140,7 +140,7 @@ class UserServiceFactory extends AbstractService
      */
     public function activateUser($email, $verifyString) 
     {
-        $user = $this->getMapper()
+        $user = $this->getMapper('user')
                            ->getActivateUser($email, $verifyString); 
         
         if(null===$user) {
@@ -148,7 +148,7 @@ class UserServiceFactory extends AbstractService
         }
         
         $user->setVerified(true);
-        $this->getMapper()->save($user);
+        $this->getMapper('user')->save($user);
         return true;
         
     }
@@ -162,7 +162,7 @@ class UserServiceFactory extends AbstractService
      */
     public function forgotPassword($data)
     {
-        $user = $this->getMapper()->getUserByEmail($data['email']);
+        $user = $this->getMapper('user')->getUserByEmail($data['email']);
         if(null === $user)
             return false;
        
@@ -187,7 +187,7 @@ class UserServiceFactory extends AbstractService
              );
          }    
         
-         $user = $this->getMapper()->getUserById($data[$key]); 
+         $user = $this->getMapper('user')->getUserById($data[$key]); 
          
          if(null===$user) {
              throw new RuntimeException(
@@ -199,7 +199,7 @@ class UserServiceFactory extends AbstractService
          
          $this->prepareData($data);
          $user->populate($data);
-         $this->getMapper()->save($user);
+         $this->getMapper('user')->save($user);
        
          $mailData = array_merge($data, $user->getArrayCopy());
          
@@ -219,14 +219,14 @@ class UserServiceFactory extends AbstractService
      */
     public function deleteUser($uid) 
     {
-        $user = $this->getMapper()->getUserById($uid); 
+        $user = $this->getMapper('user')->getUserById($uid); 
         
         if(null===$user) {
             return false;
         }
         
         $user->setActive(false);
-        $this->getMapper()->save($user);
+        $this->getMapper('user')->save($user);
         return true;
     }
     
@@ -238,14 +238,14 @@ class UserServiceFactory extends AbstractService
      */
     public function undeleteUser($uid) 
     {
-        $user = $this->getMapper()->getUserById($uid); 
+        $user = $this->getMapper('user')->getUserById($uid); 
         
         if(null===$user) {
             return false;
         }
         
         $user->setActive(true);
-        $this->getMapper()->save($user);
+        $this->getMapper('user')->save($user);
         return true;
     }
     

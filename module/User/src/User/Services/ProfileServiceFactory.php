@@ -25,7 +25,7 @@ class ProfileServiceFactory extends AbstractService
     public function createService(ServiceLocatorInterface $services)
     {
         $mapper = $services->get('User\Factory\MapperFactory');
-        $this->_mapper = $mapper->getMapper('user');
+        $this->setMapperFactory($mapper);
         
         return $this;
         
@@ -44,12 +44,12 @@ class ProfileServiceFactory extends AbstractService
         $id = $data['uid'];
         $data['edit'] = new \DateTime();
         
-        $user = $this->getMapper()->getUserById($id);
+        $user = $this->getMapper('user')->getUserById($id);
         if(null === $user)
             return false;
         
         $user->populate($data);
-        return $this->getMapper()->save($user);
+        return $this->getMapper('user')->save($user);
     }
     
     /**

@@ -15,12 +15,13 @@ return array(
     
     'view_helpers' => array(  
         'invokables' => array(  
-            'position'  => 'League\View\Helper\Position', 
+            'position'   => 'League\View\Helper\Position', 
             'dateformat' => 'League\View\Helper\DateFormat',
-            'isWinner'  => 'League\View\Helper\Winner',
-            'result'    => 'League\View\Helper\Result',
-            'isActive'  => 'League\View\Helper\Active',
-            'isOpen'    => 'League\View\Helper\Open',
+            'isWinner'   => 'League\View\Helper\Winner',
+            'result'     => 'League\View\Helper\Result',
+            'isActive'   => 'League\View\Helper\Active',
+            'isOpen'     => 'League\View\Helper\Open',
+            'seasontitle'  => 'League\View\Helper\SeasonTitle',
             // more helpers here ...  
         )  
     ),
@@ -31,18 +32,10 @@ return array(
                     'League\Services\ActualSeasonControllerFactory',
             'League\Controller\Result' => 
                     'League\Services\ResultControllerFactory',
-            'League\Controller\NewSeason' => 
-                    'League\Services\NewSeasonControllerFactory',
+            'League\Controller\Season' => 
+                    'League\Services\SeasonControllerFactory',
         ),
-        'invokables' => array(
-            
-             'League\Controller\MakeSeason' => 
-                     'League\Controller\MakeSeasonController',
-             'League\Controller\MakeLeague' => 
-                     'League\Controller\MakeLeagueController',
-             'League\Controller\MakePlayer' => 
-                     'League\Controller\MakePlayerController',
-        ),
+        
     ),
     
     'controller_plugins' => array(
@@ -162,7 +155,7 @@ return array(
                 'options' => array(
                     'route'    => '/newseason',
                     'defaults' => array(
-                        'controller' => 'League\Controller\NewSeason',
+                        'controller' => 'League\Controller\Season',
                         'action'     => 'index',
                     ),
                 ),
@@ -174,159 +167,19 @@ return array(
                     'add' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'   => '/add[/:id]',
-                            'constraints' => array(
-                                'id'    => '[0-9]+',
-                            ),
+                            'route'   => '/add',
                             'defaults' => array(
                                 'action' => 'add',
                             ),
                         ),
                     ),
                     
+                    
                 )
             ),
             
-            'season' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/season',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'League\Controller',
-                        'controller'    => 'Season',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:action]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                    'process' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:action]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                    
-                    
-                    
-                ),
-            ),
-           
+           //next route
             
-            
-            
-            'newleague' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/newleague',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'League\Controller',
-                        'controller'    => 'League\Controller\MakeLeague',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:action]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            
-            'newplayer' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/newplayer',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'League\Controller',
-                        'controller'    => 'League\Controller\MakePlayer',
-                        'action'        => 'new',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:action]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            
-            'newseason2' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/newseason2',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'League\Controller',
-                        'controller'    => 'League\Controller\MakeSeason',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:action]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                    'process' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:action]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                    
-                    
-                    
-                ),
-            ),
         ),
     ),
     
@@ -343,10 +196,20 @@ return array(
     
     'service_manager' => array(
         'factories' => array(
-            'actual_season'     => 'League\Services\ActualSeasonServiceFactory',
-            'new_season'        => 'League\Services\NewSeasonServiceFactory',
+            'League\Factory\MapperFactory'      => 
+                    'League\Factory\MapperFactory',
+            'League\Factory\FormFactory'        => 
+                    'League\Factory\FormFactory',
+            'League\Services\ActualSeasonServiceFactory'     => 
+                    'League\Services\ActualSeasonServiceFactory',
+            'League\Services\SeasonServiceFactory'  =>
+                    'League\Services\SeasonServiceFactory',
+            
             'result_form'       => 'League\Services\ResultFormFactory',
-            'match_result'      => 'League\Services\ResultServiceFactory',
+            
+            'League\Services\ResultServiceFactory' =>
+                    'League\Services\ResultServiceFactory',
+            
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

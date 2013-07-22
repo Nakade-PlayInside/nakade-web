@@ -1,32 +1,16 @@
 <?php
 namespace League\Controller;
 
+use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
-use Zend\Mvc\Controller\AbstractActionController;
 
 /**
  * processing user input, in detail results and postponing
  * matches.
  * 
  */
-class ResultController 
-    extends AbstractActionController 
-    implements MyServiceInterface
+class ResultController extends AbstractController 
 {
-    protected $_service;
-    
-    public function getService()
-    {
-       return $this->_service;    
-    }
-    
-    public function setService($service)
-    {
-        $this->_service = $service;
-        return $this;
-    }
-    
-    
    
    /**
     * showing all open results of the actual season
@@ -95,6 +79,7 @@ class ResultController
         
         $pid  = (int) $this->params()->fromRoute('id', 0);
         $form = $this->getService()->setResultFormValues($pid);
+        //$form = $this->getForm('result');//->setResultFormValues($pid);
        
         if ($this->getRequest()->isPost()) {
             

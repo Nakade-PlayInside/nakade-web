@@ -32,7 +32,7 @@ class UserController extends AbstractController
         return new ViewModel(
             array(
               'users' => $this->getService()
-                              ->getMapper()
+                              ->getMapper('user')
                               ->getAllUser()
             )
         );
@@ -110,7 +110,7 @@ class UserController extends AbstractController
         //get param 
        $uid  = $this->params()->fromRoute('id', null);
        
-       $user=$this->getService()->getMapper()->getUserById($uid);
+       $user=$this->getService()->getMapper('user')->getUserById($uid);
        
        $form = $this->getForm('user');
        $form->bindEntity($user);

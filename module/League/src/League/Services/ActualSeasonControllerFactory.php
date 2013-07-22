@@ -33,7 +33,9 @@ class ActualSeasonControllerFactory implements FactoryInterface
             $config = ArrayUtils::iteratorToArray($config);
         }
        
-        $service    = $serviceManager->get('actual_season');
+        $service    = $serviceManager->get( 
+                'League\Services\ActualSeasonServiceFactory'
+        );
        
         $controller = new ActualSeasonController();
         $controller->setService($service);

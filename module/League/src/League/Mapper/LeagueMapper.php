@@ -1,7 +1,7 @@
 <?php
 namespace League\Mapper;
 
-
+use Nakade\Abstracts\AbstractMapper;
 /**
  * Description of LeagueMapper
  *
@@ -9,12 +9,7 @@ namespace League\Mapper;
  */
 class LeagueMapper extends AbstractMapper 
 {
-    protected $_entity_manager;
     
-    public function __construct($em) 
-    {
-        $this->_entity_manager=$em;
-    }
 
    /**
      * Getting the LeagueId 
@@ -46,6 +41,47 @@ class LeagueMapper extends AbstractMapper
        return $this->getEntityManager()
                    ->getRepository('League\Entity\League')
                    ->find($leagueId);
+    }
+    
+    /**
+    * Getting the number of league in a season
+    * 
+    * @param int $seasonId
+    * @return int
+    */
+    public function getLeaguesWithPlayers($seasonId)  
+    {
+        
+       $dql = "SELECT count(l) as number FROM 
+               League\Entity\League l,
+               League\Entity\Participants p
+               WHERE l._sid = :sid AND
+               p._lid = l._id";
+       
+        return $this->getEntityManager()
+                    ->createQuery($dql)
+                    ->setParameter('sid', $seasonId)        
+                    ->getSingleScalarResult();
+       
+    }
+    
+    /**
+    * Getting the number of league in a season
+    * 
+    * @param int $seasonId
+    * @return int
+    */
+    public function getLeagueNumberInSeason($seasonId)  
+    {
+       $dql = "SELECT count(l) as number FROM 
+               League\Entity\League l
+               WHERE l._sid = :sid";
+       
+        return $this->getEntityManager()
+                    ->createQuery($dql)
+                    ->setParameter('sid', $seasonId)        
+                    ->getSingleScalarResult();
+       
     }
 }
  

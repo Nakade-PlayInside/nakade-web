@@ -79,7 +79,7 @@ class AbstractMapper extends AbstractTranslation
     */
    public function save($entity)
    {
-       
+      
        if($entity===null) {
            return $this->getEntityManager()->flush();
        }
@@ -95,7 +95,7 @@ class AbstractMapper extends AbstractTranslation
        if($entity===null) {
            return $this->getEntityManager()->flush();
        }
-    
+   
        $this->getEntityManager()->persist($entity); 
        $this->getEntityManager()->flush($entity);
        

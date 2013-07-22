@@ -3,10 +3,14 @@
 $this->plugin('translate')->setTranslatorTextDomain('League'); 
 
 
-$this->headTitle($this->title);
+$this->headTitle('schedule');
 ?>
-<h3><?php echo $this->escapeHtml($this->title); ?></h3>
+<?php $this->placeholder('noseason')->captureStart();?>
+<h3><?php echo $this->translate('No season found')?></h3>
+<?php $this->placeholder('noseason')->captureEnd(); ?>
 
+<?php $this->placeholder('schedule')->captureStart();?>
+<h3><?php echo $this->escapeHtml($this->title); ?></h3>
 <table class="league">
 <?php foreach ($this->matches as $match) : ?>
 <tr style="background-color:<?php 
@@ -30,3 +34,8 @@ $this->headTitle($this->title);
 </tr>
 <?php endforeach; ?>
 </table>
+<?php $this->placeholder('schedule')->captureEnd(); 
+
+  if($this->matches!=null)
+      echo $this->placeholder('schedule');
+  else echo $this->placeholder('noseason');       

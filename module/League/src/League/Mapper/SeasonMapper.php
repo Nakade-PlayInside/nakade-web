@@ -1,6 +1,7 @@
 <?php
 namespace League\Mapper;
 
+use Nakade\Abstracts\AbstractMapper;
 /**
  * Description of SeasonMapper
  *
@@ -8,12 +9,6 @@ namespace League\Mapper;
  */
 class SeasonMapper  extends AbstractMapper 
 {
-   protected $_entity_manager;
-    
-    public function __construct($em) 
-    {
-        $this->_entity_manager=$em;
-    }
     
    /**
    * Actual Season has one or more leagues, players and a match schedule.
@@ -89,47 +84,28 @@ class SeasonMapper  extends AbstractMapper
      
    }
    
-   /**
-   * Getting the Season of a league.
-   * 
-   * @return /League/Entity/Season $season
-   */
-   public function getActualSeasonInfos() 
-   {
-      
-      $dql = "SELECT s._number as number, s._year as year, s._title as title 
-              FROM League\Entity\Season s
-              WHERE s._active=1";
-      
-      $result = $this->getEntityManager()
-                     ->createQuery($dql)
-                     ->getOneOrNullResult();
-      
-      return $result;
-     
-   }
+  
    
    /**
-   * Getting the Season of a league.
+   * Getting the Season by the order number
    * 
    * @return /League/Entity/Season $season
    */
-   public function getNextSeason() 
+   public function getSeasonByNumber($number) 
    {
-      /**
-actual = last season where  
-**/
-      $dql = "SELECT s._number as number, s._year as year, s._title as title 
-              FROM League\Entity\Season s
-              WHERE s._active=1";
+
+       $dql = "SELECT s FROM League\Entity\Season s
+              WHERE s._number=:number";
       
       $result = $this->getEntityManager()
                      ->createQuery($dql)
+                     ->setParameter('number', $number)
                      ->getOneOrNullResult();
       
       return $result;
      
    }
+  
    
 }
 

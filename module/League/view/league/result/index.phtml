@@ -1,12 +1,16 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('League'); 
 
-$title = $this->translate('All open results');
+$title = $this->translate('results');
 $this->headTitle($title);
 ?>
-<h3><?php echo $this->escapeHtml($title); ?></h3>
+
+<?php $this->placeholder('noresults')->captureStart();?>
+<h3><?php echo $this->translate('No open results found')?></h3>
+<?php $this->placeholder('noresults')->captureEnd(); ?>
 
 <?php $this->placeholder('openresults')->captureStart();?>
+<h3><?php echo $this->translate('All open results');; ?></h3>
 <table class="league">
 <?php foreach ($this->matches as $game) : ?>
 <tr>
@@ -28,7 +32,7 @@ $this->headTitle($title);
 <?php $this->placeholder('openresults')->captureEnd(); 
 
   if($this->matches!=null)
-      echo $this->placeholder('openresults');
-          
+        echo $this->placeholder('openresults');
+  else  echo $this->placeholder('noresults');                
         
 ?>

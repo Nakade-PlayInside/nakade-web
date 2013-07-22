@@ -1,31 +1,18 @@
 <?php
 namespace League\Controller;
 
+use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
-use Zend\Mvc\Controller\AbstractActionController;
 
 /**
  * League tables and schedules of the actual season.
  * Top league table is presented by the default action index.
- * ActionSesaonServiceFactory is needed to be set.
+ * ActionSeasonServiceFactory is needed to be set.
  *   
  * @author Holger Maerz <holger@nakade.de>
  */
-class ActualSeasonController 
-    extends AbstractActionController implements MyServiceInterface
+class ActualSeasonController extends AbstractController
 {
-    protected $_service;
-    
-    public function getService()
-    {
-       return $this->_service;    
-    }
-    
-    public function setService($service)
-    {
-        $this->_service = $service;
-        return $this;
-    }       
     
     /**
     * Default action showing up the Top League table
@@ -33,54 +20,53 @@ class ActualSeasonController
     */
     public function indexAction()
     {
-        $lid=$this->getService()->getTopLeagueId();
                  
         return new ViewModel(
            array(
-              'title'     => $this->getService()->getTableShortTitle($lid),
-              'table'     => $this->getService()
-                                  ->getLeagueTable($lid)
+              'title'     => $this->getService()->getTitle(),
+              'table'     => $this->getService()->getTopLeagueTable()
            
            )
         );
     }
     
     /**
-    * Shows actual matchplan and results of the league. 
+    * Shows actual matchplan of a user and his results.
+    * If user is not in  a league, the top league schedule
+    * is shown.
+    *  
     */
     public function scheduleAction()
     {
-      
-      //@todo: show table of the loggedIn user only
+       $user = $this->identity();
         
-       //get param or top leagueId in actual season
-       $lid  = $this->params()->fromRoute(
-                  'lid', 
-                  $this->getService()->getTopLeagueId()
-               );
-       
+       if($user === null) {
+           return $this->redirect()->toRoute('login');
+       }
+       $uid = $user->getId();
+             
        return new ViewModel(
            array(
-              'title'   => $this->getService()->getScheduleTitle($lid),
-              'matches' => $this->getService()->getSchedule($lid),
+              'title'   => $this->getService()->getScheduleTitle($uid),
+              'matches' => $this->getService()->getSchedule($uid),
            )
        );
     }
     
     /**
-    * Shows detailed version of the league table. The Table is sortable.
-    * Expected params for sorting and LeagueId. If no League Id is provided,
-    * the Top League of the actual season is shown. 
+    * Shows the user's league table. If user is not in a league, the
+    * Top league is shown instead. The Table is sortable.
     */
     public function tableAction()
     {
-     //@todo: show table of the loggedIn user only
+     
+       $user = $this->identity();
         
-       //get param or top leagueId in actual season
-       $lid  = $this->params()->fromRoute(
-                  'lid', 
-                  $this->getService()->getTopLeagueId()
-               );
+       if($user === null) {
+           return $this->redirect()->toRoute('login');
+       }
+       $uid = $user->getId();
+        
        
        //sorting the table
        $sorting  = $this->params()->fromRoute('sort', null);
@@ -89,11 +75,11 @@ class ActualSeasonController
        return new ViewModel(
            array(
               'table'       => $this->getService()
-                                    ->getLeagueTable($lid, $sorting),
+                                    ->getLeagueTable($uid, $sorting),
               'tiebreakers' => $this->getService()
-                                    ->getTiebreakerNames($lid),
+                                    ->getTiebreakerNames(),
               'title'       => $this->getService()
-                                    ->getTableTitle($lid),
+                                    ->getTableTitle($uid),
               
            )
        );

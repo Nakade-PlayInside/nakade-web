@@ -1,12 +1,7 @@
 <?php
 namespace League\Mapper;
 
-use League\Entity\Season;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
+use Nakade\Abstracts\AbstractMapper;
 /**
  * Description of PlayerMapper
  *
@@ -14,13 +9,6 @@ use League\Entity\Season;
  */
 class PlayerMapper extends AbstractMapper 
 {
-    protected $_entity_manager;
-    
-    public function __construct($em) 
-    {
-        $this->_entity_manager=$em;
-    }
-    
     
     public function getAllPlayersInLeague($leagueId)
     {        
@@ -28,6 +16,27 @@ class PlayerMapper extends AbstractMapper
                      ->getRepository('League\Entity\Participants')
                      ->findBy(array('_lid' => $leagueId)); 
     } 
+    
+    
+     /**
+    * Getting the number of players in a season
+    * 
+    * @param int $seasonId
+    * @return int
+    */
+    public function getPlayerNumberInSeason($seasonId)  
+    {
+       $dql = "SELECT count(p) as number FROM 
+               League\Entity\Participants p
+               WHERE p._sid = :sid";
+       
+        return $this->getEntityManager()
+                    ->createQuery($dql)
+                    ->setParameter('sid', $seasonId)        
+                    ->getSingleScalarResult();
+       
+    }
+    
 }
 
 ?>

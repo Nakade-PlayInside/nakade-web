@@ -1,10 +1,13 @@
 <?php
 namespace League\Form;
 
+use Nakade\Abstracts\AbstractForm;
+use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
+use League\Entity\Match;
 /**
  * Form for making a new result
  */
-class ResultForm extends AbstractTranslatorForm
+class ResultForm extends AbstractForm
 {
    
     protected $_pairings;
@@ -17,7 +20,8 @@ class ResultForm extends AbstractTranslatorForm
     public function __construct()
     {
         parent::__construct($name ='ResultForm');
-        
+    //    $this->setObject(new Match());
+     //   $this->setHydrator(new Hydrator());
     } 
     
     /**
@@ -167,6 +171,15 @@ class ResultForm extends AbstractTranslatorForm
             )
         );
         
+    }
+    
+    public function getFilter()
+    {
+        $filter = new \Zend\InputFilter\InputFilter();
+     
+        
+        
+        return $filter;
     }
 }
 ?>

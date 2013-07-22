@@ -6,9 +6,8 @@ use League\Statistics\Results as RESULT;
 use League\Statistics\Tiebreaker\HahnPoints as HAHN;
 use League\Form\WinnerFilter;
 use League\Form\PointsFilter;
-use League\Mapper\SeasonMapper;
-use League\Mapper\MatchMapper;
-use Zend\ServiceManager\FactoryInterface;
+
+use Nakade\Abstracts\AbstractService;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
 use RuntimeException;
@@ -20,26 +19,12 @@ use RuntimeException;
  * 
  * @author Dr. Holger Maerz <grrompf@gmail.com>
  */
-class ResultServiceFactory 
-    extends AbstractTranslationService 
-    implements FactoryInterface 
+class ResultServiceFactory extends AbstractService 
 {
    
-    protected $_season_mapper;
-    protected $_match_mapper;
     protected $_result_form;
     protected $_match;
     
-    public function getSeasonMapper() 
-    {
-        return $this->_season_mapper;
-    }
-    
-    public function setSeasonMapper($mapper) 
-    {
-        $this->_season_mapper=$mapper;
-        return $this;
-    }
     
     public function getResultForm() 
     {
@@ -48,17 +33,6 @@ class ResultServiceFactory
     public function setResultForm($form) 
     {
         $this->_result_form=$form;
-        return $this;
-    }
-    
-    public function getMatchMapper() 
-    {
-        return $this->_match_mapper;
-    }
-    
-    public function setMatchMapper($mapper) 
-    {
-        $this->_match_mapper=$mapper;
         return $this;
     }
     
@@ -96,28 +70,28 @@ class ResultServiceFactory
         //configuration 
         $textDomain = isset($config['League']['text_domain']) ? 
             $config['League']['text_domain'] : null;
-         
-        //EntityManager for database access by doctrine
-        $entityManager = $services->get('Doctrine\ORM\EntityManager');
-        
-        if (null === $entityManager) {
-            throw new RuntimeException(
-                sprintf('Entity manager could not be found in service.')
-            );
-        }
-        
+
         //optional translator
         $translator = $services->get('translator');
         $this->setTranslator($translator, $textDomain);
         
-           
-        $this->_season_mapper = new SeasonMapper($entityManager);
-        $this->_match_mapper  = new MatchMapper($entityManager);
+        $this->setMapperFactory($services->get('League\Factory\MapperFactory'));    
         $this->_result_form = $services->get('result_form');
     
         return $this;
         
     }
+    
+    public function getActualSeason()
+    {
+        $season = $this->getMapper('season')->getActualSeason();
+        if(null===$season) {
+            $season = $this->getMapper('season')->getLastSeason();
+        }
+        
+        return $season;
+    }        
+    
     
     /**
      * shows all open results in a season.
@@ -126,11 +100,11 @@ class ResultServiceFactory
      */
     public function getMyResult($uid) {
        
-        $season = $this->getSeasonMapper()->getActualSeason();
+        $season = $this->getActualSeason();
         if($season==null)
             return null;
         
-        return $this->getMatchMapper()->getMyResults($season->getId(), $uid);
+        return $this->getMapper('match')->getMyResults($season->getId(), $uid);
     }
     
     
@@ -141,11 +115,12 @@ class ResultServiceFactory
      */
     public function getMyOpenResult($uid) {
        
-        $season = $this->getSeasonMapper()->getActualSeason();
+        $season = $this->getActualSeason();
         if($season==null)
             return null;
         
-        return $this->getMatchMapper()->getMyOpenResults($season->getId(), $uid);
+        return $this->getMapper('match')
+                    ->getMyOpenResults( $season->getId(), $uid );
     }
     
    
@@ -156,33 +131,15 @@ class ResultServiceFactory
      */
     public function getOpenResult() {
        
-        $season = $this->getSeasonMapper()->getActualSeason();
+        $season = $this->getActualSeason();
         if($season==null)
             return null;
         
-        return $this->getMatchMapper()->getAllOpenResults($season->getId());
+        return $this->getMapper('match')
+                    ->getAllOpenResults($season->getId());
     }
     
-    /**
-     * Get the title for open results.
-     * If no season is found it will return a not found information.
-     * 
-     * @return string
-     */
-    public function getOpenResultTitle() {
-       
-       $infos=$this->getSeasonMapper()->getActualSeasonInfos();
-       if($infos==null)
-           return $this->translate("No ongoing season found.");
-       
-       return sprintf(
-                  "%s %s %02d/%d",
-                  $this->translate('Open Results'),
-                  $this->translate('Season'),
-                  $infos['number'], 
-                  date_format($infos['year'], 'y')
-              );
-    }
+    
    
     public function prepareFormForValidation($form, $data)
     {
@@ -204,7 +161,7 @@ class ResultServiceFactory
     public function setResultFormValues($pid) {
        
        //match to enter a result
-        $this->_match = $this->getMatchMapper()->getMatchById($pid);
+        $this->_match = $this->getMapper('match')->getMatchById($pid);
         
         //form
         $form = $this->getResultForm();
@@ -264,10 +221,11 @@ class ResultServiceFactory
             $this->filterResultWinner($validatedData);
             $this->filterResultPoints($validatedData);
         
-            $match = $this->getMatchMapper()->getMatchById($validatedData['pid']);
+            $match = $this->getMapper('match')
+                          ->getMatchById($validatedData['pid']);
+            
             $match->populate($validatedData);
-        
-            $this->getMatchMapper()->save($match);
+            $this->getMapper('match')->save($match);
             return true;
         }
         

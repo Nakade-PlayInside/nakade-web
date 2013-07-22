@@ -1,7 +1,7 @@
 <?php
 namespace League\Statistics;
 
-
+use Nakade\Abstracts\AbstractTranslation;
 /**
  * Result types of matches. Instead of having 
  * a data table, this is more convenient 
@@ -9,7 +9,7 @@ namespace League\Statistics;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class Results extends AbstractTranslator
+class Results extends AbstractTranslation
 {
  
     const RESIGNATION=1;

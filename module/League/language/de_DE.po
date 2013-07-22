@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-14 13:08+0100\n"
-"PO-Revision-Date: 2013-05-14 13:08+0100\n"
+"POT-Creation-Date: 2013-07-19 14:29+0100\n"
+"PO-Revision-Date: 2013-07-19 14:30+0100\n"
 "Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -18,6 +18,94 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: League\n"
 
+#: League/view/league/new-season/addplayer.phtml:4
+msgid "Add players to new season"
+msgstr "Spieler zur neuen Saison hinzufügen "
+
+#: League/view/league/new-season/table.phtml:14
+msgid "Position"
+msgstr "Platz"
+
+#: League/view/league/new-season/table.phtml:15
+msgid "Player"
+msgstr "Spieler"
+
+#: League/view/league/new-season/table.phtml:19
+msgid "Name"
+msgstr "Name"
+
+#: League/view/league/new-season/table.phtml:20
+msgid "played games"
+msgstr "gespielte Partien"
+
+#: League/view/league/new-season/table.phtml:24
+msgid "GP"
+msgstr "GP"
+
+#: League/view/league/new-season/table.phtml:25
+msgid "Suspended games"
+msgstr "ausgesetzte Partien"
+
+#: League/view/league/new-season/table.phtml:29
+msgid "GS"
+msgstr "AP"
+
+#: League/view/league/new-season/table.phtml:30
+msgid "Wins"
+msgstr "Siege"
+
+#: League/view/league/new-season/table.phtml:34
+msgid "W"
+msgstr "S"
+
+#: League/view/league/new-season/table.phtml:35
+msgid "Jigo"
+msgstr "Jigo"
+
+#: League/view/league/new-season/table.phtml:39
+msgid "J"
+msgstr "U"
+
+#: League/view/league/new-season/table.phtml:40
+msgid "Lost"
+msgstr "Niederlagen"
+
+#: League/view/league/new-season/table.phtml:44
+msgid "L"
+msgstr "N"
+
+#: League/view/league/new-season/table.phtml:45
+msgid "Points"
+msgstr "Punkte"
+
+#: League/view/league/new-season/table.phtml:49
+msgid "Pt"
+msgstr "P"
+
+#: League/view/league/new-season/table.phtml:50
+msgid "First Tiebreaker"
+msgstr "erster Tie-Breaker"
+
+#: League/view/league/new-season/table.phtml:55
+msgid "Second Tiebreaker"
+msgstr "zweiter Tie-Breaker"
+
+#: League/view/league/new-season/table.phtml:60
+msgid "Third Tiebreaker"
+msgstr "dritter Tie-Breaker"
+
+#: League/view/league/new-season/index.phtml:4
+msgid "Season Overview"
+msgstr "Saisonübersicht"
+
+#: League/view/league/new-season/index.phtml:12
+msgid "actual season"
+msgstr "Aktuelle Saison"
+
+#: League/view/league/new-season/index.phtml:24
+msgid "next season"
+msgstr "nächste Saison"
+
 #: League/view/league/make-player/edit.phtml:5
 #: League/view/league/make-player/add.phtml:5
 #: League/view/league/make-player/index.phtml:5
@@ -25,7 +113,6 @@ msgstr ""
 #: League/view/league/make-season/new.phtml:5
 #: League/view/league/make-season/add.phtml:5
 #: League/view/league/make-season/index.phtml:5
-#: League/view/league/make-league/edit.phtml:5
 msgid "New Season"
 msgstr "Neue Saison"
 
@@ -33,7 +120,6 @@ msgstr "Neue Saison"
 #: League/view/league/make-player/index.phtml:14
 #: League/view/league/make-season/edit.phtml:14
 #: League/view/league/make-season/index.phtml:14
-#: League/view/league/make-league/edit.phtml:14
 msgid "Title:"
 msgstr "Titel:"
 
@@ -41,7 +127,6 @@ msgstr "Titel:"
 #: League/view/league/make-player/index.phtml:18
 #: League/view/league/make-season/edit.phtml:18
 #: League/view/league/make-season/index.phtml:18
-#: League/view/league/make-league/edit.phtml:18
 msgid "Date:"
 msgstr "Datum:"
 
@@ -51,7 +136,6 @@ msgstr "Datum:"
 #: League/view/league/make-season/last.phtml:13
 #: League/view/league/make-season/actual.phtml:13
 #: League/view/league/make-season/index.phtml:22
-#: League/view/league/make-league/edit.phtml:22
 msgid "Leagues:"
 msgstr "Ligen:"
 
@@ -61,7 +145,6 @@ msgstr "Ligen:"
 #: League/view/league/make-season/last.phtml:17
 #: League/view/league/make-season/actual.phtml:17
 #: League/view/league/make-season/index.phtml:26
-#: League/view/league/make-league/edit.phtml:26
 msgid "Players:"
 msgstr "Spieler:"
 
@@ -70,7 +153,6 @@ msgstr "Spieler:"
 #: League/view/league/make-season/edit.phtml:30
 #: League/view/league/make-season/last.phtml:21
 #: League/view/league/make-season/index.phtml:30
-#: League/view/league/make-league/edit.phtml:30
 msgid "Matches:"
 msgstr "Partien:"
 
@@ -78,7 +160,6 @@ msgstr "Partien:"
 #: League/view/league/make-player/index.phtml:34
 #: League/view/league/make-season/edit.phtml:34
 #: League/view/league/make-season/index.phtml:34
-#: League/view/league/make-league/edit.phtml:34
 msgid "Schedule:"
 msgstr "Spielplan:"
 
@@ -86,7 +167,6 @@ msgstr "Spielplan:"
 #: League/view/league/make-player/index.phtml:40
 #: League/view/league/make-season/edit.phtml:40
 #: League/view/league/make-season/index.phtml:40
-#: League/view/league/make-league/edit.phtml:40
 msgid "First Match:"
 msgstr "Erste Partie:"
 
@@ -94,7 +174,6 @@ msgstr "Erste Partie:"
 #: League/view/league/make-player/index.phtml:45
 #: League/view/league/make-season/edit.phtml:45
 #: League/view/league/make-season/index.phtml:45
-#: League/view/league/make-league/edit.phtml:45
 msgid "Last Match:"
 msgstr "Letzte Partie:"
 
@@ -102,7 +181,6 @@ msgstr "Letzte Partie:"
 #: League/view/league/make-player/index.phtml:51
 #: League/view/league/make-season/edit.phtml:50
 #: League/view/league/make-season/index.phtml:51
-#: League/view/league/make-league/edit.phtml:50
 msgid "add league"
 msgstr "Liga hinzufügen"
 
@@ -110,7 +188,6 @@ msgstr "Liga hinzufügen"
 #: League/view/league/make-player/index.phtml:52
 #: League/view/league/make-season/edit.phtml:51
 #: League/view/league/make-season/index.phtml:52
-#: League/view/league/make-league/edit.phtml:51
 msgid "add player"
 msgstr "Spieler hinzufügen"
 
@@ -122,46 +199,6 @@ msgstr "Spieler für Saison Nr. "
 #: League/view/league/make-season/index.phtml:50
 msgid "edit season"
 msgstr "Saison bearbeiten"
-
-#: League/view/league/table/index.phtml:4
-msgid "Top League"
-msgstr "Top-Liga"
-
-#: League/view/league/table/index.phtml:13
-msgid "Position"
-msgstr "Platz"
-
-#: League/view/league/table/index.phtml:14
-msgid "Player"
-msgstr "Spieler"
-
-#: League/view/league/table/index.phtml:15
-msgid "Name"
-msgstr "Name"
-
-#: League/view/league/table/index.phtml:16
-msgid "Played games"
-msgstr "gespielte Partien"
-
-#: League/view/league/table/index.phtml:17
-msgid "GP"
-msgstr "GP"
-
-#: League/view/league/table/index.phtml:18
-msgid "Wins"
-msgstr "Siege"
-
-#: League/view/league/table/index.phtml:19
-msgid "W"
-msgstr "S"
-
-#: League/view/league/table/index.phtml:20
-msgid "Tie-breaker"
-msgstr "Tie-Breaker"
-
-#: League/view/league/table/index.phtml:21
-msgid "Hahn"
-msgstr "Hahn"
 
 #: League/view/league/make-season/noseason.phtml:5
 msgid "No Season found."
@@ -195,19 +232,74 @@ msgstr "Letzte Partie:"
 msgid "Add League to Season No. "
 msgstr "Liga für Saison Nr. "
 
-#: League/view/league/result/open.phtml:4
-#: League/view/league/result/index.phtml:4
-msgid "Open Results"
-msgstr "Offene Ergebnisse"
+#: League/view/league/actual-season/schedule.phtml:9
+#: League/view/league/actual-season/table.phtml:8
+#: League/view/league/actual-season/index.phtml:7
+msgid "No season found"
+msgstr "Keine Saison gefunden."
 
-#: League/view/league/result/open.phtml:24
-#: League/view/league/result/index.phtml:24
+#: League/view/league/actual-season/index.phtml:17
+msgid "Games"
+msgstr "Spiele"
+
+#: League/view/league/actual-season/index.phtml:18
+msgid "G"
+msgstr "S"
+
+#: League/view/league/actual-season/index.phtml:20
+msgid "P"
+msgstr "P"
+
+#: League/view/league/actual-season/index.phtml:21
+msgid "Tiebreaker"
+msgstr "Tie-Breaker"
+
+#: League/view/league/actual-season/index.phtml:22
+msgid "TB"
+msgstr "TB"
+
+#: League/view/league/result/myresult.phtml:4
+msgid "My results"
+msgstr "Meine Ergebnisse"
+
+#: League/view/league/result/myresult.phtml:9
+msgid "No results found"
+msgstr "Keine Ergebnisse gefunden"
+
+#: League/view/league/result/myresult.phtml:13
+msgid "my results"
+msgstr "Meine Ergebnisse"
+
+#: League/view/league/result/myresult.phtml:31
+#: League/view/league/result/myopen.phtml:25
+#: League/view/league/result/add.phtml:4
+#: League/view/league/result/index.phtml:25
 msgid "Enter Result"
 msgstr "Ergebnis eintragen"
 
-#: League/view/league/result/addresult.phtml:4
-msgid "Neues Ergebnis"
-msgstr ""
+#: League/view/league/result/myresult.phtml:32
+#: League/view/league/result/myopen.phtml:4
+#: League/view/league/result/myopen.phtml:26
+#: League/view/league/result/index.phtml:26
+msgid "open"
+msgstr "offen"
+
+#: League/view/league/result/myopen.phtml:9
+#: League/view/league/result/index.phtml:9
+msgid "No open results found"
+msgstr "keine offenen Ergebnisse gefunden"
+
+#: League/view/league/result/myopen.phtml:13
+msgid "my open results"
+msgstr "Meine offenen Ergebnisse"
+
+#: League/view/league/result/index.phtml:4
+msgid "results"
+msgstr "Ergebnisse"
+
+#: League/view/league/result/index.phtml:13
+msgid "All open results"
+msgstr "Alle offenen Ergebnisse"
 
 #: League/view/league/season/new.phtml:5
 msgid "New Season: "
@@ -225,35 +317,53 @@ msgstr "Saisonstart:"
 msgid "State:"
 msgstr "Status:"
 
+#: League/src/League/Statistics/Results.php:31
+msgid "Resignation"
+msgstr "Aufgabe"
+
+#: League/src/League/Statistics/Results.php:32
+msgid "Win by Points"
+msgstr "Sieg nach Punkten"
+
+#: League/src/League/Statistics/Results.php:34
+msgid "Lost by Forfeit"
+msgstr "Disqualifikation"
+
+#: League/src/League/Statistics/Results.php:35
+msgid "Game Suspended"
+msgstr "Spiel ausgesetzt"
+
+#: League/src/League/Statistics/Results.php:36
+msgid "Lost on Time"
+msgstr "auf Zeit verloren "
+
 #: League/src/League/Form/LeagueForm.php:95
 msgid "No:"
 msgstr "Nr:"
 
 #: League/src/League/Form/LeagueForm.php:150
+#: League/src/League/Form/ParticipantsForm.php:171
+#: League/src/League/Form/SeasonForm.php:184
 msgid "Submit"
 msgstr "Abschicken"
 
-#: League/src/League/Form/ResultForm.php:126
+#: League/src/League/Form/ResultForm.php:124
 msgid "Winner"
 msgstr "Sieger"
 
-#: League/src/League/Form/ResultForm.php:127
+#: League/src/League/Form/ResultForm.php:125
 msgid "No Winner"
 msgstr "kein Sieger"
 
-#: League/src/League/Form/ResultForm.php:139
+#: League/src/League/Form/ResultForm.php:137
 msgid "Result"
 msgstr "Ergebnis"
 
-#: League/src/League/Form/ResultForm.php:140
+#: League/src/League/Form/ResultForm.php:138
 msgid "No Result"
 msgstr "kein Ergebnis"
 
-#: League/src/League/Form/ResultForm.php:154
-msgid "Points"
-msgstr "Punkte"
-
-#: League/src/League/Form/ResultForm.php:165
+#: League/src/League/Form/ResultForm.php:164
 msgid "Go"
 msgstr "Los!"
 
@@ -269,42 +379,86 @@ msgstr "Spieler"
 msgid "Season Start"
 msgstr "Saisonbeginn"
 
-#: League/src/League/Services/ActualSeasonServiceFactory.php:119
-#: League/src/League/Services/ResultServiceFactory.php:110
-msgid "No ongoing season found."
-msgstr "Keine laufende Saison gefunden."
-
-#: League/src/League/Services/ActualSeasonServiceFactory.php:132
+#: League/src/League/Services/ActualSeasonServiceFactory.php:144
 msgid "Matchplan"
 msgstr "Spielplan"
 
-#: League/src/League/Services/ResultServiceFactory.php:132
+#: League/src/League/Services/ActualSeasonServiceFactory.php:169
+msgid "League"
+msgstr "Liga"
+
+#: League/src/League/Services/ActualSeasonServiceFactory.php:170
 msgid "Season"
 msgstr "Saison"
 
-#: League/src/League/Business/Results.php:23
-msgid "Resignation"
-msgstr "Aufgabe"
+#: League/src/League/Services/ActualSeasonServiceFactory.php:236
+msgid "Table"
+msgstr "Tabelle"
 
-#: League/src/League/Business/Results.php:24
-msgid "Win by Points"
-msgstr "Sieg nach Punkten"
+#: League/src/League/Services/NewSeasonServiceFactory.php:154
+msgid "no matches"
+msgstr "Gesamtpartien"
 
-#: League/src/League/Business/Results.php:25
-msgid "Jigo"
-msgstr "Jigo"
+#: League/src/League/Services/NewSeasonServiceFactory.php:155
+msgid "open matches"
+msgstr "offene Partien"
 
-#: League/src/League/Business/Results.php:26
-msgid "Lost by Forfeit"
-msgstr "Disqualifikation"
+#: League/src/League/Services/NewSeasonServiceFactory.php:156
+msgid "first match"
+msgstr "erste Partie"
 
-#: League/src/League/Business/Results.php:27
-msgid "Game Suspended"
-msgstr "Spiel ausgesetzt"
+#: League/src/League/Services/NewSeasonServiceFactory.php:157
+msgid "last match"
+msgstr "letzte Partie"
 
-#: League/src/League/Business/Results.php:28
-msgid "Lost on Time"
-msgstr "auf Zeit verloren "
+#: League/src/League/Services/NewSeasonServiceFactory.php:158
+#: League/src/League/Services/NewSeasonServiceFactory.php:221
+msgid "status"
+msgstr "Status"
+
+#: League/src/League/Services/NewSeasonServiceFactory.php:182
+msgid "unknown"
+msgstr "unbekannt"
+
+#: League/src/League/Services/NewSeasonServiceFactory.php:187
+msgid "ongoing"
+msgstr "laufend"
+
+#: League/src/League/Services/NewSeasonServiceFactory.php:190
+msgid "ended"
+msgstr "beendet"
+
+#: League/src/League/Services/NewSeasonServiceFactory.php:217
+msgid "leagues"
+msgstr "Ligen"
+
+#: League/src/League/Services/NewSeasonServiceFactory.php:218
+msgid "participants"
+msgstr "Teilnehmer"
+
+#: League/src/League/Services/NewSeasonServiceFactory.php:219
+msgid "empty leagues"
+msgstr "leere Ligen"
+
+#: League/src/League/Services/NewSeasonServiceFactory.php:220
+msgid "match schedule"
+msgstr "Spielplan"
+
+#: League/src/League/Services/NewSeasonServiceFactory.php:222
+msgid "yes"
+msgstr "ja"
+
+#: League/src/League/Services/NewSeasonServiceFactory.php:223
+msgid "no"
+msgstr "nein"
+
+#: League/src/League/Services/NewSeasonServiceFactory.php:261
+msgid "edit league"
+msgstr "Liga bearbeiten"
+
+#: League/src/League/Services/NewSeasonServiceFactory.php:272
+msgid "make schedule"
+msgstr "Spielplan erstellen"
 
 #: League/src/League/Controller/SeasonController.php:69
 msgid "No actual season found."
@@ -317,10 +471,6 @@ msgstr "Keine Saison gefunden."
 #: League/src/League/Controller/SeasonController.php:114
 msgid "No last season found."
 msgstr "Keine letzte Saison gefunden."
-
-#: League/src/League/Controller/MakeLeagueController.php:91
-msgid "League"
-msgstr "Liga"
 
 #: League/src/League/Controller/Plugin/LeaguePlugin.php:100
 msgid "League No. "
@@ -341,6 +491,18 @@ msgstr "Spieler fehlen"
 #: League/src/League/Controller/Plugin/SeasonPlugin.php:151
 msgid "match schedule missing"
 msgstr "Spielplan fehlt"
+
+#~ msgid "No ongoing season found."
+#~ msgstr "Keine laufende Saison gefunden."
+
+#~ msgid "Open Results"
+#~ msgstr "Offene Ergebnisse"
+
+#~ msgid "Top League"
+#~ msgstr "Top-Liga"
+
+#~ msgid "Hahn"
+#~ msgstr "Hahn"
 
 #~ msgid "Value is required and can't be empty"
 #~ msgstr "Eine Auswahl ist notwendig"

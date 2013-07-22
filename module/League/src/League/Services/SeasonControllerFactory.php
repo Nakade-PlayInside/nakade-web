@@ -25,20 +25,21 @@ class SeasonControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $services)
     {
-     
         $serviceManager = $services->getServiceLocator();
         
         $config  = $serviceManager->get('config');
         if ($config instanceof Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
-        
-        //get text domain from module config
-        $textDomain = $config['League']['text_domain'];
-        $translator = $serviceManager->get('translator');
-
+       
+        $service    = $serviceManager->get(
+                'League\Services\SeasonServiceFactory'
+        );
+        $factory    = $serviceManager->get('League\Factory\FormFactory');
+       
         $controller = new SeasonController();
-        $controller->setTranslator($translator,$textDomain);
+        $controller->setService($service);
+        $controller->setFormFactory($factory);
         
         return $controller;
     }

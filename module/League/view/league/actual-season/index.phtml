@@ -1,12 +1,14 @@
 <?php
 // module/user/view/user/user/index.phtml:
 $this->plugin('translate')->setTranslatorTextDomain('League'); 
-$this->headTitle($this->title);
+$this->headTitle("Top Table");
 ?>
-
-<h3><?php echo $this->escapeHtml( $this->title); ?></h3>
+<?php $this->placeholder('noseason')->captureStart();?>
+<h3><?php echo $this->translate('No season found')?></h3>
+<?php $this->placeholder('noseason')->captureEnd(); ?>
 
 <?php $this->placeholder('standings')->captureStart();?>
+<h3><?php echo $this->escapeHtml($this->title); ?></h3>
 <table class="table" style="width: auto; margin-top: 0.5em;">
 <tr>
     <th title="<?php echo $this->translate('Position');?>">No</th>
@@ -35,6 +37,6 @@ $this->headTitle($this->title);
 
   if($this->table!=null)
       echo $this->placeholder('standings');
-          
+  else echo $this->placeholder('noseason');        
         
 ?>

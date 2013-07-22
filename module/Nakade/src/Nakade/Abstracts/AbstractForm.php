@@ -111,13 +111,22 @@ abstract class AbstractForm
      */
     public function bindEntity($object)
     {
+        if($object === null)
+            return;
+        
         $this->bind($object);
-        $identifier = $this->getIdentifierKey($object);
-            
+                
+        //removes leading underlines
+        $temp = $this->getIdentifierKey($object);
+        $identifier = str_replace('_', '',$temp);  
+        
         $method = 'get'.ucfirst($identifier);
+        $method = 'getId';
+       
         if(method_exists($object, $method)) {
               $value = $object->$method();
               $this->setIdentifierValue($value);
+              
         }
       
         $filter = $this->getFilter();

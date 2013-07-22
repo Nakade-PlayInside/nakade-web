@@ -32,10 +32,14 @@ class ResultControllerFactory implements FactoryInterface
             $config = ArrayUtils::iteratorToArray($config);
         }
         
-        $service    = $serviceManager->get('match_result');
+        $service    = $serviceManager->get(
+                'League\Services\ResultServiceFactory'
+        );
+        $factory    = $serviceManager->get('League\Factory\FormFactory');
         
         $controller = new ResultController();
         $controller->setService($service);
+        $controller->setFormFactory($factory);
        
         
         return $controller;

@@ -1,7 +1,6 @@
 <?php
 namespace League\Entity;
 
-use League\Entity\Rules;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,9 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @property int $_number
  * @property string $_title
  * @property string $_abbreviation
- * @property DateTime $_year
- * @property boolean $_active
- * @property boolean $_closed
+ * @property int $_drawpoints
+ * @property int $_winpoints
+ * @property string $_tiebreaker1
+ * @property string $_tiebreaker2
+ * @property string $_tiebreaker3
  */
 class Season
 {
@@ -51,24 +52,6 @@ class Season
   
   
   /**
-   * active
-   *
-   * @ORM\Column(name="active", type="boolean")
-   * @var boolean
-   * @access protected
-   */
-  protected $_active;
-  
-  /**
-   * closed
-   *
-   * @ORM\Column(name="closed", type="boolean")
-   * @var boolean
-   * @access protected
-   */
-  protected $_closed;
-  
-  /**
    * Year
    *
    * @ORM\Column(name="year", type="date")
@@ -77,25 +60,52 @@ class Season
    */
   protected $_year;
 
-  /**
-   * rulesId
+   /**
+   * drawPoints
    *
-   * @ORM\Column(name="rulesId", type="integer")
+   * @ORM\Column(name="drawPoints", type="integer")
    * @var int
    * @access protected
    */
-   protected $_rulesId;
+   protected $_drawpoints;
    
-  /**
-   * rulesId: Foreign Key
-   * Rules Entity
+   /**
+   * winPoints
    *
-   * @ORM\OneToOne(targetEntity="League\Entity\Rules")
-   * @ORM\JoinColumn(name="rulesId", referencedColumnName="id")
-   * @var Rules
+   * @ORM\Column(name="winPoints", type="integer")
+   * @var int
    * @access protected
    */
-   protected $_rules;
+   protected $_winpoints;
+   
+   /**
+   * tiebreaker1
+   *
+   * @ORM\Column(name="tiebreaker1", type="string")
+   * @var string
+   * @access protected
+   */
+   protected $_tiebreaker1;
+   
+   /**
+   * tiebreaker2
+   *
+   * @ORM\Column(name="tiebreaker2", type="string")
+   * @var string
+   * @access protected
+   */
+   protected $_tiebreaker2;
+   
+   /**
+   * winPoints
+   *
+   * @ORM\Column(name="tiebreaker3", type="string")
+   * @var string
+   * @access protected
+   */
+   protected $_tiebreaker3;
+   
+  
    
   /**
    * Sets the Identifier
@@ -145,58 +155,7 @@ class Season
     return $this->_title;
   }
 
-  /**
-   * Sets the Active flag
-   *
-   * @param boolean $active
-   * @access public
-   * @return Season
-   */
-  public function setActive($active)
-  {
-    $this->_active = $active;
-    return $this;
-  }
-
-  /**
-   * Returns the Active flag.
-   * True if all conditions are set to let the season
-   * begin ie leagues and players are bound.
-   *
-   * @access public
-   * @return boolean
-   */
-  public function isActive()
-  {
-    return $this->_active;
-  }
-  
-  /**
-   * Sets the Closed flag 
-   *
-   * @param boolean $closed
-   * @access public
-   * @return Season
-   */
-  public function setClosed($closed)
-  {
-    $this->_closed = $closed;
-    return $this;
-  }
-
-  /**
-   * Returns the Closed flag.
-   * True if all games in this season 
-   * have been played. 
-   *
-   * @access public
-   * @return boolean
-   */
-  public function isClosed()
-  {
-    return $this->_closed;
-  }
-  
+ 
   /**
    * Sets the Year  
    * @param DateTime $year
@@ -247,52 +206,163 @@ class Season
   }
   
   /**
-   * Sets the rulesId
-   * @param int $rulesId
+   * Sets the draw points
+   * @param int $points
    * @access public
    * @return Season
    */
-  public function setRulesId($rid)
+  public function setDrawpoints($points)
   {
-    $this->_rulesId = $rid;
+    $this->_drawpoints = $points;
     return $this;
   }
 
   /**
-   * Returns the rulesId
+   * Returns draw points
    *
    * @access public
    * @return int
    */
-  public function getRulesId()
+  public function getDrawpoints()
   {
     
-      return $this->_rulesId;
+      return $this->_drawpoints;
   }
   
   /**
-   * Sets the Rules entity
-   * @param int $rulesId
+   * Sets the win points
+   * @param int $points
    * @access public
    * @return Season
    */
-  public function setRules($rules)
+  public function setWinpoints($points)
   {
-    $this->_rules = $rules;
+    $this->_winpoints = $points;
     return $this;
   }
 
   /**
-   * Returns the Rules entity
+   * Returns win points
    *
    * @access public
-   * @return Rules
+   * @return int
    */
-  public function getRules()
+  public function getWinpoints()
   {
     
-      return $this->_rules;
+      return $this->_winpoints;
   }
+  
+  /**
+   * Sets the first tiebreaker
+   * @param int $tiebreaker
+   * @access public
+   * @return Season
+   */
+  public function setTiebreaker1($tiebreaker)
+  {
+    $this->_tiebreaker1 = $tiebreaker;
+    return $this;
+  }
+
+  /**
+   * Returns first tiebreaker
+   *
+   * @access public
+   * @return int
+   */
+  public function getTiebreaker1()
+  {
+    
+      return $this->_tiebreaker1;
+  }
+  
+  
+  /**
+   * Sets the second tiebreaker
+   * @param int $tiebreaker
+   * @access public
+   * @return Season
+   */
+  public function setTiebreaker2($tiebreaker)
+  {
+    $this->_tiebreaker2 = $tiebreaker;
+    return $this;
+  }
+
+  /**
+   * Returns second tiebreaker
+   *
+   * @access public
+   * @return int
+   */
+  public function getTiebreaker2()
+  {
+    
+      return $this->_tiebreaker2;
+  }
+  
+  
+  /**
+   * Sets the third tiebreaker
+   * @param int $tiebreaker
+   * @access public
+   * @return Season
+   */
+  public function setTiebreaker3($tiebreaker)
+  {
+    $this->_tiebreaker3 = $tiebreaker;
+    return $this;
+  }
+
+  /**
+   * Returns third tiebreaker
+   *
+   * @access public
+   * @return int
+   */
+  public function getTiebreaker3()
+  {
+    
+      return $this->_tiebreaker3;
+  }
+  
+  
+  /**
+   * populating data as an array.
+   * key of the array is getter methods name. 
+   * 
+   * @param array $data
+   */
+  
+  public function populate($data) 
+  {
+       foreach($data as $key => $value) {
+           
+           $key = str_replace('_', '',$key);
+           $method = 'set'.ucfirst($key);
+            if(method_exists($this, $method))
+                $this->$method($value);
+       }
+       
+  }
+  
+  
+  /**
+   * usage for creating a NEW user. Provide all neccessary values 
+   * in an array. Verified, active flag and created date are 
+   * generated automatically. 
+   *    
+   * @param array $data
+   */
+  public function exchangeArray($data)
+  {
+        $this->populate($data);
+      
+        $this->_year  = new \DateTime();
+        
+   }
+   
   
     /**
      * Convert the object to an array.

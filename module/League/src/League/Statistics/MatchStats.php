@@ -87,7 +87,6 @@ class MatchStats
         foreach($rules as $key=>$value) {
             
             $method = 'set'. ucfirst(str_replace('_', '',$key));
-            
             if(method_exists($this, $method) && isset($value)) {
                $this->$method($value);
             }    
@@ -100,7 +99,7 @@ class MatchStats
      * @param int $points
      * @return \League\Statistics\MatchStats
      */
-    public function setWinPoints($points)
+    public function setWinpoints($points)
     {
         $this->_points_for_win = $points;
         return $this;
@@ -110,7 +109,7 @@ class MatchStats
      * Get the points a player receives for winning
      * @return int
      */
-    public function getWinPoints()
+    public function getWinpoints()
     {
         return $this->_points_for_win;
     }
@@ -120,7 +119,7 @@ class MatchStats
      * @param int $points
      * @return \League\Statistics\MatchStats
      */
-    public function setDrawPoints($points)
+    public function setDrawpoints($points)
     {
         $this->_points_for_draw = $points;
         return $this;
@@ -130,7 +129,7 @@ class MatchStats
      * Get the points a player receives for a draw
      * @return int
      */
-    public function getDrawPoints()
+    public function getDrawpoints()
     {
         return $this->_points_for_draw;
     }

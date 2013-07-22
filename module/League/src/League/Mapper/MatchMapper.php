@@ -1,12 +1,8 @@
 <?php
 namespace League\Mapper;
 
-use Doctrine\ORM\EntityManager;
+use Nakade\Abstracts\AbstractMapper;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of MatchMapper
@@ -15,13 +11,6 @@ use Doctrine\ORM\EntityManager;
  */
 class MatchMapper  extends AbstractMapper 
 {
-    
-    protected $_entity_manager;
-    
-    public function __construct($em) 
-    {
-        $this->_entity_manager=$em;
-    }
     
     /**
      * Get all matches in league
@@ -142,6 +131,28 @@ class MatchMapper  extends AbstractMapper
     }
     
     /**
+     * get number of matches in a season 
+     * 
+     * @param int $seasonId
+     * @return int
+     */
+    public function getNumberOfMatches($seasonId)
+    {
+       
+        $dql = "SELECT count(m) as number FROM 
+               League\Entity\Match m,
+               League\Entity\League l
+               WHERE l._sid = :sid AND 
+               m._lid=l._id";
+       
+        return $this->getEntityManager()
+                    ->createQuery($dql)
+                    ->setParameter('sid', $seasonId)        
+                    ->getSingleScalarResult();
+       
+    }
+    
+    /**
      * get the match by id
      * 
      * @param int $id
@@ -191,6 +202,42 @@ class MatchMapper  extends AbstractMapper
                     ->setParameter('sid', $seasonId)        
                     ->getSingleScalarResult();
        
+    }
+    
+    public function getFirstMatchDate($seasonId)
+    {
+       
+        $dql = "SELECT min(m._date) as datum FROM 
+               League\Entity\Match m,
+               League\Entity\League l
+               WHERE l._sid = :sid AND 
+               m._lid=l._id";
+       
+        return $this->getEntityManager()
+                    ->createQuery($dql)
+                    ->setParameter('sid', $seasonId)        
+                    ->getSingleScalarResult();
+       
+    }
+    
+    public function getLeagueInSeasonByPlayer($seasonId, $userId)
+    {
+        
+        $dql = "SELECT l FROM 
+               League\Entity\Match m,
+               League\Entity\League l
+               WHERE l._sid = :sid AND 
+               m._lid=l._id AND
+               m._blackId = :uid OR
+               m._whiteId = :uid";
+       
+        return $this->getEntityManager()
+                    ->createQuery($dql)
+                    ->setParameter('sid', $seasonId)        
+                    ->setParameter('uid', $userId)        
+                    ->setMaxResults(1)
+                    ->getOneOrNullResult();
+        
     }
 }
 
