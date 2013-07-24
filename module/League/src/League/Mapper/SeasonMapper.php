@@ -63,6 +63,33 @@ class SeasonMapper  extends AbstractMapper
    }
    
    /**
+   * A new season has no match schedule. The newest season is the one
+   * with the highest number.
+   * 
+   * @return /League/Entity/Season $season
+   */
+   public function getNewSeason() 
+   {
+      
+      $dql = "SELECT s FROM League\Entity\Season s
+              WHERE s._id NOT IN ( SELECT t._id 
+              FROM League\Entity\Season t,
+              League\Entity\League l,
+              League\Entity\Match m
+              WHERE t._id=l._sid AND
+              l._id=m._lid )
+              ORDER BY s._number DESC";
+      
+      $result = $this->getEntityManager()
+                     ->createQuery($dql)
+                     ->setMaxResults(1)
+                     ->getOneOrNullResult();
+      
+      return $result;
+     
+   }
+   
+   /**
    * Getting the Season of a league.
    * 
    * @return /League/Entity/Season $season

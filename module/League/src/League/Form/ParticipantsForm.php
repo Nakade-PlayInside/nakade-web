@@ -1,7 +1,11 @@
 <?php
 namespace League\Form;
 
-class ParticipantsForm extends AbstractTranslatorForm
+use Nakade\Abstracts\AbstractForm;
+use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
+use League\Entity\League;
+
+class ParticipantsForm extends AbstractForm
 {
    
     protected $_players;
@@ -38,28 +42,7 @@ class ParticipantsForm extends AbstractTranslatorForm
         return $this->_players;
     }
     
-    /**
-     * set players to select. An array of id is neccessary.
-     * @param array $players
-     * @return \League\Form\ParticipantsForm
-     */
-    public function setSelectedPlayers(array $players) 
-    {
-        $this->_selectedPlayers = $players;
-        return $this;
-    } 
-    
-    /**
-     * get selected players. If not set all players are selected 
-     * @return array
-     */
-    public function getSelectedPlayers() 
-    {
-        if($this->_selectedPlayers==null) {
-             $this->_selectedPlayers = array_keys($this->_players);
-        } 
-        return $this->_selectedPlayers;
-    }
+   
     
     /**
      * set leagues 
@@ -107,11 +90,26 @@ class ParticipantsForm extends AbstractTranslatorForm
      */
     public function init() {
        
+        //season ID
+        $this->add(
+            array(
+                'name' => 'sid',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array(
+                'label' => $this->translate('Season ID'),
+                ),
+                'attributes' => array(
+                    'value'  => $this->getSeasonId(),
+                    'readonly' => true
+                )
+            )
+        );
+        
         
         //leagues
         $this->add(
             array(
-                'name' => 'league',
+                'name' => 'lid',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
                     'label' =>  $this->translate('League No:'),
@@ -126,7 +124,6 @@ class ParticipantsForm extends AbstractTranslatorForm
             'type' => 'Zend\Form\Element\Select',
             'name' => 'player',
             'attributes' => array(
-                'value'  => $this->getSelectedPlayers(),
                 'size'   => '6',
                 'multiple' => 'multiple',
             ),
@@ -136,16 +133,7 @@ class ParticipantsForm extends AbstractTranslatorForm
             ),
         ));
         
-        //season ID
-        $this->add(
-            array(
-                'type' => 'Zend\Form\Element\Hidden',
-                'name' => 'sid',
-                'attributes' => array(
-                    'value'  => $this->getSeasonId(),
-                )
-            )
-        );
+        
         
         //cross-site scripting hash protection
         //this is handled by ZF2 in the background - no need for server-side 
@@ -173,6 +161,27 @@ class ParticipantsForm extends AbstractTranslatorForm
             )
         );
         
+         //cancel button
+        $this->add(
+            array(
+                'name' => 'cancel',
+                'type'  => 'Zend\Form\Element\Submit',
+                'attributes' => array(
+                    'value' =>   $this->translate('Cancel'),
+
+                ),
+            )
+        );
+        
     } 
+    
+    public function getFilter()
+    {
+        $filter = new \Zend\InputFilter\InputFilter();
+     
+       
+        
+        return $filter;
+    }
 }
 ?>

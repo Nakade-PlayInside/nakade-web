@@ -1,10 +1,14 @@
 <?php
 namespace League\Form;
 
+use Nakade\Abstracts\AbstractForm;
+use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
+use League\Entity\League;
+
 /**
  * Form for making a new league
  */
-class LeagueForm extends AbstractTranslatorForm
+class LeagueForm extends AbstractForm
 {
    
     protected $_sid;
@@ -18,67 +22,10 @@ class LeagueForm extends AbstractTranslatorForm
     {
         //form name is LeagueForm
         parent::__construct($name='LeagueForm');
+        $this->setObject(new League());
+        $this->setHydrator(new Hydrator());
     } 
     
-    /**
-     * set number
-     * @param int $number
-     * @return \League\Form\LeagueForm
-     */
-    public function setNumber($number=1) 
-    {
-        $this->_number = $number;
-        return $this;
-    } 
-    
-    /**
-     * get number
-     * @return int
-     */
-    public function getNumber() 
-    {
-        return $this->_number;
-    }  
-    
-    /**
-     * set title
-     * @param string $title
-     * @return \League\Form\LeagueForm
-     */
-    public function setTitle($title='Top-Liga') 
-    {
-        $this->_title = $title;
-        return $this;
-    } 
-    
-    /**
-     * get title
-     * @return string
-     */
-    public function getTitle() 
-    {
-        return $this->_title;
-    }
-    
-    /**
-     * set seasonId
-     * @param int $sid
-     * @return \League\Form\LeagueForm
-     */
-    public function setSeasonId($sid) 
-    {
-        $this->_sid = $sid;
-        return $this;
-    } 
-    
-    /**
-     * get seasonId
-     * @return int
-     */
-    public function getSeasonId() 
-    {
-        return $this->_sid;
-    }
     
     /**
      * init the form. It is neccessary to call this function
@@ -92,7 +39,7 @@ class LeagueForm extends AbstractTranslatorForm
                 'name' => 'number',
                 'type' => 'Zend\Form\Element\Text',
                 'options' => array(
-                    'label' =>  $this->translate('No:'),
+                    'label' =>  $this->translate('League No:'),
                 ),
                 'attributes' => array(
                     'value' => $this->_number,
@@ -111,6 +58,7 @@ class LeagueForm extends AbstractTranslatorForm
                 ),
                 'attributes' => array(
                     'value' => $this->_title,
+                    
                 )
             )
         );
@@ -118,10 +66,14 @@ class LeagueForm extends AbstractTranslatorForm
         //season ID
         $this->add(
             array(
-                'type' => 'Zend\Form\Element\Hidden',
+                'type' => 'Zend\Form\Element\Text',
                 'name' => 'sid',
+                'options' => array(
+                    'label' =>  $this->translate('SeasonId:'),
+                ),
                 'attributes' => array(
                     'value'  => $this->_sid,
+                    'readonly'=> true
                 )
             )
         );
@@ -153,7 +105,46 @@ class LeagueForm extends AbstractTranslatorForm
             )
         );
         
+        //cancel button
+        $this->add(
+            array(
+                'name' => 'cancel',
+                'type'  => 'Zend\Form\Element\Submit',
+                'attributes' => array(
+                    'value' =>   $this->translate('Cancel'),
+
+                ),
+            )
+        );
+        
     } 
+    
+    public function getFilter()
+    {
+        $filter = new \Zend\InputFilter\InputFilter();
+     
+        $filter->add(
+             array(
+                 'name' => 'title',
+                 'required' => false,
+                 'filters'  => array(
+                     array('name' => 'StripTags'),
+                     array('name' => 'StringTrim'),
+                     array('name' => 'StripNewLines'),
+                  ),
+                 'validators' => array(
+                     array('name'    => 'StringLength',
+                           'options' => array (
+                                  'encoding' => 'UTF-8', 
+                                  'max'  => '20',
+                           )  
+                     ),  
+                  )
+              )
+         );
+        
+        return $filter;
+    }
     
 }
 ?>

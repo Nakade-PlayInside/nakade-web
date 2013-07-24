@@ -85,7 +85,15 @@ class Participants
    */
    protected $_player;
   
-   
+   /**
+   * League Entity
+   *
+   * @ORM\OneToOne(targetEntity="League\Entity\League")
+   * @ORM\JoinColumn(name="lid", referencedColumnName="id")
+   * @var League
+   * @access protected
+   */
+   protected $_league;
    
   /**
    * Sets the Identifier
@@ -205,6 +213,29 @@ class Participants
   public function getPlayer()
   {
     return $this->_player;
+  }
+  
+  /**
+   * Sets the League
+   * @param int $leagueId
+   * @access public
+   * @return Entity
+   */
+  public function setLeague($leagueId)
+  {
+    $this->_league = $leagueId;
+    return $this;
+  } 
+  
+  /**
+   * Returns League
+   *
+   * @access public
+   * @return League
+   */
+  public function getLeague()
+  {
+    return $this->_league;
   }
   
   /**

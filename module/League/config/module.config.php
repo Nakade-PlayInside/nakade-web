@@ -34,6 +34,12 @@ return array(
                     'League\Services\ResultControllerFactory',
             'League\Controller\Season' => 
                     'League\Services\SeasonControllerFactory',
+            'League\Controller\League' => 
+                    'League\Services\LeagueControllerFactory',
+            'League\Controller\Player' => 
+                    'League\Services\PlayerControllerFactory',
+            'League\Controller\Schedule' => 
+                    'League\Services\ScheduleControllerFactory',
         ),
         
     ),
@@ -177,7 +183,90 @@ return array(
                     
                 )
             ),
+           
+            'league' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/league',
+                    'defaults' => array(
+                        'controller' => 'League\Controller\League',
+                        'action'     => 'index',
+                    ),
+                ),
+                
+                'may_terminate' => true,
+                'child_routes' => array(
+                    
+                    //add a result
+                    'add' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/add',
+                            'defaults' => array(
+                                'action' => 'add',
+                            ),
+                        ),
+                    ),
+                    
+                    
+                )
+            ),
             
+            'player' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/player',
+                    'defaults' => array(
+                        'controller' => 'League\Controller\Player',
+                        'action'     => 'index',
+                    ),
+                ),
+                
+                'may_terminate' => true,
+                'child_routes' => array(
+                    
+                    //add a result
+                    'add' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/add',
+                            'defaults' => array(
+                                'action' => 'add',
+                            ),
+                        ),
+                    ),
+                    
+                    
+                )
+            ),
+            
+            'schedule' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/schedule',
+                    'defaults' => array(
+                        'controller' => 'League\Controller\Schedule',
+                        'action'     => 'index',
+                    ),
+                ),
+                
+                'may_terminate' => true,
+                'child_routes' => array(
+                    
+                    //add a result
+                    'add' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/add',
+                            'defaults' => array(
+                                'action' => 'add',
+                            ),
+                        ),
+                    ),
+                    
+                    
+                )
+            ),
            //next route
             
         ),
@@ -204,6 +293,12 @@ return array(
                     'League\Services\ActualSeasonServiceFactory',
             'League\Services\SeasonServiceFactory'  =>
                     'League\Services\SeasonServiceFactory',
+            'League\Services\LeagueServiceFactory'  =>
+                    'League\Services\LeagueServiceFactory',
+            'League\Services\PlayerServiceFactory'  =>
+                    'League\Services\PlayerServiceFactory',
+            'League\Services\ScheduleServiceFactory'  =>
+                    'League\Services\ScheduleServiceFactory',
             
             'result_form'       => 'League\Services\ResultFormFactory',
             

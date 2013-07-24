@@ -160,6 +160,36 @@ class League
     return $this->_title;
   }
 
+  /**
+   * populating data as an array.
+   * key of the array is getter methods name. 
+   * 
+   * @param array $data
+   */
+  public function populate($data) 
+  {
+       foreach($data as $key => $value) {
+           
+           $key = str_replace('_', '',$key);
+           $method = 'set'.ucfirst($key);
+            if(method_exists($this, $method))
+                $this->$method($value);
+       }
+       
+  }
+  
+  /**
+   * usage for creating a NEW league. Provide all neccessary values 
+   * in an array. 
+   *    
+   * @param array $data
+   */
+  public function exchangeArray($data)
+  {
+        $this->populate($data);
+        
+   }
+   
    /**
     * Convert the object to an array.
     *

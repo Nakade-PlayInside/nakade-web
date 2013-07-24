@@ -169,12 +169,12 @@ class SeasonServiceFactory extends AbstractService
         $state[$schedule]   = $matches==0?$no:$yes;
         
         $addLeague = sprintf('<a href="%s">%s</a>',
-                    '/addLeague',
+                    'league/add',
                     $this->translate("add league")
                 );
         
         $addPlayer = sprintf('<a href="%s">%s</a>',
-                    '/newseason/addplayer',
+                    '/player/add',
                     $this->translate("add player")
                 );
         
@@ -184,8 +184,11 @@ class SeasonServiceFactory extends AbstractService
                 );
         
         $state[$status]     = $addLeague;
-        if($state[$player]<2) {
-            $state[$status] = $addPlayer;
+        if($state[$league]==0) {
+            $state[$status] = $addLeague;
+        }
+        elseif($state[$league]>0) {
+            $state[$status] = $addLeague . " | " . $addPlayer;
         }    
         elseif($emptyLeagues>0) {
             $state[$status] = $addPlayer . " | " . $editLeague;

@@ -13,21 +13,21 @@ use Zend\View\Model\ViewModel;
  * 
  * @author Holger Maerz <holger@nakade.de>
  */
-class LeagueController extends AbstractController
+class ScheduleController extends AbstractController
 {
    
     public function indexAction()
     {
-      
-      
-       //better to get the last season 
-      // $actualSeason =  $this->getSeasonMapperService()->getActualSeason();
-       //$league       =  $this->league()->getTopLeague($actualSeason);
         
-       return new ViewModel(
+        //@todo: - form für schedule (startdate)
+        //       - day per macthday or single matchday
+        //       - exclusion: no active season 
+        // -> mit dem schedule wird die neue saison active
+        
+        return new ViewModel(
            array(
-              //'users' => $this->table()->getTable($league),
-              //'nextGames' => $this->match()->getNextThreeGames($league),
+               'players' => $this->getService()->getPlayers(),
+               'schedule'=> $this->getService()->getSchedule(),
            )
        );
     }

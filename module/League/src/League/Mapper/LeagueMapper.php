@@ -83,6 +83,25 @@ class LeagueMapper extends AbstractMapper
                     ->getSingleScalarResult();
        
     }
+    
+    /**
+    * Get all leagues of a season
+    * 
+    * @param int $seasonId
+    * @return int
+    */
+    public function getLeaguesInSeason($seasonId)  
+    {
+       $dql = "SELECT l FROM 
+               League\Entity\League l
+               WHERE l._sid = :sid";
+       
+        return $this->getEntityManager()
+                    ->createQuery($dql)
+                    ->setParameter('sid', $seasonId)        
+                    ->getResult();
+       
+    }
 }
  
 ?>

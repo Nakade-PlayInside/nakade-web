@@ -334,7 +334,6 @@ class Season
    * 
    * @param array $data
    */
-  
   public function populate($data) 
   {
        foreach($data as $key => $value) {

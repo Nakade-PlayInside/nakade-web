@@ -13,21 +13,16 @@ use Zend\View\Model\ViewModel;
  * 
  * @author Holger Maerz <holger@nakade.de>
  */
-class LeagueController extends AbstractController
+class PlayerController extends AbstractController
 {
    
     public function indexAction()
     {
-      
-      
-       //better to get the last season 
-      // $actualSeason =  $this->getSeasonMapperService()->getActualSeason();
-       //$league       =  $this->league()->getTopLeague($actualSeason);
         
        return new ViewModel(
            array(
-              //'users' => $this->table()->getTable($league),
-              //'nextGames' => $this->match()->getNextThreeGames($league),
+               'players' => $this->getService()->getPlayers(),
+              
            )
        );
     }
@@ -35,14 +30,12 @@ class LeagueController extends AbstractController
     
     public function addAction()
     {
-       $league = $this->getService()->getNewLeague();
-      
-       if(null===$league) {
-            $this->redirect()->toRoute('newseason/add');
-       } 
-     
-       $form = $this->getForm('league');
-       $form->bindEntity($league);
+       //make sure that there are leagues
+       if(count($this->getService()->getLeaguesInSeason())==0) {
+            $this->redirect()->toRoute('league/add');
+       }
+       
+       $form = $this->getForm('player');
        
        if ($this->getRequest()->isPost()) {
             
@@ -58,7 +51,7 @@ class LeagueController extends AbstractController
             if ($form->isValid()) {
            
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $this->getService()->addLeague($data);
+                $this->getService()->addPlayer($data);
                 
                 return $this->redirect()->toRoute('newseason');
             }
