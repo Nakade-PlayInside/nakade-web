@@ -183,12 +183,17 @@ class SeasonServiceFactory extends AbstractService
                     $this->translate("edit league")
                 );
         
+        $addSchedule = sprintf('<a href="%s">%s</a>',
+                    '/schedule/add',
+                    $this->translate("make matchplan")
+                );
+        
         $state[$status]     = $addLeague;
         if($state[$league]==0) {
             $state[$status] = $addLeague;
         }
         elseif($state[$league]>0) {
-            $state[$status] = $addLeague . " | " . $addPlayer;
+            $state[$status] = $addLeague . " | " . $addPlayer . ' | ' . $addSchedule;
         }    
         elseif($emptyLeagues>0) {
             $state[$status] = $addPlayer . " | " . $editLeague;

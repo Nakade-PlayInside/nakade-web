@@ -151,8 +151,7 @@ class ActualSeasonServiceFactory extends AbstractService
         $league = $this->getUserLeague($season, $uid);
         if(null===$league)
             return null;
-        
-        
+       
         return $this->getMapper('match')
                     ->getMatchesInLeague($league->getId());
         
@@ -226,7 +225,7 @@ class ActualSeasonServiceFactory extends AbstractService
        $league = $this->getUserLeague($season, $uid);
        if(null===$league)
            return null;
-       
+             
        $lid=$league->getId();
        $playersInLeague = $this->getMapper('player')
                                ->getAllPlayersInLeague($lid);

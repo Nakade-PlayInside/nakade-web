@@ -13,8 +13,7 @@ class SeasonMapper  extends AbstractMapper
    /**
    * Actual Season has one or more leagues, players and a match schedule.
    * The latter is the major property of a season. A season is active 
-   * if matches are open to be played. If all matches played, the season is 
-   * active unless no new season with a match schedule exists.
+   * if matches are open to be played. 
    * There can be only one active season.
    * 
    * @return /League/Entity/Season $season

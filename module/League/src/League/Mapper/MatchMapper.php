@@ -222,15 +222,14 @@ class MatchMapper  extends AbstractMapper
     
     public function getLeagueInSeasonByPlayer($seasonId, $userId)
     {
-        
         $dql = "SELECT l FROM 
                League\Entity\Match m,
                League\Entity\League l
                WHERE l._sid = :sid AND 
-               m._lid=l._id AND
-               m._blackId = :uid OR
-               m._whiteId = :uid";
-       
+               m._lid=l._id   AND
+               (m._blackId = :uid OR
+               m._whiteId = :uid)";
+        
         return $this->getEntityManager()
                     ->createQuery($dql)
                     ->setParameter('sid', $seasonId)        

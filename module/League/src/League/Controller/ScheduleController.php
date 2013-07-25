@@ -15,19 +15,15 @@ use Zend\View\Model\ViewModel;
  */
 class ScheduleController extends AbstractController
 {
-   
+    
     public function indexAction()
     {
-        
-        //@todo: - form für schedule (startdate)
-        //       - day per macthday or single matchday
-        //       - exclusion: no active season 
-        // -> mit dem schedule wird die neue saison active
-        
+                
         return new ViewModel(
            array(
-               'players' => $this->getService()->getPlayers(),
-               'schedule'=> $this->getService()->getSchedule(),
+               'players' => null, //$this->getService()->getPlayers(),
+               'schedule'=> null, //$this->getService()
+                                 //->getSchedule(null),
            )
        );
     }
@@ -35,14 +31,8 @@ class ScheduleController extends AbstractController
     
     public function addAction()
     {
-       $league = $this->getService()->getNewLeague();
       
-       if(null===$league) {
-            $this->redirect()->toRoute('newseason/add');
-       } 
-     
-       $form = $this->getForm('league');
-       $form->bindEntity($league);
+       $form = $this->getForm('schedule');
        
        if ($this->getRequest()->isPost()) {
             
@@ -58,9 +48,9 @@ class ScheduleController extends AbstractController
             if ($form->isValid()) {
            
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $this->getService()->addLeague($data);
+                $this->getService()->addSchedule($data);
                 
-                return $this->redirect()->toRoute('newseason');
+                return $this->redirect()->toRoute('schedule');
             }
         }
 

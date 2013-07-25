@@ -348,19 +348,18 @@ class Season
   
   
   /**
-   * usage for creating a NEW user. Provide all neccessary values 
-   * in an array. Verified, active flag and created date are 
-   * generated automatically. 
+   * usage for creating a NEW season. Provide all neccessary values 
+   * in an array. 
    *    
    * @param array $data
    */
-  public function exchangeArray($data)
-  {
+    public function exchangeArray($data)
+    {
         $this->populate($data);
       
         $this->_year  = new \DateTime();
         
-   }
+    }
    
   
     /**

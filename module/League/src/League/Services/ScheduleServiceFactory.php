@@ -66,7 +66,7 @@ class ScheduleServiceFactory extends AbstractService
     {
        $season = $this->getNewSeason();
        if(null===$season) {
-           null;
+          return null;
        }
        
        return $this->getMapper('player')
@@ -74,13 +74,41 @@ class ScheduleServiceFactory extends AbstractService
        
     }
     
-    public function getSchedule()
+    public function addSchedule($data)
     {
-        //@todo: players of a league
-        $teams = $this->getPlayers();
+       //ongoing season: no new schedule 
+       if(null != $this->getMapper('season')->getActualSeason()) {
+          return null;
+       } 
+     
+       $season = $this->getNewSeason();
+       if(null===$season) {
+          return null;
+       }
        
-        $test = new Schedule();
-        return $test->makeSchedule($teams);
+       $leagues = $this->getMapper('league')
+                       ->getLeaguesInSeason($season->getId()); 
+       if(null===$leagues) {
+         return null;
+       }
+       
+       $course = $data['course']==2? true:false;
+       $date   = $data['startdate'] . " " . $data['starttime'];
+       
+       foreach($leagues as $league) {
+            $player = $this->getMapper('player')
+                           ->getAllPlayersInLeague($league->getId());
+                 
+            $schedule = new Schedule($date, $course);
+            $pairing  = $schedule->makeSchedule($player);
+            
+            foreach($pairing as $match) {
+                    $this->getMapper('match')->save($match);
+            }
+            
+            
+       } 
+       
         
     }  
     

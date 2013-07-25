@@ -9,6 +9,7 @@ $this->headTitle($title);
 <h3><?php echo $this->translate('No players found')?></h3>
 <?php $this->placeholder('noseason')->captureEnd(); ?>
 
+<?php $this->placeholder('schedule')->captureStart();?>
 <table class="table" style="margin-top: 0.5em;">
 <tr> 
     <th>day</th>
@@ -33,6 +34,7 @@ $this->headTitle($title);
 </tr>
 <?php endforeach; ?>
 </table>
+<?php $this->placeholder('schedule')->captureEnd();?>
 
 <?php $this->placeholder('players')->captureStart();?>
 <h3><?php echo $this->escapeHtml(
@@ -61,6 +63,8 @@ $this->headTitle($title);
       echo $this->placeholder('players');
   else echo $this->placeholder('noseason');
 
+if($this->schedule!=null)
+      echo $this->placeholder('schedule');
+  else echo $this->placeholder('noseason');
+  
 
-foreach ($this->schedule as $match)
-     echo $match->getBlackId . '<br>';

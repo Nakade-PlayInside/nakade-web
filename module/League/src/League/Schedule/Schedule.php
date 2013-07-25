@@ -1,9 +1,5 @@
 <?php
 namespace League\Schedule;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of Schedule
@@ -14,22 +10,25 @@ class Schedule {
    
     const BYE = 'FREILOS';
     protected $_startdate;
+    protected $_isSingleGameAMatchday;
+    protected $_week=0;
     
-    public function __construct() {
+    public function __construct($date, $course=false) {
         
-        // todo: startdate option
-        $this->_startdate = new \DateTime("2013-08-15 18:00"); 
-       
+        $this->_isSingleGameAMatchday=$course;
+        $this->_startdate = $date; 
     }
     
     public function makeSchedule($teams) {
+        
+        shuffle($teams);
         
         if(count($teams) % 2 ){ 
             array_push($teams , self::BYE); 
         } 
 
-        $plan       = array(); // Array für den kompletten Spielplan 
-        $nogame     = 0;   // Zähler für Spielnummer 
+        $plan       = array();  // Array für den kompletten Spielplan 
+        $nogame     = 0;        // Zähler für Spielnummer 
         
     
    
@@ -74,22 +73,28 @@ class Schedule {
         $pairings = array();
         foreach($plan as $matchday=>$matchdaypairing) {
             
+            //each matchday another date
             $date =  $this->getMatchDate($matchday);
             
             foreach($matchdaypairing as $game=>$pairing) {
                 
-                $date =  $this->getMatchDate($game);
-                $match = new \League\Entity\Match();
+                //each game another date 
+                if($this->_isSingleGameAMatchday) {
+                    $date = $this->getMatchDate($game);
+                }
                 
-                //todo: exchange und populate
-                $match->setMatchday($matchday);
-                $match->setLid($pairing['away']->getLid());
-                $match->setLeague($pairing['away']->getLeague());
-                $match->setDate($date);
-                $match->setBlackId($pairing['away']->getId());
-                $match->setBlack($pairing['away']);
-                $match->setWhiteId($pairing['home']->getId());
-                $match->setWhite($pairing['home']);
+                $data['matchday'] = $matchday;
+                $data['league']   = $pairing['away']->getLeague();
+                $data['lid']      = $pairing['away']->getLid();
+                $data['date']     = $date;
+                $data['black']    = $pairing['home']->getPlayer();  
+                $data['blackId']  = $pairing['home']->getId();  
+                $data['white']    = $pairing['away']->getPlayer();    
+                $data['whiteId']  = $pairing['away']->getId();  
+                
+                $match = new \League\Entity\Match();
+                $match->exchangeArray($data);
+              
                 array_push($pairings, $match);
             }
         }
@@ -100,7 +105,11 @@ class Schedule {
     
     private function getMatchDate($week) 
     {
-       return $this->_startdate->modify('+'.$week. ' week');
+       $modify = sprintf('+%s week', $week-1);
+       $date = new \DateTime($this->_startdate);
+       
+       return $date->modify($modify);
+       
     }
     
     

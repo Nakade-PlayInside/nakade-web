@@ -102,6 +102,9 @@ class FormFactory extends AbstractFormFactory
                         
            case "season":   $form = new Form\SeasonForm();
                             break;
+                        
+           case "schedule": $form = new Form\ScheduleForm();
+                            break;             
            
                         
            default      :   throw new RuntimeException(

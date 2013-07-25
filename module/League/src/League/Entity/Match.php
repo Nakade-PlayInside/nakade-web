@@ -467,6 +467,21 @@ class Match
     return $this->_matchday;
   }
   
+  /**
+   * usage for creating a NEW match. Provide all neccessary values 
+   * in an array. 
+   *    
+   * @param array $data
+   */
+    public function exchangeArray($data)
+    {
+        foreach($data as $key => $value) {
+           $method = 'set'.ucfirst($key);
+            if(method_exists($this, $method))
+                $this->$method($value);
+        }
+       
+    }
   
     /**
      * Convert the object to an array.
@@ -485,6 +500,8 @@ class Match
      */
     public function populate($data = array()) 
     {
+        
+        
         $this->_id       = $data['pid'];
         $this->_resultId = $data['result'];
         $this->_winnerId = $data['winner'];

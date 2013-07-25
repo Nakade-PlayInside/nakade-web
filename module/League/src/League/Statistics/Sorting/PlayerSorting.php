@@ -172,6 +172,17 @@ class PlayerSorting
            $method =  "get" . ucfirst('thirdTiebreak'); 
            
            if($comp_a->$method()==$comp_b->$method() ) {
+               return $this->sortByInitialState($comp_a, $comp_b);;
+           }    
+        
+           return ($comp_a->$method() > $comp_b->$method() )?-1:1;
+            
+    }
+    
+    protected function sortByInitialState($comp_a, $comp_b) {
+        
+           $method =  "get" . ucfirst('gamesPlayed');
+           if($comp_a->$method() == $comp_b->$method()) {
                return 0;
            }    
         
