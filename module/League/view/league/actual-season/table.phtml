@@ -71,7 +71,7 @@ $this->headTitle('table');
 <tr style="background-color:<?php 
         $color = $this->cycle(array("#F0F0F0","transparent"))->next();
         
-        if($this->identity()->getId() == $player->getId()) {
+        if($this->identity()->getId() == $player->getUid()) {
             $color = "#FFC4C4";
         }    
         
