@@ -53,7 +53,7 @@ return array(
                 'connectionConfig' => array(
                     'ssl'      => 'tls',
                     'username' => 'grrompf@gmail.com',
-                    'password' => 'holger27',
+                    'password' => 'kMdCS2013',
                 ),
             ),
         ),

@@ -89,8 +89,9 @@ class HahnPoints extends AbstractGameStats implements TiebreakerInterface
      
             if($match->getResultId()==RESULT::BYPOINTS   &&
                $match->getWinnerId()==$playerId ) {
-                
+          
                $count += $match->getPoints()+self::OFFSET_POINTS; 
+               
                continue;
             }
             
@@ -98,9 +99,8 @@ class HahnPoints extends AbstractGameStats implements TiebreakerInterface
                $match->getPoints() < self::OFFSET_POINTS  &&     
                ($match->getBlackId()==$playerId || 
                 $match->getWhiteId()==$playerId )) {
-                
-                
-               $count += $match->getPoints(); 
+             
+               $count += self::OFFSET_POINTS - $match->getPoints(); 
                continue;
             }
             

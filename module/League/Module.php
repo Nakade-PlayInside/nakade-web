@@ -1,7 +1,7 @@
 <?php
 
 namespace League;
-use League\View\Helper\Position;
+
 /**
  * Manages a round-robin league. Registered players are connected to the 
  * User Module. The league contains league tables with tie-breakers and is part
