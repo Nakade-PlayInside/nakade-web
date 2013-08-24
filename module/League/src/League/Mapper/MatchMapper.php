@@ -188,6 +188,31 @@ class MatchMapper  extends AbstractMapper
                
     }  
     
+    /**
+     * get all matches with a result in a league
+     * 
+     * @param int $leagueId
+     * @return array League\Entity\Match
+     */
+    public function getAllOpenMatches($seasonId)
+    {
+       
+       $dql = "SELECT m FROM 
+               League\Entity\Match m,
+               League\Entity\League l
+               WHERE l._sid = :sid AND 
+               m._lid=l._id AND
+               m._resultId IS NULL";
+       
+       return $this->getEntityManager()
+                   ->createQuery($dql)
+                   ->setParameter('sid', $seasonId)
+                   ->getResult();
+               
+    }  
+    
+    
+    
     public function getLastMatchDate($seasonId)
     {
        

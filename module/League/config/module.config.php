@@ -22,6 +22,7 @@ return array(
             'isActive'   => 'League\View\Helper\Active',
             'isOpen'     => 'League\View\Helper\Open',
             'seasontitle'  => 'League\View\Helper\SeasonTitle',
+            
             // more helpers here ...  
         )  
     ),
@@ -32,6 +33,8 @@ return array(
                     'League\Services\ActualSeasonControllerFactory',
             'League\Controller\Result' => 
                     'League\Services\ResultControllerFactory',
+            'League\Controller\Matchday' => 
+                    'League\Services\MatchdayControllerFactory',
             'League\Controller\Season' => 
                     'League\Services\SeasonControllerFactory',
             'League\Controller\League' => 
@@ -153,6 +156,36 @@ return array(
                             ),
                         ),
                     ),
+                )
+            ),
+            
+            'matchday' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/matchday',
+                    'defaults' => array(
+                        'controller' => 'League\Controller\Matchday',
+                        'action'     => 'index',
+                    ),
+                ),
+                
+                'may_terminate' => true,
+                'child_routes' => array(
+                    
+                    //add a result
+                    'edit' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/edit[/:id]',
+                            'constraints' => array(
+                                'id'    => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'edit',
+                            ),
+                        ),
+                    ),
+                   
                 )
             ),
             
@@ -293,6 +326,8 @@ return array(
                     'League\Services\ActualSeasonServiceFactory',
             'League\Services\SeasonServiceFactory'  =>
                     'League\Services\SeasonServiceFactory',
+            'League\Services\MatchdayServiceFactory'  =>
+                    'League\Services\MatchdayServiceFactory',
             'League\Services\LeagueServiceFactory'  =>
                     'League\Services\LeagueServiceFactory',
             'League\Services\PlayerServiceFactory'  =>
