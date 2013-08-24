@@ -48,8 +48,16 @@ class MatchdayServiceFactory extends AbstractService
         return $this;
         
     }
-            
-    
+       
+    /**
+     * 
+     * @param int $id
+     * @return Match
+     */
+    public function getMatch($id)
+    {
+        return $this->getMapper('match')->getMatchById($id);
+    }
      /**
      * shows all open results in a season.
      * A link is provided for each match to enter a result.

@@ -467,6 +467,11 @@ class Match
     return $this->_matchday;
   }
   
+  public function getTime()
+  {
+      return $this->_date->format('H:i:s');
+  }
+  
   /**
    * usage for creating a NEW match. Provide all neccessary values 
    * in an array. 

@@ -88,6 +88,9 @@ class FormFactory extends AbstractFormFactory
                             $form->setLeagues($leagues);
                             $form->setSeasonId($season->getId());
                             break;
+           
+           case "matchday": $form = new Form\MatchdayForm();
+                            break;             
                         
            case "result":   $form = new Form\ResultForm();
                             $results  = new Results();

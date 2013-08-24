@@ -34,27 +34,53 @@ class MatchdayController extends AbstractController
     public function editAction()
     {
         
-        $pid  = (int) $this->params()->fromRoute('id', 0);
-        $form = $this->getService()->setResultFormValues($pid);
-        //$form = $this->getForm('result');//->setResultFormValues($pid);
-       
+        $id  = (int) $this->params()->fromRoute('id', 0);
+        $match = $this->getService()->getMatch($id);
+        
+        if(is_null($match)) {
+            return $this->redirect()->toRoute('matchday');
+        }
+        $form = $this->getForm('matchday');//->setResultFormValues($pid);
+        $form->bindEntity($match);
+        
         if ($this->getRequest()->isPost()) {
             
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
-            $this->getService()->prepareFormForValidation($form, $postData);
+            //cancel
+            if($postData['cancel']) {
+                return $this->redirect()->toRoute('matchday');
+            }
             
-            //if validated data are saved to database
-            if ($this->getService()->processResultData($form)) {
-                  return $this->redirect()->toRoute('actual');
+            $form->setData($postData);
+           
+            if ($form->isValid()) {
+                
+                $datetime = $postData['date']. ' ' . $postData['time']; 
+                $temp = new \DateTime($datetime);
+                
+                $match->setDate($temp);
+                
+                if($postData['changeColors']) {
+                    
+                    $black = $match->getBlack();
+                    $white = $match->getWhite();
+                    
+                    $match->setBlack($white);
+                    $match->setWhite($black);
+                }
+                
+                $this->getService()->getMapper('match')->save($match);
+                
+                return $this->redirect()->toRoute('matchday');
             }
         }
           
        return new ViewModel(
            array(
              // 'id'      => $pid, 
-             // 'match'   => $this->getService()->getMatch(), 
-             // 'form'    => $form
+                'match'   => $match, 
+                'form'    => $form
            )
        );
     }

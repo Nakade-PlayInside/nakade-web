@@ -1,13 +1,26 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('League'); 
 
-$title = $this->translate('add new league');
+$title = $this->translate('edit match date');
 $this->headTitle('League');
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
-
+<p>
+<div>
 <?php
+echo $this->match->getLeague()->getNumber().'. '.$this->translate('League').", ";
+echo $this->match->getMatchday(). '.' .$this->translate('Matchday');
+?>
+</div>  
+<div>
+<?php
+echo $this->match->getBlack()->getCompleteName(). ' - ';
+echo $this->match->getWhite()->getCompleteName();
+?>
+</div> 
+</p>
+<?php    
 
 $this->form->prepare();
 echo $this->form()->openTag($this->form);
