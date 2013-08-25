@@ -15,6 +15,7 @@ return array(
         'League',
         'Authentication',
         'Permission',
+        'Message',
         
         ),
     'module_listener_options' => array(
