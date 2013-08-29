@@ -3,6 +3,55 @@ body {
     padding-bottom: 40px;
 }
 
+.table-header { display: table-header; }
+.table-row { display: table-row; }
+.table-cell { display: table-cell; }
+
+.message {
+    width: auto; 
+    margin-top: 0.5em;
+}
+
+.message .subject {
+    width: 60%; 
+    padding: 0;
+    
+}
+
+.message .subject:hover {
+    background: #FCF;
+}
+
+.message .subject a {
+    display:block;
+    border: #70d900 solid thin;
+    padding: 8px;
+    color: #000000;
+    
+    
+}
+
+
+.message th {
+    text-align:left;
+}
+
+.message th img {
+    vertical-align: text-bottom;
+    height:16px;
+    width:16px;
+}
+
+.message td img {
+    vertical-align: middle;
+    height:8px;
+    width:8px;
+}
+
+.message .center {
+    text-align:center;
+}
+
 .league {
     margin-top: 0.5em;
 }

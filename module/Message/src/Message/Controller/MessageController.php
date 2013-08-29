@@ -20,16 +20,37 @@ class MessageController extends AbstractController
     */
     public function indexAction()
     {
-          
+        $id  = (int) $this->params()->fromRoute('id', 0);
+        
+        //message request if id>0
+       // $showMessage = $this->getService()->getMessage($id);
+        
+         
+        $messages = $this->getService()->getAllMessages();
+        //if message isNull ->messages[0]
+         
+        return new ViewModel(
+           array(
+                //'showMessage'   => $showMessage,
+                'messages'      => $messages,
+           
+           )
+        );
+        
+    }
+    
+    public function showAction()
+    {
+        $id  = (int) $this->params()->fromRoute('id', 0);
+             
         return new ViewModel(
            array(
               //'title'     => $this->getService()->getTitle(),
-                'messages'  => $this->getService()->getMessages(),
+                'message'  => $this->getService()->getMessage($id),
            
            )
         );
     }
-    
    
     
    

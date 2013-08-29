@@ -11,10 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @property int $id
  * @property string $subject
  * @property text $message
- * @property User $sender 
- * @property User $receiver 
+ * @property User $senderId 
+ * @property User $receiverId 
  * @property DateTime $sendDate 
  * @property DateTime $readDate 
+ * @property string $box 
  */
 class Message
 {
@@ -33,15 +34,25 @@ class Message
   /**
    * @ORM\Column(name="message", type="text")
    */
-  private $messsage;
+  private $message;
   
   /**
-   * @ORM\Column(name="sender", type="integer")
+   * @var User\Entity\User
+   *
+   * @ORM\OneToOne(targetEntity="User\Entity\User")
+   * @ORM\JoinColumns({
+   * @ORM\JoinColumn(name="senderId", referencedColumnName="uid")
+   * })
    */
   private $sender;
   
   /**
-   * @ORM\Column(name="receiver", type="integer")
+   * @var User\Entity\User
+   *
+   * @ORM\ManyToOne(targetEntity="User\Entity\User")
+   * @ORM\JoinColumns({
+   * @ORM\JoinColumn(name="receiverId", referencedColumnName="uid")
+   * })
    */
   private $receiver;
   
@@ -55,6 +66,10 @@ class Message
    */
   private $readDate;
     
+  /**
+   * @ORM\Column(name="box", type="string")
+   */
+  private $mailbox;
   
     public function getId() 
     {
@@ -76,14 +91,14 @@ class Message
         $this->subject = $subject;
     }
 
-    public function getMesssage() 
+    public function getMessage() 
     {
-        return $this->messsage;
+        return $this->message;
     }
 
-    public function setMesssage($messsage) 
+    public function setMessage($message) 
     {
-        $this->messsage = $messsage;
+        $this->message = $message;
     }
 
     public function getReceiver() 
@@ -124,6 +139,16 @@ class Message
     public function setReadDate($readDate) 
     {
         $this->readDate = $readDate;
+    }
+    
+    public function getMailbox() 
+    {
+        return $this->mailbox;
+    }
+
+    public function setMailbox($mailbox) 
+    {
+        $this->mailbox = $mailbox;
     }
   
   /**

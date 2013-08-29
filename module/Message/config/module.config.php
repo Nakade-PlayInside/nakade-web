@@ -57,15 +57,15 @@ return array(
                 'child_routes' => array(
                     
                     //league schedule
-                    'schedule' => array(
+                    'show' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'   => '/schedule[/:lid]',
+                            'route'   => '/show[/:id]',
                             'constraints' => array(
-                                'lid'    => '[0-9]+',
+                                'id'    => '[0-9]+',
                             ),
                             'defaults' => array(
-                                'action' => 'schedule',
+                                'action' => 'show',
                             ),
                         ),
                     ),
