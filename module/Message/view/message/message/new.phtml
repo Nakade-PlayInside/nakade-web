@@ -1,0 +1,32 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Message'); 
+$this->headTitle("Messages");
+?>
+<?php $this->placeholder('nothing')->captureStart();?>
+<h3><?php echo $this->translate('No messages found')?></h3>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+
+<?php //$this->placeholder('messages')->captureStart();?>
+<h3>HALLO<?php //echo $this->escapeHtml($this->title); ?></h3>
+
+<?php
+
+    
+    $this->form->prepare();
+    echo $this->form()->openTag($this->form);
+    echo $this->formCollection($this->form);
+    echo $this->form()->closeTag();
+?>
+
+
+<?php //$this->placeholder('messages')->captureEnd(); 
+
+ // if($this->messages==null) {
+     // echo $this->placeholder('messages');
+      //echo $this->messageWidget;
+  //}    
+  //else echo $this->placeholder('nothing');        
+  
+  
+?>

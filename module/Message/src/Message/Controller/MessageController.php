@@ -2,6 +2,7 @@
 namespace Message\Controller;
 
 use Nakade\Abstracts\AbstractController;
+use Message\Form\MessageForm;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -20,39 +21,88 @@ class MessageController extends AbstractController
     */
     public function indexAction()
     {
-        $id  = (int) $this->params()->fromRoute('id', 0);
+        if($this->identity() === null) {
+           return $this->redirect()->toRoute('login');
+        }
         
-        //message request if id>0
-       // $showMessage = $this->getService()->getMessage($id);
-        
-         
         $messages = $this->getService()->getAllMessages();
-        //if message isNull ->messages[0]
-         
         return new ViewModel(
-           array(
-                //'showMessage'   => $showMessage,
-                'messages'      => $messages,
-           
-           )
+           array('messages'      => $messages)
         );
-        
     }
     
     public function showAction()
     {
+        if($this->identity() === null) {
+           return $this->redirect()->toRoute('login');
+        }
+        
         $id  = (int) $this->params()->fromRoute('id', 0);
-             
+        $message = $this->getService()->getMessage($id);
         return new ViewModel(
            array(
               //'title'     => $this->getService()->getTitle(),
-                'message'  => $this->getService()->getMessage($id),
-           
+                'message'  => $message,
            )
         );
     }
-   
     
-   
+    public function newAction()
+    {
+       
+       if($this->identity() === null) {
+           return $this->redirect()->toRoute('login');
+       }
+      
+       $id = $this->identity()->getId();
+       $recipients = $this->getService()->getAllRecipients($id);
+       
+       $message = new \Message\Entity\Message();
+       $message->setSender($id);
+       
+       $form = new MessageForm($recipients);
+       $form->bindEntity($message);
+              
+       if ($this->getRequest()->isPost()) {
+            
+            //get post data, set data to from, prepare for validation
+            $postData =  $this->getRequest()->getPost();
+            
+            //cancel
+            if($postData['cancel']) {
+                return $this->redirect()->toRoute('message');
+            }
+            
+            $form->setData($postData);
+           
+            if ($form->isValid()) {
+           
+                $message = $form->getData();
+                
+                //date
+                $message->setSendDate(new \DateTime());
+                
+                $sender = $this->getService()
+                    ->getUserById($message->getSender());
+                //sender
+                $message->setSender($sender);
+                
+                $recipient = $this->getService()
+                    ->getUserById($message->getReceiver());
+                //receiver
+                $message->setReceiver($recipient);
+                
+                $this->getService()->getMapper('message')->save($message);
+                
+                return $this->redirect()->toRoute('message');
+            }
+        }
+
+        
+        return new ViewModel(
+           array('form' => $form)
+        );
+    }
+    
     
 }

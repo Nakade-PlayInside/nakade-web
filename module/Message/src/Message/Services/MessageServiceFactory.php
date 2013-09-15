@@ -66,9 +66,29 @@ class MessageServiceFactory extends AbstractService
     public function getMessage($id) 
     {
         
-        $messages   = $this->getMapper('message')
+        $message   = $this->getMapper('message')
                            ->getMessageById($id);
-        return $messages;
+        return $message;
+        
+    }
+    
+    /**
+     * @return Messages
+     */
+    public function getAllRecipients($id) 
+    {
+        $user = $this->getMapper('message')->getAllRecipients($id);
+        return $user;
+        
+    }
+    
+    /**
+     * @return Messages
+     */
+    public function getUserById($id) 
+    {
+        $user = $this->getMapper('message')->getUserById($id);
+        return $user;
         
     }
     

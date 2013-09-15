@@ -1,0 +1,110 @@
+/*
+* Style for private messages
+* @package: message
+* @author: Holger Maerz
+* @date: 14.09.2013
+*/
+
+#messages {
+    width: auto; 
+    margin-top: 0.5em;
+    border-collapse:collapse;
+}
+
+#messages tr {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+#messages th, #messages td {
+    padding: 5px;
+    vertical-align: middle;
+}
+#messages th {
+    font-weight: bold;
+    text-align: left;
+}
+
+#messages .read {
+    text-align: center;
+}
+
+#messages th.read img {
+    width:16px;
+    height:16px;
+}
+
+#messages .message .read img {
+    width:8px;
+    height:8px;
+}
+
+#messages .message .subject {
+    width: 60%; 
+}
+
+#messages .message:hover td {
+    background: #FFC4C4;
+}
+
+#messages .message  a {
+   display:block;
+}
+#messages .message:hover .subject a {
+    text-decoration: underline;
+}
+
+#message {
+    width: 80%; 
+    margin-top: 0.5em;
+    border:1px lightgrey solid
+}
+
+#message label {
+    display: inline-block;
+    text-align: right;
+    width: 4em;
+    color: grey;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+#message th {
+    color: black;
+    font-weight: normal;
+    background-color: #F0F0F0;
+    border:1px lightgrey solid
+}
+
+
+#message .msghead {
+    display: table;
+    margin: 5px;
+}
+
+#message .msghead .container {
+    display: table-cell;
+}
+
+#message .right div {
+    text-align: right;
+}
+
+#message .msghead .date {
+    vertical-align: bottom;
+    line-height: 1em;
+}
+
+#message button {
+    margin-bottom: 10px;
+}
+
+#message th div {
+    text-align: left;  
+}
+
+#message .message td {
+    padding: 5px;
+}
+
+

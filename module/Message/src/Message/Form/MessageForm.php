@@ -10,20 +10,23 @@ use Message\Entity\Message;
  */
 class MessageForm extends AbstractForm
 {
-   
-    protected $_sid;
-    protected $_title='Top-Liga';
-    protected $_number=1;
+    private $recipients = array();
     
     /**
      * Constructor
      */        
-    public function __construct()
+    public function __construct($recipients)
     {
+        foreach ($recipients as $object) {
+            $this->recipients[$object->getId()] = $object->getShortName() ;
+        }
+        asort($this->recipients);
+        
         //form name is LeagueForm
         parent::__construct($name='MessageForm');
         $this->setObject(new Message());
         $this->setHydrator(new Hydrator());
+        $this->init();
     } 
     
     
@@ -33,48 +36,44 @@ class MessageForm extends AbstractForm
      */
     public function init() {
        
-        //number
+       
+        //recipient
         $this->add(
             array(
-                'name' => 'number',
-                'type' => 'Zend\Form\Element\Text',
+                'name' => 'receiver',
+                'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' =>  $this->translate('League No:'),
+                    'label' =>  $this->translate('recipient').":",
+                    'empty_option' => $this->translate('Please choose'),
+                     'value_options' => $this->recipients,
                 ),
-                'attributes' => array(
-                    'value' => $this->_number,
-                    'readonly'=> true
-                )
+                
             )
         );
         
-        //title
+        //subject
         $this->add(
             array(
-                'name' => 'title',
+                'name' => 'subject',
                 'type' => 'Zend\Form\Element\Text',
                 'options' => array(
-                    'label' =>  $this->translate('Title:'),
+                    'label' =>  $this->translate('subject').':',
                 ),
                 'attributes' => array(
-                    'value' => $this->_title,
+                    'value' => "titel", //$this->_title,
                     
                 )
             )
         );
         
-        //season ID
+        //message
         $this->add(
             array(
-                'type' => 'Zend\Form\Element\Text',
-                'name' => 'sid',
+                'type' => 'Zend\Form\Element\Textarea',
+                'name' => 'message',
                 'options' => array(
-                    'label' =>  $this->translate('SeasonId:'),
+                    'label' =>  $this->translate('message').":",
                 ),
-                'attributes' => array(
-                    'value'  => $this->_sid,
-                    'readonly'=> true
-                )
             )
         );
         
@@ -125,7 +124,7 @@ class MessageForm extends AbstractForm
      
         $filter->add(
              array(
-                 'name' => 'title',
+                 'name' => 'subject',
                  'required' => false,
                  'filters'  => array(
                      array('name' => 'StripTags'),
@@ -136,7 +135,7 @@ class MessageForm extends AbstractForm
                      array('name'    => 'StringLength',
                            'options' => array (
                                   'encoding' => 'UTF-8', 
-                                  'max'  => '20',
+                                  'max'  => '200',
                            )  
                      ),  
                   )

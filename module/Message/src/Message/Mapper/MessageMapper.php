@@ -21,17 +21,41 @@ class MessageMapper extends AbstractMapper
     public function getMessageById($id)  
     {
        
-      $dql = "SELECT m as message 
-               FROM Message\Entity\Message m
-               WHERE m.id=:id";
-      
+          
       $result = $this->getEntityManager()
-                     ->createQuery($dql)
-                     ->setParameter('id', $id)
-                     ->getOneOrNullResult();
-      
-      return $result['message'];
+              ->getRepository('Message\Entity\Message')
+              ->find($id);
+                    
+      return $result;
     }
+    
+    public function getAllRecipients($id)  
+    {
+      $qb = $this->getEntityManager()
+              ->createQueryBuilder()
+              ->select('u')
+              ->from('User\Entity\User', 'u')
+              ->where('u.active = 1')
+              ->andWhere('u.verified = 1')
+              ->andWhere('u.id != :myself')
+              ->setParameter('myself', $id);
+             
+       return $qb->getQuery()->getResult();
+      
+    }
+    
+    public function getUserById($id)  
+    {
+      $result = $this->getEntityManager()
+              ->getRepository('\User\Entity\User')
+              ->find($id);
+             
+       return $result;
+      
+    }
+    
+    
+      
     
    
 }

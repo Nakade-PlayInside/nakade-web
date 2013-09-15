@@ -5,21 +5,23 @@ $this->headTitle("Messages");
 
  <?php   if(is_null($this->message)) die; ?>
 
-<table style="width: 80%; margin-top: 0.5em;border:1px lightgrey solid">
+<table id="message" style="width: 80%; margin-top: 0.5em;border:1px lightgrey solid">
     <tr>
-        <td style="color:grey; text-align:right; padding-right:10px;width:2em;"><?php echo $this->translate('from');?></td>
-        <td><?php echo $this->message->getSender().'Mumm';?></td>
-        <td style="text-align:right;"><button>reply</button><button>delete</button></td>
+        <th>
+            <div class="msghead"> 
+                <div class="container">
+                    <div><label><?php echo $this->translate('from');?>:</label><?php echo $this->message->getSender()->getShortName(); ?></div>
+                    <div><label><?php echo $this->translate('subject');?>:</label><?php echo $this->message->getSubject();?></div>
+                </div>
+                <div class="container right">
+                    <div><button><?php echo $this->translate('reply');?></button><button><?php echo $this->translate('delete');?></button></div>
+                    <div class="date"><?php echo $this->message->getSendDate()->format('d.m.Y H:i');?></div>
+                </div>
+            <div>
+        </th>
     </tr>
-    <tr>
-        <td style="color:grey; text-align:right; padding-right:10px;"><?php echo $this->translate('Subject');?></td>
-        <td style="width:80%"><?php echo $this->message->getSubject();?></td>
-        <td style="text-align:right; padding: 0 5px"><?php echo $this->message->getSendDate()->format('d.m.Y H:i');?></td>
-    </tr>
-</table>
-<table style="background-color:#f0f0f0;width:80%;">
-    <tr> 
-        <td style="width: 100%;padding:5px;"><?php echo $this->message->getMessage(); ?></td>
+    <tr class="message"> 
+        <td><?php echo $this->message->getMessage(); ?></td>
     </tr>
 </table>
   

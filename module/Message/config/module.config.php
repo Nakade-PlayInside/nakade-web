@@ -15,7 +15,6 @@ return array(
     
     'view_helpers' => array(  
         'invokables' => array(  
-           
             // more helpers here ...  
         )  
     ),
@@ -25,23 +24,18 @@ return array(
         'factories' => array(
             'Message\Controller\Message' => 
                 'Message\Services\MessageControllerFactory',
-            
         ),
-        
     ),
     
     'controller_plugins' => array(
       'invokables' => array(
-          
-          
       ),  
     ),
-    
     
     'router' => array(
         'routes' => array(
             
-            //actual season
+            //all messages
             'message' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -56,7 +50,7 @@ return array(
                 'may_terminate' => true,
                 'child_routes' => array(
                     
-                    //league schedule
+                    //show single message 
                     'show' => array(
                         'type'    => 'Segment',
                         'options' => array(
@@ -70,30 +64,22 @@ return array(
                         ),
                     ),
                     
-                    //league table
-                    'table' => array(
+                    //new message
+                    'new' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'   => '/table[/:lid][/:sort]',
-                            'constraints' => array(
-                                'lid'    => '[0-9]+',
-                                'sort'   => '[a-zA-Z]+',
-                            ),
+                            'route'   => '/new',
                             'defaults' => array(
-                                'action' => 'table',
+                                'action' => 'new',
                             ),
                         ),
                     ),
                     
                 )    
             ),
-       
-           
            //next route
-            
         ),
     ),
-    
     
     'view_manager' => array(
         'display_not_found_reason' => true,

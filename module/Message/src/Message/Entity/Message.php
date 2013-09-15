@@ -2,7 +2,6 @@
 
 namespace Message\Entity;
 
-//use League\Entity\Season;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @property int $id
  * @property string $subject
  * @property text $message
- * @property User $senderId 
- * @property User $receiverId 
+ * @property User $sender
+ * @property User $receiver 
  * @property DateTime $sendDate 
  * @property DateTime $readDate 
  * @property string $box 
@@ -27,58 +26,57 @@ class Message
   private $id;
   
   /**
-   * @ORM\Column(name="subject", type="string")
+   * @ORM\Column(name="subject", type="string", nullable=false)
    */
   private $subject;
   
   /**
-   * @ORM\Column(name="message", type="text")
+   * @ORM\Column(name="message", type="text", nullable=false)
    */
   private $message;
   
   /**
    * @var User\Entity\User
    *
-   * @ORM\OneToOne(targetEntity="User\Entity\User")
-   * @ORM\JoinColumns({
-   * @ORM\JoinColumn(name="senderId", referencedColumnName="uid")
-   * })
+   * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
+   * @ORM\JoinColumn(name="sender", referencedColumnName="uid", nullable=false)
+   * 
    */
   private $sender;
   
   /**
    * @var User\Entity\User
    *
-   * @ORM\ManyToOne(targetEntity="User\Entity\User")
-   * @ORM\JoinColumns({
-   * @ORM\JoinColumn(name="receiverId", referencedColumnName="uid")
-   * })
+   * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
+   * @ORM\JoinColumn(name="receiver", referencedColumnName="uid", nullable=false)
+   * 
    */
   private $receiver;
   
   /**
-   * @ORM\Column(name="sendDate", type="datetime")
+   * @ORM\Column(name="sendDate", type="datetime", nullable=false)
    */
   private $sendDate;
   
   /**
-   * @ORM\Column(name="readDate", type="datetime")
+   * @ORM\Column(name="readDate", type="datetime", nullable=true)
    */
   private $readDate;
     
   /**
-   * @ORM\Column(name="box", type="string")
+   * @ORM\Column(name="box", type="string", nullable=false)
    */
-  private $mailbox;
+  private $mailbox="maibox";
   
     public function getId() 
     {
-        $this->id;
+        return $this->id;
     }
 
     public function setId($id) 
     {
         $this->id = $id;
+        return $this;
     }
 
     public function getSubject() 
@@ -89,6 +87,7 @@ class Message
     public function setSubject($subject)
     {
         $this->subject = $subject;
+        return $this;
     }
 
     public function getMessage() 
@@ -99,6 +98,7 @@ class Message
     public function setMessage($message) 
     {
         $this->message = $message;
+        return $this;
     }
 
     public function getReceiver() 
@@ -109,6 +109,7 @@ class Message
     public function setReceiver($receiver) 
     {
         $this->receiver = $receiver;
+        return $this;
     }
 
     public function getSender() 
@@ -119,6 +120,7 @@ class Message
     public function setSender($sender) 
     {
         $this->sender = $sender;
+        return $this;
     }
 
     public function getSendDate() 
@@ -129,6 +131,7 @@ class Message
     public function setSendDate($sendDate) 
     {
         $this->sendDate = $sendDate;
+        return $this;
     }
 
     public function getReadDate() 
@@ -139,6 +142,7 @@ class Message
     public function setReadDate($readDate) 
     {
         $this->readDate = $readDate;
+        return $this;
     }
     
     public function getMailbox() 
@@ -149,6 +153,7 @@ class Message
     public function setMailbox($mailbox) 
     {
         $this->mailbox = $mailbox;
+        return $this;
     }
   
   /**
