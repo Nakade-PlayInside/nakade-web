@@ -45,7 +45,7 @@ class MessageForm extends AbstractForm
                 'options' => array(
                     'label' =>  $this->translate('recipient').":",
                     'empty_option' => $this->translate('Please choose'),
-                     'value_options' => $this->recipients,
+                    'value_options' => $this->recipients,
                 ),
                 
             )

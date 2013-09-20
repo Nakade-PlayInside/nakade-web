@@ -75,6 +75,18 @@ return array(
                         ),
                     ),
                     
+                    //reply
+                    'reply' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/reply',
+                            'defaults' => array(
+                                'action' => 'reply',
+                                
+                            ),
+                        ),
+                    ),
+                    
                 )    
             ),
            //next route

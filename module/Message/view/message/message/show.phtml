@@ -14,7 +14,7 @@ $this->headTitle("Messages");
                     <div><label><?php echo $this->translate('subject');?>:</label><?php echo $this->message->getSubject();?></div>
                 </div>
                 <div class="container right">
-                    <div><button><?php echo $this->translate('reply');?></button><button><?php echo $this->translate('delete');?></button></div>
+                    <div><form action="<?php echo $this->url('message/reply'); ?>"><button type="submit"><?php echo $this->translate('reply');?></button></form><button><?php echo $this->translate('delete');?></button></div>
                     <div class="date"><?php echo $this->message->getSendDate()->format('d.m.Y H:i');?></div>
                 </div>
             <div>

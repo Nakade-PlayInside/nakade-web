@@ -68,6 +68,8 @@ class Message
    */
   private $mailbox="maibox";
   
+ 
+  
     public function getId() 
     {
         return $this->id;
@@ -155,7 +157,9 @@ class Message
         $this->mailbox = $mailbox;
         return $this;
     }
-  
+    
+    
+    
   /**
    * populating data as an array.
    * key of the array is getter methods name. 

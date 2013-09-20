@@ -3,6 +3,7 @@ namespace Message\Controller;
 
 use Nakade\Abstracts\AbstractController;
 use Message\Form\MessageForm;
+use Message\Form\ReplyForm;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -97,6 +98,65 @@ class MessageController extends AbstractController
                 return $this->redirect()->toRoute('message');
             }
         }
+
+        
+        return new ViewModel(
+           array('form' => $form)
+        );
+    }
+    
+    public function replyAction()
+    {
+       
+       if($this->identity() === null) {
+           return $this->redirect()->toRoute('login');
+       }
+      
+       $id  = (int) $this->params()->fromRoute('id', 1);
+       $message = $this->getService()->getMessage($id);
+      
+       $sender = $message->getSender();
+       $message->setSubject('Re: '.$message->getSubject());
+      // var_dump($message); 
+       $form = new ReplyForm($sender);
+       $form->bindEntity($message);
+       
+       
+       /*
+       if ($this->getRequest()->isPost()) {
+            
+            //get post data, set data to from, prepare for validation
+            $postData =  $this->getRequest()->getPost();
+            
+            //cancel
+            if($postData['cancel']) {
+                return $this->redirect()->toRoute('message');
+            }
+            
+            $form->setData($postData);
+           
+            if ($form->isValid()) {
+           
+                $message = $form->getData();
+                
+                //date
+                $message->setSendDate(new \DateTime());
+                
+                $sender = $this->getService()
+                    ->getUserById($message->getSender());
+                //sender
+                $message->setSender($sender);
+                
+                $recipient = $this->getService()
+                    ->getUserById($message->getReceiver());
+                //receiver
+                $message->setReceiver($recipient);
+                
+                $this->getService()->getMapper('message')->save($message);
+                
+                return $this->redirect()->toRoute('message');
+            }
+        }*/
 
         
         return new ViewModel(
