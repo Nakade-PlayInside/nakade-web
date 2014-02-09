@@ -24,6 +24,10 @@ $this->headTitle($title);
     <td><?php echo $this->editEmail($this->profile);  ?></td>
 </tr>
 <tr>
+    <td><?php echo $this->translate("KGS:");?></td>
+    <td><?php echo $this->editKgs($this->profile);  ?></td>
+</tr>
+<tr>
     <td><?php echo $this->translate("Username:");?></td>
     <td><?php echo $this->escapeHtml($this->username);?></td>
 </tr>

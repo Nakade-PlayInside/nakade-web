@@ -12,7 +12,8 @@ $this->headTitle($title);
     <th><?php echo $this->translate("Sex"); ?></th>
     <th><?php echo $this->translate("Name"); ?></th>
     <th><?php echo $this->translate("Nick"); ?></th>
-    <th><?php echo $this->translate("Username"); ?></th>     
+    <th><?php echo $this->translate("Username"); ?></th>
+    <th><?php echo $this->translate("KGS"); ?></th>
     <th><?php echo $this->translate("email"); ?></th>  
     <th><?php echo $this->translate("verified"); ?></th>     
     <th><?php echo $this->translate("active"); ?></th>
@@ -29,6 +30,7 @@ foreach ($this->users as $user) : ?>
     <td><?php echo $this->escapeHtml($user->getName());?></td>
     <td><?php echo $this->escapeHtml($user->getNickname());?></td>
     <td><?php echo $this->escapeHtml($user->getUsername()); ?></td>
+    <td><?php echo $this->escapeHtml($user->getKgs()); ?></td>
     <td><?php echo $this->escapeHtml($user->getEmail()); ?></td>
     <td style="width:1em;text-align:center"><?php echo $this->showVerified($user); ?></td>
     <td style="width:1em;text-align:center"><?php echo $this->showActive($user->isActive()); ?></td>

@@ -128,7 +128,48 @@ class ProfileController extends AbstractController
            )
        );
     }
-    
+
+    /**
+     * edit the KGS name
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function kgsAction()
+    {
+        $profile = $this->getProfile();
+
+        $form = $this->getForm('kgs');
+        $form->bindEntity($profile);
+
+        if ($this->getRequest()->isPost()) {
+
+            //get post data, set data to from, prepare for validation
+            $postData =  $this->getRequest()->getPost();
+
+            //cancel
+            if($postData['cancel']) {
+                return $this->redirect()->toRoute('profile');
+            }
+
+            $form->setData($postData);
+
+            if ($form->isValid()) {
+
+                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
+                $data['uid']=$this->getProfile()->getId();
+                $this->getService()->editProfile($data);
+
+                return $this->redirect()->toRoute('profile');
+            }
+        }
+
+        return new ViewModel(
+            array(
+                'form'    => $form
+            )
+        );
+    }
+
     /**
      * edit the email
      * 

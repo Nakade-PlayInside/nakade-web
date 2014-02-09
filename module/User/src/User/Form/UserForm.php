@@ -131,6 +131,20 @@ class UserForm extends AbstractForm
                 )
             )
         );
+
+        //kgs name
+        $this->add(
+            array(
+                'name' => 'kgs',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array(
+                    'label' =>  $this->translate('KGS (opt.):'),
+                ),
+                'attributes' => array(
+
+                )
+            )
+        );
         
         //email
         $this->add(

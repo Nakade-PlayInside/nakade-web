@@ -24,8 +24,9 @@ return array(
             'showPwdReset'  => 'User\View\Helper\ShowPwdReset',
             'editBirthday'  => 'User\View\Helper\EditBirthday',
             'editNick'      => 'User\View\Helper\EditNick',
-            'editEmail'      => 'User\View\Helper\EditEmail',
-            'editPassword'      => 'User\View\Helper\EditPassword',
+            'editEmail'     => 'User\View\Helper\EditEmail',
+            'editPassword'  => 'User\View\Helper\EditPassword',
+            'editKgs'  => 'User\View\Helper\EditKgs',
             // more helpers here ...  
         )  
     ),

@@ -83,8 +83,11 @@ class FormFactory extends AbstractFormFactory
                             break;
                         
            case "nick":     $form = new Form\NickForm();
-                            break;                          
-                        
+                            break;
+
+           case "kgs":      $form = new Form\KgsForm();
+                            break;
+
            case "password": $form = new Form\PasswordForm();
                             break;
            

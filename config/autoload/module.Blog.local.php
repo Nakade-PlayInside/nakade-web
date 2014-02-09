@@ -13,6 +13,7 @@ return array(
     'db_blog' => array(
         'username' => 'wordpress',
         'password' => 'j7F9wMWKLdXEJTbP',
+	
     ),
 
 );

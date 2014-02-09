@@ -103,6 +103,15 @@ class User
    * @access protected
    */
   protected $password;
+
+   /**
+    * kgs username
+    *
+    * @ORM\Column(name="kgs", type="string")
+    * @var string
+    * @access protected
+    */
+  protected $kgs;
   
   /**
    * email
@@ -384,7 +393,31 @@ class User
   {
     return $this->password;
   }
-  
+
+    /**
+    * Sets the Kgs Name
+    *
+    * @param string $name
+    * @access public
+    * @return User
+    */
+    public function setKgs($name)
+    {
+    $this->kgs = $name;
+    return $this;
+    }
+
+    /**
+    * Returns the Kgs Name
+    *
+    * @access public
+    * @return string
+    */
+    public function getKgs()
+    {
+    return $this->kgs;
+    }
+
   /**
    * Sets the generated password
    *
