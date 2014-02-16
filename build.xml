@@ -22,7 +22,7 @@
     
     <!-- build project ,phpcs,phpdoc,phpcb -->
     <target name="build" 
-            depends="prepare,lint,analysis,phpcs,phpdoc,phpcb" />
+            depends="prepare,lint,analysis,phpcs,phpdoc,phpcb,vendor" />
   
        
     <!-- deleting build dir -->
@@ -182,13 +182,41 @@
             <arg value="build" />
         </exec>
     </target>
-    
-
-
  
-    <!-- unit tests do need the vendor dir -->
+   
+    <!-- prior to unit tests the vendors need to be downloaded -->
     <target name="vendor" 
             depends="composer-self-update,vendor-install,vendor-autoload" />
+
+
+    <!--composer self-update -->
+    <target name="composer-self-update" description="composer self-update">
+        <exec executable="php" failonerror="false">
+             <arg value="${basedir}/composer.phar" />
+             <arg value="self-update" />
+        </exec>
+    </target>
+    
+    <!-- vendor download -->
+    <target name="vendor-install" description="composer install">
+        <exec executable="php" failonerror="true">
+             <arg value="${basedir}/composer.phar" />
+             <arg value="install" />
+        </exec>
+    </target>
+    
+    <!-- autoloading -->
+    <target name="vendor-autoload" description="performing autoload">
+        <exec executable="php" failonerror="false">
+             <arg value="${basedir}/composer.phar" />
+             <arg value="dump-autoload" />
+             <arg value="--optimize" />
+        </exec>
+    </target>
+
+
+
+
     
     <target name="deployment" 
             depends="package,deploy.mkdir,deploy.copy,deploy.unpack,
@@ -199,32 +227,8 @@
     <target name="build_2" 
             depends="vendor,deployment,postaction" />
 
-      
-      
- 
     
-    <!--composer -->
-    <target name="composer-self-update" description="composer self-update">
-        <exec executable="php" failonerror="false">
-             <arg value="${basedir}/composer.phar" />
-             <arg value="self-update" />
-        </exec>
-    </target>
-    
-    <target name="vendor-install" description="composer install">
-        <exec executable="php" failonerror="true">
-             <arg value="${basedir}/composer.phar" />
-             <arg value="install" />
-        </exec>
-    </target>
-    
-    <target name="vendor-autoload" description="performing autoload">
-        <exec executable="php" failonerror="false">
-             <arg value="${basedir}/composer.phar" />
-             <arg value="dump-autoload" />
-             <arg value="--optimize" />
-        </exec>
-    </target>
+   
     
     <!-- deployment -->
     
