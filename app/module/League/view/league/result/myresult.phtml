@@ -1,0 +1,48 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('League'); 
+
+$title = $this->translate('My results');
+$this->headTitle($title);
+?>
+
+<?php $this->placeholder('noresults')->captureStart();?>
+<h3><?php echo $this->translate('No results found')?></h3>
+<?php $this->placeholder('noresults')->captureEnd(); ?>
+
+<?php $this->placeholder('openresults')->captureStart();?>
+<h3><?php echo $this->translate('my results'); ?></h3>
+<table class="league">
+<?php foreach ($this->matches as $game) : ?>
+<tr style="background-color:<?php 
+        $color = $this->cycle(array("#F0F0F0","transparent"))->next();
+        if( $this->isOpen($game)){ $color = "#FFC4C4"; }    
+        echo $color;          
+    ?>">
+    <td class="space"><?php echo $game->getDate()->format('d.m.y H');?>h</td>
+    <td <?php $this->isWinner($game, $game->getBlackId()); ?>>
+        <?php echo $this->escapeHtml($game->getBlack()->getShortName());?></td>
+    <td class="versus">-</td>
+    <td class="space" <?php $this->isWinner($game, $game->getWhiteId()); ?>>
+        <?php echo $this->escapeHtml($game->getWhite()->getShortName());?></td>
+    <td><?php  if($this->isOpen($game)) {
+                  
+      echo   sprintf('<a href="%s" title="%s">%s</a>',
+                 $this->url('result/add', array('action'=>'add', 'id'=>$game->getId()) ),
+                 $this->translate("Enter Result"),
+                 $this->translate("open")
+             );
+     }
+     else echo $this->result($game);
+     
+        ?>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
+<?php $this->placeholder('openresults')->captureEnd(); 
+
+  if($this->matches!=null)
+        echo $this->placeholder('openresults');
+  else  echo $this->placeholder('noresults');       
+        
+?>

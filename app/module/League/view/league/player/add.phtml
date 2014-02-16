@@ -1,0 +1,17 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('League'); 
+
+$title = $this->translate('add new player');
+$this->headTitle('Player');
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+
+<?php
+
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();
+
+?>

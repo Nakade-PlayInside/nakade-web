@@ -1,0 +1,39 @@
+<?php
+// module/user/view/user/user/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('User'); 
+$title = $this->translate('Profile');
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<table class="table" style="width:auto">
+<tr>
+    <td><?php echo $this->translate("Name:");?></td>
+    <td><?php echo $this->escapeHtml($this->name);?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Birthday:");?></td>
+    <td><?php echo $this->editBirthday($this->profile); ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Nick:");?></td>
+    <td><?php echo $this->editNick($this->profile); ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("email:");?></td>
+    <td><?php echo $this->editEmail($this->profile);  ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("KGS:");?></td>
+    <td><?php echo $this->editKgs($this->profile);  ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Username:");?></td>
+    <td><?php echo $this->escapeHtml($this->username);?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Password");?></td>
+    <td><?php echo $this->editPassword($this->profile);  ?></td>
+</tr>
+
+</table>

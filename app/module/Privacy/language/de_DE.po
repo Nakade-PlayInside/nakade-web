@@ -1,0 +1,62 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Impressum Nakade\n"
+"POT-Creation-Date: 2012-12-08 01:24+0100\n"
+"PO-Revision-Date: 2012-12-08 01:26+0100\n"
+"Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
+"Language-Team: Nakade <holger@spandaugo.de>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.3\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: D:\\projekte\\Nakade\\module\\Impressum\n"
+
+#: D:\projekte\Nakade\module\Impressum/view/impressum/impressum/index.phtml:5
+msgid "Imprint"
+msgstr "Impressum"
+
+#: D:\projekte\Nakade\module\Impressum/view/impressum/impressum/index.phtml:13
+msgid "President"
+msgstr "Präsident"
+
+#: D:\projekte\Nakade\module\Impressum/view/impressum/impressum/index.phtml:19
+msgid "Court of registration:"
+msgstr "Registergericht:"
+
+#: D:\projekte\Nakade\module\Impressum/view/impressum/impressum/index.phtml:21
+msgid "Number of registration::"
+msgstr "Registernummer:"
+
+#: D:\projekte\Nakade\module\Impressum/view/impressum/impressum/index.phtml:26
+msgid "Bank:"
+msgstr "Bankverbindung:"
+
+#: D:\projekte\Nakade\module\Impressum/view/impressum/impressum/index.phtml:36
+msgid "Disclaimer:"
+msgstr "Haftungshinweis:"
+
+#: D:\projekte\Nakade\module\Impressum/view/impressum/impressum/index.phtml:37
+msgid ""
+"According to the German law and despite careful control, we assume no "
+"liability for the content of external links. For the content of linked pages "
+"their operators are responsible."
+msgstr ""
+"Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für "
+"die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind "
+"ausschließlich deren Betreiber verantwortlich."
+
+#~ msgid "Registernummer:"
+#~ msgstr "Registernummer:"
+
+#~ msgid ""
+#~ "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung "
+#~ "für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind "
+#~ "ausschließlich deren Betreiber verantwortlich."
+#~ msgstr ""
+#~ "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung "
+#~ "für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind "
+#~ "ausschließlich deren Betreiber verantwortlich."

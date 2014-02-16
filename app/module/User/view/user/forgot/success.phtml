@@ -1,0 +1,9 @@
+<?php
+// module/user/view/user/user/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('User'); 
+$title = $this->translate('Success');
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p style="font-size:larger;margin: 10px 0;"><?php echo $this->translate('Your new credentials were send to you.'); ?>  
+<br/><?php echo $this->translate('Please do not forget to activate your account.');?></p>
