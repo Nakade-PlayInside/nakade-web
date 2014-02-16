@@ -20,9 +20,9 @@
     <property name="MINOR" value="1"/>
     <property name="VERSION" value="${MAJOR}.${MINOR}.${env.BUILD_NUMBER}" />
     
-    <!-- build project -->
+    <!-- build project ,phpcs,phpdoc,phpcb -->
     <target name="build" 
-            depends="prepare,lint,analysis,phpcs,phpdoc,phpcb" />
+            depends="prepare,lint,analysis" />
   
        
     <!-- deleting build dir -->
