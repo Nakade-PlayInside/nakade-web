@@ -73,7 +73,7 @@
     <target name="postaction" depends="cache.clear,deploy.clean" />
     
     <target name="build_2" 
-            depends="init,parallelTasks,phpcb,vendor,deployment,postaction" />
+            depends="parallelTasks,phpcb,vendor,deployment,postaction" />
     
     
 
