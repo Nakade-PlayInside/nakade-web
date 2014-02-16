@@ -1,8 +1,9 @@
 {
+  "minimum-stability": "dev",
   "repositories": [
     {
         "type": "composer",
-        "url": "http://packages.zendframework.com/"
+        "url": "https://packages.zendframework.com/"
     }
   ],
   "require": {
@@ -12,6 +13,6 @@
         "zendframework/zendpdf": "2.*",
         "zendframework/zendservice-recaptcha": "2.*",
         "doctrine/doctrine-orm-module": "0.*",
-        "zf-commons/zfc-rbac": "dev-master"
+        "zf-commons/zfc-rbac": "~2.0"
   }
 }
