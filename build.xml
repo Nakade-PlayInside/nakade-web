@@ -22,7 +22,7 @@
     
     <!-- build project -->
     <target name="build" 
-            depends="prepare" />
+            depends="prepare,lint,analysis,phpcs,phpdoc,phpcb" />
   
        
     <!-- deleting build dir -->
@@ -45,39 +45,7 @@
         <mkdir dir="${basedir}/build/pdepend"/>
     </target>
 
-   
-    <target name="parallelTasks"
-          description="run detection using a maximum of 2 threads.">
-        <parallel threadCount="2">
-            <sequential>
-                <antcall target="pdepend"/>
-                <antcall target="phpmd"/>
-                <antcall target="phpmd-ci"/>
-            </sequential>
-            <antcall target="phpcpd"/>
-            <antcall target="phpdcd"/>
-            <antcall target="phpcs"/>
-            <antcall target="phpdoc"/>
-            <antcall target="phploc"/>
-        </parallel>
-    </target>
-  
-    <!-- unit tests do need the vendor dir -->
-    <target name="vendor" 
-            depends="composer-self-update,vendor-install,vendor-autoload" />
-    
-    <target name="deployment" 
-            depends="package,deploy.mkdir,deploy.copy,deploy.unpack,
-                    deploy.rights,deploy.group,deploy.link" />
-    
-    <target name="postaction" depends="cache.clear,deploy.clean" />
-    
-    <target name="build_2" 
-            depends="parallelTasks,phpcb,vendor,deployment,postaction" />
-    
-    
-
-    <!-- detection code quality -->
+     <!-- static code analysis -->
     <target name="lint" description="syntax check">
         <apply executable="php" failonerror="true">
             <arg value="-l" />
@@ -88,16 +56,24 @@
             </fileset>
         </apply>
     </target>
-
-    <target name="phploc" description="measure lines of code">
-        <exec executable="phploc">
-            <arg value="--log-csv" />
-            <arg value="${basedir}/build/logs/phploc.csv" />
-            <arg path="${basedir}/${app-dir}" />
-        </exec>
+   
+    <!-- combination of several tasks for code quality analysis -->
+    <target name="analysis"
+          description="run detection using a maximum of 2 threads.">
+        <parallel threadCount="2">
+            <sequential>
+                <antcall target="pdepend"/>
+                <antcall target="phpmd"/>
+                <antcall target="phpmd-ci"/>
+            </sequential>
+            <antcall target="phpcpd"/>
+            <antcall target="phpdcd"/>
+            <antcall target="phploc"/>
+        </parallel>
     </target>
 
-    <target name="pdepend" description="software metrics">
+    <!-- software metrics -->
+     <target name="pdepend" description="software metrics">
         <exec executable="pdepend">
             <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
             <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
@@ -106,6 +82,7 @@
         </exec>
     </target>
 
+    <!-- mess detection -->
     <target name="phpmd" description="mess detection in human readable output">
         <exec executable="phpmd">
             <arg path="${basedir}/${app-dir}" />
@@ -114,6 +91,7 @@
         </exec>
     </target>
     
+    <!-- mess detection in xml -->
     <target name="phpmd-ci"  description="mess detection xml for analysis">
         <exec executable="phpmd">
             <arg path="${basedir}/${app-dir}" />
@@ -123,7 +101,8 @@
             <arg value="${basedir}/build/logs/pmd.xml" />
         </exec>
     </target>
-    
+
+    <!-- copy and paste detector -->
     <target name="phpcpd" description="duplicate code detection">
         <property name="phpcpd" value="/usr/bin/phpcpd" />
         <exec executable="${phpcpd}" failonerror="false">
@@ -132,8 +111,9 @@
             <arg path="${basedir}/${app-dir}" />
         </exec>
     </target>
-    
-    <target name="phpdcd" description="dead code detection (console only)">
+
+   <!-- dead code detector -->
+   <target name="phpdcd" description="dead code detection (console only)">
         <property name="phpdcd" value="/usr/bin/phpdcd" />
         <exec executable="${phpdcd}" failonerror="false">
             <arg value="--recursive" />
@@ -145,6 +125,16 @@
         </exec>
     </target>
     
+    <!-- line of codes -->
+    <target name="phploc" description="measure lines of code">
+        <exec executable="phploc">
+            <arg value="--log-csv" />
+            <arg value="${basedir}/build/logs/phploc.csv" />
+            <arg path="${basedir}/${app-dir}" />
+        </exec>
+    </target>
+
+    <!-- code sniffer coding style standard -->
     <target name="phpcs" description="sniffing for coding style standard">
         <exec executable="/usr/bin/phpcs">
             <arg value="--report=checkstyle" />
@@ -155,22 +145,8 @@
             <arg path="${basedir}/${app-dir}" />
         </exec>
     </target>
-    
-    <target name="phpcb"
-          description="Aggregate tool output with PHP_CodeBrowser">
-        <exec executable="phpcb">
-            <arg value="--log" />
-            <arg value="${basedir}/build/logs" />
-            <arg value="--source" />
-            <arg value="${app-dir}" />
-            <arg value="--output" />
-            <arg value="${basedir}/build/code-browser" />
-            <arg value="--ignore" />
-            <arg value="build" />
-        </exec>
-   </target>
-    
-   <!-- documentation --> 
+
+   <!-- inline-documentation --> 
    <target name="phpdoc" description="Generates API documentation">
        <exec executable="/usr/bin/phpdoc">
             <arg value="--directory" />
@@ -191,6 +167,41 @@
             <arg value="HTML:frames:earthli" />
         </exec>
     </target>
+
+    <!-- code browser -->
+    <target name="phpcb"
+          description="Aggregate tool output with PHP_CodeBrowser">
+        <exec executable="phpcb">
+            <arg value="--log" />
+            <arg value="${basedir}/build/logs" />
+            <arg value="--source" />
+            <arg value="${app-dir}" />
+            <arg value="--output" />
+            <arg value="${basedir}/build/code-browser" />
+            <arg value="--ignore" />
+            <arg value="build" />
+        </exec>
+    </target>
+    
+
+
+ 
+    <!-- unit tests do need the vendor dir -->
+    <target name="vendor" 
+            depends="composer-self-update,vendor-install,vendor-autoload" />
+    
+    <target name="deployment" 
+            depends="package,deploy.mkdir,deploy.copy,deploy.unpack,
+                    deploy.rights,deploy.group,deploy.link" />
+    
+    <target name="postaction" depends="cache.clear,deploy.clean" />
+    
+    <target name="build_2" 
+            depends="vendor,deployment,postaction" />
+
+      
+      
+ 
     
     <!--composer -->
     <target name="composer-self-update" description="composer self-update">
