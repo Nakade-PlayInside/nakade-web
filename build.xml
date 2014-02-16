@@ -5,7 +5,7 @@
     <property name="app-dir" value="app" />
     
     <!-- path to the web source code -->
-    <property name="www-dir" value="/var/www/nakade_test" />
+    <property name="www-dir" value="/var/www/nakade-test" />
     
     <!-- symbolic link path -->
     <property name="link" value="${www-dir}/prod" />
@@ -20,11 +20,32 @@
     <property name="MINOR" value="1"/>
     <property name="VERSION" value="${MAJOR}.${MINOR}.${env.BUILD_NUMBER}" />
     
+    <!-- build project -->
+    <target name="build" 
+            depends="prepare" />
+  
+       
+    <!-- deleting build dir -->
+    <target name="clean" description="cleanup previous build artifacts">
+        <delete dir="${basedir}/build/package"/>
+        <delete dir="${basedir}/build/code-browser"/>
+        <delete dir="${basedir}/build/coverage"/>
+        <delete dir="${basedir}/build/docs"/>
+        <delete dir="${basedir}/build/logs"/>
+        <delete dir="${basedir}/build/pdepend"/>
+    </target>
     
+    <!-- create new build dir after deleting existing --> 
+    <target name="prepare" depends="clean" description="prepare build dir">
+        <mkdir dir="${basedir}/build/package"/>
+        <mkdir dir="${basedir}/build/code-browser"/>
+        <mkdir dir="${basedir}/build/coverage"/>
+        <mkdir dir="${basedir}/build/docs"/>
+        <mkdir dir="${basedir}/build/logs"/>
+        <mkdir dir="${basedir}/build/pdepend"/>
+    </target>
+
    
-    <!--build -->
-    <target name="init" depends="prepare,lint" />
-        
     <target name="parallelTasks"
           description="run detection using a maximum of 2 threads.">
         <parallel threadCount="2">
@@ -51,7 +72,7 @@
     
     <target name="postaction" depends="cache.clear,deploy.clean" />
     
-    <target name="build" 
+    <target name="build_2" 
             depends="init,parallelTasks,phpcb,vendor,deployment,postaction" />
     
     <!--init -->
