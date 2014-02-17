@@ -83,7 +83,7 @@ class AuthenticationTest extends PHPUnit_Framework_TestCase
         $this->markTestIncomplete(
             'This test has not been implemented yet.'
         );
-        
+
        $response = $this->isAuthenticated('InactiveUser', 'password');
             
        //identity was not set
