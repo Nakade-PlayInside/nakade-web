@@ -183,6 +183,13 @@
     <target name="vendor" 
             depends="composer-self-update,vendor-install,vendor-autoload" />
 
+    <!-- downloading composer -->
+    <target name="composer-download" description="getting composer">
+        <exec executable="wget" failonerror="true">
+            <arg value="-nc" />
+            <arg value="http://getcomposer.org/composer.phar" />
+        </exec>
+    </target>
 
     <!--composer self-update -->
     <target name="composer-self-update" description="composer self-update">
