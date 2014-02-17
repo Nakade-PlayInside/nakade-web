@@ -22,7 +22,7 @@
     
     <!-- build project ,phpcs,phpdoc,phpcb -->
     <target name="build" 
-            depends="prepare,lint,analysis,phpcs,phpdoc,phpcb,vendor" />
+            depends="prepare,lint,analysis,phpcs,phpdoc,phpcb,vendor,deployment" />
   
        
     <!-- deleting build dir -->
@@ -183,7 +183,7 @@
         </exec>
     </target>
  
-   
+    <!-- ****************************************************  --> 
     <!-- prior to unit tests the vendors need to be downloaded -->
     <target name="vendor" 
             depends="composer-self-update,vendor-install,vendor-autoload" />
@@ -214,27 +214,21 @@
         </exec>
     </target>
 
-
-
-
+   
+    <!-- ******************************************************* -->
+    <!-- path to the versioned app code -->
+    <property name="version-dir" value="${www-dir}/version" />
     
+    <!-- symbolic link path -->
+    <property name="link" value="${www-dir}/prod" />
+    
+    <!-- deployment -->
     <target name="deployment" 
             depends="package,deploy.mkdir,deploy.copy,deploy.unpack,
                     deploy.rights,deploy.group,deploy.link" />
     
-    <target name="postaction" depends="cache.clear,deploy.clean" />
-    
-    <target name="build_2" 
-            depends="vendor,deployment,postaction" />
 
-    
-   
-    
-    <!-- deployment -->
-    
-    <!-- path to the versioned app code -->
-    <property name="version-dir" value="${www-dir}/version" />
-    
+    <!-- making a compressed file -->
     <target name="package" description="packaging source code">
         <tar destfile="${basedir}/build/package/${pkg-name}.tar">
             <tarfileset dir="${basedir}">
@@ -251,7 +245,8 @@
               src="${basedir}/build/package/${pkg-name}.tar" />
     </target>
     
-    <target name="deploy.mkdir" description="make deploymnet directories">
+    <!-- creating necessary directories -->
+    <target name="deploy.mkdir" description="make deployment directories">
         <exec executable="mkdir" failonerror="true">
              <arg value="--parents" />
              <arg value="${www-dir}/tmp" />
@@ -260,19 +255,22 @@
         </exec>
     </target>
     
+    <!-- copy package to temporary dir -->
     <target name="deploy.copy" description="copy deployment data">
         <exec executable="cp" failonerror="true">
              <arg value="${basedir}/build/package/${pkg-name}.tar.gz" />
              <arg value="${www-dir}/tmp/${pkg-name}.tar.gz" />
         </exec>
     </target>
-    
+
+    <!-- uncompress all files to versions directory -->    
     <target name="deploy.unpack" description="unzip deployment data">
         <gunzip src="${www-dir}/tmp/${pkg-name}.tar.gz"/>
         <untar src="${www-dir}/tmp/${pkg-name}.tar" 
                dest="${version-dir}/${env.BUILD_NUMBER}/"/>
     </target>
     
+    <!-- set rights to 775 -->
     <target name="deploy.rights" description="set rights for files">
         <exec executable="chmod" failonerror="true">
              <arg value="--recursive" />
@@ -281,7 +279,8 @@
         </exec>
     </target>
     
-    <target name="deploy.group" description="set rights for files">
+    <!-- set owner to www-data -->
+    <target name="deploy.group" description="set owner to www-data">
         <exec executable="chgrp" failonerror="true">
             <arg value="--recursive" /> 
             <arg value="www-data" />
@@ -289,19 +288,30 @@
         </exec>
     </target>
     
-    <target name="deploy.link" description="set rights for files">
+    <!-- set symbolic link from version --> 
+    <target name="deploy.link" description="set symbolic link">
         <exec executable="ln" failonerror="true">
             <arg line="-nfs ${version-dir}/${env.BUILD_NUMBER}/app ${link}" />
         </exec>
     </target>
+
+
+    <!-- **************************************************************** -->
+
+    <!-- path to the cache -->
+    <property name="data-cache" value="app/data/cache" />
+
     
-    <target name="cache.clear" description="set rights for files">
+    
+    <target name="postaction" depends="cache.clear,deploy.clean" />
+    
+    <target name="cache.clear" description="remove data cache files">
         <exec executable="rm">
             <arg line="-rf ${version-dir}/${env.BUILD_NUMBER}/${data-cache}/*"/> 
         </exec>
     </target>
     
-    <target name="deploy.clean" description="set rights for files">
+    <target name="deploy.clean" description="remove deployment compressed files">
         <exec executable="rm">
            <arg value="${www-dir}/tmp/${pkg-name}.tar.gz"/>
            <arg value="${www-dir}/tmp/${pkg-name}.tar"/>
