@@ -170,7 +170,7 @@
             <arg value="--log" />
             <arg value="${basedir}/build/logs" />
             <arg value="--source" />
-            <arg value="${app-dir}" />
+            <arg value="${basedir}" />
             <arg value="--output" />
             <arg value="${basedir}/build/code-browser" />
             <arg value="--ignore" />
