@@ -212,7 +212,7 @@
     <!-- ******************************************************* -->
     <!-- unit testing -->
     <target name="phpunit" description="Run unit tests with PHPUnit">
-        <exec dir="${basedir}/tests" executable="phpunit" failonerror="true" />
+        <exec dir="${basedir}/tests" executable="phpunit" failonerror="false" />
     </target>
    
     <!-- ******************************************************* -->
