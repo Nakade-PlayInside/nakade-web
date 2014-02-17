@@ -181,7 +181,7 @@
     <!-- ****************************************************  --> 
     <!-- prior to unit tests the vendors need to be downloaded -->
     <target name="vendor" 
-            depends="composer-self-update,vendor-install,vendor-autoload" />
+            depends="composer-download,composer-self-update,vendor-install,vendor-autoload" />
 
     <!-- downloading composer -->
     <target name="composer-download" description="getting composer">
