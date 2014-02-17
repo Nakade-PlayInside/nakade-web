@@ -17,7 +17,7 @@
     
     <!-- build project ,phpcs,phpdoc,phpcb -->
     <target name="build" 
-            depends="prepare,lint,analysis,phpcs,phpdoc,phpcb,vendor,deployment,postaction" />
+            depends="prepare,lint,analysis,phpcs,phpdoc,phpcb,vendor,phpunit,deployment,postaction" />
   
        
     <!-- deleting build dir -->
@@ -209,6 +209,11 @@
         </exec>
     </target>
 
+    <!-- ******************************************************* -->
+    <!-- unit testing -->
+    <target name="phpunit" description="Run unit tests with PHPUnit">
+        <exec dir="${basedir}/tests" executable="phpunit" failonerror="true" />
+    </target>
    
     <!-- ******************************************************* -->
     <!-- path to the versioned app code -->
@@ -233,7 +238,7 @@
                 <exclude name="**/nbproject/**" />
                 <exclude name="**/.gitignore" />
                 <exclude name="**/.gitmodule" />
-                <exclude name="**/tests" />
+                <exclude name="**/tests/**" />
                 <exclude name="**/composer*" />
                 <exclude name="**/build/**" />
                 <exclude name="**/ruleset.xml" />
