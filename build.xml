@@ -17,7 +17,7 @@
     
     <!-- build project ,phpcs,phpdoc,phpcb -->
     <target name="build" 
-            depends="prepare,lint,analysis,phpcs,phpdoc,phpcb,vendor,deployment" />
+            depends="prepare,lint,analysis,phpcs,phpdoc,phpcb,vendor,deployment,postaction" />
   
        
     <!-- deleting build dir -->
@@ -233,6 +233,12 @@
                 <exclude name="**/nbproject/**" />
                 <exclude name="**/.gitignore" />
                 <exclude name="**/.gitmodule" />
+                <exclude name="**/tests" />
+                <exclude name="**/composer*" />
+                <exclude name="**/build/**" />
+                <exclude name="**/ruleset.xml" />
+                <exclude name="**/build.xml" />
+                <exclude name="**/phpmd.xml" />
                 <include name="**" />
             </tarfileset>
         </tar>
