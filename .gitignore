@@ -12,11 +12,10 @@ nbproject/
 
 #ignore cached data, vendor etc
 vendor/
-app/vendor/
-app/data/cache/*
-app/data/session/*
-app/data/DoctrineORMModule/*
-app/data/DoctrineORMModule/Proxy/*
+data/cache/*
+data/session/*
+data/DoctrineORMModule/*
+data/DoctrineORMModule/Proxy/*
 
 
 #ignore more

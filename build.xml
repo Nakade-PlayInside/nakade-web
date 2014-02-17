@@ -7,12 +7,7 @@
     <!-- path to the web source code -->
     <property name="www-dir" value="/var/www/nakade-test" />
     
-    <!-- symbolic link path -->
-    <property name="link" value="${www-dir}/prod" />
-    
-    <!-- path to the cache -->
-    <property name="data-cache" value="app/data/cache" />
-    
+
     <!-- version -->
     <property environment="env"/>
     <property name="pkg-name" value="${ant.project.name}${env.BUILD_NUMBER}" />
@@ -49,7 +44,7 @@
     <target name="lint" description="syntax check">
         <apply executable="php" failonerror="true">
             <arg value="-l" />
-            <fileset dir="${basedir}/${app-dir}">
+            <fileset dir="${basedir}">
                 <include name="**/*.php" />
                 <exclude name="**/vendor/" />
                 <modified />
@@ -78,14 +73,14 @@
             <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
             <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
             <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
-            <arg path="${basedir}/${app-dir}" />
+            <arg path="${basedir}" />
         </exec>
     </target>
 
     <!-- mess detection -->
     <target name="phpmd" description="mess detection in human readable output">
         <exec executable="phpmd">
-            <arg path="${basedir}/${app-dir}" />
+            <arg path="${basedir}" />
             <arg value="text" />
             <arg value="${basedir}/phpmd.xml" />
         </exec>
@@ -94,7 +89,7 @@
     <!-- mess detection in xml -->
     <target name="phpmd-ci"  description="mess detection xml for analysis">
         <exec executable="phpmd">
-            <arg path="${basedir}/${app-dir}" />
+            <arg path="${basedir}" />
             <arg value="xml" />
             <arg value="${basedir}/phpmd.xml" />
             <arg value="--reportfile" />
@@ -108,7 +103,7 @@
         <exec executable="${phpcpd}" failonerror="false">
             <arg value="--log-pmd" />
             <arg value="${basedir}/build/logs/pmd-cpd.xml" />
-            <arg path="${basedir}/${app-dir}" />
+            <arg path="${basedir}" />
         </exec>
     </target>
 
@@ -121,7 +116,7 @@
             <arg value="**/vendor/" />
             <arg value="--exclude" />
             <arg value="**/tests/" />
-            <arg path="${basedir}/${app-dir}" />
+            <arg path="${basedir}" />
         </exec>
     </target>
     
@@ -130,7 +125,7 @@
         <exec executable="phploc">
             <arg value="--log-csv" />
             <arg value="${basedir}/build/logs/phploc.csv" />
-            <arg path="${basedir}/${app-dir}" />
+            <arg path="${basedir}" />
         </exec>
     </target>
 
@@ -142,7 +137,7 @@
             <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
             <arg value="--extensions=php" />
             <arg value="--ignore=**/tests/, **/vendor/" />
-            <arg path="${basedir}/${app-dir}" />
+            <arg path="${basedir}" />
         </exec>
     </target>
 
@@ -150,7 +145,7 @@
    <target name="phpdoc" description="Generates API documentation">
        <exec executable="/usr/bin/phpdoc">
             <arg value="--directory" />
-            <arg path="${basedir}/${app-dir}" />
+            <arg path="${basedir}" />
             <arg value="--target" />
             <arg path="${basedir}/build/docs" />
             <arg value="--filename" />
@@ -238,7 +233,7 @@
                 <exclude name="**/nbproject/**" />
                 <exclude name="**/.gitignore" />
                 <exclude name="**/.gitmodule" />
-                <include name="${app-dir}/**" />
+                <include name="**" />
             </tarfileset>
         </tar>
         <gzip destfile="${basedir}/build/package/${pkg-name}.tar.gz" 
@@ -291,7 +286,7 @@
     <!-- set symbolic link from version --> 
     <target name="deploy.link" description="set symbolic link">
         <exec executable="ln" failonerror="true">
-            <arg line="-nfs ${version-dir}/${env.BUILD_NUMBER}/app ${link}" />
+            <arg line="-nfs ${version-dir}/${env.BUILD_NUMBER} ${link}" />
         </exec>
     </target>
 
@@ -299,18 +294,19 @@
     <!-- **************************************************************** -->
 
     <!-- path to the cache -->
-    <property name="data-cache" value="app/data/cache" />
+    <property name="data-cache" value="data/cache" />
 
     
-    
     <target name="postaction" depends="cache.clear,deploy.clean" />
-    
+
+    <!-- clear cache by removing all data -->
     <target name="cache.clear" description="remove data cache files">
         <exec executable="rm">
             <arg line="-rf ${version-dir}/${env.BUILD_NUMBER}/${data-cache}/*"/> 
         </exec>
     </target>
-    
+
+    <!-- clean up deployment files  -->
     <target name="deploy.clean" description="remove deployment compressed files">
         <exec executable="rm">
            <arg value="${www-dir}/tmp/${pkg-name}.tar.gz"/>
