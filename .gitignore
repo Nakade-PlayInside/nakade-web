@@ -11,7 +11,7 @@ nbproject/
 .ssh
 
 #ignore cached data, vendor etc
-vendor/
+vendor/*
 data/cache/*
 data/session/*
 data/DoctrineORMModule/*
