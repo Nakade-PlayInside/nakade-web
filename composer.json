@@ -1,18 +1,17 @@
 {
-  "minimum-stability": "dev",
   "repositories": [
     {
         "type": "composer",
-        "url": "https://packages.zendframework.com/"
+        "url": "http://packages.zendframework.com/"
     }
   ],
   "require": {
       
-	"zendframework/zendframework": "2.*",
-	"doctrine/common": "2.*",
-        "zendframework/zendpdf": "2.*",
-        "zendframework/zendservice-recaptcha": "2.*",
-        "doctrine/doctrine-orm-module": "0.*",
-        "zf-commons/zfc-rbac": "~2.0"
+	"zendframework/zendframework": "2.2.0",
+	"doctrine/common": "2.3.0",
+        "zendframework/zendpdf": "2.0.2",
+        "zendframework/zendservice-recaptcha": "2.0.1",
+        "doctrine/doctrine-orm-module": "0.7.0",
+        "zf-commons/zfc-rbac": "dev-master"
   }
 }
