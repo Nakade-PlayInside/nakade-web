@@ -38,8 +38,7 @@
                         <ul class="nav">
                             <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home', 'Application') ?></a></li>
                             <li><a href="<?php echo $this->url('training') ?>"><?php echo $this->translate("Location", 'Application'); ?></a></li>
-                            <li><a href="<?php echo $this->url('impressum') ?>"><?php echo $this->translate("Imprint", 'Application'); ?></a></li>
-                            <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate("Contact", 'Application'); ?></a></li> 
+
                             
       
 <?php 
@@ -127,6 +126,8 @@
             <footer>
                 <div class="copyright">
                     <ul>
+                        <li><a href="<?php echo $this->url('impressum') ?>"><?php echo $this->translate("Imprint", 'Application'); ?></a></li>
+                        <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate("Contact", 'Application'); ?></a></li>
                         <li class="version">v0.2.6</li>
                         <li><?php echo $this->translate('All rights reserved.', 'Application') ?></li>
                         <li>&copy; Copyright 2013-2014 Dr. Holger Maerz</li>

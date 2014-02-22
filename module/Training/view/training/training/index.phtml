@@ -6,9 +6,10 @@ $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p><?php echo $this->translate("Every Tuesday from 5:00 p.m. to 10:00 p.m."); ?></br>
-<?php echo $this->translate("Official training of the Bundesliga team Nakade. Guests are welcome.");?></br>
+    <?php echo $this->translate("Official training of the Bundesliga team Nakade. Guests are welcome.");?></br>
 </p>
- 
+<p style="color:red"><?php echo $this->translate("The open training is currently closed."); ?></p>
+
 
 <p style="font-weight:bold;"><?php echo $this->escapeHtml("Haus der Jugend Charlottenburg - Zillestraße 54 - 10585 Berlin"); ?></p>
 
