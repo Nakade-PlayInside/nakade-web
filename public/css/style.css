@@ -7,6 +7,10 @@ body {
 .table-row { display: table-row; }
 .table-cell { display: table-cell; }
 
+
+.blog { height:9em;width:80%; overflow:auto;}
+.blog div {padding-top:10px;}
+
 .message {
     width: auto; 
     margin-top: 0.5em;
