@@ -17,7 +17,7 @@
     
     <!-- build project ,phpcs,phpdoc,phpcb -->
     <target name="build" 
-            depends="prepare,lint,analysis,phpcs,phpdoc,phpcb,vendor,phpunit,deployment,postaction" />
+            depends="prepare,version,lint,analysis,phpcs,phpdoc,phpcb,vendor,phpunit,deployment,postaction" />
   
        
     <!-- deleting build dir -->
@@ -42,7 +42,7 @@
         <mkdir dir="${basedir}/build/pdepend"/>
     </target>
 
-    <!-- create new build dir after deleting existing -->
+    <!-- create new version -->
     <target name="version" description="create version property">
         <exec executable="${basedir}/version-bump.sh">
             <arg value="v$VERSION" />
