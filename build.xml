@@ -45,7 +45,7 @@
     <!-- create new version -->
     <target name="version" description="create version property">
         <exec executable="${basedir}/version-bump.sh">
-            <arg value="v$VERSION" />
+            <arg value="v${VERSION}" />
         </exec>
     </target>
 

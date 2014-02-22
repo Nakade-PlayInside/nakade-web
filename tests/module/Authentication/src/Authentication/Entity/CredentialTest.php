@@ -56,9 +56,10 @@ class CredentialTest extends PHPUnit_Framework_TestCase
     {
 
         $methods = get_class_methods($this->_object);
-        
-        foreach ($this->_options as $key => $value) {
-        
+
+        $keys = array_keys($this->_options);
+        foreach($keys as $key) {
+
             $method = 'get' . ucfirst($key);
             if (in_array($method, $methods)) {
                 $this->assertNull(
@@ -83,8 +84,9 @@ class CredentialTest extends PHPUnit_Framework_TestCase
     {
         
         $methods = get_class_methods($this->_newObject);
-        
-        foreach ($this->_options as $key => $value) {
+
+        $keys = array_keys($this->_options);
+        foreach($keys as $key) {
         
             $method = 'get' . ucfirst($key);
             if (in_array($method, $methods)) {

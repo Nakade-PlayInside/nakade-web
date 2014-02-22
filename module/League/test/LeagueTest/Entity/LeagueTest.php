@@ -20,12 +20,13 @@ class LeagueTest extends PHPUnit_Framework_TestCase
         );
         
     }
-    
+
     public function testLeagueInitialState()
     {
         $object = new League();
 
-        foreach($this->data as $key => $value) {
+        $keys = array_keys($this->data);
+        foreach($keys as $key) {
             
             $method = 'get'.ucfirst($key);
             $this->assertNull(
@@ -40,7 +41,7 @@ class LeagueTest extends PHPUnit_Framework_TestCase
     public function testSetsPropertiesCorrectly()
     {
         $object = new League();
-        
+
         foreach($this->data as $key => $value) {
             
             //setValue

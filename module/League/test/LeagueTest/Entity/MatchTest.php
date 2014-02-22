@@ -36,7 +36,8 @@ class MatchTest extends PHPUnit_Framework_TestCase
     {
         $object = new Match();
 
-         foreach($this->data as $key => $value) {
+        $keys = array_keys($this->data);
+         foreach($keys as $key) {
             
             $method = 'get'.ucfirst($key);
             $this->assertNull(

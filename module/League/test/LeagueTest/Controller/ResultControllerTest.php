@@ -122,7 +122,6 @@ class ResultControllerTest extends PHPUnit_Framework_TestCase
         $this->_request->setMethod('POST');
         $this->_request->setPost(new Parameters(array('input' => 'some different')));
         
-       $result   = $this->_controller->dispatch($this->_request);
        $response = $this->_controller->getResponse();
         
        $this->assertEquals(200, $response->getStatusCode());
