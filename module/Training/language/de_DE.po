@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-18 14:40+0100\n"
-"PO-Revision-Date: 2013-01-18 14:40+0100\n"
-"Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
+"POT-Creation-Date: 2014-02-22 20:34+0100\n"
+"PO-Revision-Date: 2014-02-22 20:35+0100\n"
+"Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -26,13 +26,14 @@ msgstr "jeden Dienstag ab 17:00-22:00"
 
 #: ../view/training/training/index.phtml:9
 msgid "Official training of the Bundesliga team Nakade. Guests are welcome."
-msgstr ""
-"Offizielles Training des Bundesligateams Nakade. Gäste sind herzlich "
-"willkommen."
+msgstr "Offizielles Training des Bundesligateams Nakade. Gäste sind herzlich willkommen."
 
-#: ../view/training/training/index.phtml:17
-msgid "show on a larger map"
-msgstr "auf einer größeren Karte anzeigen"
+#: ../view/training/training/index.phtml:11
+msgid "The open training is currently closed."
+msgstr "Der Spieltreff ist z.Zt. still gelegt."
+
+#~ msgid "show on a larger map"
+#~ msgstr "auf einer größeren Karte anzeigen"
 
 #~ msgid "Training"
 #~ msgstr "Training"
