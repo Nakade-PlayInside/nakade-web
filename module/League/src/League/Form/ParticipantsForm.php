@@ -19,7 +19,7 @@ class ParticipantsForm extends AbstractForm
     public function __construct()
     {
          //form name is AuthForm
-        parent::__construct($name='PlayersForm');
+        parent::__construct();
     } 
     
     /**

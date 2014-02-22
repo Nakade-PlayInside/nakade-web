@@ -16,7 +16,7 @@ class MatchdayForm extends AbstractForm
      */
     public function __construct()
     {
-        parent::__construct($name ='MatchdayForm');
+        parent::__construct();
         $this->setObject(new Match());
         $this->setHydrator(new Hydrator());
     } 

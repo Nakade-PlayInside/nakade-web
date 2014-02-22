@@ -19,7 +19,7 @@ class PasswordForm extends AbstractForm
      */        
     public function __construct()
     {
-        parent::__construct($name='PasswordForm');
+        parent::__construct();
         $this->setObject(new User());
         $this->setHydrator(new Hydrator());
     } 

@@ -21,7 +21,7 @@ class LeagueForm extends AbstractForm
     public function __construct()
     {
         //form name is LeagueForm
-        parent::__construct($name='LeagueForm');
+        parent::__construct();
         $this->setObject(new League());
         $this->setHydrator(new Hydrator());
     } 

@@ -25,20 +25,7 @@ class Submenu extends AbstractViewHelper
        
     }
     
-   
-    private function getTitle($title) 
-    {
-        $placeholder = array(
-            'title'   => $title,
-        );
-        
-        $test  = '<li class="dropdown">';
-        $test .= '<a id="drop1" role="button" class="dropdown-toggle" data-toggle="dropdown" href="#">';
-        $test .= '%title%<b class="caret"></b></a>';
-        
-        return $this->setPlaceholders($test, $placeholder);
-    }
-    
+
      private function getSubmenuItems($items) 
      {
          

@@ -19,7 +19,7 @@ class BirthdayForm extends AbstractForm
      */        
     public function __construct()
     {
-        parent::__construct($name='BirthdayForm');
+        parent::__construct();
         $this->setObject(new User());
         $this->setHydrator(new Hydrator());
     } 

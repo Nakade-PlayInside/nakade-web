@@ -12,7 +12,7 @@ class ScheduleForm extends AbstractForm
     public function __construct()
     {
          //form name is AuthForm
-        parent::__construct($name='ScheduleForm');
+        parent::__construct();
     } 
    
     

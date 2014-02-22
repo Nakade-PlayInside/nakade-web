@@ -26,7 +26,7 @@ class SeasonForm extends AbstractForm
     public function __construct()
     {
         //form name is SeasonForm
-        parent::__construct($name='SeasonForm');
+        parent::__construct();
         $this->setObject(new Season());
         $this->setHydrator(new Hydrator());
         

@@ -19,7 +19,7 @@ class ResultForm extends AbstractForm
      */
     public function __construct()
     {
-        parent::__construct($name ='ResultForm');
+        parent::__construct();
     //    $this->setObject(new Match());
      //   $this->setHydrator(new Hydrator());
     } 

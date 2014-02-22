@@ -19,7 +19,7 @@ class NickForm extends AbstractForm
      */        
     public function __construct()
     {
-        parent::__construct($name='UserForm');
+        parent::__construct();
         $this->setObject(new User());
         $this->setHydrator(new Hydrator());
        
