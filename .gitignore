@@ -16,6 +16,6 @@ data/cache/*
 data/session/*
 data/DoctrineORMModule/*
 data/DoctrineORMModule/Proxy/*
-
+project.properties
 
 #ignore more

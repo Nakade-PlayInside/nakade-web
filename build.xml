@@ -12,7 +12,7 @@
     <property environment="env"/>
     <property name="pkg-name" value="${ant.project.name}${env.BUILD_NUMBER}" />
     <property name="MAJOR" value="0"/>
-    <property name="MINOR" value="1"/>
+    <property name="MINOR" value="2"/>
     <property name="VERSION" value="${MAJOR}.${MINOR}.${env.BUILD_NUMBER}" />
     
     <!-- build project ,phpcs,phpdoc,phpcb -->
@@ -40,6 +40,13 @@
         <mkdir dir="${basedir}/build/docs"/>
         <mkdir dir="${basedir}/build/logs"/>
         <mkdir dir="${basedir}/build/pdepend"/>
+    </target>
+
+    <!-- create new build dir after deleting existing -->
+    <target name="version" description="create version property">
+        <exec executable="${basedir}/version-bump.sh">
+            <arg value="v$VERSION" />
+        </exec>
     </target>
 
      <!-- static code analysis -->
@@ -265,6 +272,7 @@
                 <exclude name="**/build/**" />
                 <exclude name="**/ruleset.xml" />
                 <exclude name="**/build.xml" />
+                <exclude name="**/version-bump.sh" />
                 <exclude name="**/phpmd.xml" />
                 <include name="**" />
             </tarfileset>
