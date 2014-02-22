@@ -103,6 +103,16 @@ class SeasonForm extends AbstractForm
             )
         );
         
+        $this->setTiebreakerFields();
+        $this->setDefaultFields();
+        
+        
+
+        
+    }
+
+    private function setTiebreakerFields()
+    {
         //first tb
         $this->add(
             array(
@@ -112,13 +122,13 @@ class SeasonForm extends AbstractForm
                     'label' =>  $this->translate('First tiebreaker:'),
                     'empty_option' => $this->translate('no tiebreak'),
                     'value_options' => $this->_tiebreaker
-                 ),
+                ),
                 'attributes' => array(
                     'value' => 'Hahn',
                 )
             )
         );
-        
+
         //second tb
         $this->add(
             array(
@@ -128,13 +138,13 @@ class SeasonForm extends AbstractForm
                     'label' =>  $this->translate('Second tiebreaker:'),
                     'empty_option' => $this->translate('no tiebreak'),
                     'value_options' => $this->_tiebreaker
-                ),    
+                ),
                 'attributes' => array(
                     'value' => 'SODOS',
                 )
             )
         );
-        
+
         //third tb
         $this->add(
             array(
@@ -150,13 +160,14 @@ class SeasonForm extends AbstractForm
                 )
             )
         );
-        
-        
-        
-        
+    }
+
+    private function setDefaultFields()
+    {
+
         //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side 
-        //validation 
+        //this is handled by ZF2 in the background - no need for server-side
+        //validation
         $this->add(
             array(
                 'name' => 'csrf',
@@ -166,9 +177,9 @@ class SeasonForm extends AbstractForm
                         'timeout' => 600
                     )
                 )
-            )    
+            )
         );
-       
+
         //submit button
         $this->add(
             array(
@@ -180,7 +191,7 @@ class SeasonForm extends AbstractForm
                 ),
             )
         );
-        
+
         //cancel button
         $this->add(
             array(
@@ -192,9 +203,9 @@ class SeasonForm extends AbstractForm
                 ),
             )
         );
-        
-    } 
-    
+
+    }
+
     public function getFilter()
     {
         $filter = new \Zend\InputFilter\InputFilter();

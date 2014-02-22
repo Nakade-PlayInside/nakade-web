@@ -29,77 +29,11 @@ class UserForm extends AbstractForm
      * before using the form.
      */
     public function init() {
-       
-               
-        $this->add(
-            array(
-                'name' => 'sex',
-                'type' => 'Zend\Form\Element\Select',
-                'options' => array(
-                    'label' =>  $this->translate('Salutation:'),
-                    'value_options' => array(
-                        'm' => $this->translate('Herr'), 
-                        'f' => $this->translate('Frau'),
-                    )
-                ),
-            )
-        );
-        
-        //Title
-        $this->add(
-            array(
-                'name' => 'title',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('Title (opt.):'),
-                ),
-            )
-        );
-        
-        //first name
-        $this->add(
-            array(
-                'name' => 'firstname',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('First Name:'),
-                ),
-            )
-        );
-        
-        //family name
-        $this->add(
-            array(
-                'name' => 'lastname',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('Family Name:'),
-                ),
-            )
-        );
-        
-        //nick name
-        $this->add(
-            array(
-                'name' => 'nickname',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('Nick (opt.):'),
-                ),
-            )
-        );
-        
-        //anonym
-        $this->add(
-            array(
-                'name' => 'anonym',
-                'type' => 'Zend\Form\Element\Checkbox',
-                'options' => array(
-                    'label' =>  $this->translate('use nick always (anonymizer):'),
-                    'checked_value' => true,
-                ),
-            )
-        );
+
+
+        $this->setPersonalFields();
+        $this->setNicknameFields();
+
         
          //birthday
         $this->add(
@@ -161,6 +95,91 @@ class UserForm extends AbstractForm
             )
         );
         
+
+        $this->setRoleFields();
+        $this->setDefaultFields();
+
+    }
+
+    private function setNicknameFields()
+    {
+        //nick name
+        $this->add(
+            array(
+                'name' => 'nickname',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array(
+                    'label' =>  $this->translate('Nick (opt.):'),
+                ),
+            )
+        );
+
+        //anonym
+        $this->add(
+            array(
+                'name' => 'anonym',
+                'type' => 'Zend\Form\Element\Checkbox',
+                'options' => array(
+                    'label' =>  $this->translate('use nick always (anonymizer):'),
+                    'checked_value' => true,
+                ),
+            )
+        );
+    }
+
+    private function setPersonalFields()
+    {
+        $this->add(
+            array(
+                'name' => 'sex',
+                'type' => 'Zend\Form\Element\Select',
+                'options' => array(
+                    'label' =>  $this->translate('Salutation:'),
+                    'value_options' => array(
+                        'm' => $this->translate('Herr'),
+                        'f' => $this->translate('Frau'),
+                    )
+                ),
+            )
+        );
+
+        //Title
+        $this->add(
+            array(
+                'name' => 'title',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array(
+                    'label' =>  $this->translate('Title (opt.):'),
+                ),
+            )
+        );
+
+        //first name
+        $this->add(
+            array(
+                'name' => 'firstname',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array(
+                    'label' =>  $this->translate('First Name:'),
+                ),
+            )
+        );
+
+        //family name
+        $this->add(
+            array(
+                'name' => 'lastname',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array(
+                    'label' =>  $this->translate('Family Name:'),
+                ),
+            )
+        );
+    }
+
+
+    private function setRoleFields()
+    {
         //roles
         $this->add(
             array(
@@ -174,22 +193,24 @@ class UserForm extends AbstractForm
                         'member'    => $this->translate('Member'),
                         'moderator' => $this->translate('Moderator'),
                         'admin'     => $this->translate('Administrator'),
-                        
+
                     )
                 ),
                 'attributes' => array(
                     'value' => 'user'
                 )
-                
+
             )
-                
-                
+
+
         );
-        
-        
+    }
+
+    private function setDefaultFields()
+    {
         //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side 
-        //validation 
+        //this is handled by ZF2 in the background - no need for server-side
+        //validation
         $this->add(
             array(
                 'name' => 'csrf',
@@ -199,9 +220,9 @@ class UserForm extends AbstractForm
                         'timeout' => 600
                     )
                 )
-            )    
+            )
         );
-       
+
         //submit button
         $this->add(
             array(
@@ -213,8 +234,8 @@ class UserForm extends AbstractForm
                 ),
             )
         );
-       
-         //cancel button
+
+        //cancel button
         $this->add(
             array(
                 'name' => 'cancel',
@@ -225,9 +246,8 @@ class UserForm extends AbstractForm
                 ),
             )
         );
-    } 
-    
-    
+
+    }
     
      
     /**
@@ -238,174 +258,199 @@ class UserForm extends AbstractForm
     public function getFilter()
     {
         $filter = new \Zend\InputFilter\InputFilter();
+        $this->setPersonalFilter($filter);
+        $this->setNicknameFilter($filter);
+        $this->setUsernameFilter($filter);
+        $this->setEmailFilter($filter);
+        $this->setBirthdayFilter($filter);
+               
+         
+         return $filter;
+    }
+
+    private function setBirthdayFilter(&$filter)
+    {
         $filter->add(
-             array(
-                 'name' => 'title',
-                 'required' => false,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
-                 'validators' => array(
-                     array('name'    => 'StringLength',
-                           'options' => array (
-                                  'encoding' => 'UTF-8', 
-                                  'max'  => '10',
-                           )  
-                     ),  
-                  )
-              )
-         );
-  
-         $filter->add(
-             array(
-                 'name' => 'firstname',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
-                 'validators' => array(
-                     array('name'    => 'StringLength',
-                           'options' => array (
-                                  'encoding' => 'UTF-8', 
-                                  'max'  => '20',
-                           )  
-                     ),  
-                  )
-              )
-         );
-         
-         $filter->add(
-             array(
-                 'name' => 'lastname',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
-                 'validators' => array(
-                     array('name'    => 'StringLength',
-                           'options' => array (
-                                  'encoding' => 'UTF-8', 
-                                  'max'  => '30',
-                           )  
-                     ),  
-                  )
-              )
-         );
-        
-         $filter->add(
-             array(
-                 'name' => 'nickname',
-                 'required' => false,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
-                 'validators' => array(
-                     array('name'    => 'StringLength',
-                           'options' => array (
-                                  'encoding' => 'UTF-8', 
-                                  'max'  => '20',
-                           )  
-                     ),
-                     array(
-                        'name'     => 'User\Form\Validator\DBNoRecordExist',
-                        'options' => array( 
-                            'entity'    => 'User\Entity\User',
-                            'property' => 'nickname',
-                            'exclude'  => $this->getIdentifierValue(),
-                            'adapter'  => $this->getEntityManager(),
+            array(
+                'name' => 'birthday',
+                'required' => false,
+                'validators' => array(
+                    array('name'    => 'Date',
+                        'options' => array (
+                            'format' => 'Y-m-d',
                         )
-                     )
-                  )
-              )
-         );
-         
-         $filter->add(
-             array(
-                 'name' => 'username',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
-                 'validators' => array(
-                     array('name'    => 'StringLength',
-                           'options' => array (
-                                  'encoding' => 'UTF-8', 
-                                  'max'  => '20',
-                           )  
-                     ),
-                     array(
-                        'name'     => 'User\Form\Validator\DBNoRecordExist',
-                        'options' => array( 
-                            'entity'    => 'User\Entity\User',
-                            'property' => 'username',
-                            'exclude'  => $this->getIdentifierValue(),
-                            'adapter'  => $this->getEntityManager(),
-                        )
-                     ),
-                    
-                  )
-              )
-         );
-         
-         $filter->add(
-             array(
-                 'name' => 'birthday',
-                 'required' => false,
-                 'validators' => array(
-                     array('name'    => 'Date',
-                           'options' => array (
-                                  'format' => 'Y-m-d',
-                           )  
-                     ),
-                 )
-             )
-         );
-         
-         $filter->add(
-             array(
-                 'name' => 'email',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
-                 'validators' => array(
+                    ),
+                )
+            )
+        );
+
+    }
+
+    private function setEmailFilter(&$filter)
+    {
+        $filter->add(
+            array(
+                'name' => 'email',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripNewLines'),
+                ),
+                'validators' => array(
                     array('name' => 'StringLength',
-                          'options' => array (
-                              'encoding' => 'UTF-8', 
-                              'min'  => '6',
-                              'max'  => '120',
-                          )  
+                        'options' => array (
+                            'encoding' => 'UTF-8',
+                            'min'  => '6',
+                            'max'  => '120',
+                        )
                     ),
                     array('name' => 'EmailAddress',
-                          'break_chain_on_failure' => true,
+                        'break_chain_on_failure' => true,
                     ),
                     array(
                         'name'     => 'User\Form\Validator\DBNoRecordExist',
-                        'options' => array( 
+                        'options' => array(
                             'entity'    => 'User\Entity\User',
                             'property'  => 'email',
                             'exclude'  => $this->getIdentifierValue(),
                             'adapter'  => $this->getEntityManager(),
                         )
                     )
-                     
-                 )
-             )
-         );
-         
-         return $filter;
+
+                )
+            )
+        );
+    }
+
+    private function setUsernameFilter(&$filter)
+    {
+        $filter->add(
+            array(
+                'name' => 'username',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripNewLines'),
+                ),
+                'validators' => array(
+                    array('name'    => 'StringLength',
+                        'options' => array (
+                            'encoding' => 'UTF-8',
+                            'max'  => '20',
+                        )
+                    ),
+                    array(
+                        'name'     => 'User\Form\Validator\DBNoRecordExist',
+                        'options' => array(
+                            'entity'    => 'User\Entity\User',
+                            'property' => 'username',
+                            'exclude'  => $this->getIdentifierValue(),
+                            'adapter'  => $this->getEntityManager(),
+                        )
+                    ),
+
+                )
+            )
+        );
+    }
+
+    private function setNicknameFilter(&$filter)
+    {
+        $filter->add(
+            array(
+                'name' => 'nickname',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripNewLines'),
+                ),
+                'validators' => array(
+                    array('name'    => 'StringLength',
+                        'options' => array (
+                            'encoding' => 'UTF-8',
+                            'max'  => '20',
+                        )
+                    ),
+                    array(
+                        'name'     => 'User\Form\Validator\DBNoRecordExist',
+                        'options' => array(
+                            'entity'    => 'User\Entity\User',
+                            'property' => 'nickname',
+                            'exclude'  => $this->getIdentifierValue(),
+                            'adapter'  => $this->getEntityManager(),
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    private function setPersonalFilter(&$filter)
+    {
+        $filter->add(
+            array(
+                'name' => 'title',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripNewLines'),
+                ),
+                'validators' => array(
+                    array('name'    => 'StringLength',
+                        'options' => array (
+                            'encoding' => 'UTF-8',
+                            'max'  => '10',
+                        )
+                    ),
+                )
+            )
+        );
+
+        $filter->add(
+            array(
+                'name' => 'firstname',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripNewLines'),
+                ),
+                'validators' => array(
+                    array('name'    => 'StringLength',
+                        'options' => array (
+                            'encoding' => 'UTF-8',
+                            'max'  => '20',
+                        )
+                    ),
+                )
+            )
+        );
+
+        $filter->add(
+            array(
+                'name' => 'lastname',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripNewLines'),
+                ),
+                'validators' => array(
+                    array('name'    => 'StringLength',
+                        'options' => array (
+                            'encoding' => 'UTF-8',
+                            'max'  => '30',
+                        )
+                    ),
+                )
+            )
+        );
+
+
     }
 }
 ?>

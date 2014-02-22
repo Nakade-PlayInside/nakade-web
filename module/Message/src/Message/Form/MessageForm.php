@@ -21,7 +21,7 @@ class MessageForm extends AbstractForm
     public function __construct()
     {
         //form name is LeagueForm
-        parent::__construct($name='MessageForm');
+        parent::__construct();
         $this->setObject(new Message());
         $this->setHydrator(new Hydrator());
     } 

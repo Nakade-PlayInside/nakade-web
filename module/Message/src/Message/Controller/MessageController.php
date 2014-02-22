@@ -20,8 +20,7 @@ class MessageController extends AbstractController
     */
     public function indexAction()
     {
-        $id  = (int) $this->params()->fromRoute('id', 0);
-        
+
         //message request if id>0
        // $showMessage = $this->getService()->getMessage($id);
         

@@ -27,7 +27,7 @@ class AuthForm extends Form
     public function __construct() 
     {
         //form name is AuthForm
-        parent::__construct($name='AuthForm');
+        parent::__construct();
        
     }
 
