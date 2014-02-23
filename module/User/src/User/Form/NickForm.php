@@ -11,7 +11,7 @@ use User\Entity\User;
  * Successive settings: setEntityManager(), setInputFilter(), init().
  * Use bindingEntity for setting values.
  */
-class NickForm extends AbstractForm
+class NickForm extends DefaultForm
 {
   
     /**
@@ -54,44 +54,7 @@ class NickForm extends AbstractForm
             )
         );
         
-        //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side 
-        //validation 
-        $this->add(
-            array(
-                'name' => 'csrf',
-                'type'  => 'Zend\Form\Element\Csrf',
-                'options' => array(
-                    'csrf_options' => array(
-                        'timeout' => 600
-                    )
-                )
-            )    
-        );
-       
-        //submit button
-        $this->add(
-            array(
-                'name' => 'send',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Submit'),
-
-                ),
-            )
-        );
-        
-         //cancel button
-        $this->add(
-            array(
-                'name' => 'cancel',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Cancel'),
-
-                ),
-            )
-        );
+        $this->setDefaultFields();
        
     } 
     
