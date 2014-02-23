@@ -121,6 +121,12 @@
             <arg value="${basedir}/vendor/"/>
             <arg value="--exclude"/>
             <arg value="${basedir}/data/"/>
+            <arg value="--exclude"/>
+            <arg value="**/module.config.php"/>
+            <arg value="--exclude"/>
+            <arg value="**/Module.php"/>
+            <arg value="--exclude"/>
+            <arg value="**/*Controller.php"/>
             <arg path="${basedir}" />
         </exec>
     </target>
@@ -134,6 +140,12 @@
             <arg value="${basedir}/vendor/" />
             <arg value="--exclude" />
             <arg value="${basedir}/data/" />
+            <arg value="--exclude"/>
+            <arg value="**/module.config.php"/>
+            <arg value="--exclude"/>
+            <arg value="**/Module.php"/>
+            <arg value="--exclude"/>
+            <arg value="**/*Controller.php"/>
             <arg path="${basedir}" />
         </exec>
     </target>

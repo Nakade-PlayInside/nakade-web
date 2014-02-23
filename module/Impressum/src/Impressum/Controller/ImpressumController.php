@@ -20,7 +20,5 @@ class ImpressumController extends AbstractActionController
         return new ViewModel();
     }
 
-   
-    
     
 }

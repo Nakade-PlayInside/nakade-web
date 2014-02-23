@@ -13,14 +13,11 @@ use Zend\View\Model\ViewModel;
 
 class TrainingController extends AbstractActionController
 {
-  
-    
+
     public function indexAction()
     {
         return new ViewModel();
     }
 
-   
-    
     
 }
