@@ -31,7 +31,6 @@ class ForgotPasswordForm extends DefaultForm
        
         //email
         $this->add($this->getField()->getField());
-        
         $this->setDefaultFields();
        
     } 

@@ -1,9 +1,7 @@
 <?php
 namespace User\Form;
 
-use Nakade\Abstracts\AbstractForm;
-use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-use User\Entity\User;
+use \Zend\InputFilter\InputFilter;
 
 /**
  * Form for changing email adress.
@@ -51,40 +49,9 @@ class EmailForm extends DefaultForm
      */
     public function getFilter()
     {
-        $filter = new \Zend\InputFilter\InputFilter();
-        $filter->add(
-             array(
-                 'name' => 'email',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
-                 'validators' => array(
-                    array('name' => 'StringLength',
-                          'options' => array (
-                              'encoding' => 'UTF-8', 
-                              'min'  => '6',
-                              'max'  => '120',
-                          )  
-                    ),
-                    array('name' => 'EmailAddress',
-                          'break_chain_on_failure' => true,
-                    ),
-                    array(
-                        'name'     => 'User\Form\Validator\DBNoRecordExist',
-                        'options' => array( 
-                            'entity'    => 'User\Entity\User',
-                            'property'  => 'email',
-                            'exclude'  => $this->getIdentifierValue(),
-                            'adapter'  => $this->getEntityManager(),
-                        )
-                    )
-                     
-                 )
-             )
-         );
+
+        $filter = new InputFilter();
+        $filter->add($this->getUniqueDbFilter('email', '6','120'));
          
          return $filter;
     }

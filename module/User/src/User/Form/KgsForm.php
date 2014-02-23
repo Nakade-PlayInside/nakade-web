@@ -1,9 +1,7 @@
 <?php
 namespace User\Form;
 
-use Nakade\Abstracts\AbstractForm;
-use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-use User\Entity\User;
+use \Zend\InputFilter\InputFilter;
 
 /**
  * Form for changing email adress.
@@ -22,15 +20,7 @@ class KgsForm extends DefaultForm
        
         //email
         $this->add(
-            array(
-                'name' => 'kgs',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('KGS (opt.):'),
-                    
-                ),
-
-            )
+            $this->getTextField('kgs','KGS (opt.):')
         );
         
         $this->setDefaultFields();
@@ -47,35 +37,8 @@ class KgsForm extends DefaultForm
      */
     public function getFilter()
     {
-        $filter = new \Zend\InputFilter\InputFilter();
-        $filter->add(
-            array(
-                'name' => 'kgs',
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                    array('name' => 'StripNewLines'),
-                ),
-                'validators' => array(
-                    array('name'    => 'StringLength',
-                        'options' => array (
-                            'encoding' => 'UTF-8',
-                            'max'  => '50',
-                        )
-                    ),
-                    array(
-                        'name'     => 'User\Form\Validator\DBNoRecordExist',
-                        'options' => array(
-                            'entity'    => 'User\Entity\User',
-                            'property' => 'kgs',
-                            'exclude'  => $this->getIdentifierValue(),
-                            'adapter'  => $this->getEntityManager(),
-                        )
-                    )
-                )
-            )
-        );
+        $filter = new InputFilter();
+        $filter->add($this->getUniqueDbFilter('kgs', null,'50'));
 
 
         return $filter;

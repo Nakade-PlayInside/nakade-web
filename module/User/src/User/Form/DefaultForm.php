@@ -65,5 +65,96 @@ abstract class DefaultForm extends AbstractForm
 
     }
 
+    protected  function getTextField($name, $label)
+    {
+        return array(
+            'name' => $name,
+            'type' => 'Zend\Form\Element\Text',
+            'options' => array(
+                'label' =>  $this->translate($label),
+            ),
+        );
+    }
+
+    protected function getUniqueDbFilter($name,$min,$max,$required=true)
+    {
+        return array(
+            'name' => $name,
+            'required' => $required,
+            'filters' => $this->getStripFilter(),
+            'validators'=> $this->getValidators($name,$min,$max)
+
+        );
+    }
+
+    private function getValidators($name,$min,$max)
+    {
+        $validators=array();
+        $validators[]=$this->getStringLengthConfig($min,$max);
+        if(strtolower($name)=='email') {
+            $validators[]=$this->getEmailValidation();
+        }
+
+        $validators[]=$this->getDBNoRecordExistConfig($name);
+
+        return $validators;
+
+    }
+
+    private function getEmailValidation()
+    {
+       return array(
+            'name' => 'EmailAddress',
+            'break_chain_on_failure' => true,
+        );
+
+    }
+
+    protected function getDBNoRecordExistConfig($property)
+    {
+        return array(
+            'name'     => 'User\Form\Validator\DBNoRecordExist',
+            'options' => array(
+                'entity'   => 'User\Entity\User',
+                'property' => $property,
+                'exclude'  => $this->getIdentifierValue(),
+                'adapter'  => $this->getEntityManager(),
+            )
+        );
+    }
+
+    protected function getStripFilter()
+    {
+       return array(
+            array('name' => 'StripTags'),
+            array('name' => 'StringTrim'),
+            array('name' => 'StripNewLines'),
+        );
+    }
+
+    protected function getStringLengthConfig($min, $max)
+    {
+
+        return array('name' => 'StringLength',
+            'options' => $this->getStringLengthOptions($min,$max)
+        );
+    }
+
+    private function getStringLengthOptions($min,$max)
+    {
+        $options = array ('encoding' => 'UTF-8');
+
+
+        if(!is_null($min)){
+            $options['min']=$min;
+        }
+
+        if(!is_null($max)){
+            $options['max']=$max;
+        }
+
+        return $options;
+    }
+
 }
 ?>

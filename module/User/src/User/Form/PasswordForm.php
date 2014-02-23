@@ -1,9 +1,7 @@
 <?php
 namespace User\Form;
 
-use Nakade\Abstracts\AbstractForm;
-use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-use User\Entity\User;
+use \Zend\InputFilter\InputFilter;
 
 /**
  * Form for password changing.
@@ -59,25 +57,14 @@ class PasswordForm extends DefaultForm
      */
     public function getFilter()
     {
-        $filter = new \Zend\InputFilter\InputFilter();
+        $filter = new InputFilter();
         $filter->add(
              array(
                  'name' => 'password',
                  'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
+                 'filters'  => $this->getStripFilter(),
                  'validators' => array(
-                    array('name' => 'StringLength',
-                          'break_chain_on_failure' => true,
-                          'options' => array (
-                              'encoding' => 'UTF-8', 
-                              'min'  => '6',
-                              'max'  => '50',
-                          )  
-                     ),
+                     $this->getStringLengthConfig(6,50),
                     array('name' => 'Identical',
                           'break_chain_on_failure' => true,
                           'options' => array (

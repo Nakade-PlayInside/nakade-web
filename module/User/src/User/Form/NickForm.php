@@ -1,9 +1,7 @@
 <?php
 namespace User\Form;
 
-use Nakade\Abstracts\AbstractForm;
-use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-use User\Entity\User;
+use \Zend\InputFilter\InputFilter;
 
 /**
  * Form for nick name changing.
@@ -14,17 +12,7 @@ use User\Entity\User;
 class NickForm extends DefaultForm
 {
   
-    /**
-     * Constructor
-     */        
-    public function __construct()
-    {
-        parent::__construct();
-        $this->setObject(new User());
-        $this->setHydrator(new Hydrator());
-       
-    } 
-   
+
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
@@ -33,13 +21,8 @@ class NickForm extends DefaultForm
        
         //nick name
         $this->add(
-            array(
-                'name' => 'nickname',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('Nick (opt.):'),
-                ),
-            )
+            $this->getTextField('nickname','Nick (opt.):')
+
         );
         
         //anonym
@@ -68,40 +51,10 @@ class NickForm extends DefaultForm
      */
     public function getFilter()
     {
-        $filter = new \Zend\InputFilter\InputFilter();
-       
-         $filter->add(
-             array(
-                 'name' => 'nickname',
-                 'required' => false,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
-                 'validators' => array(
-                     array('name'    => 'StringLength',
-                           'options' => array (
-                                  'encoding' => 'UTF-8', 
-                                  'max'  => '20',
-                           )  
-                     ),
-                     array(
-                        'name'     => 'User\Form\Validator\DBNoRecordExist',
-                        'options' => array( 
-                            'entity'    => 'User\Entity\User',
-                            'property' => 'nickname',
-                            'exclude'  => $this->getIdentifierValue(),
-                            'adapter'  => $this->getEntityManager(),
-                        )
-                     )
-                  )
-              )
-         );
-         
-      
-         
-         return $filter;
+        $filter = new InputFilter();
+        $filter->add($this->getUniqueDbFilter('nickname', null, '20',false));
+
+        return $filter;
     }
 }
 ?>

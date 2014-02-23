@@ -1,10 +1,8 @@
 <?php
 namespace User\Form;
 
-use Nakade\Abstracts\AbstractForm;
-use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-use User\Entity\User;
-
+use User\Form\Fields\Birthday;
+use \Zend\InputFilter\InputFilter;
 /**
  * Form for adding or editing a new User.
  * Use a factory for needed settings after constructing.
@@ -13,7 +11,17 @@ use User\Entity\User;
  */
 class UserForm extends DefaultForm
 {
-  
+    private $birthday;
+
+
+    public function getBirthday()
+    {
+        if(is_null($this->birthday)) {
+            $this->birthday=new Birthday($this->getTranslator(), $this->getTranslatorTextDomain());
+        }
+        return $this->birthday;
+    }
+
     /**
      * Init the form. It is neccessary to call this function
      * before using the form.
@@ -21,104 +29,6 @@ class UserForm extends DefaultForm
     public function init() {
 
 
-        $this->setPersonalFields();
-        $this->setNicknameFields();
-
-        
-         //birthday
-        $this->add(
-            array(
-                'name' => 'birthday',
-                'type' => 'Zend\Form\Element\Date',
-                'options' => array(
-                    'label' =>  $this->translate('Birthday (opt.):'),
-                    'format' => 'Y-m-d',
-                 ),
-                'attributes' => array(
-                     'min' => '1900-01-01',
-                     'max' => date('Y-m-d'), 
-                     'step' => '1',
-                )
-            )
-        );
-        
-        //User name
-        $this->add(
-            array(
-                'name' => 'username',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('User Name:'),
-                ),
-                'attributes' => array(
-                    
-                )
-            )
-        );
-
-        //kgs name
-        $this->add(
-            array(
-                'name' => 'kgs',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('KGS (opt.):'),
-                ),
-                'attributes' => array(
-
-                )
-            )
-        );
-        
-        //email
-        $this->add(
-            array(
-                'name' => 'email',
-                'type' => 'Zend\Form\Element\Email',
-                'options' => array(
-                    'label' =>  $this->translate('email:'),
-                    
-                ),
-                'attributes' => array(
-                    'multiple' => false,
-                )
-            )
-        );
-        
-
-        $this->setRoleFields();
-        $this->setDefaultFields();
-
-    }
-
-    private function setNicknameFields()
-    {
-        //nick name
-        $this->add(
-            array(
-                'name' => 'nickname',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('Nick (opt.):'),
-                ),
-            )
-        );
-
-        //anonym
-        $this->add(
-            array(
-                'name' => 'anonym',
-                'type' => 'Zend\Form\Element\Checkbox',
-                'options' => array(
-                    'label' =>  $this->translate('use nick always (anonymizer):'),
-                    'checked_value' => true,
-                ),
-            )
-        );
-    }
-
-    private function setPersonalFields()
-    {
         $this->add(
             array(
                 'name' => 'sex',
@@ -135,36 +45,71 @@ class UserForm extends DefaultForm
 
         //Title
         $this->add(
-            array(
-                'name' => 'title',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('Title (opt.):'),
-                ),
-            )
+            $this->getTextField('title','Title (opt.):')
         );
 
         //first name
         $this->add(
-            array(
-                'name' => 'firstname',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('First Name:'),
-                ),
-            )
+            $this->getTextField('firstname','First Name:')
+
         );
 
         //family name
         $this->add(
+            $this->getTextField('lastname','Family Name:')
+        );
+
+        //nick name
+        $this->add(
+            $this->getTextField('nickname','Nick (opt.):')
+
+        );
+
+        //anonym
+        $this->add(
             array(
-                'name' => 'lastname',
-                'type' => 'Zend\Form\Element\Text',
+                'name' => 'anonym',
+                'type' => 'Zend\Form\Element\Checkbox',
                 'options' => array(
-                    'label' =>  $this->translate('Family Name:'),
+                    'label' =>  $this->translate('use nick always (anonymizer):'),
+                    'checked_value' => true,
                 ),
             )
         );
+
+        
+         //birthday
+        $this->add($this->getBirthday()->getField());
+        
+        //User name
+        $this->add(
+            $this->getTextField('username','User Name:')
+
+        );
+
+        //kgs name
+        $this->add(
+            $this->getTextField('kgs','KGS (opt.):')
+        );
+        
+        //email
+        $this->add(
+            array(
+                'name' => 'email',
+                'type' => 'Zend\Form\Element\Email',
+                'options' => array(
+                    'label' =>  $this->translate('email:'),
+                    
+                ),
+                'attributes' => array(
+                    'multiple' => false,
+                )
+            )
+        );
+
+        $this->setRoleFields();
+        $this->setDefaultFields();
+
     }
 
 
@@ -204,200 +149,36 @@ class UserForm extends DefaultForm
      */
     public function getFilter()
     {
-        $filter = new \Zend\InputFilter\InputFilter();
-        $this->setPersonalFilter($filter);
-        $this->setNicknameFilter($filter);
-        $this->setUsernameFilter($filter);
-        $this->setEmailFilter($filter);
-        $this->setBirthdayFilter($filter);
-               
-         
-         return $filter;
+        $this->filter = new InputFilter();
+        $this->setPersonFilter('title','10',false);
+        $this->setPersonFilter('firstname','20');
+        $this->setPersonFilter('lastname','30');
+
+        $this->filter->add($this->getUniqueDbFilter('kgs', null,'50',false));
+        $this->filter->add($this->getUniqueDbFilter('nickname',null,'20',false));
+        $this->filter->add($this->getUniqueDbFilter('username',null,'20'));
+        $this->filter->add($this->getUniqueDbFilter('email','6','120'));
+        $this->filter->add($this->getBirthday()->getFilter());
+
+        return $this->filter;
     }
 
-    private function setBirthdayFilter(&$filter)
+
+
+    private function setPersonFilter($name,$max,$required=true)
     {
-        $filter->add(
+        $this->filter->add(
             array(
-                'name' => 'birthday',
-                'required' => false,
+                'name' => $name,
+                'required' => $required,
+                'filters'  => $this->getStripFilter(),
                 'validators' => array(
-                    array('name'    => 'Date',
-                        'options' => array (
-                            'format' => 'Y-m-d',
-                        )
-                    ),
-                )
-            )
-        );
-
-    }
-
-    private function setEmailFilter(&$filter)
-    {
-        $filter->add(
-            array(
-                'name' => 'email',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                    array('name' => 'StripNewLines'),
-                ),
-                'validators' => array(
-                    array('name' => 'StringLength',
-                        'options' => array (
-                            'encoding' => 'UTF-8',
-                            'min'  => '6',
-                            'max'  => '120',
-                        )
-                    ),
-                    array('name' => 'EmailAddress',
-                        'break_chain_on_failure' => true,
-                    ),
-                    array(
-                        'name'     => 'User\Form\Validator\DBNoRecordExist',
-                        'options' => array(
-                            'entity'    => 'User\Entity\User',
-                            'property'  => 'email',
-                            'exclude'  => $this->getIdentifierValue(),
-                            'adapter'  => $this->getEntityManager(),
-                        )
-                    )
-
+                    $this->getStringLengthConfig(null,$max),
                 )
             )
         );
     }
 
-    private function setUsernameFilter(&$filter)
-    {
-        $filter->add(
-            array(
-                'name' => 'username',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                    array('name' => 'StripNewLines'),
-                ),
-                'validators' => array(
-                    array('name'    => 'StringLength',
-                        'options' => array (
-                            'encoding' => 'UTF-8',
-                            'max'  => '20',
-                        )
-                    ),
-                    array(
-                        'name'     => 'User\Form\Validator\DBNoRecordExist',
-                        'options' => array(
-                            'entity'    => 'User\Entity\User',
-                            'property' => 'username',
-                            'exclude'  => $this->getIdentifierValue(),
-                            'adapter'  => $this->getEntityManager(),
-                        )
-                    ),
 
-                )
-            )
-        );
-    }
-
-    private function setNicknameFilter(&$filter)
-    {
-        $filter->add(
-            array(
-                'name' => 'nickname',
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                    array('name' => 'StripNewLines'),
-                ),
-                'validators' => array(
-                    array('name'    => 'StringLength',
-                        'options' => array (
-                            'encoding' => 'UTF-8',
-                            'max'  => '20',
-                        )
-                    ),
-                    array(
-                        'name'     => 'User\Form\Validator\DBNoRecordExist',
-                        'options' => array(
-                            'entity'    => 'User\Entity\User',
-                            'property' => 'nickname',
-                            'exclude'  => $this->getIdentifierValue(),
-                            'adapter'  => $this->getEntityManager(),
-                        )
-                    )
-                )
-            )
-        );
-    }
-
-    private function setPersonalFilter(&$filter)
-    {
-        $filter->add(
-            array(
-                'name' => 'title',
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                    array('name' => 'StripNewLines'),
-                ),
-                'validators' => array(
-                    array('name'    => 'StringLength',
-                        'options' => array (
-                            'encoding' => 'UTF-8',
-                            'max'  => '10',
-                        )
-                    ),
-                )
-            )
-        );
-
-        $filter->add(
-            array(
-                'name' => 'firstname',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                    array('name' => 'StripNewLines'),
-                ),
-                'validators' => array(
-                    array('name'    => 'StringLength',
-                        'options' => array (
-                            'encoding' => 'UTF-8',
-                            'max'  => '20',
-                        )
-                    ),
-                )
-            )
-        );
-
-        $filter->add(
-            array(
-                'name' => 'lastname',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                    array('name' => 'StripNewLines'),
-                ),
-                'validators' => array(
-                    array('name'    => 'StringLength',
-                        'options' => array (
-                            'encoding' => 'UTF-8',
-                            'max'  => '30',
-                        )
-                    ),
-                )
-            )
-        );
-
-
-    }
 }
 ?>
