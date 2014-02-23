@@ -10,30 +10,29 @@ namespace User\Business;
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
 class VerifyStringGenerator {
-    
-    
+
     /**
      * generates a randomized verify String. 
      * 
      * @param int $length optional string length
+     *
      * @return string random verify string
      */
     public static function generateVerifyString($length=16)
     {
-       
+
         $letters = "abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@";
-        $verify_string = "";
+        $verifyString = "";
         $base = str_shuffle($letters);
-        
+
         for ($i = 0; $i < $length; $i++) {
-        
             $index = mt_rand(0, strlen($base)-1);
-            $verify_string .= $base[$index];
+            $verifyString .= $base[$index];
         }
-        
-        return $verify_string;
+
+        return $verifyString;
     }
-            
+
 }
 
 ?>

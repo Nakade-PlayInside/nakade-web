@@ -18,9 +18,9 @@ use Nakade\Abstracts\AbstractController;
 /**
  * resetting the user's password if registered email is matching
  */
-class ForgotController extends AbstractController 
+class ForgotController extends AbstractController
 {
-    
+
     /**
      * Showing the new pwd input request
      * 
@@ -30,39 +30,38 @@ class ForgotController extends AbstractController
     {
         $form = $this->getForm('forgot');
         if ($this->getRequest()->isPost()) {
-            
+
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
-            
+
             //cancel
-            if($postData['cancel']) {
+            if ($postData['cancel']) {
                 return $this->redirect()->toRoute('profile');
-            }    
-            
+            }
+
             $form->setData($postData);
-           
+
             if ($form->isValid()) {
-           
+
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $data['request'] = $this->getRequest();
-                
-                if($this->getService()->forgotPassword($data)) {
+
+                if ($this->getService()->forgotPassword($data)) {
                     return $this->redirect()->toRoute('forgot/success');
-                }
-                else { 
+                } else {
                     return $this->redirect()->toRoute('forgot/failure');
-                }    
-                
+                }
+
             }
         }
 
         return new ViewModel(
-           array(
+            array(
               'form'    => $form
-           )
-       );
+            )
+        );
     }
-    
+
     /**
      * new credentials are set and send by mail to the given email adress
      * 
@@ -72,7 +71,6 @@ class ForgotController extends AbstractController
     {
         return new ViewModel(array());
     }
-    
 
     /**
      * email not found in the database.

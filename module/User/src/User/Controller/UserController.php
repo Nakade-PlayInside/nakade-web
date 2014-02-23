@@ -19,9 +19,9 @@ use Nakade\Abstracts\AbstractController;
  * Adminstrative user action for adding a new user, edit and resetting pwd.
  * 
  */
-class UserController extends AbstractController 
+class UserController extends AbstractController
 {
-    
+
     /**
      * shows all users for adding and editing
      * 
@@ -37,7 +37,7 @@ class UserController extends AbstractController
             )
         );
     }
-    
+
     /**
      * add new user 
      * 
@@ -45,40 +45,38 @@ class UserController extends AbstractController
      */
     public function addAction()
     {
-       
+
         $form = $this->getForm('user');
-        
+
         if ($this->getRequest()->isPost()) {
-            
+
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
-            
+
             //cancel
-            if($postData['cancel']) {
+            if ($postData['cancel']) {
                 return $this->redirect()->toRoute('user');
             }
-            
+
             $form->setData($postData);
-            
+
             if ($form->isValid()) {
-                
+
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $data['request'] = $this->getRequest();
                 $this->getService()->addUser($data);
-                
+
                 return $this->redirect()->toRoute('user');
             }
         }
 
         return new ViewModel(
-           array(
+            array(
               'form'    => $form
-           )
-       );
-       
+            )
+        );
     }
-    
-    
+
     /**
      * reset the user's password (send mail)
      * 
@@ -86,19 +84,19 @@ class UserController extends AbstractController
      */
     public function resetPasswordAction()
     {
-        
+
        //@todo: nachfrage double_opt passwort zurücksetzen?YN
-       
+
        //get param 
        $uid  = $this->params()->fromRoute('id', null);
-       
+
        $data['uid'] = $uid;
        $data['request'] = $this->getRequest();
        $this->getService()->resetPassword($data);
-      
+
        return $this->redirect()->toRoute('user');
     }
-    
+
     /**
      * edit a user
      * 
@@ -106,41 +104,41 @@ class UserController extends AbstractController
      */
     public function editAction()
     {
-        
+
         //get param 
        $uid  = $this->params()->fromRoute('id', null);
-       
+
        $user=$this->getService()->getMapper('user')->getUserById($uid);
-       
+
        $form = $this->getForm('user');
        $form->bindEntity($user);
-       
+
        if ($this->getRequest()->isPost()) {
-            
+
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
             //cancel
-            if($postData['cancel']) {
+            if ($postData['cancel']) {
                 return $this->redirect()->toRoute('user');
             }
-            
+
             $form->setData($postData);
-           
+
             if ($form->isValid()) {
-           
+
                 $data = $form->getData();
                 $this->getService()->editUser($data);
-      
+
                 return $this->redirect()->toRoute('user');
             }
-        }
+       }
 
         return new ViewModel(
-           array(
+            array(
               'form'    => $form
-           )
-       );
-        
+            )
+        );
+
     }
 
     /**
@@ -153,10 +151,10 @@ class UserController extends AbstractController
        //get param 
        $uid  = $this->params()->fromRoute('id', null);
        $this->getService()->deleteUser($uid);
-       
+
        return $this->redirect()->toRoute('user');
     }
-    
+
     /**
      * reactivate a user
      * 
@@ -167,8 +165,8 @@ class UserController extends AbstractController
        //get param 
        $uid  = $this->params()->fromRoute('id', null);
        $this->getService()->undeleteUser($uid);
-       
+
        return $this->redirect()->toRoute('user');
     }
-    
+
 }

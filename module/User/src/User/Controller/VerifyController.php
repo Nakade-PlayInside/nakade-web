@@ -18,39 +18,39 @@ use Nakade\Abstracts\AbstractController;
  * Verify the account with new credentials.
  * Use the link of the activation mail send to the user.
  */
-class VerifyController extends AbstractController 
+class VerifyController extends AbstractController
 {
-    
+
     /**
      * Verification action. A direct link to this action is provided
      * in the user's verification mail. 
      * 
-     * @return Zend\View\Model\ViewModel
+     * @return \Zend\View\Model\ViewModel
      */
     public function indexAction()
     {
-        
+
        $email          = $this->params()->fromQuery('email', null);
-       $verifyString   = $this->params()->fromQuery('verify' ,null);
-       
+       $verifyString   = $this->params()->fromQuery('verify', null);
+
        //no params -> error
-       if(!isset($email) || !isset($verifyString)) {
+       if (!isset($email) || !isset($verifyString)) {
            return $this->redirect()->toRoute('verify', array('action' => 'error'));
        }
 
-       $isActivated = $this->getService()->activateUser($email,$verifyString);
-    
-       if( ! $isActivated)
+       $isActivated = $this->getService()->activateUser($email, $verifyString);
+
+       if (! $isActivated) {
            return $this->redirect()->toRoute('verify', array('action' => 'failure'));
-       
-      
+       }
+
        //OK!
        return new ViewModel(
            array()
        );
-       
+
     }
-    
+
     /**
      * Activation failed.
      * 
@@ -60,7 +60,7 @@ class VerifyController extends AbstractController
     {
         return new ViewModel();
     }
-    
+
     /**
      * Data missing.
      * 

@@ -18,9 +18,9 @@ use Nakade\Abstracts\AbstractController;
 /**
  * Editing the user's own profile
  */
-class ProfileController extends AbstractController 
+class ProfileController extends AbstractController
 {
-    
+
     /**
      * Showing the user's profile
      * 
@@ -31,21 +31,21 @@ class ProfileController extends AbstractController
         //redirection does not work here if the 
         //protected method is provided!  
         $profile = $this->identity();
-        
-        if($profile === null) {
+
+        if ($profile === null) {
             return $this->redirect()->toRoute('login');
         }
-        
+
         return new ViewModel(
-           array(
-              'profile'    => $profile, 
-              'name'       => $profile->getName(),
-              'username'   => $profile->getUsername(),  
-              
+            array(
+               'profile'    => $profile,
+               'name'       => $profile->getName(),
+               'username'   => $profile->getUsername(),
+
            )
-       );
+        );
     }
-    
+
     /**
      * edit the birthday
      * 
@@ -54,40 +54,40 @@ class ProfileController extends AbstractController
     public function birthdayAction()
     {
         $profile = $this->getProfile();
-        
+
         $form = $this->getForm('birthday');
         $form->bindEntity($profile);
-        
+
         if ($this->getRequest()->isPost()) {
-            
+
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
-            
+
             //cancel
-            if($postData['cancel']) {
+            if ($postData['cancel']) {
                 return $this->redirect()->toRoute('profile');
             }
-            
+
             $form->setData($postData);
-           
+
             if ($form->isValid()) {
-           
+
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $data['uid']=$this->getProfile()->getId();
                 $this->getService()->editProfile($data);
-      
+
                 return $this->redirect()->toRoute('profile');
             }
         }
 
         return new ViewModel(
-           array(
-              'form'    => $form
-           )
-       );
-       
+            array (
+               'form'    => $form
+            )
+        );
+
     }
-    
+
     /**
      * edit the nickname
      * 
@@ -96,37 +96,37 @@ class ProfileController extends AbstractController
     public function nickAction()
     {
         $profile = $this->getProfile();
-        
+
         $form = $this->getForm('nick');
         $form->bindEntity($profile);
-        
+
         if ($this->getRequest()->isPost()) {
-            
+
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
-            
+
             //cancel
-            if($postData['cancel']) {
+            if ($postData['cancel']) {
                 return $this->redirect()->toRoute('profile');
             }
-            
+
             $form->setData($postData);
-           
+
             if ($form->isValid()) {
-           
+
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $data['uid']=$this->getProfile()->getId();
                 $this->getService()->editProfile($data);
-      
+
                 return $this->redirect()->toRoute('profile');
             }
         }
 
         return new ViewModel(
-           array(
+            array (
               'form'    => $form
-           )
-       );
+            )
+        );
     }
 
     /**
@@ -147,7 +147,7 @@ class ProfileController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if($postData['cancel']) {
+            if ($postData['cancel']) {
                 return $this->redirect()->toRoute('profile');
             }
 
@@ -178,39 +178,38 @@ class ProfileController extends AbstractController
     public function emailAction()
     {
         $profile = $this->getProfile();
-        
         $form = $this->getForm('email');
         $form->bindEntity($profile);
-        
+
         if ($this->getRequest()->isPost()) {
-            
+
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
-            
+
             //cancel
-            if($postData['cancel']) {
+            if ($postData['cancel']) {
                 return $this->redirect()->toRoute('profile');
             }
-            
+
             $form->setData($postData);
-           
+
             if ($form->isValid()) {
-           
+
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $data['uid']=$this->getProfile()->getId();
                 $this->getService()->editProfile($data);
-      
+
                 return $this->redirect()->toRoute('profile');
             }
         }
 
         return new ViewModel(
-           array(
+            array(
               'form'    => $form
-           )
-       );
+            )
+        );
     }
-    
+
     /**
      * change the password. No email is send.
      * 
@@ -218,41 +217,41 @@ class ProfileController extends AbstractController
      */
     public function passwordAction()
     {
-        
-        if($this->identity() === null) {
+
+        if ($this->identity() === null) {
             return $this->redirect()->toRoute('login');
         }
-        
+
         $form = $this->getForm('password');
         if ($this->getRequest()->isPost()) {
-            
+
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
-            
+
             //cancel
-            if($postData['cancel']) {
+            if ($postData['cancel']) {
                 return $this->redirect()->toRoute('profile');
-            }    
-            
+            }
+
             $form->setData($postData);
-           
+
             if ($form->isValid()) {
-           
+
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $data['uid']=$this->getProfile()->getId();
                 $this->getService()->editPassword($data);
-      
+
                 return $this->redirect()->toRoute('profile');
             }
         }
 
         return new ViewModel(
-           array(
+            array(
               'form'    => $form
-           )
-       );
+            )
+        );
     }
-    
+
     /**
      * get the user's profile. Redirect to the login if not logged in.
      * 
@@ -261,13 +260,12 @@ class ProfileController extends AbstractController
     protected function getProfile()
     {
         $profile = $this->identity();
-        
-        if($profile === null) {
+
+        if ($profile === null) {
             return $this->redirect()->toRoute('login');
         }
-        
+
         return $profile;
     }
-    
-    
+
 }

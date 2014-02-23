@@ -10,33 +10,32 @@ namespace User\Business;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class PasswordGenerator {
-    
-    
+class PasswordGenerator
+{
+
     /**
      * generates a randomized password with 8 chars in length by default. 
      * 
      * @param int $length optional password length
+     *
      * @return string random password
      */
     public static function generatePassword($length=8)
     {
-       
+
         $letters = "abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+_!%&()=[]@" ;
-        
         $password = "";
         $base = str_shuffle($letters);
-        srand((double)microtime()*1000000);
-        
+        srand((double) microtime()*1000000);
+
         for ($i=0; $i<$length; $i++) {
-            
+
             $index = rand(0, strlen($base)-1);
             $password .= $base[$index];
         }
-        
+
         return $password;
     }
-            
+
 }
 
-?>
