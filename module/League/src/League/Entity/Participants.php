@@ -15,27 +15,25 @@ use Doctrine\ORM\Mapping as ORM;
  * @property int $_lid
  * @property int $_id
  * @property int $_sid
- * @property int $_uid 
+ * @property int $_uid
  */
-class Participants 
+class Participants
 {
-  
   /**
     * properties for games stats.
     * being set during match stat analysis
-    * @var int 
+    * @var int
     */
-   protected $_games_played;
-   protected $_games_suspended;
-   protected $_games_win;
-   protected $_games_lost;
-   protected $_games_draw;
-   protected $_games_points;
-   protected $_first_tiebreak;
-   protected $_second_tiebreak;
-   protected $_third_tiebreak;
-     
-    
+   protected $_gamesPlayed;
+   protected $_gamesSuspended;
+   protected $_gamesWin;
+   protected $_gamesLost;
+   protected $_gamesDraw;
+   protected $_gamesPoints;
+   protected $_firstTiebreak;
+   protected $_secondTiebreak;
+   protected $_thirdTiebreak;
+
   /**
    * Primary Identifier
    *
@@ -47,7 +45,6 @@ class Participants
    */
   protected $_id;
 
-    
   /**
    * League Identifier: Foreign Key
    *
@@ -65,7 +62,7 @@ class Participants
    * @access protected
    */
   protected $_sid;
-  
+
   /**
    * User Id: Foreign Key
    *
@@ -84,7 +81,7 @@ class Participants
    * @access protected
    */
    protected $_player;
-  
+
    /**
    * League Entity
    *
@@ -94,12 +91,12 @@ class Participants
    * @access protected
    */
    protected $_league;
-   
+
   /**
    * Sets the Identifier
    *
    * @param int $pid
-   * @access public
+   *
    * @return Pairings
    */
   public function setId($pid)
@@ -118,12 +115,12 @@ class Participants
   {
     return $this->_id;
   }
-  
+
   /**
    * Sets the LeagueId
    *
    * @param int $lid
-   * @access public
+   *
    * @return League
    */
   public function setLid($lid)
@@ -148,7 +145,7 @@ class Participants
    * Sets the SeasonId
    *
    * @param int $sid
-   * @access public
+   *
    * @return Season
    */
   public function setSid($sid)
@@ -167,12 +164,12 @@ class Participants
   {
     return $this->_sid;
   }
-  
+
   /**
    * Sets UserId
    *
    * @param int $uid
-   * @access public
+   *
    * @return User
    */
   public function setUid($uid)
@@ -191,19 +188,19 @@ class Participants
   {
     return $this->_uid;
   }
-  
+
   /**
    * Sets the Player
    * @param int $uid
-   * @access public
+   *
    * @return Table
    */
   public function setPlayer($uid)
   {
     $this->_player = $uid;
     return $this;
-  } 
-  
+  }
+
   /**
    * Returns Player
    *
@@ -214,19 +211,19 @@ class Participants
   {
     return $this->_player;
   }
-  
+
   /**
    * Sets the League
    * @param int $leagueId
-   * @access public
+   *
    * @return Entity
    */
   public function setLeague($leagueId)
   {
     $this->_league = $leagueId;
     return $this;
-  } 
-  
+  }
+
   /**
    * Returns League
    *
@@ -237,232 +234,240 @@ class Participants
   {
     return $this->_league;
   }
-  
+
   /**
    * set number of games played
    * @param int $noGames
+   *
    * @return \League\Entity\Participants
    */
   public function setGamesPlayed($noGames)
   {
-    $this->_games_played = $noGames;
+    $this->_gamesPlayed = $noGames;
     return $this;
-  } 
-  
+  }
+
   /**
    * get number of played games
    * @return int
    */
   public function getGamesPlayed()
   {
-    return $this->_games_played;
+    return $this->_gamesPlayed;
   }
-  
+
   /**
    * setter for number of suspended games
-   * 
+   *
    * @param int $noGames
+   *
    * @return \League\Entity\Participants
    */
   public function setGamesSuspended($noGames)
   {
-    $this->_games_suspended = $noGames;
+    $this->_gamesSuspended = $noGames;
     return $this;
-  } 
-  
+  }
+
   /**
    * getter for number of suspended games
-   * 
+   *
    * @return int
    */
   public function getGamesSuspended()
   {
-    return $this->_games_suspended;
+    return $this->_gamesSuspended;
   }
-  
-  /**
-   * setter for number of draw games
-   * 
-   * @param int $noGames
-   * @return \League\Entity\Participants
-   */
+
+    /**
+     * @param int $noGames
+     *
+     * @return $this
+     */
   public function setGamesDraw($noGames)
   {
-    $this->_games_draw = $noGames;
+    $this->_gamesDraw = $noGames;
     return $this;
-  } 
-  
+  }
+
   /**
    * getter for number of draw games
-   * 
+   *
    * @return int
    */
   public function getGamesDraw()
   {
-    return $this->_games_draw;
+    return $this->_gamesDraw;
   }
-  
+
   /**
    * setter for number of won games
-   * 
+   *
    * @param int $noGames
+   *
    * @return \League\Entity\Participants
    */
   public function setGamesWin($noGames)
   {
-    $this->_games_win = $noGames;
+    $this->_gamesWin = $noGames;
     return $this;
-  } 
-  
+  }
+
   /**
    * getter for number of won games
-   * 
+   *
    * @return int
    */
   public function getGamesWin()
   {
-    return $this->_games_win;
+    return $this->_gamesWin;
   }
-  
+
   /**
    * setter for number of lost games
-   * 
+   *
    * @param int $noGames
+   *
    * @return \League\Entity\Participants
    */
   public function setGamesLost($noGames)
   {
-    $this->_games_lost = $noGames;
+    $this->_gamesLost = $noGames;
     return $this;
-  } 
-  
+  }
+
   /**
    * getter for number of lost games
-   * 
+   *
    * @return int
    */
   public function getGamesLost()
   {
-    return $this->_games_lost;
+    return $this->_gamesLost;
   }
-  
+
   /**
-   * setter for points 
-   * 
+   * setter for points
+   *
    * @param int $points
+   *
    * @return \League\Entity\Participants
-   */  
+   */
   public function setGamesPoints($points)
   {
-    $this->_games_points = $points;
+    $this->_gamesPoints = $points;
     return $this;
-  } 
-  
+  }
+
   /**
    * getter for points
-   * 
+   *
    * @return int
    */
   public function getGamesPoints()
   {
-    return $this->_games_points;
+    return $this->_gamesPoints;
   }
-  
+
   /**
    * setter of first tiebreak
-   * 
+   *
    * @param int $points
+   *
    * @return \League\Entity\Participants
    */
   public function setFirstTiebreak($points)
   {
-    $this->_first_tiebreak = $points;
+    $this->_firstTiebreak = $points;
     return $this;
-  } 
-  
+  }
+
   /**
    * getter of first tiebreak
-   * 
+   *
    * @return int
    */
   public function getFirstTiebreak()
   {
-    return $this->_first_tiebreak;
+    return $this->_firstTiebreak;
   }
-  
+
   /**
    * setter of second tiebreak
-   * 
+   *
    * @param int $points
+   *
    * @return \League\Entity\Participants
    */
   public function setSecondTiebreak($points)
   {
-    $this->_second_tiebreak = $points;
+    $this->_secondTiebreak = $points;
     return $this;
-  } 
-  
+  }
+
   /**
    * getter of second tiebreak
-   * 
+   *
    * @return int
    */
   public function getSecondTiebreak()
   {
-    return $this->_second_tiebreak;
+    return $this->_secondTiebreak;
   }
-  
+
   /**
    * setter of third tiebreak
-   * 
+   *
    * @param int $points
+   *
    * @return \League\Entity\Participants
    */
   public function setThirdTiebreak($points)
   {
-    $this->_third_tiebreak = $points;
+    $this->_thirdTiebreak = $points;
     return $this;
-  } 
-  
+  }
+
   /**
    * getter of third tiebreak
-   * 
+   *
    * @return int
    */
   public function getThirdTiebreak()
   {
-    return $this->_third_tiebreak;
+    return $this->_thirdTiebreak;
   }
-  
-  
+
+
   /**
    * populating data as an array.
-   * key of the array is getter methods name. 
-   * 
+   * key of the array is getter methods name.
+   *
    * @param array $data
    */
-  
-  public function populate($data) 
+
+  public function populate($data)
   {
-       foreach($data as $key => $value) {
-            
+       foreach ($data as $key => $value) {
+
            $method = 'set'.ucfirst($key);
-       
-            if(method_exists($this, $method))
+
+            if (method_exists($this, $method)) {
                 $this->$method($value);
+            }
        }
-       
+
   }
-  
+
   /**
    * Convert the object to an array.
    *
    * @return array
    */
-   public function getArrayCopy() 
+   public function getArrayCopy()
    {
         return get_object_vars($this);
    }
- 
-  
+
+
 }

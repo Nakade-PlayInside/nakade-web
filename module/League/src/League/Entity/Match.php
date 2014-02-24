@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @property int $_lid
  * @property int $_blackId
  * @property int $_whiteId
- * @property int $_resultId 
+ * @property int $_resultId
  * @property int $_winnerId
  * @property decimal $_points
  * @property DateTime $_date
@@ -28,7 +28,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Match
 {
-   
+
   /**
    * Primary Identifier
    *
@@ -40,7 +40,7 @@ class Match
    */
   protected $_id;
 
-    
+
   /**
    * League Identifier: Foreign Key
    *
@@ -58,7 +58,7 @@ class Match
    * @access protected
    */
   protected $_blackId;
-  
+
   /**
    * White Id: Foreign Key
    *
@@ -67,7 +67,7 @@ class Match
    * @access protected
    */
   protected $_whiteId;
-  
+
   /**
    * Result Id: Foreign Key
    *
@@ -85,7 +85,7 @@ class Match
    * @access protected
    */
    protected $_winnerId;
-   
+
    /**
    * points
    *
@@ -94,8 +94,7 @@ class Match
    * @access protected
    */
    protected $_points;
-   
-   
+
    /**
    * Date
    *
@@ -104,7 +103,7 @@ class Match
    * @access protected
    */
    protected $_date;
-  
+
    /**
    * League Entity
    *
@@ -114,7 +113,7 @@ class Match
    * @access protected
    */
    protected $_league;
-   
+
    /**
    * User Entity
    *
@@ -124,7 +123,7 @@ class Match
    * @access protected
    */
    protected $_black;
-   
+
    /**
    * User Entity
    *
@@ -134,7 +133,7 @@ class Match
    * @access protected
    */
    protected $_white;
-   
+
    /**
    * User Entity
    *
@@ -144,22 +143,21 @@ class Match
    * @access protected
    */
    protected $_winner;
-   
-   
+
     /**
-   * matchday 
+   * matchday
    *
    * @ORM\Column(name="matchday", type="integer")
    * @var int
    * @access protected
    */
    protected $_matchday;
-   
+
   /**
    * Sets the Identifier
    *
    * @param int $pid
-   * @access public
+   *
    * @return Match
    */
   public function setId($pid)
@@ -178,12 +176,12 @@ class Match
   {
     return $this->_id;
   }
-  
+
   /**
    * Sets the LeagueId
    *
    * @param int $lid
-   * @access public
+   *
    * @return League
    */
   public function setLid($lid)
@@ -204,13 +202,11 @@ class Match
   }
 
 
-  /**
-   * Sets the blackId
-   *
-   * @param int $order
-   * @access public
-   * @return Match
-   */
+    /**
+     * @param int $bid
+     *
+     * @return $this
+     */
   public function setBlackId($bid)
   {
     $this->_blackId = $bid;
@@ -227,12 +223,12 @@ class Match
   {
     return $this->_blackId;
   }
-  
+
   /**
    * Sets the WhiteId
    *
    * @param int $wid
-   * @access public
+   *
    * @return Match
    */
   public function setWhiteId($wid)
@@ -251,12 +247,12 @@ class Match
   {
     return $this->_whiteId;
   }
-  
+
   /**
    * Sets the resultId
    *
    * @param int $rid
-   * @access public
+   *
    * @return Match
    */
   public function setResultId($rid)
@@ -275,12 +271,12 @@ class Match
   {
     return $this->_resultId;
   }
-  
+
   /**
    * Sets the winnerId
    *
    * @param int $wid
-   * @access public
+   *
    * @return Match
    */
   public function setWinnerId($wid)
@@ -299,12 +295,12 @@ class Match
   {
     return $this->_winnerId;
   }
-  
+
   /**
    * Sets the Points
    *
    * @param float $points
-   * @access public
+   *
    * @return Match
    */
   public function setPoints($points)
@@ -324,12 +320,12 @@ class Match
     return $this->_points;
   }
 
-  
+
   /**
    * Sets the Date
    *
    * @param DateTime $date
-   * @access public
+   *
    * @return Match
    */
   public function setDate($date)
@@ -348,19 +344,19 @@ class Match
   {
     return $this->_date;
   }
-  
+
   /**
    * Sets the League
    * @param int $league
-   * @access public
+   *
    * @return Match
    */
   public function setLeague($league)
   {
     $this->_league = $league;
     return $this;
-  } 
-  
+  }
+
   /**
    * Returns League
    *
@@ -371,19 +367,19 @@ class Match
   {
     return $this->_league;
   }
-  
+
   /**
    * Sets the black User
    * @param int $uid
-   * @access public
+   *
    * @return Match
    */
   public function setBlack($uid)
   {
     $this->_black = $uid;
     return $this;
-  } 
-  
+  }
+
   /**
    * Returns Black User
    *
@@ -394,19 +390,19 @@ class Match
   {
     return $this->_black;
   }
-  
+
   /**
    * Sets the white User
    * @param int $uid
-   * @access public
+   *
    * @return Match
    */
   public function setWhite($uid)
   {
     $this->_white = $uid;
     return $this;
-  } 
-  
+  }
+
   /**
    * Returns white User
    *
@@ -417,19 +413,19 @@ class Match
   {
     return $this->_white;
   }
-  
+
   /**
    * Sets the winning User
    * @param int $uid
-   * @access public
+   *
    * @return Match
    */
   public function setWinner($uid)
   {
     $this->_winner = $uid;
     return $this;
-  } 
-  
+  }
+
   /**
    * Returns winning User
    *
@@ -440,14 +436,12 @@ class Match
   {
     return $this->_winner;
   }
-  
-  
-  
+
   /**
    * Sets the Matchday
    *
    * @param int $noday
-   * @access public
+   *
    * @return Match
    */
   public function setMatchday($noday)
@@ -466,53 +460,57 @@ class Match
   {
     return $this->_matchday;
   }
-  
+
+    /**
+     * @return mixed
+     */
   public function getTime()
   {
       return $this->_date->format('H:i:s');
   }
-  
+
   /**
-   * usage for creating a NEW match. Provide all neccessary values 
-   * in an array. 
-   *    
+   * usage for creating a NEW match. Provide all neccessary values
+   * in an array.
+   *
    * @param array $data
    */
     public function exchangeArray($data)
     {
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
            $method = 'set'.ucfirst($key);
-            if(method_exists($this, $method))
+            if (method_exists($this, $method)) {
                 $this->$method($value);
+            }
         }
-       
+
     }
-  
+
     /**
      * Convert the object to an array.
      *
      * @return array
      */
-    public function getArrayCopy() 
+    public function getArrayCopy()
     {
         return get_object_vars($this);
     }
- 
+
     /**
      * Populate from an array.
      *
      * @param array $data
      */
-    public function populate($data = array()) 
+    public function populate($data = array())
     {
-        
-        
+
+
         $this->_id       = $data['pid'];
         $this->_resultId = $data['result'];
         $this->_winnerId = $data['winner'];
         $this->_points   = $data['points'];
-             
+
     }
- 
-  
+
+
 }

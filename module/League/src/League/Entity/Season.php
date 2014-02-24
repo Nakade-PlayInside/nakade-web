@@ -20,7 +20,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Season
 {
-  
   /**
    * Primary Identifier
    *
@@ -49,8 +48,7 @@ class Season
    * @access protected
    */
   protected $_number;
-  
-  
+
   /**
    * Year
    *
@@ -68,7 +66,7 @@ class Season
    * @access protected
    */
    protected $_drawpoints;
-   
+
    /**
    * winPoints
    *
@@ -77,7 +75,7 @@ class Season
    * @access protected
    */
    protected $_winpoints;
-   
+
    /**
    * tiebreaker1
    *
@@ -86,7 +84,7 @@ class Season
    * @access protected
    */
    protected $_tiebreaker1;
-   
+
    /**
    * tiebreaker2
    *
@@ -95,7 +93,7 @@ class Season
    * @access protected
    */
    protected $_tiebreaker2;
-   
+
    /**
    * winPoints
    *
@@ -104,14 +102,12 @@ class Season
    * @access protected
    */
    protected $_tiebreaker3;
-   
-  
-   
+
   /**
    * Sets the Identifier
    *
    * @param int $uid
-   * @access public
+   *
    * @return Season
    */
   public function setId($uid)
@@ -135,7 +131,7 @@ class Season
    * Sets the Title
    *
    * @param string $title
-   * @access public
+   *
    * @return Season
    */
   public function setTitle($title)
@@ -155,11 +151,10 @@ class Season
     return $this->_title;
   }
 
- 
   /**
-   * Sets the Year  
+   * Sets the Year
    * @param DateTime $year
-   * @access public
+   *
    * @return Season
    */
   public function setYear($year)
@@ -176,15 +171,14 @@ class Season
    */
   public function getYear()
   {
-    
+
       return $this->_year;
   }
-  
-  
+
    /**
-   * Sets the Number  
+   * Sets the Number
    * @param int $number
-   * @access public
+   *
    * @return Season
    */
   public function setNumber($number)
@@ -201,14 +195,13 @@ class Season
    */
   public function getNumber()
   {
-    
       return $this->_number;
   }
-  
+
   /**
    * Sets the draw points
    * @param int $points
-   * @access public
+   *
    * @return Season
    */
   public function setDrawpoints($points)
@@ -225,14 +218,14 @@ class Season
    */
   public function getDrawpoints()
   {
-    
+
       return $this->_drawpoints;
   }
-  
+
   /**
    * Sets the win points
    * @param int $points
-   * @access public
+   *
    * @return Season
    */
   public function setWinpoints($points)
@@ -249,14 +242,14 @@ class Season
    */
   public function getWinpoints()
   {
-    
+
       return $this->_winpoints;
   }
-  
+
   /**
    * Sets the first tiebreaker
    * @param int $tiebreaker
-   * @access public
+   *
    * @return Season
    */
   public function setTiebreaker1($tiebreaker)
@@ -273,15 +266,13 @@ class Season
    */
   public function getTiebreaker1()
   {
-    
       return $this->_tiebreaker1;
   }
-  
-  
+
   /**
    * Sets the second tiebreaker
    * @param int $tiebreaker
-   * @access public
+   *
    * @return Season
    */
   public function setTiebreaker2($tiebreaker)
@@ -298,15 +289,13 @@ class Season
    */
   public function getTiebreaker2()
   {
-    
       return $this->_tiebreaker2;
   }
-  
-  
+
   /**
    * Sets the third tiebreaker
    * @param int $tiebreaker
-   * @access public
+   *
    * @return Season
    */
   public function setTiebreaker3($tiebreaker)
@@ -323,53 +312,50 @@ class Season
    */
   public function getTiebreaker3()
   {
-    
       return $this->_tiebreaker3;
   }
-  
-  
+
   /**
    * populating data as an array.
-   * key of the array is getter methods name. 
-   * 
+   * key of the array is getter methods name.
+   *
    * @param array $data
    */
-  public function populate($data) 
+  public function populate($data)
   {
-       foreach($data as $key => $value) {
-           
-           $key = str_replace('_', '',$key);
+       foreach ($data as $key => $value) {
+
+           $key = str_replace('_', '', $key);
            $method = 'set'.ucfirst($key);
-            if(method_exists($this, $method))
+            if (method_exists($this, $method)) {
                 $this->$method($value);
+            }
        }
-       
+
   }
-  
-  
+
   /**
-   * usage for creating a NEW season. Provide all neccessary values 
-   * in an array. 
-   *    
+   * usage for creating a NEW season. Provide all neccessary values
+   * in an array.
+   *
    * @param array $data
    */
     public function exchangeArray($data)
     {
         $this->populate($data);
-      
         $this->_year  = new \DateTime();
-        
+
     }
-   
-  
+
+
     /**
      * Convert the object to an array.
      *
      * @return array
      */
-    public function getArrayCopy() 
+    public function getArrayCopy()
     {
         return get_object_vars($this);
     }
-    
+
 }

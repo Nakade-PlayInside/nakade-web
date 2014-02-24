@@ -14,12 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @property int $_sid
  * @property int $_number
  * @property string $_title
- 
+
  */
 class League
 {
-    
-    
+
   /**
    * Primary Identifier
    *
@@ -31,7 +30,7 @@ class League
    */
   protected $_id;
 
-    
+
   /**
    * Season Identifier
    *
@@ -40,19 +39,17 @@ class League
    * @access protected
    */
   protected $_sid;
-  
-  
+
   /**
    * League Order
-   * eg 1.Liga or 2.Liga 
+   * eg 1.Liga or 2.Liga
    *
    * @ORM\Column(name="number", type="integer")
    * @var int
    * @access protected
    */
   protected $_number;
-  
-   
+
   /**
    * Title
    *
@@ -62,12 +59,12 @@ class League
    */
   protected $_title;
 
-  
+
   /**
    * Sets the Identifier
    *
    * @param int $lid
-   * @access public
+   *
    * @return Season
    */
   public function setId($lid)
@@ -86,12 +83,12 @@ class League
   {
     return $this->_id;
   }
-  
+
   /**
    * Sets the SeasonId
    *
    * @param int $sid
-   * @access public
+   *
    * @return League
    */
   public function setSid($sid)
@@ -111,13 +108,11 @@ class League
     return $this->_sid;
   }
 
-  /**
-   * Sets the Order
-   *
-   * @param int $order
-   * @access public
-   * @return League
-   */
+    /**
+     * @param int $number
+     *
+     * @return $this
+     */
   public function setNumber($number)
   {
     $this->_number = $number;
@@ -134,13 +129,12 @@ class League
   {
     return $this->_number;
   }
-  
-  
+
   /**
    * Sets the Title
    *
    * @param string $title
-   * @access public
+   *
    * @return League
    */
   public function setTitle($title)
@@ -162,42 +156,43 @@ class League
 
   /**
    * populating data as an array.
-   * key of the array is getter methods name. 
-   * 
+   * key of the array is getter methods name.
+   *
    * @param array $data
    */
-  public function populate($data) 
+  public function populate($data)
   {
-       foreach($data as $key => $value) {
-           
-           $key = str_replace('_', '',$key);
+       foreach ($data as $key => $value) {
+
+           $key = str_replace('_', '', $key);
            $method = 'set'.ucfirst($key);
-            if(method_exists($this, $method))
+           if (method_exists($this, $method)) {
                 $this->$method($value);
+           }
        }
-       
+
   }
-  
+
   /**
-   * usage for creating a NEW league. Provide all neccessary values 
-   * in an array. 
-   *    
+   * usage for creating a NEW league. Provide all neccessary values
+   * in an array.
+   *
    * @param array $data
    */
   public function exchangeArray($data)
   {
         $this->populate($data);
-        
-   }
-   
+
+  }
+
    /**
     * Convert the object to an array.
     *
     * @return array
     */
-    public function getArrayCopy() 
+    public function getArrayCopy()
     {
         return get_object_vars($this);
     }
- 
+
 }

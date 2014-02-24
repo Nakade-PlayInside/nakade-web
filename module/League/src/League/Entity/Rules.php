@@ -19,8 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Rules
 {
-    
-    
+
   /**
    * Primary Identifier
    *
@@ -40,7 +39,7 @@ class Rules
    * @access protected
    */
   protected $_drawPoints;
-  
+
   /**
    * points for a win
    *
@@ -58,7 +57,7 @@ class Rules
    * @access protected
    */
    protected $_tiebreaker1;
-  
+
    /**
    * second tiebreaker
    *
@@ -67,7 +66,7 @@ class Rules
    * @access protected
    */
    protected $_tiebreaker2;
-   
+
    /**
    * third tiebreaker
    *
@@ -76,12 +75,12 @@ class Rules
    * @access protected
    */
    protected $_tiebreaker3;
-   
+
   /**
    * Sets the Identifier
    *
    * @param int $lid
-   * @access public
+   *
    * @return Rules
    */
   public function setId($lid)
@@ -100,13 +99,12 @@ class Rules
   {
     return $this->_id;
   }
-  
 
   /**
    * Sets the points for a draw
    *
    * @param int $points
-   * @access public
+   *
    * @return Rules
    */
   public function setDrawPoints($points)
@@ -125,12 +123,12 @@ class Rules
   {
     return $this->_drawPoints;
   }
-  
+
   /**
    * Sets the points for a win
    *
    * @param int $points
-   * @access public
+   *
    * @return Rules
    */
   public function setWinPoints($points)
@@ -149,13 +147,12 @@ class Rules
   {
     return $this->_winPoints;
   }
-  
-  
+
   /**
    * Sets the first Tiebreaker
    *
    * @param string $tiebreaker
-   * @access public
+   *
    * @return Rules
    */
   public function setTiebreaker1($tiebreaker)
@@ -179,7 +176,7 @@ class Rules
    * Sets the second Tiebreaker
    *
    * @param string $tiebreaker
-   * @access public
+   *
    * @return Rules
    */
   public function setTiebreaker2($tiebreaker)
@@ -198,13 +195,12 @@ class Rules
   {
     return $this->_tiebreaker2;
   }
-  
-  
+
   /**
    * Sets the third Tiebreaker
    *
    * @param string $tiebreaker
-   * @access public
+   *
    * @return Rules
    */
   public function setTiebreaker3($tiebreaker)
@@ -223,15 +219,15 @@ class Rules
   {
     return $this->_tiebreaker3;
   }
-  
+
    /**
     * Convert the object to an array.
     *
     * @return array
     */
-    public function getArrayCopy() 
+    public function getArrayCopy()
     {
         return get_object_vars($this);
     }
- 
+
 }

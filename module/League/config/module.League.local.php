@@ -9,11 +9,10 @@
  * mail message.
  */
 return array(
-    
+
     'League' => array(
-        
+
         //your text domain for translation
         'text_domain' => 'League',
-        
     ),
 );

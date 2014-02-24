@@ -10,11 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  * @property int $lid
  * @property int $id
  * @property int $sid
- * @property int $uid 
+ * @property int $uid
  */
 class Player
 {
-    
+
   /**
    * Primary Identifier
    *
@@ -26,7 +26,7 @@ class Player
    */
   protected $id;
 
-    
+
   /**
    * League Identifier: Foreign Key
    *
@@ -44,23 +44,21 @@ class Player
    * @access protected
    */
   protected $sid;
-  
+
   /**
    * User Id: Foreign Key
    *
    * @ORM\Column(name="uid", type="integer")
    * @var int
-   * @access protected
    */
   protected $uid;
 
-  
-   
+
   /**
    * Sets the Identifier
    *
    * @param int $pid
-   * @access public
+   *
    * @return Pairings
    */
   public function setId($pid)
@@ -72,19 +70,18 @@ class Player
   /**
    * Returns the Identifier
    *
-   * @access public
    * @return int
    */
   public function getId()
   {
     return $this->id;
   }
-  
+
   /**
    * Sets the LeagueId
    *
    * @param int $lid
-   * @access public
+   *
    * @return League
    */
   public function setLid($lid)
@@ -109,7 +106,7 @@ class Player
    * Sets the SeasonId
    *
    * @param int $sid
-   * @access public
+   *
    * @return Season
    */
   public function setSid($sid)
@@ -128,12 +125,12 @@ class Player
   {
     return $this->sid;
   }
-  
+
   /**
    * Sets UserId
    *
    * @param int $uid
-   * @access public
+   *
    * @return User
    */
   public function setUid($uid)
@@ -152,35 +149,37 @@ class Player
   {
     return $this->uid;
   }
-  
+
   /**
    * populating data as an array.
-   * key of the array is getter methods name. 
-   * 
+   * key of the array is getter methods name.
+   *
    * @param array $data
    */
-  
-  public function populate($data) 
+
+  public function populate($data)
   {
-       foreach($data as $key => $value) {
-            
+       foreach ($data as $key => $value) {
+
            $method = 'set'.ucfirst($key);
-       
-            if(method_exists($this, $method))
+
+            if (method_exists($this, $method)) {
                 $this->$method($value);
+            }
+
        }
-       
+
   }
-  
+
   /**
    * Convert the object to an array.
    *
    * @return array
    */
-   public function getArrayCopy() 
+   public function getArrayCopy()
    {
         return get_object_vars($this);
    }
- 
-  
+
+
 }

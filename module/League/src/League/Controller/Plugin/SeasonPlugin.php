@@ -218,7 +218,7 @@ class SeasonPlugin extends AbstractEntityPlugin
     * message is translated.
     *  
     * @param string $message
-    * 
+    *
     * @return string
     */
    protected function translate($message)
