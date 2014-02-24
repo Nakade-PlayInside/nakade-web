@@ -15,11 +15,11 @@
 
         <!-- Scripts -->
         <?php echo $this->headScript()
-                        ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', 
-                                array('conditional' => 'lt IE 9',))
-                        ->prependFile('/js/bootstrap-collapse.js') 
-                        ->prependFile('/js/bootstrap.min.js') 
-                        ->prependFile('/js/jquery-2.0.3.min.js') 
+                        ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript',
+                            array('conditional' => 'lt IE 9',))
+                        ->prependFile('/js/bootstrap-collapse.js')
+                        ->prependFile('/js/bootstrap.min.js')
+                        ->prependFile('/js/jquery-2.0.3.min.js')
                 ?>
         
     </head>
@@ -43,77 +43,76 @@
       
 <?php 
      if ($user = $this->identity()) {
-       
-        if($user->getRole()=='admin') {
-            
+
+        if ($user->getRole()=='admin') {
+
             $admin = array(
-            
-            $this->translate('User overview', 'Application')   => 
+
+            $this->translate('User overview', 'Application')   =>
                 $this->url('user'),
-            
-            $this->translate('add user', 'Application')  => 
+
+            $this->translate('add user', 'Application')  =>
                 $this->url('user/add'),
-            
-            $this->translate('open results', 'Application')    => 
+
+            $this->translate('open results', 'Application')    =>
                 $this->url('result'),
-                
-            $this->translate('edit matchday', 'Application')    => 
+
+            $this->translate('edit matchday', 'Application')    =>
                 $this->url('matchday'),
-                
-             $this->translate('season overview', 'Application')    => 
-                $this->url('newseason'),    
-                
-            ); 
-        
+
+            $this->translate('season overview', 'Application')    =>
+                $this->url('newseason'),
+
+            );
+
             echo $this->Submenu('Admin', $admin);
-      
-            
-        } 
-        
+
+
+        }
+
         echo sprintf('<li><a href="%s">%s</a></li>',
-                    $this->url('profile'),
-                    $this->translate('Profile', 'Application')
+            $this->url('profile'),
+            $this->translate('Profile', 'Application')
         );
-              
-        
+
+
         $league = array(
-            
-            $this->translate('Schedule', 'Application')   => 
+
+            $this->translate('Schedule', 'Application')   =>
                 $this->url('actual/schedule'),
-            
-            $this->translate('Standings', 'Application')  => 
+
+            $this->translate('Standings', 'Application')  =>
                 $this->url('actual/table'),
-            
-            $this->translate('results', 'Application')    => 
+
+            $this->translate('results', 'Application')    =>
                 $this->url('result/myresult'),
-                
-        ); 
-        
+
+        );
+
         echo $this->Submenu(
-                $this->translate('League', 'Application'), 
-                $league
-             );
-      
+            $this->translate('League', 'Application'),
+            $league
+        );
+
         echo sprintf('<li style="color:lightblue;line-height:19px;
                 padding:10px; padding-left:20px;">%s %s</li>',
-                    $this->translate('Logged in as ', 'Application'),
-                    $this->escapeHtml($user->getUsername()) 
+            $this->translate('Logged in as ', 'Application'),
+            $this->escapeHtml($user->getUsername())
         );
-        
+
         echo sprintf('<li><a href="%s">%s</a></li>',
-                    $this->url('login/process', array('action'=>'logout')),
-                    $this->translate('mv composer.phar /usr/local/bin/composerLogout', 'Application')
+            $this->url('login/process', array('action'=>'logout')),
+            $this->translate('Logout', 'Application')
         );
-        
-     } 
-     else {
-    
+
+     } else {
+
         echo sprintf('<li><a href="%s">%s</a></li>',
-                    $this->url('login'),
-                    $this->translate('LogIn', 'Application') 
-         );
-       
-    }
+            $this->url('login'),
+            $this->translate('LogIn', 'Application')
+        );
+
+     }
 ?>    
                         </ul>
                     </div><!--/.nav-collapse -->

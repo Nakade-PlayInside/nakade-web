@@ -13,23 +13,25 @@ use Zend\View\Model\ViewModel;
  */
 class ActualSeasonController extends AbstractController
 {
-    
+
     /**
     * Default action showing up the Top League table
     * in a short and compact version. This can be used as a widget.  
+    *
+    * @return array|ViewModel
     */
     public function indexAction()
     {
-                 
+
         return new ViewModel(
-           array(
+            array(
               'title'     => $this->getService()->getTitle(),
               'table'     => $this->getService()->getTopLeagueTable()
-           
-           )
+
+            )
         );
     }
-    
+
     /**
     * Shows actual matchplan of a user and his results.
     * If user is not in  a league, the top league schedule
@@ -39,12 +41,12 @@ class ActualSeasonController extends AbstractController
     public function scheduleAction()
     {
        $user = $this->identity();
-        
-       if($user === null) {
+
+       if ($user === null) {
            return $this->redirect()->toRoute('login');
        }
        $uid = $user->getId();
-             
+
        return new ViewModel(
            array(
               'title'   => $this->getService()->getScheduleTitle($uid),
@@ -52,26 +54,24 @@ class ActualSeasonController extends AbstractController
            )
        );
     }
-    
+
     /**
     * Shows the user's league table. If user is not in a league, the
     * Top league is shown instead. The Table is sortable.
     */
     public function tableAction()
     {
-     
+
        $user = $this->identity();
-        
-       if($user === null) {
+
+       if ($user === null) {
            return $this->redirect()->toRoute('login');
        }
        $uid = $user->getId();
-        
-       
+
        //sorting the table
        $sorting  = $this->params()->fromRoute('sort', null);
-      
-       
+
        return new ViewModel(
            array(
               'table'       => $this->getService()
@@ -80,11 +80,9 @@ class ActualSeasonController extends AbstractController
                                     ->getTiebreakerNames(),
               'title'       => $this->getService()
                                     ->getTableTitle($uid),
-              
+
            )
        );
     }
-    
-   
-    
+
 }
