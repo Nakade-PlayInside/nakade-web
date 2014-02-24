@@ -15,32 +15,33 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class LeagueControllerFactory implements FactoryInterface
 {
-    
+
     /**
      * creates the authController. Binds the authentication service and
      * the authentication form.
      *   
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
+     *
      * @return \Authentication\Controller\AuthController
      */
     public function createService(ServiceLocatorInterface $services)
     {
         $serviceManager = $services->getServiceLocator();
-        
+
         $config  = $serviceManager->get('config');
         if ($config instanceof Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
-       
+
         $service    = $serviceManager->get(
-                'League\Services\LeagueServiceFactory'
+            'League\Services\LeagueServiceFactory'
         );
         $factory    = $serviceManager->get('League\Factory\FormFactory');
-       
+
         $controller = new LeagueController();
         $controller->setService($service);
         $controller->setFormFactory($factory);
-        
+
         return $controller;
     }
 }

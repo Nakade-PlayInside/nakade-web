@@ -15,32 +15,32 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class ActualSeasonControllerFactory implements FactoryInterface
 {
-    
+
     /**
      * creates the authController. Binds the authentication service and
      * the authentication form.
      *   
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
+     *
      * @return \Authentication\Controller\AuthController
      */
     public function createService(ServiceLocatorInterface $services)
     {
-     
+
         $serviceManager = $services->getServiceLocator();
-        
+
         $config  = $serviceManager->get('config');
         if ($config instanceof Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
-       
-        $service    = $serviceManager->get( 
-                'League\Services\ActualSeasonServiceFactory'
+
+        $service    = $serviceManager->get(
+            'League\Services\ActualSeasonServiceFactory'
         );
-       
+
         $controller = new ActualSeasonController();
         $controller->setService($service);
-       
-        
+
         return $controller;
     }
 }

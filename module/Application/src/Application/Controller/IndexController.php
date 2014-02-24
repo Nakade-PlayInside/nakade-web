@@ -16,23 +16,26 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
-   
+
+    /**
+     * @return array|ViewModel
+     */
     public function indexAction()
     {
-       
+
         $blogWidget  = $this->forward()
                             ->dispatch('/Blog/Controller/Blog');
-        
+
         $tableWidget = $this->forward()
                             ->dispatch('/League/Controller/ActualSeason');
-        
+
         $page = new ViewModel();
-        
+
         $page->addChild($blogWidget, 'blogWidget');
         $page->addChild($tableWidget, 'tableWidget');
-        
+
         return $page;
-       
+
     }
-    
+
 }

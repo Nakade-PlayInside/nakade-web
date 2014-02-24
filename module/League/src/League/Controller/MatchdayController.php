@@ -11,79 +11,79 @@ use Zend\View\Model\ViewModel;
  */
 class MatchdayController extends AbstractController 
 {
-   
+
    /**
     * showing all open results of the actual season
+    *
+    * @return array|ViewModel
     */
     public function indexAction()
     {
-        
+
        return new ViewModel(
-                
-            array(
+
+           array(
                 'matches' =>  $this->getService()->getOpenMatches()
-            )
-        );
-       
+           )
+       );
+
     }
-    
-    
+
     /**
     * Form for edit a result
+    *
+    * @return \Zend\Http\Response|ViewModel
     */
     public function editAction()
     {
-        
+
         $id  = (int) $this->params()->fromRoute('id', 0);
         $match = $this->getService()->getMatch($id);
-        
-        if(is_null($match)) {
+
+        if (is_null($match)) {
             return $this->redirect()->toRoute('matchday');
         }
         $form = $this->getForm('matchday');//->setResultFormValues($pid);
         $form->bindEntity($match);
-        
+
         if ($this->getRequest()->isPost()) {
-            
+
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
             //cancel
-            if($postData['cancel']) {
+            if ($postData['cancel']) {
                 return $this->redirect()->toRoute('matchday');
             }
-            
+
             $form->setData($postData);
-           
+
             if ($form->isValid()) {
-                
-                $datetime = $postData['date']. ' ' . $postData['time']; 
+
+                $datetime = $postData['date']. ' ' . $postData['time'];
                 $temp = new \DateTime($datetime);
-                
                 $match->setDate($temp);
-                
-                if($postData['changeColors']) {
-                    
+
+                if ($postData['changeColors']) {
+
                     $black = $match->getBlack();
                     $white = $match->getWhite();
-                    
+
                     $match->setBlack($white);
                     $match->setWhite($black);
                 }
-                
+
                 $this->getService()->getMapper('match')->save($match);
-                
                 return $this->redirect()->toRoute('matchday');
             }
         }
-          
+
        return new ViewModel(
            array(
              // 'id'      => $pid, 
-                'match'   => $match, 
+                'match'   => $match,
                 'form'    => $form
            )
        );
     }
 
-    
 }
