@@ -1,27 +1,37 @@
 <?php
-$this->plugin('translate')->setTranslatorTextDomain('Message'); 
+$this->plugin('translate')->setTranslatorTextDomain('Message');
 $this->headTitle("Messages");
 ?>
 
- <?php   if(is_null($this->message)) die; ?>
+ <?php   if(is_null($this->messages)) die; ?>
+
+<form action="<?php echo $this->url('message/reply'); ?>"><button type="submit"><?php echo $this->translate('reply');?></button></form>
+<form action="<?php echo $this->url('message/reply'); ?>"><button><?php echo $this->translate('delete');?></button></form>
+<?php foreach ($this->messages as $message) : ?>
 
 <table id="message" style="width: 80%; margin-top: 0.5em;border:1px lightgrey solid">
     <tr>
         <th>
-            <div class="msghead"> 
+            <div class="msghead">
                 <div class="container">
-                    <div><label><?php echo $this->translate('from');?>:</label><?php echo $this->message->getSender()->getShortName(); ?></div>
-                    <div><label><?php echo $this->translate('subject');?>:</label><?php echo $this->message->getSubject();?></div>
+                    <div><label><?php echo $this->translate('from');?>:</label><?php echo $message->getSender()->getShortName(); ?></div>
+                    <div><label><?php echo $this->translate('subject');?>:</label><?php echo $message->getSubject();?></div>
                 </div>
                 <div class="container right">
-                    <div><form action="<?php echo $this->url('message/reply'); ?>"><button type="submit"><?php echo $this->translate('reply');?></button></form><button><?php echo $this->translate('delete');?></button></div>
-                    <div class="date"><?php echo $this->message->getSendDate()->format('d.m.Y H:i');?></div>
+                    <div><label><?php echo $this->translate('send');?>:</label><?php echo $message->getSendDate()->format('d.m.Y H:i');?></div>
+    <?php if ((int) $message->getReadDate()->format('Y') > 1 ): ?>
+                    <div><label><?php echo $this->translate('read');?>:</label>
+                        <?php  echo $message->getReadDate()->format('d.m.Y H:i'); ?>
+                    </div>
+<?php
+endif;
+    ?>
                 </div>
             <div>
         </th>
     </tr>
-    <tr class="message"> 
-        <td><?php echo $this->message->getMessage(); ?></td>
+    <tr class="message">
+        <td><?php echo $message->getMessage(); ?></td>
     </tr>
 </table>
-  
+<?php endforeach; ?>

@@ -17,5 +17,6 @@ data/session/*
 data/DoctrineORMModule/*
 data/DoctrineORMModule/Proxy/*
 project.properties
+public/phpinfo.php
 
 #ignore more

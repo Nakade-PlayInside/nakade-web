@@ -10,91 +10,120 @@ use RuntimeException;
 /**
  * Factory for the actual season for receiving
  * sorted league tables and schedules.
- * 
+ *
  * @author Dr. Holger Maerz <grrompf@gmail.com>
  */
 class MessageServiceFactory extends AbstractService
 {
-        
+
     /**
      * Actual Season Service for league tables and schedules.
      * Integration of optional translation feature (i18N)
-     * 
+     *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
      * @return ActualSeasonService
      * @throws RuntimeException
-     * 
+     *
      */
     public function createService(ServiceLocatorInterface $services)
     {
-      
+
         $config  = $services->get('config');
         if ($config instanceof Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
-        
-        //configuration 
-        $textDomain = isset($config['Message']['text_domain']) ? 
+
+        //configuration
+        $textDomain = isset($config['Message']['text_domain']) ?
             $config['Message']['text_domain'] : null;
-         
-        
+
+
         $this->setMapperFactory($services->get('Message\Factory\MapperFactory'));
-        
+
         //optional translator
         $translator = $services->get('translator');
         $this->setTranslator($translator, $textDomain);
-      
+
         return $this;
-        
+
     }
-    
+
     /**
      * @return Messages
      */
-    public function getAllMessages() 
+    public function getAllMyMessages()
     {
-        
+
+        $uid=1;
+        $messages   = $this->getMapper('message')
+            ->getActiveMessagesByUser($uid);
+        return $messages;
+
+    }
+
+    /**
+     * @return Messages
+     */
+    public function getAllMessages()
+    {
+
         $messages   = $this->getMapper('message')
                            ->getAllMessages();
         return $messages;
-        
+
     }
-    
+
     /**
-     * @return Messages
+     * @param int $mid
+     *
+     * @return array
      */
-    public function getMessage($id) 
+    public function getMessagesById($mid)
     {
-        
-        $message   = $this->getMapper('message')
-                           ->getMessageById($id);
-        return $message;
-        
+
+        $messages   = $this->getMapper('message')
+            ->getMessagesById($mid);
+
+        return $messages;
+
     }
-    
+
+
     /**
      * @return Messages
      */
-    public function getAllRecipients($id) 
+    public function getMessage($id)
+    {
+
+        $message   = $this->getMapper('message')
+                            ->getMessageById($id);
+        return $message;
+
+    }
+
+    /**
+     * @return Messages
+     */
+    public function getAllRecipients($id)
     {
         $user = $this->getMapper('message')->getAllRecipients($id);
         return $user;
-        
+
     }
-    
+
     /**
      * @return Messages
      */
-    public function getUserById($id) 
+    public function getUserById($id)
     {
         $user = $this->getMapper('message')->getUserById($id);
         return $user;
-        
+
     }
-    
-   
-   
- 
+
+
+
+
 }
 
 
