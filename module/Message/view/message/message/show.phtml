@@ -3,13 +3,21 @@ $this->plugin('translate')->setTranslatorTextDomain('Message');
 $this->headTitle("Messages");
 ?>
 
- <?php   if(is_null($this->messages)) die; ?>
+<?php $this->placeholder('nothing')->captureStart();?>
+    <h3><?php echo $this->translate('No messages found')?></h3>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
 
-<form action="<?php echo $this->url('message/reply'); ?>"><button type="submit"><?php echo $this->translate('reply');?></button></form>
-<form action="<?php echo $this->url('message/reply'); ?>"><button><?php echo $this->translate('delete');?></button></form>
+<?php $this->placeholder('messages')->captureStart();?>
+
+<div id="msgAction">
+<form action="<?php echo $this->url('message'); ?>"><button type="submit"><?php echo $this->translate('back');?></button></form>
+<form action="<?php echo $this->url('message/reply', array('id' => $this->replyId)); ?>"><button type="submit"><?php echo $this->translate('reply');?></button></form>
+<form action="<?php echo $this->url('message'); ?>"><button ><?php echo $this->translate('archive');?></button></form>
+<form action="<?php echo $this->url('message'); ?>"><button><?php echo $this->translate('delete');?></button></form>
+</div>
+
 <?php foreach ($this->messages as $message) : ?>
-
-<table id="message" style="width: 80%; margin-top: 0.5em;border:1px lightgrey solid">
+<table id="message">
     <tr>
         <th>
             <div class="msghead">
@@ -19,7 +27,7 @@ $this->headTitle("Messages");
                 </div>
                 <div class="container right">
                     <div><label><?php echo $this->translate('send');?>:</label><?php echo $message->getSendDate()->format('d.m.Y H:i');?></div>
-    <?php if ((int) $message->getReadDate()->format('Y') > 1 ): ?>
+    <?php if (!is_null($message->getReadDate())): ?>
                     <div><label><?php echo $this->translate('read');?>:</label>
                         <?php  echo $message->getReadDate()->format('d.m.Y H:i'); ?>
                     </div>
@@ -35,3 +43,11 @@ endif;
     </tr>
 </table>
 <?php endforeach; ?>
+<?php $this->placeholder('messages')->captureEnd();
+
+if (is_null($this->messages)) {
+    echo $this->placeholder('nothing');
+}
+else {
+    echo $this->placeholder('messages');
+}

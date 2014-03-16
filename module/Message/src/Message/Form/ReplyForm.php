@@ -11,28 +11,30 @@ use Message\Entity\Message;
 class ReplyForm extends AbstractForm
 {
     private $sender;
+
     /**
-     * Constructor
-     */        
+     * @param int|null|string $sender
+     */
     public function __construct($sender)
     {
         $this->sender = $sender->getShortName();
-        
+
         //form name is LeagueForm
-        parent::__construct($name='ReplyForm');
+        parent::__construct($name = 'ReplyForm');
         $this->setObject(new Message());
         $this->setHydrator(new Hydrator());
         $this->init();
-    } 
-    
-    
+    }
+
+
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() {
-       
-       
+    public function init()
+    {
+
+
         //recipient
         $this->add(
             array(
@@ -40,7 +42,7 @@ class ReplyForm extends AbstractForm
                 'type' => 'Zend\Form\Element\Text',
                 'options' => array(
                     'label' =>  $this->translate('receiver').':',
-                   
+
                 ),
                 'attributes' => array(
                     'readonly' =>   true,
@@ -48,7 +50,7 @@ class ReplyForm extends AbstractForm
                 ),
             )
         );
-        
+
         //subject
         $this->add(
             array(
@@ -57,10 +59,10 @@ class ReplyForm extends AbstractForm
                 'options' => array(
                     'label' =>  $this->translate('subject').':',
                 ),
-                
+
             )
         );
-        
+
         //message
         $this->add(
             array(
@@ -71,10 +73,10 @@ class ReplyForm extends AbstractForm
                 ),
             )
         );
-        
+
         //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side 
-        //validation 
+        //this is handled by ZF2 in the background - no need for server-side
+        //validation
         $this->add(
             array(
                 'name' => 'csrf',
@@ -84,9 +86,9 @@ class ReplyForm extends AbstractForm
                         'timeout' => 600
                     )
                 )
-            )    
+            )
         );
-       
+
         //submit button
         $this->add(
             array(
@@ -98,7 +100,7 @@ class ReplyForm extends AbstractForm
                 ),
             )
         );
-        
+
         //cancel button
         $this->add(
             array(
@@ -110,15 +112,18 @@ class ReplyForm extends AbstractForm
                 ),
             )
         );
-        
-    } 
-    
+
+    }
+
+    /**
+     * @return \Zend\InputFilter\InputFilter
+     */
     public function getFilter()
     {
         $filter = new \Zend\InputFilter\InputFilter();
-     
+
         $filter->add(
-             array(
+            array(
                  'name' => 'subject',
                  'required' => false,
                  'filters'  => array(
@@ -129,16 +134,16 @@ class ReplyForm extends AbstractForm
                  'validators' => array(
                      array('name'    => 'StringLength',
                            'options' => array (
-                                  'encoding' => 'UTF-8', 
+                                  'encoding' => 'UTF-8',
                                   'max'  => '200',
-                           )  
-                     ),  
+                           )
+                     ),
                   )
-              )
-         );
-        
+            )
+        );
+
         return $filter;
     }
-    
+
 }
-?>
+

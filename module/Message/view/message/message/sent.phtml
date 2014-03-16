@@ -11,14 +11,13 @@ $this->headTitle("Messages");
 <h3><?php //echo $this->escapeHtml($this->title); ?></h3>
 
 <div id="msgAction">
-    <form action="<?php echo $this->url('message/new'); ?>"><button type="submit"><?php echo $this->translate('new');?></button></form>
+    <form action="<?php echo $this->url('message'); ?>"><button type="submit"><?php echo $this->translate('mailbox');?></button></form>
     <form action="<?php echo $this->url('message/archive'); ?>"><button ><?php echo $this->translate('archive');?></button></form>
 </div>
 <table id="messages" class="table">
     <tr>
         <th><?php echo $this->translate('Subject');?></th>
         <th class="read"><img alt="mail read" src="/images/glasses.png"></th>
-        <th><?php echo $this->translate('from')?></th>
         <th><?php echo $this->translate('to')?></th>
         <th><?php echo $this->translate('Date')?></th>
     </tr>
@@ -36,7 +35,6 @@ $this->headTitle("Messages");
 endif;
 ?>
         </td>
-        <td><?php echo $message->getSender()->getShortName();?></td>
         <td><?php echo $message->getReceiver()->getShortName();?></td>
         <td><?php echo $message->getSendDate()->format('d.m.y H:i');?></td>
     </tr>

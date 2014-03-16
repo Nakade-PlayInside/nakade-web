@@ -88,6 +88,21 @@ class MessageServiceFactory extends AbstractService
 
     }
 
+    /**
+     * @param int $mid
+     *
+     * @return array
+     */
+    public function getLastMessagesById($mid)
+    {
+
+        $messages   = $this->getMapper('message')
+            ->getLastMessageById($mid);
+
+        return $messages;
+
+    }
+
 
     /**
      * @return Messages

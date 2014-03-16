@@ -6,7 +6,7 @@
 */
 
 #messages {
-    width: auto; 
+    width: auto;
     margin-top: 0.5em;
     border-collapse:collapse;
 }
@@ -40,7 +40,7 @@
 }
 
 #messages .message .subject {
-    width: 60%; 
+    width: 60%;
 }
 
 #messages .message:hover td {
@@ -55,10 +55,11 @@
 }
 
 #message {
-    width: 80%; 
-    margin-top: 0.5em;
+    width: 80%;
+    margin-top: 0.1em;
     border:1px lightgrey solid
 }
+
 
 #message label {
     display: inline-block;
@@ -95,21 +96,19 @@
     line-height: 1em;
 }
 
-#message form {
+#msgAction form {
     display: inline;
 }
 
-#message button {
+#msgAction button {
     display: inline-block;
     margin-bottom: 10px;
 }
 
 #message th div {
-    text-align: left;  
+    text-align: left;
 }
 
 #message .message td {
     padding: 5px;
 }
-
-

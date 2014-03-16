@@ -32,6 +32,23 @@ class MessageController extends AbstractController
         );
     }
 
+    /**
+     * Default action showing up the Top League table
+     * in a short and compact version. This can be used as a widget.
+     */
+    public function sentAction()
+    {
+        if ($this->identity() === null) {
+            return $this->redirect()->toRoute('login');
+        }
+
+        $messages = $this->getService()->getAllMyMessages();
+        return new ViewModel(
+            array('messages' => $messages)
+        );
+    }
+
+
     public function showAction()
     {
         if ($this->identity() === null) {
@@ -39,15 +56,14 @@ class MessageController extends AbstractController
         }
 
         $id  = (int) $this->params()->fromRoute('id', 0);
-
-
         $messages = $this->getService()->getMessagesById($id);
-
+        $replyId = $this->getService()->getLastMessagesById($id)->getId();
 
         return new ViewModel(
             array (
               //'title'     => $this->getService()->getTitle(),
                 'messages'  => $messages,
+                'replyId'   => $replyId,
             )
         );
     }
@@ -55,7 +71,7 @@ class MessageController extends AbstractController
     public function newAction()
     {
 
-       if($this->identity() === null) {
+       if ($this->identity() === null) {
            return $this->redirect()->toRoute('login');
        }
 
@@ -74,7 +90,7 @@ class MessageController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if($postData['cancel']) {
+            if ($postData['cancel']) {
                 return $this->redirect()->toRoute('message');
             }
 
@@ -84,6 +100,68 @@ class MessageController extends AbstractController
 
                 $message = $form->getData();
 
+                //date
+                $message->setSendDate(new \DateTime());
+
+                $sender = $this->getService()
+                    ->getUserById($message->getSender());
+                //sender
+                $message->setSender($sender);
+
+                $recipient = $this->getService()
+                    ->getUserById($message->getReceiver());
+                //receiver
+                $message->setReceiver($recipient);
+
+                $this->getService()->getMapper('message')->save($message);
+
+                return $this->redirect()->toRoute('message');
+            }
+       }
+
+
+        return new ViewModel(
+            array('form' => $form)
+        );
+    }
+
+    public function replyAction()
+    {
+
+       if ($this->identity() === null) {
+           return $this->redirect()->toRoute('login');
+       }
+
+       $id  = (int) $this->params()->fromRoute('id', 1);
+       $message = $this->getService()->getLastMessagesById($id);
+
+
+       $sender = $message->getSender();
+       $message->setSubject('Re: '.$message->getSubject());
+      // var_dump($message);
+       $form = new ReplyForm($sender);
+       $form->bindEntity($message);
+
+
+
+       if ($this->getRequest()->isPost()) {
+
+            //get post data, set data to from, prepare for validation
+            $postData =  $this->getRequest()->getPost();
+
+            //cancel
+            if ($postData['cancel']) {
+                return $this->redirect()->toRoute('message');
+            }
+
+            $form->setData($postData);
+
+            if ($form->isValid()) {
+
+                $message = $form->getData();
+                $sender = $message->getSender();
+                $recipient = $message->getReceiver();
+var_dump($message); die;
                 //date
                 $message->setSendDate(new \DateTime());
 
@@ -109,62 +187,21 @@ class MessageController extends AbstractController
         );
     }
 
-    public function replyAction()
+    /**
+     * @return \Zend\Http\Response|ViewModel
+     */
+    public function archiveAction()
     {
+        if ($this->identity() === null) {
+            return $this->redirect()->toRoute('login');
+        }
 
-       if($this->identity() === null) {
-           return $this->redirect()->toRoute('login');
-       }
-
-       $id  = (int) $this->params()->fromRoute('id', 1);
-       $message = $this->getService()->getMessage($id);
-
-       $sender = $message->getSender();
-       $message->setSubject('Re: '.$message->getSubject());
-      // var_dump($message);
-       $form = new ReplyForm($sender);
-       $form->bindEntity($message);
-
-
-       /*
-       if ($this->getRequest()->isPost()) {
-
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-
-            //cancel
-            if($postData['cancel']) {
-                return $this->redirect()->toRoute('message');
-            }
-
-            $form->setData($postData);
-
-            if ($form->isValid()) {
-
-                $message = $form->getData();
-
-                //date
-                $message->setSendDate(new \DateTime());
-
-                $sender = $this->getService()
-                    ->getUserById($message->getSender());
-                //sender
-                $message->setSender($sender);
-
-                $recipient = $this->getService()
-                    ->getUserById($message->getReceiver());
-                //receiver
-                $message->setReceiver($recipient);
-
-                $this->getService()->getMapper('message')->save($message);
-
-                return $this->redirect()->toRoute('message');
-            }
-        }*/
 
 
         return new ViewModel(
-           array('form' => $form)
+            array (
+
+            )
         );
     }
 

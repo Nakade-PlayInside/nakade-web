@@ -76,6 +76,34 @@ class Message
    */
   private $readDate;
 
+  private $new=false;
+  private $read=false;
+
+    /**
+     * @param boolean $read
+     */
+    public function setRead($read)
+    {
+        $this->read = $read;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isRead()
+    {
+        return $this->read;
+    }
+
+    public function setNew($isNew)
+    {
+        $this->new = $isNew;
+    }
+
+    public function isNew()
+    {
+        return $this->new;
+    }
 
     public function getId()
     {

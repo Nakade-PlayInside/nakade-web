@@ -28,11 +28,23 @@ class MessageMapper extends AbstractMapper
             ->andWhere('Sender.id = :uid')
             ->orWhere('Receiver.id = :uid')
             ->setParameter('uid', $uid)
-            ->andWhere('m.threadId is null');
+            ->andWhere('m.threadId is null')
+            ->orderBy('m.sendDate', DESC);
 
-        return $qb->getQuery()->getResult();
+        $result = $qb->getQuery()->getResult();
+
+        foreach ($result as $key => $message) {
+            $isNew = $this->isNewMessage($uid, $message->getId());
+            $isRead = $this->isReadMessage($uid, $message->getId());
+
+            $result[$key]->setNew($isNew);
+            $result[$key]->setRead($isRead);
+        }
+
+        return $result;
 
     }
+
 
     /**
      * @param int $mid
@@ -51,6 +63,95 @@ class MessageMapper extends AbstractMapper
             ->orderBy('m.sendDate', DESC);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * new message is where the receiver is the user and
+     * has not read his message yet
+     *
+     * @param int $userId
+     * @param int $messageId
+     *
+     * @return bool
+     */
+    public function isNewMessage($userId, $messageId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('m')
+           ->from('Message\Entity\Message', 'm')
+           ->Join('m.receiver', 'Receiver')
+           ->andWhere('Receiver.id = :uid')
+           ->setParameter('uid', $userId)
+           ->andWhere($qb
+                ->expr()
+                ->orX(
+                    $qb->expr()->eq('m.id', ':mid'),
+                    $qb->expr()->eq('m.threadId', ':mid')
+                ))
+            ->setParameter('mid', $messageId)
+            ->andWhere('m.readDate is null');
+
+        $result = $qb->getQuery()->getResult();
+        return count($result)>0;
+
+    }
+
+    /**
+     * read message is when the user is the sender and the msg is not read yet
+     *
+     * @param int $userId
+     * @param int $messageId
+     *
+     * @return bool
+     */
+    public function isReadMessage($userId, $messageId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('m')
+           ->from('Message\Entity\Message', 'm')
+           ->join('m.sender', 'Sender')
+           ->Where('Sender.id = :uid')
+           ->setParameter('uid', $userId)
+           ->andWhere($qb
+                ->expr()
+                ->orX(
+                    $qb->expr()->eq('m.id', ':mid'),
+                    $qb->expr()->eq('m.threadId', ':mid')
+                ))
+           ->setParameter('mid', $messageId)
+           ->andWhere('m.readDate is not null');
+
+        return count($qb->getQuery()->getResult())>0;
+
+    }
+
+    /**
+     * @param int $messageId
+     *
+     * @return \User\Entity\Message $object
+     */
+    public function getLastMessageById($messageId)
+    {
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('m')
+            ->from('Message\Entity\Message', 'm')
+            ->Where('m.id = :mid')
+            ->orWhere('m.threadId = :mid')
+            ->setParameter('mid', $messageId)
+            ->orderBy("m.sendDate", DESC)
+            ->setMaxResults(1);
+
+
+        $result = $qb->getQuery()->getResult();
+        return $result[0];
+
     }
 
     public function getAllMessages()
