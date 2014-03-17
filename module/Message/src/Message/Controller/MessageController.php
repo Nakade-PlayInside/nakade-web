@@ -57,13 +57,21 @@ class MessageController extends AbstractController
 
         $id  = (int) $this->params()->fromRoute('id', 0);
         $messages = $this->getService()->getMessagesById($id);
-        $replyId = $this->getService()->getLastMessagesById($id)->getId();
+
+        $lastMessage = $this->getService()->getLastMessagesById($id);
+
+        //set read date if not set yet
+        if (is_null($lastMessage->getReadDate())) {
+            $lastMessage->setReadDate(new \DateTime());
+            $this->getService()->getMapper('message')->save($lastMessage);
+
+        }
 
         return new ViewModel(
             array (
               //'title'     => $this->getService()->getTitle(),
                 'messages'  => $messages,
-                'replyId'   => $replyId,
+                'replyId'   => $lastMessage->getId(),
             )
         );
     }
