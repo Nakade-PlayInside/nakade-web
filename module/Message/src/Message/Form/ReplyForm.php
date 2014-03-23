@@ -4,6 +4,7 @@ namespace Message\Form;
 use Nakade\Abstracts\AbstractForm;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use Message\Entity\Message;
+use \Zend\InputFilter\InputFilter;
 
 /**
  * Form for making a new league
@@ -122,7 +123,7 @@ class ReplyForm extends AbstractForm
      */
     public function getFilter()
     {
-        $filter = new \Zend\InputFilter\InputFilter();
+        $filter = new InputFilter();
 
         $filter->add(
             array(
@@ -137,10 +138,21 @@ class ReplyForm extends AbstractForm
                      array('name'    => 'StringLength',
                            'options' => array (
                                   'encoding' => 'UTF-8',
-                                  'max'  => '200',
+                                  'max'  => '120',
                            )
                      ),
                   )
+            )
+        );
+
+        $filter->add(
+            array(
+                'name' => 'message',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                ),
+
             )
         );
 

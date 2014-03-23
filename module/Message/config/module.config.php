@@ -136,10 +136,6 @@ return array(
         'factories' => array(
             'Message\Services\RepositoryService'      =>
                 'Message\Services\RepositoryService',
-            'Message\Factory\MapperFactory'      =>
-                    'Message\Factory\MapperFactory',
-            'Message\Services\MessageServiceFactory'      =>
-                    'Message\Services\MessageServiceFactory',
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

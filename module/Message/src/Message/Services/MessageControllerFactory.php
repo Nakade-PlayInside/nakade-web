@@ -34,17 +34,12 @@ class MessageControllerFactory implements FactoryInterface
             $config = ArrayUtils::iteratorToArray($config);
         }
 
-        $service    = $serviceManager->get(
-            'Message\Services\MessageServiceFactory'
-        );
         $repository =  $serviceManager->get(
             'Message\Services\RepositoryService'
         );
 
         $controller = new MessageController();
         $controller->setRepository($repository);
-        $controller->setService($service);
-
 
         return $controller;
     }

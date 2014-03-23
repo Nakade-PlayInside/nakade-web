@@ -11,6 +11,11 @@ use User\Entity\Message;
 class MessageMapper extends AbstractMapper
 {
 
+    /**
+     * @param int $uid
+     *
+     * @return array
+     */
     public function getInboxMessages($uid)
     {
         $em = $this->getEntityManager();
@@ -33,6 +38,11 @@ class MessageMapper extends AbstractMapper
         return $result;
     }
 
+    /**
+     * @param int $uid
+     *
+     * @return array
+     */
     public function getSentBoxMessages($uid)
     {
         $em = $this->getEntityManager();
@@ -75,39 +85,6 @@ class MessageMapper extends AbstractMapper
     }
 
     /**
-     * @param int $uid
-     *
-     * @return array
-     */
-    public function getActiveMessagesByUser($uid)
-    {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder('Message')
-            ->select('m')
-            ->from('Message\Entity\Message', 'm')
-            ->join('m.sender', 'Sender')
-            ->join('m.receiver', 'Receiver')
-            ->andWhere('Sender.id = :uid')
-            ->orWhere('Receiver.id = :uid')
-            ->setParameter('uid', $uid)
-            ->andWhere('m.threadId is null')
-            ->orderBy('m.sendDate', DESC);
-
-        $result = $qb->getQuery()->getResult();
-
-        foreach ($result as $key => $message) {
-            $isNew = $this->isNewMessage($uid, $message->getId());
-            $isRead = $this->isReadMessage($uid, $message->getId());
-
-            $result[$key]->setNew($isNew);
-            $result[$key]->setRead($isRead);
-        }
-
-        return $result;
-
-    }
-
-    /**
      * @param int $mid
      *
      * @return \Message\Entity\Message
@@ -125,7 +102,7 @@ class MessageMapper extends AbstractMapper
      *
      * @return array
      */
-    public function getMessagesById($mid)
+    public function getAllMessagesById($mid)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder('Message')
@@ -148,7 +125,7 @@ class MessageMapper extends AbstractMapper
      *
      * @return bool
      */
-    public function isNewMessage($userId, $messageId)
+    private function isNewMessage($userId, $messageId)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
@@ -180,7 +157,7 @@ class MessageMapper extends AbstractMapper
      *
      * @return bool
      */
-    public function isReadMessage($userId, $messageId)
+    private function isReadMessage($userId, $messageId)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
@@ -206,7 +183,7 @@ class MessageMapper extends AbstractMapper
     /**
      * @param int $messageId
      *
-     * @return \User\Entity\Message $object
+     * @return \Message\Entity\Message
      */
     public function getLastMessageById($messageId)
     {
@@ -228,16 +205,12 @@ class MessageMapper extends AbstractMapper
 
     }
 
-    public function getAllMessages()
-    {
-
-       return $this->getEntityManager()
-                   ->getRepository('Message\Entity\Message')
-                   ->findAll();
-    }
-
-
-    public function getAllRecipients($id)
+    /**
+     * @param int $uid
+     *
+     * @return array
+     */
+    public function getAllRecipients($uid)
     {
       $qb = $this->getEntityManager()
               ->createQueryBuilder()
@@ -246,17 +219,23 @@ class MessageMapper extends AbstractMapper
               ->where('u.active = 1')
               ->andWhere('u.verified = 1')
               ->andWhere('u.id != :myself')
-              ->setParameter('myself', $id);
+              ->setParameter('myself', $uid);
 
        return $qb->getQuery()->getResult();
 
     }
 
-    public function getUserById($id)
+
+    /**
+     * @param int $uid
+     *
+     * @return \User\Entity\User
+     */
+    public function getUserById($uid)
     {
       $result = $this->getEntityManager()
               ->getRepository('\User\Entity\User')
-              ->find($id);
+              ->find($uid);
 
        return $result;
 

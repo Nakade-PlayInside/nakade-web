@@ -48,7 +48,7 @@ class MessageController extends AbstractController
 
         $uid = $this->identity()->getId();
 
-        /* @var $repo \Message\Repository\MessageMapper */
+        /* @var $repo \Message\Mapper\MessageMapper */
         $repo = $this->getRepository()->getMapper('message');
         $messages =  $repo->getSentBoxMessages($uid);
 
@@ -70,10 +70,10 @@ class MessageController extends AbstractController
         $id  = (int) $this->params()->fromRoute('id', 0);
 
 
-        /* @var $repo \Message\Repository\MessageMapper */
+        /* @var $repo \Message\Mapper\MessageMapper */
         $repo = $this->getRepository()->getMapper('message');
 
-        $messages = $repo->getMessagesById($id);
+        $messages = $repo->getAllMessagesById($id);
         $lastMessage =  $repo->getLastMessageById($id);
 
         //set read date if not set yet
@@ -104,7 +104,7 @@ class MessageController extends AbstractController
 
        $id = $this->identity()->getId();
 
-        /* @var $repo \Message\Repository\MessageMapper */
+        /* @var $repo \Message\Mapper\MessageMapper */
        $repo = $this->getRepository()->getMapper('message');
 
        $recipients = $repo->getAllRecipients($id);
@@ -164,7 +164,7 @@ class MessageController extends AbstractController
 
        $id  = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $repo \Message\Repository\MessageMapper */
+        /* @var $repo \Message\Mapper\MessageMapper */
         $repo = $this->getRepository()->getMapper('message');
 
        /* @var $message \Message\Entity\Message */

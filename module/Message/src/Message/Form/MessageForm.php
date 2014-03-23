@@ -4,6 +4,7 @@ namespace Message\Form;
 use Nakade\Abstracts\AbstractForm;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use Message\Entity\Message;
+use \Zend\InputFilter\InputFilter;
 
 /**
  * Form for making a new league
@@ -11,32 +12,33 @@ use Message\Entity\Message;
 class MessageForm extends AbstractForm
 {
     private $recipients = array();
-    
+
     /**
-     * Constructor
-     */        
+     * @param array $recipients
+     */
     public function __construct($recipients)
     {
         foreach ($recipients as $object) {
-            $this->recipients[$object->getId()] = $object->getShortName() ;
+            $this->recipients[$object->getId()] = $object->getShortName();
         }
         asort($this->recipients);
-        
+
         //form name is LeagueForm
-        parent::__construct($name='MessageForm');
+        parent::__construct('MessageForm');
         $this->setObject(new Message());
         $this->setHydrator(new Hydrator());
         $this->init();
-    } 
-    
-    
+    }
+
+
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() {
-       
-       
+    public function init()
+    {
+
+
         //recipient
         $this->add(
             array(
@@ -47,10 +49,10 @@ class MessageForm extends AbstractForm
                     'empty_option' => $this->translate('Please choose'),
                     'value_options' => $this->recipients,
                 ),
-                
+
             )
         );
-        
+
         //subject
         $this->add(
             array(
@@ -61,11 +63,11 @@ class MessageForm extends AbstractForm
                 ),
                 'attributes' => array(
                     'value' => "titel", //$this->_title,
-                    
+
                 )
             )
         );
-        
+
         //message
         $this->add(
             array(
@@ -76,10 +78,10 @@ class MessageForm extends AbstractForm
                 ),
             )
         );
-        
+
         //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side 
-        //validation 
+        //this is handled by ZF2 in the background - no need for server-side
+        //validation
         $this->add(
             array(
                 'name' => 'csrf',
@@ -89,9 +91,9 @@ class MessageForm extends AbstractForm
                         'timeout' => 600
                     )
                 )
-            )    
+            )
         );
-       
+
         //submit button
         $this->add(
             array(
@@ -103,7 +105,7 @@ class MessageForm extends AbstractForm
                 ),
             )
         );
-        
+
         //cancel button
         $this->add(
             array(
@@ -115,15 +117,18 @@ class MessageForm extends AbstractForm
                 ),
             )
         );
-        
-    } 
-    
+
+    }
+
+    /**
+     * @return InputFilter
+     */
     public function getFilter()
     {
-        $filter = new \Zend\InputFilter\InputFilter();
-     
+        $filter = new InputFilter();
+
         $filter->add(
-             array(
+            array(
                  'name' => 'subject',
                  'required' => false,
                  'filters'  => array(
@@ -134,16 +139,27 @@ class MessageForm extends AbstractForm
                  'validators' => array(
                      array('name'    => 'StringLength',
                            'options' => array (
-                                  'encoding' => 'UTF-8', 
-                                  'max'  => '200',
-                           )  
-                     ),  
+                                  'encoding' => 'UTF-8',
+                                  'max'  => '120',
+                           )
+                     ),
                   )
-              )
-         );
-        
+             )
+        );
+
+        $filter->add(
+            array(
+                'name' => 'message',
+                'required' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                ),
+
+            )
+        );
+
         return $filter;
     }
-    
+
 }
-?>
+
