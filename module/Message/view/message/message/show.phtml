@@ -10,10 +10,9 @@ $this->headTitle("Messages");
 <?php $this->placeholder('messages')->captureStart();?>
 
 <div id="msgAction">
-<form action="<?php echo $this->url('message'); ?>"><button type="submit"><?php echo $this->translate('back');?></button></form>
+
+<form action="<?php echo $this->returnPath; ?>"><button type="submit"><?php echo $this->translate('back');?></button></form>
 <form action="<?php echo $this->url('message/reply', array('id' => $this->replyId)); ?>"><button type="submit"><?php echo $this->translate('reply');?></button></form>
-<form action="<?php echo $this->url('message'); ?>"><button ><?php echo $this->translate('archive');?></button></form>
-<form action="<?php echo $this->url('message'); ?>"><button><?php echo $this->translate('delete');?></button></form>
 </div>
 
 <?php foreach ($this->messages as $message) : ?>
