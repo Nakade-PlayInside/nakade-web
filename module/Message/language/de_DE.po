@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-23 20:10+0100\n"
-"PO-Revision-Date: 2014-03-23 20:52+0100\n"
+"POT-Creation-Date: 2014-03-23 21:21+0100\n"
+"PO-Revision-Date: 2014-03-23 21:22+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -16,36 +16,36 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Message/Form/MessageForm.php:66
+#: ../src/Message/Form/MessageForm.php:53
 msgid "recipient"
 msgstr "Empfänger"
 
-#: ../src/Message/Form/MessageForm.php:67
+#: ../src/Message/Form/MessageForm.php:54
 msgid "Please choose"
 msgstr "Bitte wählen"
 
-#: ../src/Message/Form/MessageForm.php:80
-#: ../src/Message/Form/ReplyForm.php:63
+#: ../src/Message/Form/MessageForm.php:67
+#: ../src/Message/Form/ReplyForm.php:67
 #: ../view/message/message/show.phtml:39
 msgid "subject"
 msgstr "Betreff"
 
-#: ../src/Message/Form/MessageForm.php:95
-#: ../src/Message/Form/ReplyForm.php:75
+#: ../src/Message/Form/MessageForm.php:82
+#: ../src/Message/Form/ReplyForm.php:79
 msgid "message"
 msgstr "Nachricht"
 
-#: ../src/Message/Form/MessageForm.php:121
-#: ../src/Message/Form/ReplyForm.php:101
+#: ../src/Message/Form/MessageForm.php:108
+#: ../src/Message/Form/ReplyForm.php:105
 msgid "Submit"
 msgstr "Abschicken"
 
-#: ../src/Message/Form/MessageForm.php:133
-#: ../src/Message/Form/ReplyForm.php:113
+#: ../src/Message/Form/MessageForm.php:120
+#: ../src/Message/Form/ReplyForm.php:117
 msgid "Cancel"
 msgstr "Abbruch"
 
-#: ../src/Message/Form/ReplyForm.php:47
+#: ../src/Message/Form/ReplyForm.php:51
 msgid "receiver"
 msgstr "Empfänger"
 
@@ -123,7 +123,7 @@ msgid "unread"
 msgstr "ungelesen"
 
 #: ../view/message/message/sent.phtml:44
-#: ../view/message/message/show.phtml:50
+#: ../view/message/message/show.phtml:46
 msgid "read"
 msgstr "gelesen"
 
@@ -147,13 +147,16 @@ msgstr "auf Nachricht antworten"
 msgid "reply"
 msgstr "Antwort schreiben"
 
-#: ../view/message/message/show.phtml:45
-msgid "send"
-msgstr "Abschicken"
+#: ../view/message/message/show.phtml:44
+msgid "sent"
+msgstr "gesendet"
 
 #: ../view/message/message/new.phtml:5
 msgid "Send Message"
 msgstr "Nachricht schicken"
+
+#~ msgid "send"
+#~ msgstr "Abschicken"
 
 #~ msgid "League No. "
 #~ msgstr "Liga Nr."

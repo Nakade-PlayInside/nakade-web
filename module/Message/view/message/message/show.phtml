@@ -41,15 +41,9 @@ $this->headTitle("Messages");
                     </div>
                 </div>
                 <div class="container right">
-                    <div><label><?php
-                            echo $this->translate('send');?>:
-                        </label><?php
-                            echo $message->getSendDate()->format('d.m.Y H:i');?>
-                    </div>
+                    <div><label><?php echo $this->translate('sent');?>:</label><?php echo $message->getSendDate()->format('d.m.Y H:i');?></div>
     <?php if (!is_null($message->getReadDate())): ?>
-                    <div><label><?php echo $this->translate('read');?>:</label>
-                        <?php  echo $message->getReadDate()->format('d.m.Y H:i'); ?>
-                    </div>
+                    <div><label><?php echo $this->translate('read');?>:</label><?php echo $message->getReadDate()->format('d.m.Y H:i'); ?></div>
 <?php
 endif;
     ?>
