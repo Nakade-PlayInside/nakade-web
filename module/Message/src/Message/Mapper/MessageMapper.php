@@ -11,6 +11,68 @@ use User\Entity\Message;
 class MessageMapper extends AbstractMapper
 {
 
+    public function getInboxMessages($uid)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Message')
+            ->select('m')
+            ->from('Message\Entity\Message', 'm')
+            ->join('m.receiver', 'Receiver')
+            ->andWhere('Receiver.id = :uid')
+            ->andWhere('m.hidden = 0')
+            ->setParameter('uid', $uid)
+            ->orderBy('m.sendDate', DESC);
+
+        $result = $qb->getQuery()->getResult();
+
+        foreach ($result as $key => $message) {
+            $isNew = $this->isNewMessage($uid, $message->getId());
+            $result[$key]->setNew($isNew);
+        }
+
+        return $result;
+    }
+
+    public function getSentBoxMessages($uid)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Message')
+            ->select('m')
+            ->from('Message\Entity\Message', 'm')
+            ->join('m.sender', 'Sender')
+            ->andWhere('Sender.id = :uid')
+            ->setParameter('uid', $uid)
+            ->orderBy('m.sendDate', DESC);
+
+        $result = $qb->getQuery()->getResult();
+
+        foreach ($result as $key => $message) {
+            $isNew = $this->isReadMessage($uid, $message->getId());
+            $result[$key]->setRead($isNew);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int $uid
+     * @param int $messageId
+     *
+     * @return bool
+     */
+    public function hideMessageByUser($uid, $messageId)
+    {
+        $message = $this->getMessageById($messageId);
+
+        if ($message->getReceiver()->getId() == $uid) {
+            $message->setHidden(true);
+            $this->update($message);
+            return true;
+        }
+
+        return false;
+
+    }
 
     /**
      * @param int $uid
@@ -42,6 +104,18 @@ class MessageMapper extends AbstractMapper
         }
 
         return $result;
+
+    }
+
+    /**
+     * @param int $mid
+     *
+     * @return \Message\Entity\Message
+     */
+    public function getMessageById($mid)
+    {
+        $em = $this->getEntityManager();
+        return $em->getRepository('Message\Entity\Message')->findOneBy(array('id' => $mid));
 
     }
 
@@ -162,16 +236,6 @@ class MessageMapper extends AbstractMapper
                    ->findAll();
     }
 
-    public function getMessageById($id)
-    {
-
-
-      $result = $this->getEntityManager()
-              ->getRepository('Message\Entity\Message')
-              ->find($id);
-
-      return $result;
-    }
 
     public function getAllRecipients($id)
     {

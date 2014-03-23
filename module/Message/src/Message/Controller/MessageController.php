@@ -1,6 +1,8 @@
 <?php
 namespace Message\Controller;
 
+use Message\Entity\Delete;
+use Message\Entity\Message;
 use Nakade\Abstracts\AbstractController;
 use Message\Form\MessageForm;
 use Message\Form\ReplyForm;
@@ -17,24 +19,26 @@ class MessageController extends AbstractController
 {
 
     /**
-    * Default action showing up the Top League table
-    * in a short and compact version. This can be used as a widget.
-    */
+     * @return array|\Zend\Http\Response|ViewModel
+     */
     public function indexAction()
     {
         if ($this->identity() === null) {
            return $this->redirect()->toRoute('login');
         }
 
-        $messages = $this->getService()->getAllMyMessages();
+        $uid = $this->identity()->getId();
+        $messages =  $this->getRepository()
+            ->getMapper('message')
+            ->getInboxMessages($uid);
+
         return new ViewModel(
             array('messages' => $messages)
         );
     }
 
     /**
-     * Default action showing up the Top League table
-     * in a short and compact version. This can be used as a widget.
+     * @return \Zend\Http\Response|ViewModel
      */
     public function sentAction()
     {
@@ -42,40 +46,55 @@ class MessageController extends AbstractController
             return $this->redirect()->toRoute('login');
         }
 
-        $messages = $this->getService()->getAllMyMessages();
+        $uid = $this->identity()->getId();
+
+        /* @var $repo \Message\Repository\MessageMapper */
+        $repo = $this->getRepository()->getMapper('message');
+        $messages =  $repo->getSentBoxMessages($uid);
+
         return new ViewModel(
             array('messages' => $messages)
         );
     }
 
-
+    /**
+     * @return \Zend\Http\Response|ViewModel
+     */
     public function showAction()
     {
         if ($this->identity() === null) {
            return $this->redirect()->toRoute('login');
         }
 
+        $returnPath = $this->getRequest()->getHeader('referer')->uri()->getPath();
         $id  = (int) $this->params()->fromRoute('id', 0);
-        $messages = $this->getService()->getMessagesById($id);
 
-        $lastMessage = $this->getService()->getLastMessagesById($id);
+
+        /* @var $repo \Message\Repository\MessageMapper */
+        $repo = $this->getRepository()->getMapper('message');
+
+        $messages = $repo->getMessagesById($id);
+        $lastMessage =  $repo->getLastMessageById($id);
 
         //set read date if not set yet
         if (is_null($lastMessage->getReadDate())) {
             $lastMessage->setReadDate(new \DateTime());
-            $this->getService()->getMapper('message')->save($lastMessage);
+            $repo->update($lastMessage);
 
         }
 
         return new ViewModel(
             array (
-              //'title'     => $this->getService()->getTitle(),
+                 'returnPath' => $returnPath,
                 'messages'  => $messages,
                 'replyId'   => $lastMessage->getId(),
             )
         );
     }
 
+    /**
+     * @return \Zend\Http\Response|ViewModel
+     */
     public function newAction()
     {
 
@@ -84,9 +103,13 @@ class MessageController extends AbstractController
        }
 
        $id = $this->identity()->getId();
-       $recipients = $this->getService()->getAllRecipients($id);
 
-       $message = new \Message\Entity\Message();
+        /* @var $repo \Message\Repository\MessageMapper */
+       $repo = $this->getRepository()->getMapper('message');
+
+       $recipients = $repo->getAllRecipients($id);
+
+       $message = new Message();
        $message->setSender($id);
 
        $form = new MessageForm($recipients);
@@ -111,17 +134,13 @@ class MessageController extends AbstractController
                 //date
                 $message->setSendDate(new \DateTime());
 
-                $sender = $this->getService()
-                    ->getUserById($message->getSender());
-                //sender
+                $sender = $repo->getUserById($message->getSender());
                 $message->setSender($sender);
 
-                $recipient = $this->getService()
-                    ->getUserById($message->getReceiver());
-                //receiver
+                $recipient =  $repo->getUserById($message->getReceiver());
                 $message->setReceiver($recipient);
 
-                $this->getService()->getMapper('message')->save($message);
+                $repo->save($message);
 
                 return $this->redirect()->toRoute('message');
             }
@@ -133,6 +152,9 @@ class MessageController extends AbstractController
         );
     }
 
+    /**
+     * @return \Zend\Http\Response|ViewModel
+     */
     public function replyAction()
     {
 
@@ -141,15 +163,19 @@ class MessageController extends AbstractController
        }
 
        $id  = (int) $this->params()->fromRoute('id', 1);
-       $message = $this->getService()->getLastMessagesById($id);
 
+        /* @var $repo \Message\Repository\MessageMapper */
+        $repo = $this->getRepository()->getMapper('message');
 
-       $sender = $message->getSender();
-       $message->setSubject('Re: '.$message->getSubject());
-      // var_dump($message);
-       $form = new ReplyForm($sender);
+       /* @var $message \Message\Entity\Message */
+       $message = $repo->getLastMessageById($id);
+
+       //prepare
+       $message->setSubject('Re:' . $message->getSubject());
+       $name = $message->getSender()->getShortName();
+
+       $form = new ReplyForm($name);
        $form->bindEntity($message);
-
 
 
        if ($this->getRequest()->isPost()) {
@@ -167,50 +193,56 @@ class MessageController extends AbstractController
             if ($form->isValid()) {
 
                 $message = $form->getData();
-                $sender = $message->getSender();
-                $recipient = $message->getReceiver();
-var_dump($message); die;
-                //date
-                $message->setSendDate(new \DateTime());
 
-                $sender = $this->getService()
-                    ->getUserById($message->getSender());
-                //sender
-                $message->setSender($sender);
 
-                $recipient = $this->getService()
-                    ->getUserById($message->getReceiver());
-                //receiver
-                $message->setReceiver($recipient);
+                $threadId = $message->getId();
+                if (!is_null($message->getThreadId())) {
+                    $threadId = $message->getThreadId();
+                }
 
-                $this->getService()->getMapper('message')->save($message);
+
+                $sender = $message->getReceiver();
+                $receiver = $message->getSender();
+                $text = $message->getMessage();
+                $subject=$message->getSubject();
+
+
+                $reply = new Message();
+
+                $reply->setThreadId($threadId);
+                $reply->setReceiver($receiver);
+                $reply->setSender($sender);
+                $reply->setSubject($subject);
+                $reply->setMessage($text);
+                $reply->setSendDate(new \DateTime());
+
+
+                $repo->save($reply);
 
                 return $this->redirect()->toRoute('message');
             }
-        }
-
+       }
 
         return new ViewModel(
-           array('form' => $form)
+            array('form' => $form)
         );
     }
 
     /**
      * @return \Zend\Http\Response|ViewModel
      */
-    public function archiveAction()
+    public function deleteAction()
     {
         if ($this->identity() === null) {
             return $this->redirect()->toRoute('login');
         }
+        $uid = $this->identity()->getId();
+        $messageId  = (int) $this->params()->fromRoute('id', 1);
 
 
+        $this->getRepository()->getMapper('message')->hideMessageByUser($uid, $messageId);
 
-        return new ViewModel(
-            array (
-
-            )
-        );
+        return $this->redirect()->toRoute('message');
     }
 
 

@@ -10,17 +10,18 @@ use Message\Entity\Message;
  */
 class ReplyForm extends AbstractForm
 {
-    private $sender;
+    private $name;
 
     /**
-     * @param int|null|string $sender
+     * @param string $name
      */
-    public function __construct($sender)
+    public function __construct($name)
     {
-        $this->sender = $sender->getShortName();
+        $this->name= $name;
 
-        //form name is LeagueForm
-        parent::__construct($name = 'ReplyForm');
+        //form name
+        parent::__construct('ReplyForm');
+
         $this->setObject(new Message());
         $this->setHydrator(new Hydrator());
         $this->init();
@@ -35,7 +36,8 @@ class ReplyForm extends AbstractForm
     {
 
 
-        //recipient
+        //recipient JUST FOR INFORMATION
+        //users are taken from entity
         $this->add(
             array(
                 'name' => 'name',
@@ -46,7 +48,7 @@ class ReplyForm extends AbstractForm
                 ),
                 'attributes' => array(
                     'readonly' =>   true,
-                    'value' => $this->sender,
+                    'value' => $this->name
                 ),
             )
         );
