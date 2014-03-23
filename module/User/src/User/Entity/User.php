@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="user")
- * 
+ *
  */
 class User
 {
@@ -40,7 +40,7 @@ class User
    * @access protected
    */
   protected $firstname;
-  
+
   /**
    * Family Name
    *
@@ -49,7 +49,7 @@ class User
    * @access protected
    */
   protected $lastname;
-  
+
   /**
    * Nick Name
    *
@@ -58,7 +58,7 @@ class User
    * @access protected
    */
   protected $nickname;
-  
+
   /**
    * Sex
    *
@@ -67,7 +67,7 @@ class User
    * @access protected
    */
   protected $sex;
-  
+
   /**
    * Birthday
    *
@@ -76,7 +76,7 @@ class User
    * @access protected
    */
   protected $birthday;
-  
+
   /**
    * if flag is set the nickname is shown
    *
@@ -94,7 +94,7 @@ class User
    * @access protected
    */
   protected $username;
-  
+
   /**
    * password
    *
@@ -103,7 +103,7 @@ class User
    * @access protected
    */
   protected $password;
-  
+
   /**
    * email
    *
@@ -112,7 +112,7 @@ class User
    * @access protected
    */
   protected $email;
-  
+
   /**
    * verifyString
    *
@@ -121,7 +121,7 @@ class User
    * @access protected
    */
   protected $verifyString;
-  
+
   /**
    * verified
    *
@@ -130,7 +130,7 @@ class User
    * @access protected
    */
   protected $verified;
-  
+
   /**
    * active
    *
@@ -139,7 +139,7 @@ class User
    * @access protected
    */
   protected $active;
-  
+
   /**
    * pwdChange
    *
@@ -148,7 +148,7 @@ class User
    * @access protected
    */
   protected $pwdChange;
-  
+
   /**
    * edit
    *
@@ -157,7 +157,7 @@ class User
    * @access protected
    */
   protected $edit;
-  
+
   /**
    * lastLogin
    *
@@ -166,7 +166,7 @@ class User
    * @access protected
    */
   protected $lastLogin;
-  
+
   /**
    * firstLogin
    *
@@ -175,8 +175,8 @@ class User
    * @access protected
    */
   protected $firstLogin;
-  
-  
+
+
   /**
    * created
    *
@@ -185,8 +185,8 @@ class User
    * @access protected
    */
   protected $created;
-  
-  
+
+
   /**
    * due date
    *
@@ -195,16 +195,16 @@ class User
    * @access protected
    */
   protected $due;
-  
+
   /**
    * user's role
    * @ORM\Column(name="role", type="string")
-   * 
+   *
    * @var string
    * @access protected
    */
   protected $role;
-  
+
   /**
    * generated password is set for mail methods
    *
@@ -212,7 +212,7 @@ class User
    * @access protected
    */
   protected $generated;
-  
+
   /**
    * Sets the Identifier
    *
@@ -238,7 +238,7 @@ class User
   }
 
   /**
-   * Sets the Title. 
+   * Sets the Title.
    * If empty string, null is set
    *
    * @param string $title
@@ -286,7 +286,7 @@ class User
   {
     return $this->firstname;
   }
-  
+
   /**
    * Sets the Family Name
    *
@@ -310,7 +310,7 @@ class User
   {
     return $this->lastname;
   }
-  
+
   /**
    * Sets the Nick Name.
    * if empty string, null is set
@@ -321,7 +321,7 @@ class User
    */
   public function setNickname($nickname)
   {
-    $temp = empty($nickname)? null:$nickname;  
+    $temp = empty($nickname)? null:$nickname;
     $this->nickname = $temp;
     return $this;
   }
@@ -336,7 +336,7 @@ class User
   {
     return $this->nickname;
   }
-  
+
   /**
    * Sets the User Name
    *
@@ -360,7 +360,7 @@ class User
   {
     return $this->username;
   }
-  
+
   /**
    * Sets the password
    *
@@ -384,7 +384,7 @@ class User
   {
     return $this->password;
   }
-  
+
   /**
    * Sets the generated password
    *
@@ -408,7 +408,7 @@ class User
   {
     return $this->generated;
   }
-  
+
   /**
    * Sets the email
    *
@@ -432,7 +432,7 @@ class User
   {
     return $this->email;
   }
-  
+
   /**
    * Sets the sex
    *
@@ -456,22 +456,22 @@ class User
   {
     return $this->sex;
   }
-  
-  
+
+
   /**
    * Sets the birthday.
    * Converts to DateTime if string is provided
    *
    * @param mixed DateTime|string $datetime
-   * @access public
+   *
    * @return User
    */
   public function setBirthday($datetime)
   {
-    $temp = empty($datetime)? null : $datetime; 
-    if(is_string($temp)) {
-        $temp = new \DateTime($temp); 
-    }  
+    $temp = empty($datetime)? null : $datetime;
+    if (is_string($temp)) {
+        $temp = new \DateTime($temp);
+    }
     $this->birthday = $temp;
     return $this;
   }
@@ -484,10 +484,10 @@ class User
    */
   public function getBirthday()
   {
-    
+
       return $this->birthday;
   }
-  
+
   /**
    * Sets anonymimizer
    *
@@ -509,10 +509,10 @@ class User
    */
   public function getAnonym()
   {
-    
+
       return $this->anonym;
   }
-  
+
   /**
    * Returns the flag anonym
    *
@@ -521,10 +521,10 @@ class User
    */
   public function isAnonym()
   {
-    
+
       return $this->anonym;
   }
-  
+
   /**
    * Sets the verify string
    *
@@ -548,10 +548,10 @@ class User
   {
     return $this->verifyString;
   }
-  
+
   /**
    * Sets the Date of creation
-   * 
+   *
    * @param  DateTime $datetime
    * @access public
    * @return user
@@ -572,10 +572,10 @@ class User
   {
     return $this->created;
   }
-  
+
   /**
    * Sets the Date of last time editing
-   * 
+   *
    * @param  DateTime $datetime
    * @access public
    * @return user
@@ -596,10 +596,10 @@ class User
   {
     return $this->edit;
   }
-  
+
   /**
    * Sets the Date of last time pwd change
-   * 
+   *
    * @param  DateTime $datetime
    * @access public
    * @return user
@@ -620,7 +620,7 @@ class User
   {
     return $this->pwdChange;
   }
-  
+
   /**
    * Set user's role.
    *
@@ -630,7 +630,7 @@ class User
    */
   public function setRole($role)
   {
-        
+
     $this->role = $role;
     return $this;
   }
@@ -645,7 +645,7 @@ class User
   {
     return $this->role;
   }
-  
+
   /**
    * Sets the due date.
    *
@@ -655,7 +655,7 @@ class User
    */
   public function setDue($datetime)
   {
-        
+
     $this->due = $datetime;
     return $this;
   }
@@ -670,21 +670,21 @@ class User
   {
     return $this->due;
   }
-  
+
   /**
    * returns true if dueDate is not expired
-   * 
+   *
    * @return boolean
    */
   public function isDue()
   {
-      $expired = $this->getDue();    
+      $expired = $this->getDue();
       if($expired===null)
           return false;
-      
+
       return $expired > new \DateTime();
   }
-  
+
   /**
    * Sets the Date of the last Login.
    *
@@ -694,7 +694,7 @@ class User
    */
   public function setLastLogin($datetime)
   {
-     
+
       $this->lastLogin = $datetime;
       return $this;
   }
@@ -709,10 +709,10 @@ class User
   {
     return $this->lastLogin;
   }
-  
+
   /**
    * Sets the Date of the first Login.
-   * 
+   *
    * @param  DateTime $datetime
    * @access public
    * @return user
@@ -733,7 +733,7 @@ class User
   {
     return $this->firstLogin;
   }
-  
+
   /**
    * Sets active flag
    *
@@ -755,11 +755,11 @@ class User
    */
   public function isActive()
   {
-    
+
       return $this->active;
   }
-  
-  
+
+
   /**
    * Sets verified flag
    *
@@ -781,25 +781,26 @@ class User
    */
   public function isVerified()
   {
-    
+
       return $this->verified;
   }
-  
+
   /**
-   * gets nickname if existing and anonymized or 
+   * gets nickname if existing and anonymized or
    * firstname instead
    * @return string
    */
   public function getShortName()
   {
       $nick = $this->getNickname();
-      if($this->isAnonym()  && !empty($nick)) 
+      if ($this->isAnonym()  && !empty($nick)) {
           return $nick;
-      
+      }
+
       $lastname = $this->getLastname();
       return $this->getFirstname() . " " . $lastname[0] . ".";
   }
-  
+
   /**
    * get complete name with nickname if existing
    * @return string
@@ -814,68 +815,68 @@ class User
               $nick,
               $this->getLastname()
           );
-          
-      }    
-      
+
+      }
+
       return $this->getName();
   }
-  
+
   /**
-   * get name and title 
+   * get name and title
    * @return string
    */
   public function getName()
   {
-      return $this->getTitle() . " " .  
-          $this->getFirstname() . " " . 
+      return $this->getTitle() . " " .
+          $this->getFirstname() . " " .
           $this->getLastname();
   }
-  
-  
+
+
   /**
    * populating data as an array.
-   * key of the array is getter methods name. 
-   * 
+   * key of the array is getter methods name.
+   *
    * @param array $data
    */
-  
-  public function populate($data) 
+
+  public function populate($data)
   {
        foreach($data as $key => $value) {
-            
+
            $method = 'set'.ucfirst($key);
             if(method_exists($this, $method))
                 $this->$method($value);
        }
-       
+
   }
-  
+
   /**
-   * usage for creating a NEW user. Provide all neccessary values 
-   * in an array. Verified, active flag and created date are 
-   * generated automatically. 
-   *    
+   * usage for creating a NEW user. Provide all neccessary values
+   * in an array. Verified, active flag and created date are
+   * generated automatically.
+   *
    * @param array $data
    */
   public function exchangeArray($data)
   {
         $this->populate($data);
-      
+
         //defaults
         $this->verified  = 0;
         $this->active    = 1;
         $this->created   = new \DateTime();
-        
+
    }
-  
+
    /**
     * Convert the object to an array.
     *
     * @return array
     */
-    public function getArrayCopy() 
+    public function getArrayCopy()
     {
         return get_object_vars($this);
     }
-    
+
 }
