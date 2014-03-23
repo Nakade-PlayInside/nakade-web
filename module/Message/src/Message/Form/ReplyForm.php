@@ -10,23 +10,20 @@ use \Zend\I18n\Translator\Translator;
 /**
  * Form for making a new league
  */
-class MessageForm extends AbstractForm
+class ReplyForm extends AbstractForm
 {
-    private $recipients = array();
+    private $name;
 
     /**
-     * @param array      $recipients
-     * @param Translator $translator
+     * @param int|null|string $name
+     * @param Translator      $translator
      */
-    public function __construct(array $recipients, Translator $translator = null)
+    public function __construct($name, Translator $translator = null)
     {
-        foreach ($recipients as $object) {
-            $this->recipients[$object->getId()] = $object->getShortName();
-        }
-        asort($this->recipients);
+        $this->name= $name;
 
         //form name
-        parent::__construct('MessageForm');
+        parent::__construct('ReplyForm');
 
         $this->setTranslator($translator);
         $this->setTranslatorTextDomain('Message');
@@ -44,17 +41,20 @@ class MessageForm extends AbstractForm
     {
 
 
-        //recipient
+        //recipient JUST FOR INFORMATION
+        //users are taken from entity
         $this->add(
             array(
-                'name' => 'receiver',
-                'type' => 'Zend\Form\Element\Select',
+                'name' => 'name',
+                'type' => 'Zend\Form\Element\Text',
                 'options' => array(
-                    'label' =>  $this->translate('recipient').":",
-                    'empty_option' => $this->translate('Please choose'),
-                    'value_options' => $this->recipients,
-                ),
+                    'label' =>  $this->translate('receiver').':',
 
+                ),
+                'attributes' => array(
+                    'readonly' =>   true,
+                    'value' => $this->name
+                ),
             )
         );
 
@@ -66,10 +66,7 @@ class MessageForm extends AbstractForm
                 'options' => array(
                     'label' =>  $this->translate('subject').':',
                 ),
-                'attributes' => array(
-                    'value' => "titel", //$this->_title,
 
-                )
             )
         );
 
@@ -126,7 +123,7 @@ class MessageForm extends AbstractForm
     }
 
     /**
-     * @return InputFilter
+     * @return \Zend\InputFilter\InputFilter
      */
     public function getFilter()
     {
@@ -149,7 +146,7 @@ class MessageForm extends AbstractForm
                            )
                      ),
                   )
-             )
+            )
         );
 
         $filter->add(

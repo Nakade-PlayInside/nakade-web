@@ -1,60 +1,71 @@
 <?php
-$this->plugin('translate')->setTranslatorTextDomain('Message'); 
+$this->plugin('translate')->setTranslatorTextDomain('Message');
 $this->headTitle("Messages");
 ?>
+
+<h3><?php echo $this->translate("Messages - Inbox"); ?></h3>
+<div id="msgAction">
+    <form action="<?php echo $this->url('message/new'); ?>">
+        <button title="<?php
+        echo $this->translate('send a new message');?>" type="submit"><?php
+            echo $this->translate('new Message');?>
+        </button>
+    </form>
+    <form action="<?php echo $this->url('message/sent'); ?>">
+        <button title="<?php
+        echo $this->translate('go to sent messages');?>" type="submit"><?php
+            echo $this->translate('Sent Box');?>
+        </button>
+    </form>
+</div>
+
 <?php $this->placeholder('nothing')->captureStart();?>
 <h3><?php echo $this->translate('No messages found')?></h3>
+
 <?php $this->placeholder('nothing')->captureEnd(); ?>
 
 
 <?php $this->placeholder('messages')->captureStart();?>
-<h3><?php //echo $this->escapeHtml($this->title); ?></h3>
-<table class="table message">
-<tr>
-    <th title="<?php echo $this->translate('Subject');?>">
-        <?php echo $this->translate('Subject');?></th>
-    <th class="center" title="<?php echo $this->translate('read/unread')?>"><img alt="mail read" src="/images/glasses.png"></th>
-    <th title="<?php echo $this->translate('from')?>">
-        <?php echo $this->translate('from')?></th>
-    <th title="<?php echo $this->translate('Date');?>">
-        <?php echo $this->translate('Date')?></th>
-</tr>
-<?php foreach ($this->messages as $message) : ?>
-<tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-    <td class="subject"><a href="#"><?php echo $message->getSubject() ?></a></td>
-    <td class="center"><?php if($message->getReadDate())?><img alt="mail read" src="/images/greenball.png"></td>
-    <td><?php echo $message->getSender()->getShortName();?></td>
-    <td><?php echo $message->getSendDate()->format('d.m.y H:i');?></td>
-    
-    
-</tr>
+
+<table id="messages" class="table">
+    <tr>
+        <th><?php echo $this->translate('ID');?></th>
+        <th><?php echo $this->translate('Subject');?></th>
+        <th><?php echo $this->translate('from')?></th>
+        <th><?php echo $this->translate('Date')?></th>
+        <th></th>
+    </tr>
+ <?php foreach ($this->messages as $message) : ?>
+    <tr class="message" style="background-color:<?php echo $this->cycle(array("#F0F0F0","transparent"))->next()?>;
+        <?php if ($message->isNew()) {
+            echo "font-weight:bold;";
+}?>
+        ">
+        <td style="text-align:right;"><?php echo $message->getId(); ?></td>
+        <td class="subject"><a href="<?php
+            echo $this->url('message/show') . '/' . $message->getId(); ?>"><?php echo $message->getSubject() ?></a>
+        </td>
+        <td><?php echo $message->getSender()->getShortName();?></td>
+        <td><?php echo $message->getSendDate()->format('d.m.y H:i');?></td>
+        <td><a href="<?php
+            echo $this->url('message/delete'). '/' . $message->getId(); ?>"
+               title="<?php echo $this->translate('delete')?>">
+               <img class="paperBin"  src="/images/trash.png">
+            </a>
+        </td>
+    </tr>
 <?php endforeach; ?>
 </table>
 
-<div class="message" style="display: table;">
-    <div class="table-row" style="border: red solid 1px;">
-        <span class="table-header">subject</span>
-        <span class="table-header"><img alt="mail read" src="/images/glasses.png"></span>
-        <span class="table-header">from</span>
-        <span class="table-header">date</span>
-    </div>
-  
-    <a href="" class="table-row" style="background-color:red">
-        <span class="table-cell">das ist doch was</span>
-        <span class="table-cell"><img alt="mail read" src="/images/greenball.png"></span>
-        <span class="table-cell">Holger</span>
-        <span class="table-cell">30.6.2013</span>
-    </a>
 
-</div>
+<?php $this->placeholder('messages')->captureEnd();
 
-<?php $this->placeholder('messages')->captureEnd(); 
+  if (0==count($this->messages)) {
+      echo $this->placeholder('nothing');
 
-  if($this->messages!=null) {
+  } else {
       echo $this->placeholder('messages');
-      //echo $this->messageWidget;
-  }    
-  else echo $this->placeholder('nothing');        
-  
-  
-?>
+  }
+
+
+

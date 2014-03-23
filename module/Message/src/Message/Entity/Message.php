@@ -2,20 +2,11 @@
 
 namespace Message\Entity;
 
-//use League\Entity\Season;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="messages")
- * @property int $id
- * @property string $subject
- * @property text $message
- * @property User $senderId 
- * @property User $receiverId 
- * @property DateTime $sendDate 
- * @property DateTime $readDate 
- * @property string $box 
+ * @ORM\Table(name="mailMessages")
  */
 class Message
 {
@@ -25,170 +16,245 @@ class Message
    * @ORM\GeneratedValue(strategy="AUTO")
    */
   private $id;
-  
-  /**
-   * @ORM\Column(name="subject", type="string")
+
+   /**
+    * @ORM\Column(name="threadId", type="integer", nullable=true)
+    */
+  private $threadId;
+
+    /**
+   * @ORM\Column(name="subject", type="string", nullable=false)
    */
   private $subject;
-  
+
   /**
-   * @ORM\Column(name="message", type="text")
+   * @ORM\Column(name="message", type="text", nullable=false)
    */
   private $message;
-  
+
   /**
-   * @var User\Entity\User
+   * @var \User\Entity\User
    *
-   * @ORM\OneToOne(targetEntity="User\Entity\User")
-   * @ORM\JoinColumns({
-   * @ORM\JoinColumn(name="senderId", referencedColumnName="uid")
-   * })
+   * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
+   * @ORM\JoinColumn(name="sender", referencedColumnName="uid", nullable=false)
+   *
    */
   private $sender;
-  
+
   /**
-   * @var User\Entity\User
+   * @var \User\Entity\User
    *
-   * @ORM\ManyToOne(targetEntity="User\Entity\User")
-   * @ORM\JoinColumns({
-   * @ORM\JoinColumn(name="receiverId", referencedColumnName="uid")
-   * })
+   * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
+   * @ORM\JoinColumn(name="receiver", referencedColumnName="uid", nullable=false)
+   *
    */
   private $receiver;
-  
+
   /**
-   * @ORM\Column(name="sendDate", type="datetime")
+   * @ORM\Column(name="sendDate", type="datetime", nullable=false)
    */
   private $sendDate;
-  
+
   /**
-   * @ORM\Column(name="readDate", type="datetime")
+   * @ORM\Column(name="readDate", type="datetime", nullable=true)
    */
   private $readDate;
-    
+
   /**
-   * @ORM\Column(name="box", type="string")
-   */
-  private $mailbox;
-  
-    public function getId() 
+  * @ORM\Column(name="isHidden", type="boolean")
+  */
+  private $hidden=0;
+
+  /**
+  * @ORM\Column(name="isNew", type="boolean")
+  */
+  private $new=1;
+
+    /**
+     * @param boolean $isNew
+     */
+    public function setNew($isNew)
     {
-        $this->id;
+        $this->new = $isNew;
     }
 
-    public function setId($id) 
+    /**
+     * @return boolean
+     */
+    public function isNew()
+    {
+        return $this->new;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return $this
+     */
+    public function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
 
-    public function getSubject() 
+    /**
+     * @param int $threadId
+     */
+    public function setThreadId($threadId)
+    {
+        $this->threadId = $threadId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getThreadId()
+    {
+        return $this->threadId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubject()
     {
         return $this->subject;
     }
 
+    /**
+     * @param string $subject
+     *
+     * @return $this
+     */
     public function setSubject($subject)
     {
         $this->subject = $subject;
+        return $this;
     }
 
-    public function getMessage() 
+    /**
+     * @return string
+     */
+    public function getMessage()
     {
         return $this->message;
     }
 
-    public function setMessage($message) 
+    /**
+     * @param string $message
+     *
+     * @return $this
+     */
+    public function setMessage($message)
     {
         $this->message = $message;
+        return $this;
     }
 
-    public function getReceiver() 
+    /**
+     * @return \User\Entity\User
+     */
+    public function getReceiver()
     {
         return $this->receiver;
     }
 
-    public function setReceiver($receiver) 
+    /**
+     * @param \User\Entity\User $receiver
+     *
+     * @return $this
+     */
+    public function setReceiver($receiver)
     {
         $this->receiver = $receiver;
+        return $this;
     }
 
-    public function getSender() 
+    /**
+     * @return \User\Entity\User
+     */
+    public function getSender()
     {
         return $this->sender;
     }
 
-    public function setSender($sender) 
+    /**
+     * @param \User\Entity\User $sender
+     *
+     * @return $this
+     */
+    public function setSender($sender)
     {
         $this->sender = $sender;
+        return $this;
     }
 
-    public function getSendDate() 
+    /**
+     * @return \DateTime
+     */
+    public function getSendDate()
     {
         return $this->sendDate;
     }
 
-    public function setSendDate($sendDate) 
+    /**
+     * @param \DateTime $sendDate
+     *
+     * @return $this
+     */
+    public function setSendDate($sendDate)
     {
         $this->sendDate = $sendDate;
+        return $this;
     }
 
-    public function getReadDate() 
+    /**
+     * @return mixed
+     */
+    public function getReadDate()
     {
         return $this->readDate;
     }
 
-    public function setReadDate($readDate) 
+    /**
+     * @param \DateTime $readDate
+     *
+     * @return $this
+     */
+    public function setReadDate($readDate)
     {
         $this->readDate = $readDate;
-    }
-    
-    public function getMailbox() 
-    {
-        return $this->mailbox;
+        return $this;
     }
 
-    public function setMailbox($mailbox) 
+    /**
+     * @param boolean $hidden
+     *
+     * @return $this
+     */
+    public function setHidden($hidden)
     {
-        $this->mailbox = $mailbox;
+        $this->hidden = $hidden;
+        return $this;
     }
-  
-  /**
-   * populating data as an array.
-   * key of the array is getter methods name. 
-   * 
-   * @param array $data
-   */
-  public function populate($data) 
-  {
-       foreach($data as $key => $value) {
-           
-           $key = str_replace('_', '',$key);
-           $method = 'set'.ucfirst($key);
-            if(method_exists($this, $method))
-                $this->$method($value);
-       }
-       
-  }
-  
-  /**
-   * usage for creating a NEW league. Provide all neccessary values 
-   * in an array. 
-   *    
-   * @param array $data
-   */
-  public function exchangeArray($data)
-  {
-        $this->populate($data);
-        
-   }
-   
-   /**
-    * Convert the object to an array.
-    *
-    * @return array
-    */
-    public function getArrayCopy() 
+
+    /**
+     * @return boolean
+     */
+    public function isHidden()
     {
-        return get_object_vars($this);
+        return $this->hidden;
     }
- 
+
+
+
+
 }

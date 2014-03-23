@@ -1,0 +1,14 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Message');
+$this->headTitle("Messages");
+?>
+
+<h3><?php echo $this->translate("Message reply"); ?></h3>
+
+<?php
+    $this->form->prepare();
+    echo $this->form()->openTag($this->form);
+    echo $this->formCollection($this->form);
+    echo $this->form()->closeTag();
+
+

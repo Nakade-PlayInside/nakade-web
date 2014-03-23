@@ -1,3 +1,5 @@
+@import "message.css";
+
 body {
     padding-top: 60px;
     padding-bottom: 40px;
@@ -11,50 +13,6 @@ body {
 .blog { height:9em;width:80%; overflow:auto;}
 .blog div {padding-top:10px;}
 
-.message {
-    width: auto; 
-    margin-top: 0.5em;
-}
-
-.message .subject {
-    width: 60%; 
-    padding: 0;
-    
-}
-
-.message .subject:hover {
-    background: #FCF;
-}
-
-.message .subject a {
-    display:block;
-    border: #70d900 solid thin;
-    padding: 8px;
-    color: #000000;
-    
-    
-}
-
-
-.message th {
-    text-align:left;
-}
-
-.message th img {
-    vertical-align: text-bottom;
-    height:16px;
-    width:16px;
-}
-
-.message td img {
-    vertical-align: middle;
-    height:8px;
-    width:8px;
-}
-
-.message .center {
-    text-align:center;
-}
 
 .league {
     margin-top: 0.5em;
@@ -65,17 +23,17 @@ body {
 }
 
 .league .space {
-   padding-right: 10px; 
+   padding-right: 10px;
 }
 
 .league .black {
    width: 20px;
-   background: url('/images/black.png') no-repeat center center; 
+   background: url('/images/black.png') no-repeat center center;
 }
 
 .league .white {
    width: 20px;
-   background: url('/images/white.png') no-repeat center center; 
+   background: url('/images/white.png') no-repeat center center;
 }
 
 
