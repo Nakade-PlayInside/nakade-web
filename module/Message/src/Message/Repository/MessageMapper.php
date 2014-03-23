@@ -206,7 +206,7 @@ class MessageMapper extends AbstractMapper
     /**
      * @param int $messageId
      *
-     * @return \User\Entity\Message $object
+     * @return \Message\Entity\Message $object
      */
     public function getLastMessageById($messageId)
     {

@@ -49,7 +49,7 @@ class Message
   private $message;
 
   /**
-   * @var User\Entity\User
+   * @var \User\Entity\User
    *
    * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
    * @ORM\JoinColumn(name="sender", referencedColumnName="uid", nullable=false)
@@ -58,7 +58,7 @@ class Message
   private $sender;
 
   /**
-   * @var User\Entity\User
+   * @var \User\Entity\User
    *
    * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
    * @ORM\JoinColumn(name="receiver", referencedColumnName="uid", nullable=false)
@@ -75,6 +75,11 @@ class Message
    * @ORM\Column(name="readDate", type="datetime", nullable=true)
    */
   private $readDate;
+
+  /**
+  * @ORM\Column(name="hidden", type="boolean")
+  */
+  private $hidden=0;
 
   private $new=false;
   private $read=false;
@@ -182,45 +187,26 @@ class Message
         return $this;
     }
 
-
-  /**
-   * populating data as an array.
-   * key of the array is getter methods name.
-   *
-   * @param array $data
-   */
-  public function populate($data)
-  {
-       foreach($data as $key => $value) {
-
-           $key = str_replace('_', '',$key);
-           $method = 'set'.ucfirst($key);
-            if(method_exists($this, $method))
-                $this->$method($value);
-       }
-
-  }
-
-  /**
-   * usage for creating a NEW league. Provide all neccessary values
-   * in an array.
-   *
-   * @param array $data
-   */
-  public function exchangeArray($data)
-  {
-        $this->populate($data);
-
-   }
-
-   /**
-    * Convert the object to an array.
-    *
-    * @return array
-    */
-    public function getArrayCopy()
+    /**
+     * @param boolean $hidden
+     *
+     * @return $this
+     */
+    public function setHidden($hidden)
     {
-        return get_object_vars($this);
+        $this->hidden = $hidden;
+        return $this;
     }
+
+    /**
+     * @return boolean
+     */
+    public function isHidden()
+    {
+        return $this->hidden;
+    }
+
+
+
 
 }
