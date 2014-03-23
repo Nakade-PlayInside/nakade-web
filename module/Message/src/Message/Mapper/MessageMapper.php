@@ -106,24 +106,6 @@ class MessageMapper extends AbstractMapper
         return $qb->getQuery()->getResult();
     }
 
-    public function getReceiver($userId, $messageId)
-    {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder();
-
-        $qb->select('m')
-            ->from('Message\Entity\Message', 'm')
-            ->Where('m.id = :mid')
-            ->orWhere('m.threadId = :mid')
-            ->setParameter('mid', $messageId)
-            ->orderBy("m.sendDate", DESC)
-            ->setMaxResults(1);
-
-
-        $result = $qb->getQuery()->getResult();
-        return $result[0];
-    }
-
 
     /**
      * @param int $messageId

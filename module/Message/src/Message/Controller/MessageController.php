@@ -192,10 +192,6 @@ class MessageController extends AbstractController
         $reply->setReceiver($receiver);
 
 
-       /* @var $message \Message\Entity\Message */
-       $message = $repo->getLastMessageById($messageId);
-
-
        $form = new ReplyForm($receiver->getShortName());
        $form->bindEntity($reply);
 
@@ -236,9 +232,7 @@ class MessageController extends AbstractController
             return $this->redirect()->toRoute('login');
         }
         $uid = $this->identity()->getId();
-        $messageId  = (int) $this->params()->fromRoute('id', 1);
-
-
+        $messageId  = (int) $this->params()->fromRoute('id', -1);
         $this->getRepository()->getMapper('message')->hideMessageByUser($uid, $messageId);
 
         return $this->redirect()->toRoute('message');
