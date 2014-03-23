@@ -3,6 +3,7 @@ namespace Nakade\Abstracts;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\FactoryInterface;
+use Zend\I18n\Translator\Translator;
 
 /**
  * Extending for having a service getter and setter
@@ -15,6 +16,7 @@ class AbstractController extends AbstractActionController
     protected $_service;
     protected $_formFactory;
     protected $_repository;
+    protected $_translator;
 
     /**
      * @return mixed
@@ -87,6 +89,25 @@ class AbstractController extends AbstractActionController
     public function getRepository()
     {
         return $this->_repository;
+    }
+
+    /**
+     * @param \Zend\I18n\Translator\Translator $translator
+     *
+     * @return $this
+     */
+    public function setTranslator(Translator $translator)
+    {
+        $this->_translator = $translator;
+        return $this;
+    }
+
+    /**
+     * @return \Zend\I18n\Translator\Translator
+     */
+    public function getTranslator()
+    {
+        return $this->_translator;
     }
 }
 

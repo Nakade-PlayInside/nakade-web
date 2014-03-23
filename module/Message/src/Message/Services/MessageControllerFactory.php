@@ -28,18 +28,16 @@ class MessageControllerFactory implements FactoryInterface
     {
 
         $serviceManager = $services->getServiceLocator();
-
-        $config  = $serviceManager->get('config');
-        if ($config instanceof Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
-        }
-
         $repository =  $serviceManager->get(
             'Message\Services\RepositoryService'
         );
 
+
+        $translator = $serviceManager->get('translator');
+
         $controller = new MessageController();
         $controller->setRepository($repository);
+        $controller->setTranslator($translator);
 
         return $controller;
     }

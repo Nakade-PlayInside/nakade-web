@@ -114,7 +114,8 @@ class MessageController extends AbstractController
        $message = new Message();
        $message->setSender($id);
 
-       $form = new MessageForm($recipients);
+
+       $form = new MessageForm($recipients, $this->getTranslator());
        $form->bindEntity($message);
 
        if ($this->getRequest()->isPost()) {
@@ -192,7 +193,7 @@ class MessageController extends AbstractController
         $reply->setReceiver($receiver);
 
 
-       $form = new ReplyForm($receiver->getShortName());
+       $form = new ReplyForm($receiver->getShortName(), $this->getTranslator());
        $form->bindEntity($reply);
 
 

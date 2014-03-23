@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-11 18:39+0100\n"
-"PO-Revision-Date: 2013-07-11 18:39+0100\n"
-"Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
+"POT-Creation-Date: 2014-03-23 19:12+0100\n"
+"PO-Revision-Date: 2014-03-23 19:12+0100\n"
+"Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
@@ -15,430 +15,143 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/League/Controller/MakeLeagueController.php:91
-msgid "League"
+#: ../src/Message/Form/MessageForm.php:48
+msgid "recipient"
 msgstr ""
 
-#: ../src/League/Controller/SeasonController.php:69
-msgid "No actual season found."
+#: ../src/Message/Form/MessageForm.php:49
+msgid "Please choose"
 msgstr ""
 
-#: ../src/League/Controller/SeasonController.php:91
-msgid "No season found."
+#: ../src/Message/Form/MessageForm.php:62
+#: ../src/Message/Form/ReplyForm.php:63
+#: ../view/message/message/show.phtml:39
+msgid "subject"
 msgstr ""
 
-#: ../src/League/Controller/SeasonController.php:114
-msgid "No last season found."
+#: ../src/Message/Form/MessageForm.php:77
+#: ../src/Message/Form/ReplyForm.php:75
+msgid "message"
 msgstr ""
 
-#: ../src/League/Controller/Plugin/LeaguePlugin.php:100
-msgid "League No. "
-msgstr ""
-
-#: ../src/League/Controller/Plugin/SeasonPlugin.php:143
-msgid "waiting for activating"
-msgstr ""
-
-#: ../src/League/Controller/Plugin/SeasonPlugin.php:145
-msgid "leagues missing"
-msgstr ""
-
-#: ../src/League/Controller/Plugin/SeasonPlugin.php:148
-msgid "players missing"
-msgstr ""
-
-#: ../src/League/Controller/Plugin/SeasonPlugin.php:151
-msgid "match schedule missing"
-msgstr ""
-
-#: ../src/League/Form/LeagueForm.php:95
-msgid "No:"
-msgstr ""
-
-#: ../src/League/Form/LeagueForm.php:110 ../src/League/Form/SeasonForm.php:125
-#: ../view/league/make-league/edit.phtml:14
-#: ../view/league/make-league/index.phtml:14
-#: ../view/league/make-player/edit.phtml:14
-#: ../view/league/make-player/index.phtml:14
-#: ../view/league/make-season/edit.phtml:14
-#: ../view/league/make-season/index.phtml:14
-#: ../view/league/season/edit.phtml:14 ../view/league/season/index.phtml:14
-msgid "Title:"
-msgstr ""
-
-#: ../src/League/Form/LeagueForm.php:150
-#: ../src/League/Form/ParticipantsForm.php:171
-#: ../src/League/Form/SeasonForm.php:184
+#: ../src/Message/Form/MessageForm.php:103
+#: ../src/Message/Form/ReplyForm.php:101
 msgid "Submit"
 msgstr ""
 
-#: ../src/League/Form/ParticipantsForm.php:117
-msgid "League No:"
+#: ../src/Message/Form/MessageForm.php:115
+#: ../src/Message/Form/ReplyForm.php:113
+msgid "Cancel"
 msgstr ""
 
-#: ../src/League/Form/ParticipantsForm.php:134
-msgid "Players"
+#: ../src/Message/Form/ReplyForm.php:47
+msgid "receiver"
 msgstr ""
 
-#: ../src/League/Form/ResultForm.php:124
-msgid "Winner"
+#: ../view/message/message/index.phtml:6
+msgid "Messages - Inbox"
 msgstr ""
 
-#: ../src/League/Form/ResultForm.php:125
-msgid "No Winner"
+#: ../view/message/message/index.phtml:10
+msgid "send a new message"
 msgstr ""
 
-#: ../src/League/Form/ResultForm.php:137
-msgid "Result"
+#: ../view/message/message/index.phtml:11
+msgid "new Message"
 msgstr ""
 
-#: ../src/League/Form/ResultForm.php:138
-msgid "No Result"
+#: ../view/message/message/index.phtml:16
+msgid "go to sent messages"
 msgstr ""
 
-#: ../src/League/Form/ResultForm.php:153
-#: ../view/league/actual-season/index.phtml:17
-#: ../view/league/actual-season/table.phtml:45
-msgid "Points"
+#: ../view/message/message/index.phtml:17
+msgid "Sent Box"
 msgstr ""
 
-#: ../src/League/Form/ResultForm.php:164
-msgid "Go"
+#: ../view/message/message/index.phtml:23
+#: ../view/message/message/sent.phtml:18
+#: ../view/message/message/show.phtml:22
+msgid "No messages found"
 msgstr ""
 
-#: ../src/League/Form/SeasonForm.php:139
-msgid "Season Start"
+#: ../view/message/message/index.phtml:32
+msgid "ID"
 msgstr ""
 
-#: ../src/League/Services/ActualSeasonServiceFactory.php:139
-#: ../src/League/Services/ResultServiceFactory.php:176
-msgid "No ongoing season found."
+#: ../view/message/message/index.phtml:33
+#: ../view/message/message/sent.phtml:26
+msgid "Subject"
 msgstr ""
 
-#: ../src/League/Services/ActualSeasonServiceFactory.php:162
-msgid "Matchplan"
+#: ../view/message/message/index.phtml:34
+#: ../view/message/message/show.phtml:34
+msgid "from"
 msgstr ""
 
-#: ../src/League/Services/ResultServiceFactory.php:180
-msgid "Open Results"
+#: ../view/message/message/index.phtml:35
+#: ../view/message/message/sent.phtml:31
+msgid "Date"
 msgstr ""
 
-#: ../src/League/Services/ResultServiceFactory.php:181
-msgid "Season"
+#: ../view/message/message/index.phtml:52
+msgid "delete"
 msgstr ""
 
-#: ../src/League/Statistics/Results.php:31
-msgid "Resignation"
+#: ../view/message/message/sent.phtml:6
+msgid "Messages - Sent"
 msgstr ""
 
-#: ../src/League/Statistics/Results.php:32
-msgid "Win by Points"
+#: ../view/message/message/sent.phtml:10
+msgid "go to Inbox"
 msgstr ""
 
-#: ../src/League/Statistics/Results.php:33
-#: ../view/league/actual-season/table.phtml:35
-msgid "Jigo"
+#: ../view/message/message/sent.phtml:11
+msgid "Inbox"
 msgstr ""
 
-#: ../src/League/Statistics/Results.php:34
-msgid "Lost by Forfeit"
+#: ../view/message/message/sent.phtml:28
+msgid "reading state"
 msgstr ""
 
-#: ../src/League/Statistics/Results.php:35
-msgid "Game Suspended"
+#: ../view/message/message/sent.phtml:30
+msgid "to"
 msgstr ""
 
-#: ../src/League/Statistics/Results.php:36
-msgid "Lost on Time"
+#: ../view/message/message/sent.phtml:42
+msgid "unread"
 msgstr ""
 
-#: ../view/league/actual-season/index.phtml:12
-#: ../view/league/actual-season/table.phtml:14
-msgid "Position"
+#: ../view/message/message/sent.phtml:44
+#: ../view/message/message/show.phtml:50
+msgid "read"
 msgstr ""
 
-#: ../view/league/actual-season/index.phtml:13
-#: ../view/league/actual-season/table.phtml:15
-msgid "Player"
+#: ../view/message/message/reply.phtml:6
+msgid "Message reply"
 msgstr ""
 
-#: ../view/league/actual-season/index.phtml:14
-#: ../view/league/actual-season/table.phtml:19
-msgid "Name"
+#: ../view/message/message/show.phtml:5
+msgid "Message Thread"
 msgstr ""
 
-#: ../view/league/actual-season/index.phtml:15
-msgid "Games"
+#: ../view/message/message/show.phtml:9
+msgid "back"
 msgstr ""
 
-#: ../view/league/actual-season/index.phtml:16
-msgid "G"
+#: ../view/message/message/show.phtml:13
+msgid "reply to message"
 msgstr ""
 
-#: ../view/league/actual-season/index.phtml:18
-msgid "P"
+#: ../view/message/message/show.phtml:14
+msgid "reply"
 msgstr ""
 
-#: ../view/league/actual-season/index.phtml:19
-msgid "Tiebreaker"
+#: ../view/message/message/show.phtml:45
+msgid "send"
 msgstr ""
 
-#: ../view/league/actual-season/index.phtml:20
-msgid "TB"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:20
-msgid "played games"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:24
-msgid "GP"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:25
-msgid "Suspended games"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:29
-msgid "GS"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:30
-msgid "Wins"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:34
-msgid "W"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:39
-msgid "J"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:40
-msgid "Lost"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:44
-msgid "L"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:49
-msgid "Pt"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:50
-msgid "First Tiebreaker"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:55
-msgid "Second Tiebreaker"
-msgstr ""
-
-#: ../view/league/actual-season/table.phtml:60
-msgid "Third Tiebreaker"
-msgstr ""
-
-#: ../view/league/make-league/add.phtml:5
-#: ../view/league/make-league/edit.phtml:5
-#: ../view/league/make-league/index.phtml:5
-#: ../view/league/make-player/add.phtml:5
-#: ../view/league/make-player/edit.phtml:5
-#: ../view/league/make-player/index.phtml:5
-#: ../view/league/make-season/add.phtml:5
-#: ../view/league/make-season/edit.phtml:5
-#: ../view/league/make-season/index.phtml:5
-#: ../view/league/make-season/new.phtml:5 ../view/league/season/edit.phtml:5
-#: ../view/league/season/index.phtml:5
-msgid "New Season"
-msgstr ""
-
-#: ../view/league/make-league/edit.phtml:18
-#: ../view/league/make-league/index.phtml:18
-#: ../view/league/make-player/edit.phtml:18
-#: ../view/league/make-player/index.phtml:18
-#: ../view/league/make-season/edit.phtml:18
-#: ../view/league/make-season/index.phtml:18
-#: ../view/league/season/edit.phtml:18 ../view/league/season/index.phtml:18
-msgid "Date:"
-msgstr ""
-
-#: ../view/league/make-league/edit.phtml:22
-#: ../view/league/make-league/index.phtml:22
-#: ../view/league/make-player/edit.phtml:22
-#: ../view/league/make-player/index.phtml:22
-#: ../view/league/make-season/actual.phtml:13
-#: ../view/league/make-season/edit.phtml:22
-#: ../view/league/make-season/index.phtml:22
-#: ../view/league/make-season/last.phtml:13
-#: ../view/league/season/actual.phtml:13 ../view/league/season/edit.phtml:22
-#: ../view/league/season/index.phtml:22 ../view/league/season/last.phtml:13
-#: ../view/league/season/new.phtml:13
-msgid "Leagues:"
-msgstr ""
-
-#: ../view/league/make-league/edit.phtml:26
-#: ../view/league/make-league/index.phtml:26
-#: ../view/league/make-player/edit.phtml:26
-#: ../view/league/make-player/index.phtml:26
-#: ../view/league/make-season/actual.phtml:17
-#: ../view/league/make-season/edit.phtml:26
-#: ../view/league/make-season/index.phtml:26
-#: ../view/league/make-season/last.phtml:17
-#: ../view/league/season/actual.phtml:17 ../view/league/season/edit.phtml:26
-#: ../view/league/season/index.phtml:26 ../view/league/season/last.phtml:17
-#: ../view/league/season/new.phtml:17
-msgid "Players:"
-msgstr ""
-
-#: ../view/league/make-league/edit.phtml:30
-#: ../view/league/make-league/index.phtml:30
-#: ../view/league/make-player/edit.phtml:30
-#: ../view/league/make-player/index.phtml:30
-#: ../view/league/make-season/edit.phtml:30
-#: ../view/league/make-season/index.phtml:30
-#: ../view/league/make-season/last.phtml:21
-#: ../view/league/season/edit.phtml:30 ../view/league/season/index.phtml:30
-#: ../view/league/season/last.phtml:21
-msgid "Matches:"
-msgstr ""
-
-#: ../view/league/make-league/edit.phtml:34
-#: ../view/league/make-league/index.phtml:34
-#: ../view/league/make-player/edit.phtml:34
-#: ../view/league/make-player/index.phtml:34
-#: ../view/league/make-season/edit.phtml:34
-#: ../view/league/make-season/index.phtml:34
-#: ../view/league/season/edit.phtml:34 ../view/league/season/index.phtml:34
-msgid "Schedule:"
-msgstr ""
-
-#: ../view/league/make-league/edit.phtml:40
-#: ../view/league/make-league/index.phtml:40
-#: ../view/league/make-player/edit.phtml:40
-#: ../view/league/make-player/index.phtml:40
-#: ../view/league/make-season/edit.phtml:40
-#: ../view/league/make-season/index.phtml:40
-#: ../view/league/season/edit.phtml:40 ../view/league/season/index.phtml:40
-msgid "First Match:"
-msgstr ""
-
-#: ../view/league/make-league/edit.phtml:45
-#: ../view/league/make-league/index.phtml:45
-#: ../view/league/make-player/edit.phtml:45
-#: ../view/league/make-player/index.phtml:45
-#: ../view/league/make-season/edit.phtml:45
-#: ../view/league/make-season/index.phtml:45
-#: ../view/league/season/edit.phtml:45 ../view/league/season/index.phtml:45
-msgid "Last Match:"
-msgstr ""
-
-#: ../view/league/make-league/edit.phtml:50
-#: ../view/league/make-league/index.phtml:51
-#: ../view/league/make-player/edit.phtml:50
-#: ../view/league/make-player/index.phtml:51
-#: ../view/league/make-season/edit.phtml:50
-#: ../view/league/make-season/index.phtml:51
-#: ../view/league/season/edit.phtml:50 ../view/league/season/index.phtml:51
-msgid "add league"
-msgstr ""
-
-#: ../view/league/make-league/edit.phtml:51
-#: ../view/league/make-league/index.phtml:52
-#: ../view/league/make-player/edit.phtml:51
-#: ../view/league/make-player/index.phtml:52
-#: ../view/league/make-season/edit.phtml:51
-#: ../view/league/make-season/index.phtml:52
-#: ../view/league/season/edit.phtml:51 ../view/league/season/index.phtml:52
-msgid "add player"
-msgstr ""
-
-#: ../view/league/make-league/index.phtml:50
-#: ../view/league/make-player/index.phtml:50
-#: ../view/league/make-season/index.phtml:50
-#: ../view/league/season/index.phtml:50
-msgid "edit season"
-msgstr ""
-
-#: ../view/league/make-league/new.phtml:5
-msgid "Add League to Season No. "
-msgstr ""
-
-#: ../view/league/make-player/new.phtml:5
-msgid "Add Player to Season No. "
-msgstr ""
-
-#: ../view/league/make-season/actual.phtml:5
-#: ../view/league/season/actual.phtml:5
-msgid "Actual Season"
-msgstr ""
-
-#: ../view/league/make-season/actual.phtml:21
-#: ../view/league/season/actual.phtml:21
-msgid "Open Matches:"
-msgstr ""
-
-#: ../view/league/make-season/actual.phtml:25
-#: ../view/league/season/actual.phtml:25
-msgid "Last Game:"
-msgstr ""
-
-#: ../view/league/make-season/last.phtml:5 ../view/league/season/last.phtml:5
-msgid "Last Season"
-msgstr ""
-
-#: ../view/league/make-season/last.phtml:25
-#: ../view/league/season/last.phtml:25
-msgid "Champion:"
-msgstr ""
-
-#: ../view/league/make-season/noseason.phtml:5
-#: ../view/league/season/noseason.phtml:5
-msgid "No Season found."
-msgstr ""
-
-#: ../view/league/make-season/showme.phtml:5
-#: ../view/league/season/showme.phtml:5
-msgid "Actual Season "
-msgstr ""
-
-#: ../view/league/result/add.phtml:4 ../view/league/result/index.phtml:21
-#: ../view/league/result/myopen.phtml:21
-#: ../view/league/result/myresult.phtml:27
-msgid "Enter Result"
-msgstr ""
-
-#: ../view/league/result/index.phtml:4
-msgid "All open results"
-msgstr ""
-
-#: ../view/league/result/index.phtml:22 ../view/league/result/myopen.phtml:22
-#: ../view/league/result/myresult.phtml:28
-msgid "open"
-msgstr ""
-
-#: ../view/league/result/myopen.phtml:4
-msgid "My open results"
-msgstr ""
-
-#: ../view/league/result/myresult.phtml:4
-msgid "My results"
-msgstr ""
-
-#: ../view/league/season/new.phtml:5
-msgid "New Season: "
-msgstr ""
-
-#: ../view/league/season/new.phtml:21
-msgid "Total Matches:"
-msgstr ""
-
-#: ../view/league/season/new.phtml:25
-msgid "Season begin:"
-msgstr ""
-
-#: ../view/league/season/new.phtml:29
-msgid "State:"
+#: ../view/message/message/new.phtml:5
+msgid "Send Message"
 msgstr ""
 
 #~ msgid "Skeleton Application"

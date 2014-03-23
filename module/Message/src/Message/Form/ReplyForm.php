@@ -5,6 +5,7 @@ use Nakade\Abstracts\AbstractForm;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use Message\Entity\Message;
 use \Zend\InputFilter\InputFilter;
+use \Zend\I18n\Translator\Translator;
 
 /**
  * Form for making a new league
@@ -14,15 +15,18 @@ class ReplyForm extends AbstractForm
     private $name;
 
     /**
-     * @param string $name
+     * @param int|null|string $name
+     * @param Translator      $translator
      */
-    public function __construct($name)
+    public function __construct($name, Translator $translator = null)
     {
         $this->name= $name;
 
         //form name
         parent::__construct('ReplyForm');
 
+        $this->setTranslator($translator);
+        $this->setTranslatorTextDomain('Message');
         $this->setObject(new Message());
         $this->setHydrator(new Hydrator());
         $this->init();
