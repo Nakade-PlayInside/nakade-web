@@ -101,13 +101,16 @@ return array(
                         ),
                     ),
 
-                    //archived messages
-                    'archive' => array(
+                    //delete messages
+                    'delete' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'   => '/archive',
+                            'route'   => '/delete[/:id]',
+                            'constraints' => array(
+                                'id'    => '[0-9]+',
+                            ),
                             'defaults' => array(
-                                'action' => 'archive',
+                                'action' => 'delete',
                             ),
                         ),
                     ),
@@ -131,6 +134,8 @@ return array(
 
     'service_manager' => array(
         'factories' => array(
+            'Message\Services\RepositoryService'      =>
+                'Message\Services\RepositoryService',
             'Message\Factory\MapperFactory'      =>
                     'Message\Factory\MapperFactory',
             'Message\Services\MessageServiceFactory'      =>

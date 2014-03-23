@@ -49,16 +49,29 @@ class MessageServiceFactory extends AbstractService
     }
 
     /**
-     * @return Messages
+     * @param int $uid
+     *
+     * @return array
      */
-    public function getAllMyMessages()
+    public function getInboxMessages($uid)
     {
-
-        $uid=1;
         $messages   = $this->getMapper('message')
-            ->getActiveMessagesByUser($uid);
-        return $messages;
+            ->getInboxMessages($uid);
 
+        return $messages;
+    }
+
+    /**
+     * @param int $uid
+     *
+     * @return array
+     */
+    public function getSentBoxMessages($uid)
+    {
+        $messages   = $this->getMapper('message')
+            ->getSentBoxMessages($uid);
+
+        return $messages;
     }
 
     /**
