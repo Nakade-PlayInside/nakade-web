@@ -30,11 +30,6 @@ class MessageMapper extends AbstractMapper
 
         $result = $qb->getQuery()->getResult();
 
-        foreach ($result as $key => $message) {
-            $isNew = $this->isNewMessage($uid, $message->getId());
-            $result[$key]->setNew($isNew);
-        }
-
         return $result;
     }
 
@@ -55,11 +50,6 @@ class MessageMapper extends AbstractMapper
             ->orderBy('m.sendDate', DESC);
 
         $result = $qb->getQuery()->getResult();
-
-        foreach ($result as $key => $message) {
-            $isNew = $this->isReadMessage($uid, $message->getId());
-            $result[$key]->setRead($isNew);
-        }
 
         return $result;
     }
@@ -116,69 +106,24 @@ class MessageMapper extends AbstractMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * new message is where the receiver is the user and
-     * has not read his message yet
-     *
-     * @param int $userId
-     * @param int $messageId
-     *
-     * @return bool
-     */
-    private function isNewMessage($userId, $messageId)
+    public function getReceiver($userId, $messageId)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
 
         $qb->select('m')
-           ->from('Message\Entity\Message', 'm')
-           ->Join('m.receiver', 'Receiver')
-           ->andWhere('Receiver.id = :uid')
-           ->setParameter('uid', $userId)
-           ->andWhere($qb
-                ->expr()
-                ->orX(
-                    $qb->expr()->eq('m.id', ':mid'),
-                    $qb->expr()->eq('m.threadId', ':mid')
-                ))
+            ->from('Message\Entity\Message', 'm')
+            ->Where('m.id = :mid')
+            ->orWhere('m.threadId = :mid')
             ->setParameter('mid', $messageId)
-            ->andWhere('m.readDate is null');
+            ->orderBy("m.sendDate", DESC)
+            ->setMaxResults(1);
+
 
         $result = $qb->getQuery()->getResult();
-        return count($result)>0;
-
+        return $result[0];
     }
 
-    /**
-     * read message is when the user is the sender and the msg is not read yet
-     *
-     * @param int $userId
-     * @param int $messageId
-     *
-     * @return bool
-     */
-    private function isReadMessage($userId, $messageId)
-    {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder();
-
-        $qb->select('m')
-           ->from('Message\Entity\Message', 'm')
-           ->join('m.sender', 'Sender')
-           ->Where('Sender.id = :uid')
-           ->setParameter('uid', $userId)
-           ->andWhere($qb
-                ->expr()
-                ->orX(
-                    $qb->expr()->eq('m.id', ':mid'),
-                    $qb->expr()->eq('m.threadId', ':mid')
-                ))
-           ->setParameter('mid', $messageId)
-           ->andWhere('m.readDate is not null');
-
-        return count($qb->getQuery()->getResult())>0;
-
-    }
 
     /**
      * @param int $messageId

@@ -77,28 +77,15 @@ class Message
   private $readDate;
 
   /**
-  * @ORM\Column(name="hidden", type="boolean")
+  * @ORM\Column(name="isHidden", type="boolean")
   */
   private $hidden=0;
 
-  private $new=false;
-  private $read=false;
+  /**
+  * @ORM\Column(name="isNew", type="boolean")
+  */
+  private $new=1;
 
-    /**
-     * @param boolean $read
-     */
-    public function setRead($read)
-    {
-        $this->read = $read;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isRead()
-    {
-        return $this->read;
-    }
 
     public function setNew($isNew)
     {

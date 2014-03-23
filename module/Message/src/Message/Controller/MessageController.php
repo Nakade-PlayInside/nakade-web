@@ -32,6 +32,7 @@ class MessageController extends AbstractController
             ->getMapper('message')
             ->getInboxMessages($uid);
 
+
         return new ViewModel(
             array('messages' => $messages)
         );
@@ -67,27 +68,28 @@ class MessageController extends AbstractController
         }
 
         $returnPath = $this->getRequest()->getHeader('referer')->uri()->getPath();
-        $id  = (int) $this->params()->fromRoute('id', 0);
+        $messageId  = (int) $this->params()->fromRoute('id', -1);
+        $uid = $this->identity()->getId();
 
 
         /* @var $repo \Message\Mapper\MessageMapper */
         $repo = $this->getRepository()->getMapper('message');
 
-        $messages = $repo->getAllMessagesById($id);
-        $lastMessage =  $repo->getLastMessageById($id);
+        $messages = $repo->getAllMessagesById($messageId);
+        $lastMessage =  $repo->getMessageById($messageId);
 
-        //set read date if not set yet
-        if (is_null($lastMessage->getReadDate())) {
+        if ($lastMessage->getReceiver()->getId()==$uid && $lastMessage->isNew()) {
+            $lastMessage->setNew(false);
             $lastMessage->setReadDate(new \DateTime());
             $repo->update($lastMessage);
-
         }
+
 
         return new ViewModel(
             array (
                  'returnPath' => $returnPath,
                 'messages'  => $messages,
-                'replyId'   => $lastMessage->getId(),
+                'replyId'   => $messageId,
             )
         );
     }
@@ -162,20 +164,40 @@ class MessageController extends AbstractController
            return $this->redirect()->toRoute('login');
        }
 
-       $id  = (int) $this->params()->fromRoute('id', 1);
+       $uid = $this->identity()->getId();
+       $messageId  = (int) $this->params()->fromRoute('id', -1);
+
 
         /* @var $repo \Message\Mapper\MessageMapper */
         $repo = $this->getRepository()->getMapper('message');
+        $sender=$repo->getUserById($uid);
+
+        $message=$repo->getMessageById($messageId);
+
+        $subject = 'Re:' . $message->getSubject();
+        $receiver = $message->getReceiver();
+        if ($message->getReceiver()->getId() == $uid) {
+            $receiver = $message->getSender();
+        }
+
+        $threadId = $message->getId();
+        if (!is_null($message->getThreadId())) {
+            $threadId = $message->getThreadId();
+        }
+
+        $reply = new Message();
+        $reply->setSubject($subject);
+        $reply->setThreadId($threadId);
+        $reply->setSender($sender);
+        $reply->setReceiver($receiver);
+
 
        /* @var $message \Message\Entity\Message */
-       $message = $repo->getLastMessageById($id);
+       $message = $repo->getLastMessageById($messageId);
 
-       //prepare
-       $message->setSubject('Re:' . $message->getSubject());
-       $name = $message->getSender()->getShortName();
 
-       $form = new ReplyForm($name);
-       $form->bindEntity($message);
+       $form = new ReplyForm($receiver->getShortName());
+       $form->bindEntity($reply);
 
 
        if ($this->getRequest()->isPost()) {
@@ -192,31 +214,8 @@ class MessageController extends AbstractController
 
             if ($form->isValid()) {
 
-                $message = $form->getData();
-
-
-                $threadId = $message->getId();
-                if (!is_null($message->getThreadId())) {
-                    $threadId = $message->getThreadId();
-                }
-
-
-                $sender = $message->getReceiver();
-                $receiver = $message->getSender();
-                $text = $message->getMessage();
-                $subject=$message->getSubject();
-
-
-                $reply = new Message();
-
-                $reply->setThreadId($threadId);
-                $reply->setReceiver($receiver);
-                $reply->setSender($sender);
-                $reply->setSubject($subject);
-                $reply->setMessage($text);
+                $reply = $form->getData();
                 $reply->setSendDate(new \DateTime());
-
-
                 $repo->save($reply);
 
                 return $this->redirect()->toRoute('message');

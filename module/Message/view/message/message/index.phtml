@@ -4,21 +4,32 @@ $this->headTitle("Messages");
 ?>
 
 <h3><?php echo $this->translate("Messages - Inbox"); ?></h3>
+<div id="msgAction">
+    <form action="<?php echo $this->url('message/new'); ?>">
+        <button title="<?php
+        echo $this->translate('send a new message');?>" type="submit"><?php
+            echo $this->translate('new Message');?>
+        </button>
+    </form>
+    <form action="<?php echo $this->url('message/sent'); ?>">
+        <button title="<?php
+        echo $this->translate('go to sent messages');?>" type="submit"><?php
+            echo $this->translate('Sent Box');?>
+        </button>
+    </form>
+</div>
 
 <?php $this->placeholder('nothing')->captureStart();?>
 <h3><?php echo $this->translate('No messages found')?></h3>
+
 <?php $this->placeholder('nothing')->captureEnd(); ?>
 
 
 <?php $this->placeholder('messages')->captureStart();?>
 
-
-<div id="msgAction">
-    <form action="<?php echo $this->url('message/new'); ?>"><button type="submit"><?php echo $this->translate('new');?></button></form>
-    <a href="<?php echo $this->url('message/sent'); ?>"><?php echo $this->translate('Sent');?></a>
-</div>
 <table id="messages" class="table">
     <tr>
+        <th><?php echo $this->translate('ID');?></th>
         <th><?php echo $this->translate('Subject');?></th>
         <th><?php echo $this->translate('from')?></th>
         <th><?php echo $this->translate('Date')?></th>
@@ -30,10 +41,18 @@ $this->headTitle("Messages");
             echo "font-weight:bold;";
 }?>
         ">
-        <td class="subject"><a href="<?php echo $this->url('message/show') . '/' . $message->getId(); ?>"><?php echo $message->getSubject() ?></a></td>
+        <td style="text-align:right;"><?php echo $message->getId(); ?></td>
+        <td class="subject"><a href="<?php
+            echo $this->url('message/show') . '/' . $message->getId(); ?>"><?php echo $message->getSubject() ?></a>
+        </td>
         <td><?php echo $message->getSender()->getShortName();?></td>
         <td><?php echo $message->getSendDate()->format('d.m.y H:i');?></td>
-        <td><a href="<?php echo $this->url('message/delete'). '/' . $message->getId(); ?>" title="<?php echo $this->translate('delete')?>"><img style="height:16px;width=16px;margin-left:10px;vertical-align: middle" src="/images/trash.png"></a></td>
+        <td><a href="<?php
+            echo $this->url('message/delete'). '/' . $message->getId(); ?>"
+               title="<?php echo $this->translate('delete')?>">
+               <img style="height:16px;width=16px;margin-left:10px;vertical-align: middle" src="/images/trash.png">
+            </a>
+        </td>
     </tr>
 <?php endforeach; ?>
 </table>
