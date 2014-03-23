@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-23 19:05+0100\n"
-"PO-Revision-Date: 2014-03-23 19:12+0100\n"
+"POT-Creation-Date: 2014-03-23 20:10+0100\n"
+"PO-Revision-Date: 2014-03-23 20:52+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -16,31 +16,31 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Message/Form/MessageForm.php:48
+#: ../src/Message/Form/MessageForm.php:66
 msgid "recipient"
 msgstr "Empfänger"
 
-#: ../src/Message/Form/MessageForm.php:49
+#: ../src/Message/Form/MessageForm.php:67
 msgid "Please choose"
 msgstr "Bitte wählen"
 
-#: ../src/Message/Form/MessageForm.php:62
+#: ../src/Message/Form/MessageForm.php:80
 #: ../src/Message/Form/ReplyForm.php:63
 #: ../view/message/message/show.phtml:39
 msgid "subject"
 msgstr "Betreff"
 
-#: ../src/Message/Form/MessageForm.php:77
+#: ../src/Message/Form/MessageForm.php:95
 #: ../src/Message/Form/ReplyForm.php:75
 msgid "message"
 msgstr "Nachricht"
 
-#: ../src/Message/Form/MessageForm.php:103
+#: ../src/Message/Form/MessageForm.php:121
 #: ../src/Message/Form/ReplyForm.php:101
 msgid "Submit"
 msgstr "Abschicken"
 
-#: ../src/Message/Form/MessageForm.php:115
+#: ../src/Message/Form/MessageForm.php:133
 #: ../src/Message/Form/ReplyForm.php:113
 msgid "Cancel"
 msgstr "Abbruch"
