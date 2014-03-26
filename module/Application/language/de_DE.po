@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-24 15:50+0100\n"
-"PO-Revision-Date: 2013-08-24 15:50+0100\n"
-"Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
+"POT-Creation-Date: 2014-03-26 21:41+0100\n"
+"PO-Revision-Date: 2014-03-26 21:42+0100\n"
+"Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -15,85 +15,9 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../view/error/403.phtml:1
-msgid "A 403 error occurred"
-msgstr "Es trat ein 403 Fehler auf"
-
-#: ../view/error/403.phtml:10 ../view/error/404.phtml:10
-msgid "The requested controller was unable to dispatch the request."
-msgstr ""
-"Der angeforderte Controller war nicht in der Lage die Anfrage zu verarbeiten."
-
-#: ../view/error/403.phtml:13 ../view/error/404.phtml:13
-msgid ""
-"The requested controller could not be mapped to an existing controller class."
-msgstr ""
-"Der angeforderte Controller konnte keiner Controller Klasse zugeordnet "
-"werden."
-
-#: ../view/error/403.phtml:16 ../view/error/404.phtml:16
-msgid "The requested controller was not dispatchable."
-msgstr "Der angeforderte Controller ist nicht aufrufbar."
-
-#: ../view/error/403.phtml:19 ../view/error/404.phtml:19
-msgid "The requested URL could not be matched by routing."
-msgstr "Für die angeforderte URL konnte keine Übereinstimmung gefunden werden."
-
-#: ../view/error/403.phtml:22 ../view/error/404.phtml:22
-msgid "We cannot determine at this time why a 404 was generated."
-msgstr ""
-"Zu diesem Zeitpunkt ist es uns nicht möglich zu bestimmen, warum ein 404 "
-"Fehler aufgetreten ist."
-
-#: ../view/error/403.phtml:34 ../view/error/404.phtml:34
-msgid "Controller"
-msgstr "Controller"
-
-#: ../view/error/403.phtml:41 ../view/error/404.phtml:41
-#, php-format
-msgid "resolves to %s"
-msgstr "wird aufgelöst in %s"
-
-#: ../view/error/403.phtml:51 ../view/error/404.phtml:51
-msgid "Exception"
-msgstr "Ausnahme"
-
-#: ../view/error/403.phtml:55 ../view/error/404.phtml:55
-#: ../view/error/index.phtml:19 ../view/error/index.phtml:43
-msgid "Stack trace"
-msgstr "Stapelüberwachung"
-
-#: ../view/error/404.phtml:1
-msgid "A 404 error occurred"
-msgstr "Es trat ein 404 Fehler auf"
-
-#: ../view/error/index.phtml:1
-msgid "An error occurred"
-msgstr "Ein Fehler ist aufgetreten"
-
-#: ../view/error/index.phtml:8
-msgid "Additional information"
-msgstr "Zusätzliche Information"
-
-#: ../view/error/index.phtml:11 ../view/error/index.phtml:35
-msgid "File"
-msgstr "Datei"
-
-#: ../view/error/index.phtml:15 ../view/error/index.phtml:39
-msgid "Message"
-msgstr "Meldung"
-
-#: ../view/error/index.phtml:29
-msgid "Previous exceptions"
-msgstr "Vorherige Ausnahme"
-
-#: ../view/error/index.phtml:58
-msgid "No Exception available"
-msgstr "Es ist keine Ausnahme verfügbar"
-
 #: ../view/layout/layout.phtml:36
 msgid "Berliner Baduk Club e.V."
-msgstr ""
+msgstr "Berliner Baduk Club e.V."
 
 #: ../view/layout/layout.phtml:39
 msgid "Home"
@@ -103,69 +27,167 @@ msgstr "Startseite"
 msgid "Location"
 msgstr "Spielort"
 
-#: ../view/layout/layout.phtml:41
-msgid "Imprint"
-msgstr "Impressum"
-
-#: ../view/layout/layout.phtml:42
-msgid "Contact"
-msgstr "Kontakt"
-
-#: ../view/layout/layout.phtml:52
+#: ../view/layout/layout.phtml:51
 msgid "User overview"
 msgstr "Benutzer Übersicht"
 
-#: ../view/layout/layout.phtml:55
+#: ../view/layout/layout.phtml:54
 msgid "add user"
 msgstr "Benutzer hinzufügen"
 
-#: ../view/layout/layout.phtml:58
+#: ../view/layout/layout.phtml:57
 msgid "open results"
 msgstr "offene Ergebnisse"
 
-#: ../view/layout/layout.phtml:61
+#: ../view/layout/layout.phtml:60
 msgid "edit matchday"
 msgstr "Spieltag ändern"
 
-#: ../view/layout/layout.phtml:64
+#: ../view/layout/layout.phtml:63
 msgid "season overview"
 msgstr "neue Saison"
 
-#: ../view/layout/layout.phtml:76
+#: ../view/layout/layout.phtml:75
 msgid "Profile"
 msgstr "Profil"
 
-#: ../view/layout/layout.phtml:82
+#: ../view/layout/layout.phtml:80
+msgid "Inbox"
+msgstr "Posteingang"
+
+#: ../view/layout/layout.phtml:83
+msgid "New Message"
+msgstr "Neue Nachricht"
+
+#: ../view/layout/layout.phtml:86
+msgid "Sent"
+msgstr "Gesendet"
+
+#: ../view/layout/layout.phtml:93
+msgid "Messages"
+msgstr "Nachrichten"
+
+#: ../view/layout/layout.phtml:99
 msgid "Schedule"
 msgstr "Spielplan"
 
-#: ../view/layout/layout.phtml:85
+#: ../view/layout/layout.phtml:102
 msgid "Standings"
 msgstr "Tabelle"
 
-#: ../view/layout/layout.phtml:88
+#: ../view/layout/layout.phtml:105
 msgid "results"
 msgstr "Ergebnisse"
 
-#: ../view/layout/layout.phtml:94
+#: ../view/layout/layout.phtml:111
 msgid "League"
 msgstr "Liga"
 
-#: ../view/layout/layout.phtml:100
+#: ../view/layout/layout.phtml:117
 msgid "Logged in as "
 msgstr "angemeldet als"
 
-#: ../view/layout/layout.phtml:106
+#: ../view/layout/layout.phtml:123
 msgid "Logout"
 msgstr "Abmelden"
 
-#: ../view/layout/layout.phtml:114
+#: ../view/layout/layout.phtml:130
 msgid "LogIn"
 msgstr "Login"
 
-#: ../view/layout/layout.phtml:128
+#: ../view/layout/layout.phtml:146
+msgid "Imprint"
+msgstr "Impressum"
+
+#: ../view/layout/layout.phtml:147
+msgid "Contact"
+msgstr "Kontakt"
+
+#: ../view/layout/layout.phtml:149
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
+
+#: ../view/error/index.phtml:1
+msgid "An error occurred"
+msgstr "Ein Fehler ist aufgetreten"
+
+#: ../view/error/index.phtml:8
+msgid "Additional information"
+msgstr "Zusätzliche Information"
+
+#: ../view/error/index.phtml:11
+#: ../view/error/index.phtml:35
+msgid "File"
+msgstr "Datei"
+
+#: ../view/error/index.phtml:15
+#: ../view/error/index.phtml:39
+msgid "Message"
+msgstr "Meldung"
+
+#: ../view/error/index.phtml:19
+#: ../view/error/index.phtml:43
+#: ../view/error/403.phtml:55
+#: ../view/error/404.phtml:55
+msgid "Stack trace"
+msgstr "Stapelüberwachung"
+
+#: ../view/error/index.phtml:29
+msgid "Previous exceptions"
+msgstr "Vorherige Ausnahme"
+
+#: ../view/error/index.phtml:58
+msgid "No Exception available"
+msgstr "Es ist keine Ausnahme verfügbar"
+
+#: ../view/error/403.phtml:1
+msgid "A 403 error occurred"
+msgstr "Es trat ein 403 Fehler auf"
+
+#: ../view/error/403.phtml:10
+#: ../view/error/404.phtml:10
+msgid "The requested controller was unable to dispatch the request."
+msgstr "Der angeforderte Controller war nicht in der Lage die Anfrage zu verarbeiten."
+
+#: ../view/error/403.phtml:13
+#: ../view/error/404.phtml:13
+msgid "The requested controller could not be mapped to an existing controller class."
+msgstr "Der angeforderte Controller konnte keiner Controller Klasse zugeordnet werden."
+
+#: ../view/error/403.phtml:16
+#: ../view/error/404.phtml:16
+msgid "The requested controller was not dispatchable."
+msgstr "Der angeforderte Controller ist nicht aufrufbar."
+
+#: ../view/error/403.phtml:19
+#: ../view/error/404.phtml:19
+msgid "The requested URL could not be matched by routing."
+msgstr "Für die angeforderte URL konnte keine Übereinstimmung gefunden werden."
+
+#: ../view/error/403.phtml:22
+#: ../view/error/404.phtml:22
+msgid "We cannot determine at this time why a 404 was generated."
+msgstr "Zu diesem Zeitpunkt ist es uns nicht möglich zu bestimmen, warum ein 404 Fehler aufgetreten ist."
+
+#: ../view/error/403.phtml:34
+#: ../view/error/404.phtml:34
+msgid "Controller"
+msgstr "Controller"
+
+#: ../view/error/403.phtml:41
+#: ../view/error/404.phtml:41
+#, php-format
+msgid "resolves to %s"
+msgstr "wird aufgelöst in %s"
+
+#: ../view/error/403.phtml:51
+#: ../view/error/404.phtml:51
+msgid "Exception"
+msgstr "Ausnahme"
+
+#: ../view/error/404.phtml:1
+msgid "A 404 error occurred"
+msgstr "Es trat ein 404 Fehler auf"
 
 #~ msgid "all open results"
 #~ msgstr "alle offenen Ergebnisse"

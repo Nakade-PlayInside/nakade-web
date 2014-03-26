@@ -4,15 +4,7 @@ $this->headTitle("Messages");
 ?>
 
 <h3><?php echo $this->translate("Messages - Sent"); ?></h3>
-<div id="msgAction">
-    <form action="<?php echo $this->url('message'); ?>">
-        <button title="<?php
-        echo $this->translate('go to Inbox');?>" type="submit"><?php
-            echo $this->translate('Inbox');?>
-        </button>
-    </form>
 
-</div>
 
 <?php $this->placeholder('nothing')->captureStart();?>
     <h3><?php echo $this->translate('No messages found')?></h3>
@@ -23,6 +15,7 @@ $this->headTitle("Messages");
 
     <table id="messages" class="table">
         <tr>
+            <th><?php echo $this->translate('ID');?></th>
             <th><?php echo $this->translate('Subject');?></th>
             <th class="read" title="<?php
                 echo $this->translate('reading state');?>"><img alt="mail read" src="/images/glasses.png">
@@ -33,6 +26,7 @@ $this->headTitle("Messages");
         <?php foreach ($this->messages as $message) : ?>
             <tr class="message" style="background-color:<?php
                 echo $this->cycle(array("#F0F0F0","transparent"))->next()?>; ">
+                <td style="text-align:right;"><?php echo $message->getId(); ?></td>
                 <td class="subject"><a href="<?php
                     echo $this->url('message/show') . '/' . $message->getId(); ?>">
                     <?php echo $message->getSubject() ?>
