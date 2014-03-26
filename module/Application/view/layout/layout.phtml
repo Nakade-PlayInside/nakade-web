@@ -21,11 +21,11 @@
                         ->prependFile('/js/bootstrap.min.js')
                         ->prependFile('/js/jquery-2.0.3.min.js')
                 ?>
-        
+
     </head>
     <body>
         <div class="navbar navbar-fixed-top">
-             
+
             <div class="navbar-inner">
                 <div class="container">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -39,9 +39,9 @@
                             <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home', 'Application') ?></a></li>
                             <li><a href="<?php echo $this->url('training') ?>"><?php echo $this->translate("Location", 'Application'); ?></a></li>
 
-                            
-      
-<?php 
+
+
+<?php
      if ($user = $this->identity()) {
 
         if ($user->getRole()=='admin') {
@@ -75,6 +75,24 @@
             $this->translate('Profile', 'Application')
         );
 
+        $messages = array(
+
+            $this->translate('Inbox', 'Application')  =>
+                $this->url('message'),
+
+            $this->translate('New Message', 'Application')  =>
+                $this->url('message/new'),
+
+             $this->translate('Sent', 'Application')  =>
+                 $this->url('message/sent'),
+
+
+        );
+
+         echo $this->Submenu(
+             $this->translate('Messages', 'Application'),
+             $messages
+         );
 
         $league = array(
 
@@ -113,7 +131,7 @@
         );
 
      }
-?>    
+?>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
@@ -135,6 +153,6 @@
             </footer>
         </div> <!-- /container -->
         <?php //echo $this->inlineScript() ?>
-     
+
     </body>
 </html>

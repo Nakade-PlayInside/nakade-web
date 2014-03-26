@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-23 21:21+0100\n"
-"PO-Revision-Date: 2014-03-23 21:22+0100\n"
+"POT-Creation-Date: 2014-03-26 21:40+0100\n"
+"PO-Revision-Date: 2014-03-26 21:40+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -53,48 +53,32 @@ msgstr "Empfänger"
 msgid "Messages - Inbox"
 msgstr "Posteingang"
 
-#: ../view/message/message/index.phtml:10
-msgid "send a new message"
-msgstr "neue Nachricht schicken"
-
-#: ../view/message/message/index.phtml:11
-msgid "new Message"
-msgstr "Neue Nachricht"
-
-#: ../view/message/message/index.phtml:16
-msgid "go to sent messages"
-msgstr "zum Postausgang"
-
-#: ../view/message/message/index.phtml:17
-msgid "Sent Box"
-msgstr "Postausgang"
-
-#: ../view/message/message/index.phtml:23
-#: ../view/message/message/sent.phtml:18
+#: ../view/message/message/index.phtml:9
+#: ../view/message/message/sent.phtml:10
 #: ../view/message/message/show.phtml:22
 msgid "No messages found"
 msgstr "Keine Nachrichten gefunden."
 
-#: ../view/message/message/index.phtml:32
+#: ../view/message/message/index.phtml:18
 msgid "ID"
 msgstr "Id"
 
-#: ../view/message/message/index.phtml:33
-#: ../view/message/message/sent.phtml:26
+#: ../view/message/message/index.phtml:19
+#: ../view/message/message/sent.phtml:18
 msgid "Subject"
 msgstr "Betreff"
 
-#: ../view/message/message/index.phtml:34
+#: ../view/message/message/index.phtml:20
 #: ../view/message/message/show.phtml:34
 msgid "from"
 msgstr "von"
 
-#: ../view/message/message/index.phtml:35
-#: ../view/message/message/sent.phtml:31
+#: ../view/message/message/index.phtml:21
+#: ../view/message/message/sent.phtml:23
 msgid "Date"
 msgstr "Datum"
 
-#: ../view/message/message/index.phtml:52
+#: ../view/message/message/index.phtml:38
 msgid "delete"
 msgstr "löschen"
 
@@ -102,27 +86,19 @@ msgstr "löschen"
 msgid "Messages - Sent"
 msgstr "Postausgang"
 
-#: ../view/message/message/sent.phtml:10
-msgid "go to Inbox"
-msgstr "zum Posteingang"
-
-#: ../view/message/message/sent.phtml:11
-msgid "Inbox"
-msgstr "Posteingang"
-
-#: ../view/message/message/sent.phtml:28
+#: ../view/message/message/sent.phtml:20
 msgid "reading state"
 msgstr "Lese Status"
 
-#: ../view/message/message/sent.phtml:30
+#: ../view/message/message/sent.phtml:22
 msgid "to"
 msgstr "an"
 
-#: ../view/message/message/sent.phtml:42
+#: ../view/message/message/sent.phtml:34
 msgid "unread"
 msgstr "ungelesen"
 
-#: ../view/message/message/sent.phtml:44
+#: ../view/message/message/sent.phtml:36
 #: ../view/message/message/show.phtml:46
 msgid "read"
 msgstr "gelesen"
@@ -154,6 +130,24 @@ msgstr "gesendet"
 #: ../view/message/message/new.phtml:5
 msgid "Send Message"
 msgstr "Nachricht schicken"
+
+#~ msgid "send a new message"
+#~ msgstr "neue Nachricht schicken"
+
+#~ msgid "new Message"
+#~ msgstr "Neue Nachricht"
+
+#~ msgid "go to sent messages"
+#~ msgstr "zum Postausgang"
+
+#~ msgid "Sent Box"
+#~ msgstr "Postausgang"
+
+#~ msgid "go to Inbox"
+#~ msgstr "zum Posteingang"
+
+#~ msgid "Inbox"
+#~ msgstr "Posteingang"
 
 #~ msgid "send"
 #~ msgstr "Abschicken"
