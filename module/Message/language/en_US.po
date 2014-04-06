@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-23 19:12+0100\n"
-"PO-Revision-Date: 2014-03-23 19:12+0100\n"
+"POT-Creation-Date: 2014-03-26 21:40+0100\n"
+"PO-Revision-Date: 2014-03-26 22:09+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -15,36 +15,36 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Message/Form/MessageForm.php:48
+#: ../src/Message/Form/MessageForm.php:53
 msgid "recipient"
 msgstr ""
 
-#: ../src/Message/Form/MessageForm.php:49
+#: ../src/Message/Form/MessageForm.php:54
 msgid "Please choose"
 msgstr ""
 
-#: ../src/Message/Form/MessageForm.php:62
-#: ../src/Message/Form/ReplyForm.php:63
+#: ../src/Message/Form/MessageForm.php:67
+#: ../src/Message/Form/ReplyForm.php:67
 #: ../view/message/message/show.phtml:39
 msgid "subject"
 msgstr ""
 
-#: ../src/Message/Form/MessageForm.php:77
-#: ../src/Message/Form/ReplyForm.php:75
+#: ../src/Message/Form/MessageForm.php:82
+#: ../src/Message/Form/ReplyForm.php:79
 msgid "message"
 msgstr ""
 
-#: ../src/Message/Form/MessageForm.php:103
-#: ../src/Message/Form/ReplyForm.php:101
+#: ../src/Message/Form/MessageForm.php:108
+#: ../src/Message/Form/ReplyForm.php:105
 msgid "Submit"
 msgstr ""
 
-#: ../src/Message/Form/MessageForm.php:115
-#: ../src/Message/Form/ReplyForm.php:113
+#: ../src/Message/Form/MessageForm.php:120
+#: ../src/Message/Form/ReplyForm.php:117
 msgid "Cancel"
 msgstr ""
 
-#: ../src/Message/Form/ReplyForm.php:47
+#: ../src/Message/Form/ReplyForm.php:51
 msgid "receiver"
 msgstr ""
 
@@ -52,48 +52,32 @@ msgstr ""
 msgid "Messages - Inbox"
 msgstr ""
 
-#: ../view/message/message/index.phtml:10
-msgid "send a new message"
-msgstr ""
-
-#: ../view/message/message/index.phtml:11
-msgid "new Message"
-msgstr ""
-
-#: ../view/message/message/index.phtml:16
-msgid "go to sent messages"
-msgstr ""
-
-#: ../view/message/message/index.phtml:17
-msgid "Sent Box"
-msgstr ""
-
-#: ../view/message/message/index.phtml:23
-#: ../view/message/message/sent.phtml:18
+#: ../view/message/message/index.phtml:9
+#: ../view/message/message/sent.phtml:10
 #: ../view/message/message/show.phtml:22
 msgid "No messages found"
 msgstr ""
 
-#: ../view/message/message/index.phtml:32
+#: ../view/message/message/index.phtml:18
 msgid "ID"
 msgstr ""
 
-#: ../view/message/message/index.phtml:33
-#: ../view/message/message/sent.phtml:26
+#: ../view/message/message/index.phtml:19
+#: ../view/message/message/sent.phtml:18
 msgid "Subject"
 msgstr ""
 
-#: ../view/message/message/index.phtml:34
+#: ../view/message/message/index.phtml:20
 #: ../view/message/message/show.phtml:34
 msgid "from"
 msgstr ""
 
-#: ../view/message/message/index.phtml:35
-#: ../view/message/message/sent.phtml:31
+#: ../view/message/message/index.phtml:21
+#: ../view/message/message/sent.phtml:23
 msgid "Date"
 msgstr ""
 
-#: ../view/message/message/index.phtml:52
+#: ../view/message/message/index.phtml:38
 msgid "delete"
 msgstr ""
 
@@ -101,28 +85,20 @@ msgstr ""
 msgid "Messages - Sent"
 msgstr ""
 
-#: ../view/message/message/sent.phtml:10
-msgid "go to Inbox"
-msgstr ""
-
-#: ../view/message/message/sent.phtml:11
-msgid "Inbox"
-msgstr ""
-
-#: ../view/message/message/sent.phtml:28
+#: ../view/message/message/sent.phtml:20
 msgid "reading state"
 msgstr ""
 
-#: ../view/message/message/sent.phtml:30
+#: ../view/message/message/sent.phtml:22
 msgid "to"
 msgstr ""
 
-#: ../view/message/message/sent.phtml:42
+#: ../view/message/message/sent.phtml:34
 msgid "unread"
 msgstr ""
 
-#: ../view/message/message/sent.phtml:44
-#: ../view/message/message/show.phtml:50
+#: ../view/message/message/sent.phtml:36
+#: ../view/message/message/show.phtml:46
 msgid "read"
 msgstr ""
 
@@ -146,8 +122,8 @@ msgstr ""
 msgid "reply"
 msgstr ""
 
-#: ../view/message/message/show.phtml:45
-msgid "send"
+#: ../view/message/message/show.phtml:44
+msgid "sent"
 msgstr ""
 
 #: ../view/message/message/new.phtml:5
