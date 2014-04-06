@@ -85,13 +85,30 @@ class User extends UserModel
      */
     public function getShortName()
     {
+        $shortName = $this->getFirstname();
         $nick = $this->getNickname();
-        if ($this->isAnonym()  && !empty($nick)) {
-            return $nick;
+
+        if ($this->isAnonym()  && !is_null($nick)) {
+            $shortName = $nick;
+        } else {
+            $lastName = strtoupper($this->getLastname());
+            $shortName .= " " . $lastName[0] . ".";
         }
 
-        $lastname = $this->getLastname();
-        return $this->getFirstname() . " " . $lastname[0] . ".";
+        return $shortName;
+    }
+
+    /**
+     * online Go Name
+     *
+     * @return string
+     */
+    public function getOnlineName()
+    {
+        if (is_null($this->getKgs())) {
+            return $this->getShortName();
+        }
+        return $this->getKgs();
     }
 
     /**

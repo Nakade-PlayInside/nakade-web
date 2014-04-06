@@ -20,14 +20,16 @@ $this->headTitle('schedule');
     ?>">
     <td class="space"><?php echo $match->getDate()->format('d.m. H:i');?></td>
     <td class="black"></td>
-    <td <?php $this->isWinner($match, $match->getBlackId()); ?>><?php
-            echo $this->escapeHtml($match->getBlack()->getShortName());
+    <td <?php $this->isWinner($match, $match->getBlackId()); ?> title="<?php
+        echo $this->escapeHtml($match->getBlack()->getShortName());?>"><?php
+            echo $this->escapeHtml($match->getBlack()->getOnlineName());
     ?>
     </td>
     <td class="versus">-</td>
     <td class="white"></td>
-    <td class="space"<?php $this->isWinner($match, $match->getWhiteId()); ?>><?php
-        echo $this->escapeHtml($match->getWhite()->getShortName());
+    <td class="space"<?php $this->isWinner($match, $match->getWhiteId()); ?> title="<?php
+    echo $this->escapeHtml($match->getWhite()->getShortName());?>"><?php
+        echo $this->escapeHtml($match->getWhite()->getOnlineName());
     ?>
     </td>
     <td><?php echo $this->result($match); ?></td>
