@@ -168,6 +168,27 @@ class MessageMapper extends AbstractMapper
 
     }
 
+    /**
+     * @param int $uid
+     *
+     * @return array
+     */
+    public function getNumberOfNewMessages($uid)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Message')
+            ->select('m')
+            ->from('Message\Entity\Message', 'm')
+            ->join('m.receiver', 'Receiver')
+            ->andWhere('Receiver.id = :uid')
+            ->andWhere('m.hidden = 0')
+            ->andWhere('m.new = 1')
+            ->setParameter('uid', $uid);
+
+        $result = $qb->getQuery()->getResult();
+
+        return count($result);
+    }
 
 
 
