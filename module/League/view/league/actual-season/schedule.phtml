@@ -1,6 +1,6 @@
 <?php
 // module/user/view/user/user/index.phtml:
-$this->plugin('translate')->setTranslatorTextDomain('League'); 
+$this->plugin('translate')->setTranslatorTextDomain('League');
 
 
 $this->headTitle('schedule');
@@ -13,29 +13,31 @@ $this->headTitle('schedule');
 <h3><?php echo $this->escapeHtml($this->title); ?></h3>
 <table class="league">
 <?php foreach ($this->matches as $match) : ?>
-<tr style="background-color:<?php 
+<tr style="background-color:<?php
         $color = $this->cycle(array("#F0F0F0","transparent"))->next();
-        if( $this->isActive($match)){ $color = "#FFC4C4"; }    
-        echo $color;          
+        if( $this->isActive($match)){ $color = "#FFC4C4"; }
+        echo $color;
     ?>">
-    <td class="space"><?php echo $match->getDate()->format('d.m.y H');?>h</td>
+    <td class="space"><?php echo $match->getDate()->format('d.m. H:i');?></td>
     <td class="black"></td>
-    <td <?php $this->isWinner($match, $match->getBlackId()); ?>><?php 
-            echo $this->escapeHtml($match->getBlack()->getShortName());
+    <td <?php $this->isWinner($match, $match->getBlackId()); ?> title="<?php
+        echo $this->escapeHtml($match->getBlack()->getShortName());?>"><?php
+            echo $this->escapeHtml($match->getBlack()->getOnlineName());
     ?>
     </td>
     <td class="versus">-</td>
     <td class="white"></td>
-    <td class="space"<?php $this->isWinner($match, $match->getWhiteId()); ?>><?php 
-        echo $this->escapeHtml($match->getWhite()->getShortName());
+    <td class="space"<?php $this->isWinner($match, $match->getWhiteId()); ?> title="<?php
+    echo $this->escapeHtml($match->getWhite()->getShortName());?>"><?php
+        echo $this->escapeHtml($match->getWhite()->getOnlineName());
     ?>
     </td>
     <td><?php echo $this->result($match); ?></td>
 </tr>
 <?php endforeach; ?>
 </table>
-<?php $this->placeholder('schedule')->captureEnd(); 
+<?php $this->placeholder('schedule')->captureEnd();
 
   if($this->matches!=null)
       echo $this->placeholder('schedule');
-  else echo $this->placeholder('noseason');       
+  else echo $this->placeholder('noseason');

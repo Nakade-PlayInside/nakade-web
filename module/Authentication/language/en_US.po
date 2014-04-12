@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-22 13:36+0100\n"
-"PO-Revision-Date: 2013-03-22 13:36+0100\n"
-"Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
+"POT-Creation-Date: 2014-04-06 18:30+0100\n"
+"PO-Revision-Date: 2014-04-06 18:30+0100\n"
+"Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
@@ -15,24 +15,60 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Authentication/Form/AuthForm.php:72
+#: ../src/Authentication/Form/AuthForm.php:173
 msgid "Username:"
 msgstr ""
 
-#: ../src/Authentication/Form/AuthForm.php:83
+#: ../src/Authentication/Form/AuthForm.php:184
 msgid "Password:"
 msgstr ""
 
-#: ../src/Authentication/Form/AuthForm.php:95
+#: ../src/Authentication/Form/AuthForm.php:196
 msgid "Remember Me ?:"
 msgstr ""
 
-#: ../src/Authentication/Form/AuthForm.php:104
+#: ../src/Authentication/Form/AuthForm.php:206
 msgid "Please verify you are human."
 msgstr ""
 
-#: ../src/Authentication/Form/AuthForm.php:117
+#: ../src/Authentication/Form/AuthForm.php:237
 msgid "Submit"
+msgstr ""
+
+#: ../src/Authentication/Adapter/AuthAdapter.php:151
+msgid "Supplied credential is invalid."
+msgstr ""
+
+#: ../src/Authentication/Adapter/AuthAdapter.php:162
+msgid "Account is not verified. Please check your email."
+msgstr ""
+
+#: ../src/Authentication/Adapter/AuthAdapter.php:174
+msgid "Account is not active. Please refer an administrator."
+msgstr ""
+
+#: ../src/Authentication/Adapter/AuthAdapter.php:198
+msgid "Authentication successful."
+msgstr ""
+
+#: ../view/authentication/success/index.phtml:6
+msgid "You got %number% new messages"
+msgstr ""
+
+#: ../view/authentication/success/index.phtml:10
+msgid "go to mailbox"
+msgstr ""
+
+#: ../view/authentication/success/index.phtml:18
+msgid "Logged in as %name%"
+msgstr ""
+
+#: ../view/authentication/success/index.phtml:22
+msgid "LogOut"
+msgstr ""
+
+#: ../view/authentication/success/index.phtml:33
+msgid "Not logged in"
 msgstr ""
 
 #~ msgid "Skeleton Application"

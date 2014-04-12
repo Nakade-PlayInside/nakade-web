@@ -33,7 +33,6 @@ class MessageController extends AbstractController
             ->getMapper('message')
             ->getInboxMessages($uid);
 
-
         return new ViewModel(
             array('messages' => $messages)
         );
