@@ -1,52 +1,52 @@
 <?php
 /**
- * The config information is passed to the relevant components by the 
- * ServiceManager. The controllers section provides a list of all the 
- * controllers provided by the module. 
- * 
- * Within the view_manager section, we add our view directory to the 
- * TemplatePathStack configuration. 
- * 
- * @return array 
+ * The config information is passed to the relevant components by the
+ * ServiceManager. The controllers section provides a list of all the
+ * controllers provided by the module.
+ *
+ * Within the view_manager section, we add our view directory to the
+ * TemplatePathStack configuration.
+ *
+ * @return array
  */
 namespace League;
 
 return array(
-    
-    'view_helpers' => array(  
-        'invokables' => array(  
-            'position'   => 'League\View\Helper\Position', 
+
+    'view_helpers' => array(
+        'invokables' => array(
+            'position'   => 'League\View\Helper\Position',
             'dateformat' => 'League\View\Helper\DateFormat',
             'isWinner'   => 'League\View\Helper\Winner',
             'result'     => 'League\View\Helper\Result',
             'isActive'   => 'League\View\Helper\Active',
             'isOpen'     => 'League\View\Helper\Open',
             'seasontitle'  => 'League\View\Helper\SeasonTitle',
-            
-            // more helpers here ...  
-        )  
+
+            // more helpers here ...
+        )
     ),
-    
+
     'controllers' => array(
         'factories' => array(
-            'League\Controller\ActualSeason' => 
+            'League\Controller\ActualSeason' =>
                     'League\Services\ActualSeasonControllerFactory',
-            'League\Controller\Result' => 
+            'League\Controller\Result' =>
                     'League\Services\ResultControllerFactory',
-            'League\Controller\Matchday' => 
+            'League\Controller\Matchday' =>
                     'League\Services\MatchdayControllerFactory',
-            'League\Controller\Season' => 
+            'League\Controller\Season' =>
                     'League\Services\SeasonControllerFactory',
-            'League\Controller\League' => 
+            'League\Controller\League' =>
                     'League\Services\LeagueControllerFactory',
-            'League\Controller\Player' => 
+            'League\Controller\Player' =>
                     'League\Services\PlayerControllerFactory',
-            'League\Controller\Schedule' => 
+            'League\Controller\Schedule' =>
                     'League\Services\ScheduleControllerFactory',
         ),
-        
+
     ),
-    
+
     'controller_plugins' => array(
       'invokables' => array(
           'season'  => 'League\Controller\Plugin\SeasonPlugin',
@@ -54,14 +54,14 @@ return array(
           'league'  => 'League\Controller\Plugin\LeaguePlugin',
           'player'  => 'League\Controller\Plugin\PlayerPlugin',
           'form'    => 'League\Controller\Plugin\FormPlugin',
-          
-      ),  
+
+      ),
     ),
-    
-    
+
+
     'router' => array(
         'routes' => array(
-            
+
             //actual season
             'actual' => array(
                 'type'    => 'Literal',
@@ -72,10 +72,10 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
-                
+
                 'may_terminate' => true,
                 'child_routes' => array(
-                    
+
                     //league schedule
                     'schedule' => array(
                         'type'    => 'Segment',
@@ -89,7 +89,21 @@ return array(
                             ),
                         ),
                     ),
-                    
+
+                    //league schedule
+                    'my-schedule' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/mySchedule[/:uid]',
+                            'constraints' => array(
+                                'uid'    => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'my-schedule',
+                            ),
+                        ),
+                    ),
+
                     //league table
                     'table' => array(
                         'type'    => 'Segment',
@@ -104,10 +118,10 @@ return array(
                             ),
                         ),
                     ),
-                    
-                )    
+
+                )
             ),
-       
+
             'result' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -117,10 +131,10 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
-                
+
                 'may_terminate' => true,
                 'child_routes' => array(
-                    
+
                     //add a result
                     'add' => array(
                         'type'    => 'Segment',
@@ -134,7 +148,7 @@ return array(
                             ),
                         ),
                     ),
-                    
+
                     //results of a user
                     'myresult' => array(
                         'type'    => 'Segment',
@@ -145,7 +159,7 @@ return array(
                             ),
                         ),
                     ),
-                    
+
                     //open results of a user
                     'myopen' => array(
                         'type'    => 'Segment',
@@ -158,7 +172,7 @@ return array(
                     ),
                 )
             ),
-            
+
             'matchday' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -168,10 +182,10 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
-                
+
                 'may_terminate' => true,
                 'child_routes' => array(
-                    
+
                     //add a result
                     'edit' => array(
                         'type'    => 'Segment',
@@ -185,10 +199,10 @@ return array(
                             ),
                         ),
                     ),
-                   
+
                 )
             ),
-            
+
             'newseason' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -198,10 +212,10 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
-                
+
                 'may_terminate' => true,
                 'child_routes' => array(
-                    
+
                     //add a result
                     'add' => array(
                         'type'    => 'Segment',
@@ -212,11 +226,11 @@ return array(
                             ),
                         ),
                     ),
-                    
-                    
+
+
                 )
             ),
-           
+
             'league' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -226,10 +240,10 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
-                
+
                 'may_terminate' => true,
                 'child_routes' => array(
-                    
+
                     //add a result
                     'add' => array(
                         'type'    => 'Segment',
@@ -240,11 +254,11 @@ return array(
                             ),
                         ),
                     ),
-                    
-                    
+
+
                 )
             ),
-            
+
             'player' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -254,10 +268,10 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
-                
+
                 'may_terminate' => true,
                 'child_routes' => array(
-                    
+
                     //add a result
                     'add' => array(
                         'type'    => 'Segment',
@@ -268,11 +282,11 @@ return array(
                             ),
                         ),
                     ),
-                    
-                    
+
+
                 )
             ),
-            
+
             'schedule' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -282,10 +296,10 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
-                
+
                 'may_terminate' => true,
                 'child_routes' => array(
-                    
+
                     //add a result
                     'add' => array(
                         'type'    => 'Segment',
@@ -296,33 +310,33 @@ return array(
                             ),
                         ),
                     ),
-                    
-                    
+
+
                 )
             ),
            //next route
-            
+
         ),
     ),
-    
-    
+
+
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
-                
+
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
     ),
-    
+
     'service_manager' => array(
         'factories' => array(
-            'League\Factory\MapperFactory'      => 
+            'League\Factory\MapperFactory'      =>
                     'League\Factory\MapperFactory',
-            'League\Factory\FormFactory'        => 
+            'League\Factory\FormFactory'        =>
                     'League\Factory\FormFactory',
-            'League\Services\ActualSeasonServiceFactory'     => 
+            'League\Services\ActualSeasonServiceFactory'     =>
                     'League\Services\ActualSeasonServiceFactory',
             'League\Services\SeasonServiceFactory'  =>
                     'League\Services\SeasonServiceFactory',
@@ -334,16 +348,16 @@ return array(
                     'League\Services\PlayerServiceFactory',
             'League\Services\ScheduleServiceFactory'  =>
                     'League\Services\ScheduleServiceFactory',
-            
+
             'result_form'       => 'League\Services\ResultFormFactory',
-            
+
             'League\Services\ResultServiceFactory' =>
                     'League\Services\ResultServiceFactory',
-            
+
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
-    
+
     'translator' => array(
         'translation_file_patterns' => array(
             array(
@@ -354,8 +368,8 @@ return array(
             ),
         ),
     ),
-    
-    //Doctrine2 
+
+    //Doctrine2
     'doctrine' => array(
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(
@@ -371,5 +385,5 @@ return array(
            )
         )
     ),
-    
+
 );
