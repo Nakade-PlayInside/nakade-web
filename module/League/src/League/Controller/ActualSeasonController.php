@@ -2,21 +2,48 @@
 namespace League\Controller;
 
 use Nakade\Abstracts\AbstractController;
+use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
+use League\Services\ICalService;
+use Zend\Http\PhpEnvironment\Response as iCalResponse;
+use Zend\Http\Headers;
 
 /**
  * League tables and schedules of the actual season.
  * Top league table is presented by the default action index.
  * ActionSeasonServiceFactory is needed to be set.
- *   
+ *
  * @author Holger Maerz <holger@nakade.de>
  */
 class ActualSeasonController extends AbstractController
 {
+    /**
+     * @var ICalService
+     */
+    private $iCal=null;
+
+    /**
+     * @param ICalService $service
+     *
+     * @return $this
+     */
+    public function setICalService(ICalService $service)
+    {
+        $this->iCal = $service;
+        return $this;
+    }
+
+    /**
+     * @return ICalService
+     */
+    public function getICalService()
+    {
+        return $this->iCal;
+    }
 
     /**
     * Default action showing up the Top League table
-    * in a short and compact version. This can be used as a widget.  
+    * in a short and compact version. This can be used as a widget.
     *
     * @return array|ViewModel
     */
@@ -36,16 +63,12 @@ class ActualSeasonController extends AbstractController
     * Shows actual matchplan of a user and his results.
     * If user is not in  a league, the top league schedule
     * is shown.
-    *  
+    *
+    * @return array|ViewModel
     */
     public function scheduleAction()
     {
-       $user = $this->identity();
-
-       if ($user === null) {
-           return $this->redirect()->toRoute('login');
-       }
-       $uid = $user->getId();
+       $uid = $this->getUserId();
 
        return new ViewModel(
            array(
@@ -56,20 +79,33 @@ class ActualSeasonController extends AbstractController
     }
 
     /**
+     * @return ViewModel
+     */
+    public function myScheduleAction()
+    {
+        $uid = $this->getUserId();
+
+        return new ViewModel(
+            array(
+                'userId' =>  $uid,
+                'title'   => $this->getService()->getMyScheduleTitle($uid),
+                'matches' => $this->getService()->getMySchedule($uid),
+            )
+        );
+    }
+
+    /**
     * Shows the user's league table. If user is not in a league, the
     * Top league is shown instead. The Table is sortable.
+    *
+    * @return array|ViewModel
     */
     public function tableAction()
     {
 
-       $user = $this->identity();
+       $uid = $this->getUserId();
 
-       if ($user === null) {
-           return $this->redirect()->toRoute('login');
-       }
-       $uid = $user->getId();
-
-       //sorting the table
+        //sorting the table
        $sorting  = $this->params()->fromRoute('sort', null);
 
        return new ViewModel(
@@ -83,6 +119,46 @@ class ActualSeasonController extends AbstractController
 
            )
        );
+    }
+
+    /**
+     * @return \Zend\Http\PhpEnvironment\Response
+     */
+    public function iCalAction()
+    {
+
+        $fileName = 'myNakade.iCal';
+
+        $uid = $this->getUserId();
+        $matches = $this->getService()->getMySchedule($uid);
+
+        $content = $this->getICalService()->getICalSchedule($uid, $matches);
+
+        $headers = new Headers();
+        $headers->addHeaderLine('Content-Type', 'text/calendar; charset=utf-8')
+                ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $fileName . '"');
+
+        $response = new iCalResponse();
+        $response->setStatusCode(200);
+        $response->setHeaders($headers);
+        $response->setContent($content);
+
+        return $response;
+
+    }
+
+    /**
+     * @return \Zend\Http\Response | int
+     */
+    private function getUserId()
+    {
+        $user = $this->identity();
+
+        if (is_null($user)) {
+            return $this->redirect()->toRoute('login');
+        }
+
+        return $user->getId();
     }
 
 }
