@@ -50,8 +50,8 @@ endforeach;
 </table>
 <?php $this->placeholder('schedule')->captureEnd();
 
-  if ($this->matches != null) {
-      echo $this->placeholder('schedule');
-  } else {
+  if (is_null($this->matches)) {
       echo $this->placeholder('noSchedule');
+  } else {
+      echo $this->placeholder('schedule');
   }

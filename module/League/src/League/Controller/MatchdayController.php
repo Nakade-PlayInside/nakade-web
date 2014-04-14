@@ -7,9 +7,9 @@ use Zend\View\Model\ViewModel;
 /**
  * processing user input, in detail results and postponing
  * matches.
- * 
+ *
  */
-class MatchdayController extends AbstractController 
+class MatchdayController extends AbstractController
 {
 
    /**
@@ -38,6 +38,8 @@ class MatchdayController extends AbstractController
     {
 
         $id  = (int) $this->params()->fromRoute('id', 0);
+
+        /* @var $match \League\Entity\Match */
         $match = $this->getService()->getMatch($id);
 
         if (is_null($match)) {
@@ -59,9 +61,14 @@ class MatchdayController extends AbstractController
 
             if ($form->isValid()) {
 
+
                 $datetime = $postData['date']. ' ' . $postData['time'];
                 $temp = new \DateTime($datetime);
                 $match->setDate($temp);
+
+                //updating for iCal
+                $sequence = $match->getSequence() + 1;
+                $match->setSequence($sequence);
 
                 if ($postData['changeColors']) {
 
@@ -79,7 +86,7 @@ class MatchdayController extends AbstractController
 
        return new ViewModel(
            array(
-             // 'id'      => $pid, 
+             // 'id'      => $pid,
                 'match'   => $match,
                 'form'    => $form
            )

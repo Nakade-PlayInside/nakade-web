@@ -106,7 +106,7 @@ class ICalService implements FactoryInterface
         "DTEND:" . $this->getDtEnd($match) . PHP_EOL .
         "DTSTAMP:" . date('Ymd').'T'.date('His') . PHP_EOL .
         "UID:" . $this->getUnique($match) . PHP_EOL .
-        "SEQUENCE:" . $this->getSequence($match) . PHP_EOL .
+        "SEQUENCE:" . $match->getSequence() . PHP_EOL .
         "LOCATION:" . $this->getLocation() . PHP_EOL .
         "DESCRIPTION:" . $this->getDescription($match, $userId) . PHP_EOL .
         "URL;VALUE=URI:nakade.de"  . PHP_EOL .
@@ -159,25 +159,6 @@ class ICalService implements FactoryInterface
         return sprintf("%s@nakade",
             $match->getId()
         );
-    }
-
-    /**
-     * @param Match $match
-     *
-     * @return string
-     */
-    private function getSequence(Match $match)
-    {
-        $sequence = 0;
-        //dummy; exchange for new field sequence for updating dates
-        if (!is_null($match->getId())) {
-            $sequence = 0;
-        }
-        return sprintf("%s",
-            $sequence
-        );
-
-
     }
 
     /**

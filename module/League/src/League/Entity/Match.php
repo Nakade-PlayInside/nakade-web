@@ -144,7 +144,7 @@ class Match
    */
    protected $_winner;
 
-    /**
+   /**
    * matchday
    *
    * @ORM\Column(name="matchday", type="integer")
@@ -152,6 +152,17 @@ class Match
    * @access protected
    */
    protected $_matchday;
+
+    /**
+     * sequence by default=0
+     * indicating date changes for iCal
+     *
+     * @ORM\Column(name="sequence", type="integer")
+     * @var int
+     * @access protected
+     */
+    protected $_sequence=0;
+
 
   /**
    * Sets the Identifier
@@ -462,6 +473,26 @@ class Match
   }
 
     /**
+     * @param int $sequence
+     *
+     * @return Match
+     */
+    public function setSequence($sequence)
+    {
+        $this->_sequence = $sequence;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSequence()
+    {
+        return $this->_sequence;
+    }
+
+
+    /**
      * @return mixed
      */
   public function getTime()
@@ -503,8 +534,6 @@ class Match
      */
     public function populate($data = array())
     {
-
-
         $this->_id       = $data['pid'];
         $this->_resultId = $data['result'];
         $this->_winnerId = $data['winner'];
