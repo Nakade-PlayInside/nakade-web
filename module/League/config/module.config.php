@@ -104,6 +104,20 @@ return array(
                         ),
                     ),
 
+                    //league schedule
+                    'i-cal' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'   => '/iCal[/:uid]',
+                            'constraints' => array(
+                                'uid'    => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'action' => 'i-cal',
+                            ),
+                        ),
+                    ),
+
                     //league table
                     'table' => array(
                         'type'    => 'Segment',

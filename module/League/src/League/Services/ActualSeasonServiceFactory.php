@@ -117,7 +117,8 @@ class ActualSeasonServiceFactory extends AbstractService
      *
      * @param Season $season
      * @param int $uid
-     * @return League
+     *
+     * @return \League\Entity\League
      */
     public function getUserLeague($season, $uid)
     {
@@ -125,7 +126,7 @@ class ActualSeasonServiceFactory extends AbstractService
         $league   = $this->getMapper('match')
                          ->getLeagueInSeasonByPlayer($seasonId, $uid);
 
-        if(null===$league)
+        if (null === $league)
             $league = $this->getMapper('league')
                            ->getLeague($seasonId, 1);
 
@@ -156,6 +157,39 @@ class ActualSeasonServiceFactory extends AbstractService
                     ->getMatchesInLeague($league->getId());
 
     }
+
+    /**
+     * Get league title
+     *
+     * @param int $uid
+     *
+     * @return mixed null|string
+     */
+    public function getMyScheduleTitle($uid=null)
+    {
+
+        $season = $this->getActualSeason();
+        if (is_null($season)) {
+            return null;
+        }
+
+        //get user's league.
+        //if not in any league, the top league is returned
+        $league = $this->getUserLeague($season, $uid);
+        if (is_null($league)) {
+            return null;
+        }
+
+        return sprintf(
+            "%s %s-%s %s",
+            $this->translate("My"),
+            $season->getTitle(),
+            $this->translate("League"),
+            $this->translate("schedule")
+        );
+
+    }
+
 
     /**
      * Get the user's schedule of a league. If user is not in a league,
@@ -204,7 +238,7 @@ class ActualSeasonServiceFactory extends AbstractService
      * get the actual season. If there is no actual season, the last season is
      * returned instead.
      *
-     * @return mixed null|Season
+     * @return \League\Entity\Season
      */
     public function getActualSeason()
     {

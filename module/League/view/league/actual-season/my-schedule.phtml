@@ -11,6 +11,7 @@ $this->headTitle('schedule');
 
 <?php $this->placeholder('schedule')->captureStart();?>
 <h3><?php echo $this->escapeHtml($this->title); ?></h3>
+<a href="/actual/iCal"><img src="/images/iCal-32.png" /></a>
 <table class="league">
 <?php foreach ($this->matches as $match) : ?>
 
@@ -31,15 +32,15 @@ $this->headTitle('schedule');
         $myColor = "black";
     }
 
-    $isPlayer ='';
+    $isPlayed ='';
     if (!is_null($match->getResultId())) {
         $isPlayed = "text-decoration:line-through;";
     }
 
 
 ?>
-<tr style="<?php echo $isPlayed ?>">
-    <td class="space"><?php echo $match->getDate()->format('d.m. H:i');?></td>
+<tr>
+    <td style="<?php echo $isPlayed ?>" class="space"><?php echo $match->getDate()->format('d.m. H:i');?></td>
     <td title="<?php echo $this->translate('my color')?>" class="<?php echo $myColor; ?>"></td>
     <td class="space"><?php echo $opponentName; ?></td>
 </tr>

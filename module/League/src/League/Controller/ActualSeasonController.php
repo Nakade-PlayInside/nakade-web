@@ -2,6 +2,7 @@
 namespace League\Controller;
 
 use Nakade\Abstracts\AbstractController;
+use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
 use User\Entity\User;
 
@@ -62,7 +63,7 @@ class ActualSeasonController extends AbstractController
         return new ViewModel(
             array(
                 'userId' =>  $uid,
-                'title'   => $this->getService()->getScheduleTitle($uid),
+                'title'   => $this->getService()->getMyScheduleTitle($uid),
                 'matches' => $this->getService()->getMySchedule($uid),
             )
         );
@@ -93,6 +94,46 @@ class ActualSeasonController extends AbstractController
 
            )
        );
+    }
+
+    public function iCalAction()
+    {
+
+        $fileName = 'myNakade.iCal';
+
+        // SEQUENCE: 0++
+        // UNIQUE Id similar for updating
+        $fileContents = "BEGIN:VCALENDAR" . PHP_EOL .
+        "VERSION:2.0" . PHP_EOL .
+        "PRODID: http://www.nakade.de" . PHP_EOL .
+        "CALSCALE:GREGORIAN" . PHP_EOL .
+        "METHOD:PUBLISH" . PHP_EOL .
+        "BEGIN:VEVENT" . PHP_EOL .
+        "DTSTART: 20140520T140000" . PHP_EOL .
+        "DTEND: 20140520T170000" . PHP_EOL .
+        "DTSTAMP:" . date('Ymd').'T'.date('His') . PHP_EOL .
+        "UID:" . uniqid() . PHP_EOL .
+        "LOCATION: Kiseido Go Server" . PHP_EOL .
+        "DESCRIPTION: My Match vs Tina M., KGS Name: TinaGo. My Color is White. 60min, 15/10, 7.5 Komi" . PHP_EOL .
+        "URL;VALUE=URI:nakade.de"  . PHP_EOL .
+        "SUMMARY: Nakade League Match vs Tina M." . PHP_EOL .
+        "CATEGORIES:GO" . PHP_EOL .
+        "ORGANIZER:mailto:holger@nakade.de" . PHP_EOL .
+        "END:VEVENT" . PHP_EOL .
+        "END:VCALENDAR" . PHP_EOL;
+
+
+        $headers = new \Zend\Http\Headers();
+        $headers->addHeaderLine('Content-Type', 'text/calendar; charset=utf-8')
+                ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $fileName . '"');
+
+        $response  = new \Zend\Http\Response\Stream();
+        $response->setStatusCode(200);
+        $response->setHeaders($headers);
+
+        print $fileContents;
+        return $response;
+
     }
 
     /**
