@@ -368,6 +368,9 @@ return array(
             'League\Services\ResultServiceFactory' =>
                     'League\Services\ResultServiceFactory',
 
+            'League\Services\ICalService' =>
+                'League\Services\ICalService',
+
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

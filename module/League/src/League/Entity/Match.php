@@ -99,7 +99,7 @@ class Match
    * Date
    *
    * @ORM\Column(name="date", type="datetime")
-   * @var DateTime
+   * @var \DateTime
    * @access protected
    */
    protected $_date;
@@ -324,7 +324,7 @@ class Match
   /**
    * Sets the Date
    *
-   * @param DateTime $date
+   * @param \DateTime $date
    *
    * @return Match
    */
@@ -338,7 +338,7 @@ class Match
    * Returns the Date
    *
    * @access public
-   * @return DateTime
+   * @return \DateTime
    */
   public function getDate()
   {
