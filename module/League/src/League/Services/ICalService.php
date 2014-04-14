@@ -7,14 +7,14 @@ use League\Entity\Match;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
-use Zend\I18n\Translator;
+use Zend\I18n\Translator\Translator;
 
 /**
  * Makes an iCal match schedule for a specific user
  *
  * @author Dr.Holger Maerz <grrompf@gmail.com>
  */
-class ICalServiceFactory implements FactoryInterface
+class ICalService implements FactoryInterface
 {
     private $organizer = 'holger@nakade.de';
     private $location  = 'Kiseido Go Server';
@@ -33,9 +33,9 @@ class ICalServiceFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $services)
     {
 
-        $serviceManager = $services->getServiceLocator();
+       // $serviceManager = $services->getServiceLocator();
 
-        $config  = $serviceManager->get('config');
+        $config  = $services->get('config');
         if ($config instanceof \Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
@@ -71,7 +71,7 @@ class ICalServiceFactory implements FactoryInterface
             $this->getEvents($userId, $mySchedule) .
             "END:VCALENDAR" . PHP_EOL;
 
-        return $content;
+        return "$content";
 
     }
 
@@ -83,31 +83,38 @@ class ICalServiceFactory implements FactoryInterface
      */
     public function getEvents($userId, array $mySchedule)
     {
-        $event = '';
+        $myEvent = '';
 
         /* @var $match \League\Entity\Match */
         foreach ($mySchedule as $match) {
-
-            $event .=
-                "BEGIN:VEVENT" . PHP_EOL .
-                "DTSTART:" . $this->getDtStart($match) . PHP_EOL .
-                "DTEND:" . $this->getDtEnd($match) . PHP_EOL .
-                "DTSTAMP:" . date('Ymd').'T'.date('His') . PHP_EOL .
-                "UID:" . $this->getUnique($match) . PHP_EOL .
-                "SEQUENCE:" . $this->getSequence($match) . PHP_EOL .
-                "LOCATION:" . $this->getLocation() . PHP_EOL .
-                "DESCRIPTION:" . $this->getDescription($match, $userId) . PHP_EOL .
-                "URL;VALUE=URI:nakade.de"  . PHP_EOL .
-                "SUMMARY:" . $this->getSummary($match, $userId) . PHP_EOL .
-                "CATEGORIES:GO" . PHP_EOL .
-                "ORGANIZER:mailto:" . $this->getOrganizer() . PHP_EOL .
-                "END:VEVENT" . PHP_EOL ;
-
+            $myEvent .= $this->getMyEvent($match, $userId);
         }
 
-        return $event;
+        return $myEvent;
     }
 
+    /**
+     * @param Match $match
+     * @param int   $userId
+     *
+     * @return string
+     */
+    private function getMyEvent(Match $match, $userId)
+    {
+        return "BEGIN:VEVENT" . PHP_EOL .
+        "DTSTART:" . $this->getDtStart($match) . PHP_EOL .
+        "DTEND:" . $this->getDtEnd($match) . PHP_EOL .
+        "DTSTAMP:" . date('Ymd').'T'.date('His') . PHP_EOL .
+        "UID:" . $this->getUnique($match) . PHP_EOL .
+        "SEQUENCE:" . $this->getSequence($match) . PHP_EOL .
+        "LOCATION:" . $this->getLocation() . PHP_EOL .
+        "DESCRIPTION:" . $this->getDescription($match, $userId) . PHP_EOL .
+        "URL;VALUE=URI:nakade.de"  . PHP_EOL .
+        "SUMMARY:" . $this->getSummary($match, $userId) . PHP_EOL .
+        "CATEGORIES:GO" . PHP_EOL .
+        "ORGANIZER:mailto:" . $this->getOrganizer() . PHP_EOL .
+        "END:VEVENT" . PHP_EOL ;
+    }
     /**
      * @param Match $match
      *
@@ -115,9 +122,12 @@ class ICalServiceFactory implements FactoryInterface
      */
     private function getDtStart(Match $match)
     {
+        $date = $match->getDate()->format('Ymd');
+        $time = $match->getDate()->format('His');
+
         return sprintf("%sT%s",
-            $match->getDate()->format('Ymd'),
-            $match->getDate()->format('His')
+            $date,
+            $time
         );
     }
 
@@ -128,10 +138,14 @@ class ICalServiceFactory implements FactoryInterface
      */
     private function getDtEnd(Match $match)
     {
+
         $end = $match->getDate()->modify("+3 hour");
+        $date = $end->format('Ymd');
+        $time = $end->format('His');
+
         return sprintf("%sT%s",
-            $end->format('Ymd'),
-            $end->format('His')
+            $date,
+            $time
         );
     }
 
@@ -189,9 +203,9 @@ class ICalServiceFactory implements FactoryInterface
      */
     private function getMyColor(Match $match, $userId)
     {
-        $myColor = "white";
+        $myColor = $this->translate("white");
         if ( $match->getBlack()->getId() == $userId) {
-            $myColor = "black";
+            $myColor = $this->translate("black");
         }
         return $myColor;
     }
@@ -205,10 +219,19 @@ class ICalServiceFactory implements FactoryInterface
     private function getDescription(Match $match, $userId)
     {
         $opponent = $this->getOpponent($match, $userId);
-        return sprintf("My match vs %s, KGS name: %s, my color is %s. %s",
-            $opponent->getShortName(),
-            $opponent->getOnlineName(),
-            $this->getMyColor($match, $userId),
+        $matchInfo = $this->translate("My match vs %name%");
+        $matchInfo = str_replace("%name%", $opponent->getShortName(), $matchInfo);
+
+        $kgsName = $this->translate("KGS name: %name%");
+        $kgsName = str_replace("%name%", $opponent->getOnlineName(), $kgsName);
+
+        $colorInfo = $this->translate("my color is %color%");
+        $colorInfo = str_replace("%color%", $this->getMyColor($match, $userId), $colorInfo);
+
+        return sprintf("%s, %s, %s. %s",
+            $matchInfo,
+            $kgsName,
+            $colorInfo,
             $this->getRules()
         );
     }
@@ -222,9 +245,10 @@ class ICalServiceFactory implements FactoryInterface
     private function getSummary(Match $match, $userId)
     {
         $opponent = $this->getOpponent($match, $userId);
-        return sprintf("Nakade League Match vs %s",
-            $opponent->getShortName()
-        );
+        $info = $this->translate("Nakade League Match vs %name%");
+        $info = str_replace("%name%", $opponent->getShortName(), $info);
+
+        return $info;
 
     }
 
@@ -257,7 +281,7 @@ class ICalServiceFactory implements FactoryInterface
      *
      * @return $this
      */
-    public function setTranslator (Translator $translator)
+    public function setTranslator(Translator $translator)
     {
         $this->translator=$translator;
         return $this;

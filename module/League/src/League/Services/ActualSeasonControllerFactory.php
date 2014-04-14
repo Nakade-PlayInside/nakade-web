@@ -5,6 +5,7 @@ namespace League\Services;
 use League\Controller\ActualSeasonController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Stdlib\ArrayUtils;
 
 /**
  * Creates the controller used for authentication.
@@ -30,7 +31,7 @@ class ActualSeasonControllerFactory implements FactoryInterface
         $serviceManager = $services->getServiceLocator();
 
         $config  = $serviceManager->get('config');
-        if ($config instanceof Traversable) {
+        if ($config instanceof \Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
 
@@ -38,8 +39,13 @@ class ActualSeasonControllerFactory implements FactoryInterface
             'League\Services\ActualSeasonServiceFactory'
         );
 
+        $iCal    = $serviceManager->get(
+            'League\Services\ICalService'
+        );
+
         $controller = new ActualSeasonController();
         $controller->setService($service);
+        $controller->setICalService($iCal);
 
         return $controller;
     }

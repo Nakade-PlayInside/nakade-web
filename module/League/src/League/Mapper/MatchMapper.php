@@ -39,15 +39,13 @@ class MatchMapper  extends AbstractMapper
         $qb = $em->createQueryBuilder('Match')
             ->select('m')
             ->from('League\Entity\Match', 'm')
-            ->where('m._whiteId = :uid')
-            ->orWhere('m._blackId = :uid')
-            ->andwhere('m._lid = :lid')
+            ->Where('m._lid = :lid')
+            ->andWhere('(m._whiteId = :uid OR m._blackId = :uid)')
             ->setParameter('lid', $leagueId)
             ->setParameter('uid', $uid)
             ->orderBy('m._date', 'ASC');
 
         $result = $qb->getQuery()->getResult();
-
         return $result;
     }
 

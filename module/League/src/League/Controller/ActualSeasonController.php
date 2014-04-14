@@ -4,7 +4,9 @@ namespace League\Controller;
 use Nakade\Abstracts\AbstractController;
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
-use User\Entity\User;
+use League\Services\ICalService;
+use Zend\Http\PhpEnvironment\Response as iCalResponse;
+use Zend\Http\Headers;
 
 /**
  * League tables and schedules of the actual season.
@@ -15,6 +17,29 @@ use User\Entity\User;
  */
 class ActualSeasonController extends AbstractController
 {
+    /**
+     * @var ICalService
+     */
+    private $iCal=null;
+
+    /**
+     * @param ICalService $service
+     *
+     * @return $this
+     */
+    public function setICalService(ICalService $service)
+    {
+        $this->iCal = $service;
+        return $this;
+    }
+
+    /**
+     * @return ICalService
+     */
+    public function getICalService()
+    {
+        return $this->iCal;
+    }
 
     /**
     * Default action showing up the Top League table
@@ -96,42 +121,28 @@ class ActualSeasonController extends AbstractController
        );
     }
 
+    /**
+     * @return \Zend\Http\PhpEnvironment\Response
+     */
     public function iCalAction()
     {
 
         $fileName = 'myNakade.iCal';
 
-        // SEQUENCE: 0++
-        // UNIQUE Id similar for updating
-        $fileContents = "BEGIN:VCALENDAR" . PHP_EOL .
-        "VERSION:2.0" . PHP_EOL .
-        "PRODID: http://www.nakade.de" . PHP_EOL .
-        "CALSCALE:GREGORIAN" . PHP_EOL .
-        "METHOD:PUBLISH" . PHP_EOL .
-        "BEGIN:VEVENT" . PHP_EOL .
-        "DTSTART: 20140520T140000" . PHP_EOL .
-        "DTEND: 20140520T170000" . PHP_EOL .
-        "DTSTAMP:" . date('Ymd').'T'.date('His') . PHP_EOL .
-        "UID:" . uniqid() . PHP_EOL .
-        "LOCATION: Kiseido Go Server" . PHP_EOL .
-        "DESCRIPTION: My Match vs Tina M., KGS Name: TinaGo. My Color is White. 60min, 15/10, 7.5 Komi" . PHP_EOL .
-        "URL;VALUE=URI:nakade.de"  . PHP_EOL .
-        "SUMMARY: Nakade League Match vs Tina M." . PHP_EOL .
-        "CATEGORIES:GO" . PHP_EOL .
-        "ORGANIZER:mailto:holger@nakade.de" . PHP_EOL .
-        "END:VEVENT" . PHP_EOL .
-        "END:VCALENDAR" . PHP_EOL;
+        $uid = $this->getUserId();
+        $matches = $this->getService()->getMySchedule($uid);
 
+        $content = $this->getICalService()->getICalSchedule($uid, $matches);
 
-        $headers = new \Zend\Http\Headers();
+        $headers = new Headers();
         $headers->addHeaderLine('Content-Type', 'text/calendar; charset=utf-8')
                 ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $fileName . '"');
 
-        $response  = new \Zend\Http\Response\Stream();
+        $response = new iCalResponse();
         $response->setStatusCode(200);
         $response->setHeaders($headers);
+        $response->setContent($content);
 
-        print $fileContents;
         return $response;
 
     }
