@@ -32,12 +32,19 @@ class MessageControllerFactory implements FactoryInterface
             'Message\Services\RepositoryService'
         );
 
+        /* @var $transport \Zend\Mail\Transport\TransportInterface */
+        $transport = $serviceManager->get('Mail\Services\MailTransportFactory');
+
+        /* @var $message \Mail\Services\MailMessageFactory */
+        $mailService =   $serviceManager->get('Mail\Services\MailMessageFactory');
+        $mailService->setTransport($transport);
 
         $translator = $serviceManager->get('translator');
 
         $controller = new MessageController();
         $controller->setRepository($repository);
         $controller->setTranslator($translator);
+        $controller->setMailService($mailService);
 
         return $controller;
     }

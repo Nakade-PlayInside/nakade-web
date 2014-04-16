@@ -4,6 +4,7 @@ namespace Nakade\Abstracts;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\I18n\Translator\Translator;
+use Mail\Services\MailMessageFactory;
 
 /**
  * Extending for having a service getter and setter
@@ -17,6 +18,26 @@ class AbstractController extends AbstractActionController
     protected $_formFactory;
     protected $_repository;
     protected $_translator;
+    protected $_mailService;
+
+    /**
+     * @param MailMessageFactory $mailService
+     *
+     * @return $this
+     */
+    public function setMailService(MailMessageFactory $mailService)
+    {
+        $this->_mailService = $mailService;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMailService()
+    {
+        return $this->_mailService;
+    }
 
     /**
      * @return mixed

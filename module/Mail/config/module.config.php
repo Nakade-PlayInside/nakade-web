@@ -1,15 +1,16 @@
 <?php
+namespace Mail;
+
 return array(
-    'nakade_mail' => array(
-       
-        'service_manager' => array(
-            'factories' => array(
-                'MailMessage'   => 
-                    'Mail\Service\MailMessageFactory',
-                'MailTransport' => 
-                    'Mail\Service\MailTransportFactory',
-            
-            ),
+
+    'service_manager' => array(
+        'factories' => array(
+            'Mail\Services\MailMessageFactory'   =>
+                'Mail\Services\MailMessageFactory',
+
+            'Mail\Services\MailTransportFactory'  =>
+                'Mail\Services\MailTransportFactory',
         ),
-    )   
+    ),
+
 );

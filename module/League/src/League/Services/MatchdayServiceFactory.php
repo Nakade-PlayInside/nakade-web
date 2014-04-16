@@ -12,45 +12,45 @@ use RuntimeException;
 /**
  * Factory for the actual season for receiving
  * sorted league tables and schedules.
- * 
+ *
  * @author Dr. Holger Maerz <grrompf@gmail.com>
  */
-class MatchdayServiceFactory extends AbstractService 
+class MatchdayServiceFactory extends AbstractService
 {
-   
+
     /**
-     * Actual Season Service for league tables and schedules.
+     * Actual Season Services for league tables and schedules.
      * Integration of optional translation feature (i18N)
-     * 
+     *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
      * @return ActualSeasonService
      * @throws RuntimeException
-     * 
+     *
      */
     public function createService(ServiceLocatorInterface $services)
     {
-      
+
         $config  = $services->get('config');
         if ($config instanceof Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
-        
-        //configuration 
-        $textDomain = isset($config['League']['text_domain']) ? 
+
+        //configuration
+        $textDomain = isset($config['League']['text_domain']) ?
             $config['League']['text_domain'] : null;
-         
+
         $this->setMapperFactory($services->get('League\Factory\MapperFactory'));
-        
+
         //optional translator
         $translator = $services->get('translator');
         $this->setTranslator($translator, $textDomain);
-      
+
         return $this;
-        
+
     }
-       
+
     /**
-     * 
+     *
      * @param int $id
      * @return Match
      */
@@ -64,19 +64,19 @@ class MatchdayServiceFactory extends AbstractService
      * @return mixed
      */
     public function getOpenMatches() {
-       
+
         $season = $this->getMapper('season')->getActualSeason();
         if($season==null) {
             return null;
-        }    
-        
+        }
+
         return $this->getMapper('match')
                     ->getAllOpenMatches($season->getId());
     }
-    
+
      /**
       * Helper for formatting the SQL date
-      * 
+      *
       * @param DateTime $datetime
       * @return string
       */
@@ -84,14 +84,14 @@ class MatchdayServiceFactory extends AbstractService
      {
          if($datetime===null)
              return $datetime;
-         
+
          $time = strtotime($datetime);
          return date('d.m.Y H:i' , $time);
      }
-    
-    
-   
- 
+
+
+
+
 }
 
 

@@ -7,35 +7,35 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 
 /**
- * Service for controller. A mapper is set for database action.
- * 
+ * Services for controller. A mapper is set for database action.
+ *
  * @author Dr. Holger Maerz <grrompf@gmail.com>
  */
 class ProfileServiceFactory extends AbstractService
 {
-   
+
     /**
-     * Creating service for the controller. 
+     * Creating service for the controller.
      * Setting a mapper for database action.
-     * 
+     *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
      * @return ProfileServiceFactory
-     * 
+     *
      */
     public function createService(ServiceLocatorInterface $services)
     {
         $mapper = $services->get('User\Factory\MapperFactory');
         $this->setMapperFactory($mapper);
-        
+
         return $this;
-        
+
     }
-    
+
     /**
      * User edit action. Getting user by id, populating the edited
-     * data, while the date of edit is set. 
+     * data, while the date of edit is set.
      * Returns boolean.
-     * 
+     *
      * @param array $data
      * @return boolean
      */
@@ -43,20 +43,20 @@ class ProfileServiceFactory extends AbstractService
     {
         $id = $data['uid'];
         $data['edit'] = new \DateTime();
-        
+
         $user = $this->getMapper('user')->getUserById($id);
         if(null === $user)
             return false;
-        
+
         $user->populate($data);
         return $this->getMapper('user')->save($user);
     }
-    
+
     /**
      * User password change. Setting date of change and
      * md5 encrytion of the password before saving.
      * Forwared to editProfile method.
-     * 
+     *
      * @param array $data
      * @return boolean
      */
@@ -64,15 +64,15 @@ class ProfileServiceFactory extends AbstractService
     {
         $data['pwdChange'] = new \DateTime();
         $data['password'] = md5($data['password']);
-        
+
         return $this->editProfile($data);
-        
+
     }
-    
-   
-    
-    
-    
+
+
+
+
+
 }
 
 

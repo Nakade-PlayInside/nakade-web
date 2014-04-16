@@ -1,20 +1,21 @@
 <?php
 /**
- * This is a sample "local" configuration for your mail config. 
- * Copy it to your config/autoload/ directory of your application, 
+ * This is a sample "local" configuration for your mail config.
+ * Copy it to your config/autoload/ directory of your application,
  * and edit to suit your application.
  */
 return array(
     'nakade_mail' => array(
-       
-        // This sets the default "to" 
+
+        // This sets the default "to"
         'message' => array(
-            'from' => 'name@domain.org' , 
+            'from' => 'name@domain.org' ,
             'name' => 'your name (opt.)',
-            'reply'=> 'name@domain.org (opt.)',
+            'reply'=> 'name@domain.org',
+            'replyName'=> 'company name (opt.)',
         ),
 
-        // Transport consists of two keys: 
+        // Transport consists of two keys:
         // - "method", => 'sendmail', 'smtp', 'file'
         // - "options" => required for 'smtp' and 'file'
         'transport' => array(
