@@ -5,6 +5,7 @@
  * and edit to suit your application.
  */
 return array(
+
     'nakade_mail' => array(
 
         // This sets the default "to"

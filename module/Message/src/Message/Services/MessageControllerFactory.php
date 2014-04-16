@@ -40,7 +40,6 @@ class MessageControllerFactory implements FactoryInterface
         $textDomain = isset($config['Message']['text_domain']) ?
             $config['Message']['text_domain'] : null;
 
-
         $repository =  $serviceManager->get(
             'Message\Services\RepositoryService'
         );

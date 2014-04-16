@@ -35,7 +35,10 @@ class MessageController extends AbstractController
             ->getMapper('message')
             ->getInboxMessages($uid);
 
-        $this->getMailService()->sendMail($this->identity());
+        $repo = $this->getRepository()->getMapper('message');
+        $sender=$repo->getUserById($uid);
+
+        $this->getMailService()->sendMail($sender);
 
         return new ViewModel(
             array('messages' => $messages)

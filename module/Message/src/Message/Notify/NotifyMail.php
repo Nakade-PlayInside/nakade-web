@@ -16,7 +16,6 @@ class NotifyMail extends AbstractTranslation
 {
     private $mailService;
     private $transport;
-    const SUBJECT = 'Nakade Message';
 
 
     /**
@@ -27,29 +26,33 @@ class NotifyMail extends AbstractTranslation
     {
         $this->mailService = $mailService;
         $this->transport = $transport;
-
-        $subject = $this->translate(self::SUBJECT);
-        $this->mailService->setSubject($subject);
-        $this->mailService->setBody($this->getMessage());
     }
 
     private function getMessage()
     {
-        return
-            $this->translate('You have got a new message in your mailbox at nakade.de.') .
-            $this->translate('Please logIn for reading.') . '\n\n' .
+        $message =
+            $this->translate('You have got a new message in your mailbox at nakade.de.') . ' ' .
+            $this->translate('Please logIn at nakade.de for reading.') . ' ' .
             $this->translate('Your Nakade Team');
+
+        $message = str_replace("\n.", "\n..", $message);
+
+        return $message;
     }
 
     /**
-     * @param User $sendTo
+     * @param User $user
      *
      * @return bool
      */
-    public function sendMail(User $sendTo)
+    public function sendMail(User $user)
     {
-        $this->mailService->setTo($sendTo->getEmail());
-        $this->mailService->setToName($sendTo->getName());
+        $subject = $this->translate('New Message at nakade.de');
+        $this->mailService->setSubject($subject);
+        $this->mailService->setBody($this->getMessage());
+
+        $this->mailService->setTo($user->getEmail());
+        $this->mailService->setToName($user->getName());
 
         $message = $this->mailService->getMessage();
 
