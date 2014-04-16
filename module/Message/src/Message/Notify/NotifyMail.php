@@ -44,9 +44,15 @@ class NotifyMail extends AbstractTranslation
      * @param User $user
      *
      * @return bool
+     *
+     * todo: configure email sending in profile
      */
     public function sendMail(User $user)
     {
+        if (!$user->isActive()) {
+            return false;
+        }
+
         $subject = $this->translate('New Message at nakade.de');
         $this->mailService->setSubject($subject);
         $this->mailService->setBody($this->getMessage());
