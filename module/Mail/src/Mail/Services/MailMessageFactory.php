@@ -20,7 +20,6 @@ class MailMessageFactory implements FactoryInterface
     private $replyName=null;
     private $subject=null;
     private $body=null;
-    private $transport;
 
     /**
      * @param string $to
@@ -58,25 +57,6 @@ class MailMessageFactory implements FactoryInterface
     public function getToName()
     {
         return $this->toName;
-    }
-
-    /**
-     * @param TransportInterface $transport
-     *
-     * @return $this
-     */
-    public function setTransport(TransportInterface $transport)
-    {
-        $this->transport = $transport;
-        return $this;
-    }
-
-    /**
-     * @return TransportInterface|null
-     */
-    public function getTransport()
-    {
-        return $this->transport;
     }
 
     /**
@@ -281,26 +261,6 @@ class MailMessageFactory implements FactoryInterface
         $message->setBody($body);
 
         return $message;
-    }
-
-    /**
-     * @return bool
-     *
-     * @throws \RuntimeException
-     */
-    public function sendMail()
-    {
-        $message = $this->getMessage();
-        $transport=$this->getTransport();
-
-        if (is_null($transport)) {
-            throw new RuntimeException(
-                'TransportInterface no found. Cannot send mail');
-        }
-
-        $transport->send($message);
-
-        return true;
     }
 
 }

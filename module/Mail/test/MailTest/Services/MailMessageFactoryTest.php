@@ -32,10 +32,6 @@ class MailMessageFactoryTest extends PHPUnit_Framework_TestCase
         $obj ->setBody('we can mail this');
         $this->assertSame('we can mail this', $obj->getBody());
 
-        $mock = $this->getTransportMock();
-        $obj->setTransport($mock);
-        $this->assertSame($mock, $obj->getTransport());
-
         $obj->setTo("my@where.org");
         $this->assertSame("my@where.org", $obj->getTo());
 
@@ -135,44 +131,7 @@ class MailMessageFactoryTest extends PHPUnit_Framework_TestCase
         $obj->createService($mock);
     }
 
-    /**
-     * sendMail
-     */
-    public function testSendMail()
-    {
-        $obj = $this->getFactoryWithAllRequiredProperties();
-        $this->assertTrue($obj->sendMail());
-    }
-
-    /**
-     * @expectedException     \RuntimeException
-     */
-    public function testSendMailExceptionByNoTransport()
-    {
-        $obj = $this->getFactoryWithAllRequiredProperties(false);
-        $obj->sendMail();
-
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getTransportMock()
-    {
-        $mock = $this
-            ->getMockBuilder('\Zend\Mail\Transport\TransportInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $mock
-            ->expects($this->any())
-            ->method('send')
-            ->will($this->returnValue(true));
-
-        return $mock;
-    }
-
-    private function getFactoryWithAllRequiredProperties($hasTransport=true)
+    private function getFactoryWithAllRequiredProperties()
     {
         $obj = new MailMessageFactory();
         $obj->setFrom('none@somewhere.org');
@@ -180,10 +139,6 @@ class MailMessageFactoryTest extends PHPUnit_Framework_TestCase
         $obj->setSubject('test');
         $obj->setBody('my mail text');
         $obj->setTo('you@somewhere.org');
-
-        if ($hasTransport) {
-            $obj->setTransport($this->getTransportMock());
-        }
 
         return $obj;
     }

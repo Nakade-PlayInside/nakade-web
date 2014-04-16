@@ -18,26 +18,6 @@ class AbstractController extends AbstractActionController
     protected $_formFactory;
     protected $_repository;
     protected $_translator;
-    protected $_mailService;
-
-    /**
-     * @param MailMessageFactory $mailService
-     *
-     * @return $this
-     */
-    public function setMailService(MailMessageFactory $mailService)
-    {
-        $this->_mailService = $mailService;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMailService()
-    {
-        return $this->_mailService;
-    }
 
     /**
      * @return mixed
