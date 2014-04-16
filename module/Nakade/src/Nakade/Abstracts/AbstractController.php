@@ -4,6 +4,7 @@ namespace Nakade\Abstracts;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\I18n\Translator\Translator;
+use Mail\Services\MailMessageFactory;
 
 /**
  * Extending for having a service getter and setter

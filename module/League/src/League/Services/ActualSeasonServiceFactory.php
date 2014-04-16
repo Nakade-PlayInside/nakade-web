@@ -35,7 +35,7 @@ class ActualSeasonServiceFactory extends AbstractService
     }
 
     /**
-     * Actual Season Service for league tables and schedules.
+     * Actual Season Services for league tables and schedules.
      * Integration of optional translation feature (i18N)
      *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services

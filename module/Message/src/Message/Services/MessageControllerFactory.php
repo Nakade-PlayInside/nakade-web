@@ -3,8 +3,10 @@
 namespace Message\Services;
 
 use Message\Controller\MessageController;
+use Message\Notify\NotifyMail;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Stdlib\ArrayUtils;
 
 /**
  * Creates the controller used for authentication.
@@ -28,16 +30,36 @@ class MessageControllerFactory implements FactoryInterface
     {
 
         $serviceManager = $services->getServiceLocator();
+
+        $config  = $serviceManager->get('config');
+        if ($config instanceof \Traversable) {
+            $config = ArrayUtils::iteratorToArray($config);
+        }
+
+        //configuration
+        $textDomain = isset($config['Message']['text_domain']) ?
+            $config['Message']['text_domain'] : null;
+
         $repository =  $serviceManager->get(
             'Message\Services\RepositoryService'
         );
 
+        /* @var $transport \Zend\Mail\Transport\TransportInterface */
+        $transport = $serviceManager->get('Mail\Services\MailTransportFactory');
+
+        /* @var $message \Mail\Services\MailMessageFactory */
+        $message =   $serviceManager->get('Mail\Services\MailMessageFactory');
 
         $translator = $serviceManager->get('translator');
+
+        $mailService = new NotifyMail($message, $transport);
+        $mailService->setTranslator($translator);
+        $mailService->setTranslatorTextDomain($textDomain);
 
         $controller = new MessageController();
         $controller->setRepository($repository);
         $controller->setTranslator($translator);
+        $controller->setMailService($mailService);
 
         return $controller;
     }

@@ -3,6 +3,7 @@ namespace Message\Controller;
 
 use Message\Entity\Delete;
 use Message\Entity\Message;
+use Message\Notify\NotifyMail;
 use Nakade\Abstracts\AbstractController;
 use Message\Form\MessageForm;
 use Message\Form\ReplyForm;
@@ -17,6 +18,7 @@ use Zend\View\Model\ViewModel;
  */
 class MessageController extends AbstractController
 {
+    private $mailService;
 
     /**
      * @return array|\Zend\Http\Response|ViewModel
@@ -145,6 +147,9 @@ class MessageController extends AbstractController
 
                 $repo->save($message);
 
+                //sending email
+                $this->getMailService()->sendMail($recipient);
+
                 return $this->redirect()->toRoute('message');
             }
        }
@@ -215,6 +220,9 @@ class MessageController extends AbstractController
                 $reply->setSendDate(new \DateTime());
                 $repo->save($reply);
 
+                //sending email
+                $this->getMailService()->sendMail($receiver);
+
                 return $this->redirect()->toRoute('message');
             }
        }
@@ -237,6 +245,25 @@ class MessageController extends AbstractController
         $this->getRepository()->getMapper('message')->hideMessageByUser($uid, $messageId);
 
         return $this->redirect()->toRoute('message');
+    }
+
+    /**
+     * @param NotifyMail $mail
+     *
+     * @return $this
+     */
+    public function setMailService(NotifyMail $mail)
+    {
+        $this->mailService = $mail;
+        return $this;
+    }
+
+    /**
+     * @return NotifyMail
+     */
+    public function getMailService()
+    {
+        return $this->mailService;
     }
 
 

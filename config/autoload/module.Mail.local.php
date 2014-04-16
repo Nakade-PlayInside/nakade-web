@@ -1,20 +1,20 @@
 <?php
 /**
- * This is a sample "local" configuration for your mail config. 
- * Copy it to your config/autoload/ directory of your application, 
+ * This is a sample "local" configuration for your mail config.
+ * Copy it to your config/autoload/ directory of your application,
  * and edit to suit your application.
  */
 return array(
     'nakade_mail' => array(
-       
+
         // This sets the default "to" and "sender" headers for your message
         'message' => array(
-            'from' => 'holger@nakade.de' , 
+            'from' => 'holger@nakade.de' ,
             'name' => 'Nakade Mail',
             'reply'=> 'noreply@nakade.de',
         ),
 
-        // Transport consists of two keys: 
+        // Transport consists of two keys:
         // - "method", => 'sendmail', 'smtp', 'file'
         // - "options" => required for 'smtp' and 'file'
         'transport' => array(

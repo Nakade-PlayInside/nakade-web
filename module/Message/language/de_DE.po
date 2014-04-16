@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 21:40+0100\n"
-"PO-Revision-Date: 2014-03-26 21:40+0100\n"
+"POT-Creation-Date: 2014-04-16 13:36+0100\n"
+"PO-Revision-Date: 2014-04-16 13:36+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -49,6 +49,22 @@ msgstr "Abbruch"
 msgid "receiver"
 msgstr "Empfänger"
 
+#: ../src/Message/Notify/NotifyMail.php:34
+msgid "You have got a new message in your mailbox at nakade.de."
+msgstr "Du hast eine neue Nachricht in deinem Posteingang bei nakade.de."
+
+#: ../src/Message/Notify/NotifyMail.php:35
+msgid "Please logIn at nakade.de for reading."
+msgstr "Um diese zu lesen, musst du dich bei nakade.de einloggen."
+
+#: ../src/Message/Notify/NotifyMail.php:36
+msgid "Your Nakade Team"
+msgstr "Dein Nakade Team"
+
+#: ../src/Message/Notify/NotifyMail.php:50
+msgid "New Message at nakade.de"
+msgstr "Neue Nachricht auf nakade.de"
+
 #: ../view/message/message/index.phtml:6
 msgid "Messages - Inbox"
 msgstr "Posteingang"
@@ -60,11 +76,12 @@ msgid "No messages found"
 msgstr "Keine Nachrichten gefunden."
 
 #: ../view/message/message/index.phtml:18
+#: ../view/message/message/sent.phtml:18
 msgid "ID"
 msgstr "Id"
 
 #: ../view/message/message/index.phtml:19
-#: ../view/message/message/sent.phtml:18
+#: ../view/message/message/sent.phtml:19
 msgid "Subject"
 msgstr "Betreff"
 
@@ -74,7 +91,7 @@ msgid "from"
 msgstr "von"
 
 #: ../view/message/message/index.phtml:21
-#: ../view/message/message/sent.phtml:23
+#: ../view/message/message/sent.phtml:24
 msgid "Date"
 msgstr "Datum"
 
@@ -86,19 +103,19 @@ msgstr "löschen"
 msgid "Messages - Sent"
 msgstr "Postausgang"
 
-#: ../view/message/message/sent.phtml:20
+#: ../view/message/message/sent.phtml:21
 msgid "reading state"
 msgstr "Lese Status"
 
-#: ../view/message/message/sent.phtml:22
+#: ../view/message/message/sent.phtml:23
 msgid "to"
 msgstr "an"
 
-#: ../view/message/message/sent.phtml:34
+#: ../view/message/message/sent.phtml:36
 msgid "unread"
 msgstr "ungelesen"
 
-#: ../view/message/message/sent.phtml:36
+#: ../view/message/message/sent.phtml:38
 #: ../view/message/message/show.phtml:46
 msgid "read"
 msgstr "gelesen"
@@ -131,11 +148,11 @@ msgstr "gesendet"
 msgid "Send Message"
 msgstr "Nachricht schicken"
 
+#~ msgid "New Nakade Message"
+#~ msgstr "Neue Nachricht bei Nakade"
+
 #~ msgid "send a new message"
 #~ msgstr "neue Nachricht schicken"
-
-#~ msgid "new Message"
-#~ msgstr "Neue Nachricht"
 
 #~ msgid "go to sent messages"
 #~ msgstr "zum Postausgang"

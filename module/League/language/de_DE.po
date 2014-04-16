@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-14 14:45+0100\n"
-"PO-Revision-Date: 2014-04-14 14:47+0100\n"
+"POT-Creation-Date: 2014-04-16 12:44+0100\n"
+"PO-Revision-Date: 2014-04-16 12:45+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -298,27 +298,27 @@ msgstr "Spielplan:"
 msgid "Table"
 msgstr "Tabelle"
 
-#: ../src/League/Services/ICalService.php:206
+#: ../src/League/Services/ICalService.php:187
 msgid "white"
 msgstr "Weiß"
 
-#: ../src/League/Services/ICalService.php:208
+#: ../src/League/Services/ICalService.php:189
 msgid "black"
 msgstr "Schwarz"
 
-#: ../src/League/Services/ICalService.php:222
+#: ../src/League/Services/ICalService.php:203
 msgid "My match vs %name%"
 msgstr "Meine Partie gegen %name%"
 
-#: ../src/League/Services/ICalService.php:225
+#: ../src/League/Services/ICalService.php:206
 msgid "KGS name: %name%"
 msgstr "KGS Name: %name%"
 
-#: ../src/League/Services/ICalService.php:228
+#: ../src/League/Services/ICalService.php:209
 msgid "my color is %color%"
 msgstr "meine Spielfarbe ist %color%"
 
-#: ../src/League/Services/ICalService.php:248
+#: ../src/League/Services/ICalService.php:229
 msgid "Nakade League Match vs %name%"
 msgstr "Nakade Liga Partie gegen %name%"
 
