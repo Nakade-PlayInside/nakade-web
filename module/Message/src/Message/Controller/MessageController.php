@@ -35,11 +35,6 @@ class MessageController extends AbstractController
             ->getMapper('message')
             ->getInboxMessages($uid);
 
-        $repo = $this->getRepository()->getMapper('message');
-        $sender=$repo->getUserById($uid);
-
-        $this->getMailService()->sendMail($sender);
-
         return new ViewModel(
             array('messages' => $messages)
         );
@@ -152,8 +147,8 @@ class MessageController extends AbstractController
 
                 $repo->save($message);
 
-
-
+                //sending email
+                $this->getMailService()->sendMail($recipient);
 
                 return $this->redirect()->toRoute('message');
             }
@@ -224,6 +219,9 @@ class MessageController extends AbstractController
                 $reply = $form->getData();
                 $reply->setSendDate(new \DateTime());
                 $repo->save($reply);
+
+                //sending email
+                $this->getMailService()->sendMail($receiver);
 
                 return $this->redirect()->toRoute('message');
             }
