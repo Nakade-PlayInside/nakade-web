@@ -102,7 +102,6 @@ class ActualSeasonController extends AbstractController
     */
     public function tableAction()
     {
-
        $uid = $this->getUserId();
 
         //sorting the table
@@ -154,7 +153,7 @@ class ActualSeasonController extends AbstractController
     {
         $user = $this->identity();
 
-        if (is_null($user)) {
+        if (null == $user) {
             return $this->redirect()->toRoute('login');
         }
 

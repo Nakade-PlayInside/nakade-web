@@ -70,24 +70,6 @@ class MatchStats extends MatchInfo
         return $this->gamesStatsFactory;
     }
 
-    /**
-     * Expecting an array of rules with a leading underline it will
-     * populate the rules, i.e. points for wins, draws and which
-     * tiebreakers are taken into account
-     *
-     * @param array $rules
-     */
-    public function populateRules($rules)
-    {
-        foreach ($rules as $key => $value) {
-
-            $method = 'set'. ucfirst(str_replace('_', '', $key));
-            if (method_exists($this, $method) && isset($value)) {
-               $this->$method($value);
-            }
-        }
-
-    }
 
     /**
      * @return array
@@ -146,10 +128,8 @@ class MatchStats extends MatchInfo
 
     private function getPoints()
     {
-        return  $this->getGamesStatsFactory()
-                     ->getPoints('won')  * $this->getWinPoints() +
-                $this->getGamesStatsFactory()
-                     ->getPoints('draw') * $this->getDrawPoints();
+        return  (int) $this->getGamesStatsFactory()->getPoints('won')  * (int) $this->getWinPoints() +
+                (int) $this->getGamesStatsFactory()->getPoints('draw') * (int) $this->getDrawPoints();
     }
 
 
