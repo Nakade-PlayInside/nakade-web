@@ -2,7 +2,7 @@
 namespace League\Statistics\Games;
 
 use League\Statistics\Results as RESULT;
-use League\Statistics\AbstractGameStats;
+use League\Statistics\GameStats;
 
 /**
  * Determine the number of played games of a player.
@@ -11,7 +11,7 @@ use League\Statistics\AbstractGameStats;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class PlayedGames extends AbstractGameStats implements GameStatsInterface
+class PlayedGames extends GameStats implements GameStatsInterface
 {
 
     /**

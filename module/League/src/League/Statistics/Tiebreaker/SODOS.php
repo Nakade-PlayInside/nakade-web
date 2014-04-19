@@ -2,9 +2,6 @@
 namespace League\Statistics\Tiebreaker;
 
 use League\Statistics\Results as RESULT;
-use League\Statistics\AbstractGameStats;
-use League\Statistics\Games\WonGames;
-use League\Statistics\Games\DrawGames;
 
 /**
  * Calculating the Sum of defeated Opponents Scores.
@@ -13,17 +10,8 @@ use League\Statistics\Games\DrawGames;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class SODOS extends AbstractGameStats implements TiebreakerInterface
+class SODOS extends SOS
 {
-
-    /**
-     * constructor
-     */
-    public function __construct()
-    {
-        $this->setName('SODOS');
-        $this->setDescription('Sum of defeated Opponents Score');
-    }
 
     /**
      * calculating the points
@@ -50,8 +38,7 @@ class SODOS extends AbstractGameStats implements TiebreakerInterface
                $match->getBlackId()==$playerId ) {
 
                $opponent = $match->getWhiteId();
-               $sos += $this->getNumberOfDrawGames($opponent);
-               $sos += $this->getNumberOfWonGames($opponent);
+               $sos += $this->calculatePointsByOpponent($opponent);
                continue;
             }
 
@@ -59,8 +46,7 @@ class SODOS extends AbstractGameStats implements TiebreakerInterface
                $match->getWhiteId()==$playerId) {
 
                $opponent = $match->getBlackId();
-               $sos += $this->getNumberOfDrawGames($opponent);
-               $sos += $this->getNumberOfWonGames($opponent);
+               $sos += $this->calculatePointsByOpponent($opponent);
                continue;
             }
 
@@ -70,18 +56,20 @@ class SODOS extends AbstractGameStats implements TiebreakerInterface
 
     }
 
-    private function getNumberOfDrawGames($playerId)
+    /**
+     * @return string
+     */
+    public function getName()
     {
-        $obj = DrawGames::getInstance();
-        $obj->setMatches($this->getMatches());
-        return $obj->getNumberOfGames($playerId);
+        return 'SODOS';
     }
 
-    private function getNumberOfWonGames($playerId)
+    /**
+     * @return string
+     */
+    public function getDescription()
     {
-        $obj = WonGames::getInstance();
-        $obj->setMatches($this->getMatches());
-        return $obj->getNumberOfGames($playerId);
+        return 'Sum of defeated Opponents Score';
     }
 
 }

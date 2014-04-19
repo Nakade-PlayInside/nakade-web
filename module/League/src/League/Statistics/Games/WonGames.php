@@ -2,7 +2,7 @@
 namespace League\Statistics\Games;
 
 use League\Statistics\Results as RESULT;
-use League\Statistics\AbstractGameStats;
+use League\Statistics\GameStats;
 
 
 /**
@@ -12,7 +12,7 @@ use League\Statistics\AbstractGameStats;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class WonGames extends AbstractGameStats implements GameStatsInterface
+class WonGames extends GameStats implements GameStatsInterface
 {
 
     /**

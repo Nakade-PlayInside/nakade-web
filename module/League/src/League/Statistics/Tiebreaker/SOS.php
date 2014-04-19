@@ -2,7 +2,7 @@
 namespace League\Statistics\Tiebreaker;
 
 use League\Statistics\Results as RESULT;
-use League\Statistics\AbstractGameStats;
+use League\Statistics\GameStats;
 use League\Statistics\Games\WonGames;
 use League\Statistics\Games\DrawGames;
 
@@ -13,17 +13,8 @@ use League\Statistics\Games\DrawGames;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class SOS extends AbstractGameStats implements TiebreakerInterface
+class SOS extends GameStats implements TiebreakerInterface
 {
-     /**
-     * constructor
-     */
-    public function __construct()
-    {
-        $this->setName('SOS');
-        $this->setDescription('Sum of Opponent Score');
-    }
-
 
     /**
      * calculating the points
@@ -48,16 +39,14 @@ class SOS extends AbstractGameStats implements TiebreakerInterface
             if ($match->getBlackId() == $playerId) {
 
                $opponent = $match->getWhiteId();
-               $sos += $this->getNumberOfDrawGames($opponent);
-               $sos += $this->getNumberOfWonGames($opponent);
+               $sos += $this->calculatePointsByOpponent($opponent);
                continue;
             }
 
             if ($match->getWhiteId() == $playerId) {
 
                $opponent = $match->getBlackId();
-               $sos += $this->getNumberOfDrawGames($opponent);
-               $sos += $this->getNumberOfWonGames($opponent);
+               $sos += $this->calculatePointsByOpponent($opponent);
                continue;
             }
 
@@ -67,18 +56,55 @@ class SOS extends AbstractGameStats implements TiebreakerInterface
 
     }
 
-    private function getNumberOfDrawGames($playerId)
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'SOS';
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'Sum of Opponent Score';
+    }
+
+    /**
+     * @param int $opponent
+     *
+     * @return int
+     */
+    protected function calculatePointsByOpponent($opponent)
+    {
+        return (int) $this->getNumberOfDrawGames($opponent) +
+        (int) $this->getNumberOfWonGames($opponent);
+    }
+
+    /**
+     * @param int $playerId
+     *
+     * @return int
+     */
+    protected function getNumberOfDrawGames($playerId)
     {
         $obj = DrawGames::getInstance();
         $obj->setMatches($this->getMatches());
-        return $obj->getNumberOfGames($playerId);
+        return (int) $obj->getNumberOfGames($playerId);
     }
 
-    private function getNumberOfWonGames($playerId)
+    /**
+     * @param int $playerId
+     *
+     * @return int
+     */
+    protected function getNumberOfWonGames($playerId)
     {
         $obj = WonGames::getInstance();
         $obj->setMatches($this->getMatches());
-        return $obj->getNumberOfGames($playerId);
+        return (int) $obj->getNumberOfGames($playerId);
     }
 
 }

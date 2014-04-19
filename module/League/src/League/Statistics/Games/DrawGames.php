@@ -2,7 +2,7 @@
 namespace League\Statistics\Games;
 
 use League\Statistics\Results as RESULT;
-use League\Statistics\AbstractGameStats;
+use League\Statistics\GameStats;
 
 /**
  * Determine the amounts of draw games of a player.
@@ -11,7 +11,7 @@ use League\Statistics\AbstractGameStats;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class DrawGames extends AbstractGameStats implements GameStatsInterface
+class DrawGames extends GameStats implements GameStatsInterface
 {
 
     /**

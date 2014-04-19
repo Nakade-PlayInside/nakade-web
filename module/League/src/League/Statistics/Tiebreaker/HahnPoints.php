@@ -2,7 +2,7 @@
 namespace League\Statistics\Tiebreaker;
 
 use League\Statistics\Results as RESULT;
-use League\Statistics\AbstractGameStats;
+use League\Statistics\GameStats;
 
 /**
  * Calculating Hahn-Points. The Hahn points are referred by Prof. Hahn from
@@ -17,19 +17,10 @@ use League\Statistics\AbstractGameStats;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class HahnPoints extends AbstractGameStats implements TiebreakerInterface
+class HahnPoints extends GameStats implements TiebreakerInterface
 {
     const MAX_POINTS=40;
     const OFFSET_POINTS=20;
-
-    /**
-     * constructor
-     */
-    public function __construct()
-    {
-        $this->setName('Hahn');
-        $this->setDescription('Hahn Points');
-    }
 
     /**
      * calculating the points
@@ -73,5 +64,21 @@ class HahnPoints extends AbstractGameStats implements TiebreakerInterface
             }
         }
         return $count;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'Hahn';
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'Hahn Points';
     }
 }

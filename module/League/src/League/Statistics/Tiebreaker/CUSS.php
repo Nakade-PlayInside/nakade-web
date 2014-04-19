@@ -2,7 +2,7 @@
 namespace League\Statistics\Tiebreaker;
 
 use League\Statistics\Results as RESULT;
-use League\Statistics\AbstractGameStats;
+use League\Statistics\GameStats;
 
 /**
  * Calculating the Cummulative Sum of Scores which is the
@@ -11,19 +11,8 @@ use League\Statistics\AbstractGameStats;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class CUSS extends AbstractGameStats implements TiebreakerInterface
+class CUSS extends GameStats implements TiebreakerInterface
 {
-
-    /**
-     * constructor
-     */
-    public function __construct()
-    {
-        $this->setName('CUSS');
-        $this->setDescription('Cummulative Sum of Scores');
-    }
-
-
 
     /**
      * calculating the points
@@ -59,6 +48,11 @@ class CUSS extends AbstractGameStats implements TiebreakerInterface
 
     }
 
+    /**
+     * @param array $sumOfPoints
+     *
+     * @return int
+     */
     private function getCummulativeSumOfPoints(array $sumOfPoints)
     {
         $cuss=0;
@@ -66,6 +60,22 @@ class CUSS extends AbstractGameStats implements TiebreakerInterface
             $cuss += $point;
         }
         return $cuss;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'CUSS';
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'Cummulative Sum of Scores';
     }
 }
 
