@@ -2,36 +2,80 @@
 namespace League\Statistics;
 
 /**
- * Abstract class for game statistics. 
+ * Abstract class for game statistics.
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-abstract class AbstractGameStats 
+abstract class AbstractGameStats
 {
-    
-    protected $_all_matches;
-    
-    
+
+    protected $allMatches;
+    protected $name;
+    protected $description;
+
+
     /**
-     * setter for entities of matches 
+     * setter for entities of matches
+     *
      * @param array $allMatches
-     * @return \League\Statistics\AbstractGameStats
+     *
+     * @return $this
      */
-    public function setMatches($allMatches) {
-        
-        $this->_all_matches = $allMatches;
+    public function setMatches(array $allMatches)
+    {
+
+        $this->allMatches = $allMatches;
         return $this;
     }
-    
+
     /**
      * getter for matches
-     * @return \League\Entities\Matches
+     * @return array
      */
-    public function getMatches() {
-        
-        return $this->_all_matches;
-    }
-    
-}
+    public function getMatches()
+    {
 
-?>
+        return $this->allMatches;
+    }
+
+    /**
+     * Name of the Tiebreaker
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Description of the Tiebreaker
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+}

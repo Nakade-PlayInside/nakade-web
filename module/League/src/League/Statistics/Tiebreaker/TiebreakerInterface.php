@@ -3,10 +3,12 @@ namespace League\Statistics\Tiebreaker;
 
 /**
  * interface for tiebreakers
+ *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-interface TiebreakerInterface {
-    
+interface TiebreakerInterface
+{
+
     /**
      * get the tiebreaking points
      * @param int $playerId
@@ -14,4 +16,4 @@ interface TiebreakerInterface {
     public function getTieBreaker($playerId);
 }
 
-?>
+

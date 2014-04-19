@@ -11,26 +11,26 @@ use Zend\I18n\Translator\TranslatorAwareInterface;
  */
 class AbstractTranslator implements TranslatorAwareInterface
 {
-    
+
     protected $_translator;
     protected $_textDomain='League';
-    
+
     /**
-     * Sets translator to use in helper
+     * @param Translator $translator
      *
-     * @param  Translator $translator  [optional] translator.
-     *          Default is null, which sets no translator.
-     * @param  string     $textDomain  [optional] text domain
-     *          Default is null, which skips setTranslatorTextDomain
-     * @return TranslatorAwareInterface
+     * @param null $textDomain
+     *
+     * @return void|TranslatorAwareInterface
      */
-    public function setTranslator(Translator $translator = null, $textDomain = null) 
+    public function setTranslator(Translator $translator = null, $textDomain = null)
     {
-        if(isset($translator))
+        if (isset($translator)) {
             $this->_translator=$translator;
-    
-        if(isset($textDomain))
+        }
+
+        if (isset($textDomain)) {
             $this->_textDomain=$textDomain;
+        }
     }
 
     /**
@@ -39,7 +39,7 @@ class AbstractTranslator implements TranslatorAwareInterface
      * @return Translator|null
      */
     public function getTranslator()
-    {   
+    {
         return $this->_translator;
     }
 
@@ -54,25 +54,28 @@ class AbstractTranslator implements TranslatorAwareInterface
     }
 
     /**
-     * Sets whether translator is enabled and should be used
+     * @param bool $enabled
      *
-     * @param  bool $enabled [optional] whether translator should be used.
-     *                       Default is true.
-     * @return TranslatorAwareInterface
+     * @return void|TranslatorAwareInterface
      */
-    public function setTranslatorEnabled($enabled = true) {;}
+    public function setTranslatorEnabled($enabled=true)
+    {;
+    }
 
     /**
      * Returns whether translator is enabled and should be used
      *
      * @return bool
      */
-    public function isTranslatorEnabled() {;}
+    public function isTranslatorEnabled()
+    {;
+    }
 
     /**
      * Set translation text domain
      *
      * @param  string $textDomain
+     *
      * @return TranslatorAwareInterface
      */
     public function setTranslatorTextDomain($textDomain = 'default')
@@ -89,27 +92,28 @@ class AbstractTranslator implements TranslatorAwareInterface
     {
         return $this->_textDomain;
     }
-    
+
     /**
-    * Helper for i18N. If a translator is set to the controller, the 
+    * Helper for i18N. If a translator is set to the controller, the
     * message is translated.
-    *  
+    *
     * @param string $message
+     *
     * @return string
     */
-   public function translate($message) 
+   public function translate($message)
    {
-   
+
        $translator = $this->getTranslator();
-       if ($translator===null)
+       if (is_null($translator)) {
            return $message;
-       
+       }
+
        return $translator->translate(
-                  $message, 
-                  $this->getTranslatorTextDomain()
-              );
-       
+           $message,
+           $this->getTranslatorTextDomain()
+       );
+
    }
 }
 
-?>

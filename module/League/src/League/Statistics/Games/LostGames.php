@@ -14,56 +14,56 @@ use League\Statistics\AbstractGameStats;
 class LostGames extends AbstractGameStats implements GameStatsInterface
 {
     /**
-    * @var AbstractGameStats 
+    * @var AbstractGameStats
     */
     private static $instance =null;
-    
+
    /**
     * Singleton Pattern for preventing object inflation.
     * @return AbstractGameStats
     */
     public static function getInstance()
     {
-        if(self::$instance == null) {
+        if (is_null(self::$instance)) {
             self::$instance = new LostGames();
         }
-        
+
         return self::$instance;
-    }      
+    }
 
     /**
      * gets you the number a lost games
      * @param int $playerId
+     *
      * @return int
      */
-    public function getNumberOfGames($playerId) 
+    public function getNumberOfGames($playerId)
     {
-        
+
         $count=0;
-        foreach($this->_all_matches as $match) {
-            
-            if( $match->getResultId()===null             || 
-                $match->getResultId()==RESULT::DRAW      || 
-                $match->getResultId()==RESULT::SUSPENDED ||
-                $match->getWinnerId()==$playerId    
+        foreach ($this->getMatches() as $match) {
+
+            if (null === $match->getResultId() ||
+                $match->getResultId() == RESULT::DRAW      ||
+                $match->getResultId() == RESULT::SUSPENDED ||
+                $match->getWinnerId() == $playerId
             ) {
                 continue;
-            }    
-     
-            
-            if( $match->getBlackId()==$playerId || 
-                $match->getWhiteId()==$playerId ) {
-                
+            }
+
+
+            if ($match->getBlackId() == $playerId ||
+                $match->getWhiteId() == $playerId ) {
+
                 $count++;
-            }    
-            
-            
-        } 
-      
+            }
+
+
+        }
+
         return $count;
     }
-   
-    
+
+
 }
 
-?>

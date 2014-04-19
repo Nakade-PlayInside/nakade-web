@@ -7,57 +7,57 @@ use League\Statistics\AbstractGameStats;
 /**
  * Determine the amounts of draw games of a player.
  * This is a singleton. You will receive an only instance by using the
- * static call. 
+ * static call.
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
 class DrawGames extends AbstractGameStats implements GameStatsInterface
 {
    /**
-    * @var AbstractGameStats 
+    * @var AbstractGameStats
     */
     private static $instance =null;
-    
+
    /**
     * Singleton Pattern for preventing object inflation.
     * @return AbstractGameStats
     */
     public static function getInstance()
     {
-        if(self::$instance == null) {
+        if (is_null(self::$instance)) {
             self::$instance = new DrawGames();
         }
-        
+
         return self::$instance;
-    }      
+    }
 
     /**
      * gets you the number a draw games
      * @param int $playerId
+     *
      * @return int
      */
-    public function getNumberOfGames($playerId) 
+    public function getNumberOfGames($playerId)
     {
-        
+
         $count=0;
-        foreach($this->_all_matches as $match) {
-            
-            if($match->getResultId()===null    ||
+        foreach ($this->getMatches() as $match) {
+
+            if (null === $match->getResultId() ||
                $match->getResultId()!=RESULT::DRAW) {
                 continue;
-            }    
-     
-            if( $match->getBlackId()==$playerId || 
+            }
+
+            if ($match->getBlackId()==$playerId ||
                 $match->getWhiteId()==$playerId ) {
-                
+
                 $count++;
-            }    
-            
-        } 
-        
+            }
+
+        }
+
        return $count;
     }
-    
+
 }
 
-?>
