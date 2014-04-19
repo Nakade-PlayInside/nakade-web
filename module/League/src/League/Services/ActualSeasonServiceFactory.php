@@ -304,7 +304,7 @@ class ActualSeasonServiceFactory extends AbstractService
        $players = $this->getMatchStats()->getMatchStats();
 
        $sorting = SORT::getInstance();
-       $sorting->sorting($players, $sort);
+       $sorting->sorting($players);
 
        return $players;
 
