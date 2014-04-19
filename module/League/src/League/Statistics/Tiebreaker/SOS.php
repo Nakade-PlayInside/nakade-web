@@ -2,120 +2,109 @@
 namespace League\Statistics\Tiebreaker;
 
 use League\Statistics\Results as RESULT;
-use League\Statistics\AbstractGameStats;
+use League\Statistics\GameStats;
 use League\Statistics\Games\WonGames;
 use League\Statistics\Games\DrawGames;
 
 /**
- * Calculating the Sum of Opponents Scores. This tiebreaker is almost intended 
- * for tournaments. In a robin-around-league the SOS results in having 
- * all players with the same score. 
+ * Calculating the Sum of Opponents Scores. This tiebreaker is almost intended
+ * for tournaments. In a robin-around-league the SOS results in having
+ * all players with the same score.
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class SOS extends AbstractGameStats implements TiebreakerInterface
+class SOS extends GameStats implements TiebreakerInterface
 {
-    
-    /**
-    * @var AbstractGameStats 
-    */
-    private static $instance =null;
-    
-   /**
-    * @var name of the tiebreak
-    */
-    protected $_name        ='SOS';
-    
-    /**
-     * description
-     * @var string
-     */
-    protected $_description ='Sum of Opponent Score';
-    
-   /**
-    * Singleton Pattern for preventing object inflation.
-    * @return AbstractGameStats
-    */
-    public static function getInstance()
-    {
-        if(self::$instance == null) {
-            self::$instance = new SOS();
-        }
-        
-        return self::$instance;
-    }      
-    
-    /**
-     * Name of the Tiebreaker
-     * @return string
-     */
-    public function getName() {
-        return $this->_name;
-    }
-    
-    /**
-     * Description of the Tiebreaker
-     * @return string
-     */
-    public function getDescription() {
-        return $this->_description;
-    }
-    
+
     /**
      * calculating the points
-     * 
+     *
      * @param int $playerId
+     *
      * @return int
      */
-    public function getTieBreaker($playerId) 
+    public function getTieBreaker($playerId)
     {
-       
+
         $sos=0;
-        foreach($this->_all_matches as $match) {
-            
-            
-            if($match->getResultId() ===null            ||
-               $match->getResultId()==RESULT::SUSPENDED ) {
-                
+        /* @var $match \League\Entity\Match */
+        foreach ($this->getMatches() as $match) {
+
+            if (null === $match->getResultId() ||
+               $match->getResultId()==RESULT::SUSPENDED) {
+
                continue;
-            }    
-     
-            if($match->getBlackId()==$playerId) {
-               
+            }
+
+            if ($match->getBlackId() == $playerId) {
+
                $opponent = $match->getWhiteId();
-               $sos += $this->getNumberOfDrawGames($opponent);
-               $sos += $this->getNumberOfWonGames($opponent);  
+               $sos += $this->calculatePointsByOpponent($opponent);
                continue;
             }
-            
-            if($match->getWhiteId()==$playerId) {
-               
+
+            if ($match->getWhiteId() == $playerId) {
+
                $opponent = $match->getBlackId();
-               $sos += $this->getNumberOfDrawGames($opponent);
-               $sos += $this->getNumberOfWonGames($opponent); 
+               $sos += $this->calculatePointsByOpponent($opponent);
                continue;
             }
-           
-        } 
-      
+
+        }
+
         return $sos;
-        
+
     }
-   
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'SOS';
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return 'Sum of Opponent Score';
+    }
+
+    /**
+     * @param int $opponent
+     *
+     * @return int
+     */
+    protected function calculatePointsByOpponent($opponent)
+    {
+        return (int) $this->getNumberOfDrawGames($opponent) +
+        (int) $this->getNumberOfWonGames($opponent);
+    }
+
+    /**
+     * @param int $playerId
+     *
+     * @return int
+     */
     protected function getNumberOfDrawGames($playerId)
     {
         $obj = DrawGames::getInstance();
-        $obj->setMatches($this->_all_matches);
-        return $obj->getNumberOfGames($playerId);
+        $obj->setMatches($this->getMatches());
+        return (int) $obj->getNumberOfGames($playerId);
     }
-    
+
+    /**
+     * @param int $playerId
+     *
+     * @return int
+     */
     protected function getNumberOfWonGames($playerId)
     {
         $obj = WonGames::getInstance();
-        $obj->setMatches($this->_all_matches);
-        return $obj->getNumberOfGames($playerId);
+        $obj->setMatches($this->getMatches());
+        return (int) $obj->getNumberOfGames($playerId);
     }
-    
-}
 
-?>
+}

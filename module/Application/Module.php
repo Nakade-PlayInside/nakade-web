@@ -34,9 +34,9 @@ class Module
 
         $locale = "de_DE";
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $locale = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+            $languages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+            $locale=$this->getLocale($languages);
         }
-
         $translator->setLocale(
             \Locale::acceptFromHttp($locale)
         );
@@ -47,6 +47,14 @@ class Module
 
     }
 
+    private function getLocale(array $languages)
+    {
+        $lang = $languages[0];
+        if (strpos($lang, "de") === 0) {
+            return "de_DE";
+        }
+        return 'en_US';
+    }
     /**
      * @return mixed
      */

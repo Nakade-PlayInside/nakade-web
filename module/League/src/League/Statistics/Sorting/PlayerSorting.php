@@ -1,6 +1,8 @@
 <?php
 namespace League\Statistics\Sorting;
 
+use \InvalidArgumentException;
+use League\Entity\Participants;
 
 /**
  * Sorting an array of objects in a dependend order. After the first sorting
@@ -10,187 +12,233 @@ namespace League\Statistics\Sorting;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class PlayerSorting
+class PlayerSorting implements SortingInterface
 {
-    const BY_POINTS='points';
-    const BY_NAME='name';
-    const BY_SUSPENDED_GAMES='suspended';
-    const BY_PLAYED_GAMES='played';
-    const BY_WON_GAMES='win';
-    const BY_LOST_GAMES='lost';
-    const BY_DRAW_GAMES='draw';
-    const BY_FIRST_TIEBREAK='firstTiebreak';
-    const BY_SECOND_TIEBREAK='secondTiebreak';
-    const BY_THIRD_TIEBREAK='thirdTiebreak';
-    
+
     /**
      * instance
      * @var object
      */
-    private static $instance =null;
-    
+    private static $instance=null;
+
     /**
      * static for getting an instance of this class
      * @return PlayerSorting
      */
-    public static function getInstance() {
-        
-        if(self::$instance == null)
-            self::$instance=new PlayerSorting ();
-        
+    public static function getInstance()
+    {
+
+        if (is_null(self::$instance)) {
+            self::$instance=new self();
+        }
+
         return self::$instance;
     }
-    
+
     /**
-     * Sorting an array of objetcs
-     * @param array $playersInLeague
+     * @param array  &$playersInLeague
      * @param string $sort
+     *
+     * @throws \InvalidArgumentException
      */
-    public function sorting(&$playersInLeague, $sort=self::BY_POINTS) 
+    public function sorting(&$playersInLeague, $sort=self::BY_POINTS)
     {
-        
-       $method = 'sortBy' . ucfirst($sort);  
-       if(!method_exists($this, $method))
-           $method='sortBy' . ucfirst('points');      
-       
+       $method = 'sortBy' . ucfirst($sort);
+       if (!method_exists($this, $method)) {
+           throw new InvalidArgumentException(sprintf('A unknown sorting type was provided: %s', $sort));
+       }
        usort($playersInLeague, array($this, $method));
-       
-    }
-    
-    protected function sortByName($comp_a, $comp_b) {
-        
-           $method =  "get" . ucfirst('player');
-           if(
-               strcmp (
-                   $comp_a->$method()->getShortName(),
-                   $comp_b->$method()->getShortName()
-               ) == 0
-           ) {
-               return $this->sortByPoints($comp_a, $comp_b);
-           }
-        
-           return (
-                   strcmp (
-                       $comp_a->$method()->getShortName(),
-                       $comp_b->$method()->getShortName()
-                   )
-           );
-            
-    }
-    
-    protected function sortBySuspended($comp_a, $comp_b) {
-        
-        
-           $method =  "get" . ucfirst('gamesSuspended');
-           if ($comp_a->$method() == $comp_b->$method() ) {
-               return $this->sortByPoints($comp_a, $comp_b);
-           }    
-      
-           return ($comp_a->$method() > $comp_b->$method() )?-1:1;
-            
-    }
-    
-    
-    protected function sortByPlayed($comp_a, $comp_b) {
-        
-           $method =  "get" . ucfirst('gamesPlayed');
-           if($comp_a->$method() == $comp_b->$method()) {
-               return $this->sortByPoints($comp_a, $comp_b);
-           }    
-        
-           return ($comp_a->$method() > $comp_b->$method() )?-1:1;
-            
-    }
-    
-    protected function sortByWin($comp_a, $comp_b) {
-        
-           $method =  "get" . ucfirst('gamesWin');
-           if($comp_a->$method() == $comp_b->$method()) {
-               return $this->sortByPoints($comp_a, $comp_b);
-           }    
-        
-           return ($comp_a->$method() > $comp_b->$method() )?-1:1;
-            
-    }
-    
-    protected function sortByLost($comp_a, $comp_b) {
-        
-           $method =  "get" . ucfirst('gamesLost');
-           if($comp_a->$method() == $comp_b->$method() ) {
-               return $this->sortByPoints($comp_a, $comp_b);
-           }    
-        
-           return ($comp_a->$method() > $comp_b->$method() )?-1:1;
-            
-    }
-    
-    protected function sortByDraw($comp_a, $comp_b) {
-        
-           $method =  "get" . ucfirst('gamesDraw');
-           if($comp_a->$method() == $comp_b->$method() ) {
-               return $this->sortByPoints($comp_a, $comp_b);
-           }    
-        
-           return ($comp_a->$method()>$comp_b->$method())?-1:1;
-            
-    }
-    
-    protected function sortByPoints($comp_a, $comp_b) {
-        
-           $method =  "get" . ucfirst('gamesPoints'); 
-           if($comp_a->$method()==$comp_b->$method())
-               return $this->sortByFirstTiebreak($comp_a, $comp_b);
-        
-           return ($comp_a->$method()>$comp_b->$method())?-1:1;
-            
-    }
-  
-    protected function sortByFirstTiebreak($comp_a, $comp_b) {
-        
-           $method =  "get" . ucfirst('firstTiebreak'); 
-           if($comp_a->$method()==$comp_b->$method())
-               return $this->sortBySecondTiebreak($comp_a, $comp_b);
-        
-           return ($comp_a->$method()>$comp_b->$method())?-1:1;
-            
     }
 
-    protected function sortBySecondTiebreak($comp_a, $comp_b) {
-        
-           $method =  "get" . ucfirst('secondTiebreak'); 
-           
-           if($comp_a->$method() == $comp_b->$method() ) {
-               return $this->sortByThirdTiebreak($comp_a, $comp_b);
-           }    
-        
-           return ($comp_a->$method() > $comp_b->$method() )?-1:1;
-            
+    /**
+     * @param Participants $compA
+     * @param Participants $compB
+     *
+     * @return int
+     */
+    public function sortByName(Participants $compA, Participants $compB)
+    {
+           $nameA =  $compA->getPlayer()->getShortName();
+           $nameB =  $compB->getPlayer()->getShortName();
+           $result = strcmp($nameA, $nameB);
+
+           if ($result == 0) {
+               return $this->sortByPoints($compA, $compB);
+           }
+
+           return $result;
     }
-    
-    protected function sortByThirdTiebreak($comp_a, $comp_b) {
-        
-           $method =  "get" . ucfirst('thirdTiebreak'); 
-           
-           if($comp_a->$method()==$comp_b->$method() ) {
-               return $this->sortByInitialState($comp_a, $comp_b);;
-           }    
-        
-           return ($comp_a->$method() > $comp_b->$method() )?-1:1;
-            
+
+    /**
+     * @param Participants $compA
+     * @param Participants $compB
+     *
+     * @return int
+     */
+    public function sortBySuspended(Participants $compA, Participants $compB)
+    {
+        $tbA =  $compA->getGamesSuspended();
+        $tbB =  $compB->getGamesSuspended();
+        if ($tbA == $tbB) {
+           return $this->sortByPoints($compA, $compB);
+        }
+
+        return ($tbA > $tbB)?-1:1;
     }
-    
-    protected function sortByInitialState($comp_a, $comp_b) {
-        
-           $method =  "get" . ucfirst('gamesPlayed');
-           if($comp_a->$method() == $comp_b->$method()) {
+
+    /**
+     * @param Participants $compA
+     * @param Participants $compB
+     *
+     * @return int
+     */
+    public function sortByPlayed(Participants $compA, Participants $compB)
+    {
+        $tbA =  $compA->getGamesPlayed();
+        $tbB =  $compB->getGamesPlayed();
+        if ($tbA == $tbB) {
+            return $this->sortByPoints($compA, $compB);
+        }
+
+        return ($tbA > $tbB)?-1:1;
+    }
+
+    /**
+     * @param Participants $compA
+     * @param Participants $compB
+     *
+     * @return int
+     */
+    public function sortByWin(Participants $compA, Participants $compB)
+    {
+        $tbA =  $compA->getGamesWin();
+        $tbB =  $compB->getGamesWin();
+        if ($tbA == $tbB) {
+               return $this->sortByPoints($compA, $compB);
+        }
+
+        return ($tbA > $tbB)?-1:1;
+    }
+
+    /**
+     * @param Participants $compA
+     * @param Participants $compB
+     *
+     * @return int
+     */
+    public function sortByLost(Participants $compA, Participants $compB)
+    {
+        $tbA =  $compA->getGamesLost();
+        $tbB =  $compB->getGamesLost();
+        if ($tbA == $tbB) {
+               return $this->sortByPoints($compA, $compB);
+        }
+
+        return ($tbA > $tbB)?-1:1;
+    }
+
+    /**
+     * @param Participants $compA
+     * @param Participants $compB
+     *
+     * @return int
+     */
+    public function sortByDraw(Participants $compA, Participants $compB)
+    {
+        $tbA =  $compA->getGamesDraw();
+        $tbB =  $compB->getGamesDraw();
+        if ($tbA == $tbB) {
+               return $this->sortByPoints($compA, $compB);
+        }
+
+        return ($tbA > $tbB)?-1:1;
+    }
+
+    /**
+     * @param Participants $compA
+     * @param Participants $compB
+     *
+     * @return int
+     */
+    public function sortByPoints(Participants $compA, Participants $compB)
+    {
+        $tbA =  $compA->getGamesPoints();
+        $tbB =  $compB->getGamesPoints();
+        if ($tbA == $tbB) {
+            return $this->sortByFirstTiebreak($compA, $compB);
+        }
+
+        return ($tbA > $tbB)?-1:1;
+    }
+
+    /**
+     * @param Participants $compA
+     * @param Participants $compB
+     *
+     * @return int
+     */
+    public function sortByFirstTiebreak(Participants $compA, Participants $compB)
+    {
+           $tbA = $compA->getFirstTiebreak();
+           $tbB = $compB->getFirstTiebreak();
+           if ($tbA == $tbB) {
+               return $this->sortBySecondTiebreak($compA, $compB);
+           }
+
+           return ($tbA>$tbB)?-1:1;
+    }
+
+    /**
+     * @param Participants $compA
+     * @param Participants $compB
+     *
+     * @return int
+     */
+    public function sortBySecondTiebreak(Participants $compA, Participants $compB)
+    {
+           $tbA = $compA->getSecondTiebreak();
+           $tbB = $compB->getSecondTiebreak();
+           if ($tbA == $tbB) {
+               return $this->sortByThirdTiebreak($compA, $compA);
+           }
+
+           return ($tbA > $tbB)?-1:1;
+
+    }
+
+    /**
+     * @param Participants $compA
+     * @param Participants $compB
+     *
+     * @return int
+     */
+    public function sortByThirdTiebreak(Participants $compA, Participants $compB)
+    {
+
+           $tbA = $compA->getThirdTiebreak();
+           $tbB = $compB->getThirdTiebreak();
+           if ($tbA == $tbB) {
+               return $this->sortByInitialState($compA, $compB);
+           }
+           return ($tbA > $tbB)?-1:1;
+    }
+
+    /**
+     * @param Participants $compA
+     * @param Participants $compB
+     *
+     * @return int
+     */
+    public function sortByInitialState(Participants $compA, Participants $compB)
+    {
+           $tbA = $compA->getGamesPlayed();
+           $tbB = $compB->getGamesPlayed();
+           if ($tbA == $tbB) {
                return 0;
-           }    
-        
-           return ($comp_a->$method() > $comp_b->$method() )?-1:1;
-            
+           }
+
+        return ($tbA > $tbB)?-1:1;
     }
-    
 
 }
 
-?>

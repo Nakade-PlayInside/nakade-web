@@ -2,62 +2,46 @@
 namespace League\Statistics\Games;
 
 use League\Statistics\Results as RESULT;
-use League\Statistics\AbstractGameStats;
+use League\Statistics\GameStats;
 
 /**
  * Determine the amounts of draw games of a player.
  * This is a singleton. You will receive an only instance by using the
- * static call. 
+ * static call.
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class DrawGames extends AbstractGameStats implements GameStatsInterface
+class DrawGames extends GameStats implements GameStatsInterface
 {
-   /**
-    * @var AbstractGameStats 
-    */
-    private static $instance =null;
-    
-   /**
-    * Singleton Pattern for preventing object inflation.
-    * @return AbstractGameStats
-    */
-    public static function getInstance()
-    {
-        if(self::$instance == null) {
-            self::$instance = new DrawGames();
-        }
-        
-        return self::$instance;
-    }      
 
     /**
      * gets you the number a draw games
      * @param int $playerId
+     *
      * @return int
      */
-    public function getNumberOfGames($playerId) 
+    public function getNumberOfGames($playerId)
     {
-        
+
         $count=0;
-        foreach($this->_all_matches as $match) {
-            
-            if($match->getResultId()===null    ||
+        /* @var $match \League\Entity\Match */
+        foreach ($this->getMatches() as $match) {
+
+            if (null === $match->getResultId() ||
                $match->getResultId()!=RESULT::DRAW) {
                 continue;
-            }    
-     
-            if( $match->getBlackId()==$playerId || 
+            }
+
+            if ($match->getBlackId()==$playerId ||
                 $match->getWhiteId()==$playerId ) {
-                
+
                 $count++;
-            }    
-            
-        } 
-        
+            }
+
+        }
+
        return $count;
     }
-    
+
 }
 
-?>
