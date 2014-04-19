@@ -24,8 +24,8 @@ class SODOS extends SOS
     {
 
         $sos=0;
+        /* @var $match \League\Entity\Match */
         foreach ($this->getMatches() as $match) {
-
 
             if (null === $match->getResultId() ||
                $match->getResultId() == RESULT::SUSPENDED ||

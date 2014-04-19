@@ -4,6 +4,7 @@ namespace League\Statistics\Tiebreaker;
 use League\Statistics\Results as RESULT;
 use League\Statistics\GameStats;
 
+
 /**
  * Calculating the Cummulative Sum of Scores which is the
  * sum of a player's points after each round (matchday).
@@ -11,9 +12,8 @@ use League\Statistics\GameStats;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class CUSS extends GameStats implements TiebreakerInterface
+class CUSS extends GameStats implements  TiebreakerInterface
 {
-
     /**
      * calculating the points
      *

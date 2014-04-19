@@ -1,6 +1,7 @@
 <?php
 namespace League\Statistics\Games;
 
+use League\Statistics\StatsFactory;
 use RuntimeException;
 
 /**
@@ -9,42 +10,10 @@ use RuntimeException;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class GamesStatsFactory
+class GamesStatsFactory extends StatsFactory
 {
 
     private $gameStats;
-    private $allMatches;
-    private $playerId;
-
-    /**
-     * Constructor providing an array of match entities
-     * @param array $allMatches
-     */
-    public function __construct($allMatches)
-    {
-        $this->allMatches=$allMatches;
-    }
-
-    /**
-     * set the playerId
-     * @param int $playerId
-     *
-     * @return $this
-     */
-    public function setPlayerId($playerId)
-    {
-        $this->playerId=$playerId;
-        return $this;
-    }
-
-    /**
-     * get the playerID
-     * @return int
-     */
-    public function getPlayerId()
-    {
-        return $this->playerId;
-    }
 
     /**
      * receives the points of the provided game statistics
@@ -80,8 +49,8 @@ class GamesStatsFactory
                );
         }
 
-
-        $this->gameStats->setMatches($this->allMatches);
+        $matches = $this->getMatches();
+        $this->gameStats->setMatches($matches);
 
          if ($this->getPlayerId() == null) {
             throw new RuntimeException(

@@ -15,5 +15,3 @@ interface GameStatsInterface
      */
     public function getNumberOfGames($playerId);
 }
-
-

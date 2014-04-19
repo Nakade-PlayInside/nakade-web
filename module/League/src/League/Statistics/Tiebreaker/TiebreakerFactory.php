@@ -1,6 +1,7 @@
 <?php
 namespace League\Statistics\Tiebreaker;
 
+use League\Statistics\StatsFactory;
 use RuntimeException;
 
 /**
@@ -10,44 +11,9 @@ use RuntimeException;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class TiebreakerFactory
+class TiebreakerFactory extends StatsFactory
 {
-
     protected $tieBreaker;
-    protected $allMatches;
-    protected $playerId;
-
-    /**
-     * constructor needs an array of match entities
-     *
-     * @param array $allMatches
-     */
-    public function __construct($allMatches)
-    {
-        $this->allMatches=$allMatches;
-    }
-
-    /**
-     * set the playerId
-     *
-     * @param int $playerId
-     *
-     * @return \League\Statistics\Tiebreaker\TiebreakerFactory
-     */
-    public function setPlayerId($playerId)
-    {
-        $this->playerId=$playerId;
-        return $this;
-    }
-
-    /**
-     * get the playerID
-     * @return int
-     */
-    public function getPlayerId()
-    {
-        return $this->playerId;
-    }
 
     /**
      * using the switch.
@@ -83,6 +49,14 @@ class TiebreakerFactory
     }
 
     /**
+     * @return mixed
+     */
+    public function getTieBreaker()
+    {
+        return $this->tieBreaker;
+    }
+
+    /**
      * returns the name of the provided tiebreaker
      *
      * @param string $typ
@@ -92,7 +66,10 @@ class TiebreakerFactory
     public function getName($typ)
     {
         $this->setTiebreaker($typ);
-        return $this->tieBreaker->getName();
+        /* @var $tiebreaker TiebreakerInterface */
+        $tiebreaker = $this->getTieBreaker();
+
+        return $tiebreaker->getName();
     }
 
     /**
@@ -106,13 +83,22 @@ class TiebreakerFactory
     {
 
         $this->setTiebreaker($typ);
-        $this->tieBreaker->setMatches($this->allMatches);
+
+        /* @var $tiebreaker \League\Statistics\GameStats */
+        $tiebreaker = $this->getTieBreaker();
+        $allMatches = $this->getMatches();
+        $tiebreaker->setMatches($allMatches);
 
         if (is_null($this->getPlayerId())) {
             throw new RuntimeException(
                 sprintf('PlayerId has to be set. Found:null')
             );
         }
-        return $this->tieBreaker->getTieBreaker($this->getPlayerId());
+
+        $playerId = $this->getPlayerId();
+
+        /* @var $stats TiebreakerInterface */
+        $stats = $this->getTieBreaker();
+        return $stats->getTieBreaker($playerId);
     }
 }
