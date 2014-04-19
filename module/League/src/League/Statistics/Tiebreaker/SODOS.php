@@ -17,30 +17,12 @@ class SODOS extends AbstractGameStats implements TiebreakerInterface
 {
 
     /**
-    * @var AbstractGameStats
-    */
-    private static $instance = null;
-
-    /**
      * constructor
      */
     public function __construct()
     {
         $this->setName('SODOS');
         $this->setDescription('Sum of defeated Opponents Score');
-    }
-
-    /**
-     * Singleton Pattern for preventing object inflation.
-     * @return AbstractGameStats
-     */
-    public static function getInstance()
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new SODOS();
-        }
-
-        return self::$instance;
     }
 
     /**
@@ -88,14 +70,14 @@ class SODOS extends AbstractGameStats implements TiebreakerInterface
 
     }
 
-    protected function getNumberOfDrawGames($playerId)
+    private function getNumberOfDrawGames($playerId)
     {
         $obj = DrawGames::getInstance();
         $obj->setMatches($this->getMatches());
         return $obj->getNumberOfGames($playerId);
     }
 
-    protected function getNumberOfWonGames($playerId)
+    private function getNumberOfWonGames($playerId)
     {
         $obj = WonGames::getInstance();
         $obj->setMatches($this->getMatches());

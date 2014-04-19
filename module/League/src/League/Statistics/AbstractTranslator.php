@@ -74,7 +74,7 @@ class AbstractTranslator implements TranslatorAwareInterface
     /**
      * Set translation text domain
      *
-     * @param  string $textDomain
+     * @param string $textDomain
      *
      * @return TranslatorAwareInterface
      */

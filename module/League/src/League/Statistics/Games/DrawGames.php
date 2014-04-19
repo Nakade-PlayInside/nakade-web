@@ -13,23 +13,6 @@ use League\Statistics\AbstractGameStats;
  */
 class DrawGames extends AbstractGameStats implements GameStatsInterface
 {
-   /**
-    * @var AbstractGameStats
-    */
-    private static $instance =null;
-
-   /**
-    * Singleton Pattern for preventing object inflation.
-    * @return AbstractGameStats
-    */
-    public static function getInstance()
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new DrawGames();
-        }
-
-        return self::$instance;
-    }
 
     /**
      * gets you the number a draw games

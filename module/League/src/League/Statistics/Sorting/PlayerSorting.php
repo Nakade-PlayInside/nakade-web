@@ -50,8 +50,9 @@ class PlayerSorting
     {
 
        $method = 'sortBy' . ucfirst($sort);
-       if(!method_exists($this, $method))
+       if (!method_exists($this, $method)) {
            $method='sortBy' . ucfirst('points');
+       }
 
        usort($playersInLeague, array($this, $method));
 

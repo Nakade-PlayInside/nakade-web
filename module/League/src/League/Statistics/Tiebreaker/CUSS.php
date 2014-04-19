@@ -15,11 +15,6 @@ class CUSS extends AbstractGameStats implements TiebreakerInterface
 {
 
     /**
-    * @var AbstractGameStats
-    */
-    private static $instance =null;
-
-    /**
      * constructor
      */
     public function __construct()
@@ -28,18 +23,7 @@ class CUSS extends AbstractGameStats implements TiebreakerInterface
         $this->setDescription('Cummulative Sum of Scores');
     }
 
-    /**
-    * Singleton Pattern for preventing object inflation.
-    * @return AbstractGameStats
-    */
-    public static function getInstance()
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new CUSS();
-        }
 
-        return self::$instance;
-    }
 
     /**
      * calculating the points

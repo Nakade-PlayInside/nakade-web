@@ -6,13 +6,26 @@ namespace League\Statistics;
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-abstract class AbstractGameStats
+class AbstractGameStats
 {
-
+    protected static $instances=array();
     protected $allMatches;
     protected $name;
     protected $description;
 
+    /**
+     * Singleton Pattern for preventing object inflation.
+     * @return AbstractGameStats
+     */
+    public static function getInstance()
+    {
+        $cls = get_called_class(); // late-static-bound class name
+        if (!isset(self::$instances[$cls])) {
+            self::$instances[$cls] = new static();
+        }
+
+        return self::$instances[$cls];
+    }
 
     /**
      * setter for entities of matches
@@ -34,7 +47,6 @@ abstract class AbstractGameStats
      */
     public function getMatches()
     {
-
         return $this->allMatches;
     }
 

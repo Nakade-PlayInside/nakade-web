@@ -19,14 +19,8 @@ use League\Statistics\AbstractGameStats;
  */
 class HahnPoints extends AbstractGameStats implements TiebreakerInterface
 {
-
     const MAX_POINTS=40;
     const OFFSET_POINTS=20;
-
-    /**
-    * @var AbstractGameStats
-    */
-    private static $instance =null;
 
     /**
      * constructor
@@ -35,19 +29,6 @@ class HahnPoints extends AbstractGameStats implements TiebreakerInterface
     {
         $this->setName('Hahn');
         $this->setDescription('Hahn Points');
-    }
-
-   /**
-    * Singleton Pattern for preventing object inflation.
-    * @return AbstractGameStats
-    */
-    public static function getInstance()
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new HahnPoints();
-        }
-
-        return self::$instance;
     }
 
     /**

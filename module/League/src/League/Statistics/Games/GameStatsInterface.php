@@ -3,6 +3,7 @@ namespace League\Statistics\Games;
 
 /**
  * interface for game statistics
+ *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
 interface GameStatsInterface
