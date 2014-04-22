@@ -33,8 +33,8 @@ class Module
             'translator'
         );
 
-        $authService = $events->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
-        $this->getIdentity($authService);
+       // $authService = $events->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
+       // $this->getIdentity($authService);
 
         $locale = "de_DE";
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {

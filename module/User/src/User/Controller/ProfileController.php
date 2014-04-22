@@ -2,9 +2,9 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for 
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for
  * the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. 
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc.
  * (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
@@ -23,13 +23,13 @@ class ProfileController extends AbstractController
 
     /**
      * Showing the user's profile
-     * 
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function indexAction()
     {
-        //redirection does not work here if the 
-        //protected method is provided!  
+        //redirection does not work here if the
+        //protected method is provided!
         $profile = $this->identity();
 
         if ($profile === null) {
@@ -41,14 +41,13 @@ class ProfileController extends AbstractController
                'profile'    => $profile,
                'name'       => $profile->getName(),
                'username'   => $profile->getUsername(),
-
            )
         );
     }
 
     /**
      * edit the birthday
-     * 
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function birthdayAction()
@@ -90,7 +89,7 @@ class ProfileController extends AbstractController
 
     /**
      * edit the nickname
-     * 
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function nickAction()
@@ -172,7 +171,7 @@ class ProfileController extends AbstractController
 
     /**
      * edit the email
-     * 
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function emailAction()
@@ -212,7 +211,7 @@ class ProfileController extends AbstractController
 
     /**
      * change the password. No email is send.
-     * 
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function passwordAction()
@@ -254,7 +253,7 @@ class ProfileController extends AbstractController
 
     /**
      * get the user's profile. Redirect to the login if not logged in.
-     * 
+     *
      * @return mixed
      */
     protected function getProfile()
