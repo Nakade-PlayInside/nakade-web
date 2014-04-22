@@ -280,7 +280,7 @@ class ProfileController extends AbstractController
 
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $data['uid']=$this->getProfile()->getId();
-                $this->getService()->editLanguage($data);
+                $this->getService()->editProfile($data);
 
                 return $this->redirect()->toRoute('profile');
             }

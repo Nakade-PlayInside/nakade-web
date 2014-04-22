@@ -18,8 +18,7 @@ class EditLanguage extends AbstractProfileEditHelper
     {
         $this->_url = "profile/language";
         $value = $profile->getLanguage();
-
-
+       
         return $this->getLink($value);
     }
 
