@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-27 12:18+0100\n"
-"PO-Revision-Date: 2013-06-27 12:22+0100\n"
-"Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
+"POT-Creation-Date: 2014-04-22 18:15+0100\n"
+"PO-Revision-Date: 2014-04-22 18:18+0100\n"
+"Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -15,281 +15,215 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../view/user/verify/failure.phtml:4
-msgid "Verification Failed"
-msgstr "Bestätigung fehlgeschlagen."
+#: ../src/User/Mail/PasswordMail.php:21
+#: ../src/User/Mail/VerifyMail.php:113
+msgid "Welcome %firstname%"
+msgstr "Willkommen %firstname%"
 
-#: ../view/user/verify/failure.phtml:9
-msgid "Activation of your account failed."
-msgstr "Aktivierung des Zugangs fehlgeschlagen."
+#: ../src/User/Mail/PasswordMail.php:22
+msgid "Your password at nakade.de was reset."
+msgstr "Dein Passwort auf nakade.de  wurde neu gesetzt."
 
-#: ../view/user/verify/failure.phtml:11
-msgid "Probably your credentials are expired."
-msgstr "Möglicherweise sind deine Zugangsdaten ungültig."
+#: ../src/User/Mail/PasswordMail.php:26
+#: ../src/User/Mail/VerifyMail.php:118
+msgid "Your Credentials"
+msgstr "Deine Zugangsdaten"
 
-#: ../view/user/verify/failure.phtml:13
-msgid "Read your activation mail for more information."
-msgstr ""
-
-#: ../view/user/verify/failure.phtml:16
-msgid "YOU DO NOT HAVE TO REGISTER."
-msgstr ""
-
-#: ../view/user/verify/failure.phtml:18
-msgid "Just request a new password by using the 'forgot password' option."
-msgstr "Fordere ein neues Passwort über die 'Passwort vergessen' Option an."
-
-#: ../view/user/verify/error.phtml:4
-msgid "Data Transmission Error"
-msgstr ""
-
-#: ../view/user/verify/error.phtml:9
-msgid "Expected data not found."
-msgstr "Daten nicht gefunden."
-
-#: ../view/user/verify/error.phtml:11
-msgid "Hint: click the link provided in your email."
-msgstr "Hinweis: verwende den Link in deiner email."
-
-#: ../view/user/verify/index.phtml:4
-msgid "Account Verified"
-msgstr "Zugang bestätigt"
-
-#: ../view/user/verify/index.phtml:9
-msgid "Thank you for your activation."
-msgstr "Vielen Dank für deine Aktivierung."
-
-#: ../view/user/verify/index.phtml:11
-msgid "You can now sign in using your credentials."
-msgstr "Du kannst dich  jetzt mit deinen Zugangsdaten anmelden. "
-
-#: ../view/user/forgot/success.phtml:4
-msgid "Success"
-msgstr "Erfolg"
-
-#: ../view/user/forgot/success.phtml:8
-msgid "Your new credentials were send to you."
-msgstr "Deine neuen Zugangsdaten wurden dir zugeschickt."
-
-#: ../view/user/forgot/success.phtml:9
-msgid "Please do not forget to activate your account."
-msgstr "Vergiss bitte nicht deinen Zugang zu aktivieren."
-
-#: ../view/user/forgot/failure.phtml:4
-msgid "Failure"
-msgstr "Fehler"
-
-#: ../view/user/forgot/failure.phtml:9
-msgid "The given email adress was not found."
-msgstr "Die eingegebene email-Adresse wurde nicht gefunden."
-
-#: ../view/user/forgot/failure.phtml:11
-msgid "Please try again with the registered mail."
-msgstr "Bitte versuch es nochmal mit der registrierten email-Adresse."
-
-#: ../view/user/forgot/index.phtml:3
-msgid "Forgot Password"
-msgstr "Passwort vergessen"
-
-#: ../view/user/forgot/index.phtml:7
-msgid "Please enter your registered mail adress."
-msgstr "Bitte gib deine bestätigte email-Adresse ein."
-
-#: ../view/user/forgot/index.phtml:8
-msgid "We will send your new credentials immediatley to that adress."
-msgstr "Wir werden dir deine neuen Zugangsdaten sofort an deine email-Adresse schicken."
-
-#: ../view/user/profile/birthday.phtml:4
-#: ../view/user/profile/password.phtml:4
-#: ../view/user/profile/nick.phtml:4
-#: ../view/user/profile/email.phtml:4
-msgid "Edit Profile"
-msgstr "Profil ändern"
-
-#: ../view/user/profile/index.phtml:4
-msgid "Profile"
-msgstr "Profil"
-
-#: ../view/user/profile/index.phtml:11
-msgid "Name:"
-msgstr "Name:"
-
-#: ../view/user/profile/index.phtml:15
-msgid "Birthday:"
-msgstr "Geburtstag:"
-
-#: ../view/user/profile/index.phtml:19
-msgid "Nick:"
-msgstr "Spitzname:"
-
-#: ../view/user/profile/index.phtml:23
-msgid "email:"
-msgstr "Email:"
-
-#: ../view/user/profile/index.phtml:27
-msgid "Username:"
-msgstr "Benutzername:"
-
-#: ../view/user/profile/index.phtml:31
-msgid "Password"
-msgstr "Passwort"
-
-#: ../view/user/user/edit.phtml:4
-msgid "Edit User"
-msgstr "Benutzer bearbeiten"
-
-#: ../view/user/user/add.phtml:4
-msgid "Add User"
-msgstr "Benutzer hinzufügen"
-
-#: ../view/user/user/index.phtml:4
-msgid "Registered Users"
-msgstr "Registrierte Benutzer"
-
-#: ../view/user/user/index.phtml:9
-msgid "add user"
-msgstr "Benutzer hinzufügen"
-
-#: ../view/user/user/index.phtml:12
-msgid "Sex"
-msgstr "Anrede"
-
-#: ../view/user/user/index.phtml:13
-msgid "Name"
-msgstr "Name"
-
-#: ../view/user/user/index.phtml:14
-msgid "Nick"
-msgstr "Spitzname"
-
-#: ../view/user/user/index.phtml:15
-msgid "Username"
+#: ../src/User/Mail/PasswordMail.php:27
+#: ../src/User/Mail/VerifyMail.php:119
+msgid "username"
 msgstr "Benutzername"
 
-#: ../view/user/user/index.phtml:16
-msgid "email"
-msgstr "Email"
+#: ../src/User/Mail/PasswordMail.php:28
+#: ../src/User/Mail/VerifyMail.php:120
+msgid "password"
+msgstr "Passwort"
 
-#: ../view/user/user/index.phtml:17
-msgid "verified"
-msgstr "bestätigt"
+#: ../src/User/Mail/PasswordMail.php:32
+#: ../src/User/Mail/VerifyMail.php:124
+msgid "Your account requires activation during the next %expire% hours."
+msgstr "Dein Konto muss binnen der nächsten %expire% Stunden aktiviert werden."
 
-#: ../view/user/user/index.phtml:18
+#: ../src/User/Mail/PasswordMail.php:33
+#: ../src/User/Mail/VerifyMail.php:125
+msgid "Please click on the link for activation."
+msgstr "Bitte klicke auf den  Link für die Aktivierung."
+
+#: ../src/User/Mail/PasswordMail.php:34
+#: ../src/User/Mail/VerifyMail.php:126
+msgid "If you fail to activate your account in time, you have to reset your password using the 'forgot password' option."
+msgstr "Falls du deinen Zugang nicht innerhalb der gegebenen Frist aktivierst, musst du dein Passwort über die 'Passwort vergessen' Option zurücksetzen."
+
+#: ../src/User/Mail/PasswordMail.php:38
+#: ../src/User/Mail/VerifyMail.php:130
+msgid "May the stones be with you."
+msgstr "Mit 361 Grüßen"
+
+#: ../src/User/Mail/PasswordMail.php:39
+#: ../src/User/Mail/VerifyMail.php:131
+msgid "Your %signature%."
+msgstr "Dein %signature%"
+
+#: ../src/User/Mail/PasswordMail.php:43
+#: ../src/User/Mail/VerifyMail.php:135
+msgid "Court of Registration"
+msgstr "Amtsgericht"
+
+#: ../src/User/Mail/PasswordMail.php:44
+#: ../src/User/Mail/VerifyMail.php:136
+msgid "Register No."
+msgstr "Registernummer"
+
+#: ../src/User/Mail/PasswordMail.php:47
+msgid "%prefix% - Your New Credentials"
+msgstr "%prefix% - Deine neuen Zugangsdaten"
+
+#: ../src/User/Mail/VerifyMail.php:114
+msgid "Thank you for your registration at nakade.de"
+msgstr "Vielen Dank, dass du dich für nakade.de entschieden hast."
+
+#: ../src/User/Mail/VerifyMail.php:139
+msgid "%prefix% - Your Credentials"
+msgstr "%prefix% - Deine Zugangsdaten"
+
+#: ../src/User/View/Helper/ShowActive.php:16
+msgid "inactive"
+msgstr "inaktiv"
+
+#: ../src/User/View/Helper/ShowActive.php:21
 msgid "active"
 msgstr "aktiv"
 
-#: ../view/user/user/index.phtml:19
+#: ../src/User/View/Helper/ShowEdit.php:16
 msgid "edit"
 msgstr "bearbeiten"
 
-#: ../view/user/user/index.phtml:20
-msgid "access"
-msgstr "Zugang"
+#: ../src/User/View/Helper/ShowTrigger.php:20
+msgid "activate"
+msgstr "aktivieren"
 
-#: ../view/user/user/index.phtml:21
-msgid "pwd"
-msgstr "Pwd"
+#: ../src/User/View/Helper/ShowTrigger.php:26
+msgid "deactivate"
+msgstr "deaktivieren"
 
-#: ../src/User/Form/NickForm.php:40
-#: ../src/User/Form/UserForm.php:87
-msgid "Nick (opt.):"
-msgstr "Spitzname (opt.):"
+#: ../src/User/View/Helper/EditLanguage.php:31
+msgid "German"
+msgstr "Deutsch"
 
-#: ../src/User/Form/NickForm.php:51
-#: ../src/User/Form/UserForm.php:98
-msgid "use nick always (anonymizer):"
-msgstr "immer Spitznamen verwenden (anonym)"
+#: ../src/User/View/Helper/EditLanguage.php:34
+msgid "English"
+msgstr "Englisch"
 
-#: ../src/User/Form/NickForm.php:78
-#: ../src/User/Form/BirthdayForm.php:73
-#: ../src/User/Form/UserForm.php:197
-#: ../src/User/Form/ForgotPasswordForm.php:70
-#: ../src/User/Form/PasswordForm.php:79
-#: ../src/User/Form/EmailForm.php:71
-msgid "Submit"
-msgstr "Abschicken"
+#: ../src/User/View/Helper/EditLanguage.php:38
+msgid "auto detect"
+msgstr "automatische Erkennung"
 
-#: ../src/User/Form/NickForm.php:90
-#: ../src/User/Form/BirthdayForm.php:85
-#: ../src/User/Form/UserForm.php:209
-#: ../src/User/Form/ForgotPasswordForm.php:82
-#: ../src/User/Form/PasswordForm.php:91
-#: ../src/User/Form/EmailForm.php:83
-msgid "Cancel"
-msgstr "Abbruch"
+#: ../src/User/View/Helper/ShowVerified.php:21
+msgid "not verified"
+msgstr "unbestätigt"
 
-#: ../src/User/Form/UserForm.php:39
-msgid "Salutation:"
-msgstr "Anrede:"
+#: ../src/User/View/Helper/ShowVerified.php:26
+msgid "verified"
+msgstr "bestätigt"
 
-#: ../src/User/Form/UserForm.php:41
-msgid "Herr"
-msgstr "Herr"
+#: ../src/User/View/Helper/ShowVerified.php:31
+msgid "waiting for verification"
+msgstr "warte auf Bestätigung"
 
-#: ../src/User/Form/UserForm.php:42
-msgid "Frau"
-msgstr "Frau"
+#: ../src/User/View/Helper/AbstractProfileEditHelper.php:77
+msgid "Incognito"
+msgstr "Inkognito"
 
-#: ../src/User/Form/UserForm.php:54
-msgid "Title (opt.):"
-msgstr "Titel (opt.):"
+#: ../src/User/View/Helper/AbstractProfileEditHelper.php:78
+msgid "password was never changed"
+msgstr "Passwort wurde noch nie geändert"
 
-#: ../src/User/Form/UserForm.php:65
-msgid "First Name:"
-msgstr "Vorname:"
+#: ../src/User/View/Helper/AbstractProfileEditHelper.php:80
+msgid "last time edited on %pwdChangeDate%"
+msgstr "letzte Änderung am %pwdChangeDate%"
 
-#: ../src/User/Form/UserForm.php:76
-msgid "Family Name:"
-msgstr "Nachname:"
+#: ../src/User/View/Helper/ShowPwdReset.php:16
+msgid "reset password"
+msgstr "Password zurücksetzen"
 
-#: ../src/User/Form/UserForm.php:110
-msgid "Birthday (opt.):"
-msgstr "Geburtsdatum (opt.):"
-
-#: ../src/User/Form/UserForm.php:127
-msgid "User Name:"
-msgstr "Benutzername:"
-
-#: ../src/User/Form/UserForm.php:156
-msgid "Role"
-msgstr "Rolle"
-
-#: ../src/User/Form/UserForm.php:158
-msgid "Guest"
-msgstr "Gast"
-
-#: ../src/User/Form/UserForm.php:159
-msgid "User"
-msgstr "Benutzer"
-
-#: ../src/User/Form/UserForm.php:160
-msgid "Member"
-msgstr "Mitglied"
-
-#: ../src/User/Form/UserForm.php:161
-msgid "Moderator"
-msgstr "Moderator"
-
-#: ../src/User/Form/UserForm.php:162
-msgid "Administrator"
-msgstr "Administrator"
-
-#: ../src/User/Form/PasswordForm.php:39
+#: ../src/User/Form/PasswordForm.php:27
 msgid "enter new password:"
 msgstr "Neues Passwort:"
 
-#: ../src/User/Form/PasswordForm.php:51
+#: ../src/User/Form/PasswordForm.php:39
 msgid "repeat new password:"
 msgstr "Eingabe wiederholen:"
 
-#: ../src/User/Form/Validator/CommonPassword.php:39
+#: ../src/User/Form/EmailForm.php:28
+#: ../src/User/Form/UserForm.php:101
+msgid "email:"
+msgstr "Email:"
+
+#: ../src/User/Form/NickForm.php:34
+#: ../src/User/Form/UserForm.php:74
+msgid "use nick always (anonymizer):"
+msgstr "immer Spitznamen verwenden (anonym)"
+
+#: ../src/User/Form/UserForm.php:37
+msgid "Salutation:"
+msgstr "Anrede:"
+
+#: ../src/User/Form/UserForm.php:39
+msgid "Herr"
+msgstr "Herr"
+
+#: ../src/User/Form/UserForm.php:40
+msgid "Frau"
+msgstr "Frau"
+
+#: ../src/User/Form/UserForm.php:124
+msgid "Role"
+msgstr "Rolle"
+
+#: ../src/User/Form/UserForm.php:126
+msgid "Guest"
+msgstr "Gast"
+
+#: ../src/User/Form/UserForm.php:127
+msgid "User"
+msgstr "Benutzer"
+
+#: ../src/User/Form/UserForm.php:128
+msgid "Member"
+msgstr "Mitglied"
+
+#: ../src/User/Form/UserForm.php:129
+msgid "Moderator"
+msgstr "Moderator"
+
+#: ../src/User/Form/UserForm.php:130
+msgid "Administrator"
+msgstr "Administrator"
+
+#: ../src/User/Form/LanguageForm.php:28
+msgid "language:"
+msgstr "Sprache:"
+
+#: ../src/User/Form/LanguageForm.php:30
+msgid "No language"
+msgstr "keine Sprache"
+
+#: ../src/User/Form/DefaultForm.php:48
+msgid "Submit"
+msgstr "Abschicken"
+
+#: ../src/User/Form/DefaultForm.php:60
+msgid "Cancel"
+msgstr "Abbruch"
+
+#: ../src/User/Form/Fields/Birthday.php:18
+msgid "Birthday:"
+msgstr "Geburtstag:"
+
 #: ../src/User/Form/Validator/PasswordComplexity.php:68
+#: ../src/User/Form/Validator/CommonPassword.php:39
 msgid "Invalid type given. String expected."
 msgstr "Ungültiger Typ. Zeichenkette wird erwartet. "
-
-#: ../src/User/Form/Validator/CommonPassword.php:41
-msgid "Do not use common password: %value%."
-msgstr "Keines der bekanntesten Passwörter verwenden: %value%"
 
 #: ../src/User/Form/Validator/PasswordComplexity.php:70
 msgid "Optimal password length: '%length%'."
@@ -323,164 +257,235 @@ msgstr "Keine Buchstabenwiederholung."
 msgid "Do not repeat words."
 msgstr "Wiederhole keine Wörter"
 
-#: ../src/User/Form/Fieldset/OptionsFieldset.php:34
-msgid "Options"
-msgstr "Optionen"
+#: ../src/User/Form/Validator/CommonPassword.php:41
+msgid "Do not use common password: %value%."
+msgstr "Keines der bekanntesten Passwörter verwenden: %value%"
 
-#: ../src/User/Form/Fieldset/OptionsFieldset.php:42
-msgid "language:"
-msgstr "Sprache:"
+#: ../view/user/verify/index.phtml:4
+msgid "Account Verified"
+msgstr "Zugang bestätigt"
 
-#: ../src/User/Form/Fieldset/OptionsFieldset.php:54
-msgid "Twitter Messages:"
-msgstr "Twitter Nachrichten:"
+#: ../view/user/verify/index.phtml:9
+msgid "Thank you for your activation."
+msgstr "Vielen Dank für deine Aktivierung."
 
-#: ../src/User/Form/Fieldset/ContactFieldset.php:32
-msgid "Contact"
-msgstr "Kontakt"
+#: ../view/user/verify/index.phtml:11
+msgid "You can now sign in using your credentials."
+msgstr "Du kannst dich  jetzt mit deinen Zugangsdaten anmelden. "
 
-#: ../src/User/Form/Fieldset/ContactFieldset.php:40
-msgid "Phone (@home):"
-msgstr "Telefon (privat):"
+#: ../view/user/verify/failure.phtml:4
+msgid "Verification Failed"
+msgstr "Bestätigung fehlgeschlagen."
 
-#: ../src/User/Form/Fieldset/ContactFieldset.php:51
-msgid "Phone (@other):"
-msgstr "Telefon (sonstig):"
+#: ../view/user/verify/failure.phtml:9
+msgid "Activation of your account failed."
+msgstr "Aktivierung des Zugangs fehlgeschlagen."
 
-#: ../src/User/Form/Fieldset/ContactFieldset.php:62
-msgid "Mobile:"
-msgstr "Handy:"
+#: ../view/user/verify/failure.phtml:11
+msgid "Probably your credentials are expired."
+msgstr "Möglicherweise sind deine Zugangsdaten ungültig."
 
-#: ../src/User/Form/Fieldset/ContactFieldset.php:74
-msgid "Skype:"
-msgstr "Skype:"
+#: ../view/user/verify/failure.phtml:13
+msgid "Read your activation mail for more information."
+msgstr "Für mehr Informationen lese deine Aktivierungsmail."
 
-#: ../src/User/Form/Fieldset/AdressFieldset.php:32
-msgid "Adress"
-msgstr "Adresse:"
+#: ../view/user/verify/failure.phtml:16
+msgid "YOU DO NOT HAVE TO REGISTER."
+msgstr "DU MUSST DICH NICHT REGISTRIEREN"
 
-#: ../src/User/Form/Fieldset/AdressFieldset.php:40
-msgid "Street:"
-msgstr "Strasse:"
+#: ../view/user/verify/failure.phtml:18
+msgid "Just request a new password by using the 'forgot password' option."
+msgstr "Fordere ein neues Passwort über die 'Passwort vergessen' Option an."
 
-#: ../src/User/Form/Fieldset/AdressFieldset.php:51
-msgid "PO Box:"
-msgstr "PLZ:"
+#: ../view/user/verify/error.phtml:4
+msgid "Data Transmission Error"
+msgstr "Datenübertragungsfehler"
 
-#: ../src/User/Form/Fieldset/AdressFieldset.php:63
-msgid "City:"
-msgstr "Stadt:"
+#: ../view/user/verify/error.phtml:9
+msgid "Expected data not found."
+msgstr "Daten nicht gefunden."
 
-#: ../src/User/Form/Fieldset/AdressFieldset.php:75
-msgid "Country:"
-msgstr "Land:"
+#: ../view/user/verify/error.phtml:11
+msgid "Hint: click the link provided in your email."
+msgstr "Hinweis: verwende den Link in deiner email."
 
-#: ../src/User/Mail/VerifyMail.php:113
-#: ../src/User/Mail/PasswordMail.php:21
-msgid "Welcome %firstname%"
-msgstr "Willkommen %firstname%"
+#: ../view/user/forgot/index.phtml:3
+msgid "Forgot Password"
+msgstr "Passwort vergessen"
 
-#: ../src/User/Mail/VerifyMail.php:114
-msgid "Thank you for your registration at nakade.de"
-msgstr "Vielen Dank, dass du dich für nakade.de entschieden hast."
+#: ../view/user/forgot/index.phtml:7
+msgid "Please enter your registered mail adress."
+msgstr "Bitte gib deine bestätigte email-Adresse ein."
 
-#: ../src/User/Mail/VerifyMail.php:118
-#: ../src/User/Mail/PasswordMail.php:26
-msgid "Your Credentials"
-msgstr "Deine Zugangsdaten"
+#: ../view/user/forgot/index.phtml:8
+msgid "We will send your new credentials immediatley to that adress."
+msgstr "Wir werden dir deine neuen Zugangsdaten sofort an deine email-Adresse schicken."
 
-#: ../src/User/Mail/VerifyMail.php:119
-#: ../src/User/Mail/PasswordMail.php:27
-msgid "username"
-msgstr "Benutzername"
+#: ../view/user/forgot/failure.phtml:4
+msgid "Failure"
+msgstr "Fehler"
 
-#: ../src/User/Mail/VerifyMail.php:120
-#: ../src/User/Mail/PasswordMail.php:28
-msgid "password"
+#: ../view/user/forgot/failure.phtml:9
+msgid "The given email adress was not found."
+msgstr "Die eingegebene email-Adresse wurde nicht gefunden."
+
+#: ../view/user/forgot/failure.phtml:11
+msgid "Please try again with the registered mail."
+msgstr "Bitte versuch es nochmal mit der registrierten email-Adresse."
+
+#: ../view/user/forgot/success.phtml:4
+msgid "Success"
+msgstr "Erfolg"
+
+#: ../view/user/forgot/success.phtml:8
+msgid "Your new credentials were send to you."
+msgstr "Deine neuen Zugangsdaten wurden dir zugeschickt."
+
+#: ../view/user/forgot/success.phtml:9
+msgid "Please do not forget to activate your account."
+msgstr "Vergiss bitte nicht deinen Zugang zu aktivieren."
+
+#: ../view/user/profile/index.phtml:4
+msgid "Profile"
+msgstr "Profil"
+
+#: ../view/user/profile/index.phtml:11
+msgid "Name:"
+msgstr "Name:"
+
+#: ../view/user/profile/index.phtml:19
+msgid "Nick:"
+msgstr "Spitzname:"
+
+#: ../view/user/profile/index.phtml:27
+msgid "KGS:"
+msgstr "KGS:"
+
+#: ../view/user/profile/index.phtml:31
+msgid "Username:"
+msgstr "Benutzername:"
+
+#: ../view/user/profile/index.phtml:35
+msgid "Password"
 msgstr "Passwort"
 
-#: ../src/User/Mail/VerifyMail.php:124
-#: ../src/User/Mail/PasswordMail.php:32
-msgid "Your account requires activation during the next %expire% hours."
-msgstr "Dein Konto muss binnen der nächsten %expire% Stunden aktiviert werden."
+#: ../view/user/profile/index.phtml:39
+msgid "Language"
+msgstr "Sprache:"
 
-#: ../src/User/Mail/VerifyMail.php:125
-#: ../src/User/Mail/PasswordMail.php:33
-msgid "Please click on the link for activation."
-msgstr "Bitte klicke auf den  Link für die Aktivierung."
+#: ../view/user/profile/language.phtml:4
+msgid "Edit Language"
+msgstr "Sprache einstellen"
 
-#: ../src/User/Mail/VerifyMail.php:126
-#: ../src/User/Mail/PasswordMail.php:34
-msgid "If you fail to activate your account in time, you have to reset your password using the 'forgot password' option."
-msgstr "Falls du deinen Zugang nicht innerhalb der gegebenen Frist aktivierst, musst du dein Passwort über die 'Passwort vergessen' Option zurücksetzen."
+#: ../view/user/profile/email.phtml:4
+#: ../view/user/profile/kgs.phtml:4
+#: ../view/user/profile/password.phtml:4
+#: ../view/user/profile/birthday.phtml:4
+#: ../view/user/profile/nick.phtml:4
+msgid "Edit Profile"
+msgstr "Profil ändern"
 
-#: ../src/User/Mail/VerifyMail.php:130
-#: ../src/User/Mail/PasswordMail.php:38
-msgid "May the stones be with you."
-msgstr "Mit 361 Grüßen"
+#: ../view/user/user/index.phtml:4
+msgid "Registered Users"
+msgstr "Registrierte Benutzer"
 
-#: ../src/User/Mail/VerifyMail.php:131
-#: ../src/User/Mail/PasswordMail.php:39
-msgid "Your %signature%."
-msgstr "Dein %signature%"
+#: ../view/user/user/index.phtml:9
+msgid "add user"
+msgstr "Benutzer hinzufügen"
 
-#: ../src/User/Mail/VerifyMail.php:135
-#: ../src/User/Mail/PasswordMail.php:43
-msgid "Court of Registration"
-msgstr "Amtsgericht"
+#: ../view/user/user/index.phtml:12
+msgid "Sex"
+msgstr "Anrede"
 
-#: ../src/User/Mail/VerifyMail.php:136
-#: ../src/User/Mail/PasswordMail.php:44
-msgid "Register No."
-msgstr "Registernummer"
+#: ../view/user/user/index.phtml:13
+msgid "Name"
+msgstr "Name"
 
-#: ../src/User/Mail/VerifyMail.php:139
-msgid "%prefix% - Your Credentials"
-msgstr "%prefix% - Deine Zugangsdaten"
+#: ../view/user/user/index.phtml:14
+msgid "Nick"
+msgstr "Spitzname"
 
-#: ../src/User/Mail/PasswordMail.php:22
-msgid "Your password at nakade.de was reset."
-msgstr "Dein Passwort auf nakade.de  wurde neu gesetzt."
+#: ../view/user/user/index.phtml:15
+msgid "Username"
+msgstr "Benutzername"
 
-#: ../src/User/Mail/PasswordMail.php:47
-msgid "%prefix% - Your New Credentials"
-msgstr "%prefix% - Deine neuen Zugangsdaten"
+#: ../view/user/user/index.phtml:16
+msgid "KGS"
+msgstr "KGS"
 
-#: ../src/User/View/Helper/AbstractProfileEditHelper.php:77
-msgid "Incognito"
-msgstr "Inkognito"
+#: ../view/user/user/index.phtml:17
+msgid "email"
+msgstr "Email"
 
-#: ../src/User/View/Helper/AbstractProfileEditHelper.php:78
-msgid "password was never changed"
-msgstr "Passwort wurde noch nie geändert"
+#: ../view/user/user/index.phtml:21
+msgid "access"
+msgstr "Zugang"
 
-#: ../src/User/View/Helper/AbstractProfileEditHelper.php:80
-msgid "last time edited on %pwdChangeDate%"
-msgstr "letzte Änderung am %pwdChangeDate%"
+#: ../view/user/user/index.phtml:22
+msgid "pwd"
+msgstr "Pwd"
 
-#: ../src/User/View/Helper/ShowTrigger.php:20
-msgid "activate"
-msgstr "aktivieren"
+#: ../view/user/user/edit.phtml:4
+msgid "Edit User"
+msgstr "Benutzer bearbeiten"
 
-#: ../src/User/View/Helper/ShowTrigger.php:26
-msgid "deactivate"
-msgstr "deaktivieren"
+#: ../view/user/user/add.phtml:4
+msgid "Add User"
+msgstr "Benutzer hinzufügen"
 
-#: ../src/User/View/Helper/ShowPwdReset.php:16
-msgid "reset password"
-msgstr "Password zurücksetzen"
+#~ msgid "Nick (opt.):"
+#~ msgstr "Spitzname (opt.):"
 
-#: ../src/User/View/Helper/ShowVerified.php:21
-msgid "not verified"
-msgstr "unbestätigt"
+#~ msgid "Title (opt.):"
+#~ msgstr "Titel (opt.):"
 
-#: ../src/User/View/Helper/ShowVerified.php:31
-msgid "waiting for verification"
-msgstr "warte auf Bestätigung"
+#~ msgid "First Name:"
+#~ msgstr "Vorname:"
 
-#: ../src/User/View/Helper/ShowActive.php:16
-msgid "inactive"
-msgstr "inaktiv"
+#~ msgid "Family Name:"
+#~ msgstr "Nachname:"
+
+#~ msgid "Birthday (opt.):"
+#~ msgstr "Geburtsdatum (opt.):"
+
+#~ msgid "User Name:"
+#~ msgstr "Benutzername:"
+
+#~ msgid "Options"
+#~ msgstr "Optionen"
+
+#~ msgid "Twitter Messages:"
+#~ msgstr "Twitter Nachrichten:"
+
+#~ msgid "Contact"
+#~ msgstr "Kontakt"
+
+#~ msgid "Phone (@home):"
+#~ msgstr "Telefon (privat):"
+
+#~ msgid "Phone (@other):"
+#~ msgstr "Telefon (sonstig):"
+
+#~ msgid "Mobile:"
+#~ msgstr "Handy:"
+
+#~ msgid "Skype:"
+#~ msgstr "Skype:"
+
+#~ msgid "Adress"
+#~ msgstr "Adresse:"
+
+#~ msgid "Street:"
+#~ msgstr "Strasse:"
+
+#~ msgid "PO Box:"
+#~ msgstr "PLZ:"
+
+#~ msgid "City:"
+#~ msgstr "Stadt:"
+
+#~ msgid "Country:"
+#~ msgstr "Land:"
 
 #~ msgid "Account Activation"
 #~ msgstr "Konto Aktivierung"

@@ -11,7 +11,15 @@ use \Zend\InputFilter\InputFilter;
  */
 class LanguageForm extends DefaultForm
 {
+    private $language;
 
+    /**
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language=$language;
+    }
 
     /**
      * init the form. It is neccessary to call this function
@@ -32,7 +40,10 @@ class LanguageForm extends DefaultForm
                         'en_US' => $this->translate('English'),
                     )
                 ),
-            )
+                'attributes' => array(
+                        'value' => $this->language
+                )
+           )
         );
 
         $this->setDefaultFields();

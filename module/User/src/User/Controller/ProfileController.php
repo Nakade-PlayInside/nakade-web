@@ -262,8 +262,10 @@ class ProfileController extends AbstractController
         if ($this->identity() === null) {
             return $this->redirect()->toRoute('login');
         }
+        $user = $this->identity();
+        $lang = $user->getLanguage();
 
-        $form = $this->getForm('language');
+        $form = $this->getForm('language', $lang);
         if ($this->getRequest()->isPost()) {
 
             //get post data, set data to from, prepare for validation

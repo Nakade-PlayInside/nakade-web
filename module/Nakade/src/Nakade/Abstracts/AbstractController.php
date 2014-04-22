@@ -62,14 +62,14 @@ class AbstractController extends AbstractActionController
      *
      * @return null
      */
-    public function getForm($typ)
+    public function getForm($typ, $lang=null)
     {
 
         if (null === $this->_formFactory) {
             return null;
         }
 
-        return $this->_formFactory->getForm($typ);
+        return $this->_formFactory->getForm($typ, $lang);
 
     }
 

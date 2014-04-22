@@ -56,16 +56,15 @@ class FormFactory extends AbstractFormFactory
     }
 
     /**
-     * @param string $typ
+     * @param string      $typ
+     * @param string|null $language
      *
      * @return mixed
      *
      * @throws \RuntimeException
      */
-    public function getForm($typ)
+    public function getForm($typ, $language=null)
     {
-
-
 
         switch (strtolower($typ)) {
 
@@ -99,6 +98,7 @@ class FormFactory extends AbstractFormFactory
 
            case "language":
                $form = new Form\LanguageForm();
+               $form->setLanguage($language);
                break;
 
 
@@ -124,4 +124,6 @@ class FormFactory extends AbstractFormFactory
 
         return $form;
     }
+
+
 }
