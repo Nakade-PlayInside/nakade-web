@@ -16,7 +16,7 @@ class EditLanguage extends AbstractProfileEditHelper
      */
     public function __invoke(User $profile)
     {
-        $this->_url = "profile/kgs";
+        $this->_url = "profile/language";
         $value = $profile->getLanguage();
 
 
