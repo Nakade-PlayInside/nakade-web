@@ -17,10 +17,27 @@ class EditLanguage extends AbstractProfileEditHelper
     public function __invoke(User $profile)
     {
         $this->_url = "profile/language";
-        $value = $profile->getLanguage();
-       
+        $type = $profile->getLanguage();
+        $value = $this->getLanguage($type);
+
         return $this->getLink($value);
     }
 
+    private function getLanguage($type)
+    {
+        $language = 'unknown';
+        switch ($type) {
+            case 'de_DE':
+                $language = $this->translate('German');
+                break;
+            case 'en_US':
+                $language = $this->translate('English');
+                break;
 
+            default:
+                $language = $this->translate('auto detect');
+        }
+
+        return $language;
+    }
 }
