@@ -282,6 +282,11 @@ class ProfileController extends AbstractController
 
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $data['uid']=$this->getProfile()->getId();
+
+                //no language selected
+                if ($data['language'] == 'no_NO') {
+                    $data['language']=null;
+                }
                 $this->getService()->editProfile($data);
 
                 //todo: refactoring

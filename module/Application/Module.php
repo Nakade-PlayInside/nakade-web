@@ -28,19 +28,14 @@ class Module
     public function onBootstrap($events)
     {
 
-        //use browser language for locale (i18n)
+        /* @var $translator \Zend\I18n\Translator\Translator */
         $translator = $events->getApplication()->getServiceManager()->get(
             'translator'
         );
 
-       // $authService = $events->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
-       // $this->getIdentity($authService);
+        $authService = $events->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
+        $locale = $this->getLocale($authService);
 
-        $locale = "de_DE";
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $languages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-            $locale=$this->getLocale($languages);
-        }
         $translator->setLocale(
             \Locale::acceptFromHttp($locale)
         );
@@ -51,7 +46,17 @@ class Module
 
     }
 
-    private function getLanguageSettings(AuthenticationService $authService)
+    private function getLocale(AuthenticationService $authService)
+    {
+        $locale = $this->getLocaleFromIdentity($authService);
+        if (is_null($locale)) {
+           $locale = $this->getLocaleByBrowser();
+        }
+        return $locale;
+
+    }
+
+    private function getLocaleFromIdentity(AuthenticationService $authService)
     {
         if (!$authService->hasIdentity()) {
             return null;
@@ -59,20 +64,21 @@ class Module
 
         /* @var $user \User\Entity\User */
         $user = $authService->getIdentity();
-        //if ($user->get)
+        return $user->getLanguage();
 
-        return $authService->getIdentity();
     }
 
-    private function getIdentity(AuthenticationService $authService)
+    private function getLocaleByBrowser()
     {
-        if (!$authService->hasIdentity()) {
-            return null;
+        $locale = "en_US"; //default
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $languages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+            $locale=$this->getLocaleByBrowserConfig($languages);
         }
-        return $authService->getIdentity();
+        return $locale;
     }
 
-    private function getLocale(array $languages)
+    private function getLocaleByBrowserConfig(array $languages)
     {
         $lang = $languages[0];
         if (strpos($lang, "de") === 0) {
