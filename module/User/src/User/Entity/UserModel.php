@@ -182,10 +182,19 @@ class UserModel
   /**
    * user's role
    * @ORM\Column(name="role", type="string")
-   * 
+   *
    * @var string
    */
   protected $role;
+
+ /**
+ * user's role
+ * @ORM\Column(name="language", type="string")
+ *
+ * @var string
+ */
+ protected $language;
+
 
   /**
    * generated password is set for mail methods
@@ -220,7 +229,7 @@ class UserModel
   }
 
   /**
-   * Sets the Title. 
+   * Sets the Title.
    * If empty string, null is set
    *
    * @param string $title
@@ -535,7 +544,7 @@ class UserModel
 
   /**
    * Sets the Date of creation
-   * 
+   *
    * @param DateTime $datetime
    *
    * @return user
@@ -558,7 +567,7 @@ class UserModel
 
   /**
    * Sets the Date of last time editing
-   * 
+   *
    * @param DateTime $datetime
    *
    * @return user
@@ -581,7 +590,7 @@ class UserModel
 
   /**
    * Sets the Date of last time pwd change
-   * 
+   *
    * @param DateTime $datetime
    *
    * @return user
@@ -677,7 +686,7 @@ class UserModel
 
   /**
    * Sets the Date of the first Login.
-   * 
+   *
    * @param DateTime $datetime
    *
    * @return user
@@ -745,5 +754,20 @@ class UserModel
       return $this->verified;
   }
 
+  /**
+  * @param string $language
+  */
+  public function setLanguage($language)
+  {
+     $this->language = $language;
+  }
+
+  /**
+  * @return string
+  */
+  public function getLanguage()
+  {
+     return $this->language;
+  }
 
 }

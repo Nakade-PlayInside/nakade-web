@@ -14,10 +14,11 @@ namespace Application;
 use Zend\Mvc\ModuleRouteListener;
 
 // Add these import statements:
-use Application\Model\Blog;
-use Application\Model\BlogTable;
+use Blog\Model\Blog;
+use Blog\Model\BlogTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Authentication\AuthenticationService;
 
 class Module
 {
@@ -27,16 +28,14 @@ class Module
     public function onBootstrap($events)
     {
 
-        //use browser language for locale (i18n)
+        /* @var $translator \Zend\I18n\Translator\Translator */
         $translator = $events->getApplication()->getServiceManager()->get(
             'translator'
         );
 
-        $locale = "de_DE";
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $languages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-            $locale=$this->getLocale($languages);
-        }
+        $authService = $events->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
+        $locale = $this->getLocale($authService);
+
         $translator->setLocale(
             \Locale::acceptFromHttp($locale)
         );
@@ -47,14 +46,48 @@ class Module
 
     }
 
-    private function getLocale(array $languages)
+    private function getLocale(AuthenticationService $authService)
+    {
+        $locale = $this->getLocaleFromIdentity($authService);
+        if (is_null($locale)) {
+           $locale = $this->getLocaleByBrowser();
+        }
+        return $locale;
+
+    }
+
+    private function getLocaleFromIdentity(AuthenticationService $authService)
+    {
+        if (!$authService->hasIdentity()) {
+            return null;
+        }
+
+        /* @var $user \User\Entity\User */
+        $user = $authService->getIdentity();
+        return $user->getLanguage();
+
+    }
+
+    private function getLocaleByBrowser()
+    {
+        $locale = "en_US"; //default
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $languages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+            $locale=$this->getLocaleByBrowserConfig($languages);
+        }
+        return $locale;
+    }
+
+    private function getLocaleByBrowserConfig(array $languages)
     {
         $lang = $languages[0];
         if (strpos($lang, "de") === 0) {
             return "de_DE";
         }
-        return 'en_US';
+        return $lang;
     }
+
+
     /**
      * @return mixed
      */

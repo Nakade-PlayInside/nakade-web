@@ -1,21 +1,21 @@
 <?php
 /**
- * The config information is passed to the relevant components by the 
- * ServiceManager. The controllers section provides a list of all the 
- * controllers provided by the module. 
- * 
- * Within the view_manager section, we add our view directory to the 
- * TemplatePathStack configuration. 
- * 
- * @return array 
+ * The config information is passed to the relevant components by the
+ * ServiceManager. The controllers section provides a list of all the
+ * controllers provided by the module.
+ *
+ * Within the view_manager section, we add our view directory to the
+ * TemplatePathStack configuration.
+ *
+ * @return array
  */
 namespace User;
 
 return array(
-    
-     'view_helpers' => array(  
-        'invokables' => array(  
-            'salutation' => 'User\View\Helper\Salutation', 
+
+     'view_helpers' => array(
+        'invokables' => array(
+            'salutation' => 'User\View\Helper\Salutation',
             'birthday'   => 'User\View\Helper\Birthday',
             'showActive'    => 'User\View\Helper\ShowActive',
             'showTrigger'   => 'User\View\Helper\ShowTrigger',
@@ -27,53 +27,54 @@ return array(
             'editEmail'     => 'User\View\Helper\EditEmail',
             'editPassword'  => 'User\View\Helper\EditPassword',
             'editKgs'  => 'User\View\Helper\EditKgs',
-            // more helpers here ...  
-        )  
+            'editLanguage'  => 'User\View\Helper\EditLanguage',
+            // more helpers here ...
+        )
     ),
-    
+
     'controllers' => array(
-        
+
         'factories' => array(
-            'User\Controller\User' => 
+            'User\Controller\User' =>
                      'User\Services\UserControllerFactory',
-            'User\Controller\Profile' => 
+            'User\Controller\Profile' =>
                      'User\Services\ProfileControllerFactory',
-            'User\Controller\Forgot' => 
+            'User\Controller\Forgot' =>
                      'User\Services\ForgotControllerFactory',
-            'User\Controller\Verify' => 
+            'User\Controller\Verify' =>
                      'User\Services\VerifyControllerFactory',
-            
+
         ),
     ),
-    //The name of the route is ‘user’ and has a type of ‘segment’. The segment 
-    //route allows us to specify placeholders in the URL pattern (route) that 
-    //will be mapped to named parameters in the matched route. 
-    //In this case, the route is ``/user[/:action][/:id]`` which will match any 
-    //URL that starts with /user. 
-    //The next segment will be an optional action name, and then finally the 
-    //next segment will be mapped to an optional id. 
-    //The square brackets indicate that a segment is optional. 
-    //The constraints section allows us to ensure that the characters within a 
-    //segment are as expected, so we have limited actions to starting with a 
-    //letter and then subsequent characters only being alphanumeric, underscore 
+    //The name of the route is ‘user’ and has a type of ‘segment’. The segment
+    //route allows us to specify placeholders in the URL pattern (route) that
+    //will be mapped to named parameters in the matched route.
+    //In this case, the route is ``/user[/:action][/:id]`` which will match any
+    //URL that starts with /user.
+    //The next segment will be an optional action name, and then finally the
+    //next segment will be mapped to an optional id.
+    //The square brackets indicate that a segment is optional.
+    //The constraints section allows us to ensure that the characters within a
+    //segment are as expected, so we have limited actions to starting with a
+    //letter and then subsequent characters only being alphanumeric, underscore
     //or hyphen. We also limit the id to a number.
     'router' => array(
         'routes' => array(
             //USER
             'user' => array(
-              
+
                 'type'  => 'Literal',
                 'options' => array(
-                     'route'    => '/user',  
+                     'route'    => '/user',
                      'defaults' => array(
                         'controller' => 'User\Controller\User',
                         'action'     => 'index',
                     ),
                 ),
-           
+
                 'may_terminate' => true,
                 'child_routes' => array(
-                    
+
                     //add user
                     'add' => array(
                         'type'    => 'Segment',
@@ -84,7 +85,7 @@ return array(
                             ),
                         ),
                     ),
-                
+
                     //edit user
                     'edit' => array(
                         'type'    => 'Segment',
@@ -99,7 +100,7 @@ return array(
                             ),
                         ),
                     ),
-                    
+
                     //deactivate user
                     'delete' => array(
                         'type'    => 'Segment',
@@ -114,7 +115,7 @@ return array(
                             ),
                         ),
                     ),
-                    
+
                     //activate user
                     'undelete' => array(
                         'type'    => 'Segment',
@@ -129,7 +130,7 @@ return array(
                             ),
                         ),
                     ),
-                    
+
                     //reset password
                     'resetPassword' => array(
                         'type'    => 'Segment',
@@ -144,13 +145,13 @@ return array(
                             ),
                         ),
                     ),
-                    
+
                 ),
             ),
-            
-            
-            
-            
+
+
+
+
             //PROFILE
             'profile' => array(
                 'type'    => 'segment',
@@ -196,38 +197,38 @@ return array(
                     ),
                 ),
             ),
-            
+
         ),
     ),
-    
-    
+
+
     'view_manager' => array(
         'doctype'                  => 'HTML5',
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
     ),
-    
+
     'service_manager' => array(
         'factories' => array(
-            'MailMessage'   => 
+            'MailMessage'   =>
                     'Mail\Service\MailMessageFactory',
-            'MailTransport' => 
+            'MailTransport' =>
                     'Mail\Service\MailTransportFactory',
-            'User\Factory\MailFactory'    => 
+            'User\Factory\MailFactory'    =>
                     'User\Factory\MailFactory',
-            'User\Factory\MapperFactory'  => 
+            'User\Factory\MapperFactory'  =>
                     'User\Factory\MapperFactory',
-            'User\Factory\FormFactory'  => 
+            'User\Factory\FormFactory'  =>
                     'User\Factory\FormFactory',
-            'User\Services\ProfileService' => 
+            'User\Services\ProfileService' =>
                     'User\Services\ProfileServiceFactory',
-            'User\Services\UserService'    => 
+            'User\Services\UserService'    =>
                     'User\Services\UserServiceFactory',
             'translator'  => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
-    
+
     'translator' => array(
         'translation_file_patterns' => array(
             array(
@@ -238,8 +239,8 @@ return array(
             ),
         ),
     ),
-    
-    //Doctrine2 
+
+    //Doctrine2
     'doctrine' => array(
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(
@@ -255,5 +256,5 @@ return array(
            )
         )
     ),
-    
+
 );
