@@ -284,6 +284,11 @@ class ProfileController extends AbstractController
                 $data['uid']=$this->getProfile()->getId();
                 $this->getService()->editProfile($data);
 
+                //todo: refactoring
+                $auth = $this->getService()->getAuthService();
+                $user = $auth->getIdentity();
+                $user->setLanguage($data['language']);
+
                 return $this->redirect()->toRoute('profile');
             }
         }

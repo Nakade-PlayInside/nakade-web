@@ -14,12 +14,15 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class ProfileServiceFactory extends AbstractService
 {
 
+    private $auth;
+
     /**
      * Creating service for the controller.
      * Setting a mapper for database action.
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
-     * @return ProfileServiceFactory
+     * @param ServiceLocatorInterface $services
+     *
+     * @return $this
      *
      */
     public function createService(ServiceLocatorInterface $services)
@@ -27,8 +30,17 @@ class ProfileServiceFactory extends AbstractService
         $mapper = $services->get('User\Factory\MapperFactory');
         $this->setMapperFactory($mapper);
 
+        $this->auth = $services->get('Zend\Authentication\AuthenticationService');
         return $this;
 
+    }
+
+    /**
+     * @return \Zend\Authentication\AuthenticationService
+     */
+    public function getAuthService()
+    {
+        return $this->auth;
     }
 
     /**
@@ -37,6 +49,7 @@ class ProfileServiceFactory extends AbstractService
      * Returns boolean.
      *
      * @param array $data
+     *
      * @return boolean
      */
     public function editProfile($data)
