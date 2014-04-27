@@ -45,7 +45,7 @@ class UserServiceFactory extends AbstractService
         $this->_expire = isset($config['User']['email_options']['expire']) ?
             $config['User']['email_options']['expire'] : 72;
 
-        $this->_mailFactory = $services->get('User\Factory\MailFactory');
+        $this->_mailFactory = $services->get('User\Factory\UserMailFactory');
 
         $mapper = $services->get('User\Factory\MapperFactory');
         $this->setMapperFactory($mapper);
@@ -69,12 +69,13 @@ class UserServiceFactory extends AbstractService
          //make new user
          $user = new User();
          $user->exchangeArray($data);
-         $this->getMapper('user')->save($user);
+       //  $this->getMapper('user')->save($user);
 
          //send verify mail to user
          $mail = $this->getMailFactory()->getMail('verify');
          $mail->setData($data);
          $mail->setRecipient($user->getEmail(), $user->getName());
+
          $mail->send();
 
     }

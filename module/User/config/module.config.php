@@ -215,8 +215,8 @@ return array(
                     'Mail\Service\MailMessageFactory',
             'MailTransport' =>
                     'Mail\Service\MailTransportFactory',
-            'User\Factory\MailFactory'    =>
-                    'User\Factory\MailFactory',
+            'User\Factory\UserMailFactory'    =>
+                    'User\Factory\UserMailFactory',
             'User\Factory\MapperFactory'  =>
                     'User\Factory\MapperFactory',
             'User\Factory\FormFactory'  =>

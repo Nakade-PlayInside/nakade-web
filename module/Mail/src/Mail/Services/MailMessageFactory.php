@@ -3,6 +3,7 @@
 namespace Mail\Services;
 
 use Zend\Mail\Message;
+use Zend\Mime\Mime;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
@@ -258,7 +259,20 @@ class MailMessageFactory implements FactoryInterface
             throw new RuntimeException(
                 'Mail body missing.');
         }
-        $message->setBody($body);
+
+        $html = new \Zend\Mime\Part($body);
+        $html->type = Mime::TYPE_HTML;
+        $html->charset= "charset=UTF-8";
+
+        $text = new \Zend\Mime\Part($body);
+        $text->type = "text/plain";
+        $text->charset= "charset=UTF-8";
+
+        $content = new \Zend\Mime\Message;
+        $content->setParts(array($html, $text));
+
+        $message->setBody($content);
+
 
         return $message;
     }

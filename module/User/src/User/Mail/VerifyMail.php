@@ -3,16 +3,19 @@ namespace User\Mail;
 
 use Nakade\Abstracts\AbstractMail;
 use Zend\Mime;
+use Zend\Validator\Exception\InvalidArgumentException;
+
 
 /**
  * Used for sending a verification mail to the registered user.
- * Mail has an expiration date and contents credentials and an 
+ * Mail has an expiration date and contents credentials and an
  * activation link. Mail is translated.
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class VerifyMail extends AbstractMail {
-   
+class VerifyMail extends AbstractMail
+{
+
     /**
      * mail template keys as constants
      */
@@ -23,13 +26,13 @@ class VerifyMail extends AbstractMail {
     const CONTACT      = 'emailContact';
     const LINK         = 'emailActivation';
     const SUBJECT      = 'emailSubject';
-   
+
     /**
      * mail template
-     * 
+     *
      * @var array
      */
-    protected $_mailTemplates = array(
+    protected $mailTemplates = array(
         self::SALUTATION => "Welcome %firstname%,\n\nThank you for your registration at nakade.de\n\n",
         self::ACCOUNT    => "Your Credentials:\n\nusername: %username%\npassword: %password%\n\n",
         self::VERIFY     => "\nYour account requires activation during the next %expire% hours. Please click on the link for activation. If you fail to activate your account in time, you have to reset your password using the \"forgot password\" option.\n",
@@ -38,13 +41,13 @@ class VerifyMail extends AbstractMail {
         self::LINK       => "\n\n%activationLink%\n\n",
         self::SUBJECT    => "%prefix% - Your Credentials",
     );
-    
-    
+
+
     /**
-     * used placeholder vars 
+     * used placeholder vars
      * @var array
      */
-    protected $_mailVariables = array(
+    protected $mailVariables = array(
         'firstname' => 'firstname',
         'username'  => 'username',
         'password'  => 'password',
@@ -56,11 +59,11 @@ class VerifyMail extends AbstractMail {
         'activationLink'   => 'activationLink',
         'prefix'    => 'prefix',
     );
-    
+
 
     /**
-     * properties 
-     * @var mixed 
+     * properties
+     * @var mixed
      */
     protected $firstname;
     protected $username;
@@ -68,14 +71,14 @@ class VerifyMail extends AbstractMail {
     protected $verifyString;
     protected $verifyUrl="http://www.nakade.de";
     protected $activationLink;
-    
+
     protected $expire='72';
     protected $prefix = 'Nakade';
     protected $signature='Nakade Team';
-    protected $club='Berliner Baduk Club e.V.'; 
+    protected $club='Berliner Baduk Club e.V.';
     protected $register_court='Berlin-Charlottenburg';
     protected $register_no='VR31852';
-    
+
     /**
      * options :
      *  - expire -> hours
@@ -84,26 +87,29 @@ class VerifyMail extends AbstractMail {
      *  - club -> contact name
      *  - register_court => Amtsgericht
      *  - register_no    => Registriernummer
-     * 
-     * @param \User\Mail\Traversable $options
-     * @throws Exception\InvalidArgumentException
+     *
+     * @param array $options
+     *
+     * @throws InvalidArgumentException
      */
-    public function __construct($options=null) {
-        
-        if (!is_array($options) && !$options instanceof Traversable) {
-            throw new Exception\InvalidArgumentException(__METHOD__ . ' expects an array or Traversable');
+    public function __construct(array $options=null)
+    {
+
+        if (!is_array($options) && !$options instanceof \Traversable) {
+            throw new InvalidArgumentException(__METHOD__ . ' expects an array or Traversable');
         }
-        
+
         foreach ($options as $name => $option) {
-            if(property_exists($this, $name))
-                $this->$name = $option;    
+            if (property_exists($this, $name)) {
+                $this->$name = $option;
+            }
         }
-      
-    }    
-    
+
+    }
+
     /**
-     * Translated mail template. Needed for Poedit usage. 
-     * 
+     * Translated mail template. Needed for Poedit usage.
+     *
      * @return array
      */
     public function getTranslatedMailTemplate()
@@ -113,32 +119,32 @@ class VerifyMail extends AbstractMail {
             $this->translate("Welcome %firstname%"),
             $this->translate("Thank you for your registration at nakade.de")
         );
-        
+
         $account = sprintf("%s:\n\n%s: %%username%%\n%s: %%password%%\n\n",
             $this->translate("Your Credentials"),
             $this->translate("username"),
-            $this->translate("password")    
+            $this->translate("password")
         );
-        
+
         $verify = sprintf("\n%s %s %s\n",
             $this->translate("Your account requires activation during the next %expire% hours."),
             $this->translate("Please click on the link for activation."),
             $this->translate("If you fail to activate your account in time, you have to reset your password using the 'forgot password' option.")
         );
-        
+
         $greeting = sprintf("\n%s\n\n%s\n",
             $this->translate("May the stones be with you."),
-            $this->translate("Your %signature%.")    
+            $this->translate("Your %signature%.")
         );
-        
+
         $contact = sprintf("\n\n%%club%%\n%s: %%register_court%%\n%s: %%register_no%%",
             $this->translate("Court of Registration"),
-            $this->translate("Register No.")    
+            $this->translate("Register No.")
         );
-        
+
         $subject = $this->translate("%prefix% - Your Credentials");
-        $this->_mailTemplates[self::SUBJECT] = $subject;
-        
+        $this->mailTemplates[self::SUBJECT] = $subject;
+
         $template = array(
             self::SALUTATION => $salutation,
             self::ACCOUNT    => $account,
@@ -148,9 +154,9 @@ class VerifyMail extends AbstractMail {
             self::LINK       => "\n\n%activationLink%\n\n",
             self::SUBJECT    => $subject,
         );
-        
+
         return $template;
-        
+
     }
 
 
@@ -162,74 +168,78 @@ class VerifyMail extends AbstractMail {
      *        - 'lastname'      => user's last name
      *        - 'generated'     => pwd in clear text for credentials
      *        - 'email'         => email adress for sending to
-     *  
+     *
      * @param array $data
      */
     public function setData($data)
     {
-        
-        $this->verifyUrl = isset($data['verifyUrl']) ? 
+
+        $this->verifyUrl = isset($data['verifyUrl']) ?
                 $data['verifyUrl'] : null;
-        
-         $this->verifyString = isset($data['verifyString']) ? 
+
+         $this->verifyString = isset($data['verifyString']) ?
                 $data['verifyString'] : null;
-         
+
         $this->firstname = isset($data['firstname'])? $data['firstname'] : null;
         $this->username  = isset($data['username']) ? $data['username'] : null;
         $this->password  = isset($data['generated']) ? $data['generated'] : null;
-        
+
         $email = isset($data['email']) ? $data['email'] : null;
         $this->activationLink = sprintf('%s/verify?email=%s&verify=%s',
-            $this->verifyUrl,    
+            $this->verifyUrl,
             $email,
-            $this->verifyString    
+            $this->verifyString
         );
-        
-       
+
+
     }
-   
+
     /**
      * Replaces all placeholder with property values.
      *
      * @param string $message
+     *
      * @return string
      */
     protected function setPlaceholder($message)
     {
-        foreach ($this->_mailVariables as $ident => $property) {
+        foreach ($this->mailVariables as $ident => $property) {
             $value = $this->$property;
             $message = str_replace("%$ident%", (string) $value, $message);
         }
-        
+
         return $message;
     }
-    
-    
+
+
     /**
      * Get the mail subject
-     * 
+     *
      * @return string
      */
     public function getSubject()
     {
-        $temp    = $this->_mailTemplates[self::SUBJECT];
+        $temp    = $this->mailTemplates[self::SUBJECT];
         $subject = $this->translate($temp);
-        
+
         return $this->setPlaceholder($subject);
     }
-    
+
     /**
      * Composing the mail content by templates
-     * 
+     *
      * @param array $template
+     *
      * @return string
      */
-    protected function createMail($template=null)
+    protected function createMail(array $template=null)
     {
-       
-        if(null===$template)
-            $template = $this->_mailTemplates;
-        
+
+        if (is_null($template)) {
+            $template = $this->mailTemplates;
+        }
+
+
         $message  = "";
         $message .= $template[self::SALUTATION];
         $message .= $template[self::ACCOUNT];
@@ -237,33 +247,28 @@ class VerifyMail extends AbstractMail {
         $message .= $template[self::LINK];
         $message .= $template[self::GREETING];
         $message .= $template[self::CONTACT];
-       
+
         return $this->setPlaceholder($message);
-        
+
     }
-    
+
     /**
      * Get the HTML mail body
-     * 
+     *
      * @return \Zend\Mime\Message
      */
     public function getBody()
     {
-         
+
          $template    =  $this->getTranslatedMailTemplate();
          $translation = $this->createMail($template);
-         $html = $this->getHTMLMessage($translation);
-         
-         $body = new Mime\Message;
-         $body->setParts(array($html));
-         
-         return $body;
+        // $html = $this->getHTMLMessage($translation);
+
+        // $body = new Mime\Message;
+        // $body->setParts(array($html));
+
+         return $translation;
     }
-    
-    
-    
-    
 
 }
 
-?>
