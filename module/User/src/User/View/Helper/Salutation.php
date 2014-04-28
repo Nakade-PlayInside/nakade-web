@@ -8,7 +8,11 @@ use Nakade\Abstracts\AbstractViewHelper;
  */
 class Salutation extends AbstractViewHelper
 {
-    
+    /**
+     * @param string $sex
+     *
+     * @return string
+     */
     public function __invoke($sex)
     {
         //default
@@ -16,17 +20,17 @@ class Salutation extends AbstractViewHelper
             'sex'   => 'female',
             'image' => 'images/small_female.png',
         );
-        
-        if(strtolower($sex)=='m') {
+
+        if (strtolower($sex) == 'm') {
             $placeholder['sex']   = 'male';
-            $placeholder['image'] = 'images/small_male.png'; 
+            $placeholder['image'] = 'images/small_male.png';
         }
-        
+
         $img = '<img alt="%sex" src="%image%">';
-        
+
         return $this->setPlaceholders($img, $placeholder);
-       
+
     }
-    
-   
+
+
 }

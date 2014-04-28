@@ -8,7 +8,8 @@ class Birthday extends DefaultField
      *
      * @return array
      */
-    public function getField() {
+    public function getField()
+    {
 
         //birthday
        return array(
@@ -28,7 +29,7 @@ class Birthday extends DefaultField
 
     /**
      * get the InputFilter
-     * 
+     *
      * @return array
      */
     public function getFilter()
@@ -46,4 +47,3 @@ class Birthday extends DefaultField
          );
     }
 }
-?>

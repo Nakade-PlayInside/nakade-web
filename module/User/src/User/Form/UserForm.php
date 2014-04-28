@@ -13,10 +13,12 @@ class UserForm extends DefaultForm
 {
     private $birthday;
 
-
+    /**
+     * @return Birthday
+     */
     public function getBirthday()
     {
-        if(is_null($this->birthday)) {
+        if (is_null($this->birthday)) {
             $this->birthday=new Birthday($this->getTranslator(), $this->getTranslatorTextDomain());
         }
         return $this->birthday;
@@ -26,7 +28,8 @@ class UserForm extends DefaultForm
      * Init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() {
+    public function init()
+    {
 
 
         $this->add(
@@ -45,23 +48,23 @@ class UserForm extends DefaultForm
 
         //Title
         $this->add(
-            $this->getTextField('title','Title (opt.):')
+            $this->getTextField('title', 'Title (opt.):')
         );
 
         //first name
         $this->add(
-            $this->getTextField('firstname','First Name:')
+            $this->getTextField('firstname', 'First Name:')
 
         );
 
         //family name
         $this->add(
-            $this->getTextField('lastname','Family Name:')
+            $this->getTextField('lastname', 'Family Name:')
         );
 
         //nick name
         $this->add(
-            $this->getTextField('nickname','Nick (opt.):')
+            $this->getTextField('nickname', 'Nick (opt.):')
 
         );
 
@@ -77,21 +80,21 @@ class UserForm extends DefaultForm
             )
         );
 
-        
+
          //birthday
         $this->add($this->getBirthday()->getField());
-        
+
         //User name
         $this->add(
-            $this->getTextField('username','User Name:')
+            $this->getTextField('username', 'User Name:')
 
         );
 
         //kgs name
         $this->add(
-            $this->getTextField('kgs','KGS (opt.):')
+            $this->getTextField('kgs', 'KGS (opt.):')
         );
-        
+
         //email
         $this->add(
             array(
@@ -99,7 +102,7 @@ class UserForm extends DefaultForm
                 'type' => 'Zend\Form\Element\Email',
                 'options' => array(
                     'label' =>  $this->translate('email:'),
-                    
+
                 ),
                 'attributes' => array(
                     'multiple' => false,
@@ -141,23 +144,23 @@ class UserForm extends DefaultForm
         );
     }
 
-     
+
     /**
      * get the InputFilter
-     * 
+     *
      * @return \Zend\InputFilter\InputFilter
      */
     public function getFilter()
     {
         $this->filter = new InputFilter();
-        $this->setPersonFilter('title','10',false);
-        $this->setPersonFilter('firstname','20');
-        $this->setPersonFilter('lastname','30');
+        $this->setPersonFilter('title', '10', false);
+        $this->setPersonFilter('firstname', '20');
+        $this->setPersonFilter('lastname', '30');
 
-        $this->filter->add($this->getUniqueDbFilter('kgs', null,'50',false));
-        $this->filter->add($this->getUniqueDbFilter('nickname',null,'20',false));
-        $this->filter->add($this->getUniqueDbFilter('username',null,'20'));
-        $this->filter->add($this->getUniqueDbFilter('email','6','120'));
+        $this->filter->add($this->getUniqueDbFilter('kgs', null, '50', false));
+        $this->filter->add($this->getUniqueDbFilter('nickname', null, '20', false));
+        $this->filter->add($this->getUniqueDbFilter('username', null, '20'));
+        $this->filter->add($this->getUniqueDbFilter('email', '6', '120'));
         $this->filter->add($this->getBirthday()->getFilter());
 
         return $this->filter;
@@ -173,7 +176,7 @@ class UserForm extends DefaultForm
                 'required' => $required,
                 'filters'  => $this->getStripFilter(),
                 'validators' => array(
-                    $this->getStringLengthConfig(null,$max),
+                    $this->getStringLengthConfig(null, $max),
                 )
             )
         );
@@ -181,4 +184,4 @@ class UserForm extends DefaultForm
 
 
 }
-?>
+

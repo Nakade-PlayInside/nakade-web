@@ -58,8 +58,9 @@ class ProfileServiceFactory extends AbstractService
         $data['edit'] = new \DateTime();
 
         $user = $this->getMapper('user')->getUserById($id);
-        if(null === $user)
+        if (null === $user) {
             return false;
+        }
 
         $user->populate($data);
         return $this->getMapper('user')->save($user);
@@ -71,6 +72,7 @@ class ProfileServiceFactory extends AbstractService
      * Forwared to editProfile method.
      *
      * @param array $data
+     *
      * @return boolean
      */
     public function editPassword($data)

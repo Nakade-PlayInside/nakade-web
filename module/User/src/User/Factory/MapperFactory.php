@@ -21,7 +21,7 @@ class MapperFactory implements FactoryInterface
      *
      * @return $this|mixed
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function createService(ServiceLocatorInterface $services)
     {
@@ -29,7 +29,7 @@ class MapperFactory implements FactoryInterface
         $this->_entityManager = $services->get('Doctrine\ORM\EntityManager');
 
         if (null === $this->_entityManager) {
-            throw new RuntimeException(
+            throw new \RuntimeException(
                 sprintf('Entity manager could not be found in service.')
             );
         }
@@ -46,7 +46,7 @@ class MapperFactory implements FactoryInterface
      *
      * @return string
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function getMapper($typ)
     {
@@ -56,9 +56,10 @@ class MapperFactory implements FactoryInterface
            case "user":   $mapper = new Mapper\UserMapper();
                break;
 
-           default      :   throw new RuntimeException(
-               sprintf('An unknown mapper type was provided.')
-           );
+           default:
+               throw new \RuntimeException(
+                   sprintf('An unknown mapper type was provided.')
+               );
         }
 
         $mapper->setEntityManager($this->_entityManager);

@@ -15,9 +15,12 @@ class ForgotPasswordForm extends DefaultForm
 
     private $field;
 
+    /**
+     * @return ForgotPassword
+     */
     public function getField()
     {
-        if(is_null($this->field)) {
+        if (is_null($this->field)) {
             $this->field=new ForgotPassword($this->getTranslator(), $this->getTranslatorTextDomain());
         }
         return $this->field;
@@ -27,28 +30,29 @@ class ForgotPasswordForm extends DefaultForm
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() {
-       
+    public function init()
+    {
+
         //email
         $this->add($this->getField()->getField());
         $this->setDefaultFields();
-       
-    } 
-    
-    
-    
-     
+
+    }
+
+
+
+
     /**
      * get the InputFilter
-     * 
+     *
      * @return \Zend\InputFilter\InputFilter
      */
     public function getFilter()
     {
         $filter = new InputFilter();
         $filter->add($this->getField()->getFilter());
-         
+
          return $filter;
     }
 }
-?>
+

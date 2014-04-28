@@ -86,7 +86,7 @@ class UserController extends AbstractController
     /**
      * reset the user's password (send mail)
      *
-     * @return type
+     * @return \Zend\Http\Response
      */
     public function resetPasswordAction()
     {
@@ -150,7 +150,7 @@ class UserController extends AbstractController
     /**
      * deactivate a user
      *
-     * @return type
+     * @return \Zend\Http\Response
      */
     public function deleteAction()
     {
@@ -164,7 +164,7 @@ class UserController extends AbstractController
     /**
      * reactivate a user
      *
-     * @return type
+     * @return \Zend\Http\Response
      */
     public function undeleteAction()
     {

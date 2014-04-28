@@ -21,6 +21,7 @@ class UserControllerFactory implements FactoryInterface
      * forms.
      *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
+     *
      * @return UserController
      */
     public function createService(ServiceLocatorInterface $services)

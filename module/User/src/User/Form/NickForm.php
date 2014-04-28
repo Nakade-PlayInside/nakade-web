@@ -11,20 +11,21 @@ use \Zend\InputFilter\InputFilter;
  */
 class NickForm extends DefaultForm
 {
-  
+
 
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() {
-       
+    public function init()
+    {
+
         //nick name
         $this->add(
-            $this->getTextField('nickname','Nick (opt.):')
+            $this->getTextField('nickname', 'Nick (opt.):')
 
         );
-        
+
         //anonym
         $this->add(
             array(
@@ -36,25 +37,24 @@ class NickForm extends DefaultForm
                 ),
             )
         );
-        
+
         $this->setDefaultFields();
-       
-    } 
-    
-    
-    
-     
+
+    }
+
+
+
+
     /**
      * get the InputFilter
-     * 
+     *
      * @return \Zend\InputFilter\InputFilter
      */
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add($this->getUniqueDbFilter('nickname', null, '20',false));
+        $filter->add($this->getUniqueDbFilter('nickname', null, '20', false));
 
         return $filter;
     }
 }
-?>

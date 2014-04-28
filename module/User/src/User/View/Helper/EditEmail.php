@@ -7,15 +7,19 @@ use User\Entity\User;
  */
 class EditEmail extends AbstractProfileEditHelper
 {
-        
+    /**
+     * @param User $profile
+     *
+     * @return mixed|string
+     */
     public function __invoke(User $profile)
     {
         $this->_url = "profile/email";
-        $value = $profile->getEmail(); 
-        
-        
+        $value = $profile->getEmail();
+
+
         return $this->getLink($value);
     }
-    
-       
+
+
 }

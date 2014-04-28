@@ -11,13 +11,14 @@ use \Zend\InputFilter\InputFilter;
  */
 class PasswordForm extends DefaultForm
 {
-  
+
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() {
-       
+    public function init()
+    {
+
          //password
         $this->add(
             array(
@@ -25,63 +26,63 @@ class PasswordForm extends DefaultForm
                 'type' => 'Zend\Form\Element\Password',
                 'options' => array(
                     'label' =>  $this->translate('enter new password:'),
-                    
+
                 ),
-                
+
             )
         );
-        
+
         $this->add(
             array(
                 'name' => 'repeat',
                 'type' => 'Zend\Form\Element\Password',
                 'options' => array(
                     'label' =>  $this->translate('repeat new password:'),
-                    
+
                 ),
-                
+
             )
         );
-        
+
         $this->setDefaultFields();
-       
-    } 
-    
-    
-    
-     
+
+    }
+
+
+
+
     /**
      * get the InputFilter
-     * 
+     *
      * @return \Zend\InputFilter\InputFilter
      */
     public function getFilter()
     {
         $filter = new InputFilter();
         $filter->add(
-             array(
+            array(
                  'name' => 'password',
                  'required' => true,
                  'filters'  => $this->getStripFilter(),
                  'validators' => array(
-                     $this->getStringLengthConfig(6,50),
+                     $this->getStringLengthConfig(6, 50),
                     array('name' => 'Identical',
                           'break_chain_on_failure' => true,
                           'options' => array (
-                              'token' => 'repeat', 
-                          )  
-                     ), 
+                              'token' => 'repeat',
+                          )
+                     ),
                     array('name' => 'User\Form\Validator\PasswordComplexity',
                           'break_chain_on_failure' => true,
                           'options' => array (
                               'length'   => '8',
                               'treshold' => '80',
-                            
+
                           )
                     ),
                     array('name' => 'User\Form\Validator\CommonPassword',
                           'break_chain_on_failure' => true,
-                          'options' => array (  
+                          'options' => array (
                                'commons'  => array(
                                                 'password',
                                                 '123456',
@@ -96,14 +97,14 @@ class PasswordForm extends DefaultForm
                                                 'welcome',
                                                 'shadow',
                               )
-                         )       
+                         )
                     ),
-                     
+
                  )
              )
-         );
-         
+        );
+
          return $filter;
     }
 }
-?>
+
