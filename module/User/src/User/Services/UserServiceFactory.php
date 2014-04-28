@@ -29,7 +29,8 @@ class UserServiceFactory extends AbstractService
      * Setting a mapper for database action and a mail factory for
      * sending mails.
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
+     * @param ServiceLocatorInterface $services
+     *
      * @return UserServiceFactory
      *
      */
@@ -37,7 +38,7 @@ class UserServiceFactory extends AbstractService
     {
 
         $config  = $services->get('config');
-        if ($config instanceof Traversable) {
+        if ($config instanceof \Traversable) {
             $config = ArrayUtils::iteratorToArray($config);
         }
 
@@ -58,10 +59,9 @@ class UserServiceFactory extends AbstractService
     /**
      * adding an user
      *
-     * @param Request $request
      * @param array $data
      */
-    public function addUser($data)
+    public function addUser(array $data)
     {
          //sets pwd, verifyStr etc
          $this->prepareData($data);
@@ -71,7 +71,7 @@ class UserServiceFactory extends AbstractService
          $user->exchangeArray($data);
        //  $this->getMapper('user')->save($user);
 
-         //send verify mail to user
+         /* @var $mail \User\Mail\UserMail */
          $mail = $this->getMailFactory()->getMail('verify');
          $mail->setData($data);
          $mail->setRecipient($user->getEmail(), $user->getName());
@@ -84,21 +84,22 @@ class UserServiceFactory extends AbstractService
      * prepraring data before filling the entity.
      * Params is given by reference..
      *
-     * @param array $data
+     * @param array &$data
+     *
      * @throws RuntimeException
      */
-    private  function prepareData(&$data)
+    private  function prepareData(array &$data)
     {
          $key = 'request';
-         if(!array_key_exists($key,$data)) {
+         if (!array_key_exists($key, $data)) {
              throw new RuntimeException(
-                   __METHOD__ . ' expects an array key: ' . $key
+                 __METHOD__ . ' expects an array key: ' . $key
              );
          }
 
          $request = $data[$key];
          $uri       = $request->getUri();
-         $verifyUrl = sprintf('%s://%s',$uri->getScheme(), $uri->getHost());
+         $verifyUrl = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
 
          $data['verifyString'] = VerifyStringGenerator::generateVerifyString();
          $data['verifyUrl']    = $verifyUrl;
@@ -109,8 +110,8 @@ class UserServiceFactory extends AbstractService
 
          //expire verification
          $now  = new \DateTime();
-         $duetime  = sprintf('+ %s hour', $this->_expire);
-         $data['due']    = $now->modify($duetime);
+         $dueTime  = sprintf('+ %s hour', $this->_expire);
+         $data['due'] = $now->modify($dueTime);
 
          $data['verified'] = 0;
     }
@@ -137,14 +138,15 @@ class UserServiceFactory extends AbstractService
      *
      * @param string $email
      * @param string $verifyString
+     *
      * @return boolean
      */
     public function activateUser($email, $verifyString)
     {
-        $user = $this->getMapper('user')
-                           ->getActivateUser($email, $verifyString);
+        /* @var $user User */
+        $user = $this->getMapper('user')->getActivateUser($email, $verifyString);
 
-        if(null===$user) {
+        if (null === $user) {
             return false;
         }
 
@@ -159,13 +161,16 @@ class UserServiceFactory extends AbstractService
      * generated and all credentials are sent to the given email.
      *
      * @param array $data
+      *
      * @return boolean
      */
-    public function forgotPassword($data)
+    public function forgotPassword(array $data)
     {
+        /* @var $user User */
         $user = $this->getMapper('user')->getUserByEmail($data['email']);
-        if(null === $user)
+        if (null === $user) {
             return false;
+        }
 
         $data['uid'] = $user->getId();
         return $this->resetPassword($data);
@@ -177,22 +182,24 @@ class UserServiceFactory extends AbstractService
      * is send to the user by email and needs to be verified.
      *
      * @param array $data
+     *
      * @throws RuntimeException
      */
-    public function resetPassword($data)
+    public function resetPassword(array $data)
     {
          $key = 'uid';
-         if(!array_key_exists($key,$data)) {
+         if (!array_key_exists($key, $data)) {
              throw new RuntimeException(
-                   __METHOD__ . ' expects an array key: ' . $key
+                 __METHOD__ . ' expects an array key: ' . $key
              );
          }
 
+        /* @var $user User */
          $user = $this->getMapper('user')->getUserById($data[$key]);
 
-         if(null===$user) {
+         if (null === $user) {
              throw new RuntimeException(
-                   sprintf("User with id:%s not found", $data[$key])
+                 sprintf("User with id:%s not found", $data[$key])
              );
          }
 
@@ -205,10 +212,11 @@ class UserServiceFactory extends AbstractService
          $mailData = array_merge($data, $user->getArrayCopy());
 
         //send verify mail to user
+        /* @var $mail \User\Mail\UserMail */
          $mail = $this->getMailFactory()->getMail('password');
          $mail->setData($mailData);
          $mail->setRecipient($user->getEmail(), $user->getName());
-         return $mail->send();
+         $mail->send();
 
     }
 
@@ -216,13 +224,15 @@ class UserServiceFactory extends AbstractService
      * Deactivate a user but not deleting. This is for database consistancy
      *
      * @param int $uid
+     *
      * @return boolean
      */
     public function deleteUser($uid)
     {
+        /* @var $user User */
         $user = $this->getMapper('user')->getUserById($uid);
 
-        if(null===$user) {
+        if (null === $user) {
             return false;
         }
 
@@ -235,13 +245,15 @@ class UserServiceFactory extends AbstractService
      * Activate a deactivated user.
      *
      * @param int $uid
+     *
      * @return boolean
      */
     public function undeleteUser($uid)
     {
+        /* @var $user User */
         $user = $this->getMapper('user')->getUserById($uid);
 
-        if(null===$user) {
+        if (null === $user) {
             return false;
         }
 

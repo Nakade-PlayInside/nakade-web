@@ -1,14 +1,21 @@
 <?php
 namespace User\Mail;
 
+use Zend\Mail\Transport\TransportInterface;
+use Mail\Services\MailMessageFactory;
+
 /**
+ * Class PasswordMail
+ *
  * New verification mail after resetting the user's password.
  * Same procedure as in VerifyMail just with minor changes in the text.
  *
- * @author Dr.Holger Maerz <holger@nakade.de>
+ * @package User\Mail
  */
-class PasswordMail extends VerifyMail
+class PasswordMail extends UserMail
 {
+
+
 
     /**
      * Translated mail template. Needed for Poedit usage.
@@ -46,7 +53,7 @@ class PasswordMail extends VerifyMail
         );
 
         $subject = $this->translate("%prefix% - Your New Credentials");
-        $this->_mailTemplates[self::SUBJECT] = $subject;
+        $this->mailTemplates[self::SUBJECT] = $subject;
 
         $template = array(
             self::SALUTATION => $salutation,

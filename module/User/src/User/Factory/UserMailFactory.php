@@ -2,11 +2,10 @@
 
 namespace User\Factory;
 
-use Traversable;
 use User\Mail;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\ArrayUtils;
+use User\Mail\UserMail;
 
 /**
  * Creates a translated mail for sending verification mails.
@@ -31,9 +30,6 @@ class UserMailFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $services)
     {
         $config  = $services->get('config');
-        if ($config instanceof Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
-        }
 
         //configuration
         $this->textDomain = isset($config['User']['text_domain']) ?
@@ -61,7 +57,7 @@ class UserMailFactory implements FactoryInterface
      *
      * @param string $typ
      *
-     * @return mixed
+     * @return UserMail
      *
      * @throws \RuntimeException
      */
@@ -70,10 +66,10 @@ class UserMailFactory implements FactoryInterface
 
         switch (strtolower($typ)) {
 
-           case "verify":   $mail = new Mail\VerifyMail($this->emailOptions);
+           case "verify":   $mail = new Mail\VerifyMail($this->message, $this->transport);
                break;
 
-           case "password": $mail = new Mail\PasswordMail($this->emailOptions);
+           case "password": $mail = new Mail\PasswordMail($this->message, $this->transport);
                break;
 
 
@@ -83,8 +79,7 @@ class UserMailFactory implements FactoryInterface
                );
         }
 
-        $mail->setMessage($this->message);
-        $mail->setTransport($this->transport);
+        $mail->setEmailOptions($this->emailOptions);
         $mail->setTranslator($this->translator, $this->textDomain);
 
         return $mail;
