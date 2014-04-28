@@ -12,11 +12,11 @@ class UserMapper extends AbstractMapper
 {
 
    /**
-     * Get all registered User 
-     * 
-     * @return array \User\Entity\User
+     * Get all registered User
+     *
+     * @return array User\Entity\User
      */
-    public function getAllUser()  
+    public function getAllUser()
     {
        return $this->getEntityManager()
                    ->getRepository('User\Entity\User')
@@ -25,7 +25,7 @@ class UserMapper extends AbstractMapper
 
     /**
      * Get User by its email and verifystring if due date
-     * is not expired 
+     * is not expired
      *
      * @param string $email
      * @param string $verifyString
@@ -36,7 +36,7 @@ class UserMapper extends AbstractMapper
     {
 
       $dql = "SELECT u as user FROM User\Entity\User u
-              WHERE u.email=:email AND u.verifyString=:code 
+              WHERE u.email=:email AND u.verifyString=:code
               AND u.due > :today";
 
       $result = $this->getEntityManager()
@@ -57,7 +57,7 @@ class UserMapper extends AbstractMapper
      */
     public function getUserById($uid)
     {
-       $dql = "SELECT u as user 
+       $dql = "SELECT u as user
                FROM User\Entity\User u
                WHERE u.id=:uid";
 
@@ -74,12 +74,12 @@ class UserMapper extends AbstractMapper
      * Get User by its email
      *
      * @param string $email
-     * 
+     *
      * @return \User\Entity\User $user|null
      */
     public function getUserByEmail($email)
     {
-       $dql = "SELECT u as user 
+       $dql = "SELECT u as user
                FROM User\Entity\User u
                WHERE u.email=:email";
 

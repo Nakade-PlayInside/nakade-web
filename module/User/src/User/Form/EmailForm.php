@@ -11,14 +11,15 @@ use \Zend\InputFilter\InputFilter;
  */
 class EmailForm extends DefaultForm
 {
-  
+
 
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() {
-       
+    public function init()
+    {
+
         //email
         $this->add(
             array(
@@ -26,7 +27,7 @@ class EmailForm extends DefaultForm
                 'type' => 'Zend\Form\Element\Email',
                 'options' => array(
                     'label' =>  $this->translate('email:'),
-                    
+
                 ),
                 'attributes' => array(
                     'multiple' => false,
@@ -34,26 +35,25 @@ class EmailForm extends DefaultForm
                 )
             )
         );
-        
+
         $this->setDefaultFields();
-       
-    } 
-    
-    
-    
-     
+
+    }
+
+
+
+
     /**
      * get the InputFilter
-     * 
+     *
      * @return \Zend\InputFilter\InputFilter
      */
     public function getFilter()
     {
 
         $filter = new InputFilter();
-        $filter->add($this->getUniqueDbFilter('email', '6','120'));
-         
+        $filter->add($this->getUniqueDbFilter('email', '6', '120'));
+
          return $filter;
     }
 }
-?>

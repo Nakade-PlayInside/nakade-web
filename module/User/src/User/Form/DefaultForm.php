@@ -10,18 +10,21 @@ use User\Entity\User;
  */
 abstract class DefaultForm extends AbstractForm
 {
-  
+
     /**
      * Constructor
-     */        
+     */
     public function __construct()
     {
         parent::__construct();
         $this->setObject(new User());
         $this->setHydrator(new Hydrator());
-        
-    } 
-   
+
+    }
+
+    /**
+     * default
+     */
     public function setDefaultFields()
     {
         //cross-site scripting hash protection
@@ -76,22 +79,22 @@ abstract class DefaultForm extends AbstractForm
         );
     }
 
-    protected function getUniqueDbFilter($name,$min,$max,$required=true)
+    protected function getUniqueDbFilter($name, $min, $max, $required=true)
     {
         return array(
             'name' => $name,
             'required' => $required,
             'filters' => $this->getStripFilter(),
-            'validators'=> $this->getValidators($name,$min,$max)
+            'validators'=> $this->getValidators($name, $min, $max)
 
         );
     }
 
-    private function getValidators($name,$min,$max)
+    private function getValidators($name, $min, $max)
     {
         $validators=array();
-        $validators[]=$this->getStringLengthConfig($min,$max);
-        if(strtolower($name)=='email') {
+        $validators[]=$this->getStringLengthConfig($min, $max);
+        if (strtolower($name) == 'email') {
             $validators[]=$this->getEmailValidation();
         }
 
@@ -136,20 +139,20 @@ abstract class DefaultForm extends AbstractForm
     {
 
         return array('name' => 'StringLength',
-            'options' => $this->getStringLengthOptions($min,$max)
+            'options' => $this->getStringLengthOptions($min, $max)
         );
     }
 
-    private function getStringLengthOptions($min,$max)
+    private function getStringLengthOptions($min, $max)
     {
         $options = array ('encoding' => 'UTF-8');
 
 
-        if(!is_null($min)){
+        if (!is_null($min)) {
             $options['min']=$min;
         }
 
-        if(!is_null($max)){
+        if (!is_null($max)) {
             $options['max']=$max;
         }
 
@@ -157,4 +160,3 @@ abstract class DefaultForm extends AbstractForm
     }
 
 }
-?>

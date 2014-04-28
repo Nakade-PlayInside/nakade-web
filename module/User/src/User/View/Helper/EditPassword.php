@@ -8,24 +8,29 @@ use User\Entity\User;
  */
 class EditPassword extends AbstractProfileEditHelper
 {
-    
+
     protected $_vars = array('pwdChangeDate' => 'pwdChangeDate',);
     protected $pwdChangeDate;
-    
+
+    /**
+     * @param User $profile
+     *
+     * @return mixed|string
+     */
     public function __invoke(User $profile)
     {
-        
+
         $this->pwdChangeDate= $this->convertDate($profile->getPwdChange());
         $this->_url = "profile/password";
-        
-        $value = isset($this->pwdChangeDate)? 
+
+        $value = isset($this->pwdChangeDate)?
             $this->getMessage(self::PWD_CHANGE) : $this->getMessage(self::PWD_NEVER);
-        
+
         //set pwd style
         $this->setStyle(self::CSS_VALUE, self::CSS_PWD);
-        
+
         return $this->getLink($value);
     }
-    
-       
+
+
 }

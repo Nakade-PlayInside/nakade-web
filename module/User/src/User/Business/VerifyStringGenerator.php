@@ -5,15 +5,16 @@ namespace User\Business;
  * Generator for randomized verification strings used for email validation.
  * If passed this string during a certain time, the email is validated.
  * Similar process is used for resetting the password and sending a new
- * generated password by email. 
+ * generated password by email.
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class VerifyStringGenerator {
+class VerifyStringGenerator
+{
 
     /**
-     * generates a randomized verify String. 
-     * 
+     * generates a randomized verify String.
+     *
      * @param int $length optional string length
      *
      * @return string random verify string
@@ -34,5 +35,3 @@ class VerifyStringGenerator {
     }
 
 }
-
-?>

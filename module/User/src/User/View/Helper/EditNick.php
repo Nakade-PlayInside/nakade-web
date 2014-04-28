@@ -7,18 +7,23 @@ use User\Entity\User;
  */
 class EditNick extends AbstractProfileEditHelper
 {
-    
+
+    /**
+     * @param User $profile
+     *
+     * @return mixed|string
+     */
     public function __invoke(User $profile)
     {
         $this->_url = "profile/nick";
-       
+
         $img = $this->getAnonymousImage();
         $nick  = $profile->getNickname();
-        $value = $profile->isAnonym()? $nick . $img : $nick; 
-        
+        $value = $profile->isAnonym()? $nick . $img : $nick;
+
         return $this->getLink($value);
-        
+
     }
-    
-       
+
+
 }

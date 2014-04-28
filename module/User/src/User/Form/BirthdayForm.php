@@ -27,7 +27,8 @@ class BirthdayForm extends DefaultForm
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() {
+    public function init()
+    {
 
         //birthday
         $this->add($this->getField()->getField());
@@ -49,4 +50,3 @@ class BirthdayForm extends DefaultForm
          return $filter;
     }
 }
-?>
