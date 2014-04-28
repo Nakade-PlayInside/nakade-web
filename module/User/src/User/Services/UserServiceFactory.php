@@ -60,6 +60,8 @@ class UserServiceFactory extends AbstractService
      * adding an user
      *
      * @param array $data
+     *
+     * @return bool
      */
     public function addUser(array $data)
     {
@@ -69,14 +71,14 @@ class UserServiceFactory extends AbstractService
          //make new user
          $user = new User();
          $user->exchangeArray($data);
-       //  $this->getMapper('user')->save($user);
+         $this->getMapper('user')->save($user);
 
          /* @var $mail \User\Mail\UserMail */
          $mail = $this->getMailFactory()->getMail('verify');
          $mail->setData($data);
          $mail->setRecipient($user->getEmail(), $user->getName());
 
-         $mail->send();
+         return $mail->send();
 
     }
 

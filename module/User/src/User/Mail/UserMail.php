@@ -114,9 +114,11 @@ abstract class UserMail extends AbstractTranslation implements UserMailInterface
     }
 
     /**
-     * Send mail to the given email adress.
-     * The recipent has to be prior to sending.
+     * Send mail to the given email address.
+     * The recipient has to be prior to sending.
      * name of the recipient is an optional string.
+     *
+     * @return bool
      */
     public function send()
     {
@@ -133,10 +135,11 @@ abstract class UserMail extends AbstractTranslation implements UserMailInterface
         try {
 
             $this->transport->send($message);
-            //$success = 'Your password reminder was sent to your email';
+            return true;
 
         } catch (\Exception $e) {
-            //$error = 'Unable to send email';
+
+            return false;
         }
 
 

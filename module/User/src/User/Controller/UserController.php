@@ -2,9 +2,9 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for 
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for
  * the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. 
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc.
  * (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
@@ -17,14 +17,14 @@ use Nakade\Abstracts\AbstractController;
 
 /**
  * Adminstrative user action for adding a new user, edit and resetting pwd.
- * 
+ *
  */
 class UserController extends AbstractController
 {
 
     /**
      * shows all users for adding and editing
-     * 
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function indexAction()
@@ -33,14 +33,14 @@ class UserController extends AbstractController
             array(
               'users' => $this->getService()
                               ->getMapper('user')
-                              ->getAllUser()
+                              ->getAllUser(),
             )
         );
     }
 
     /**
-     * add new user 
-     * 
+     * add new user
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function addAction()
@@ -64,7 +64,13 @@ class UserController extends AbstractController
 
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $data['request'] = $this->getRequest();
-                $this->getService()->addUser($data);
+
+                if ($this->getService()->addUser($data)) {
+                    $this->flashMessenger()->addMessage('new user added successfully');
+                } else {
+                    $this->flashMessenger()->addMessage('unable to send verify email');
+                }
+
 
                 return $this->redirect()->toRoute('user');
             }
@@ -79,7 +85,7 @@ class UserController extends AbstractController
 
     /**
      * reset the user's password (send mail)
-     * 
+     *
      * @return type
      */
     public function resetPasswordAction()
@@ -87,7 +93,7 @@ class UserController extends AbstractController
 
        //@todo: nachfrage double_opt passwort zurücksetzen?YN
 
-       //get param 
+       //get param
        $uid  = $this->params()->fromRoute('id', null);
 
        $data['uid'] = $uid;
@@ -99,13 +105,13 @@ class UserController extends AbstractController
 
     /**
      * edit a user
-     * 
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function editAction()
     {
 
-        //get param 
+        //get param
        $uid  = $this->params()->fromRoute('id', null);
 
        $user=$this->getService()->getMapper('user')->getUserById($uid);
@@ -143,12 +149,12 @@ class UserController extends AbstractController
 
     /**
      * deactivate a user
-     * 
+     *
      * @return type
      */
     public function deleteAction()
     {
-       //get param 
+       //get param
        $uid  = $this->params()->fromRoute('id', null);
        $this->getService()->deleteUser($uid);
 
@@ -157,12 +163,12 @@ class UserController extends AbstractController
 
     /**
      * reactivate a user
-     * 
+     *
      * @return type
      */
     public function undeleteAction()
     {
-       //get param 
+       //get param
        $uid  = $this->params()->fromRoute('id', null);
        $this->getService()->undeleteUser($uid);
 

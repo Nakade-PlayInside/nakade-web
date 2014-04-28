@@ -1,10 +1,11 @@
 <?php
 // module/user/view/user/user/index.phtml:
-$this->plugin('translate')->setTranslatorTextDomain('User'); 
+$this->plugin('translate')->setTranslatorTextDomain('User');
 $title = $this->translate('Registered Users');
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
+
 
 <a href="user/add"><?php echo $this->translate("add user"); ?></a>
 <table class="table" style="width:auto">
@@ -14,17 +15,17 @@ $this->headTitle($title);
     <th><?php echo $this->translate("Nick"); ?></th>
     <th><?php echo $this->translate("Username"); ?></th>
     <th><?php echo $this->translate("KGS"); ?></th>
-    <th><?php echo $this->translate("email"); ?></th>  
-    <th><?php echo $this->translate("verified"); ?></th>     
+    <th><?php echo $this->translate("email"); ?></th>
+    <th><?php echo $this->translate("verified"); ?></th>
     <th><?php echo $this->translate("active"); ?></th>
-    <th><?php echo $this->translate("edit"); ?></th>    
+    <th><?php echo $this->translate("edit"); ?></th>
     <th><?php echo $this->translate("access"); ?></th>
     <th><?php echo $this->translate("pwd"); ?></th>
 </tr>
-<?php 
+<?php
 
 foreach ($this->users as $user) : ?>
-<tr style="background-color:<?php 
+<tr style="background-color:<?php
     echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
     <td style="width:1em;text-align:center"><?php echo $this->salutation($user->getSex()); ?></td>
     <td><?php echo $this->escapeHtml($user->getName());?></td>
