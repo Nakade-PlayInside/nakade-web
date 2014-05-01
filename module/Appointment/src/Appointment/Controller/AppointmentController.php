@@ -54,7 +54,10 @@ class AppointmentController extends AbstractActionController
 
            if ($form->isValid()) {
 
-               var_dump("what");//die;
+               //make entity for database
+               //make email
+               //send email
+               var_dump("what");die;
                //return $this->redirect()->toRoute('message');
            }
        }
