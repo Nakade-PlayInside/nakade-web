@@ -45,10 +45,10 @@ class AppointmentForm extends AbstractForm
         $this->add(
             array(
                 'name' => 'appointment-date-time',
-                'type' => 'Zend\Form\Element\DateTimeLocal',
+                'type' => 'Zend\Form\Element\Date',
                 'options' => array(
-                   // 'label' =>  $this->translate('Appointment Date').":",
-                    'format' => 'Y-m-d TH:iP'
+                    'label' =>  $this->translate('New Match Date').":",
+                    'format' => 'Y-m-d'
                 ),
                 'attributes' => array(
                     'min'  => \date('Y-m-d'),
@@ -63,15 +63,26 @@ class AppointmentForm extends AbstractForm
             'type' => 'Zend\Form\Element\Time',
             'name' => 'time',
             'options'=> array(
-                'label' => 'Time'
+                'label' => $this->translate('Time').":"
             ),
             'attributes' => array(
                 'min' => '00:00:00',
                 'max' => '23:59:59',
-                'step' => '300', // seconds; default step interval is 60 seconds
+                'step' => '900', // seconds; default step interval is 60 seconds
+                'value' => '18:30:00'
             )
         ));
 
+        //check
+        $this->add(
+            array(
+                'type' => 'Zend\Form\Element\Checkbox',
+                'name' => 'confirm',
+                'options' => array(
+                    'label' => $this->translate('I do confirm my opponent has agreed to this schedule'),
+                ),
+            )
+        );
 
 
         //cross-site scripting hash protection

@@ -39,13 +39,20 @@ class AppointmentController extends AbstractActionController
        $blackMatches = $repo->getNextMatchDatesInLeagueByUser($black, $lid);
        $whiteMatches = $repo->getNextMatchDatesInLeagueByUser($white, $lid);
 
+       $matchInfo = sprintf("%s: %s - %s",
+           $match->getDate()->format('d.M  H:i'),
+           $match->getBlack()->getShortName(),
+           $match->getWhite()->getShortName()
+       );
+
        $dates = array_merge($blackMatches, $whiteMatches);
        $form = new AppointmentForm();
 
        return new ViewModel(
            array(
                'appointment' => null,
-               'form' => $form
+               'form' => $form,
+               'matchInfo' => $matchInfo
            )
        );
    }

@@ -1,12 +1,14 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('Appointment');
-$title = $this->translate("My appointments");
+$title = $this->translate("Edit match appointment");
 $this->headTitle($title);
 
 ?>
 
 <h3><?php echo $title;?></h3>
+<p><?php echo $this->translate("Before edit your match date, contact your opponent."); ?></p>
 
+<p style="color: #0088cc;"><?php echo $this->matchInfo; ?></p>
 <?php
 
 $this->form->prepare();
