@@ -2,7 +2,15 @@
 $this->plugin('translate')->setTranslatorTextDomain('Appointment');
 $title = $this->translate("My appointments");
 $this->headTitle($title);
+
 ?>
 
 <h3><?php echo $title;?></h3>
+
+<?php
+
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();
 

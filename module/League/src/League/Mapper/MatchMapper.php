@@ -293,6 +293,33 @@ class MatchMapper  extends AbstractMapper
                     ->getOneOrNullResult();
 
     }
+
+    /**
+     * @param \User\Entity\User $user
+     * @param int               $lid
+     *
+     * @return array
+     */
+    public function getNextMatchDatesInLeagueByUser($user, $lid)
+    {
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m._date')
+            ->from('League\Entity\Match', 'm')
+            ->join('m._black', 'Black')
+            ->join('m._white', 'White')
+            ->Where('m._lid = :lid')
+            ->andWhere('Black.id = :uid OR White.id = :uid')
+           // ->andWhere('m._date > :now')
+            ->setParameter('uid', $user->getId())
+            ->setParameter('lid', $lid)
+           // ->setParameter('now', new \DateTime())
+            ->orderBy('m._date ', 'ASC');
+
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
 }
 
-?>
