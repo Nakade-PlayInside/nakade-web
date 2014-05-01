@@ -2,34 +2,28 @@
 namespace Appointment\Form;
 
 use Nakade\Abstracts\AbstractForm;
-use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-use Message\Entity\Message;
 use \Zend\InputFilter\InputFilter;
 use \Zend\I18n\Translator\Translator;
+use \Zend\Validator\Identical;
 
 class AppointmentForm extends AbstractForm
 {
-    private $recipients = array();
 
+    const USER_CONFIRM = "1";
     /**
-     * @param array      $recipients
      * @param Translator $translator
      */
-    public function __construct(array $recipients=null, Translator $translator = null)
+    public function __construct(Translator $translator = null)
     {
-        foreach ($recipients as $object) {
-            $this->recipients[$object->getId()] = $object->getShortName();
-        }
-        asort($this->recipients);
 
         //form name
-        parent::__construct('MessageForm');
+        parent::__construct('AppointmentForm');
 
         $this->setTranslator($translator);
-        $this->setTranslatorTextDomain('Message');
-        $this->setObject(new Message());
-        $this->setHydrator(new Hydrator());
+        $this->setTranslatorTextDomain('Appointment');
+
         $this->init();
+        $this->setInputFilter($this->getFilter());
     }
 
 
@@ -77,9 +71,13 @@ class AppointmentForm extends AbstractForm
         $this->add(
             array(
                 'type' => 'Zend\Form\Element\Checkbox',
-                'name' => 'confirm',
+                'name' => 'confirming',
                 'options' => array(
                     'label' => $this->translate('I do confirm my opponent has agreed to this schedule'),
+                    'use_hidden_element' => true,
+                    'checked_value' => self::USER_CONFIRM,
+                    'unchecked_value' => 'no'
+
                 ),
             )
         );
@@ -132,6 +130,29 @@ class AppointmentForm extends AbstractForm
     public function getFilter()
     {
         $filter = new InputFilter();
+
+        $filter->add(
+            array(
+                'name' => 'confirming',
+                'required' => true,
+                'filters'  => array(),
+                'validators' => array(
+                    array(
+                        'name'    => 'Zend\Validator\Identical',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'token' => self::USER_CONFIRM,
+                            'messages' => array(
+                                Identical::NOT_SAME => $this->translate(
+                                    'You must confirm your opponent agreed to the new schedule.'
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            )
+        );
+
         return $filter;
     }
 

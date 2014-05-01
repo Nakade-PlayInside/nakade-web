@@ -31,13 +31,6 @@ class AppointmentController extends AbstractActionController
 
        /* @var $match \League\Entity\Match */
        $match = $repo->getMatchById(6);
-       $black = $match->getBlack();
-       $white = $match->getWhite();
-
-       //works for this league only
-       $lid = $match->getLid();
-       $blackMatches = $repo->getNextMatchDatesInLeagueByUser($black, $lid);
-       $whiteMatches = $repo->getNextMatchDatesInLeagueByUser($white, $lid);
 
        $matchInfo = sprintf("%s: %s - %s",
            $match->getDate()->format('d.M  H:i'),
@@ -45,8 +38,27 @@ class AppointmentController extends AbstractActionController
            $match->getWhite()->getShortName()
        );
 
-       $dates = array_merge($blackMatches, $whiteMatches);
        $form = new AppointmentForm();
+
+       if ($this->getRequest()->isPost()) {
+
+           //get post data, set data to from, prepare for validation
+           $postData =  $this->getRequest()->getPost();
+
+           //cancel
+           if ($postData['cancel']) {
+               return $this->redirect()->toRoute('message');
+           }
+
+           $form->setData($postData);
+
+           if ($form->isValid()) {
+
+               var_dump("what");//die;
+               //return $this->redirect()->toRoute('message');
+           }
+       }
+
 
        return new ViewModel(
            array(

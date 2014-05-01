@@ -9,8 +9,8 @@ use League\Entity\Match;
  */
 class MatchdayForm extends AbstractForm
 {
-   
-        
+
+
     /**
      * Constructor
      */
@@ -19,16 +19,16 @@ class MatchdayForm extends AbstractForm
         parent::__construct();
         $this->setObject(new Match());
         $this->setHydrator(new Hydrator());
-    } 
-    
+    }
+
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() 
+    public function init()
     {
         $this->setAttribute('method', 'post');
-        
+
         //date
         $this->add(
             array(
@@ -45,7 +45,7 @@ class MatchdayForm extends AbstractForm
                 ),
             )
         );
-        
+
         //time
         $this->add(
             array(
@@ -56,11 +56,11 @@ class MatchdayForm extends AbstractForm
                 ),
                 'attributes' => array(
                      'step'  => '900',
-                     
+
                 ),
             )
         );
-        
+
         //check
         $this->add(
             array(
@@ -71,10 +71,10 @@ class MatchdayForm extends AbstractForm
                 ),
             )
         );
-        
+
         //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side 
-        //validation 
+        //this is handled by ZF2 in the background - no need for server-side
+        //validation
         $this->add(
             array(
                 'name' => 'csrf',
@@ -84,9 +84,9 @@ class MatchdayForm extends AbstractForm
                         'timeout' => 600
                     )
                 )
-            )    
-        ); 
-        
+            )
+        );
+
          //submit
         $this->add(
             array(
@@ -98,7 +98,7 @@ class MatchdayForm extends AbstractForm
                 ),
             )
         );
-        
+
          //cancel button
         $this->add(
             array(
@@ -110,16 +110,18 @@ class MatchdayForm extends AbstractForm
                 ),
             )
         );
-        
+
     }
-    
+
+    /**
+     * @return \Zend\InputFilter\InputFilter
+     */
     public function getFilter()
     {
         $filter = new \Zend\InputFilter\InputFilter();
-     
-        
-        
+
+
+
         return $filter;
     }
 }
-?>

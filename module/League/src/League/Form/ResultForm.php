@@ -4,16 +4,17 @@ namespace League\Form;
 use Nakade\Abstracts\AbstractForm;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use League\Entity\Match;
+use \Zend\InputFilter\InputFilter;
 /**
  * Form for making a new result
  */
 class ResultForm extends AbstractForm
 {
-   
+
     protected $_pairings;
     protected $_resultlist;
     protected $_id;
-    
+
     /**
      * Constructor
      */
@@ -22,92 +23,92 @@ class ResultForm extends AbstractForm
         parent::__construct();
     //    $this->setObject(new Match());
      //   $this->setHydrator(new Hydrator());
-    } 
-    
+    }
+
     /**
      * get pairing
      * @return array
      */
-    public function getPairing() 
+    public function getPairing()
     {
         return $this->_pairings;
     }
-            
+
     protected function getPlayerName($user)
     {
         $player = sprintf("%s %s ",
-                      $user->getFirstName(),
-                      $user->getLastName()
-                  );
-        
-        
-        if(!is_null($nick=$user->getNickname()))
+            $user->getFirstName(),
+            $user->getLastName()
+        );
+
+
+        if (!is_null($nick = $user->getNickname())) {
             $player .= "($nick)";
-        
+        }
+
         return $player;
-    }        
+    }
     /**
      * set pairing
-     * @param Match $pairing 
+     * @param Match $pairing
      */
-    public function setPairing($pairing) 
+    public function setPairing($pairing)
     {
         $black = $this->getPlayerName($pairing->getBlack());
         $white = $this->getPlayerName($pairing->getWhite());
-        
+
         $match = array(
             $pairing->getBlackId() => $black,
             $pairing->getWhiteId() => $white,
         );
-        
+
         $this->_pairings=$match;
     }
-    
+
     /**
      * get result list
      * @return array
      */
-    public function getResultlist() 
+    public function getResultlist()
     {
         return $this->_resultlist;
     }
-    
+
     /**
-     * set resultlist
-     * @param type $resultlist
+     * @param array $resultlist
      */
-    public function setResultlist($resultlist) 
+    public function setResultlist($resultList)
     {
-        
-        $this->_resultlist=$resultlist;
+
+        $this->_resultlist=$resultList;
     }
-    
+
     /**
      * get id
      * @return int
      */
-    public function getId() 
+    public function getId()
     {
         return $this->_id;
     }
-    
+
     /**
      * set id
      * @param int $pairingId
      */
-    public function setId($pairingId) 
+    public function setId($pairingId)
     {
         $this->_id=$pairingId;
     }
-    
+
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() 
+    public function init()
     {
         $this->setAttribute('method', 'post');
-        
+
         //pairingId
         $this->add(
             array(
@@ -118,7 +119,7 @@ class ResultForm extends AbstractForm
                 ),
             )
         );
-       
+
         //winner
         $this->add(
             array(
@@ -131,7 +132,7 @@ class ResultForm extends AbstractForm
                 ),
             )
         );
-        
+
         //result
         $this->add(
             array(
@@ -143,8 +144,8 @@ class ResultForm extends AbstractForm
                     'value_options' => $this->getResultlist(),
                 ),
             )
-         );
-        
+        );
+
          //points
          $this->add(
              array(
@@ -157,8 +158,8 @@ class ResultForm extends AbstractForm
                     'label' => $this->translate('Points')
                  ),
             )
-        );
-        
+         );
+
          //submit
         $this->add(
             array(
@@ -170,16 +171,17 @@ class ResultForm extends AbstractForm
                 ),
             )
         );
-        
+
     }
-    
+
+    /**
+     * @return \Zend\InputFilter\InputFilter
+     */
     public function getFilter()
     {
-        $filter = new \Zend\InputFilter\InputFilter();
-     
-        
-        
+        $filter = new InputFilter();
+
         return $filter;
     }
 }
-?>
+
