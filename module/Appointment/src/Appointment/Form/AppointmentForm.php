@@ -10,10 +10,14 @@ class AppointmentForm extends AbstractForm
 {
 
     const USER_CONFIRM = "1";
+    private $endOfSeason;
+
     /**
+     * @param \DateTime  $endOfSeason
+     *
      * @param Translator $translator
      */
-    public function __construct(Translator $translator = null)
+    public function __construct($endOfSeason, Translator $translator = null)
     {
 
         //form name
@@ -21,6 +25,13 @@ class AppointmentForm extends AbstractForm
 
         $this->setTranslator($translator);
         $this->setTranslatorTextDomain('Appointment');
+
+        if ($endOfSeason instanceof \DateTime) {
+            $this->endOfSeason = $endOfSeason;
+        } else {
+            $this->endOfSeason = new \DateTime();
+            $this->endOfSeason->modify('+3 month');
+        }
 
         $this->init();
         $this->setInputFilter($this->getFilter());
@@ -38,7 +49,7 @@ class AppointmentForm extends AbstractForm
         //recipient
         $this->add(
             array(
-                'name' => 'appointment-date-time',
+                'name' => 'date',
                 'type' => 'Zend\Form\Element\Date',
                 'options' => array(
                     'label' =>  $this->translate('New Match Date').":",
@@ -46,7 +57,7 @@ class AppointmentForm extends AbstractForm
                 ),
                 'attributes' => array(
                     'min'  => \date('Y-m-d'),
-                    'max'  => '2020-01-01T00:00:00Z',
+                    'max'  => $this->endOfSeason->format('Y-m-d'),
                     'step' => '1', // days; default step interval is 1 day
                 )
 
@@ -132,6 +143,7 @@ class AppointmentForm extends AbstractForm
         $filter = new InputFilter();
 
         $filter->add(
+
             array(
                 'name' => 'confirming',
                 'required' => true,

@@ -40,7 +40,9 @@ class AppointmentController extends AbstractActionController
            $match->getWhite()->getShortName()
        );
 
-       $form = new AppointmentForm();
+       $endDate = new \DateTime('now');
+       $endDate->modify('+4 months');
+       $form = new AppointmentForm($endDate);
 
        if ($this->getRequest()->isPost()) {
 
@@ -58,9 +60,8 @@ class AppointmentController extends AbstractActionController
 
                $appointment = new Appointment();
 
-               $newDate = new \DateTime();
-               $newDate->modify('+3d');
-
+               $data = $form->getData();
+               $newDate = \DateTime::createFromFormat('Y-m-d H:i:s', $data['date'] . ' ' . $data['time']);
 
                $appointment->setMatch($match);
                $appointment->setSubmitter($match->getBlack());
@@ -68,7 +69,7 @@ class AppointmentController extends AbstractActionController
                $appointment->setSubmitDate(new \DateTime());
                $appointment->setOldDate($match->getDate());
                $appointment->setNewDate($newDate);
-              
+
                $em->persist($appointment);
                $em->flush($appointment);
               //make email
