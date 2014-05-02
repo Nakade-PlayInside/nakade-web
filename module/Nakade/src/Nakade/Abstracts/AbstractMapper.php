@@ -11,20 +11,20 @@ use Doctrine\ORM\EntityManager;
  */
 class AbstractMapper extends AbstractTranslation
 {
-   
-   protected $_entity_manager; 
-  
-   
+
+   protected $entityManager;
+
+
    /**
    * Sets the EntityManager
    *
-   * @param EntityManager $entitymanager
-   * @access public
-   * @return ActionController
+   * @param EntityManager $em
+   *
+   * @return $this
    */
    public function setEntityManager(EntityManager $em)
    {
-      $this->_entity_manager = $em;
+      $this->entityManager = $em;
       return $this;
    }
 
@@ -39,9 +39,9 @@ class AbstractMapper extends AbstractTranslation
    */
    public function getEntityManager()
    {
-      return $this->_entity_manager;
+      return $this->entityManager;
    }
-   
+
    /**
    * Returns true if EntityManager is set
    *
@@ -50,58 +50,60 @@ class AbstractMapper extends AbstractTranslation
    */
    public function hasEntityManager()
    {
-      return isset($this->_entity_manager);
+      return isset($this->entityManager);
    }
-   
+
    /**
     * Returns the primary key of the given
     * entity or null if the entity manager is not set.
-    * 
+    *
     * @param entity $object
+    *
     * @return null|string
     */
    public function getIdentifier($object)
    {
-       if($this->hasEntityManager()) {
+       if ($this->hasEntityManager()) {
            return $this->getEntityManager()
                  ->getClassMetaData(get_class($object))
                  ->getSingleIdentifierFieldName();
        }
        return null;
-       
+
    }
-   
+
    /**
-    * saves the entity. 
+    * saves the entity.
     * return true on success
-    * 
-    * @param Entity $entity
+    *
+    * @param object $entity
     */
    public function save($entity)
    {
-      
-       if($entity===null) {
+
+       if ($entity===null) {
            return $this->getEntityManager()->flush();
        }
-    
+
        $this->getEntityManager()->persist($entity);
        $this->getEntityManager()->flush($entity);
-       
+
    }
-   
-   public function update($entity)
+
+    /**
+     * @param object $entity
+     */
+    public function update($entity)
    {
-       
-       if($entity===null) {
+
+       if ($entity===null) {
            return $this->getEntityManager()->flush();
        }
-   
-       $this->getEntityManager()->persist($entity); 
-       $this->getEntityManager()->flush($entity);
-       
-   }
-   
-   
-}
 
-?>
+       $this->getEntityManager()->persist($entity);
+       $this->getEntityManager()->flush($entity);
+
+   }
+
+
+}

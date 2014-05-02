@@ -5,6 +5,7 @@ namespace Appointment\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use User\Entity\User;
 use League\Entity\Match;
+use League\Entity\League;
 
 /**
  * model
@@ -14,42 +15,39 @@ use League\Entity\Match;
  */
 class Appointment
 {
-   /**
-   * @ORM\Id
-   * @ORM\Column(name="id", type="integer")
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  private $id;
+       /**
+       * @ORM\Id
+       * @ORM\Column(name="id", type="integer")
+       * @ORM\GeneratedValue(strategy="AUTO")
+       */
+      private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\League\Entity\Match", cascade={"persist"})
+     * @ORM\JoinColumn(name="pairing", referencedColumnName="id", nullable=false)
+     */
+    private $match;
+
+    /**
+     * @var \User\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="submitter", referencedColumnName="uid", nullable=false)
+     *
+     */
+    private $submitter;
+
+    /**
+     * @var \User\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="responder", referencedColumnName="uid", nullable=false)
+     *
+     */
+    private $responder;
 
   /**
-   * @var \League\Entity\Match
-   *
-   * @ORM\ManyToOne(targetEntity="League\Entity\Match", cascade={"persist"})
-   * @ORM\JoinColumn(name="match", referencedColumnName="id", nullable=false)
-   *
-   */
-  private $match;
-
-  /**
-   * @var \User\Entity\User
-   *
-   * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
-   * @ORM\JoinColumn(name="submitter", referencedColumnName="uid", nullable=false)
-   *
-   */
-  private $submitter;
-
-  /**
-  * @var \User\Entity\User
-  *
-  * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
-  * @ORM\JoinColumn(name="responder", referencedColumnName="uid", nullable=false)
-  *
-  */
-  private $responder;
-
-  /**
-   * @ORM\Column(name="requestDate", type="datetime", nullable=false)
+   * @ORM\Column(name="submitDate", type="datetime", nullable=false)
    */
   private $submitDate;
 
@@ -59,37 +57,47 @@ class Appointment
   private $oldDate;
 
   /**
-   * @ORM\Column(name="appointmentDate", type="datetime", nullable=false)
+   * @ORM\Column(name="newDate", type="datetime", nullable=false)
    */
-  private $appointmentDate;
+  private $newDate;
 
  /**
   * @ORM\Column(name="isConfirmed", type="boolean", nullable=true)
   */
-  private $isConfirmed;
+  private $isConfirmed=0;
 
   /**
-   * @ORM\Column(name="reason", type="text", nullable=true)
+   * @ORM\Column(name="isRejected", type="boolean", nullable=true)
    */
-  private $reason;
+  private $isRejected=0;
+
+  /**
+   * @ORM\Column(name="isDone", type="boolean", nullable=true)
+   */
+  private $isDone=0;
+
+  /**
+   * @ORM\Column(name="rejectReason", type="text", nullable=true)
+   */
+  private $rejectReason;
 
     /**
-     * @param \DateTime $appointmentDate
+     * @param \DateTime $newDate
      *
      * @return $this
      */
-    public function setAppointmentDate($appointmentDate)
+    public function setNewDate($newDate)
     {
-        $this->appointmentDate = $appointmentDate;
+        $this->newDate = $newDate;
         return $this;
     }
 
     /**
      * @return \DateTime
      */
-    public function getAppointmentDate()
+    public function getNewDate()
     {
-        return $this->appointmentDate;
+        return $this->newDate;
     }
 
     /**
@@ -109,25 +117,6 @@ class Appointment
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param bool $isConfirmed
-     *
-     * @return $this
-     */
-    public function setConfirmed($isConfirmed)
-    {
-        $this->isConfirmed = $isConfirmed;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isConfirmed()
-    {
-        return $this->isConfirmed;
     }
 
     /**
@@ -168,24 +157,6 @@ class Appointment
         return $this->oldDate;
     }
 
-    /**
-     * @param string $reason
-     *
-     * @return $this
-     */
-    public function setReason($reason)
-    {
-        $this->reason = $reason;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getReason()
-    {
-        return $this->reason;
-    }
 
     /**
      * @param User $responder
@@ -242,6 +213,82 @@ class Appointment
     public function getSubmitter()
     {
         return $this->submitter;
+    }
+
+    /**
+     * @param bool $isConfirmed
+     *
+     * @return $this
+     */
+    public function setIsConfirmed($isConfirmed)
+    {
+        $this->isConfirmed = $isConfirmed;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isConfirmed()
+    {
+        return $this->isConfirmed;
+    }
+
+    /**
+     * @param boolean $isDone
+     *
+     * @return $this
+     */
+    public function setIsDone($isDone)
+    {
+        $this->isDone = $isDone;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDone()
+    {
+        return $this->isDone;
+    }
+
+    /**
+     * @param boolean $isRejected
+     *
+     * @return $this
+     */
+    public function setIsRejected($isRejected)
+    {
+        $this->isRejected = $isRejected;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isRejected()
+    {
+        return $this->isRejected;
+    }
+
+    /**
+     * @param string $rejectReason
+     *
+     * @return $this
+     */
+    public function setRejectReason($rejectReason)
+    {
+        $this->rejectReason = $rejectReason;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRejectReason()
+    {
+        return $this->rejectReason;
     }
 
 }

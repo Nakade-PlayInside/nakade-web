@@ -8,7 +8,9 @@
 // module/Appointment/src/Appointment/Controller/AppointmentController.php:
 namespace Appointment\Controller;
 
+use Appointment\Entity\Appointment;
 use Appointment\Form\AppointmentForm;
+use Zend\Form\Element\DateTime;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -54,10 +56,24 @@ class AppointmentController extends AbstractActionController
 
            if ($form->isValid()) {
 
-               //make entity for database
-               //make email
+               $appointment = new Appointment();
+
+               $newDate = new \DateTime();
+               $newDate->modify('+3d');
+
+
+               $appointment->setMatch($match);
+               $appointment->setSubmitter($match->getBlack());
+               $appointment->setResponder($match->getWhite());
+               $appointment->setSubmitDate(new \DateTime());
+               $appointment->setOldDate($match->getDate());
+               $appointment->setNewDate($newDate);
+              
+               $em->persist($appointment);
+               $em->flush($appointment);
+              //make email
                //send email
-               var_dump("what");die;
+
                //return $this->redirect()->toRoute('message');
            }
        }
