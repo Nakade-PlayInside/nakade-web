@@ -16,6 +16,14 @@ use Zend\Form\Element\DateTime;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
+//
+// 2. email
+// 2b factories for controller, form and email
+// 3. config
+// 4. confirm by email
+// 5. automatic confirm after time exceed
+// 6. user right
+
 class AppointmentController extends AbstractActionController
 {
 
@@ -25,7 +33,12 @@ class AppointmentController extends AbstractActionController
    public function indexAction()
    {
        $user = $this->identity();
-       #match id=6
+
+       //provide MATCHId
+       $matchId  = (int) $this->params()->fromRoute('id', -1);
+       //proof matchId
+       //proof on already existing appoinment
+       //proof if id is matching
 
        $sm = $this->getServiceLocator();
        $em = $sm->get('Doctrine\ORM\EntityManager');
@@ -34,13 +47,7 @@ class AppointmentController extends AbstractActionController
        $repo->setEntityManager($em);
 
        /* @var $match \League\Entity\Match */
-       $match = $repo->getMatchById(6);
-
-       $matchInfo = sprintf("%s: %s - %s",
-           $match->getDate()->format('d.M  H:i'),
-           $match->getBlack()->getShortName(),
-           $match->getWhite()->getShortName()
-       );
+       $match = $repo->getMatchById($matchId);
 
        //get league from match; get season from league; get last date from season
        $endDate = $match->getDate();
@@ -56,7 +63,8 @@ class AppointmentController extends AbstractActionController
 
            //cancel
            if ($postData['cancel']) {
-               return $this->redirect()->toRoute('message');
+               //todo: change route finally to origin
+               return $this->redirect()->toRoute('home');
            }
 
            $form->setData($postData);
@@ -88,7 +96,7 @@ class AppointmentController extends AbstractActionController
        return new ViewModel(
            array(
                'form' => $form,
-               'matchInfo' => $matchInfo
+               'match' => $match
            )
        );
    }
@@ -101,6 +109,11 @@ class AppointmentController extends AbstractActionController
 
         // todo: confirmation deadline if excceding time period for confirming: automatic confirmation!
 
+        //provide appointmentId
+        $appointmentId  = (int) $this->params()->fromRoute('id', -1);
+
+        //proof on matching user
+
         $sm = $this->getServiceLocator();
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $sm->get('Doctrine\ORM\EntityManager');
@@ -108,14 +121,10 @@ class AppointmentController extends AbstractActionController
         $repo = new \Appointment\Mapper\AppointmentMapper();
         $repo->setEntityManager($em);
 
+        $appointment = $repo->getAppointmentById($appointmentId);
 
-        $appointment = $repo->getAppointmentById(1);
-        $matchInfo = sprintf("%s - %s",
-            $appointment->getMatch()->getBlack()->getShortName(),
-            $appointment->getMatch()->getWhite()->getShortName()
-        );
 
-        if ($appointment->isConfirmed() || $appointment->isRejected()) {
+        if (is_null($appointment) || $appointment->isConfirmed() || $appointment->isRejected()) {
             return $this->redirect()->toRoute('home');
         }
 
@@ -163,7 +172,7 @@ class AppointmentController extends AbstractActionController
                 'oldDate' => $appointment->getOldDate()->format('d.m.Y H:i'),
                 'newDate' => $appointment->getNewDate()->format('d.m.Y H:i'),
                 'form' => $form,
-                'matchInfo' => $matchInfo
+                'matchInfo' => $appointment->getMatch()->getMatchInfo()
             )
         );
     }
@@ -173,6 +182,12 @@ class AppointmentController extends AbstractActionController
      */
     public function rejectAction()
     {
+
+        //provide appointmentId
+        $appointmentId  = (int) $this->params()->fromRoute('id', -1);
+
+        //proof on matching user
+
         $sm = $this->getServiceLocator();
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $sm->get('Doctrine\ORM\EntityManager');
@@ -181,13 +196,8 @@ class AppointmentController extends AbstractActionController
         $repo->setEntityManager($em);
 
 
-        $appointment = $repo->getAppointmentById(1);
-        $matchInfo = sprintf("%s - %s",
-            $appointment->getMatch()->getBlack()->getShortName(),
-            $appointment->getMatch()->getWhite()->getShortName()
-        );
-
-        if ($appointment->isConfirmed() || $appointment->isRejected()) {
+        $appointment = $repo->getAppointmentById($appointmentId);
+        if (is_null($appointment) || $appointment->isConfirmed() || $appointment->isRejected()) {
             return $this->redirect()->toRoute('home');
         }
 
@@ -232,7 +242,7 @@ class AppointmentController extends AbstractActionController
                 'oldDate' => $appointment->getOldDate()->format('d.m.Y H:i'),
                 'newDate' => $appointment->getNewDate()->format('d.m.Y H:i'),
                 'form' => $form,
-                'matchInfo' => $matchInfo
+                'matchInfo' => $appointment->getMatch()->getMatchInfo()
             )
         );
     }
@@ -255,5 +265,14 @@ class AppointmentController extends AbstractActionController
         return new ViewModel(
             array()
         );
+    }
+
+    private function isValidAppointment(Appointment $appointment)
+    {
+        /* @var $user /User/League/User */
+        $user = $this->identity();
+
+
+        return (is_null($appointment) || $appointment->isConfirmed() || $appointment->isRejected());
     }
 }

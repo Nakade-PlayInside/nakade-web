@@ -539,5 +539,15 @@ class Match
 
     }
 
+    /**
+     * @return string
+     */
+    public function getMatchInfo()
+    {
+        return sprintf("%s - %s",
+            $this->getBlack()->getShortName(),
+            $this->getWhite()->getShortName()
+        );
+    }
 
 }
