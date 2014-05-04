@@ -50,7 +50,9 @@ class AppointmentController extends AbstractActionController
 
        /* @var $request \Zend\Http\Request */
        $request = $this->getRequest();
-       if ($postData = $request->isPost()) {
+       if ($request->isPost()) {
+
+           $postData =  $request->getPost();
 
            //cancel
            if ($postData['cancel']) {
