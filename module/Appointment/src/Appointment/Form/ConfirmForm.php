@@ -4,13 +4,12 @@ namespace Appointment\Form;
 use Nakade\Abstracts\AbstractForm;
 use \Zend\InputFilter\InputFilter;
 use \Zend\I18n\Translator\Translator;
-use \Zend\Validator\Identical;
+
 
 class ConfirmForm extends AbstractForm
 {
 
     /**
-     *
      * @param Translator $translator
      */
     public function __construct(Translator $translator = null)

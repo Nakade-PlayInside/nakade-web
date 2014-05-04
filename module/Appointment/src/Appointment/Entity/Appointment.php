@@ -5,7 +5,6 @@ namespace Appointment\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use User\Entity\User;
 use League\Entity\Match;
-use League\Entity\League;
 
 /**
  * model
@@ -70,11 +69,6 @@ class Appointment
    * @ORM\Column(name="isRejected", type="boolean", nullable=true)
    */
   private $isRejected=0;
-
-  /**
-   * @ORM\Column(name="isDone", type="boolean", nullable=true)
-   */
-  private $isDone=0;
 
   /**
    * @ORM\Column(name="rejectReason", type="text", nullable=true)
@@ -232,25 +226,6 @@ class Appointment
     public function isConfirmed()
     {
         return $this->isConfirmed;
-    }
-
-    /**
-     * @param boolean $isDone
-     *
-     * @return $this
-     */
-    public function setIsDone($isDone)
-    {
-        $this->isDone = $isDone;
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isDone()
-    {
-        return $this->isDone;
     }
 
     /**

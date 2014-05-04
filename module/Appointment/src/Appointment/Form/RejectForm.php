@@ -4,7 +4,7 @@ namespace Appointment\Form;
 use Nakade\Abstracts\AbstractForm;
 use \Zend\InputFilter\InputFilter;
 use \Zend\I18n\Translator\Translator;
-use \Zend\Validator\Identical;
+
 
 class RejectForm extends AbstractForm
 {

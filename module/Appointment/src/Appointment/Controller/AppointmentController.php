@@ -95,6 +95,9 @@ class AppointmentController extends AbstractActionController
      */
     public function confirmAction()
     {
+
+        // todo: confirmation deadline if excceding time period for confirming: automatic confirmation!
+
         $sm = $this->getServiceLocator();
         /* @var $em \Doctrine\ORM\EntityManager */
         $em = $sm->get('Doctrine\ORM\EntityManager');
@@ -131,14 +134,10 @@ class AppointmentController extends AbstractActionController
 
             if ($form->isValid() && $postData['confirm']) {
 
-                var_dump("YES");
-
-
                 $match = $appointment->getMatch();
                 $date = $appointment->getNewDate();
-                $appointment->setIsConfirmed(true);
-                $appointment->setIsDone(true);
 
+                $appointment->setIsConfirmed(true);
                 $match->setDate($date);
 
                 $em->persist($appointment);
@@ -210,7 +209,6 @@ class AppointmentController extends AbstractActionController
 
                 $data = $form->getData();
                 $appointment->setIsRejected(true);
-                $appointment->setIsDone(true);
                 $appointment->setRejectReason($data['reason']);
 
                 $em->persist($appointment);
