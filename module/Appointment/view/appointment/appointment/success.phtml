@@ -1,0 +1,19 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Appointment');
+$title = $this->translate("New match appointment confirmed");
+$this->headTitle($title);
+
+?>
+
+<h3><?php echo $title;?></h3>
+<p>
+    <div><?php echo $this->translate("Your match appointment is confirmed."); ?></div>
+    <div><?php echo $this->translate("All necessary information will sent to your email address."); ?></div>
+</p>
+
+<p>
+    <div><?php echo $this->translate("If you use ICal, make sure to update."); ?></div>
+    <div><?php echo $this->translate("Therefore, just download your match schedule again."); ?></div>
+</p>
+
+<?php
