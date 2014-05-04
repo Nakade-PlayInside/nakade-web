@@ -1,17 +1,17 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('Appointment');
-$title = $this->translate("Confirm new match appointment");
+$title = $this->translate("Reject new match appointment");
 $this->headTitle($title);
 
 ?>
 
 <h3><?php echo $title;?></h3>
 <p>
-    <div><?php echo $this->translate("A new new match date was provided by your opponent."); ?></div>
-    <div><?php echo $this->translate("Your binding confirmation is needed."); ?></div>
+    <div><?php echo $this->translate("Please provide a reason for rejecting the new match date."); ?></div>
+    <div><?php echo $this->translate("For example: I was not asked at all."); ?></div>
 </p>
 
-<table>
+<table style="margin-bottom: 10px;">
 <tr>
     <td style="font-weight: bold;"><?php echo $this->translate("Match"); ?>:</td>
     <td style="color:#0088cc"><?php echo $this->matchInfo; ?></td>
@@ -26,9 +26,6 @@ $this->headTitle($title);
 </tr>
 </table>
 
-<p>
-    <div><?php echo $this->translate("If you do not agree, you may reject the appointment."); ?></div>
-</p>
 
 <?php
 

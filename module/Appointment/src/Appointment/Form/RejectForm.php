@@ -9,15 +9,11 @@ use \Zend\Validator\Identical;
 class RejectForm extends AbstractForm
 {
 
-    const USER_CONFIRM = "1";
-    private $endOfSeason;
 
     /**
-     * @param \DateTime  $endOfSeason
-     *
      * @param Translator $translator
      */
-    public function __construct($endOfSeason, Translator $translator = null)
+    public function __construct(Translator $translator = null)
     {
 
         //form name
@@ -25,13 +21,6 @@ class RejectForm extends AbstractForm
 
         $this->setTranslator($translator);
         $this->setTranslatorTextDomain('Appointment');
-
-        if ($endOfSeason instanceof \DateTime) {
-            $this->endOfSeason = $endOfSeason;
-        } else {
-            $this->endOfSeason = new \DateTime();
-            $this->endOfSeason->modify('+3 month');
-        }
 
         $this->init();
         $this->setInputFilter($this->getFilter());
@@ -49,8 +38,8 @@ class RejectForm extends AbstractForm
         //recipient
         $this->add(
             array(
-                'name' => 'rejectReason',
-                'type' => 'Zend\Form\Element\Text',
+                'name' => 'reason',
+                'type' => 'Zend\Form\Element\Textarea',
                 'options' => array(
                     'label' =>  $this->translate('Reject Reason').":",
                 ),
@@ -76,10 +65,10 @@ class RejectForm extends AbstractForm
         //submit button
         $this->add(
             array(
-                'name' => 'Send',
+                'name' => 'reject',
                 'type'  => 'Zend\Form\Element\Submit',
                 'attributes' => array(
-                    'value' =>   $this->translate('Submit'),
+                    'value' =>   $this->translate('Reject'),
 
                 ),
             )
@@ -105,6 +94,29 @@ class RejectForm extends AbstractForm
     public function getFilter()
     {
         $filter = new InputFilter();
+
+        $filter->add(
+
+            array(
+                'name' => 'reason',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripNewLines'),
+                ),
+                'validators' => array(
+                    array('name'    => 'NotEmpty'),
+                    array('name'    => 'StringLength',
+                        'options' => array (
+                            'encoding' => 'UTF-8',
+                            'max'  => '600',
+                        )
+                    ),
+                )
+            )
+        );
+
         return $filter;
     }
 

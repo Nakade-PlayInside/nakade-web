@@ -11,6 +11,7 @@ namespace Appointment\Controller;
 use Appointment\Entity\Appointment;
 use Appointment\Form\AppointmentForm;
 use Appointment\Form\ConfirmForm;
+use Appointment\Form\RejectForm;
 use Zend\Form\Element\DateTime;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -83,7 +84,6 @@ class AppointmentController extends AbstractActionController
 
        return new ViewModel(
            array(
-               'appointment' => null,
                'form' => $form,
                'matchInfo' => $matchInfo
            )
@@ -120,11 +120,11 @@ class AppointmentController extends AbstractActionController
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
 
-            //cancel
+            //reject
             if ($postData['reject']) {
-
-                var_dump("NO");
-                //return $this->redirect()->toRoute('message');
+                return $this->redirect()->toRoute('appointment', array(
+                        'action' => 'reject'
+                ));
             }
 
             $form->setData($postData);
@@ -158,9 +158,8 @@ class AppointmentController extends AbstractActionController
 
         return new ViewModel(
             array(
-                'appointment' => $appointment,
-                'oldDate' => $appointment->getOldDate()->format('d.m.Y'),
-                'newDate' => $appointment->getNewDate()->format('d.m.Y'),
+                'oldDate' => $appointment->getOldDate()->format('d.m.Y H:i'),
+                'newDate' => $appointment->getNewDate()->format('d.m.Y H:i'),
                 'form' => $form,
                 'matchInfo' => $matchInfo
             )
@@ -190,7 +189,7 @@ class AppointmentController extends AbstractActionController
             return $this->redirect()->toRoute('home');
         }
 
-        $form = new ConfirmForm();
+        $form = new RejectForm();
 
         if ($this->getRequest()->isPost()) {
 
@@ -198,36 +197,30 @@ class AppointmentController extends AbstractActionController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['reject']) {
+            if ($postData['cancel']) {
 
-                var_dump("NO");
-                //return $this->redirect()->toRoute('message');
+                return $this->redirect()->toRoute('appointment', array(
+                    'action' => 'confirm'
+                ));
             }
 
             $form->setData($postData);
 
-            if ($form->isValid() && $postData['confirm']) {
+            if ($form->isValid() && $postData['reject']) {
 
-                var_dump("YES");
-
-
-                $match = $appointment->getMatch();
-                $date = $appointment->getNewDate();
-                $appointment->setIsConfirmed(true);
+                $data = $form->getData();
+                $appointment->setIsRejected(true);
                 $appointment->setIsDone(true);
-
-                $match->setDate($date);
+                $appointment->setRejectReason($data['reason']);
 
                 $em->persist($appointment);
                 $em->flush($appointment);
-                $em->persist($match);
-                $em->flush($match);
 
                 //make email
-                //send email
+                //send email to both players and league managers
 
                 return $this->redirect()->toRoute('appointment', array(
-                    'action' => 'success'
+                    'action' => 'info'
                 ));
             }
         }
@@ -235,9 +228,8 @@ class AppointmentController extends AbstractActionController
 
         return new ViewModel(
             array(
-                'appointment' => $appointment,
-                'oldDate' => $appointment->getOldDate()->format('d.m.Y'),
-                'newDate' => $appointment->getNewDate()->format('d.m.Y'),
+                'oldDate' => $appointment->getOldDate()->format('d.m.Y H:i'),
+                'newDate' => $appointment->getNewDate()->format('d.m.Y H:i'),
                 'form' => $form,
                 'matchInfo' => $matchInfo
             )
@@ -248,6 +240,16 @@ class AppointmentController extends AbstractActionController
      * @return array|ViewModel
      */
     public function successAction()
+    {
+        return new ViewModel(
+            array()
+        );
+    }
+
+    /**
+     * @return array|ViewModel
+     */
+    public function infoAction()
     {
         return new ViewModel(
             array()
