@@ -42,14 +42,15 @@ class AppointmentController extends AbstractActionController
            $match->getWhite()->getShortName()
        );
 
-       $endDate = new \DateTime('now');
-       $endDate->modify('+4 months');
+       //get league from match; get season from league; get last date from season
+       $endDate = $match->getDate();
+       $endDate->modify('+1 months');
+
        $form = new AppointmentForm($endDate);
 
-       if ($this->getRequest()->isPost()) {
-
-           //get post data, set data to from, prepare for validation
-           $postData =  $this->getRequest()->getPost();
+       /* @var $request \Zend\Http\Request */
+       $request = $this->getRequest();
+       if ($postData = $request->isPost()) {
 
            //cancel
            if ($postData['cancel']) {

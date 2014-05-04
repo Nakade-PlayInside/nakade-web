@@ -186,7 +186,7 @@ class MatchMapper  extends AbstractMapper
      * get the match by id
      *
      * @param int $id
-     * @return League\Entity\Match
+     * @return \League\Entity\Match
      */
     public function getMatchById($id)
     {
@@ -201,6 +201,7 @@ class MatchMapper  extends AbstractMapper
      * get all matches with a result in a league
      *
      * @param int $leagueId
+     *
      * @return array League\Entity\Match
      */
     public function getAllMatchesWithResult($leagueId)
@@ -221,7 +222,8 @@ class MatchMapper  extends AbstractMapper
     /**
      * get all matches with a result in a league
      *
-     * @param int $leagueId
+     * @param int $seasonId
+     *
      * @return array League\Entity\Match
      */
     public function getAllOpenMatches($seasonId)
@@ -242,6 +244,27 @@ class MatchMapper  extends AbstractMapper
     }
 
 
+    /**
+     * @param int $leagueId
+     *
+     * @return \DateTime
+     */
+    public function getEndOfLeague($leagueId)
+    {
+
+        //not used
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('max(m._date)')
+            ->from('League\Entity\Match', 'm')
+            ->join('m._league', 'League')
+            ->where('League._id = :lid')
+            ->setParameter('lid', $leagueId);
+
+        $endDate = $qb->getQuery()->getSingleScalarResult();
+        return \DateTime::createFromFormat('Y-m-d H:i:s', $endDate);
+
+    }
 
     public function getLastMatchDate($seasonId)
     {

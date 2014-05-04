@@ -23,5 +23,4 @@ class AppointmentMapper extends AbstractMapper
                    ->find($id);
     }
 
-
 }
