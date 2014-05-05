@@ -56,10 +56,11 @@ class RepositoryService implements FactoryInterface
 
            case "match":
                $repository = new MatchMapper();
+               $repository->setEntityManager($this->entityManager);
                break;
 
            case "appointment":
-               $repository = new AppointmentMapper();
+               $repository = new AppointmentMapper($this->entityManager);
                break;
 
            default:
@@ -67,8 +68,6 @@ class RepositoryService implements FactoryInterface
                    sprintf('An unknown mapper type was provided.')
                );
         }
-
-        $repository->setEntityManager($this->entityManager);
 
         return $repository;
     }

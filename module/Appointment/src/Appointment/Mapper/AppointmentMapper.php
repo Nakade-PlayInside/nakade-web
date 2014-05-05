@@ -2,6 +2,7 @@
 namespace Appointment\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
+use Doctrine\ORM\EntityManager;
 use League\Entity\Match;
 
 /**
@@ -11,6 +12,14 @@ use League\Entity\Match;
  */
 class AppointmentMapper extends AbstractMapper
 {
+
+    /**
+     * @param EntityManager $entityManager
+     */
+    public function __construct(EntityManager $entityManager)
+    {
+            $this->entityManager = $entityManager;
+    }
 
     /**
      * @param int $id
@@ -34,6 +43,28 @@ class AppointmentMapper extends AbstractMapper
         return $this->getEntityManager()
             ->getRepository('Appointment\Entity\Appointment')
             ->findBy(array('match' => $match));
+    }
+
+    /**
+     * @return array
+     */
+    public function getOverdueAppointments()
+    {
+
+        $overdue = new \DateTime();
+        $overdue->modify('-72h');
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Appointment')
+            ->select('a')
+            ->from('Appointment\Entity\Appointment', 'a')
+            ->where('a.isConfirmed = 0')
+            ->andWhere('a.isRejected = 0')
+            ->andWhere('a.newDate > :overdue')
+            ->setParameter('overdue', $overdue);
+
+        return $qb->getQuery()->getResult();
+
     }
 
 }

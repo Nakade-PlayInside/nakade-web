@@ -10,13 +10,18 @@ namespace Appointment\Controller;
 
 use Appointment\Entity\Appointment;
 use League\Entity\Match;
-use User\Entity\User;
 use Appointment\Form\AppointmentForm;
 use Appointment\Form\ConfirmForm;
 use Appointment\Form\RejectForm;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
+/**
+<p>
+    <div><?php echo $this->translate("If you use ICal, make sure to update."); ?></div>
+<div><?php echo $this->translate("Therefore, just download your match schedule again."); ?></div>
+</p>
 
+*/
 //
 // 2. email
 // 2b factories for controller, form and email
@@ -28,14 +33,13 @@ use Nakade\Abstracts\AbstractController;
 class AppointmentController extends AbstractController
 {
 
+    private $homeRoute = 'home';
+
     /**
      * @return array|ViewModel
      */
    public function indexAction()
    {
-       $user = $this->identity();
-
-       //provide MATCHId
        $matchId  = (int) $this->params()->fromRoute('id', -1);
 
        /* @var $repo \League\Mapper\MatchMapper */
@@ -44,12 +48,14 @@ class AppointmentController extends AbstractController
        /* @var $match \League\Entity\Match */
        $match = $repo->getMatchById($matchId);
 
-       if (!$this->isValidMatch($match) || !$this->isValidUser($match)) {
+       //noAppointment made for this match
+       //user is either black or white
+       //match has no result
+       if (isNull($match) || isNull($match->getResultId()) || $this->hasAppointment($match) || !$this->isValidUser($match)) {
           return $this->redirect()->toRoute('appointment', array(
               'action' => 'invalid'
           ));
        }
-
 
        //is this the best way; binding and init?
        $appointment = $this->makeAppointmentByUser($match);
@@ -64,8 +70,7 @@ class AppointmentController extends AbstractController
 
            //cancel
            if ($postData['cancel']) {
-               //todo: change route finally to origin
-               return $this->redirect()->toRoute('home');
+               return $this->redirect()->toRoute($this->homeRoute);
            }
 
            $form->setData($postData);
@@ -79,7 +84,9 @@ class AppointmentController extends AbstractController
               //make email
                //send email
 
-               //return $this->redirect()->toRoute('message');
+               return $this->redirect()->toRoute('appointment', array(
+                   'action' => 'success'
+               ));
            }
        }
 
@@ -109,6 +116,9 @@ class AppointmentController extends AbstractController
         $repo = $this->getRepository()->getMapper('appointment');
         $appointment = $repo->getAppointmentById($appointmentId);
 
+        //appointment is not confirmed or rejected
+        //user is either black or white
+        //match has no result
         if (!$this->isValidAppointment($appointment)) {
             return $this->redirect()->toRoute('appointment', array(
                 'action' => 'invalid'
@@ -174,7 +184,11 @@ class AppointmentController extends AbstractController
         /* @var $repo \Appointment\Mapper\AppointmentMapper */
         $repo = $this->getRepository()->getMapper('appointment');
         $appointment = $repo->getAppointmentById($appointmentId);
-        if (!$this->isValidAppointment($appointment)) {
+
+        //appointment is not confirmed or rejected
+        //user is either black or white
+        //match has no result
+        if (is_null($appointment) || $this->isProcessed($appointment) || !$this->isValidUser($appointment->getMatch())) {
             return $this->redirect()->toRoute('appointment', array(
                 'action' => 'invalid'
             ));
@@ -286,14 +300,15 @@ class AppointmentController extends AbstractController
      *
      * @return bool
      */
-    private function isValidAppointment(Appointment $appointment=null)
+    private function isProcessed(Appointment $appointment)
     {
 
-        if (is_null($appointment)) {
-            return false;
+        if ($appointment->isRejected() || $appointment->isConfirmed()) {
+            return true;
         }
+        return false;
 
-        return $this->isValidMatch($appointment->getMatch());
+        //return $this->isValidMatch($appointment->getMatch());
     }
     /**
      * @param Match $match
@@ -320,16 +335,22 @@ class AppointmentController extends AbstractController
      *
      * @return bool
      */
-    private function isValidMatch(Match $match=null)
+    private function hasResult(Match $match)
     {
-        if (is_null($match)) {
-            return false;
-        }
+        $result = $match->getResultId();
+        return isset($result);
+
+    }
+
+    /**
+     * @param Match $match
+     *
+     * @return bool
+     */
+    private function hasAppointment(Match $match)
+    {
         $result = $this->getRepository()->getMapper('appointment')->getAppointmentByMatch($match);
-        if (empty($result)) {
-            return true;
-        }
-        return false;
+        return empty($result);
 
     }
 }
