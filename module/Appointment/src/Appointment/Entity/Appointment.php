@@ -266,4 +266,24 @@ class Appointment
         return $this->rejectReason;
     }
 
+    /**
+     * for form data
+     *
+     * @param array $data
+     */
+    public function exchangeArray($data)
+    {
+        $this->newDate = \DateTime::createFromFormat('Y-m-d H:i:s', $data['date'] . ' ' . $data['time']);
+    }
+
+    /**
+     * needed for form data
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+
 }

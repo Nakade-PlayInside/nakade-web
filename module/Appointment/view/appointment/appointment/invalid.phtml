@@ -1,0 +1,12 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Appointment');
+$title = $this->translate("Invalid Process");
+$this->headTitle($title);
+
+?>
+
+<h3><?php echo $title;?></h3>
+<p>
+    <div><?php echo $this->translate("You are not authorized to that.");?></div>
+    <div><?php echo $this->translate("Probably, this is not your match or it was already edited.");?></div>
+</p>

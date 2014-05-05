@@ -1,23 +1,26 @@
 <?php
 namespace Appointment\Form;
 
+use Appointment\Entity\Appointment;
 use Nakade\Abstracts\AbstractForm;
 use \Zend\InputFilter\InputFilter;
 use \Zend\I18n\Translator\Translator;
 use \Zend\Validator\Identical;
+use League\Entity\Match;
+use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 
 class AppointmentForm extends AbstractForm
 {
 
     const USER_CONFIRM = "1";
-    private $endOfSeason;
+
+    /* @var $maxDate \DateTime */
+    private $maxDate;
 
     /**
-     * @param \DateTime  $endOfSeason
-     *
      * @param Translator $translator
      */
-    public function __construct($endOfSeason, Translator $translator = null)
+    public function __construct(Translator $translator = null)
     {
 
         //form name
@@ -26,12 +29,19 @@ class AppointmentForm extends AbstractForm
         $this->setTranslator($translator);
         $this->setTranslatorTextDomain('Appointment');
 
-        if ($endOfSeason instanceof \DateTime) {
-            $this->endOfSeason = $endOfSeason;
-        } else {
-            $this->endOfSeason = new \DateTime();
-            $this->endOfSeason->modify('+3 month');
-        }
+        $this->maxDate = new \DateTime();
+        $this->maxDate->modify('+1 months');
+    }
+
+    /**
+     * @param Appointment $object
+     */
+    public function bindEntity(Appointment $object)
+    {
+        $this->bind($object);
+
+        $this->maxDate = $object->getOldDate();
+        $this->maxDate->modify('+1 months');
 
         $this->init();
         $this->setInputFilter($this->getFilter());
@@ -57,7 +67,7 @@ class AppointmentForm extends AbstractForm
                 ),
                 'attributes' => array(
                     'min'  => \date('Y-m-d'),
-                    'max'  => $this->endOfSeason->format('Y-m-d'),
+                    'max'  => $this->maxDate->format('Y-m-d'),
                     'step' => '1', // days; default step interval is 1 day
                 )
 

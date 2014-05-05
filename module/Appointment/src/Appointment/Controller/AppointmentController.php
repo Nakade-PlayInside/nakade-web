@@ -9,6 +9,8 @@
 namespace Appointment\Controller;
 
 use Appointment\Entity\Appointment;
+use League\Entity\Match;
+use User\Entity\User;
 use Appointment\Form\AppointmentForm;
 use Appointment\Form\ConfirmForm;
 use Appointment\Form\RejectForm;
@@ -35,9 +37,6 @@ class AppointmentController extends AbstractController
 
        //provide MATCHId
        $matchId  = (int) $this->params()->fromRoute('id', -1);
-       //proof matchId
-       //proof on already existing appoinment
-       //proof if id is matching
 
        /* @var $repo \League\Mapper\MatchMapper */
        $repo = $this->getRepository()->getMapper('match');
@@ -45,25 +44,17 @@ class AppointmentController extends AbstractController
        /* @var $match \League\Entity\Match */
        $match = $repo->getMatchById($matchId);
 
-       if (is_null($match)) {
-           var_dump("nul");die;
+       if (!$this->isValidMatch($match) || !$this->isValidUser($match)) {
+          return $this->redirect()->toRoute('appointment', array(
+              'action' => 'invalid'
+          ));
        }
 
-       if (!is_null($user) && $match->getBlack()->getId() != $user->getId() && $match->getWhite()->getId() != $user->getId()) {
-         //  var_dump("nul"); die;
-       }
 
-
-       $ap = $this->getRepository()->getMapper('appointment')->getAppointmentByMatch($match);
-       if (!empty($ap)) {
-           var_dump($ap); die;
-       }
-
-       //get league from match; get season from league; get last date from season
-       $endDate = $match->getDate();
-       $endDate->modify('+1 months');
-
-       $form = new AppointmentForm($endDate);
+       //is this the best way; binding and init?
+       $appointment = $this->makeAppointmentByUser($match);
+       $form = new AppointmentForm($this->getTranslator());
+       $form->bindEntity($appointment);
 
        /* @var $request \Zend\Http\Request */
        $request = $this->getRequest();
@@ -81,19 +72,9 @@ class AppointmentController extends AbstractController
 
            if ($form->isValid()) {
 
-               $appointment = new Appointment();
-
                $data = $form->getData();
-               $newDate = \DateTime::createFromFormat('Y-m-d H:i:s', $data['date'] . ' ' . $data['time']);
+               $repo->save($data);
 
-               $appointment->setMatch($match);
-               $appointment->setSubmitter($match->getBlack());
-               $appointment->setResponder($match->getWhite());
-               $appointment->setSubmitDate(new \DateTime());
-               $appointment->setOldDate($match->getDate());
-               $appointment->setNewDate($newDate);
-
-               $repo->save($appointment);
 
               //make email
                //send email
@@ -124,18 +105,14 @@ class AppointmentController extends AbstractController
 
         //proof on matching user
 
-        $sm = $this->getServiceLocator();
-        /* @var $em \Doctrine\ORM\EntityManager */
-        $em = $sm->get('Doctrine\ORM\EntityManager');
-
-        $repo = new \Appointment\Mapper\AppointmentMapper();
-        $repo->setEntityManager($em);
-
+        /* @var $repo \Appointment\Mapper\AppointmentMapper */
+        $repo = $this->getRepository()->getMapper('appointment');
         $appointment = $repo->getAppointmentById($appointmentId);
 
-
-        if (is_null($appointment) || $appointment->isConfirmed() || $appointment->isRejected()) {
-            return $this->redirect()->toRoute('home');
+        if (!$this->isValidAppointment($appointment)) {
+            return $this->redirect()->toRoute('appointment', array(
+                'action' => 'invalid'
+            ));
         }
 
         $form = new ConfirmForm();
@@ -162,10 +139,8 @@ class AppointmentController extends AbstractController
                 $appointment->setIsConfirmed(true);
                 $match->setDate($date);
 
-                $em->persist($appointment);
-                $em->flush($appointment);
-                $em->persist($match);
-                $em->flush($match);
+                $repo->save($appointment);
+                $repo->save($match);
 
                 //make email
                 //send email
@@ -196,19 +171,13 @@ class AppointmentController extends AbstractController
         //provide appointmentId
         $appointmentId  = (int) $this->params()->fromRoute('id', -1);
 
-        //proof on matching user
-
-        $sm = $this->getServiceLocator();
-        /* @var $em \Doctrine\ORM\EntityManager */
-        $em = $sm->get('Doctrine\ORM\EntityManager');
-
-        $repo = new \Appointment\Mapper\AppointmentMapper();
-        $repo->setEntityManager($em);
-
-
+        /* @var $repo \Appointment\Mapper\AppointmentMapper */
+        $repo = $this->getRepository()->getMapper('appointment');
         $appointment = $repo->getAppointmentById($appointmentId);
-        if (is_null($appointment) || $appointment->isConfirmed() || $appointment->isRejected()) {
-            return $this->redirect()->toRoute('home');
+        if (!$this->isValidAppointment($appointment)) {
+            return $this->redirect()->toRoute('appointment', array(
+                'action' => 'invalid'
+            ));
         }
 
         $form = new RejectForm();
@@ -220,7 +189,6 @@ class AppointmentController extends AbstractController
 
             //cancel
             if ($postData['cancel']) {
-
                 return $this->redirect()->toRoute('appointment', array(
                     'action' => 'confirm'
                 ));
@@ -234,8 +202,7 @@ class AppointmentController extends AbstractController
                 $appointment->setIsRejected(true);
                 $appointment->setRejectReason($data['reason']);
 
-                $em->persist($appointment);
-                $em->flush($appointment);
+                $repo->save($appointment);
 
                 //make email
                 //send email to both players and league managers
@@ -262,9 +229,7 @@ class AppointmentController extends AbstractController
      */
     public function successAction()
     {
-        return new ViewModel(
-            array()
-        );
+        return new ViewModel();
     }
 
     /**
@@ -277,12 +242,94 @@ class AppointmentController extends AbstractController
         );
     }
 
-    private function isValidAppointment(Appointment $appointment)
+    /**
+     * @return array|ViewModel
+     */
+    public function invalidAction()
     {
-        /* @var $user /User/League/User */
+        return new ViewModel(
+            array()
+        );
+    }
+
+    /**
+     * @param Match $match
+     *
+     * @return Appointment
+     */
+    private function makeAppointmentByUser(Match $match)
+    {
+        /* @var $user \User\Entity\User */
         $user = $this->identity();
 
+        $appointment = new Appointment();
 
-        return (is_null($appointment) || $appointment->isConfirmed() || $appointment->isRejected());
+        $appointment->setMatch($match);
+        $appointment->setSubmitDate(new \DateTime());
+        $appointment->setOldDate($match->getDate());
+
+        $responder = $match->getBlack();
+        $submitter = $match->getWhite();
+        if ($user->getId() == $match->getBlack()->getId()) {
+            $submitter = $match->getBlack();
+            $responder = $match->getWhite();
+        }
+        $appointment->setSubmitter($submitter);
+        $appointment->setResponder($responder);
+
+        return $appointment;
+
+    }
+
+    /**
+     * @param Appointment $appointment
+     *
+     * @return bool
+     */
+    private function isValidAppointment(Appointment $appointment=null)
+    {
+
+        if (is_null($appointment)) {
+            return false;
+        }
+
+        return $this->isValidMatch($appointment->getMatch());
+    }
+    /**
+     * @param Match $match
+     *
+     * @return bool
+     */
+    private function isValidUser(Match $match)
+    {
+        /* @var $user \User\Entity\User */
+        $user = $this->identity();
+        if ($match->getBlack()->getId() == $user->getId()) {
+            return true;
+        }
+
+        if ($match->getWhite()->getId() == $user->getId()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Match $match
+     *
+     * @return bool
+     */
+    private function isValidMatch(Match $match=null)
+    {
+        if (is_null($match)) {
+            return false;
+        }
+        $result = $this->getRepository()->getMapper('appointment')->getAppointmentByMatch($match);
+        if (empty($result)) {
+            return true;
+        }
+        return false;
+
     }
 }
