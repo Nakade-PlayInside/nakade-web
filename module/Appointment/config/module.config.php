@@ -5,9 +5,9 @@ return array(
 
     //controller
     'controllers' => array(
-        'invokables' => array(
+        'factories' => array(
             'Appointment\Controller\Appointment' =>
-                'Appointment\Controller\AppointmentController',
+                'Appointment\Services\\AppointmentControllerFactory',
         ),
     ),
 
@@ -42,6 +42,15 @@ return array(
                 'pattern'       => '%s.mo',
                 'text_domain'   => 'Appointment',
             ),
+        ),
+    ),
+
+    //services
+    'service_manager' => array(
+        'factories' => array(
+            'Appointment\Services\RepositoryService'      =>
+                'Appointment\Services\RepositoryService',
+            'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
 

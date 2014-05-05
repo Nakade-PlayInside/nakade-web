@@ -14,7 +14,6 @@ class AbstractMapper extends AbstractTranslation
 
    protected $entityManager;
 
-
    /**
    * Sets the EntityManager
    *
@@ -57,7 +56,7 @@ class AbstractMapper extends AbstractTranslation
     * Returns the primary key of the given
     * entity or null if the entity manager is not set.
     *
-    * @param entity $object
+    * @param object $object
     *
     * @return null|string
     */
@@ -81,8 +80,9 @@ class AbstractMapper extends AbstractTranslation
    public function save($entity)
    {
 
-       if ($entity===null) {
-           return $this->getEntityManager()->flush();
+       if (is_null($entity)) {
+           $this->getEntityManager()->flush();
+           return;
        }
 
        $this->getEntityManager()->persist($entity);
@@ -93,17 +93,16 @@ class AbstractMapper extends AbstractTranslation
     /**
      * @param object $entity
      */
-    public function update($entity)
+   public function update($entity)
    {
 
-       if ($entity===null) {
-           return $this->getEntityManager()->flush();
+       if (is_null($entity)) {
+           $this->getEntityManager()->flush();
+           return;
        }
 
        $this->getEntityManager()->persist($entity);
        $this->getEntityManager()->flush($entity);
 
    }
-
-
 }

@@ -2,6 +2,7 @@
 namespace Appointment\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
+use League\Entity\Match;
 
 /**
  * Requesting database using doctrine
@@ -21,6 +22,18 @@ class AppointmentMapper extends AbstractMapper
        return $this->getEntityManager()
                    ->getRepository('Appointment\Entity\Appointment')
                    ->find($id);
+    }
+
+    /**
+     * @param Match $match
+     *
+     * @return array
+     */
+    public function getAppointmentByMatch(Match $match)
+    {
+        return $this->getEntityManager()
+            ->getRepository('Appointment\Entity\Appointment')
+            ->findBy(array('match' => $match));
     }
 
 }

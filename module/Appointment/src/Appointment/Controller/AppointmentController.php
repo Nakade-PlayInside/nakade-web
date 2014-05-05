@@ -12,9 +12,8 @@ use Appointment\Entity\Appointment;
 use Appointment\Form\AppointmentForm;
 use Appointment\Form\ConfirmForm;
 use Appointment\Form\RejectForm;
-use Zend\Form\Element\DateTime;
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Nakade\Abstracts\AbstractController;
 
 //
 // 2. email
@@ -24,7 +23,7 @@ use Zend\View\Model\ViewModel;
 // 5. automatic confirm after time exceed
 // 6. user right
 
-class AppointmentController extends AbstractActionController
+class AppointmentController extends AbstractController
 {
 
     /**
@@ -40,14 +39,25 @@ class AppointmentController extends AbstractActionController
        //proof on already existing appoinment
        //proof if id is matching
 
-       $sm = $this->getServiceLocator();
-       $em = $sm->get('Doctrine\ORM\EntityManager');
-
-       $repo = new \League\Mapper\MatchMapper();
-       $repo->setEntityManager($em);
+       /* @var $repo \League\Mapper\MatchMapper */
+       $repo = $this->getRepository()->getMapper('match');
 
        /* @var $match \League\Entity\Match */
        $match = $repo->getMatchById($matchId);
+
+       if (is_null($match)) {
+           var_dump("nul");die;
+       }
+
+       if (!is_null($user) && $match->getBlack()->getId() != $user->getId() && $match->getWhite()->getId() != $user->getId()) {
+         //  var_dump("nul"); die;
+       }
+
+
+       $ap = $this->getRepository()->getMapper('appointment')->getAppointmentByMatch($match);
+       if (!empty($ap)) {
+           var_dump($ap); die;
+       }
 
        //get league from match; get season from league; get last date from season
        $endDate = $match->getDate();
@@ -83,8 +93,8 @@ class AppointmentController extends AbstractActionController
                $appointment->setOldDate($match->getDate());
                $appointment->setNewDate($newDate);
 
-               $em->persist($appointment);
-               $em->flush($appointment);
+               $repo->save($appointment);
+
               //make email
                //send email
 

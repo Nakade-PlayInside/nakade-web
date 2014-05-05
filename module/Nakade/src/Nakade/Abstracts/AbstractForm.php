@@ -4,6 +4,7 @@ namespace Nakade\Abstracts;
 use Zend\Form\Form;
 use Zend\I18n\Translator\Translator;
 use Zend\I18n\Translator\TranslatorAwareInterface;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Abstract form implementing a translator.
@@ -11,128 +12,121 @@ use Zend\I18n\Translator\TranslatorAwareInterface;
  * no translator is set.
  * Using bindingEntity for setting values will reset the filter.
  */
-abstract class AbstractForm 
-            extends Form 
-            implements TranslatorAwareInterface
+abstract class AbstractForm extends Form implements TranslatorAwareInterface
 {
-   
-    protected $_translator;
-    protected $_textDomain="default";
-    protected $_entity_manager=null;
-    protected $_id;
-    
-    
+
+    protected $translator;
+    protected $textDomain="default";
+    protected $entityManager=null;
+    protected $id;
+    protected $enabled=true;
+
+
    /**
    * Sets the EntityManager
    *
-   * @param EntityManager $entitymanager
-   * @access public
-   * @return ActionController
+   * @param EntityManager $em
+   *
+   * @return $this;
    */
-   public function setEntityManager($em)
+   public function setEntityManager(EntityManager $em)
    {
-      $this->_entity_manager = $em;
+      $this->entityManager = $em;
       return $this;
    }
 
   /**
-   * Returns the EntityManager
-   *
-   * Fetches the EntityManager from ServiceLocator if it has not been initiated
-   * and then returns it
-   *
-   * @access public
-   * @return EntityManager
+   * @return \Doctrine\ORM\EntityManager
    */
    public function getEntityManager()
    {
-      return $this->_entity_manager;
+      return $this->entityManager;
    }
-   
+
    /**
-   * Returns true if EntityManager is set
-   *
-   * @access public
    * @return bool
    */
    public function hasEntityManager()
    {
-      return isset($this->_entity_manager);
+      return isset($this->entityManager);
    }
-   
+
    /**
     * Returns the primary key of the given
     * entity or null if the entity manager is not set.
-    * 
-    * @param entity $object
+    *
+    * @param object $object
+    *
     * @return null|string
     */
    public function getIdentifierKey($object)
    {
-       if($this->hasEntityManager()) {
+       if ($this->hasEntityManager()) {
            return $this->getEntityManager()
                  ->getClassMetaData(get_class($object))
                  ->getSingleIdentifierFieldName();
        }
        return null;
-       
+
    }
-   
+
    /**
     * get the id value
-    * 
+    *
     * @return int
     */
-   public function getIdentifierValue()
+    public function getIdentifierValue()
     {
-        return $this->_id;
-    }  
-    
+        return $this->id;
+    }
+
     /**
      * set the id value
-     * 
+     *
      * @param int $value
-     * @return \User\Form\AbstractForm
+     *
+     * @return $this;
      */
     public function setIdentifierValue($value)
     {
-        $this->_id=$value;
+        $this->id=$value;
         return $this;
-    }       
-   
+    }
+
     /**
      * Binds an entitiy object to the form, populating
-     * the form values. The identifier of the 
+     * the form values. The identifier of the
      * entity is set and the filter are reset. This is mandatory
-     * if the DBNoRecordExist validator is used with the exclude 
+     * if the DBNoRecordExist validator is used with the exclude
      * option.
-     * 
-     * @param Entity $object
+     *
+     * @param object $object
      */
     public function bindEntity($object)
     {
-        if($object === null)
+        if (is_null($object)) {
             return;
-        
+        }
+
         $this->bind($object);
-                
+
         //removes leading underlines
         $temp = $this->getIdentifierKey($object);
-        $identifier = str_replace('_', '',$temp);  
-        
+        $identifier = str_replace('_', '', $temp);
+
         $method = 'get'.ucfirst($identifier);
         $method = 'getId';
-       
-        if(method_exists($object, $method)) {
+
+        if (method_exists($object, $method)) {
               $value = $object->$method();
               $this->setIdentifierValue($value);
-              
+
         }
-      
+
         $filter = $this->getFilter();
         $this->setInputFilter($filter);
-    }        
-    
+    }
+
     /**
      * You have to implement this for setting the filter
      * and validators
@@ -141,53 +135,52 @@ abstract class AbstractForm
 
 
     /**
-    * saves the entity. 
+    * saves the entity.
     * return true on success
-    * 
-    * @param Entity $entity
+    *
+    * @param object $entity
     */
    public function save($entity)
    {
-       
-       if($entity===null) {
-           return $this->getEntityManager()->flush();
+
+       if (is_null($entity)) {
+           $this->getEntityManager()->flush();
+           return;
        }
-    
+
        $this->getEntityManager()->persist($entity);
        $this->getEntityManager()->flush($entity);
-       
+
    }
-   
-    
+
+
     /**
-     * Sets translator to use in helper
+     * @param Translator $translator
      *
-     * @param  Translator $translator  [optional] translator.
-     *          Default is null, which sets no translator.
-     * @param  string     $textDomain  [optional] text domain
-     *          Default is null, which skips setTranslatorTextDomain
-     * @return TranslatorAwareInterface
+     * @param string     $textDomain
+     *
+     * @return Translator|TranslatorAwareInterface
      */
-    public function setTranslator(
-            Translator $translator = null, 
-            $textDomain = null
-            ) 
+    public function setTranslator(Translator $translator = null, $textDomain = null)
     {
-        if(isset($translator))
-            $this->_translator=$translator;
-    
-        if(isset($textDomain))
-            $this->_textDomain=$textDomain;
+        if (isset($translator)) {
+            $this->translator=$translator;
+        }
+
+        if (isset($textDomain)) {
+            $this->textDomain=$textDomain;
+        }
+        return $translator;
     }
 
     /**
      * Returns translator used in object
      *
-     * @return Translator|null
+     * @return Translator
      */
     public function getTranslator()
-    {   
-        return $this->_translator;
+    {
+        return $this->translator;
     }
 
     /**
@@ -197,34 +190,39 @@ abstract class AbstractForm
      */
     public function hasTranslator()
     {
-        return isset($this->_translator);
+        return isset($this->translator);
     }
 
     /**
-     * Sets whether translator is enabled and should be used
+     * @param bool $enabled
      *
-     * @param  bool $enabled [optional] whether translator should be used.
-     *                       Default is true.
-     * @return TranslatorAwareInterface
+     * @return $this
      */
-    public function setTranslatorEnabled($enabled = true) {;}
-    
+    public function setTranslatorEnabled($enabled = true)
+    {
+        $this->enabled = $enabled;
+        return $this;
+    }
+
     /**
-     * Returns whether translator is enabled and should be used
-     *
      * @return bool
      */
-    public function isTranslatorEnabled() {;}
+    public function isTranslatorEnabled()
+    {
+        return $this->enabled;
+    }
 
     /**
      * Set translation text domain
      *
-     * @param  string $textDomain
-     * @return TranslatorAwareInterface
+     * @param string $textDomain
+     *
+     * @return $this
      */
     public function setTranslatorTextDomain($textDomain = 'default')
     {
-        $this->_textDomain=$textDomain;
+        $this->textDomain=$textDomain;
+        return $this;
     }
 
     /**
@@ -234,29 +232,31 @@ abstract class AbstractForm
      */
     public function getTranslatorTextDomain()
     {
-        return $this->_textDomain;
+        return $this->textDomain;
     }
-    
+
     /**
-    * Helper for i18N. If a translator is set to the controller, the 
+    * Helper for i18N. If a translator is set to the controller, the
     * message is translated.
-    *  
+    *
     * @param string $message
+     *
     * @return string
     */
-   public function translate($message) 
+   public function translate($message)
    {
-   
+
        $translator = $this->getTranslator();
-       if ($translator===null)
+       if (is_null($translator)) {
            return $message;
-       
+       }
+
        return $translator->translate(
-                  $message, 
-                  $this->getTranslatorTextDomain()
-              );
-       
+           $message,
+           $this->getTranslatorTextDomain()
+       );
+
    }
-    
+
 }
-?>
+
