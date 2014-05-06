@@ -69,15 +69,24 @@ class AppointmentFormFactory extends AbstractFormFactory
         switch (strtolower($typ)) {
 
            case self::APPOINTMENT_FORM:
-               $form = new Form\AppointmentForm(4, $this->getTranslator());
-               break;
+               $form = new Form\AppointmentForm(4);
+               $form->setTranslator($this->getTranslator());
+               break; //init made by binding entity
 
            case self::CONFIRM_FORM:
-               $form = new Form\ConfirmForm($this->getTranslator());
+               $form = new Form\ConfirmForm();
+               $form->setTranslator($this->getTranslator());
+               $form->init();
+               $filter = $form->getFilter();
+               $form->setInputFilter($filter);
                break;
 
            case self::REJECT_FORM:
-               $form = new Form\RejectForm($this->getTranslator());
+               $form = new Form\RejectForm();
+               $form->setTranslator($this->getTranslator());
+               $form->init();
+               $filter = $form->getFilter();
+               $form->setInputFilter($filter);
                break;
 
            default:

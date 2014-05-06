@@ -120,11 +120,11 @@ class AppointmentController extends AbstractController
         //appointment is not confirmed or rejected
         //user is either black or white
         //match has no result
-        if (is_null($appointment) || $this->isProcessed($appointment) || !$this->isValidUser($appointment->getMatch()) || $appointment->getMatch()->hasResult()) {
+    /*    if (is_null($appointment) || $this->isProcessed($appointment) || !$this->isValidUser($appointment->getMatch()) || $appointment->getMatch()->hasResult()) {
             return $this->redirect()->toRoute('appointment', array(
                 'action' => 'invalid'
             ));
-        }
+        }*/
 
         $form = $this->getFormFactory()->getForm('confirm');
 

@@ -4,8 +4,13 @@ namespace Appointment\Form;
 use Appointment\Entity\Appointment;
 use Nakade\Abstracts\AbstractForm;
 use \Zend\InputFilter\InputFilter;
-use \Zend\I18n\Translator\Translator;
 use \Zend\Validator\Identical;
+
+/**
+ * Class AppointmentForm
+ *
+ * @package Appointment\Form
+ */
 class AppointmentForm extends AbstractForm
 {
 
@@ -16,16 +21,12 @@ class AppointmentForm extends AbstractForm
 
     /**
      * @param int        $maxDatePeriod
-     *
-     * @param Translator $translator
      */
-    public function __construct($maxDatePeriod=4, Translator $translator = null)
+    public function __construct($maxDatePeriod=4)
     {
 
         //form name
         parent::__construct('AppointmentForm');
-        $this->setTranslator($translator);
-        $this->setTranslatorTextDomain('Appointment');
 
         $period = sprintf('+%d weeks', $maxDatePeriod);
         $this->maxDate = new \DateTime();

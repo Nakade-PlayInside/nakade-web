@@ -3,27 +3,23 @@ namespace Appointment\Form;
 
 use Nakade\Abstracts\AbstractForm;
 use \Zend\InputFilter\InputFilter;
-use \Zend\I18n\Translator\Translator;
 
-
+/**
+ * Class RejectForm
+ *
+ * @package Appointment\Form
+ */
 class RejectForm extends AbstractForm
 {
 
 
     /**
-     * @param Translator $translator
+     * constructor
      */
-    public function __construct(Translator $translator = null)
+    public function __construct()
     {
-
         //form name
         parent::__construct('RejectForm');
-
-        $this->setTranslator($translator);
-        $this->setTranslatorTextDomain('Appointment');
-
-        $this->init();
-        $this->setInputFilter($this->getFilter());
     }
 
 
