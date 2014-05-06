@@ -51,15 +51,16 @@ class AppointmentController extends AbstractController
        //noAppointment made for this match
        //user is either black or white
        //match has no result
-       if (isNull($match) || $match->hasResult() || $this->hasAppointment($match) || !$this->isValidUser($match)) {
+      /* if (is_null($match) || $match->hasResult() || $this->hasAppointment($match) || !$this->isValidUser($match)) {
           return $this->redirect()->toRoute('appointment', array(
               'action' => 'invalid'
           ));
-       }
+       }*/
 
-       //is this the best way; binding and init?
        $appointment = $this->makeAppointmentByUser($match);
-       $form = new AppointmentForm($this->getTranslator());
+
+       /* @var $form \Appointment\Form\AppointmentForm */
+       $form = $this->getFormFactory()->getForm('appointment');
        $form->bindEntity($appointment);
 
        /* @var $request \Zend\Http\Request */
@@ -125,7 +126,7 @@ class AppointmentController extends AbstractController
             ));
         }
 
-        $form = new ConfirmForm();
+        $form = $this->getFormFactory()->getForm('confirm');
 
         if ($this->getRequest()->isPost()) {
 
@@ -194,7 +195,7 @@ class AppointmentController extends AbstractController
             ));
         }
 
-        $form = new RejectForm();
+        $form = $this->getFormFactory()->getForm('reject');
 
         if ($this->getRequest()->isPost()) {
 

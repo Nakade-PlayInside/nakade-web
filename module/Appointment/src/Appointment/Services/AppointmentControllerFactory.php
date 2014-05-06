@@ -30,6 +30,11 @@ class AppointmentControllerFactory implements FactoryInterface
             'Appointment\Services\RepositoryService'
         );
 
+        $formFactory =  $serviceManager->get(
+            'Appointment\Services\AppointmentFormFactory'
+        );
+
+
 
         /* @var $transport \Zend\Mail\Transport\TransportInterface */
      //   $transport = $serviceManager->get('Mail\Services\MailTransportFactory');
@@ -39,6 +44,7 @@ class AppointmentControllerFactory implements FactoryInterface
 
         $translator = $serviceManager->get('translator');
 
+
     //    $mailService = new NotifyMail($message, $transport);
    //     $mailService->setTranslator($translator);
    //     $mailService->setTranslatorTextDomain($textDomain);
@@ -46,6 +52,7 @@ class AppointmentControllerFactory implements FactoryInterface
         $controller = new AppointmentController();
         $controller->setRepository($repository);
         $controller->setTranslator($translator);
+        $controller->setFormFactory($formFactory);
      //   $controller->setMailService($mailService);
 
         return $controller;

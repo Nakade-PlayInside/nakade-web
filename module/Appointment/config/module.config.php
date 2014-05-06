@@ -51,6 +51,8 @@ return array(
             'Appointment\Services\RepositoryService'      =>
                 'Appointment\Services\RepositoryService',
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
+            'Appointment\Services\AppointmentFormFactory' =>
+                'Appointment\Services\AppointmentFormFactory'
         ),
     ),
 
