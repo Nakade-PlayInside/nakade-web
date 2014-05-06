@@ -51,7 +51,7 @@ class AppointmentController extends AbstractController
        //noAppointment made for this match
        //user is either black or white
        //match has no result
-       if (isNull($match) || isNull($match->getResultId()) || $this->hasAppointment($match) || !$this->isValidUser($match)) {
+       if (isNull($match) || $match->hasResult() || $this->hasAppointment($match) || !$this->isValidUser($match)) {
           return $this->redirect()->toRoute('appointment', array(
               'action' => 'invalid'
           ));
@@ -119,7 +119,7 @@ class AppointmentController extends AbstractController
         //appointment is not confirmed or rejected
         //user is either black or white
         //match has no result
-        if (!$this->isValidAppointment($appointment)) {
+        if (is_null($appointment) || $this->isProcessed($appointment) || !$this->isValidUser($appointment->getMatch()) || $appointment->getMatch()->hasResult()) {
             return $this->redirect()->toRoute('appointment', array(
                 'action' => 'invalid'
             ));
@@ -188,7 +188,7 @@ class AppointmentController extends AbstractController
         //appointment is not confirmed or rejected
         //user is either black or white
         //match has no result
-        if (is_null($appointment) || $this->isProcessed($appointment) || !$this->isValidUser($appointment->getMatch())) {
+        if (is_null($appointment) || $this->isProcessed($appointment) || !$this->isValidUser($appointment->getMatch()) || $appointment->getMatch()->hasResult()) {
             return $this->redirect()->toRoute('appointment', array(
                 'action' => 'invalid'
             ));
@@ -330,17 +330,6 @@ class AppointmentController extends AbstractController
         return false;
     }
 
-    /**
-     * @param Match $match
-     *
-     * @return bool
-     */
-    private function hasResult(Match $match)
-    {
-        $result = $match->getResultId();
-        return isset($result);
-
-    }
 
     /**
      * @param Match $match

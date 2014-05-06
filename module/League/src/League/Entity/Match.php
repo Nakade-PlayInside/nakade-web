@@ -516,6 +516,15 @@ class Match
     }
 
     /**
+     * @return bool
+     */
+    public function hasResult()
+    {
+        return isset($this->_resultId);
+    }
+
+
+    /**
      * Convert the object to an array.
      *
      * @return array
