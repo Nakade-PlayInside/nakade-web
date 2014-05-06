@@ -22,8 +22,8 @@ class AppointmentControllerFactory implements FactoryInterface
         }
 
         //configuration
-     //   $textDomain = isset($config['Appointment']['text_domain']) ?
-     //       $config['Appointment']['text_domain'] : null;
+        $textDomain = isset($config['Appointment']['text_domain']) ?
+            $config['Appointment']['text_domain'] : null;
 
 
         $repository =  $serviceManager->get(
@@ -51,7 +51,6 @@ class AppointmentControllerFactory implements FactoryInterface
 
         $controller = new AppointmentController();
         $controller->setRepository($repository);
-        $controller->setTranslator($translator);
         $controller->setFormFactory($formFactory);
      //   $controller->setMailService($mailService);
 

@@ -6,7 +6,7 @@
   */
 return array(
 
-    'League' => array(
+    'Appointment' => array(
 
         //your text domain for translation
         'text_domain' => 'Appointment',

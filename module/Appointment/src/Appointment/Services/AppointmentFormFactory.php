@@ -21,6 +21,8 @@ class AppointmentFormFactory extends AbstractFormFactory
     const CONFIRM_FORM = 'confirm';
     const REJECT_FORM = 'reject';
 
+    private $maxDatePeriod=4;
+
     /**
      * @param ServiceLocatorInterface $services
      *
@@ -33,8 +35,11 @@ class AppointmentFormFactory extends AbstractFormFactory
             $config = ArrayUtils::iteratorToArray($config);
         }
 
+        $this->maxDatePeriod = isset($config['Appointment']['max_date_period']) ?
+            $config['Appointment']['max_date_period'] : 4;
+
         //configuration
-        $textDomain = isset($config['Appointment']['text_domain']) ?
+        $textDomain = isset($config['Appointment']['max_auth_attempts']) ?
             $config['Appointment']['text_domain'] : null;
 
         $translator = $services->get('translator');
@@ -48,9 +53,10 @@ class AppointmentFormFactory extends AbstractFormFactory
             'de_DE'
         );
 
+        //@todo: proof if this text domain setting is already doing the job
        $this->setTranslator($translator, $textDomain);
 
-        return $this;
+       return $this;
     }
 
     /**
@@ -69,7 +75,8 @@ class AppointmentFormFactory extends AbstractFormFactory
         switch (strtolower($typ)) {
 
            case self::APPOINTMENT_FORM:
-               $form = new Form\AppointmentForm(4);
+               $period = $this->getMaxDatePeriod();
+               $form = new Form\AppointmentForm($period);
                break; //init made by binding entity
 
            case self::CONFIRM_FORM:
@@ -88,5 +95,13 @@ class AppointmentFormFactory extends AbstractFormFactory
 
         $form->setTranslator($this->getTranslator());
         return $form;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxDatePeriod()
+    {
+        return $this->maxDatePeriod;
     }
 }
