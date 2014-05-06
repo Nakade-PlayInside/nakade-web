@@ -25,10 +25,12 @@ use Nakade\Abstracts\AbstractController;
 //
 // 2. email
 // 2b factories for controller, form and email
-// 3. config
 // 4. confirm by email
 // 5. automatic confirm after time exceed
-// 6. user right
+// login message for awaiting confirmation or rejecting
+// css for bootstrap
+//rejectReason for admin
+// unit test
 
 class AppointmentController extends AbstractController
 {
@@ -82,8 +84,9 @@ class AppointmentController extends AbstractController
                $repo->save($data);
 
 
-              //make email
+              //make email: submitter & responder
                //send email
+               //
 
                return $this->redirect()->toRoute('appointment', array(
                    'action' => 'success'
@@ -159,8 +162,8 @@ class AppointmentController extends AbstractController
                 $repo->save($appointment);
                 $repo->save($match);
 
-                //make email
-                //send email
+                //make email : confirm
+                //send email to both players
 
                 return $this->redirect()->toRoute('appointment', array(
                     'action' => 'success'
@@ -226,7 +229,7 @@ class AppointmentController extends AbstractController
                 $appointment->setIsRejected(true);
                 $repo->save($appointment);
 
-                //make email
+                //make email : reject
                 //send email to both players and league managers
 
                 return $this->redirect()->toRoute('appointment', array(
