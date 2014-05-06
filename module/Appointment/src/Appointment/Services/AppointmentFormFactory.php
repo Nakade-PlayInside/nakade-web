@@ -70,23 +70,14 @@ class AppointmentFormFactory extends AbstractFormFactory
 
            case self::APPOINTMENT_FORM:
                $form = new Form\AppointmentForm(4);
-               $form->setTranslator($this->getTranslator());
                break; //init made by binding entity
 
            case self::CONFIRM_FORM:
                $form = new Form\ConfirmForm();
-               $form->setTranslator($this->getTranslator());
-               $form->init();
-               $filter = $form->getFilter();
-               $form->setInputFilter($filter);
                break;
 
            case self::REJECT_FORM:
                $form = new Form\RejectForm();
-               $form->setTranslator($this->getTranslator());
-               $form->init();
-               $filter = $form->getFilter();
-               $form->setInputFilter($filter);
                break;
 
            default:
@@ -95,6 +86,7 @@ class AppointmentFormFactory extends AbstractFormFactory
                );
         }
 
+        $form->setTranslator($this->getTranslator());
         return $form;
     }
 }

@@ -273,7 +273,13 @@ class Appointment
      */
     public function exchangeArray($data)
     {
-        $this->newDate = \DateTime::createFromFormat('Y-m-d H:i:s', $data['date'] . ' ' . $data['time']);
+
+        if (isset($data['date']) &&  isset($data['time'])) {
+            $this->newDate = \DateTime::createFromFormat('Y-m-d H:i:s', $data['date'] . ' ' . $data['time']);
+        }
+        if (isset($data['reason'])) {
+            $this->rejectReason = $data['reason'];
+        }
     }
 
     /**

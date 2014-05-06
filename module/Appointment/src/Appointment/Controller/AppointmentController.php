@@ -126,7 +126,9 @@ class AppointmentController extends AbstractController
             ));
         }*/
 
+        /* @var $form \Appointment\Form\ConfirmForm */
         $form = $this->getFormFactory()->getForm('confirm');
+        $form->bindEntity($appointment);
 
         if ($this->getRequest()->isPost()) {
 
@@ -136,13 +138,17 @@ class AppointmentController extends AbstractController
             //reject
             if ($postData['reject']) {
                 return $this->redirect()->toRoute('appointment', array(
-                        'action' => 'reject'
+                        'action' => 'reject',
+                        'id' => $appointmentId,
                 ));
             }
 
             $form->setData($postData);
 
             if ($form->isValid() && $postData['confirm']) {
+
+                /* @var $appointment \Appointment\Entity\Appointment */
+                $appointment = $form->getData();
 
                 $match = $appointment->getMatch();
                 $date = $appointment->getNewDate();
@@ -189,13 +195,15 @@ class AppointmentController extends AbstractController
         //appointment is not confirmed or rejected
         //user is either black or white
         //match has no result
-        if (is_null($appointment) || $this->isProcessed($appointment) || !$this->isValidUser($appointment->getMatch()) || $appointment->getMatch()->hasResult()) {
+    /*    if (is_null($appointment) || $this->isProcessed($appointment) || !$this->isValidUser($appointment->getMatch()) || $appointment->getMatch()->hasResult()) {
             return $this->redirect()->toRoute('appointment', array(
                 'action' => 'invalid'
             ));
-        }
+        }*/
 
+        /* @var $form \Appointment\Form\RejectForm */
         $form = $this->getFormFactory()->getForm('reject');
+        $form->bindEntity($appointment);
 
         if ($this->getRequest()->isPost()) {
 
@@ -205,7 +213,8 @@ class AppointmentController extends AbstractController
             //cancel
             if ($postData['cancel']) {
                 return $this->redirect()->toRoute('appointment', array(
-                    'action' => 'confirm'
+                    'action' => 'confirm',
+                    'id' => $appointmentId
                 ));
             }
 
@@ -213,10 +222,8 @@ class AppointmentController extends AbstractController
 
             if ($form->isValid() && $postData['reject']) {
 
-                $data = $form->getData();
+                $appointment = $form->getData();
                 $appointment->setIsRejected(true);
-                $appointment->setRejectReason($data['reason']);
-
                 $repo->save($appointment);
 
                 //make email

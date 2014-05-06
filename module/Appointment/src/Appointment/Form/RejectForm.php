@@ -3,7 +3,7 @@ namespace Appointment\Form;
 
 use Nakade\Abstracts\AbstractForm;
 use \Zend\InputFilter\InputFilter;
-
+use Appointment\Entity\Appointment;
 /**
  * Class RejectForm
  *
@@ -12,9 +12,9 @@ use \Zend\InputFilter\InputFilter;
 class RejectForm extends AbstractForm
 {
 
-
     /**
      * constructor
+     * for using this form you have to init and setFilter OR you bind entity
      */
     public function __construct()
     {
@@ -22,6 +22,15 @@ class RejectForm extends AbstractForm
         parent::__construct('RejectForm');
     }
 
+    /**
+     * @param Appointment $object
+     */
+    public function bindEntity(Appointment $object)
+    {
+        $this->bind($object);
+        $this->init();
+        $this->setInputFilter($this->getFilter());
+    }
 
     /**
      * init the form. It is neccessary to call this function

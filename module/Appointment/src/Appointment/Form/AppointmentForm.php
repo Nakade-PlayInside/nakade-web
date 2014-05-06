@@ -19,6 +19,8 @@ class AppointmentForm extends AbstractForm
     /* @var $maxDate \DateTime */
     private $maxDate;
 
+    private $period;
+
     /**
      * @param int        $maxDatePeriod
      */
@@ -28,9 +30,9 @@ class AppointmentForm extends AbstractForm
         //form name
         parent::__construct('AppointmentForm');
 
-        $period = sprintf('+%d weeks', $maxDatePeriod);
+        $this->period = sprintf('+%d weeks', $maxDatePeriod);
         $this->maxDate = new \DateTime();
-        $this->maxDate->modify($period);
+        $this->maxDate->modify($this->period);
     }
 
     /**
@@ -38,11 +40,10 @@ class AppointmentForm extends AbstractForm
      */
     public function bindEntity(Appointment $object)
     {
-        $this->bind($object);
-
         $this->maxDate = $object->getOldDate();
-        $this->maxDate->modify('+1 months');
+        $this->maxDate->modify($this->period);
 
+        $this->bind($object);
         $this->init();
         $this->setInputFilter($this->getFilter());
     }
