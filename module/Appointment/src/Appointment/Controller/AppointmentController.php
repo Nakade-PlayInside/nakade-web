@@ -9,6 +9,7 @@
 namespace Appointment\Controller;
 
 use Appointment\Entity\Appointment;
+use Appointment\Services\MailService;
 use League\Entity\Match;
 use Appointment\Form\AppointmentForm;
 use Appointment\Form\ConfirmForm;
@@ -36,6 +37,7 @@ class AppointmentController extends AbstractController
 {
 
     private $homeRoute = 'home';
+    private $mailService;
 
     /**
      * @return array|ViewModel
@@ -159,9 +161,11 @@ class AppointmentController extends AbstractController
                 $appointment->setIsConfirmed(true);
                 $match->setDate($date);
 
-                $repo->save($appointment);
-                $repo->save($match);
+                //$repo->save($appointment);
+                //$repo->save($match);
 
+                $mail = $this->getMailService()->getMail('confirm');
+                $mail->sendMail($this->identity());
                 //make email : confirm
                 //send email to both players
 
@@ -352,5 +356,24 @@ class AppointmentController extends AbstractController
         $result = $this->getRepository()->getMapper('appointment')->getAppointmentByMatch($match);
         return empty($result);
 
+    }
+
+    /**
+     * @param MailService $mail
+     *
+     * @return $this
+     */
+    public function setMailService(MailService $mail)
+    {
+        $this->mailService = $mail;
+        return $this;
+    }
+
+    /**
+     * @return MailService
+     */
+    public function getMailService()
+    {
+        return $this->mailService;
     }
 }

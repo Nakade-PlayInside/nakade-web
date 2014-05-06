@@ -7,52 +7,44 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
 
+/**
+ * Class AppointmentControllerFactory
+ *
+ * @package Appointment\Services
+ */
 class AppointmentControllerFactory implements FactoryInterface
 {
 
-
+    /**
+     * @param ServiceLocatorInterface $services
+     *
+     * @return AppointmentController
+     */
     public function createService(ServiceLocatorInterface $services)
     {
         /* @var $serviceManager \Zend\ServiceManager\ServiceManager */
         $serviceManager = $services->getServiceLocator();
 
-        $config  = $serviceManager->get('config');
-        if ($config instanceof \Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
-        }
-
-        //configuration
-        $textDomain = isset($config['Appointment']['text_domain']) ?
-            $config['Appointment']['text_domain'] : null;
-
-
+        /* @var $repository \Appointment\Services\RepositoryService */
         $repository =  $serviceManager->get(
             'Appointment\Services\RepositoryService'
         );
 
+        /* @var $formFactory \Appointment\Services\AppointmentFormFactory */
         $formFactory =  $serviceManager->get(
             'Appointment\Services\AppointmentFormFactory'
         );
 
+        /* @var $mailService \Appointment\Services\MailService */
+        $mailService = $serviceManager->get(
+            'Appointment\Services\MailService'
+        );
 
-
-        /* @var $transport \Zend\Mail\Transport\TransportInterface */
-     //   $transport = $serviceManager->get('Mail\Services\MailTransportFactory');
-
-        /* @var $message \Mail\Services\MailMessageFactory */
-      //  $message =   $serviceManager->get('Mail\Services\MailMessageFactory');
-
-        $translator = $serviceManager->get('translator');
-
-
-    //    $mailService = new NotifyMail($message, $transport);
-   //     $mailService->setTranslator($translator);
-   //     $mailService->setTranslatorTextDomain($textDomain);
 
         $controller = new AppointmentController();
         $controller->setRepository($repository);
         $controller->setFormFactory($formFactory);
-     //   $controller->setMailService($mailService);
+        $controller->setMailService($mailService);
 
         return $controller;
 

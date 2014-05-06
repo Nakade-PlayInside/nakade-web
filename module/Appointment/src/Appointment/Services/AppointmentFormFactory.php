@@ -39,7 +39,7 @@ class AppointmentFormFactory extends AbstractFormFactory
             $config['Appointment']['max_date_period'] : 4;
 
         //configuration
-        $textDomain = isset($config['Appointment']['max_auth_attempts']) ?
+        $textDomain = isset($config['Appointment']['text_domain']) ?
             $config['Appointment']['text_domain'] : null;
 
         $translator = $services->get('translator');

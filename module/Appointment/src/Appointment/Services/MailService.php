@@ -5,12 +5,13 @@ namespace Appointment\Services;
 use Appointment\Mail;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Nakade\Abstracts\AbstractTranslation;
 /**
  * Class MailService
  *
  * @package Appointment\Services
  */
-class MailService implements FactoryInterface
+class MailService extends AbstractTranslation implements FactoryInterface
 {
 
     const SUBMITTER_MAIL = 'submitter';
@@ -21,7 +22,6 @@ class MailService implements FactoryInterface
     private $transport;
     private $message;
 
-
     /**
      * @param ServiceLocatorInterface $services
      *
@@ -31,21 +31,31 @@ class MailService implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $services)
     {
-        $serviceManager = $services->getServiceLocator();
-
-        $this->transport = $serviceManager->get('Mail\Services\MailTransportFactory');
+        $this->transport = $services->get('Mail\Services\MailTransportFactory');
         if (is_null($this->transport)) {
             throw new \RuntimeException(
                 sprintf('Mail Transport Service is not found.')
             );
         }
 
-        $this->message =   $serviceManager->get('Mail\Services\MailMessageFactory');
+        $this->message =   $services->get('Mail\Services\MailMessageFactory');
         if (is_null($this->message)) {
             throw new \RuntimeException(
                 sprintf('Mail Message Service is not found.')
             );
         }
+
+        $config  = $services->get('config');
+
+        //configuration
+        $textDomain = isset($config['Appointment']['text_domain']) ?
+            $config['Appointment']['text_domain'] : null;
+
+        $translator = $services->get('translator');
+
+
+        //@todo: proof if this text domain setting is already doing the job
+        $this->setTranslator($translator, $textDomain);
 
         return $this;
     }
@@ -84,6 +94,7 @@ class MailService implements FactoryInterface
                );
         }
 
+        $mail->setTranslator($this->getTranslator());
         return $mail;
     }
 
