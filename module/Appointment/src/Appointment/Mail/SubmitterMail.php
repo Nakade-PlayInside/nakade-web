@@ -7,29 +7,18 @@
 
 namespace Appointment\Mail;
 
-use Nakade\Abstracts\AbstractTranslation;
-use Mail\Services\MailMessageFactory;
-use User\Entity\User;
-use \Zend\Mail\Transport\TransportInterface;
-
-class SubmitterMail extends AbstractTranslation
+/**
+ * mail for the submitter of an appointment
+ *
+ * @package Appointment\Mail
+ */
+class SubmitterMail extends AppointmentMail
 {
-    private $mailService;
-    private $transport;
-
-
 
     /**
-     * @param MailMessageFactory $mailService
-     * @param TransportInterface $transport
+     * @return string
      */
-    public function __construct(MailMessageFactory $mailService, TransportInterface $transport)
-    {
-        $this->mailService = $mailService;
-        $this->transport = $transport;
-    }
-
-    private function getMessage()
+    public function getMailBody()
     {
         $message =
             $this->translate('You made an appointment for a new match date at nakade.de.') . ' ' .
@@ -48,33 +37,10 @@ class SubmitterMail extends AbstractTranslation
     /**
      * @return string
      */
-    private function getSubject()
+    public function getSubject()
     {
         return $this->translate('New League Appointment at nakade.de');
     }
 
-    /**
-     * @param User $user
-     *
-     * @return bool
-     *
-     */
-    public function sendMail(User $user)
-    {
-        if (!$user->isActive()) {
-            return false;
-        }
 
-        $subject = $this->getSubject();
-        $this->mailService->setSubject($subject);
-        $this->mailService->setBody($this->getMessage());
-
-        $this->mailService->setTo($user->getEmail());
-        $this->mailService->setToName($user->getName());
-
-        $message = $this->mailService->getMessage();
-
-        $this->transport->send($message);
-        return true;
-    }
 }

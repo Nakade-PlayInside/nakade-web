@@ -7,29 +7,17 @@
 
 namespace Appointment\Mail;
 
-use Nakade\Abstracts\AbstractTranslation;
-use Mail\Services\MailMessageFactory;
-use User\Entity\User;
-use \Zend\Mail\Transport\TransportInterface;
-
-class ConfirmMail extends AbstractTranslation
+/**
+ * mail for both players after confirming
+ *
+ * @package Appointment\Mail
+ */
+class ConfirmMail extends AppointmentMail
 {
-    private $mailService;
-    private $transport;
-
-
-
     /**
-     * @param MailMessageFactory $mailService
-     * @param TransportInterface $transport
+     * @return string
      */
-    public function __construct(MailMessageFactory $mailService, TransportInterface $transport)
-    {
-        $this->mailService = $mailService;
-        $this->transport = $transport;
-    }
-
-    private function getMessage()
+    public function getMailBody()
     {
         $message =
             $this->translate('The new appointment for your match date at nakade.de. is confirmed.') . ' ' .
@@ -50,33 +38,9 @@ class ConfirmMail extends AbstractTranslation
     /**
      * @return string
      */
-    private function getSubject()
+    public  function getSubject()
     {
         return $this->translate('Your League Appointment is confirmed');
     }
 
-    /**
-     * @param User $user
-     *
-     * @return bool
-     *
-     */
-    public function sendMail(User $user)
-    {
-        if (!$user->isActive()) {
-            return false;
-        }
-
-        $subject = $this->getSubject();
-        $this->mailService->setSubject($subject);
-        $this->mailService->setBody($this->getMessage());
-
-        $this->mailService->setTo($user->getEmail());
-        $this->mailService->setToName($user->getName());
-
-        $message = $this->mailService->getMessage();
-
-        $this->transport->send($message);
-        return true;
-    }
 }
