@@ -75,6 +75,11 @@ class Appointment
    */
   private $rejectReason;
 
+  /**
+   * @ORM\Column(name="confirmString", type="text", nullable=true)
+   */
+  private $confirmString;
+
     /**
      * @param \DateTime $newDate
      *
@@ -264,6 +269,22 @@ class Appointment
     public function getRejectReason()
     {
         return $this->rejectReason;
+    }
+
+    /**
+     * @param string $confirmString
+     */
+    public function setConfirmString($confirmString)
+    {
+        $this->confirmString = $confirmString;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConfirmString()
+    {
+        return $this->confirmString;
     }
 
     /**

@@ -11,26 +11,14 @@ namespace Appointment\Controller;
 use Appointment\Entity\Appointment;
 use Appointment\Services\MailService;
 use League\Entity\Match;
-use Appointment\Form\AppointmentForm;
-use Appointment\Form\ConfirmForm;
-use Appointment\Form\RejectForm;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
-/**
-<p>
-    <div><?php echo $this->translate("If you use ICal, make sure to update."); ?></div>
-<div><?php echo $this->translate("Therefore, just download your match schedule again."); ?></div>
-</p>
 
-*/
-//
-//
-//
-// 4. confirm by email
-// 5. automatic confirm after time exceed
+// validity class
+// automatic confirm after time exceed
 // login message for awaiting confirmation or rejecting
 // css for bootstrap
-//rejectReason for admin
+// rejectReason for admin
 // unit test
 
 class AppointmentController extends AbstractController
@@ -61,6 +49,13 @@ class AppointmentController extends AbstractController
           ));
        }*/
 
+       $submit = $this->getMailService()->getMail('submitter');
+       $submit->sendMail($this->identity());
+
+       $responder = $this->getMailService()->getMail('responder');
+       $responder->sendMail($this->identity());
+
+
        $appointment = $this->makeAppointmentByUser($match);
 
        /* @var $form \Appointment\Form\AppointmentForm */
@@ -82,13 +77,17 @@ class AppointmentController extends AbstractController
 
            if ($form->isValid()) {
 
-               $data = $form->getData();
-               $repo->save($data);
+               /* @var $appointment \Appointment\Entity\Appointment */
+               $appointment = $form->getData();
+               $repo->save($appointment);
 
+               //mail to submitter
+               $submit = $this->getMailService()->getMail('submitter');
+               $submit->sendMail($appointment->getSubmitter());
 
-              //make email: submitter & responder
-               //send email
-               //
+               //mail to responder
+               $responder = $this->getMailService()->getMail('responder');
+               $responder->sendMail($appointment->getResponder());
 
                return $this->redirect()->toRoute('appointment', array(
                    'action' => 'success'
@@ -161,13 +160,14 @@ class AppointmentController extends AbstractController
                 $appointment->setIsConfirmed(true);
                 $match->setDate($date);
 
-                //$repo->save($appointment);
-                //$repo->save($match);
+                $repo->save($appointment);
+                $repo->save($match);
 
-                $mail = $this->getMailService()->getMail('confirm');
-                $mail->sendMail($this->identity());
-                //make email : confirm
                 //send email to both players
+                $mail = $this->getMailService()->getMail('confirm');
+                $mail->sendMail($appointment->getResponder());
+                $mail->sendMail($appointment->getSubmitter());
+
 
                 return $this->redirect()->toRoute('appointment', array(
                     'action' => 'success'
@@ -229,12 +229,15 @@ class AppointmentController extends AbstractController
 
             if ($form->isValid() && $postData['reject']) {
 
+                /* @var $appointment \Appointment\Entity\Appointment */
                 $appointment = $form->getData();
                 $appointment->setIsRejected(true);
                 $repo->save($appointment);
 
-                //make email : reject
-                //send email to both players and league managers
+                //send email to both players
+                $mail = $this->getMailService()->getMail('reject');
+                $mail->sendMail($appointment->getResponder());
+                $mail->sendMail($appointment->getSubmitter());
 
                 return $this->redirect()->toRoute('appointment', array(
                     'action' => 'info'
@@ -266,9 +269,7 @@ class AppointmentController extends AbstractController
      */
     public function infoAction()
     {
-        return new ViewModel(
-            array()
-        );
+        return new ViewModel();
     }
 
     /**
@@ -276,9 +277,7 @@ class AppointmentController extends AbstractController
      */
     public function invalidAction()
     {
-        return new ViewModel(
-            array()
-        );
+        return new ViewModel();
     }
 
     /**

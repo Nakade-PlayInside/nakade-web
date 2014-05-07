@@ -18,7 +18,7 @@ class AppointmentForm extends AbstractForm
 
     /* @var $maxDate \DateTime */
     private $maxDate;
-
+    private $confirmString;
     private $period;
 
     /**
@@ -42,6 +42,7 @@ class AppointmentForm extends AbstractForm
     {
         $this->maxDate = $object->getOldDate();
         $this->maxDate->modify($this->period);
+        $this->confirmString = md5(uniqid(rand(), true));
 
         $this->bind($object);
         $this->init();
@@ -55,9 +56,17 @@ class AppointmentForm extends AbstractForm
      */
     public function init()
     {
-       // 'Y-m-d\TH:iP'
+        $this->add(
+            array(
+                'name' => 'confirmString',
+                'type' => 'Zend\Form\Element\Hidden',
+                'attributes' => array(
+                    'value'  => $this->confirmString,
+                )
 
-        //recipient
+        ));
+
+        //date
         $this->add(
             array(
                 'name' => 'date',
@@ -104,10 +113,6 @@ class AppointmentForm extends AbstractForm
             )
         );
 
-
-        //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side
-        //validation
         $this->add(
             array(
                 'name' => 'csrf',

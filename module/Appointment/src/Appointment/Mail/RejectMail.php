@@ -29,7 +29,12 @@ class RejectMail extends AppointmentMail
             PHP_EOL .
             $this->translate('Proposed appointment: %NEW_DATE%') .
             PHP_EOL . PHP_EOL .
-            $this->translate('A league manager will contact you as soon as possible.') .
+            $this->translate('Please contact your opponent immediately.') . ' ' .
+            $this->translate('Try to find a solution together.') .
+            PHP_EOL .
+            $this->translate('Subsequently, contact a league manager.') . ' ' .
+            $this->translate('Only a league manager can edit a rejected date.') . ' ' .
+            $this->translate('If you cannot find a solution, the league manager will make a decision.') .
             PHP_EOL . PHP_EOL .
             $this->getSignature()->getSignatureText();
 

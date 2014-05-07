@@ -8,6 +8,8 @@ return array(
         'factories' => array(
             'Appointment\Controller\Appointment' =>
                 'Appointment\Services\\AppointmentControllerFactory',
+            'Appointment\Controller\Confirm' =>
+                'Appointment\Services\\ConfirmControllerFactory',
         ),
     ),
 
@@ -25,6 +27,22 @@ return array(
                     'defaults' => array(
                         '__NAMESPACE__' => 'Appointment\Controller',
                         'controller'    => 'Appointment\Controller\Appointment',
+                        'action'        => 'index',
+                    ),
+                ),
+            ),
+            'appointmentConfirm' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/appointmentConfirm[/:action][/:id][/:confirm]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                        'confirm' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Appointment\Controller',
+                        'controller'    => 'Appointment\Controller\Confirm',
                         'action'        => 'index',
                     ),
                 ),

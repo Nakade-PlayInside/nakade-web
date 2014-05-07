@@ -66,4 +66,25 @@ class AppointmentMapper extends AbstractMapper
 
     }
 
+    /**
+     * @param string $confirmString
+     *
+     * @return array
+     */
+    public function getAppointmentByConfirmString($confirmString)
+    {
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Appointment')
+            ->select('a')
+            ->from('Appointment\Entity\Appointment', 'a')
+            ->where('a.isConfirmed = 0')
+            ->andWhere('a.isRejected = 0')
+            ->andWhere('a.confirmString LIKE :confirmString')
+            ->setParameter('confirmString', $confirmString);
+
+        return $qb->getQuery()->getResult();
+
+    }
+
 }
