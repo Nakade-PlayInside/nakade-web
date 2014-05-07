@@ -24,8 +24,8 @@ use Nakade\Abstracts\AbstractController;
 
 */
 //
-// 2. email
-// 2b factories for controller, form and email
+//
+//
 // 4. confirm by email
 // 5. automatic confirm after time exceed
 // login message for awaiting confirmation or rejecting

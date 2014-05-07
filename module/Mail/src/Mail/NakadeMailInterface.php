@@ -6,11 +6,12 @@
  * Time: 16:00
  */
 
-namespace Appointment\Mail;
+namespace Mail;
 
 use User\Entity\User;
 use Mail\Services\MailMessageFactory;
 use \Zend\Mail\Transport\TransportInterface;
+use Mail\Services\MailSignatureService;
 
 /**
  * Interface NakadeMailInterface
@@ -60,4 +61,16 @@ interface NakadeMailInterface
      * @return string
      */
     public function getMailBody();
+
+    /**
+     * @return MailSignatureService
+     */
+    public function getSignature();
+
+    /**
+     * @param MailSignatureService $signatureService
+     *
+     * @return $this
+     */
+    public function setSignature(MailSignatureService $signatureService);
 }

@@ -21,16 +21,19 @@ class RejectMail extends AppointmentMail
     public function getMailBody()
     {
         $message =
-            $this->translate('The new appointment for your match date at nakade.de. is rejected.') . ' ' .
-            $this->translate('Your match: %black - %white') . ' ' .
-            $this->translate('Actual match date: %date') . ' ' .
-            $this->translate('Proposed appointment: %date') . ' ' .
+            $this->translate('The new appointment for your match date at %URL% is rejected.') .
+            PHP_EOL . PHP_EOL .
+            $this->translate('Your match: %MATCH_INFO%') .
+            PHP_EOL .
+            $this->translate('Actual match date: %OLD_DATE%') .
+            PHP_EOL .
+            $this->translate('Proposed appointment: %NEW_DATE%') .
+            PHP_EOL . PHP_EOL .
+            $this->translate('A league manager will contact you as soon as possible.') .
+            PHP_EOL . PHP_EOL .
+            $this->getSignature()->getSignatureText();
 
-            $this->translate('A league manager will contact you as soon as possible.') . ' ' .
-
-            $this->translate('Your Nakade Team');
-
-        $message = str_replace("\n.", "\n..", $message);
+        $this->makeReplacements($message);
 
         return $message;
     }

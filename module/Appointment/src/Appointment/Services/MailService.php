@@ -21,6 +21,7 @@ class MailService extends AbstractTranslation implements FactoryInterface
 
     private $transport;
     private $message;
+    private $signature;
 
     /**
      * @param ServiceLocatorInterface $services
@@ -45,6 +46,13 @@ class MailService extends AbstractTranslation implements FactoryInterface
             );
         }
 
+        $this->signature = $services->get('Mail\Services\MailSignatureService');
+        if (is_null($this->signature)) {
+            throw new \RuntimeException(
+                sprintf('Mail Signature Service is not found.')
+            );
+        }
+
         $config  = $services->get('config');
 
         //configuration
@@ -52,7 +60,6 @@ class MailService extends AbstractTranslation implements FactoryInterface
             $config['Appointment']['text_domain'] : null;
 
         $translator = $services->get('translator');
-
 
         //@todo: proof if this text domain setting is already doing the job
         $this->setTranslator($translator, $textDomain);
@@ -95,6 +102,7 @@ class MailService extends AbstractTranslation implements FactoryInterface
         }
 
         $mail->setTranslator($this->getTranslator());
+        $mail->setSignature($this->signature);
         return $mail;
     }
 

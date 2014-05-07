@@ -30,5 +30,12 @@ return array(
                 ),
             ),
         ),
+
+        'signature' => array(
+            'team'  => 'Nakade Team',
+            'club'  => 'Berliner Baduk Club e.V.',
+            'register_court' => 'Berlin-Charlottenburg',
+            'register_no'    => 'VR31852',
+        ),
     ),
 );

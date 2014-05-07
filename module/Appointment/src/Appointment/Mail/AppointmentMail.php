@@ -7,9 +7,9 @@
 
 namespace Appointment\Mail;
 
-use Nakade\Abstracts\AbstractTranslation;
+use Appointment\Entity\Appointment;
+use Mail\NakadeMail;
 use Mail\Services\MailMessageFactory;
-use User\Entity\User;
 use \Zend\Mail\Transport\TransportInterface;
 
 /**
@@ -17,13 +17,12 @@ use \Zend\Mail\Transport\TransportInterface;
  *
  * @package Appointment\Mail
  */
-abstract class AppointmentMail extends AbstractTranslation implements NakadeMailInterface
+abstract class AppointmentMail extends NakadeMail
 {
-    protected $mailService;
-    protected $transport;
+    protected $url = 'http://www.nakade.de';
+    protected $appointment;
 
-
-    /**
+     /**
      * @param MailMessageFactory $mailService
      * @param TransportInterface $transport
      */
@@ -33,80 +32,40 @@ abstract class AppointmentMail extends AbstractTranslation implements NakadeMail
         $this->transport = $transport;
     }
 
-    /**
-     * @return string
-     */
-    abstract public function getSubject();
-
-    /**
-     * @return string
-     */
-    abstract public function getMailBody();
-
-    /**
-     * @param User $user
-     *
-     * @return bool
-     *
-     */
-    public function sendMail(User $user)
+    protected function getUrl()
     {
-        if (!$user->isActive()) {
-            return false;
+        return $this->url;
+    }
+
+    protected function makeReplacements(&$message)
+    {
+        $message = str_replace('%URL%', $this->getUrl(), $message);
+
+        if (!is_null($this->getAppointment())) {
+            $message = str_replace('%MATCH_INFO%', $this->getAppointment()->getMatch()->getMatchInfo(), $message);
+            $message = str_replace('%NEW_DATE%', $this->getAppointment()->getNewDate()->format('d.m.y H:i'), $message);
+            $message = str_replace('%OLD_DATE%', $this->getAppointment()->getOldDate()->format('d.m.y H:i'), $message);
         }
+        $message = str_replace('%TIME%', '72', $message);
 
-        $subject = $this->getSubject();
-        $this->getMailService()->setSubject($subject);
-        $this->getMailService()->setBody($this->getMailBody());
-
-        $this->getMailService()->setTo($user->getEmail());
-        $this->getMailService()->setToName($user->getName());
-
-        $message = $this->getMailService()->getMessage();
-
-        $this->getTransport()->send($message);
-
-        return true;
     }
 
     /**
-     * @param MailMessageFactory $mailService
+     * @param Appointment $appointment
      *
-     * @return $this;
+     * @return $this
      */
-    public function setMailService(MailMessageFactory $mailService)
+    public function setAppointment(Appointment $appointment)
     {
-        $this->mailService = $mailService;
+        $this->appointment = $appointment;
         return $this;
     }
 
     /**
-     * @return MailMessageFactory
+     * @return Appointment
      */
-    public function getMailService()
+    public function getAppointment()
     {
-        return $this->mailService;
+        return $this->appointment;
     }
-
-    /**
-     * @param TransportInterface $transport
-     *
-     * @return $this;
-     */
-    public function setTransport(TransportInterface $transport)
-    {
-        $this->transport = $transport;
-        return $this;
-    }
-
-    /**
-     * @return TransportInterface
-     */
-    public function getTransport()
-    {
-        return $this->transport;
-
-    }
-
-
 }

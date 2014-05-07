@@ -10,6 +10,9 @@ return array(
 
             'Mail\Services\MailTransportFactory'  =>
                 'Mail\Services\MailTransportFactory',
+
+            'Mail\Services\MailSignatureService'  =>
+                'Mail\Services\MailSignatureService',
         ),
     ),
 

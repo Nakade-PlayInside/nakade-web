@@ -25,7 +25,7 @@ class FormFactory extends AbstractFormFactory
      *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
      *
-     * @return \User\Services\FormFactory
+     * @return $this
      */
     public function createService(ServiceLocatorInterface $services)
     {
@@ -67,9 +67,9 @@ class FormFactory extends AbstractFormFactory
      *
      * @param string $typ
      *
-     * @return Form
+     * @return \Zend\Form\Form
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function getForm($typ)
     {
@@ -116,7 +116,7 @@ class FormFactory extends AbstractFormFactory
                break;
 
            default:
-               throw new RuntimeException(
+               throw new \RuntimeException(
                    sprintf('An unknown form type was provided.')
                );
         }
