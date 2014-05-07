@@ -20,6 +20,7 @@ use \Zend\Mail\Transport\TransportInterface;
 abstract class AppointmentMail extends NakadeMail
 {
     protected $url = 'http://www.nakade.de';
+    protected $time = '72';
     protected $appointment;
 
      /**
@@ -32,22 +33,23 @@ abstract class AppointmentMail extends NakadeMail
         $this->transport = $transport;
     }
 
-    protected function getUrl()
+    /**
+     * @return string
+     */
+    public function getUrl()
     {
         return $this->url;
     }
 
-    protected function makeReplacements(&$message)
+    /**
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function setUrl($url)
     {
-        $message = str_replace('%URL%', $this->getUrl(), $message);
-
-        if (!is_null($this->getAppointment())) {
-            $message = str_replace('%MATCH_INFO%', $this->getAppointment()->getMatch()->getMatchInfo(), $message);
-            $message = str_replace('%NEW_DATE%', $this->getAppointment()->getNewDate()->format('d.m.y H:i'), $message);
-            $message = str_replace('%OLD_DATE%', $this->getAppointment()->getOldDate()->format('d.m.y H:i'), $message);
-        }
-        $message = str_replace('%TIME%', '72', $message);
-
+        $this->url = $url;
+        return $this;
     }
 
     /**
@@ -68,4 +70,38 @@ abstract class AppointmentMail extends NakadeMail
     {
         return $this->appointment;
     }
+
+    /**
+     * @param string $time
+     *
+     * @return $this;
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    protected function makeReplacements(&$message)
+    {
+        $message = str_replace('%URL%', $this->getUrl(), $message);
+
+        if (!is_null($this->getAppointment())) {
+            $message = str_replace('%MATCH_INFO%', $this->getAppointment()->getMatch()->getMatchInfo(), $message);
+            $message = str_replace('%NEW_DATE%', $this->getAppointment()->getNewDate()->format('d.m.y H:i'), $message);
+            $message = str_replace('%OLD_DATE%', $this->getAppointment()->getOldDate()->format('d.m.y H:i'), $message);
+        }
+        $message = str_replace('%TIME%', $this->getTime(), $message);
+
+    }
+
+
 }

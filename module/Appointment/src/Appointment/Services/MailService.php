@@ -22,6 +22,8 @@ class MailService extends AbstractTranslation implements FactoryInterface
     private $transport;
     private $message;
     private $signature;
+    private $confirmTime='72';
+    private $url='http://www.nakade.de';
 
     /**
      * @param ServiceLocatorInterface $services
@@ -55,9 +57,19 @@ class MailService extends AbstractTranslation implements FactoryInterface
 
         $config  = $services->get('config');
 
-        //configuration
+        //text domain
         $textDomain = isset($config['Appointment']['text_domain']) ?
             $config['Appointment']['text_domain'] : null;
+
+        //url
+        if (isset($config['Appointment']['url'])) {
+            $this->url =  $config['Appointment']['url'];
+        }
+
+        //time
+        if (isset($config['Appointment']['auto_confirm_time'])) {
+            $this->confirmTime =  strval($config['Appointment']['auto_confirm_time']);
+        }
 
         $translator = $services->get('translator');
 
@@ -103,6 +115,8 @@ class MailService extends AbstractTranslation implements FactoryInterface
 
         $mail->setTranslator($this->getTranslator());
         $mail->setSignature($this->signature);
+        $mail->setTime($this->confirmTime);
+        $mail->setUrl($this->url);
         return $mail;
     }
 

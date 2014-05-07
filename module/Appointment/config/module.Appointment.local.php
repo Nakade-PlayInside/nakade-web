@@ -17,5 +17,7 @@ return array(
         //automatic confirmation after given time in hours
         'auto_confirm_time' => 72,
 
+        //url to direct
+        'url' => 'http://www.nakade.de',
     ),
 );
