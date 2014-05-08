@@ -53,7 +53,7 @@ class Appointment
   /**
    * @ORM\Column(name="oldDate", type="datetime", nullable=false)
    */
-  private $oldDate;
+  private $oldDate; //needed for reverting OR make a log
 
   /**
    * @ORM\Column(name="newDate", type="datetime", nullable=false)

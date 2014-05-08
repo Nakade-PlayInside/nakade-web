@@ -12,11 +12,17 @@ use League\Entity\Match;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
-// automatic confirm after time exceed
-// rejectReason for admin
-// styling of checkbox in appointment
-// unit test
+// todo: confirmation deadline if excceding time period for confirming: automatic confirmation!
+// todo: rejectReason for admin
+// todo: styling of checkbox in appointment
+// todo: unit test
+// todo: database sql script for prod server
 
+/**
+ * Class AppointmentController
+ *
+ * @package Appointment\Controller
+ */
 class AppointmentController extends AbstractController
 {
 
@@ -92,8 +98,6 @@ class AppointmentController extends AbstractController
      */
     public function confirmAction()
     {
-
-        // todo: confirmation deadline if excceding time period for confirming: automatic confirmation!
 
         //provide appointmentId
         $appointmentId  = (int) $this->params()->fromRoute('id', -1);
