@@ -72,7 +72,9 @@ return array(
             'Appointment\Services\AppointmentFormFactory' =>
                 'Appointment\Services\AppointmentFormFactory',
             'Appointment\Services\MailService' =>
-                'Appointment\Services\MailService'
+                'Appointment\Services\MailService',
+            'Appointment\Services\AppointmentValidService' =>
+                'Appointment\Services\AppointmentValidService'
         ),
     ),
 

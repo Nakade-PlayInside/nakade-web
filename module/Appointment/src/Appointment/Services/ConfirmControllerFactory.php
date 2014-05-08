@@ -35,10 +35,15 @@ class ConfirmControllerFactory implements FactoryInterface
             'Appointment\Services\MailService'
         );
 
+        /* @var $validService \Appointment\Services\AppointmentValidService */
+        $validService = $serviceManager->get(
+            'Appointment\Services\AppointmentValidService'
+        );
 
         $controller = new ConfirmController();
         $controller->setRepository($repository);
         $controller->setMailService($mailService);
+        $controller->setService($validService);
 
         return $controller;
 

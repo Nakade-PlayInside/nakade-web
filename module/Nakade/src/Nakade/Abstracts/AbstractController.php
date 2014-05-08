@@ -4,7 +4,8 @@ namespace Nakade\Abstracts;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\I18n\Translator\Translator;
-use Mail\Services\MailMessageFactory;
+use Mail\NakadeMail;
+
 
 /**
  * Extending for having a service getter and setter
@@ -14,17 +15,18 @@ use Mail\Services\MailMessageFactory;
 class AbstractController extends AbstractActionController
 {
 
-    protected $_service;
-    protected $_formFactory;
-    protected $_repository;
-    protected $_translator;
+    protected $service;
+    protected $formFactory;
+    protected $repository;
+    protected $translator;
+    protected $mailService;
 
     /**
      * @return mixed
      */
     public function getService()
     {
-       return $this->_service;
+       return $this->service;
     }
 
     /**
@@ -34,7 +36,7 @@ class AbstractController extends AbstractActionController
      */
     public function setService($service)
     {
-        $this->_service = $service;
+        $this->service = $service;
         return $this;
     }
 
@@ -43,7 +45,7 @@ class AbstractController extends AbstractActionController
      */
     public function getFormFactory()
     {
-       return $this->_formFactory;
+       return $this->formFactory;
     }
 
     /**
@@ -53,23 +55,24 @@ class AbstractController extends AbstractActionController
      */
     public function setFormFactory(AbstractFormFactory $factory)
     {
-        $this->_formFactory = $factory;
+        $this->formFactory = $factory;
         return $this;
     }
 
     /**
      * @param string $typ
+     * @param string $lang
      *
-     * @return null
+     * @return /Zend/Form/Form
      */
     public function getForm($typ, $lang=null)
     {
 
-        if (null === $this->_formFactory) {
+        if (null === $this->formFactory) {
             return null;
         }
 
-        return $this->_formFactory->getForm($typ, $lang);
+        return $this->formFactory->getForm($typ, $lang);
 
     }
 
@@ -80,7 +83,7 @@ class AbstractController extends AbstractActionController
      */
     public function setRepository(FactoryInterface $repository)
     {
-        $this->_repository = $repository;
+        $this->repository = $repository;
         return $this;
     }
 
@@ -89,7 +92,7 @@ class AbstractController extends AbstractActionController
      */
     public function getRepository()
     {
-        return $this->_repository;
+        return $this->repository;
     }
 
     /**
@@ -99,7 +102,7 @@ class AbstractController extends AbstractActionController
      */
     public function setTranslator(Translator $translator)
     {
-        $this->_translator = $translator;
+        $this->translator = $translator;
         return $this;
     }
 
@@ -108,6 +111,25 @@ class AbstractController extends AbstractActionController
      */
     public function getTranslator()
     {
-        return $this->_translator;
+        return $this->translator;
+    }
+
+    /**
+     * @param FactoryInterface $mail
+     *
+     * @return $this
+     */
+    public function setMailService(FactoryInterface $mail)
+    {
+        $this->mailService = $mail;
+        return $this;
+    }
+
+    /**
+     * @return FactoryInterface
+     */
+    public function getMailService()
+    {
+        return $this->mailService;
     }
 }

@@ -40,11 +40,16 @@ class AppointmentControllerFactory implements FactoryInterface
             'Appointment\Services\MailService'
         );
 
+        /* @var $validService \Appointment\Services\AppointmentValidService */
+        $validService = $serviceManager->get(
+            'Appointment\Services\AppointmentValidService'
+        );
 
         $controller = new AppointmentController();
         $controller->setRepository($repository);
         $controller->setFormFactory($formFactory);
         $controller->setMailService($mailService);
+        $controller->setService($validService);
 
         return $controller;
 

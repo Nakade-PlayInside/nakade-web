@@ -11,19 +11,16 @@
 
 namespace Appointment\Controller;
 
-use Appointment\Mapper\AppointmentMapper;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
-use Appointment\Services\MailService;
 
 /**
- * Verify the account with new credentials.
- * Use the link of the activation mail send to the user.
+ * Confirm of an appointment by using link provided by email
+ *
+ * @package Appointment\Controller
  */
 class ConfirmController extends AbstractController
 {
-    private $mailService;
-
     /**
      * Verification action. A direct link to this action is provided
      * in the user's verification mail.
@@ -45,11 +42,7 @@ class ConfirmController extends AbstractController
        $repo = $this->getRepository()->getMapper('appointment');
        $appointment = $repo->getAppointmentById($appointmentId);
 
-       if (0 != strcmp($appointment->getConfirmString(), $confirmString)) {
-           return $this->redirect()->toRoute('appointmentConfirm', array('action' => 'failure'));
-       }
-
-       if (is_null($appointment) || $appointment->isConfirmed() || $appointment->isRejected()) {
+       if (!$this->getService()->isValidLink($appointment, $confirmString)) {
            return $this->redirect()->toRoute('appointmentConfirm', array('action' => 'failure'));
        }
 
@@ -61,7 +54,7 @@ class ConfirmController extends AbstractController
        $repo->save($match);
        $repo->save($appointment);
 
-       //send email to both players
+       /* @var $mail \Appointment\Mail\ConfirmMail */
        $mail = $this->getMailService()->getMail('confirm');
        $mail->sendMail($appointment->getResponder());
        $mail->sendMail($appointment->getSubmitter());
@@ -100,22 +93,4 @@ class ConfirmController extends AbstractController
         return new ViewModel();
     }
 
-    /**
-     * @param MailService $mail
-     *
-     * @return $this
-     */
-    public function setMailService(MailService $mail)
-    {
-        $this->mailService = $mail;
-        return $this;
-    }
-
-    /**
-     * @return MailService
-     */
-    public function getMailService()
-    {
-        return $this->mailService;
-    }
 }
