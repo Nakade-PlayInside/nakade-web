@@ -26,12 +26,14 @@ class SuccessController extends AbstractActionController
            $noNewMails = $repo->getNumberOfNewMessages($user);
        }
 
-      // return new ViewModel(array('noNewMails' => $noNewMails));
-
         $scheduleWidget  = $this->forward()
             ->dispatch('/League/Controller/ActualSeason', array('action' => 'mySchedule'));
 
+        $appointmentWidget  = $this->forward()
+            ->dispatch('/Appointment/Controller/Show', array('action' => 'message'));
+
         $page = new ViewModel(array('noNewMails' => $noNewMails));
+        $page->addChild($appointmentWidget, 'appointmentWidget');
         $page->addChild($scheduleWidget, 'scheduleWidget');
 
         return $page;

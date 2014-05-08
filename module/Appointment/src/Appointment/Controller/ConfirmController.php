@@ -42,7 +42,7 @@ class ConfirmController extends AbstractController
        $repo = $this->getRepository()->getMapper('appointment');
        $appointment = $repo->getAppointmentById($appointmentId);
 
-       if (!$this->getService()->isValidLink($appointment, $confirmString)) {
+       if (!$this->getService()->isValidLink($confirmString, $appointment)) {
            return $this->redirect()->toRoute('appointmentConfirm', array('action' => 'failure'));
        }
 

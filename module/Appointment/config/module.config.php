@@ -7,9 +7,11 @@ return array(
     'controllers' => array(
         'factories' => array(
             'Appointment\Controller\Appointment' =>
-                'Appointment\Services\\AppointmentControllerFactory',
+                'Appointment\Services\AppointmentControllerFactory',
             'Appointment\Controller\Confirm' =>
-                'Appointment\Services\\ConfirmControllerFactory',
+                'Appointment\Services\ConfirmControllerFactory',
+            'Appointment\Controller\Show' =>
+                'Appointment\Services\ShowControllerFactory'
         ),
     ),
 
@@ -47,6 +49,22 @@ return array(
                     ),
                 ),
             ),
+            'appointmentShow' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/appointmentShow[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Appointment\Controller',
+                        'controller'    => 'Appointment\Controller\Show',
+                        'action'        => 'index',
+                    ),
+                ),
+            ),
+
         ),
     ),
 
@@ -74,7 +92,7 @@ return array(
             'Appointment\Services\MailService' =>
                 'Appointment\Services\MailService',
             'Appointment\Services\AppointmentValidService' =>
-                'Appointment\Services\AppointmentValidService'
+                'Appointment\Services\AppointmentValidService',
         ),
     ),
 

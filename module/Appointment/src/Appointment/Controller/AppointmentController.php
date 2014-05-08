@@ -13,16 +13,12 @@ use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
 // automatic confirm after time exceed
-// login message for awaiting confirmation or rejecting
-// css for bootstrap
 // rejectReason for admin
+// styling of checkbox in appointment
 // unit test
 
 class AppointmentController extends AbstractController
 {
-
-    private $homeRoute = 'home';
-
 
     /**
      * @return array|ViewModel
@@ -57,7 +53,7 @@ class AppointmentController extends AbstractController
 
            //cancel
            if ($postData['cancel']) {
-               return $this->redirect()->toRoute($this->homeRoute);
+               return $this->redirect()->toRoute('appointmentShow');
            }
 
            $form->setData($postData);
@@ -105,6 +101,7 @@ class AppointmentController extends AbstractController
         /* @var $repo \Appointment\Mapper\AppointmentMapper */
         $repo = $this->getRepository()->getMapper('appointment');
         $appointment = $repo->getAppointmentById($appointmentId);
+
 
         if (!$this->getService()->isValidConfirm($this->identity(), $appointment)) {
             return $this->redirect()->toRoute('appointment', array(

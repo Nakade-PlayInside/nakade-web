@@ -1,6 +1,7 @@
 <?php
 namespace Appointment\Mapper;
 
+use \User\Entity\User;
 use Nakade\Abstracts\AbstractMapper;
 use Doctrine\ORM\EntityManager;
 use League\Entity\Match;
@@ -57,6 +58,7 @@ class AppointmentMapper extends AbstractMapper
         $qb = $em->createQueryBuilder('Appointment')
             ->select('a')
             ->from('Appointment\Entity\Appointment', 'a')
+
             ->where('a.isConfirmed = 0')
             ->andWhere('a.isRejected = 0')
             ->andWhere('a.newDate > :overdue')
@@ -67,21 +69,24 @@ class AppointmentMapper extends AbstractMapper
     }
 
     /**
-     * @param string $confirmString
+     * @param User $user
      *
      * @return array
      */
-    public function getAppointmentByConfirmString($confirmString)
+    public function getOpenConfirmsByUser(User $user)
     {
-
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder('Appointment')
             ->select('a')
             ->from('Appointment\Entity\Appointment', 'a')
+            ->join('a.responder', 'User')
+            ->join('a.match', 'Match')
             ->where('a.isConfirmed = 0')
             ->andWhere('a.isRejected = 0')
-            ->andWhere('a.confirmString LIKE :confirmString')
-            ->setParameter('confirmString', $confirmString);
+            ->andWhere('User.id = :uid')
+            ->andWhere('Match._resultId IS NULL')
+            ->setParameter('uid', $user->getId());
+
 
         return $qb->getQuery()->getResult();
 

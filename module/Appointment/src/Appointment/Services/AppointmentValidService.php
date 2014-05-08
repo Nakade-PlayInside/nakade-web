@@ -21,11 +21,9 @@ class AppointmentValidService implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $services)
     {
-        /* @var $serviceManager \Zend\ServiceManager\ServiceManager */
-        $serviceManager = $services->getServiceLocator();
 
         /* @var $repository \Appointment\Services\RepositoryService */
-        $this->repository =  $serviceManager->get(
+        $this->repository =  $services->get(
             'Appointment\Services\RepositoryService'
         );
 
@@ -42,7 +40,7 @@ class AppointmentValidService implements FactoryInterface
      *
      * @return bool
      */
-    public function isValidMatch(User $user, Match $match)
+    public function isValidMatch(User $user, Match $match=null)
     {
         if (is_null($match) || $match->hasResult() || $this->hasAppointment($match)) {
             return false;
@@ -64,7 +62,7 @@ class AppointmentValidService implements FactoryInterface
      *
      * @return bool
      */
-    public function isValidConfirm(User $user, Appointment $appointment)
+    public function isValidConfirm(User $user, Appointment $appointment=null)
     {
         //not confirmed or rejected, no result yet
         if (is_null($appointment) || $this->isProcessed($appointment) || $appointment->getMatch()->hasResult()) {
@@ -83,12 +81,12 @@ class AppointmentValidService implements FactoryInterface
      * Proving valid appointment, i.e. not null, no confirm or reject yet, no result and if confirm string provided
      * by mail is correct.
      *
-     * @param Appointment $appointment
      * @param string      $confirmString
+     * @param Appointment $appointment
      *
      * @return bool
      */
-    public function isValidLink(Appointment $appointment, $confirmString)
+    public function isValidLink($confirmString, Appointment $appointment=null)
     {
         //not confirmed or rejected, no result yet
         if (is_null($appointment) || $this->isProcessed($appointment) || $appointment->getMatch()->hasResult()) {

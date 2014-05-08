@@ -8,7 +8,7 @@ $this->headTitle($title);
 <h3><?php echo $title;?></h3>
 <p><?php echo $this->translate("Before edit your match date, contact your opponent."); ?></p>
 
-<p style="color: #0088cc;">
+<p class="matchInfo">
     <?php echo $this->match->getDate()->format('d.M  H:i'); ?>: <?php echo $this->match->getMatchInfo(); ?>
 </p>
 <?php

@@ -40,6 +40,7 @@ class AppointmentControllerFactory implements FactoryInterface
             'Appointment\Services\MailService'
         );
 
+
         /* @var $validService \Appointment\Services\AppointmentValidService */
         $validService = $serviceManager->get(
             'Appointment\Services\AppointmentValidService'

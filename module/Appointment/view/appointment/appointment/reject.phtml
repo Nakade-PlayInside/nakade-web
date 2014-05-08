@@ -7,22 +7,22 @@ $this->headTitle($title);
 
 <h3><?php echo $title;?></h3>
 <p>
-    <div><?php echo $this->translate("Please provide a reason for rejecting the new match date."); ?></div>
-    <div><?php echo $this->translate("For example: I was not asked at all."); ?></div>
+    <?php echo $this->translate("Please provide a reason for rejecting the new match date."); ?><br/>
+    <?php echo $this->translate("For example: I was not asked at all."); ?><br/>
 </p>
 
-<table style="margin-bottom: 10px;">
+<table class="reject">
 <tr>
-    <td style="font-weight: bold;"><?php echo $this->translate("Match"); ?>:</td>
-    <td style="color:#0088cc"><?php echo $this->matchInfo; ?></td>
+    <td><?php echo $this->translate("Match"); ?>:</td>
+    <td><span><?php echo $this->matchInfo; ?></span></td>
 </tr>
 <tr>
-    <td style="font-weight: bold;"><?php echo $this->translate("Old Date"); ?>:</td>
-    <td style="color:#0088cc; text-align: right;"><?php echo $this->oldDate; ?></td>
+    <td><?php echo $this->translate("Old Date"); ?>:</td>
+    <td><span><?php echo $this->oldDate; ?></span></td>
 </tr>
 <tr>
-    <td style="font-weight: bold;"><?php echo $this->translate("New Date"); ?>:</td>
-    <td style="color:#0088cc; text-align: right;"><?php echo $this->newDate; ?></td>
+    <td><?php echo $this->translate("New Date"); ?>:</td>
+    <td><span><?php echo $this->newDate; ?></span></td>
 </tr>
 </table>
 

@@ -1,0 +1,18 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Appointment');
+?>
+<?php
+    $message = $this->translate("You have %x% appointments awaiting confirmation");
+    $message = str_replace('%x%', "<span> $this->noConfirm </span>", $message);
+?>
+
+<?php $this->placeholder('Message')->captureStart();?>
+<div class="message"><?php echo $message; ?>
+    <a href="<?php echo $this->url('appointmentShow')?>"><?php echo $this->translate("go to confirmation") ?></a>
+</div>
+<?php $this->placeholder('Message')->captureEnd();
+
+if (!empty($this->noConfirm)) {
+    echo $this->placeholder('Message');
+}
+
