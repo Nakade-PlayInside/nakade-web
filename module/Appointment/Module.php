@@ -1,14 +1,15 @@
 <?php
 namespace Appointment;
 
-// Add these import statements:
-use Blog\Model\Blog;
-use Blog\Model\BlogTable;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
-use Zend\ModuleManager\ModuleManager;
 
-class Module
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
+use Zend\Console\Adapter\AdapterInterface as Console;
+
+class Module implements AutoloaderProviderInterface,
+    ConfigProviderInterface,
+    ConsoleUsageProviderInterface
 {
 
     /**
@@ -34,6 +35,23 @@ class Module
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+
+    /**
+     * @param Console $console
+     *
+     * @return array
+     */
+    public function getConsoleUsage(Console $console)
+    {
+        return array(
+            // Describe available commands
+            'autoConfirm <overdueTime>'    => 'automatic confirm of overdue appointments',
+
+            // Describe expected parameters
+            array( 'overdue_time',            'time after submit in hours i.e. 72' ),
+
+        );
     }
 
 }

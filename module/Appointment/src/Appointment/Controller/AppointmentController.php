@@ -12,12 +12,11 @@ use League\Entity\Match;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
-// todo: confirmation deadline if excceding time period for confirming: automatic confirmation!
 // todo: rejectReason for admin
 // todo: styling of checkbox in appointment
 // todo: unit test
 // todo: database sql script for prod server
-
+// todo: str_replace for mail -> data
 /**
  * Class AppointmentController
  *

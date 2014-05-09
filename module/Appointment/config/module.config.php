@@ -5,6 +5,9 @@ return array(
 
     //controller
     'controllers' => array(
+        'invokables' => array(
+            'Appointment\Command\Command' => 'Appointment\Command\CommandController',
+        ),
         'factories' => array(
             'Appointment\Controller\Appointment' =>
                 'Appointment\Services\AppointmentControllerFactory',
@@ -13,6 +16,25 @@ return array(
             'Appointment\Controller\Show' =>
                 'Appointment\Services\ShowControllerFactory'
         ),
+    ),
+
+    //command
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'auto-confirm' => array(
+                    'options' => array(
+                        // add [ and ] if optional ( ex : [<doname>] )
+                        'route' => 'autoConfirm <overdueTime>',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'Appointment\Command',
+                            'controller' => 'Appointment\Command\Command',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+            )
+        )
     ),
 
     // routes & defaults

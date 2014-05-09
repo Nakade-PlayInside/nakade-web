@@ -47,21 +47,23 @@ class AppointmentMapper extends AbstractMapper
     }
 
     /**
-     * @param \DateTime $overdue
+     * @param \DateTime $time
      *
      * @return array
      */
-    public function getOverdueAppointments($overdue)
+    public function getOverdueAppointments($time)
     {
+        $modifyStr = sprintf('-%d hour', $time);
+        $now = new \DateTime();
+        $overdue = $now->modify($modifyStr);
 
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder('Appointment')
             ->select('a')
             ->from('Appointment\Entity\Appointment', 'a')
-
             ->where('a.isConfirmed = 0')
             ->andWhere('a.isRejected = 0')
-            ->andWhere('a.newDate > :overdue')
+            ->andWhere('a.submitDate < :overdue')
             ->setParameter('overdue', $overdue);
 
         return $qb->getQuery()->getResult();
