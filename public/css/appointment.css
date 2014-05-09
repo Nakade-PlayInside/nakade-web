@@ -32,6 +32,19 @@ table.reject td:nth-child(2)
     text-align: right;
 }
 
+table.rejectAdmin {
+    width:auto;
+    margin-top: 10px;
+}
+
+table.rejectAdmin td {
+    white-space:nowrap;
+}
+
+table.rejectAdmin td:last-child {
+    white-space:normal;
+}
+
 .matchInfo {
     color:#0088cc;;
 }

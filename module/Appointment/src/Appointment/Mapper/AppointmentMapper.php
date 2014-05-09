@@ -94,4 +94,21 @@ class AppointmentMapper extends AbstractMapper
 
     }
 
+    /**
+     * @return array
+     *
+     * @todo: filter by league and season
+     */
+    public function getRejectedAppointments()
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Appointment')
+            ->select('a')
+            ->from('Appointment\Entity\Appointment', 'a')
+            ->Where('a.isRejected = 1');
+
+        return $qb->getQuery()->getResult();
+
+    }
+
 }

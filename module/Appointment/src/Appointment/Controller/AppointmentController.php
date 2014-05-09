@@ -12,11 +12,9 @@ use League\Entity\Match;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
-// todo: rejectReason for admin
 // todo: unit test
 // todo: database sql script for prod server
 // todo: str_replace for mail -> data
-// todo: permission for showController
 /**
  * Class AppointmentController
  *

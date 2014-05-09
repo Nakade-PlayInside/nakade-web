@@ -1,0 +1,55 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Appointment');
+$title = $this->translate("Rejected Appointments");
+$this->headTitle($title);
+
+?>
+<?php
+
+
+    /* @var $appointment \Appointment\Entity\Appointment */
+?>
+    <h3><?php echo $title;?></h3>
+<?php $this->placeholder('Message')->captureStart();?>
+
+    <table class="table rejectAdmin" style="width:auto;margin-top: 0.5em;">
+        <tr>
+
+            <th>Id</th>
+            <th><?php echo $this->translate("Submitter"); ?></th>
+            <th><?php echo $this->translate("Responder");?></th>
+            <th><?php echo $this->translate("submitted");?></th>
+            <th><?php echo $this->translate("old");?></th>
+            <th><?php echo $this->translate("new");?></th>
+            <th><?php echo $this->translate("Reason");?></th>
+
+        </tr>
+
+        <?php foreach ($this->rejectedAppointments as $appointment) : ?>
+            <?php
+                $submitter = $appointment->getSubmitter();
+                $subName = $submitter->getShortName();
+                $responder = $appointment->getResponder();
+                $resName = $responder->getShortName();
+            ?>
+            <tr style="background-color:<?php
+            echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+                <td><?php echo $appointment->getId(); ?></td>
+                <td title="<?php echo $this->userInfo($submitter);?>"><?php echo $subName;?></td>
+                <td title="<?php echo $this->userInfo($responder);?>"><?php echo $resName;?></td>
+                <td><?php echo $appointment->getSubmitDate()->format('d.m.y');?></td>
+                <td><?php echo $appointment->getOldDate()->format('d.m.y H:i');?></td>
+                <td><?php echo $appointment->getNewDate()->format('d.m.y H:i');?></td>
+                <td><?php echo $appointment->getRejectReason();?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+
+<?php $this->placeholder('Message')->captureEnd();
+
+if (!empty($this->rejectedAppointments)) {
+    echo $this->placeholder('Message');
+} else {
+    echo $this->translate("No rejected appointments found.");
+}
+

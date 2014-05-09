@@ -21,7 +21,7 @@ class Authorize extends AbstractPlugin
 
     protected $_event;
     protected $_role;
-    protected $_ressource;
+    protected $_resource;
     protected $_identity;
     protected $_acl;
     protected $_default_role = 'everyone';//unsigned user
@@ -43,7 +43,7 @@ class Authorize extends AbstractPlugin
      */
     public function getRole()
     {
-        if(null === $this->_role) {
+        if (null === $this->_role) {
             $this->initRole();
         }
         return $this->_role;
@@ -86,7 +86,7 @@ class Authorize extends AbstractPlugin
      */
     public function getAcl()
     {
-        if(null === $this->_acl) {
+        if (null === $this->_acl) {
             $this->initAcl();
         }
 
@@ -110,11 +110,11 @@ class Authorize extends AbstractPlugin
      */
     public function getRessource()
     {
-        if(null === $this->_ressource) {
+        if(null === $this->_resource) {
             $this->initRessource();
         }
 
-        return $this->_ressource;
+        return $this->_resource;
     }
 
     /**
@@ -146,7 +146,7 @@ class Authorize extends AbstractPlugin
      */
     public function getIdentity()
     {
-        if(null === $this->_identity) {
+        if (null === $this->_identity) {
             $this->initIdentity();
         }
 
@@ -178,18 +178,19 @@ class Authorize extends AbstractPlugin
 
         $role       = $this->getRole();
         $acl        = $this->getAcl();
-        $ressouce   = $this->getRessource();
+        $resource   = $this->getRessource();
 
 
         //unknown ressource is free to everyone
-        if( ! $acl->hasResource($ressouce))
+        if (!$acl->hasResource($resource)) {
             return $event->getResponse();
+        }
 
         if ( ! $this->hasIdentity()) {
             return $this->redirectToRoute('login');
         }
 
-        if ( ! $acl->isAllowed($role, $ressouce)) {
+        if ( ! $acl->isAllowed($role, $resource)) {
             return $this->redirectToRoute('forbidden');
         }
 
@@ -207,13 +208,13 @@ class Authorize extends AbstractPlugin
         $default    = $this->getDefaultRole();
         $identity   = $this->getIdentity();
 
-        if( ! $this->hasIdentity()) {
+        if (! $this->hasIdentity()) {
             return $this->setRole($default);
 
         }
 
         $method = 'getRole';
-        if(method_exists($identity, $method)) {
+        if (method_exists($identity, $method)) {
 
              $temp = $identity->$method();
              $role = empty($temp) ? $default : $temp;
@@ -236,7 +237,7 @@ class Authorize extends AbstractPlugin
             //set authentication service
         $manager = $event->getApplication()->getServiceManager();
 
-        if($manager->has('Zend\Authentication\AuthenticationService')) {
+        if ($manager->has('Zend\Authentication\AuthenticationService')) {
             $authService =
                 $manager->get('Zend\Authentication\AuthenticationService');
 
@@ -262,10 +263,10 @@ class Authorize extends AbstractPlugin
         $defaultRole = $this->getDefaultRole();
         //add roles ..
         $acl->addRole(new Role($defaultRole));
-        $acl->addRole(new Role('guest'),  $defaultRole);
-        $acl->addRole(new Role('user'),  'guest');
-        $acl->addRole(new Role('member'),  'guest');
-        $acl->addRole(new Role('moderator'),  'member');
+        $acl->addRole(new Role('guest'), $defaultRole);
+        $acl->addRole(new Role('user'), 'guest');
+        $acl->addRole(new Role('member'), 'guest');
+        $acl->addRole(new Role('moderator'), 'member');
         $acl->addRole(new Role('admin'), 'moderator');
 
         /**
@@ -278,20 +279,22 @@ class Authorize extends AbstractPlugin
 
         //add ressources
         $acl->addResource(new Resource('nav-admin'));
-        $acl->allow('admin', 'nav-admin' );
+        $acl->allow('admin', 'nav-admin');
 
         $acl->addResource(new Resource('User\Controller\User'));
-        $acl->allow('admin', 'User\Controller\User' );
+        $acl->allow('admin', 'User\Controller\User');
 
         $acl->addResource(new Resource('User\Controller\Profile'));
-        $acl->allow('guest', 'User\Controller\Profile' );
+        $acl->allow('guest', 'User\Controller\Profile');
 
         $acl->addResource(new Resource('Appointment\Controller\Appointment'));
-        $acl->allow('guest', 'Appointment\Controller\Appointment' );
+        $acl->allow('guest', 'Appointment\Controller\Appointment');
 
+        $acl->addResource(new Resource('Appointment\Controller\Show'));
+        $acl->allow('guest', 'Appointment\Controller\Show');
 
         $this->setAcl($acl);
-     }
+    }
 
     /**
      * set the actual ressource from the request
@@ -312,8 +315,8 @@ class Authorize extends AbstractPlugin
         $controller     = $routeMatch->getParam('controller');
         //$action         = $routeMatch->getParam('action');
 
-        //the ressouce to request
-        //$requestedRessouce = $controller . "\\" . $action;
+        //the resource to request
+        //$requestedResource = $controller . "\\" . $action;
 
         $this->setRessource($controller);
 
@@ -323,6 +326,8 @@ class Authorize extends AbstractPlugin
      * set the redirection and stops the propagation
      *
      * @param string $route
+     *
+     * @return \Zend\Stdlib\ResponseInterface
      */
     private function redirectToRoute($route)
     {
@@ -344,4 +349,3 @@ class Authorize extends AbstractPlugin
 
 }
 
-?>

@@ -51,4 +51,26 @@ class ShowController extends AbstractController
         );
     }
 
+    /**
+     * @return array|ViewModel
+     */
+    public function rejectAction()
+    {
+        /*
+        if ($this->identity()->getRole() != 'admin') {
+           @todo: action for moderator or admin
+        }*/
+
+
+        /* @var $repo \Appointment\Mapper\AppointmentMapper */
+        $repo = $this->getRepository()->getMapper('appointment');
+        $appointments = $repo->getRejectedAppointments();
+
+        return new ViewModel(
+            array(
+                'rejectedAppointments' => $appointments
+            )
+        );
+    }
+
 }

@@ -3,6 +3,13 @@ namespace Appointment;
 
 return array(
 
+    'view_helpers' => array(
+        'invokables' => array(
+            'userInfo'   => 'Appointment\View\Helper\UserInfo',
+            // more helpers here ...
+        )
+    ),
+
     //controller
     'controllers' => array(
         'invokables' => array(
