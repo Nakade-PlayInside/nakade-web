@@ -107,9 +107,11 @@ class AppointmentForm extends AbstractForm
                     'label' => $this->translate('I do confirm my opponent has agreed to this schedule'),
                     'use_hidden_element' => true,
                     'checked_value' => self::USER_CONFIRM,
-                    'unchecked_value' => 'no'
-
+                    'unchecked_value' => 'no',
                 ),
+                'attributes' => array(
+                    'class' => 'checkbox',
+                )
             )
         );
 
