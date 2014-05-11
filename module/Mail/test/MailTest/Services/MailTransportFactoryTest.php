@@ -3,7 +3,11 @@ namespace Mail\Services;
 
 use PHPUnit_Framework_TestCase;
 
-
+/**
+ * Class MailTransportFactoryTest
+ *
+ * @package Mail\Services
+ */
 class MailTransportFactoryTest extends PHPUnit_Framework_TestCase
 {
 

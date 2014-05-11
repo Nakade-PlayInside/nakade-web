@@ -6,6 +6,8 @@ use Appointment\Mail;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Nakade\Abstracts\AbstractTranslation;
+use \Mail\Services\MailMessageFactory;
+use \Mail\Services\MailTransportFactory;
 /**
  * Class MailService
  *
@@ -114,12 +116,51 @@ class MailService extends AbstractTranslation implements FactoryInterface
         }
 
         $mail->setTranslator($this->getTranslator());
-        $mail->setSignature($this->signature);
-        $mail->setTime($this->confirmTime);
-        $mail->setUrl($this->url);
+        $mail->setSignature($this->getSignature());
+        $mail->setTime($this->getConfirmTime());
+        $mail->setUrl($this->getUrl());
         return $mail;
     }
 
+    /**
+     * @return string
+     */
+    public function getConfirmTime()
+    {
+        return $this->confirmTime;
+    }
+
+    /**
+     * @return \Mail\Services\MailMessageFactory
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @return \Mail\Services\MailSignatureService
+     */
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
+    /**
+     * @return \Zend\Mail\Transport\TransportInterface
+     */
+    public function getTransport()
+    {
+        return $this->transport;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
 
 }

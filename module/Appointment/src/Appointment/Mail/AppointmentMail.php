@@ -105,7 +105,7 @@ abstract class AppointmentMail extends NakadeMail
             $message = str_replace('%MATCH_INFO%', $this->getAppointment()->getMatch()->getMatchInfo(), $message);
             $message = str_replace('%NEW_DATE%', $this->getAppointment()->getNewDate()->format('d.m.y H:i'), $message);
             $message = str_replace('%OLD_DATE%', $this->getAppointment()->getOldDate()->format('d.m.y H:i'), $message);
-            $message = str_replace('%LINK%', $link, $message);
+            $message = str_replace('%CONFIRM_LINK%', $link, $message);
         }
         $message = str_replace('%TIME%', $this->getTime(), $message);
 
