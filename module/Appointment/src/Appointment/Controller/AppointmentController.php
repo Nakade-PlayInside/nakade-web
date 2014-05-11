@@ -14,7 +14,7 @@ use Nakade\Abstracts\AbstractController;
 
 // todo: unit test
 // todo: database sql script for prod server
-// todo: str_replace for mail -> data
+// todo: permission for action
 /**
  * Class AppointmentController
  *
@@ -69,10 +69,12 @@ class AppointmentController extends AbstractController
 
                /* @var $submit \Appointment\Mail\SubmitterMail */
                $submit = $this->getMailService()->getMail('submitter');
+               $submit->setAppointment($appointment);
                $submit->sendMail($appointment->getSubmitter());
 
                /* @var $responder \Appointment\Mail\ResponderMail */
                $responder = $this->getMailService()->getMail('responder');
+               $responder->setAppointment($appointment);
                $responder->sendMail($appointment->getResponder());
 
                return $this->redirect()->toRoute('appointment', array(
@@ -145,6 +147,7 @@ class AppointmentController extends AbstractController
 
                 /* @var $mail \Appointment\Mail\ConfirmMail */
                 $mail = $this->getMailService()->getMail('confirm');
+                $mail->setAppointment($appointment);
                 $mail->sendMail($appointment->getResponder());
                 $mail->sendMail($appointment->getSubmitter());
 
@@ -213,6 +216,7 @@ class AppointmentController extends AbstractController
 
                 /* @var $mail \Appointment\Mail\RejectMail */
                 $mail = $this->getMailService()->getMail('reject');
+                $mail->setAppointment($appointment);
                 $mail->sendMail($appointment->getResponder());
                 $mail->sendMail($appointment->getSubmitter());
 

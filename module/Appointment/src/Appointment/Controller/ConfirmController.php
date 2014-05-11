@@ -56,6 +56,7 @@ class ConfirmController extends AbstractController
 
        /* @var $mail \Appointment\Mail\ConfirmMail */
        $mail = $this->getMailService()->getMail('confirm');
+       $mail->setAppointment($appointment);
        $mail->sendMail($appointment->getResponder());
        $mail->sendMail($appointment->getSubmitter());
 
