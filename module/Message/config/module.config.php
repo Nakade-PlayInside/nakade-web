@@ -13,23 +13,11 @@ namespace Message;
 
 return array(
 
-    'view_helpers' => array(
-        'invokables' => array(
-            // more helpers here ...
-        )
-    ),
-
     'controllers' => array(
-
         'factories' => array(
             'Message\Controller\Message' =>
                 'Message\Services\MessageControllerFactory',
         ),
-    ),
-
-    'controller_plugins' => array(
-      'invokables' => array(
-      ),
     ),
 
     'router' => array(

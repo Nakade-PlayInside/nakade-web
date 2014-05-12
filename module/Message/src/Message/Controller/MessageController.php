@@ -1,14 +1,12 @@
 <?php
 namespace Message\Controller;
 
-use Message\Entity\Delete;
 use Message\Entity\Message;
 use Message\Notify\NotifyMail;
 use Nakade\Abstracts\AbstractController;
 use Message\Form\MessageForm;
 use Message\Form\ReplyForm;
 use Zend\View\Model\ViewModel;
-
 /**
  * League tables and schedules of the actual season.
  * Top league table is presented by the default action index.
@@ -18,17 +16,12 @@ use Zend\View\Model\ViewModel;
  */
 class MessageController extends AbstractController
 {
-    private $mailService;
 
     /**
      * @return array|\Zend\Http\Response|ViewModel
      */
     public function indexAction()
     {
-
-        if ($this->identity() === null) {
-           return $this->redirect()->toRoute('login');
-        }
 
         $uid = $this->identity()->getId();
         $messages =  $this->getRepository()
@@ -70,6 +63,7 @@ class MessageController extends AbstractController
         }
 
         $returnPath = $this->getRequest()->getHeader('referer')->uri()->getPath();
+
         $messageId  = (int) $this->params()->fromRoute('id', -1);
         $uid = $this->identity()->getId();
 
@@ -265,6 +259,10 @@ class MessageController extends AbstractController
     {
         return $this->mailService;
     }
+
+
+
+
 
 
 }

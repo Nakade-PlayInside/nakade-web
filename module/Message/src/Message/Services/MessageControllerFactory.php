@@ -8,6 +8,7 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
 
+
 /**
  * Creates the controller used for authentication.
  * make sure, you have configured the factory in the module configuration
@@ -43,20 +44,23 @@ class MessageControllerFactory implements FactoryInterface
         $repository =  $serviceManager->get(
             'Message\Services\RepositoryService'
         );
-
         /* @var $transport \Zend\Mail\Transport\TransportInterface */
         $transport = $serviceManager->get('Mail\Services\MailTransportFactory');
+
 
         /* @var $message \Mail\Services\MailMessageFactory */
         $message =   $serviceManager->get('Mail\Services\MailMessageFactory');
 
         $translator = $serviceManager->get('translator');
 
+
         $mailService = new NotifyMail($message, $transport);
+
         $mailService->setTranslator($translator);
         $mailService->setTranslatorTextDomain($textDomain);
 
         $controller = new MessageController();
+
         $controller->setRepository($repository);
         $controller->setTranslator($translator);
         $controller->setMailService($mailService);

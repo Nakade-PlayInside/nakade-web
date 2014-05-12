@@ -72,7 +72,7 @@ class AbstractController extends AbstractActionController
             return null;
         }
 
-        return $this->formFactory->getForm($typ, $lang);
+        return $this->getFormFactory()->getForm($typ, $lang);
 
     }
 
