@@ -6,12 +6,11 @@ use Nakade\Abstracts\AbstractController;
 use Message\Form\MessageForm;
 use Message\Form\ReplyForm;
 use Zend\View\Model\ViewModel;
+
 /**
- * League tables and schedules of the actual season.
- * Top league table is presented by the default action index.
- * ActionSeasonServiceFactory is needed to be set.
+ * Class MessageController
  *
- * @author Holger Maerz <holger@nakade.de>
+ * @package Message\Controller
  */
 class MessageController extends AbstractController
 {

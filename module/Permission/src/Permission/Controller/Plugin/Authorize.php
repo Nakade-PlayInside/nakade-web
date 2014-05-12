@@ -28,6 +28,7 @@ class Authorize extends AbstractPermission implements AuthorizeInterface
         $authService = $this->getService('Zend\Authentication\AuthenticationService');
 
         $role = $this->getRoleByIdentity($authService);
+
         $resource = $this->getRequestedResource();
 
         /* @var $acl \Zend\Permissions\Acl\Acl */
@@ -43,7 +44,10 @@ class Authorize extends AbstractPermission implements AuthorizeInterface
             return $this->redirectToRoute('login');
         }
 
-        if (! $acl->isAllowed($role, $resource)) {
+        //look for action; if allowed return response
+
+        //look for controller
+        if (!$acl->isAllowed($role, $resource)) {
             return $this->redirectToRoute('forbidden');
         }
 
