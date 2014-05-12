@@ -17,6 +17,7 @@ return array(
             'User\Controller\Profile' => 'guest',
             'Appointment\Controller\Appointment' => 'guest',
             'Appointment\Controller\Show' => 'guest',
+            'Messages\Controller\Messages' => 'guest',
         )
     ),
 );

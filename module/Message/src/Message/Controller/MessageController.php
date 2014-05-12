@@ -38,10 +38,6 @@ class MessageController extends AbstractController
      */
     public function sentAction()
     {
-        if ($this->identity() === null) {
-            return $this->redirect()->toRoute('login');
-        }
-
         $uid = $this->identity()->getId();
 
         /* @var $repo \Message\Mapper\MessageMapper */
@@ -58,10 +54,6 @@ class MessageController extends AbstractController
      */
     public function showAction()
     {
-        if ($this->identity() === null) {
-           return $this->redirect()->toRoute('login');
-        }
-
         $returnPath = $this->getRequest()->getHeader('referer')->uri()->getPath();
 
         $messageId  = (int) $this->params()->fromRoute('id', -1);
@@ -95,10 +87,6 @@ class MessageController extends AbstractController
      */
     public function newAction()
     {
-
-       if ($this->identity() === null) {
-           return $this->redirect()->toRoute('login');
-       }
 
        $id = $this->identity()->getId();
 
@@ -159,10 +147,6 @@ class MessageController extends AbstractController
      */
     public function replyAction()
     {
-
-       if ($this->identity() === null) {
-           return $this->redirect()->toRoute('login');
-       }
 
        $uid = $this->identity()->getId();
        $messageId  = (int) $this->params()->fromRoute('id', -1);
@@ -231,9 +215,6 @@ class MessageController extends AbstractController
      */
     public function deleteAction()
     {
-        if ($this->identity() === null) {
-            return $this->redirect()->toRoute('login');
-        }
         $uid = $this->identity()->getId();
         $messageId  = (int) $this->params()->fromRoute('id', -1);
         $this->getRepository()->getMapper('message')->hideMessageByUser($uid, $messageId);
