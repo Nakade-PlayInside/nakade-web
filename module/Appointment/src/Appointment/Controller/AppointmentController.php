@@ -12,7 +12,6 @@ use League\Entity\Match;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
-// todo: unit test
 // todo: database sql script for prod server
 // todo: permission for action
 /**

@@ -4,7 +4,8 @@ return array(
         'Mail',
         'Appointment',
         'Nakade',
-        'League'
+        'League',
+        'User'
     ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(

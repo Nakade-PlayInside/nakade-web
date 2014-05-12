@@ -97,10 +97,8 @@ class AppointmentValidService implements FactoryInterface
         if (!$this->isConfirmedByLink($appointment, $confirmString)) {
             return false;
         }
-
         return true;
     }
-
 
     /**
      * @param Appointment $appointment
@@ -115,8 +113,6 @@ class AppointmentValidService implements FactoryInterface
         }
         return false;
     }
-
-
 
     /**
      * @param Appointment $appointment
@@ -151,7 +147,6 @@ class AppointmentValidService implements FactoryInterface
         return false;
     }
 
-
     /**
      * @param Match $match
      *
@@ -174,5 +169,16 @@ class AppointmentValidService implements FactoryInterface
         return $this->repository;
     }
 
+    /**
+     * @param RepositoryService $service
+     *
+     * @return $this
+     */
+    public function setRepository(RepositoryService $service)
+    {
+        $this->repository = $service;
+        return $this;
+
+    }
 
 }
