@@ -124,6 +124,8 @@ return array(
         'factories' => array(
             'Message\Services\RepositoryService'      =>
                 'Message\Services\RepositoryService',
+            'Message\Services\MailService'      =>
+                'Message\Services\MailService',
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

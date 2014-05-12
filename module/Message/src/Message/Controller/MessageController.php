@@ -2,7 +2,6 @@
 namespace Message\Controller;
 
 use Message\Entity\Message;
-use Message\Notify\NotifyMail;
 use Nakade\Abstracts\AbstractController;
 use Message\Form\MessageForm;
 use Message\Form\ReplyForm;
@@ -129,8 +128,9 @@ class MessageController extends AbstractController
 
                 $repo->save($message);
 
-                //sending email
-                $this->getMailService()->sendMail($recipient);
+                /* @var $mail \Message\Mail\NotifyMail */
+                $mail = $this->getMailService()->getMail('notify');
+                $mail->sendMail($recipient);
 
                 return $this->redirect()->toRoute('message');
             }
@@ -198,8 +198,9 @@ class MessageController extends AbstractController
                 $reply->setSendDate(new \DateTime());
                 $repo->save($reply);
 
-                //sending email
-                $this->getMailService()->sendMail($receiver);
+                /* @var $mail \Message\Mail\NotifyMail */
+                $mail = $this->getMailService()->getMail('notify');
+                $mail->sendMail($receiver);
 
                 return $this->redirect()->toRoute('message');
             }
@@ -221,29 +222,5 @@ class MessageController extends AbstractController
 
         return $this->redirect()->toRoute('message');
     }
-
-    /**
-     * @param NotifyMail $mail
-     *
-     * @return $this
-     */
-    public function setMailService(NotifyMail $mail)
-    {
-        $this->mailService = $mail;
-        return $this;
-    }
-
-    /**
-     * @return NotifyMail
-     */
-    public function getMailService()
-    {
-        return $this->mailService;
-    }
-
-
-
-
-
 
 }
