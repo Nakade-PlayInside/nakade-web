@@ -12,7 +12,6 @@ use League\Entity\Match;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
-// todo: permission for action
 /**
  * Class AppointmentController
  *
