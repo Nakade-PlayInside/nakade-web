@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-13 15:21+0100\n"
-"PO-Revision-Date: 2014-05-13 15:38+0100\n"
+"POT-Creation-Date: 2014-05-13 16:33+0100\n"
+"PO-Revision-Date: 2014-05-13 16:36+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: ../src/Appointment/Mail/SubmitterMail.php:24
 msgid "You submitted an appointment for a new match date at %URL%."
-msgstr "Du hast eine Terminverlegung für eine Partie auf %URL% eingereicht."
+msgstr "Du hast eine Terminverlegung für eine Partie auf %URL% beantragt."
 
 #: ../src/Appointment/Mail/SubmitterMail.php:26
 #: ../src/Appointment/Mail/ResponderMail.php:27
@@ -40,15 +40,15 @@ msgstr "Neuer Termin: %NEW_DATE%"
 
 #: ../src/Appointment/Mail/SubmitterMail.php:32
 msgid "Before updating, your opponent has to confirm the appointment ."
-msgstr "Um den neuen Termin zu übernehmen, muss dein Gegner die Terminverschiebung bestätigen."
+msgstr "Für eine endgültige Übernahme des neuen Termin, muss dein Gegner diesen bestätigen."
 
 #: ../src/Appointment/Mail/SubmitterMail.php:34
 msgid "The confirmation process can last up to %TIME% hours."
-msgstr "Die Bestätigung einer Terminverlegung kann bis zu  %TIME% Stunden dauern."
+msgstr "Das kann bis zu %TIME% Stunden dauern."
 
 #: ../src/Appointment/Mail/SubmitterMail.php:36
 msgid "Do not update your iCal before confirmation."
-msgstr "Aktualisiere dein iCal erst nach der Terminbestätigung. "
+msgstr "Aktualisiere dein iCal erst nach Terminbestätigung. "
 
 #: ../src/Appointment/Mail/SubmitterMail.php:50
 msgid "New League Appointment Reminder"
@@ -56,27 +56,27 @@ msgstr "Memo zur Terminverlegung"
 
 #: ../src/Appointment/Mail/ResponderMail.php:25
 msgid "The new appointment for your match date at %URL% is submitted."
-msgstr "Eine Anfrage zur Terminverlegung deiner Ligapartie bei %URL% wurde eingereicht. "
+msgstr "Es wurde eine Anfrage zur Terminverlegung deiner Ligapartie bei %URL% eingereicht. "
 
 #: ../src/Appointment/Mail/ResponderMail.php:33
 msgid "You have to confirm the appointment before updating."
-msgstr "Du musst den Termin bestätigen, um diesen zu übernehmen."
+msgstr "Um der Terminverlegung zu zustimmen, musst du den neuen Termin bestätigen."
 
 #: ../src/Appointment/Mail/ResponderMail.php:35
 msgid "Therefore, you just can click on the link provided below."
-msgstr "Zum Bestätigen einfach den Link unten klicken."
+msgstr "Dazu musst du lediglich auf den Link klicken oder über deinen Browser ausführen."
 
 #: ../src/Appointment/Mail/ResponderMail.php:37
 msgid "Or you just login at %URL% and confirm the new date on your site."
-msgstr "Oder du meldest dich unter %URL% an und bestätigst den neuen Termin online."
+msgstr "Eine andere Möglichkeit ist die online Bestätigung unter %URL%."
 
 #: ../src/Appointment/Mail/ResponderMail.php:39
 msgid "Otherwise, if you do NOT AGREE to the appointment, you can reject it."
-msgstr "Falls du mit der Terminverlegung NICHT EINVERSTANDEN bist, kannst du diese abweisen.."
+msgstr "Falls du mit der Terminverlegung NICHT EINVERSTANDEN bist, kannst du diese auch online abweisen."
 
 #: ../src/Appointment/Mail/ResponderMail.php:41
 msgid "For rejecting, you have to logIn at %URL% and provide a reason."
-msgstr "Für einen Einspruch musst du dich unter %URL% anmelden und begründen.   "
+msgstr "Ein begründeter Widerspruch des vorgeschlagenen Termins ist nur online unter %URL% möglich.   "
 
 #: ../src/Appointment/Mail/ResponderMail.php:43
 msgid "After %TIME% hours, the new appointment will be automatically confirmed."
@@ -96,11 +96,11 @@ msgstr "Die Terminverlegung deiner Partie auf %URL% wurde bestätigt."
 
 #: ../src/Appointment/Mail/ConfirmMail.php:31
 msgid "If you use a calendar application, do not forget to update."
-msgstr "Falls du einen digitalen Terminkalendar benutzt, vergiss nicht diesen zu aktualisieren."
+msgstr "Du kannst jetzt deinen digitalen Terminkalendar aktualisieren."
 
 #: ../src/Appointment/Mail/ConfirmMail.php:32
 msgid "An updated iCal is found on your site after login at %URL%."
-msgstr "Den aktuellen iCal  findest du auf deiner Begrüßungsseite nach der Anmeldung auf %URL%."
+msgstr "Den aktuellen iCal  findest du auf der Begrüßungsseite nach Anmeldung auf %URL%."
 
 #: ../src/Appointment/Mail/ConfirmMail.php:46
 msgid "Your League Appointment is confirmed"
@@ -120,19 +120,19 @@ msgstr "Bitte kontaktiere umgehend deinen Gegner."
 
 #: ../src/Appointment/Mail/RejectMail.php:33
 msgid "Try to find a solution together."
-msgstr "Versuche gemeinsam eine Lösung zu finden."
+msgstr "Versucht gemeinsam eine Lösung zu finden."
 
 #: ../src/Appointment/Mail/RejectMail.php:35
 msgid "Subsequently, contact a league manager."
-msgstr "Danach kontaktiere einen Liga-Manager."
+msgstr "Danach kontaktiere den Liga-Manager."
 
 #: ../src/Appointment/Mail/RejectMail.php:36
 msgid "Only a league manager can edit a rejected date."
-msgstr "Nur ein Liga-Manager kann einen abgewiesenen Termin bearbeiten."
+msgstr "Nur der Liga-Manager kann einen einmal abgewiesenen Termin bearbeiten."
 
 #: ../src/Appointment/Mail/RejectMail.php:37
 msgid "If you cannot find a solution, the league manager will make a decision."
-msgstr "Falls du dich mit deinem Gegner nicht einigen kannst, obliegt es dem Liga-Manager dazu eine Entscheidung zu treffen. "
+msgstr "Falls du keine Einigung mit deinem Gegner erzielen kannst, wird der Liga-Manager eine Entscheidung gemäß den Regeln treffen. "
 
 #: ../src/Appointment/Mail/RejectMail.php:51
 msgid "Your League Appointment is rejected"
@@ -257,7 +257,7 @@ msgstr "Neuer Termin"
 
 #: ../view/appointment/appointment/confirm.phtml:29
 msgid "If you do not agree, you may reject the appointment."
-msgstr "Falls du nicht einverstanden bist, kannst du den neuen Termin abweisen. "
+msgstr "Falls du nicht einverstanden bist, kannst du dem neuen Termin widersprechen. "
 
 #: ../view/appointment/appointment/index.phtml:3
 msgid "Edit match appointment"

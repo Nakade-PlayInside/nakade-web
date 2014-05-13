@@ -8,6 +8,8 @@ return array(
 
     'nakade_mail' => array(
 
+        'text_domain' => 'Mail',
+
         // This sets the default "to"
         'message' => array(
             'from' => 'name@domain.org' ,

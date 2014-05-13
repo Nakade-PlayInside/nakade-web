@@ -30,13 +30,13 @@ class MailSignatureService extends AbstractTranslation implements FactoryInterfa
         $this->clubInfo = $config['nakade_mail']['signature'];
 
         //configuration
-        $textDomain = isset($config['Mail']['text_domain']) ?
-            $config['Mail']['text_domain'] : null;
+        $textDomain = isset($config['nakade_mail']['text_domain']) ?
+            $config['nakade_mail']['text_domain'] : null;
 
         $translator = $services->get('translator');
 
-        //@todo: proof if this text domain setting is already doing the job
         $this->setTranslator($translator, $textDomain);
+        $this->setTranslatorTextDomain($textDomain);
 
         return $this;
     }

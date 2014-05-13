@@ -7,6 +7,8 @@
 return array(
     'nakade_mail' => array(
 
+        'text_domain' => 'Mail',
+
         // This sets the default "to" and "sender" headers for your message
         'message' => array(
             'from' => 'holger@nakade.de' ,

@@ -75,7 +75,7 @@ class MailService extends AbstractTranslation implements FactoryInterface
 
         $translator = $services->get('translator');
 
-        //@todo: proof if this text domain setting is already doing the job
+        $this->setTranslatorTextDomain($textDomain);
         $this->setTranslator($translator, $textDomain);
 
         return $this;
@@ -116,6 +116,7 @@ class MailService extends AbstractTranslation implements FactoryInterface
         }
 
         $mail->setTranslator($this->getTranslator());
+        $mail->setTranslatorTextDomain($this->getTranslatorTextDomain());
         $mail->setSignature($this->getSignature());
         $mail->setTime($this->getConfirmTime());
         $mail->setUrl($this->getUrl());
