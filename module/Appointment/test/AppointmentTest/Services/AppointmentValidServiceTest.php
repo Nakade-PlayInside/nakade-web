@@ -105,13 +105,13 @@ class AppointmentValidServiceTest extends PHPUnit_Framework_TestCase
         $obj = $this->getObj();
         $match = new Match();
 
-        $mock = $this->getRepositoryMock(true);
+        $mock = $this->getRepositoryMock(false);
         $obj->setRepository($mock);
 
         $result = $this->invokeMethod('hasAppointment', array($match));
         $this->assertFalse($result);
 
-        $mock = $this->getRepositoryMock(false);
+        $mock = $this->getRepositoryMock(true);
         $obj->setRepository($mock);
 
         $result = $this->invokeMethod('hasAppointment', array($match));
@@ -193,18 +193,18 @@ class AppointmentValidServiceTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($obj->isValidMatch($black, $match));
 
         // match hasAppointment
-        $mock = $this->getRepositoryMock(true);
+        $mock = $this->getRepositoryMock(false);
         $obj->setRepository($mock);
         $this->assertFalse($obj->isValidMatch($black, $match));
 
         // match has InvalidUser
         $match->setResultId(null);
-        $mock = $this->getRepositoryMock(false);
+        $mock = $this->getRepositoryMock(true);
         $obj->setRepository($mock);
         $this->assertFalse($obj->isValidMatch($invalid, $match));
 
         // match has validUser
-        $mock = $this->getRepositoryMock(true);
+        $mock = $this->getRepositoryMock(false);
         $obj->setRepository($mock);
         $this->assertTrue($obj->isValidMatch($black, $match));
 

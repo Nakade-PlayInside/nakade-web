@@ -158,7 +158,7 @@ class AppointmentValidService implements FactoryInterface
         $mapper = $this->getRepository()->getMapper('appointment');
         $result = $mapper->getAppointmentByMatch($match);
 
-        return empty($result);
+        return !empty($result);
     }
 
     /**

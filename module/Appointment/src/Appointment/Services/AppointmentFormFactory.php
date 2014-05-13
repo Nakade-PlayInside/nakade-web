@@ -44,17 +44,8 @@ class AppointmentFormFactory extends AbstractFormFactory
 
         $translator = $services->get('translator');
 
-        //@todo: Übersetzung der Std Validatoren
-       //needed for translating validation messages
-        $translator->addTranslationFile(
-            'phpArray',
-            'vendor/zendframework/zendframework/resources/languages/de/Zend_Validate.php',
-            'default',
-            'de_DE'
-        );
-
-        //@todo: proof if this text domain setting is already doing the job
-       $this->setTranslator($translator, $textDomain);
+        $this->setTranslator($translator);
+        $this->setTranslatorTextDomain($textDomain);
 
        return $this;
     }
@@ -94,6 +85,7 @@ class AppointmentFormFactory extends AbstractFormFactory
         }
 
         $form->setTranslator($this->getTranslator());
+        $form->setTranslatorTextDomain($this->getTranslatorTextDomain());
         return $form;
     }
 

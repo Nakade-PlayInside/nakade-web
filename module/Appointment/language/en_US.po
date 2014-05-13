@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-10 18:33+0100\n"
-"PO-Revision-Date: 2014-05-10 18:34+0100\n"
+"POT-Creation-Date: 2014-05-13 15:20+0100\n"
+"PO-Revision-Date: 2014-05-13 15:20+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -213,14 +213,17 @@ msgid "Did you really use the correct link provided by email?"
 msgstr ""
 
 #: ../view/appointment/confirm/success.phtml:3
+#: ../view/appointment/appointment/success.phtml:3
 msgid "New match appointment confirmed"
 msgstr ""
 
 #: ../view/appointment/confirm/success.phtml:10
+#: ../view/appointment/appointment/success.phtml:10
 msgid "Your match appointment is confirmed."
 msgstr ""
 
 #: ../view/appointment/confirm/success.phtml:11
+#: ../view/appointment/appointment/success.phtml:11
 msgid "Further detailed information will be sent to your email address."
 msgstr ""
 
@@ -237,14 +240,18 @@ msgid "Your binding confirmation is needed."
 msgstr ""
 
 #: ../view/appointment/appointment/confirm.phtml:16
+#: ../view/appointment/appointment/reject.phtml:16
+#: ../view/appointment/show/available.phtml:16
 msgid "Match"
 msgstr ""
 
 #: ../view/appointment/appointment/confirm.phtml:20
+#: ../view/appointment/appointment/reject.phtml:20
 msgid "Old Date"
 msgstr ""
 
 #: ../view/appointment/appointment/confirm.phtml:24
+#: ../view/appointment/appointment/reject.phtml:24
 msgid "New Date"
 msgstr ""
 
@@ -294,6 +301,26 @@ msgstr ""
 
 #: ../view/appointment/appointment/reject.phtml:11
 msgid "For example: I was not asked at all."
+msgstr ""
+
+#: ../view/appointment/show/available.phtml:3
+msgid "Matches available for shifting appointment"
+msgstr ""
+
+#: ../view/appointment/show/available.phtml:14
+msgid "ID"
+msgstr ""
+
+#: ../view/appointment/show/available.phtml:15
+msgid "Date"
+msgstr ""
+
+#: ../view/appointment/show/available.phtml:22
+msgid "click for making an appointment"
+msgstr ""
+
+#: ../view/appointment/show/available.phtml:37
+msgid "There are no appointments available to shift."
 msgstr ""
 
 #: ../view/appointment/show/index.phtml:3

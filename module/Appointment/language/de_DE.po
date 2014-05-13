@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-10 18:34+0100\n"
-"PO-Revision-Date: 2014-05-10 20:33+0100\n"
+"POT-Creation-Date: 2014-05-13 15:21+0100\n"
+"PO-Revision-Date: 2014-05-13 15:38+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -213,14 +213,17 @@ msgid "Did you really use the correct link provided by email?"
 msgstr "Hast du den korrekten Link der Email benutzt?"
 
 #: ../view/appointment/confirm/success.phtml:3
+#: ../view/appointment/appointment/success.phtml:3
 msgid "New match appointment confirmed"
 msgstr "Neuer Termin bestätigt"
 
 #: ../view/appointment/confirm/success.phtml:10
+#: ../view/appointment/appointment/success.phtml:10
 msgid "Your match appointment is confirmed."
 msgstr "Deine Terminverlegung wurde bestätigt."
 
 #: ../view/appointment/confirm/success.phtml:11
+#: ../view/appointment/appointment/success.phtml:11
 msgid "Further detailed information will be sent to your email address."
 msgstr "Weitere Informationen dazu findest du in deiner email."
 
@@ -237,14 +240,18 @@ msgid "Your binding confirmation is needed."
 msgstr "Deine verbindliche Zusage wird benötigt. "
 
 #: ../view/appointment/appointment/confirm.phtml:16
+#: ../view/appointment/appointment/reject.phtml:16
+#: ../view/appointment/show/available.phtml:16
 msgid "Match"
 msgstr "Partie"
 
 #: ../view/appointment/appointment/confirm.phtml:20
+#: ../view/appointment/appointment/reject.phtml:20
 msgid "Old Date"
 msgstr "Alter Termin"
 
 #: ../view/appointment/appointment/confirm.phtml:24
+#: ../view/appointment/appointment/reject.phtml:24
 msgid "New Date"
 msgstr "Neuer Termin"
 
@@ -254,7 +261,7 @@ msgstr "Falls du nicht einverstanden bist, kannst du den neuen Termin abweisen. 
 
 #: ../view/appointment/appointment/index.phtml:3
 msgid "Edit match appointment"
-msgstr "Termin bearbeiten"
+msgstr "Terminverlegung"
 
 #: ../view/appointment/appointment/index.phtml:9
 msgid "Before edit your match date, contact your opponent."
@@ -296,6 +303,26 @@ msgstr "Bitte begründe deine Terminabweisung."
 msgid "For example: I was not asked at all."
 msgstr "z.B. : Ich wurde überhaupt nicht gefragt."
 
+#: ../view/appointment/show/available.phtml:3
+msgid "Matches available for shifting appointments"
+msgstr "Verschiebbare Partietermine"
+
+#: ../view/appointment/show/available.phtml:14
+msgid "ID"
+msgstr "ID"
+
+#: ../view/appointment/show/available.phtml:15
+msgid "Date"
+msgstr "Datum"
+
+#: ../view/appointment/show/available.phtml:22
+msgid "click for making an appointment"
+msgstr "hier klicken, um einen Termin zu verschieben"
+
+#: ../view/appointment/show/available.phtml:37
+msgid "There are no appointments available to shift."
+msgstr "Keine Termine gefunden."
+
 #: ../view/appointment/show/index.phtml:3
 msgid "Matches to Confirm"
 msgstr "Partien zu bestätigen"
@@ -314,7 +341,7 @@ msgstr "neues Datum"
 
 #: ../view/appointment/show/index.phtml:36
 msgid "There are no appointments to confirm."
-msgstr "Keine zu bestätigenden Termine ."
+msgstr "Keine zu bestätigenden Termine."
 
 #: ../view/appointment/show/reject.phtml:3
 msgid "Rejected Appointments"
@@ -326,7 +353,7 @@ msgstr "Antragsteller"
 
 #: ../view/appointment/show/reject.phtml:20
 msgid "Responder"
-msgstr "Antragsempfänger"
+msgstr "Empfänger"
 
 #: ../view/appointment/show/reject.phtml:21
 msgid "submitted"
