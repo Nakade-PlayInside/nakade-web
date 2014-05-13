@@ -6,6 +6,7 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Authentication\AuthenticationService;
+use \Zend\Permissions\Acl\Acl;
 
 /**
  * Class AbstractPermission
@@ -17,6 +18,11 @@ abstract class AbstractPermission extends AbstractPlugin implements AuthorizeInt
 
     protected $event;
     protected $serviceManager;
+    protected $resourceController;
+    protected $resourceAction;
+    protected $acl;
+    protected $role;
+
 
     /**
      * @return ServiceLocatorInterface
@@ -35,6 +41,38 @@ abstract class AbstractPermission extends AbstractPlugin implements AuthorizeInt
     {
         $this->serviceManager = $serviceManager;
         return $this;
+    }
+
+    /**
+     * @param Acl $acl
+     */
+    public function setAcl(Acl $acl)
+    {
+        $this->acl = $acl;
+    }
+
+    /**
+     * @return Acl
+     */
+    public function getAcl()
+    {
+        return $this->acl;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 
     /**
@@ -57,6 +95,75 @@ abstract class AbstractPermission extends AbstractPlugin implements AuthorizeInt
         $this->event = $event;
         return $this;
     }
+
+    /**
+     * @param string $resourceAction
+     *
+     * @return $this
+     */
+    public function setResourceAction($resourceAction)
+    {
+        $this->resourceAction = $resourceAction;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResourceAction()
+    {
+        return $this->resourceAction;
+    }
+
+    /**
+     * @param string $resourceController
+     *
+     * @return $this
+     */
+    public function setResourceController($resourceController)
+    {
+        $this->resourceController = $resourceController;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResourceController()
+    {
+        return $this->resourceController;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasResource()
+    {
+        $controller = $this->getResourceController();
+        $action = $this->getResourceAction();
+
+        return $this->getAcl()->hasResource($controller) || $this->getAcl()->hasResource($action);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAllowed()
+    {
+        $acl = $this->getAcl();
+        $controller = $this->getResourceController();
+        $action = $this->getResourceAction();
+
+        // first check controller if no action is registered
+        if ($acl->hasResource($controller) && !$acl->hasResource($action)) {
+            return $acl->isAllowed($this->getRole(), $controller);
+        } elseif ($acl->hasResource($action)) {
+            return $acl->isAllowed($this->getRole(), $action);
+        }
+
+        return false;
+    }
+
 
     /**
      * @param AuthenticationService $auth

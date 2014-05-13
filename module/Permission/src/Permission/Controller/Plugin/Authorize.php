@@ -23,59 +23,31 @@ class Authorize extends AbstractPermission implements AuthorizeInterface
         $this->event = $event;
         $this->serviceManager = $event->getApplication()->getServiceManager();
 
-
         $aclService = $this->getService('Permission\Services\AclService');
         $authService = $this->getService('Zend\Authentication\AuthenticationService');
+        $routeMatch = $this->getEvent()->getRouteMatch();
 
-        $role = $this->getRoleByIdentity($authService);
+        $this->resourceController = $routeMatch->getParam('controller');
+        $this->resourceAction = $this->getResourceController() .'\\'. $routeMatch->getParam('action');
+        $this->role = $this->getRoleByIdentity($authService);
+        $this->acl = $aclService->getAcl();
 
-        $resource = $this->getRequestedResource();
+        //permission check
+        if ($this->hasResource()) {
 
-        /* @var $acl \Zend\Permissions\Acl\Acl */
-        $acl = $aclService->getAcl();
+            //not logged in
+            if ($this->getRole() === self::DEFAULT_ROLE) {
+                return $this->redirectToRoute('login');
+            }
 
-        //unknown resource is free to everyone
-        if (!$acl->hasResource($resource)) {
-            return $event->getResponse();
-        }
-
-        //not logged in
-        if ($role === self::DEFAULT_ROLE) {
-            return $this->redirectToRoute('login');
-        }
-
-        //look for action; if allowed return response
-
-        //look for controller
-        if (!$acl->isAllowed($role, $resource)) {
-            return $this->redirectToRoute('forbidden');
+            //lookup allowance
+            if (!$this->isAllowed()) {
+                return $this->redirectToRoute('forbidden');
+            }
         }
 
         return $event->getResponse();
     }
-
-
-    /**
-     * @return string
-     */
-    private function getRequestedResource()
-    {
-        $event = $this->getEvent();
-
-        $routeMatch     = $event->getRouteMatch();
-        $controller     = $routeMatch->getParam('controller');
-        $action         = $routeMatch->getParam('action');
-
-        //var_dump($action);die;
-        //the resource to request
-        //$requestedResource = $controller . "\\" . $action;
-        $requestedResource = $controller;
-
-        return $requestedResource;
-
-    }
-
-
 
 }
 

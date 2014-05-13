@@ -3,6 +3,7 @@ namespace Permission\Controller\Plugin;
 
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use \Zend\Permissions\Acl\Acl;
 
 /**
  * Interface AuthorizeInterface
@@ -32,6 +33,59 @@ interface AuthorizeInterface
      */
     public function setEvent(MvcEvent $event);
 
+    /**
+     * @param Acl $acl
+     */
+    public function setAcl(Acl $acl);
+
+    /**
+     * @return Acl
+     */
+    public function getAcl();
+
+    /**
+     * @param string $role
+     */
+    public function setRole($role);
+
+    /**
+     * @return string
+     */
+    public function getRole();
+
+    /**
+     * @param string $resourceAction
+     *
+     * @return $this
+     */
+    public function setResourceAction($resourceAction);
+
+    /**
+     * @return string
+     */
+    public function getResourceAction();
+
+    /**
+     * @param string $resourceController
+     *
+     * @return $this
+     */
+    public function setResourceController($resourceController);
+
+    /**
+     * @return string
+     */
+    public function getResourceController();
+
+    /**
+     * @return bool
+     */
+    public function hasResource();
+
+    /**
+     * @return bool
+     */
+    public function isAllowed();
 
     /**
      * @return ServiceLocatorInterface
