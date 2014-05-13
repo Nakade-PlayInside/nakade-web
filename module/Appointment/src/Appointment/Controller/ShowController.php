@@ -41,13 +41,13 @@ class ShowController extends AbstractController
     public function availableAction()
     {
 
-        /* @var $repo \Appointment\Mapper\AppointmentMapper */
-        $repo = $this->getRepository()->getMapper('appointment');
-        $appointments = $repo->getOpenConfirmsByUser($this->identity());
+        /* @var $repo \League\Mapper\MatchMapper */
+        $repo = $this->getRepository()->getMapper('match');
+        $availableMatches = $repo->getMatchesOpenForAppointmentByUser($this->identity());
 
         return new ViewModel(
             array(
-                'confirmMatches' => $appointments
+                'availableMatches' => $availableMatches
             )
         );
     }

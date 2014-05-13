@@ -2,6 +2,7 @@
 namespace League\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
+use User\Entity\User;
 
 
 /**
@@ -338,6 +339,47 @@ class MatchMapper  extends AbstractMapper
             ->setParameter('uid', $user->getId())
             ->setParameter('lid', $lid)
            // ->setParameter('now', new \DateTime())
+            ->orderBy('m._date ', 'ASC');
+
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
+
+    /**
+     * @param User $user
+     * @param int  $timeLimit
+     *
+     * @return array
+     */
+    public function getMatchesOpenForAppointmentByUser(User $user, $timeLimit=72)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('Match._id')
+           ->from('Appointment\Entity\Appointment', 'a')
+           ->join('a.match', 'Match')
+           ->join('a.responder', 'Responder')
+           ->join('a.submitter', 'Submitter')
+           ->andwhere('Responder.id = :uid OR Submitter.id = :uid')
+           ->setParameter('uid', $user->getId());
+        $notIn = $qb->getQuery()->getResult();
+
+        $now = new \DateTime();
+        $now->modify('+'.$timeLimit.' day');
+
+
+        $qb->select('m')
+            ->from('League\Entity\Match', 'm')
+            ->join('m._black', 'Black')
+            ->join('m._white', 'White')
+            ->where('m._id NOT IN (:notIn)')
+            ->andWhere('m._resultId is Null')
+            ->andwhere('Black.id = :uid OR White.id = :uid')
+            ->andWhere('m._date > :deadline')
+            ->setParameter('notIn', $notIn)
+            ->setParameter('uid', $user->getId())
+            ->setParameter('deadline', $now)
             ->orderBy('m._date ', 'ASC');
 
         $result = $qb->getQuery()->getResult();

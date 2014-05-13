@@ -1,38 +1,39 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('Appointment');
-$title = $this->translate("Matches to Confirm");
+$title = $this->translate("Matches available for shifting appointment");
 $this->headTitle($title);
 
-/* @var $appointment \Appointment\Entity\Appointment */
+/* @var $match \League\Entity\Match */
 ?>
 
 <h3><?php echo $title;?></h3>
 <?php $this->placeholder('Message')->captureStart();?>
-<hr>
-<?php foreach ($this->confirmMatches as $appointment) : ?>
 
-<?php
-   $link = $this->url('appointment', array('action' => 'confirm', 'id' => $appointment->getId()));
-   $match = $appointment->getMatch()->getMatchInfo();
-?>
-    <a class="appointment" href="<?php echo $link;?>" title="<?php echo $this->translate('click to process');?>"><?php echo $match;?>
-        <span title="<?php echo $this->translate('old date');?>">
-            <?php echo $appointment->getOldDate()->format('d.m.y H:i');?>
-        </span>
-        <img style="vertical-align:text-bottom;" src="/images/arrow-16.png" />
-        <span title="<?php echo $this->translate('new date');?>">
-            <?php echo $appointment->getNewDate()->format('d.m.y H:i');?>
-        </span>
-    </a>
+<table class="table rejectAdmin">
+    <tr>
+        <th><?php echo $this->translate("ID");?></th>
+        <th><?php echo $this->translate("Date");?></th>
+        <th><?php echo $this->translate("Match");?></th>
+    </tr>
+<?php foreach ($this->availableMatches as $match) : ?>
+    <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+            <td><?php echo $match->getId();?></td>
+            <td><?php echo $match->getDate()->format('d.m. H:i');?></td>
+            <td><a title="<?php echo $this->translate('click for making an appointment');?>" href="<?php
+                echo $this->url('appointment', array('id' => $match->getId()));?>"><?php
+                echo $match->getMatchInfo(); ?></a>
+            </td>
+    </tr>
 <?php endforeach; ?>
+</table>
 
 
 
 <?php $this->placeholder('Message')->captureEnd();
 
-if (count($this->confirmMatches)>0) {
+if (count($this->availableMatches)>0) {
     echo $this->placeholder('Message');
 } else {
-    echo $this->translate("There are no appointments to confirm.");;
+    echo $this->translate("There are no appointments available to shift.");;
 }
 
