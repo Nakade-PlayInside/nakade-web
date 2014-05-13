@@ -29,12 +29,12 @@ $this->headTitle("Messages");
         ">
         <td style="text-align:right;"><?php echo $message->getId(); ?></td>
         <td class="subject"><a href="<?php
-            echo $this->url('message/show') . '/' . $message->getId(); ?>"><?php echo $message->getSubject() ?></a>
+            echo $this->url('message', array('action' => 'show' )) . '/' . $message->getId(); ?>"><?php echo $message->getSubject() ?></a>
         </td>
         <td><?php echo $message->getSender()->getShortName();?></td>
         <td><?php echo $message->getSendDate()->format('d.m.y H:i');?></td>
         <td><a href="<?php
-            echo $this->url('message/delete'). '/' . $message->getId(); ?>"
+            echo $this->url('message', array('action' => 'delete')). '/' . $message->getId(); ?>"
                title="<?php echo $this->translate('delete')?>">
                <img class="paperBin"  src="/images/trash.png">
             </a>

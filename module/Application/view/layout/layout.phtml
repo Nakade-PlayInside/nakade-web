@@ -81,10 +81,10 @@
                 $this->url('message'),
 
             $this->translate('New Message', 'Application')  =>
-                $this->url('message/new'),
+                $this->url('message', array('action' => 'new')),
 
              $this->translate('Sent', 'Application')  =>
-                 $this->url('message/sent'),
+                 $this->url('message', array('action' => 'sent')),
 
 
         );

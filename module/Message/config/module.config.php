@@ -22,12 +22,14 @@ return array(
 
     'router' => array(
         'routes' => array(
-
-            //all messages
             'message' => array(
-                'type'    => 'Literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/message',
+                    'route'    => '/message[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
                         '__NAMESPACE__' => 'Message\Controller',
                         'controller' => 'Message\Controller\Message',
@@ -35,76 +37,7 @@ return array(
                     ),
                 ),
 
-                'may_terminate' => true,
-                'child_routes' => array(
 
-                    //reply
-                    'reply' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/reply[/:id]',
-                            'constraints' => array(
-                                'id'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'reply',
-
-                            ),
-                        ),
-                    ),
-
-                    //show single message
-                    'show' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/show[/:id]',
-                            'constraints' => array(
-                                'id'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'show',
-                            ),
-                        ),
-                    ),
-
-                    //new message
-                    'new' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/new',
-                            'defaults' => array(
-                                'action' => 'new',
-                            ),
-                        ),
-                    ),
-
-                    //sent messages
-                    'sent' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/sent',
-                            'defaults' => array(
-                                'action' => 'sent',
-                            ),
-                        ),
-                    ),
-
-                    //delete messages
-                    'delete' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/delete[/:id]',
-                            'constraints' => array(
-                                'id'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'delete',
-                            ),
-                        ),
-                    ),
-
-
-                )
             ),
            //next route
         ),
