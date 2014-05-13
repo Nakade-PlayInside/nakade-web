@@ -38,6 +38,23 @@ class ShowController extends AbstractController
     /**
      * @return array|ViewModel
      */
+    public function availableAction()
+    {
+
+        /* @var $repo \Appointment\Mapper\AppointmentMapper */
+        $repo = $this->getRepository()->getMapper('appointment');
+        $appointments = $repo->getOpenConfirmsByUser($this->identity());
+
+        return new ViewModel(
+            array(
+                'confirmMatches' => $appointments
+            )
+        );
+    }
+
+    /**
+     * @return array|ViewModel
+     */
     public function messageAction()
     {
         /* @var $repo \Appointment\Mapper\AppointmentMapper */

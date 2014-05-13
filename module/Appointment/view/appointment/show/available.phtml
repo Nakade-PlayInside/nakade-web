@@ -1,0 +1,38 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Appointment');
+$title = $this->translate("Matches to Confirm");
+$this->headTitle($title);
+
+/* @var $appointment \Appointment\Entity\Appointment */
+?>
+
+<h3><?php echo $title;?></h3>
+<?php $this->placeholder('Message')->captureStart();?>
+<hr>
+<?php foreach ($this->confirmMatches as $appointment) : ?>
+
+<?php
+   $link = $this->url('appointment', array('action' => 'confirm', 'id' => $appointment->getId()));
+   $match = $appointment->getMatch()->getMatchInfo();
+?>
+    <a class="appointment" href="<?php echo $link;?>" title="<?php echo $this->translate('click to process');?>"><?php echo $match;?>
+        <span title="<?php echo $this->translate('old date');?>">
+            <?php echo $appointment->getOldDate()->format('d.m.y H:i');?>
+        </span>
+        <img style="vertical-align:text-bottom;" src="/images/arrow-16.png" />
+        <span title="<?php echo $this->translate('new date');?>">
+            <?php echo $appointment->getNewDate()->format('d.m.y H:i');?>
+        </span>
+    </a>
+<?php endforeach; ?>
+
+
+
+<?php $this->placeholder('Message')->captureEnd();
+
+if (count($this->confirmMatches)>0) {
+    echo $this->placeholder('Message');
+} else {
+    echo $this->translate("There are no appointments to confirm.");;
+}
+

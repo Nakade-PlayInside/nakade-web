@@ -63,6 +63,9 @@
             $this->translate('season overview', 'Application')    =>
                 $this->url('newseason'),
 
+            $this->translate('rejected appointments', 'Application')    =>
+                $this->url('appointmentShow', array('action' => 'reject')),
+
             );
 
             echo $this->Submenu('Admin', $admin);
@@ -111,6 +114,16 @@
             $this->translate('League', 'Application'),
             $league
         );
+
+         echo $this->Submenu(
+             $this->translate('Appointments', 'Application'),
+             array (
+                 $this->translate('Shift Date', 'Application')   =>
+                     $this->url('appointmentShow', array('action' => 'available')),
+                 $this->translate('Confirm', 'Application')   =>
+                     $this->url('appointmentShow'),
+             )
+         );
 
         echo sprintf('<li style="color:lightblue;line-height:19px;
                 padding:10px; padding-left:20px;">%s %s</li>',
