@@ -36,7 +36,7 @@ class CommandController extends AbstractActionController
        $mailService = $sm->get('Appointment\Services\MailService');
 
        //time
-       $time = 72;
+       $time = 48;
        $config  = $sm->get('config');
        if (isset($config['Appointment']['auto_confirm_time'])) {
            $time =  strval($config['Appointment']['auto_confirm_time']);
