@@ -17,6 +17,7 @@ use Nakade\Abstracts\AbstractController;
  */
 class ShowController extends AbstractController
 {
+    private $deadline;
 
     /**
      * @return array|ViewModel
@@ -40,10 +41,19 @@ class ShowController extends AbstractController
      */
     public function availableAction()
     {
+        /* @var $repo \Appointment\Mapper\AppointmentMapper */
+        $repo = $this->getRepository()->getMapper('appointment');
+        $shiftedMatches = $repo->getMatchIdsByUser($this->identity());
 
-        /* @var $repo \League\Mapper\MatchMapper */
-        $repo = $this->getRepository()->getMapper('match');
-        $availableMatches = $repo->getMatchesOpenForAppointmentByUser($this->identity());
+        $deadline = $this->getDeadline();
+
+        /* @var $matchRepo \League\Mapper\MatchMapper */
+        $matchRepo = $this->getRepository()->getMapper('match');
+        $availableMatches = $matchRepo->getMatchesOpenForAppointmentByUser(
+            $this->identity(),
+            $shiftedMatches,
+            $deadline
+        );
 
         return new ViewModel(
             array(
@@ -82,6 +92,25 @@ class ShowController extends AbstractController
                 'rejectedAppointments' => $appointments
             )
         );
+    }
+
+    /**
+     * @param string $deadline
+     *
+     * @return $this
+     */
+    public function setDeadline($deadline)
+    {
+        $this->deadline = $deadline;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeadline()
+    {
+        return $this->deadline;
     }
 
 }

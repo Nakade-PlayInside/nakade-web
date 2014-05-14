@@ -46,11 +46,7 @@ class Module implements AutoloaderProviderInterface,
     {
         return array(
             // Describe available commands
-            'autoConfirm <overdueTime>'    => 'automatic confirm of overdue appointments',
-
-            // Describe expected parameters
-            array( 'overdue_time',            'time after submit in hours i.e. 72' ),
-
+            'autoConfirm'    => 'automatic confirm of overdue appointments',
         );
     }
 

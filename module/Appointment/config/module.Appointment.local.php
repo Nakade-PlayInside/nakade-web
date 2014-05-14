@@ -17,6 +17,9 @@ return array(
         //automatic confirmation after given time in hours
         'auto_confirm_time' => 72,
 
+        //deadline for making appointment in a given time of hours
+        'deadline_date_shift' => 72,
+
         //url to direct
         'url' => 'http://www.nakade.de',
     ),

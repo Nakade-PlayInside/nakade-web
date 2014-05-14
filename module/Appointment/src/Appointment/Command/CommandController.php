@@ -31,11 +31,16 @@ class CommandController extends AbstractActionController
            throw new \RuntimeException('You can only use this action from a console!');
        }
 
-       $time   = $request->getParam('overdueTime');
-
        $sm = $this->getServiceLocator();
        $repoService = $sm->get('Appointment\Services\RepositoryService');
        $mailService = $sm->get('Appointment\Services\MailService');
+
+       //time
+       $time = 72;
+       $config  = $sm->get('config');
+       if (isset($config['Appointment']['auto_confirm_time'])) {
+           $time =  strval($config['Appointment']['auto_confirm_time']);
+       }
 
        /* @var $mail \Appointment\Mail\ConfirmMail */
        $mail = $mailService->getMail('confirm');

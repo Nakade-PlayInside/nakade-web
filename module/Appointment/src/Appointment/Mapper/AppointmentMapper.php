@@ -111,4 +111,27 @@ class AppointmentMapper extends AbstractMapper
 
     }
 
+    /**
+     * Needed for getMatchesOpenForAppointmentByUser
+     *
+     * @param User $user
+     *
+     * @return array
+     */
+    public function getMatchIdsByUser(User $user)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Appointment');
+        return $qb
+            ->select('Match._id')
+            ->from('Appointment\Entity\Appointment', 'a')
+            ->join('a.match', 'Match')
+            ->join('a.responder', 'Responder')
+            ->join('a.submitter', 'Submitter')
+            ->where('Responder.id = :uid OR Submitter.id = :uid')
+            ->setParameter('uid', $user->getId())
+            ->getQuery()
+            ->getResult();
+
+    }
+
 }
