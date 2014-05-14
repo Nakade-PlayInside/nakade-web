@@ -14,6 +14,9 @@ class BirthdayForm extends DefaultForm
 {
     private $field;
 
+    /**
+     * @return Birthday
+     */
     public function getField()
     {
         if (is_null($this->field)) {

@@ -10,29 +10,30 @@ use League\Entity\League;
  */
 class LeagueForm extends AbstractForm
 {
-   
+
     protected $_sid;
     protected $_title='Top-Liga';
     protected $_number=1;
-    
+
     /**
      * Constructor
-     */        
+     */
     public function __construct()
     {
         //form name is LeagueForm
         parent::__construct();
         $this->setObject(new League());
         $this->setHydrator(new Hydrator());
-    } 
-    
-    
+    }
+
+
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() {
-       
+    public function init()
+    {
+
         //number
         $this->add(
             array(
@@ -47,7 +48,7 @@ class LeagueForm extends AbstractForm
                 )
             )
         );
-        
+
         //title
         $this->add(
             array(
@@ -58,11 +59,11 @@ class LeagueForm extends AbstractForm
                 ),
                 'attributes' => array(
                     'value' => $this->_title,
-                    
+
                 )
             )
         );
-        
+
         //season ID
         $this->add(
             array(
@@ -77,10 +78,10 @@ class LeagueForm extends AbstractForm
                 )
             )
         );
-        
+
         //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side 
-        //validation 
+        //this is handled by ZF2 in the background - no need for server-side
+        //validation
         $this->add(
             array(
                 'name' => 'csrf',
@@ -90,9 +91,9 @@ class LeagueForm extends AbstractForm
                         'timeout' => 600
                     )
                 )
-            )    
+            )
         );
-       
+
         //submit button
         $this->add(
             array(
@@ -104,7 +105,7 @@ class LeagueForm extends AbstractForm
                 ),
             )
         );
-        
+
         //cancel button
         $this->add(
             array(
@@ -116,15 +117,18 @@ class LeagueForm extends AbstractForm
                 ),
             )
         );
-        
-    } 
-    
+
+    }
+
+    /**
+     * @return \Zend\InputFilter\InputFilter
+     */
     public function getFilter()
     {
         $filter = new \Zend\InputFilter\InputFilter();
-     
+
         $filter->add(
-             array(
+            array(
                  'name' => 'title',
                  'required' => false,
                  'filters'  => array(
@@ -135,16 +139,16 @@ class LeagueForm extends AbstractForm
                  'validators' => array(
                      array('name'    => 'StringLength',
                            'options' => array (
-                                  'encoding' => 'UTF-8', 
+                                  'encoding' => 'UTF-8',
                                   'max'  => '20',
-                           )  
-                     ),  
+                           )
+                     ),
                   )
-              )
-         );
-        
+            )
+        );
+
         return $filter;
     }
-    
+
 }
-?>
+

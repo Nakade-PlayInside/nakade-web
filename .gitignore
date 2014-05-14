@@ -18,5 +18,6 @@ data/DoctrineORMModule/*
 data/DoctrineORMModule/Proxy/*
 project.properties
 public/phpinfo.php
+save/*
 
 #ignore more

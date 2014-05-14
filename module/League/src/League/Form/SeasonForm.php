@@ -10,35 +10,36 @@ use League\Entity\Season;
  */
 class SeasonForm extends AbstractForm
 {
-   
-    protected $_tiebreaker = array( 
-            'Hahn'  => 'Hahn', 
-            'CUSS'  => 'CUSS', 
+
+    protected $_tiebreaker = array(
+            'Hahn'  => 'Hahn',
+            'CUSS'  => 'CUSS',
             'SODOS' => 'SODOS',
     );
-   
+
     protected $_title='Bundesliga';
     protected $_number=1;
-    
+
     /**
-     * constructor 
-     */        
+     * constructor
+     */
     public function __construct()
     {
         //form name is SeasonForm
         parent::__construct();
         $this->setObject(new Season());
         $this->setHydrator(new Hydrator());
-        
-    } 
-   
-    
+
+    }
+
+
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() {
-       
+    public function init()
+    {
+
         //title
         $this->add(
             array(
@@ -52,7 +53,7 @@ class SeasonForm extends AbstractForm
                 )
             )
         );
-        
+
         //number
         $this->add(
             array(
@@ -60,14 +61,14 @@ class SeasonForm extends AbstractForm
                 'name' => 'number',
                  'options' => array(
                     'label' =>  $this->translate('Number:'),
-                ),     
+                ),
                 'attributes' => array(
                     'readonly' => 'readonly',
                     'value'  => $this->_number,
                 )
             )
         );
-        
+
         //winpoints
         $this->add(
             array(
@@ -76,8 +77,8 @@ class SeasonForm extends AbstractForm
                 'options' => array(
                     'label' =>  $this->translate('Winning points:'),
                     'value_options' => array (
-                        1 => '1', 
-                        2 => '2', 
+                        1 => '1',
+                        2 => '2',
                         3 => '3'
                     )
                 ),
@@ -86,7 +87,7 @@ class SeasonForm extends AbstractForm
                 )
             )
         );
-        
+
         //drawpoints
         $this->add(
             array(
@@ -102,13 +103,13 @@ class SeasonForm extends AbstractForm
                 )
             )
         );
-        
+
         $this->setTiebreakerFields();
         $this->setDefaultFields();
-        
-        
 
-        
+
+
+
     }
 
     private function setTiebreakerFields()
@@ -206,12 +207,15 @@ class SeasonForm extends AbstractForm
 
     }
 
+    /**
+     * @return \Zend\InputFilter\InputFilter
+     */
     public function getFilter()
     {
         $filter = new \Zend\InputFilter\InputFilter();
-     
+
         $filter->add(
-             array(
+            array(
                  'name' => 'title',
                  'required' => false,
                  'filters'  => array(
@@ -222,15 +226,14 @@ class SeasonForm extends AbstractForm
                  'validators' => array(
                      array('name'    => 'StringLength',
                            'options' => array (
-                                  'encoding' => 'UTF-8', 
+                                  'encoding' => 'UTF-8',
                                   'max'  => '20',
-                           )  
-                     ),  
+                           )
+                     ),
                   )
-              )
-         );
-        
+            )
+        );
+
         return $filter;
     }
 }
-?>

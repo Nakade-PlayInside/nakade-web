@@ -2,6 +2,7 @@
 namespace League\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
+use User\Entity\User;
 
 
 /**
@@ -186,7 +187,7 @@ class MatchMapper  extends AbstractMapper
      * get the match by id
      *
      * @param int $id
-     * @return League\Entity\Match
+     * @return \League\Entity\Match
      */
     public function getMatchById($id)
     {
@@ -201,6 +202,7 @@ class MatchMapper  extends AbstractMapper
      * get all matches with a result in a league
      *
      * @param int $leagueId
+     *
      * @return array League\Entity\Match
      */
     public function getAllMatchesWithResult($leagueId)
@@ -221,7 +223,8 @@ class MatchMapper  extends AbstractMapper
     /**
      * get all matches with a result in a league
      *
-     * @param int $leagueId
+     * @param int $seasonId
+     *
      * @return array League\Entity\Match
      */
     public function getAllOpenMatches($seasonId)
@@ -242,6 +245,27 @@ class MatchMapper  extends AbstractMapper
     }
 
 
+    /**
+     * @param int $leagueId
+     *
+     * @return \DateTime
+     */
+    public function getEndOfLeague($leagueId)
+    {
+
+        //not used
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('max(m._date)')
+            ->from('League\Entity\Match', 'm')
+            ->join('m._league', 'League')
+            ->where('League._id = :lid')
+            ->setParameter('lid', $leagueId);
+
+        $endDate = $qb->getQuery()->getSingleScalarResult();
+        return \DateTime::createFromFormat('Y-m-d H:i:s', $endDate);
+
+    }
 
     public function getLastMatchDate($seasonId)
     {
@@ -293,6 +317,67 @@ class MatchMapper  extends AbstractMapper
                     ->getOneOrNullResult();
 
     }
+
+    /**
+     * @param \User\Entity\User $user
+     * @param int               $lid
+     *
+     * @return array
+     */
+    public function getNextMatchDatesInLeagueByUser($user, $lid)
+    {
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m._date')
+            ->from('League\Entity\Match', 'm')
+            ->join('m._black', 'Black')
+            ->join('m._white', 'White')
+            ->Where('m._lid = :lid')
+            ->andWhere('Black.id = :uid OR White.id = :uid')
+           // ->andWhere('m._date > :now')
+            ->setParameter('uid', $user->getId())
+            ->setParameter('lid', $lid)
+           // ->setParameter('now', new \DateTime())
+            ->orderBy('m._date ', 'ASC');
+
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
+
+    /**
+     * @param User  $user
+     * @param array $shiftedMatches
+     * @param int   $timeLimit
+     *
+     * @return array
+     */
+    public function getMatchesOpenForAppointmentByUser(User $user, array $shiftedMatches, $timeLimit=72)
+    {
+        //mandatory array is never empty
+        if (empty($shiftedMatches)) {
+            $shiftedMatches[]=0;
+        }
+
+        $now = new \DateTime();
+        $now->modify('+'.$timeLimit.' hour');
+
+        $qb = $this->getEntityManager()->createQueryBuilder('Match');
+        $qb->select('m')
+            ->from('League\Entity\Match', 'm')
+            ->join('m._black', 'Black')
+            ->join('m._white', 'White')
+            ->where($qb->expr()->notIn('m._id', $shiftedMatches))
+            ->andWhere('m._resultId is Null')
+            ->andWhere('Black.id = :uid OR White.id = :uid')
+            ->andWhere('m._date > :deadline')
+            ->setParameter('uid', $user->getId())
+            ->setParameter('deadline', $now)
+            ->orderBy('m._date ', 'ASC');
+
+        $result = $qb->getQuery()->getResult();
+        return $result;
+    }
 }
 
-?>

@@ -119,3 +119,30 @@
 #message .message td {
     padding: 5px;
 }
+
+div.message {
+    font-weight: bold ;
+    padding: 5px 0;
+}
+
+div.message span {
+    color: red ;
+}
+
+div.message a {
+    padding-left: 15px;
+}
+
+div.loginMessage {
+
+    padding: 5px 0;
+}
+
+div.loginMessage span {
+    font-weight: bold ;
+}
+
+div.loginMessage a {
+    font-weight: bold ;
+    padding-left: 15px;
+}

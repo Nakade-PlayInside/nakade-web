@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-08 00:54+0100\n"
-"PO-Revision-Date: 2012-12-08 00:54+0100\n"
-"Last-Translator: Dr. Holger Maerz <Holger@SpandauGo.de>\n"
+"POT-Creation-Date: 2014-05-13 16:23+0100\n"
+"PO-Revision-Date: 2014-05-13 16:23+0100\n"
+"Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
@@ -15,47 +15,112 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../view/error/404.phtml:1
-msgid "A 404 error occurred"
+#: ../view/layout/layout.phtml:36
+msgid "Berliner Baduk Club e.V."
 msgstr ""
 
-#: ../view/error/404.phtml:10
-msgid "The requested controller was unable to dispatch the request."
+#: ../view/layout/layout.phtml:39
+msgid "Home"
 msgstr ""
 
-#: ../view/error/404.phtml:13
-msgid ""
-"The requested controller could not be mapped to an existing controller class."
+#: ../view/layout/layout.phtml:40
+msgid "Location"
 msgstr ""
 
-#: ../view/error/404.phtml:16
-msgid "The requested controller was not dispatchable."
+#: ../view/layout/layout.phtml:51
+msgid "User overview"
 msgstr ""
 
-#: ../view/error/404.phtml:19
-msgid "The requested URL could not be matched by routing."
+#: ../view/layout/layout.phtml:54
+msgid "add user"
 msgstr ""
 
-#: ../view/error/404.phtml:22
-msgid "We cannot determine at this time why a 404 was generated."
+#: ../view/layout/layout.phtml:57
+msgid "open results"
 msgstr ""
 
-#: ../view/error/404.phtml:34
-msgid "Controller"
+#: ../view/layout/layout.phtml:60
+msgid "edit matchday"
 msgstr ""
 
-#: ../view/error/404.phtml:41
-#, php-format
-msgid "resolves to %s"
+#: ../view/layout/layout.phtml:63
+msgid "season overview"
 msgstr ""
 
-#: ../view/error/404.phtml:51
-msgid "Exception"
+#: ../view/layout/layout.phtml:66
+msgid "rejected appointments"
 msgstr ""
 
-#: ../view/error/404.phtml:55 ../view/error/index.phtml:19
-#: ../view/error/index.phtml:43
-msgid "Stack trace"
+#: ../view/layout/layout.phtml:78
+msgid "Profile"
+msgstr ""
+
+#: ../view/layout/layout.phtml:83
+msgid "Inbox"
+msgstr ""
+
+#: ../view/layout/layout.phtml:86
+msgid "New Message"
+msgstr ""
+
+#: ../view/layout/layout.phtml:89
+msgid "Sent"
+msgstr ""
+
+#: ../view/layout/layout.phtml:96
+msgid "Messages"
+msgstr ""
+
+#: ../view/layout/layout.phtml:102
+msgid "Schedule"
+msgstr ""
+
+#: ../view/layout/layout.phtml:105
+msgid "Standings"
+msgstr ""
+
+#: ../view/layout/layout.phtml:108
+msgid "results"
+msgstr ""
+
+#: ../view/layout/layout.phtml:114
+msgid "League"
+msgstr ""
+
+#: ../view/layout/layout.phtml:119
+msgid "Appointments"
+msgstr ""
+
+#: ../view/layout/layout.phtml:121
+msgid "Shift Date"
+msgstr ""
+
+#: ../view/layout/layout.phtml:123
+msgid "Confirm"
+msgstr ""
+
+#: ../view/layout/layout.phtml:130
+msgid "Logged in as "
+msgstr ""
+
+#: ../view/layout/layout.phtml:136
+msgid "Logout"
+msgstr ""
+
+#: ../view/layout/layout.phtml:143
+msgid "LogIn"
+msgstr ""
+
+#: ../view/layout/layout.phtml:159
+msgid "Imprint"
+msgstr ""
+
+#: ../view/layout/layout.phtml:160
+msgid "Contact"
+msgstr ""
+
+#: ../view/layout/layout.phtml:162
+msgid "All rights reserved."
 msgstr ""
 
 #: ../view/error/index.phtml:1
@@ -66,12 +131,21 @@ msgstr ""
 msgid "Additional information"
 msgstr ""
 
-#: ../view/error/index.phtml:11 ../view/error/index.phtml:35
+#: ../view/error/index.phtml:11
+#: ../view/error/index.phtml:35
 msgid "File"
 msgstr ""
 
-#: ../view/error/index.phtml:15 ../view/error/index.phtml:39
+#: ../view/error/index.phtml:15
+#: ../view/error/index.phtml:39
 msgid "Message"
+msgstr ""
+
+#: ../view/error/index.phtml:19
+#: ../view/error/index.phtml:43
+#: ../view/error/403.phtml:55
+#: ../view/error/404.phtml:55
+msgid "Stack trace"
 msgstr ""
 
 #: ../view/error/index.phtml:29
@@ -82,28 +156,53 @@ msgstr ""
 msgid "No Exception available"
 msgstr ""
 
-#: ../view/layout/layout.phtml:29
-msgid "Berliner Baduk Club e.V."
+#: ../view/error/403.phtml:1
+msgid "A 403 error occurred"
 msgstr ""
 
-#: ../view/layout/layout.phtml:32
-msgid "Home"
+#: ../view/error/403.phtml:10
+#: ../view/error/404.phtml:10
+msgid "The requested controller was unable to dispatch the request."
 msgstr ""
 
-#: ../view/layout/layout.phtml:33
-msgid "Training"
+#: ../view/error/403.phtml:13
+#: ../view/error/404.phtml:13
+msgid "The requested controller could not be mapped to an existing controller class."
 msgstr ""
 
-#: ../view/layout/layout.phtml:34
-msgid "Imprint"
+#: ../view/error/403.phtml:16
+#: ../view/error/404.phtml:16
+msgid "The requested controller was not dispatchable."
 msgstr ""
 
-#: ../view/layout/layout.phtml:35
-msgid "Contact"
+#: ../view/error/403.phtml:19
+#: ../view/error/404.phtml:19
+msgid "The requested URL could not be matched by routing."
 msgstr ""
 
-#: ../view/layout/layout.phtml:45
-msgid "All rights reserved."
+#: ../view/error/403.phtml:22
+#: ../view/error/404.phtml:22
+msgid "We cannot determine at this time why a 404 was generated."
+msgstr ""
+
+#: ../view/error/403.phtml:34
+#: ../view/error/404.phtml:34
+msgid "Controller"
+msgstr ""
+
+#: ../view/error/403.phtml:41
+#: ../view/error/404.phtml:41
+#, php-format
+msgid "resolves to %s"
+msgstr ""
+
+#: ../view/error/403.phtml:51
+#: ../view/error/404.phtml:51
+msgid "Exception"
+msgstr ""
+
+#: ../view/error/404.phtml:1
+msgid "A 404 error occurred"
 msgstr ""
 
 #~ msgid "Skeleton Application"

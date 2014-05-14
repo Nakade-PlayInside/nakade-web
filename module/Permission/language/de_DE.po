@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-27 12:18+0100\n"
-"PO-Revision-Date: 2013-06-27 12:18+0100\n"
-"Last-Translator: Dr. Holger Maerz <grrompf@gmail.com>\n"
+"PO-Revision-Date: 2014-05-13 16:37+0100\n"
+"Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
@@ -22,11 +22,11 @@ msgstr "Es trat ein 403 Fehler auf"
 
 #: ../view/permission/forbidden/index.phtml:8
 msgid "Forbidden."
-msgstr "Verboten."
+msgstr "Zugang Verboten."
 
 #: ../view/permission/forbidden/index.phtml:9
 msgid "You do not have the permission to access the ressource."
-msgstr "Keine Zugangsberechtigung."
+msgstr "Du hast nicht das benötigte Recht."
 
 #~ msgid "A 403 error occured"
 #~ msgstr "Es trat ein 403 Fehler auf"

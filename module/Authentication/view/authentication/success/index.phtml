@@ -4,38 +4,43 @@
 $this->plugin('translate')->setTranslatorTextDomain('Auth');
 
 $info = $this->translate("You got %number% new messages");
-$number = sprintf('<span style="color:red;">%s</span>', $this->noNewMails);
-$link = sprintf('<a style="padding-left:15px" href="%s">%s</a>',
+$number = sprintf('<span>%s</span>', $this->noNewMails);
+$link = sprintf('<a href="%s">%s</a>',
     $this->url('message'),
     $this->translate("go to mailbox")
 );
 $mailInfo = str_replace("%number%", (string) $number, $info);
-$textInfo = sprintf('<p style="margin-top:10px;font-weight:bold;">%s%s</p>',
+$textInfo = sprintf('<div class="message"">%s%s</div>',
     $mailInfo,
     $link
 );
 
 $loginText = $this->translate("Logged in as %name%");
-$login = str_replace("%name%", (string) $this->identity()->getUsername(), $loginText);
-$logOutLink = sprintf('<a style="padding-left:15px" href="%s">%s</a>',
-    $this->url('login/process', array('action'=>'logout')),
-    $this->translate('LogOut')
-);
-$loginInfo = $login . $logOutLink;
+$userName = (string) $this->identity()->getUsername();
+$login = str_replace("%name%", "<span>$userName</span>", $loginText);
 
+if ($user = $this->identity()) { ?>
 
-if ($user = $this->identity()) {
-    echo $loginInfo;
+<div class="loginMessage"><?php echo $login; ?>
+    <a href="<?php echo $this->url('login/process', array('action' => 'logout'))?>">
+        <?php echo $this->translate("LogOut") ?>
+    </a>
+</div>
+
+<?php
     if ($this->noNewMails > 0) {
         echo $textInfo;
     }
 } else {
         echo $this->translate('Not logged in');
 }
+
+echo $this->appointmentWidget;
 ?>
 
 <hr>
 
 <?php
+
 echo $this->scheduleWidget;
 

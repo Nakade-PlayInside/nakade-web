@@ -16,7 +16,8 @@ return array(
         'Authentication',
         'Permission',
         'Message',
-        
+        'Appointment',
+
         ),
     'module_listener_options' => array(
         'config_glob_paths'    => array(
@@ -27,5 +28,5 @@ return array(
             './vendor',
         ),
     ),
-    
+
 );

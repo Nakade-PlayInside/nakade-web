@@ -1,0 +1,12 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Appointment');
+$title = $this->translate("New match appointment confirmed");
+$this->headTitle($title);
+
+?>
+
+<h3><?php echo $title;?></h3>
+<p>
+    <?php echo $this->translate("Your match appointment is confirmed."); ?><br/>
+    <?php echo $this->translate("Further detailed information will be sent to your email address."); ?><br/>
+</p>

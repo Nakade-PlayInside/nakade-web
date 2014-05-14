@@ -1,0 +1,12 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Appointment');
+$title = $this->translate("Match appointment rejected");
+$this->headTitle($title);
+
+?>
+
+<h3><?php echo $title;?></h3>
+<p>
+    <?php echo $this->translate("Your matter is in process.");?><br/>
+    <?php echo $this->translate("Please contact immediately your opponent to find a solution.");?><br/>
+</p>

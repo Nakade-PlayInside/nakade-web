@@ -1,0 +1,37 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Appointment');
+$title = $this->translate("Confirm new match appointment");
+$this->headTitle($title);
+
+?>
+
+<h3><?php echo $title;?></h3>
+<p>
+    <?php echo $this->translate("A new new match date was provided by your opponent."); ?><br/>
+    <?php echo $this->translate("Your binding confirmation is needed."); ?><br/>
+</p>
+
+<table  class="reject">
+<tr>
+    <td><?php echo $this->translate("Match"); ?>:</td>
+    <td><?php echo $this->matchInfo; ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Old Date"); ?>:</td>
+    <td><?php echo $this->oldDate; ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("New Date"); ?>:</td>
+    <td><?php echo $this->newDate; ?></td>
+</tr>
+</table>
+
+<p><?php echo $this->translate("If you do not agree, you may reject the appointment."); ?></p>
+
+<?php
+
+
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();

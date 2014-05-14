@@ -1,4 +1,5 @@
 @import "message.css";
+@import "appointment.css";
 
 body {
     padding-top: 60px;
@@ -75,3 +76,10 @@ form input[type="submit"] {margin-top: 10px;margin-right: 10px;}
 .copyright ul { margin: 0; padding: 0.8em; text-align: center;}
 .copyright ul li { list-style: none; display:inline;margin: 0.4em; padding: 0;}
 .version {color: #68b604;}
+
+/* checkboxes label */
+form input.checkbox {
+    display:inline-block;
+    float: left;
+    margin-right: 10px;
+}

@@ -9,13 +9,13 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Creates the form with a translator, filter and validator.
  * Adds the translation file for validation messages from zend ressources.
  */
-abstract class AbstractFormFactory 
+abstract class AbstractFormFactory
     extends AbstractTranslation
     implements FactoryInterface
 {
-    
+
     protected $_entityManager;
-    
+
     /**
     * Sets the EntityManager
     *
@@ -42,7 +42,7 @@ abstract class AbstractFormFactory
     {
        return $this->_entity_manager;
     }
-   
+
     /**
     * Returns true if EntityManager is set
     *
@@ -53,36 +53,39 @@ abstract class AbstractFormFactory
     {
        return isset($this->_entity_manager);
     }
-    
+
     /**
-    * saves the entity. 
+    * saves the entity.
     * return true on success
-    * 
+    *
     * @param Entity $entity
     */
     public function save($entity)
     {
-       
+
        if($entity===null) {
            return $this->getEntityManager()->flush();
        }
-    
+
        $this->getEntityManager()->persist($entity);
        $this->getEntityManager()->flush($entity);
-       
+
     }
-   
+
     /**
      * implement ServiceLocator
-     * 
+     *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
+     *
      * @return \User\Services\FormFactory
      */
     abstract public function createService(ServiceLocatorInterface $services);
-    
+
     /**
-     * implement fabric method for getting the form needed. 
+     * @param string $typ
+     *
+     * @return \Zend\Form\Form
      */
     abstract public function getForm($typ);
-       
+
 }

@@ -1,0 +1,50 @@
+/*
+* Style for appointment
+* @package: appointment
+* @author: Holger Maerz
+* @date: 08.05.2014
+*/
+
+a.appointment {
+    display: block;
+}
+
+a.appointment span {
+    color: black;
+}
+
+table.reject {
+    margin-bottom: 10px;
+}
+
+table.reject td {
+    font-weight: bold;
+}
+
+table.reject td span {
+    font-weight: normal;
+    color:#0088cc;
+
+}
+
+table.reject td:nth-child(2)
+{
+    text-align: right;
+}
+
+table.rejectAdmin {
+    width:auto;
+    margin-top: 10px;
+}
+
+table.rejectAdmin td {
+    white-space:nowrap;
+}
+
+table.rejectAdmin td:last-child {
+    white-space:normal;
+}
+
+.matchInfo {
+    color:#0088cc;;
+}

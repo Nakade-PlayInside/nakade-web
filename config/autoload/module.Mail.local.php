@@ -7,6 +7,8 @@
 return array(
     'nakade_mail' => array(
 
+        'text_domain' => 'Mail',
+
         // This sets the default "to" and "sender" headers for your message
         'message' => array(
             'from' => 'holger@nakade.de' ,
@@ -29,6 +31,13 @@ return array(
                     'password' => 'kMdCS2013',
                 ),
             ),
+        ),
+
+        'signature' => array(
+            'team'  => 'Nakade Team',
+            'club'  => 'Berliner Baduk Club e.V.',
+            'register_court' => 'Berlin-Charlottenburg',
+            'register_no'    => 'VR31852',
         ),
     ),
 );

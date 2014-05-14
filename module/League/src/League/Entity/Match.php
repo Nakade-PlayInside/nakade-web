@@ -35,8 +35,6 @@ class Match
    * @ORM\Id
    * @ORM\Column(name="id", type="integer")
    * @ORM\GeneratedValue(strategy="AUTO")
-   * @var integer
-   * @access protected
    */
   protected $_id;
 
@@ -518,6 +516,15 @@ class Match
     }
 
     /**
+     * @return bool
+     */
+    public function hasResult()
+    {
+        return isset($this->_resultId);
+    }
+
+
+    /**
      * Convert the object to an array.
      *
      * @return array
@@ -541,5 +548,15 @@ class Match
 
     }
 
+    /**
+     * @return string
+     */
+    public function getMatchInfo()
+    {
+        return sprintf("%s - %s",
+            $this->getBlack()->getShortName(),
+            $this->getWhite()->getShortName()
+        );
+    }
 
 }

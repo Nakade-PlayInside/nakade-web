@@ -8,6 +8,8 @@ return array(
 
     'nakade_mail' => array(
 
+        'text_domain' => 'Mail',
+
         // This sets the default "to"
         'message' => array(
             'from' => 'name@domain.org' ,
@@ -31,6 +33,13 @@ return array(
                     'password' => 'password',
                 ),
             ),
+        ),
+
+        'signature' => array(
+            'team'  => 'Nakade Team',
+            'club'  => 'Berliner Baduk Club e.V.',
+            'register_court' => 'Berlin-Charlottenburg',
+            'register_no'    => 'VR31852',
         ),
     ),
 );

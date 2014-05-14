@@ -28,7 +28,7 @@ $this->headTitle("Messages");
                 echo $this->cycle(array("#F0F0F0","transparent"))->next()?>; ">
                 <td style="text-align:right;"><?php echo $message->getId(); ?></td>
                 <td class="subject"><a href="<?php
-                    echo $this->url('message/show') . '/' . $message->getId(); ?>">
+                    echo $this->url('message',array('action' => 'show', 'id' => $message->getId())); ?>">
                     <?php echo $message->getSubject() ?>
                     </a>
                 </td>

@@ -20,7 +20,8 @@ class ScheduleForm extends AbstractForm
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() {
+    public function init()
+    {
 
 
         //matchday course
@@ -137,6 +138,9 @@ class ScheduleForm extends AbstractForm
 
     }
 
+    /**
+     * @return \Zend\InputFilter\InputFilter
+     */
     public function getFilter()
     {
         $filter = new \Zend\InputFilter\InputFilter();
@@ -146,4 +150,4 @@ class ScheduleForm extends AbstractForm
         return $filter;
     }
 }
-?>
+

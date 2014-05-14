@@ -4,92 +4,102 @@ namespace League\Form;
 use Nakade\Abstracts\AbstractForm;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use League\Entity\League;
+use \Zend\InputFilter\InputFilter;
 
 class ParticipantsForm extends AbstractForm
 {
-   
+
     protected $_players;
     protected $_selectedPlayers;
     protected $_sid;
     protected $_leagues;
-    
+
     /**
      * Constructor
-     */        
+     */
     public function __construct()
     {
          //form name is AuthForm
         parent::__construct();
-    } 
-    
+    }
+
     /**
      * set players as an array
+     *
      * @param array $players
+     *
      * @return \League\Form\ParticipantsForm
      */
-    public function setPlayers(array $players) 
+    public function setPlayers(array $players)
     {
         $this->_players = $players;
         return $this;
-    } 
-    
+    }
+
     /**
      * get players
+     *
      * @return array
      */
-    public function getPlayers() 
+    public function getPlayers()
     {
         return $this->_players;
     }
-    
-   
-    
+
+
+
     /**
-     * set leagues 
+     * set leagues
      * @param array $leagues
+     *
      * @return \League\Form\ParticipantsForm
      */
-    public function setLeagues(array $leagues) 
+    public function setLeagues(array $leagues)
     {
         $this->_leagues = $leagues;
         return $this;
-    } 
-    
+    }
+
     /**
      * get leagues
+     *
      * @return array
      */
-    public function getLeagues() 
+    public function getLeagues()
     {
         return $this->_leagues;
     }
-    
+
     /**
      * set seasonId
+     *
      * @param int $sid
+     *
      * @return \League\Form\ParticipantsForm
-     */        
-    public function setSeasonId($sid) 
+     */
+    public function setSeasonId($sid)
     {
         $this->_sid = $sid;
         return $this;
-    } 
-    
+    }
+
     /**
      * get seasonId
+     *
      * @return int
      */
-    public function getSeasonId() 
+    public function getSeasonId()
     {
         return $this->_sid;
     }
-    
+
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
-    public function init() {
-       
+    public function init()
+    {
+
         //season ID
         $this->add(
             array(
@@ -104,8 +114,8 @@ class ParticipantsForm extends AbstractForm
                 )
             )
         );
-        
-        
+
+
         //leagues
         $this->add(
             array(
@@ -115,10 +125,10 @@ class ParticipantsForm extends AbstractForm
                     'label' =>  $this->translate('League No:'),
                     'value_options' => $this->getLeagues(),
                 )
-                
+
             )
         );
-        
+
         //players
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
@@ -132,12 +142,12 @@ class ParticipantsForm extends AbstractForm
                 'value_options' => $this->getPlayers(),
             ),
         ));
-        
-        
-        
+
+
+
         //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side 
-        //validation 
+        //this is handled by ZF2 in the background - no need for server-side
+        //validation
         $this->add(
             array(
                 'name' => 'csrf',
@@ -147,9 +157,9 @@ class ParticipantsForm extends AbstractForm
                         'timeout' => 600
                     )
                 )
-            )    
+            )
         );
-       
+
         //submit button
         $this->add(
             array(
@@ -160,7 +170,7 @@ class ParticipantsForm extends AbstractForm
                 ),
             )
         );
-        
+
          //cancel button
         $this->add(
             array(
@@ -172,16 +182,17 @@ class ParticipantsForm extends AbstractForm
                 ),
             )
         );
-        
-    } 
-    
+
+    }
+
+    /**
+     * @return InputFilter
+     */
     public function getFilter()
     {
-        $filter = new \Zend\InputFilter\InputFilter();
-     
-       
-        
+        $filter = new InputFilter();
+
         return $filter;
     }
 }
-?>
+

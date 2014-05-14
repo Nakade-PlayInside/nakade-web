@@ -1,34 +1,25 @@
 <?php
 namespace Message\Controller;
 
-use Message\Entity\Delete;
 use Message\Entity\Message;
-use Message\Notify\NotifyMail;
 use Nakade\Abstracts\AbstractController;
 use Message\Form\MessageForm;
 use Message\Form\ReplyForm;
 use Zend\View\Model\ViewModel;
 
 /**
- * League tables and schedules of the actual season.
- * Top league table is presented by the default action index.
- * ActionSeasonServiceFactory is needed to be set.
+ * Class MessageController
  *
- * @author Holger Maerz <holger@nakade.de>
+ * @package Message\Controller
  */
 class MessageController extends AbstractController
 {
-    private $mailService;
 
     /**
      * @return array|\Zend\Http\Response|ViewModel
      */
     public function indexAction()
     {
-
-        if ($this->identity() === null) {
-           return $this->redirect()->toRoute('login');
-        }
 
         $uid = $this->identity()->getId();
         $messages =  $this->getRepository()
@@ -45,10 +36,6 @@ class MessageController extends AbstractController
      */
     public function sentAction()
     {
-        if ($this->identity() === null) {
-            return $this->redirect()->toRoute('login');
-        }
-
         $uid = $this->identity()->getId();
 
         /* @var $repo \Message\Mapper\MessageMapper */
@@ -65,11 +52,8 @@ class MessageController extends AbstractController
      */
     public function showAction()
     {
-        if ($this->identity() === null) {
-           return $this->redirect()->toRoute('login');
-        }
-
         $returnPath = $this->getRequest()->getHeader('referer')->uri()->getPath();
+
         $messageId  = (int) $this->params()->fromRoute('id', -1);
         $uid = $this->identity()->getId();
 
@@ -101,10 +85,6 @@ class MessageController extends AbstractController
      */
     public function newAction()
     {
-
-       if ($this->identity() === null) {
-           return $this->redirect()->toRoute('login');
-       }
 
        $id = $this->identity()->getId();
 
@@ -147,8 +127,9 @@ class MessageController extends AbstractController
 
                 $repo->save($message);
 
-                //sending email
-                $this->getMailService()->sendMail($recipient);
+                /* @var $mail \Message\Mail\NotifyMail */
+                $mail = $this->getMailService()->getMail('notify');
+                $mail->sendMail($recipient);
 
                 return $this->redirect()->toRoute('message');
             }
@@ -165,10 +146,6 @@ class MessageController extends AbstractController
      */
     public function replyAction()
     {
-
-       if ($this->identity() === null) {
-           return $this->redirect()->toRoute('login');
-       }
 
        $uid = $this->identity()->getId();
        $messageId  = (int) $this->params()->fromRoute('id', -1);
@@ -220,8 +197,9 @@ class MessageController extends AbstractController
                 $reply->setSendDate(new \DateTime());
                 $repo->save($reply);
 
-                //sending email
-                $this->getMailService()->sendMail($receiver);
+                /* @var $mail \Message\Mail\NotifyMail */
+                $mail = $this->getMailService()->getMail('notify');
+                $mail->sendMail($receiver);
 
                 return $this->redirect()->toRoute('message');
             }
@@ -237,34 +215,11 @@ class MessageController extends AbstractController
      */
     public function deleteAction()
     {
-        if ($this->identity() === null) {
-            return $this->redirect()->toRoute('login');
-        }
         $uid = $this->identity()->getId();
         $messageId  = (int) $this->params()->fromRoute('id', -1);
         $this->getRepository()->getMapper('message')->hideMessageByUser($uid, $messageId);
 
         return $this->redirect()->toRoute('message');
     }
-
-    /**
-     * @param NotifyMail $mail
-     *
-     * @return $this
-     */
-    public function setMailService(NotifyMail $mail)
-    {
-        $this->mailService = $mail;
-        return $this;
-    }
-
-    /**
-     * @return NotifyMail
-     */
-    public function getMailService()
-    {
-        return $this->mailService;
-    }
-
 
 }

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 21:41+0100\n"
-"PO-Revision-Date: 2014-03-26 21:42+0100\n"
+"POT-Creation-Date: 2014-05-13 16:22+0100\n"
+"PO-Revision-Date: 2014-05-13 16:31+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -47,63 +47,79 @@ msgstr "Spieltag ändern"
 msgid "season overview"
 msgstr "neue Saison"
 
-#: ../view/layout/layout.phtml:75
+#: ../view/layout/layout.phtml:66
+msgid "rejected appointments"
+msgstr "abgewiesene Termine"
+
+#: ../view/layout/layout.phtml:78
 msgid "Profile"
 msgstr "Profil"
 
-#: ../view/layout/layout.phtml:80
+#: ../view/layout/layout.phtml:83
 msgid "Inbox"
 msgstr "Posteingang"
 
-#: ../view/layout/layout.phtml:83
+#: ../view/layout/layout.phtml:86
 msgid "New Message"
 msgstr "Neue Nachricht"
 
-#: ../view/layout/layout.phtml:86
+#: ../view/layout/layout.phtml:89
 msgid "Sent"
 msgstr "Gesendet"
 
-#: ../view/layout/layout.phtml:93
+#: ../view/layout/layout.phtml:96
 msgid "Messages"
 msgstr "Nachrichten"
 
-#: ../view/layout/layout.phtml:99
+#: ../view/layout/layout.phtml:102
 msgid "Schedule"
 msgstr "Spielplan"
 
-#: ../view/layout/layout.phtml:102
+#: ../view/layout/layout.phtml:105
 msgid "Standings"
 msgstr "Tabelle"
 
-#: ../view/layout/layout.phtml:105
+#: ../view/layout/layout.phtml:108
 msgid "results"
 msgstr "Ergebnisse"
 
-#: ../view/layout/layout.phtml:111
+#: ../view/layout/layout.phtml:114
 msgid "League"
 msgstr "Liga"
 
-#: ../view/layout/layout.phtml:117
+#: ../view/layout/layout.phtml:119
+msgid "Appointments"
+msgstr "Termine"
+
+#: ../view/layout/layout.phtml:121
+msgid "Shift Date"
+msgstr "Verlegen"
+
+#: ../view/layout/layout.phtml:123
+msgid "Confirm"
+msgstr "Bestätigen"
+
+#: ../view/layout/layout.phtml:130
 msgid "Logged in as "
 msgstr "angemeldet als"
 
-#: ../view/layout/layout.phtml:123
+#: ../view/layout/layout.phtml:136
 msgid "Logout"
 msgstr "Abmelden"
 
-#: ../view/layout/layout.phtml:130
+#: ../view/layout/layout.phtml:143
 msgid "LogIn"
 msgstr "Login"
 
-#: ../view/layout/layout.phtml:146
+#: ../view/layout/layout.phtml:159
 msgid "Imprint"
 msgstr "Impressum"
 
-#: ../view/layout/layout.phtml:147
+#: ../view/layout/layout.phtml:160
 msgid "Contact"
 msgstr "Kontakt"
 
-#: ../view/layout/layout.phtml:149
+#: ../view/layout/layout.phtml:162
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
 

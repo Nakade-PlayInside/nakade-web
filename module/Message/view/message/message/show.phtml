@@ -9,7 +9,7 @@ $this->headTitle("Messages");
                 echo $this->translate('back');?>
             </button>
         </form>
-        <form action="<?php echo $this->url('message/reply', array('id' => $this->replyId)); ?>">
+        <form action="<?php echo $this->url('message', array('action' => 'reply', 'id' => $this->replyId)); ?>">
             <button title="<?php echo $this->translate('reply to message');?>" type="submit"><?php
                 echo $this->translate('reply');?>
             </button>

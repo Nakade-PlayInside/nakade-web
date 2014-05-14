@@ -5,11 +5,13 @@ use Zend\InputFilter\InputFilter;
 
 class PointsFilter extends InputFilter
 {
-    
+    /**
+     * constructor
+     */
     public function __construct()
     {
         $this->add(
-           array(
+            array(
                 'name'       => 'points',
                 'required'   => true,
                 'filters'    => array(
@@ -19,8 +21,8 @@ class PointsFilter extends InputFilter
                           'options' => array(
                               'pattern' => '/,/',
                               'replacement' => '.',
-                          ) 
-                    ), 
+                          )
+                    ),
                 ),
                 'validators' => array(
                     array(
@@ -33,11 +35,11 @@ class PointsFilter extends InputFilter
                         )
                     ),
                 ),
-                
-                
-           )
+
+
+            )
         );
 
-        
+
     }
 }
