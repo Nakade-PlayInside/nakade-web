@@ -356,28 +356,31 @@ class MatchMapper  extends AbstractMapper
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('Match._id')
+        $notIn = $qb->select('Match._id')
            ->from('Appointment\Entity\Appointment', 'a')
            ->join('a.match', 'Match')
            ->join('a.responder', 'Responder')
            ->join('a.submitter', 'Submitter')
-           ->andwhere('Responder.id = :uid OR Submitter.id = :uid')
-           ->setParameter('uid', $user->getId());
-        $notIn = $qb->getQuery()->getResult();
+           ->where('Responder.id = :uid OR Submitter.id = :uid')
+           ->setParameter('uid', $user->getId())
+           ->getQuery()
+           ->getResult();
+
+        //mandatory array is never empty
+        $notIn[]=0;
 
         $now = new \DateTime();
-        $now->modify('+'.$timeLimit.' day');
+        $now->modify('+'.$timeLimit.' hour');
 
 
         $qb->select('m')
             ->from('League\Entity\Match', 'm')
             ->join('m._black', 'Black')
             ->join('m._white', 'White')
-            ->where('m._id NOT IN (:notIn)')
+            ->where($qb->expr()->notIn('m._id', $notIn))
             ->andWhere('m._resultId is Null')
             ->andwhere('Black.id = :uid OR White.id = :uid')
             ->andWhere('m._date > :deadline')
-            ->setParameter('notIn', $notIn)
             ->setParameter('uid', $user->getId())
             ->setParameter('deadline', $now)
             ->orderBy('m._date ', 'ASC');
