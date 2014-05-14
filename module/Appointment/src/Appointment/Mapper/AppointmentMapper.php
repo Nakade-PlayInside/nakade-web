@@ -89,7 +89,6 @@ class AppointmentMapper extends AbstractMapper
             ->andWhere('Match._resultId IS NULL')
             ->setParameter('uid', $user->getId());
 
-
         return $qb->getQuery()->getResult();
 
     }

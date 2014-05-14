@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-13 15:20+0100\n"
-"PO-Revision-Date: 2014-05-13 15:20+0100\n"
+"POT-Creation-Date: 2014-05-14 10:50+0100\n"
+"PO-Revision-Date: 2014-05-14 10:50+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -303,8 +303,24 @@ msgstr ""
 msgid "For example: I was not asked at all."
 msgstr ""
 
+#: ../view/appointment/appointment/submitted.phtml:3
+msgid "Match appointment submitted"
+msgstr ""
+
+#: ../view/appointment/appointment/submitted.phtml:10
+msgid "Your match appointment is submitted."
+msgstr ""
+
+#: ../view/appointment/appointment/submitted.phtml:11
+msgid "Please show some patience until your opponent confirmed the new date."
+msgstr ""
+
+#: ../view/appointment/appointment/submitted.phtml:12
+msgid "A reminder mail is sent to your email address."
+msgstr ""
+
 #: ../view/appointment/show/available.phtml:3
-msgid "Matches available for shifting appointment"
+msgid "Matches available for shifting appointments"
 msgstr ""
 
 #: ../view/appointment/show/available.phtml:14

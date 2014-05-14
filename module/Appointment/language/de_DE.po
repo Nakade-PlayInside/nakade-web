@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-13 16:33+0100\n"
-"PO-Revision-Date: 2014-05-13 16:36+0100\n"
+"POT-Creation-Date: 2014-05-14 10:45+0100\n"
+"PO-Revision-Date: 2014-05-14 10:50+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -302,6 +302,22 @@ msgstr "Bitte begründe deine Terminabweisung."
 #: ../view/appointment/appointment/reject.phtml:11
 msgid "For example: I was not asked at all."
 msgstr "z.B. : Ich wurde überhaupt nicht gefragt."
+
+#: ../view/appointment/appointment/submitted.phtml:3
+msgid "Match appointment submitted"
+msgstr "Terminverlegung beantragt"
+
+#: ../view/appointment/appointment/submitted.phtml:10
+msgid "Your match appointment is submitted."
+msgstr "Dein Terminvorschlag wurde weitergeleitet."
+
+#: ../view/appointment/appointment/submitted.phtml:11
+msgid "Please show some patience until your opponent confirmed the new date."
+msgstr "Damit der neue Termin übernommen werden kann, muss dein Gegner diesen zuerst bestätigen. Bitte habe ein Geduld."
+
+#: ../view/appointment/appointment/submitted.phtml:12
+msgid "A reminder mail is sent to your email address."
+msgstr "Du bekommst in kürze ein Mail zu diesem Vorgang."
 
 #: ../view/appointment/show/available.phtml:3
 msgid "Matches available for shifting appointments"

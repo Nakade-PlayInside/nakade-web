@@ -75,7 +75,7 @@ class AppointmentController extends AbstractController
                $responder->sendMail($appointment->getResponder());
 
                return $this->redirect()->toRoute('appointment', array(
-                   'action' => 'success'
+                   'action' => 'submitted'
                ));
            }
        }
@@ -232,6 +232,14 @@ class AppointmentController extends AbstractController
                 'matchInfo' => $appointment->getMatch()->getMatchInfo()
             )
         );
+    }
+
+    /**
+     * @return array|ViewModel
+     */
+    public function submittedAction()
+    {
+        return new ViewModel();
     }
 
     /**
