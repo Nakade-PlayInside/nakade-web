@@ -294,7 +294,9 @@ class Appointment
      */
     public function exchangeArray($data)
     {
-
+        if (isset($data['confirmString'])) {
+            $this->confirmString = $data['confirmString'];
+        }
         if (isset($data['date']) &&  isset($data['time'])) {
             $this->newDate = \DateTime::createFromFormat('Y-m-d H:i:s', $data['date'] . ' ' . $data['time']);
         }
