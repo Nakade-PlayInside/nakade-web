@@ -1,6 +1,7 @@
 <?php
 namespace Appointment\Mapper;
 
+use Doctrine\ORM\Query;
 use \User\Entity\User;
 use Nakade\Abstracts\AbstractMapper;
 use Doctrine\ORM\EntityManager;
@@ -120,7 +121,7 @@ class AppointmentMapper extends AbstractMapper
     public function getMatchIdsByUser(User $user)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Appointment');
-        return $qb
+        $result = $qb
             ->select('Match._id')
             ->from('Appointment\Entity\Appointment', 'a')
             ->join('a.match', 'Match')
@@ -131,6 +132,13 @@ class AppointmentMapper extends AbstractMapper
             ->getQuery()
             ->getResult();
 
+        //quicker than array_map
+        $ids = array();
+        foreach ($result as $item) {
+            $ids[] = $item['_id'];
+        }
+
+        return $ids;
     }
 
 }

@@ -356,7 +356,9 @@ class MatchMapper  extends AbstractMapper
     public function getMatchesOpenForAppointmentByUser(User $user, array $shiftedMatches, $timeLimit=72)
     {
         //mandatory array is never empty
-        $shiftedMatches[]=0;
+        if (empty($shiftedMatches)) {
+            $shiftedMatches[]=0;
+        }
 
         $now = new \DateTime();
         $now->modify('+'.$timeLimit.' hour');

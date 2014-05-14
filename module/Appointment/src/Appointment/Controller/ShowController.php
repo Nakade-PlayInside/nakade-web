@@ -44,7 +44,6 @@ class ShowController extends AbstractController
         /* @var $repo \Appointment\Mapper\AppointmentMapper */
         $repo = $this->getRepository()->getMapper('appointment');
         $shiftedMatches = $repo->getMatchIdsByUser($this->identity());
-
         $deadline = $this->getDeadline();
 
         /* @var $matchRepo \League\Mapper\MatchMapper */

@@ -96,7 +96,7 @@ abstract class AppointmentMail extends NakadeMail
 
         if (!is_null($this->getAppointment())) {
 
-            $link = sprintf('%s/id=%d&confirm=%s',
+            $link = sprintf('%s/appointmentConfirm?id=%d&confirm=%s',
                 $this->getUrl(),
                 $this->getAppointment()->getId(),
                 $this->getAppointment()->getConfirmString()
