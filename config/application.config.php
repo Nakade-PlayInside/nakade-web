@@ -2,8 +2,7 @@
 return array(
     'modules' => array(
         'Application',
-        'Impressum',
-        'PhlyContact',
+      //  'PhlyContact',
         'Blog',
         'User',
         'DoctrineModule',

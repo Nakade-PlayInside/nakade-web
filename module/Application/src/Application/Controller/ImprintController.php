@@ -5,11 +5,11 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 /**
- * Class PrivacyController
+ * Class ImprintController
  *
  * @package Application\Controller
  */
-class PrivacyController extends AbstractActionController
+class ImprintController extends AbstractActionController
 {
 
     /**
@@ -19,5 +19,6 @@ class PrivacyController extends AbstractActionController
     {
         return new ViewModel();
     }
+
 
 }

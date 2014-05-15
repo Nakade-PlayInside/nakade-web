@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-15 08:09+0100\n"
-"PO-Revision-Date: 2014-05-15 08:13+0100\n"
+"POT-Creation-Date: 2014-05-15 08:43+0100\n"
+"PO-Revision-Date: 2014-05-15 08:44+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -113,6 +113,7 @@ msgid "LogIn"
 msgstr "Login"
 
 #: ../view/layout/layout.phtml:159
+#: ../view/application/imprint/index.phtml:3
 msgid "Imprint"
 msgstr "Impressum"
 
@@ -221,6 +222,34 @@ msgstr "Der Spieltreff ist z.Zt. geschlossen."
 #: ../view/application/training/index.phtml:18
 msgid "show on a larger map"
 msgstr "Kartenausschnitt vergrößern"
+
+#: ../view/application/imprint/index.phtml:16
+msgid "Court of registration"
+msgstr "Registergericht"
+
+#: ../view/application/imprint/index.phtml:18
+msgid "Number of registration"
+msgstr "Registernummer"
+
+#: ../view/application/imprint/index.phtml:23
+msgid "Bank"
+msgstr "Bank"
+
+#: ../view/application/imprint/index.phtml:33
+msgid "Disclaimer"
+msgstr "Haftungshinweis"
+
+#: ../view/application/imprint/index.phtml:35
+msgid "According to the German law and despite careful control, we assume no liability for the content of external links."
+msgstr "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links."
+
+#: ../view/application/imprint/index.phtml:36
+msgid "For the content of linked pages their operators are responsible."
+msgstr "Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich."
+
+#: ../view/application/privacy/index.phtml:4
+msgid "Privacy"
+msgstr "Datenschutz"
 
 #~ msgid "all open results"
 #~ msgstr "alle offenen Ergebnisse"
