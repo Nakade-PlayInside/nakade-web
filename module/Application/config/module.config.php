@@ -18,6 +18,23 @@ return array(
         )
     ),
 
+    'controllers' => array(
+        'invokables' => array(
+            'Application\Controller\Index' =>
+                'Application\Controller\IndexController',
+            'Application\Controller\Training' =>
+                'Application\Controller\TrainingController',
+            'Application\Controller\Privacy' =>
+                'Application\Controller\PrivacyController',
+            'Application\Controller\Imprint' =>
+                'Application\Controller\ImprintController',
+
+        ),
+        'factories' => array(
+            'Application\Controller\Contact' =>
+                'Application\Services\ContactControllerFactory',
+        ),
+    ),
 
     'router' => array(
             'routes' => array(
@@ -27,98 +44,70 @@ return array(
                     'options' => array(
                         'route'    => '/',
                         'defaults' => array(
+                            '__NAMESPACE__' => 'Application\Controller',
                             'controller' => 'Application\Controller\Index',
                             'action'     => 'index',
                         ),
                     ),
                 ),
+                'training' => array(
+                    'type' => 'Literal',
+                    'options' => array(
+                        'route'    => '/training',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'Application\Controller',
+                            'controller' => 'Application\Controller\Training',
+                            'action'     => 'index',
+                        ),
+                    ),
+                ),
+                'privacy' => array(
+                    'type' => 'Literal',
+                    'options' => array(
+                        'route'    => '/privacy',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'Application\Controller',
+                            'controller' => 'Application\Controller\Privacy',
+                            'action'     => 'index',
+                        ),
+                    ),
+                ),
+                'imprint' => array(
+                    'type' => 'Literal',
+                    'options' => array(
+                        'route'    => '/imprint',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'Application\Controller',
+                            'controller' => 'Application\Controller\Imprint',
+                            'action'     => 'index',
+                        ),
+                    ),
+                ),
+                'contact' => array(
+                    'type' => 'Literal',
+                    'options' => array(
+                        'route'    => '/contact',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'Application\Controller',
+                            'controller' => 'Application\Controller\Contact',
+                            'action'     => 'index',
+                        ),
+                    ),
+                ),
+
 
         ),
     ),
-    /*
-    //navigation
-    'navigation' => array(
-
-
-       'default' => array(
-            'home' => array(
-                'label'=>'Home',
-                'route'=>'/'
-            ),
-
-            'location' => array(
-                'label' => 'Location',
-                'route' => 'training',
-            ),
-
-           'contact' => array(
-                'label' => 'Contact',
-                'route' => 'contact',
-            ),
-
-           'imprint' => array(
-                'label' => 'Imprint',
-                'route' => 'impressum',
-                'controller' => 'Impressum\Controller\Impressum',
-                'action' => 'index'
-            ),
-
-           'admin' => array(
-                'label' => 'Admin',
-                'uri' => '#acl-admin',
-                'resource' => 'nav-admin',
-                'pages' => array(
-
-                    'user' => array(
-                        'label' => 'User',
-                        'route' => 'user',
-                        'resource' => 'User\Controller\User',
-                    ),
-                )
-            ),
-
-           'profile' => array(
-                'label' => 'Profile',
-                'route' => 'profile',
-
-            ),
-
-           'league' => array(
-                'label' => 'League',
-                'route' => 'actual',
-                'controller' => 'League\Controller\ActualSeason',
-
-                'pages' => array(
-
-                    'results' => array(
-                        'label' => 'Results',
-                        'action' => 'opensesults'
-                    ),
-
-                    'schedule' => array(
-                        'label' => 'Schedule',
-                        'action' => 'schedule'
-                    ),
-
-                    'table' => array(
-                        'label' => 'Standings',
-                        'action' => 'table'
-                    ),
-
-
-                )
-            ),
-
-       ),
-
-
-
-    ),*/
 
     'service_manager' => array(
         'factories' => array(
-            //'app_navigation' => 'Zend\Navigation\Services\DefaultNavigationFactory',
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
+            'Application\Services\ContactFormFactory'
+                => 'Application\Services\ContactFormFactory',
+            'Application\Services\ContactCaptchaFactory'
+                => 'Application\Services\ContactCaptchaFactory',
+            'Application\Services\MailService'
+                => 'Application\Services\MailService',
         ),
     ),
     'translator' => array(
@@ -131,13 +120,7 @@ return array(
             ),
         ),
     ),
-    'controllers' => array(
-        'invokables' => array(
-            'Application\Controller\Index' =>
-                     'Application\Controller\IndexController',
 
-        ),
-    ),
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,

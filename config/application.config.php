@@ -2,10 +2,6 @@
 return array(
     'modules' => array(
         'Application',
-        'Training',
-        'Impressum',
-        'PhlyContact',
-        'Privacy',
         'Blog',
         'User',
         'DoctrineModule',

@@ -40,8 +40,9 @@ class AppointmentForm extends AbstractForm
      */
     public function bindEntity(Appointment $object)
     {
-        $this->maxDate = $object->getOldDate();
-        $this->maxDate->modify($this->period);
+        $date = clone $object->getOldDate();
+        $date->modify($this->period);
+        $this->maxDate = $date;
         $this->confirmString = md5(uniqid(rand(), true));
 
         $this->bind($object);

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-13 16:22+0100\n"
-"PO-Revision-Date: 2014-05-13 16:31+0100\n"
+"POT-Creation-Date: 2014-05-15 08:43+0100\n"
+"PO-Revision-Date: 2014-05-15 08:44+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -24,6 +24,7 @@ msgid "Home"
 msgstr "Startseite"
 
 #: ../view/layout/layout.phtml:40
+#: ../view/application/training/index.phtml:4
 msgid "Location"
 msgstr "Spielort"
 
@@ -112,6 +113,7 @@ msgid "LogIn"
 msgstr "Login"
 
 #: ../view/layout/layout.phtml:159
+#: ../view/application/imprint/index.phtml:3
 msgid "Imprint"
 msgstr "Impressum"
 
@@ -204,6 +206,50 @@ msgstr "Ausnahme"
 #: ../view/error/404.phtml:1
 msgid "A 404 error occurred"
 msgstr "Es trat ein 404 Fehler auf"
+
+#: ../view/application/training/index.phtml:8
+msgid "Every Tuesday from 5:00 p.m. to 10:00 p.m."
+msgstr "Jeden Dienstag von 17h bis 22h."
+
+#: ../view/application/training/index.phtml:9
+msgid "Official training of the Bundesliga team Nakade. Guests are welcome."
+msgstr "Offizielles Training des Bundesligateams Nakade. Gäste sind herzlich willkommen. "
+
+#: ../view/application/training/index.phtml:11
+msgid "The open training is currently closed."
+msgstr "Der Spieltreff ist z.Zt. geschlossen."
+
+#: ../view/application/training/index.phtml:18
+msgid "show on a larger map"
+msgstr "Kartenausschnitt vergrößern"
+
+#: ../view/application/imprint/index.phtml:16
+msgid "Court of registration"
+msgstr "Registergericht"
+
+#: ../view/application/imprint/index.phtml:18
+msgid "Number of registration"
+msgstr "Registernummer"
+
+#: ../view/application/imprint/index.phtml:23
+msgid "Bank"
+msgstr "Bank"
+
+#: ../view/application/imprint/index.phtml:33
+msgid "Disclaimer"
+msgstr "Haftungshinweis"
+
+#: ../view/application/imprint/index.phtml:35
+msgid "According to the German law and despite careful control, we assume no liability for the content of external links."
+msgstr "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links."
+
+#: ../view/application/imprint/index.phtml:36
+msgid "For the content of linked pages their operators are responsible."
+msgstr "Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich."
+
+#: ../view/application/privacy/index.phtml:4
+msgid "Privacy"
+msgstr "Datenschutz"
 
 #~ msgid "all open results"
 #~ msgstr "alle offenen Ergebnisse"
