@@ -18,6 +18,17 @@ return array(
         )
     ),
 
+    'controllers' => array(
+        'invokables' => array(
+            'Application\Controller\Index' =>
+                'Application\Controller\IndexController',
+            'Application\Controller\Training' =>
+                'Application\Controller\TrainingController',
+            'Application\Controller\Privacy' =>
+                'Application\Controller\PrivacyController',
+
+        ),
+    ),
 
     'router' => array(
             'routes' => array(
@@ -27,7 +38,30 @@ return array(
                     'options' => array(
                         'route'    => '/',
                         'defaults' => array(
+                            '__NAMESPACE__' => 'Application\Controller',
                             'controller' => 'Application\Controller\Index',
+                            'action'     => 'index',
+                        ),
+                    ),
+                ),
+                'training' => array(
+                    'type' => 'Literal',
+                    'options' => array(
+                        'route'    => '/training',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'Application\Controller',
+                            'controller' => 'Application\Controller\Training',
+                            'action'     => 'index',
+                        ),
+                    ),
+                ),
+                'privacy' => array(
+                    'type' => 'Literal',
+                    'options' => array(
+                        'route'    => '/privacy',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'Application\Controller',
+                            'controller' => 'Application\Controller\Privacy',
                             'action'     => 'index',
                         ),
                     ),
@@ -131,13 +165,7 @@ return array(
             ),
         ),
     ),
-    'controllers' => array(
-        'invokables' => array(
-            'Application\Controller\Index' =>
-                     'Application\Controller\IndexController',
 
-        ),
-    ),
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,

@@ -1,12 +1,12 @@
 <?php
 // module/Training/view/training/training/index.phtml:
-$this->plugin('translate')->setTranslatorTextDomain('Training'); 
-$title = $this->translate("Meeting");
+$this->plugin('translate')->setTranslatorTextDomain('Application');
+$title = $this->translate("Location");
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
-<p><?php echo $this->translate("Every Tuesday from 5:00 p.m. to 10:00 p.m."); ?></br>
-    <?php echo $this->translate("Official training of the Bundesliga team Nakade. Guests are welcome.");?></br>
+<p><?php echo $this->translate("Every Tuesday from 5:00 p.m. to 10:00 p.m."); ?><br/>
+   <?php echo $this->translate("Official training of the Bundesliga team Nakade. Guests are welcome.");?><br/>
 </p>
 <p style="color:red"><?php echo $this->translate("The open training is currently closed."); ?></p>
 

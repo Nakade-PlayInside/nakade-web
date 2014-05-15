@@ -1,23 +1,24 @@
 <?php
-/**
- * Controller Training
- *
- * @author Dr. Holger Maerz <holger@spandaugo.de>
- */
-
-// module/Training/src/Training/Controller/TrainingController.php:
-namespace Training\Controller;
+namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
+/**
+ * Class TrainingController
+ *
+ * @package Application\Controller
+ */
 class TrainingController extends AbstractActionController
 {
 
+    /**
+     * @return array|ViewModel
+     */
     public function indexAction()
     {
         return new ViewModel();
     }
 
-    
+
 }

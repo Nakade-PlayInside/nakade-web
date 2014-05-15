@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-13 16:22+0100\n"
-"PO-Revision-Date: 2014-05-13 16:31+0100\n"
+"POT-Creation-Date: 2014-05-15 08:09+0100\n"
+"PO-Revision-Date: 2014-05-15 08:13+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -24,6 +24,7 @@ msgid "Home"
 msgstr "Startseite"
 
 #: ../view/layout/layout.phtml:40
+#: ../view/application/training/index.phtml:4
 msgid "Location"
 msgstr "Spielort"
 
@@ -204,6 +205,22 @@ msgstr "Ausnahme"
 #: ../view/error/404.phtml:1
 msgid "A 404 error occurred"
 msgstr "Es trat ein 404 Fehler auf"
+
+#: ../view/application/training/index.phtml:8
+msgid "Every Tuesday from 5:00 p.m. to 10:00 p.m."
+msgstr "Jeden Dienstag von 17h bis 22h."
+
+#: ../view/application/training/index.phtml:9
+msgid "Official training of the Bundesliga team Nakade. Guests are welcome."
+msgstr "Offizielles Training des Bundesligateams Nakade. Gäste sind herzlich willkommen. "
+
+#: ../view/application/training/index.phtml:11
+msgid "The open training is currently closed."
+msgstr "Der Spieltreff ist z.Zt. geschlossen."
+
+#: ../view/application/training/index.phtml:18
+msgid "show on a larger map"
+msgstr "Kartenausschnitt vergrößern"
 
 #~ msgid "all open results"
 #~ msgstr "alle offenen Ergebnisse"
