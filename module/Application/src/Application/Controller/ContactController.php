@@ -13,6 +13,9 @@ use Zend\View\Model\ViewModel;
 class ContactController extends AbstractController
 {
 
+    /**
+     * @return array
+     */
     public function indexAction()
     {
         $form = $this->getForm('contact');

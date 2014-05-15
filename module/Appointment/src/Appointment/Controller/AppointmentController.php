@@ -80,7 +80,6 @@ class AppointmentController extends AbstractController
            }
        }
 
-
        return new ViewModel(
            array(
                'form' => $form,
@@ -278,10 +277,10 @@ class AppointmentController extends AbstractController
 
         $appointment = new Appointment();
 
+
         $appointment->setMatch($match);
         $appointment->setSubmitDate(new \DateTime());
         $appointment->setOldDate($match->getDate());
-
         $responder = $match->getBlack();
         $submitter = $match->getWhite();
         if ($user->getId() == $match->getBlack()->getId()) {
