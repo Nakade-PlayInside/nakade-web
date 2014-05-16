@@ -2,7 +2,6 @@
 
 $title = $this->translate("Contact");
 $this->headTitle()->prepend($title); ?>
-<section class="contact">
 <h2><?php echo $title ?></h2>
 
 <p>
@@ -12,39 +11,7 @@ $this->headTitle()->prepend($title); ?>
 <?php
 
 $this->form->prepare();
-echo $this->form()->openTag($this->form); ?>
-<dl class="zend_form">
-<dt><?php echo  $this->formLabel($form->get('from')); ?></dt>
-    <dd><?php
-        echo $this->formInput($form->get('from'));
-        echo $this->formElementErrors($form->get('from'));
-        ?></dd>
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();
 
-    <dt><?php echo $this->formLabel($form->get('subject')); ?></dt>
-    <dd><?php
-        echo $this->formInput($form->get('subject'));
-        echo $this->formElementErrors($form->get('subject'));
-        ?></dd>
-
-    <dt><?php echo $this->formLabel($form->get('body')); ?></dt>
-    <dd><?php
-        echo $this->formTextarea($form->get('body'));
-        echo $this->formElementErrors($form->get('body'));
-        ?></dd>
-
-    <dt><?php echo $this->formLabel($form->get('captcha')); ?></dt>
-    <dd><?php
-        echo $this->formCaptcha($form->get('captcha'));
-        echo $this->formElementErrors($form->get('captcha'));
-        ?></dd>
-
-    <dd><?php
-        echo $this->formElement($form->get('csrf'));
-        echo $this->formInput($form->get('Send'));
-        echo $this->formElementErrors($form->get('Send'));
-        ?></dd>
-
-    </dl>
-
-<?php echo $this->form()->closeTag();?>
-</section>

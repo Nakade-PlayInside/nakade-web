@@ -84,9 +84,12 @@ return array(
                     ),
                 ),
                 'contact' => array(
-                    'type' => 'Literal',
+                    'type' => 'segment',
                     'options' => array(
-                        'route'    => '/contact',
+                        'route'    => '/contact[/:action]',
+                        'constraints' => array(
+                            'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        ),
                         'defaults' => array(
                             '__NAMESPACE__' => 'Application\Controller',
                             'controller' => 'Application\Controller\Contact',

@@ -9,6 +9,7 @@ class MailMessage
     protected $to;
     protected $toName;
     protected $fromName=null;
+    protected $bbc=array();
     protected $replyName=null;
     protected $subject=null;
     protected $body=null;
@@ -158,6 +159,33 @@ class MailMessage
     {
         $this->from = $from;
         return $this;
+    }
+
+    /**
+     * @param array $bbc
+     *
+     * @return $this
+     */
+    public function setBbc(array $bbc)
+    {
+        $this->bbc = $bbc;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBbc()
+    {
+        return $this->bbc;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasBbc()
+    {
+        return !empty($this->bbc);
     }
 
 }

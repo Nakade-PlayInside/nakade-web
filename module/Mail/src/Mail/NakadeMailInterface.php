@@ -8,8 +8,8 @@
 
 namespace Mail;
 
-use User\Entity\User;
 use Mail\Services\MailMessageFactory;
+use User\Entity\UserInterface;
 use \Zend\Mail\Transport\TransportInterface;
 use Mail\Services\MailSignatureService;
 
@@ -22,11 +22,11 @@ interface NakadeMailInterface
 {
 
     /**
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return bool
      */
-    public function sendMail(User $user);
+    public function sendMail(UserInterface $user);
 
     /**
      * @param MailMessageFactory $mailService
