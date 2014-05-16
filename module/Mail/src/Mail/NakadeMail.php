@@ -9,7 +9,7 @@ namespace Mail;
 
 use Nakade\Abstracts\AbstractTranslation;
 use Mail\Services\MailMessageFactory;
-use User\Entity\User;
+use User\Entity\UserInterface;
 use \Zend\Mail\Transport\TransportInterface;
 use Mail\Services\MailSignatureService;
 
@@ -23,6 +23,7 @@ abstract class NakadeMail extends AbstractTranslation implements NakadeMailInter
     protected $mailService;
     protected $transport;
     protected $signatureService;
+    protected $bbc;
 
     /**
      * @return string
@@ -35,23 +36,24 @@ abstract class NakadeMail extends AbstractTranslation implements NakadeMailInter
     abstract public function getMailBody();
 
     /**
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return bool
      *
      */
-    public function sendMail(User $user)
+    public function sendMail(UserInterface $user)
     {
-        if (!$user->isActive()) {
-            return false;
-        }
-
         $subject = $this->getSubject();
         $this->getMailService()->setSubject($subject);
         $this->getMailService()->setBody($this->getMailBody());
 
         $this->getMailService()->setTo($user->getEmail());
         $this->getMailService()->setToName($user->getName());
+
+        if ($this->hasBbc()) {
+            $bbc = $this->getBbc();
+            $this->getMailService()->setBbc($bbc);
+        }
 
         $message = $this->getMailService()->getMessage();
 
@@ -116,6 +118,33 @@ abstract class NakadeMail extends AbstractTranslation implements NakadeMailInter
     {
         $this->signatureService = $signatureService;
         return $this;
+    }
+
+    /**
+     * @param array $bbc
+     *
+     * @return $this
+     */
+    public function setBbc(array $bbc)
+    {
+        $this->bbc = $bbc;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBbc()
+    {
+        return $this->bbc;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasBbc()
+    {
+        return !empty($this->bbc);
     }
 
 }

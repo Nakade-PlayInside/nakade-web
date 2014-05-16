@@ -1,0 +1,10 @@
+<?php $this->plugin('translate')->setTranslatorTextDomain('Application');
+
+$title = $this->translate("Contact Message sent");
+$this->headTitle()->prepend($title); ?>
+<h2><?php echo $title ?></h2>
+
+<p>
+    <?php echo $this->translate("Thank you for contacting us."); ?><br/>
+    <?php echo $this->translate("A copy of your request is sent to you."); ?>
+</p>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-15 08:43+0100\n"
-"PO-Revision-Date: 2014-05-15 08:44+0100\n"
+"POT-Creation-Date: 2014-05-16 14:26+0100\n"
+"PO-Revision-Date: 2014-05-16 14:31+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -15,6 +15,43 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
+#: ../src/Application/Mail/ContactMail.php:37
+msgid "Dear %NAME%"
+msgstr "Hallo %NAME%"
+
+#: ../src/Application/Mail/ContactMail.php:38
+msgid "Thank you for contacting us at %URL%."
+msgstr "Vielen dank für deine Anfrage bei %URL%."
+
+#: ../src/Application/Mail/ContactMail.php:40
+msgid "Your request is processed as soon as possible."
+msgstr "Dein Anliegen wird so schnell wie möglich bearbeitet."
+
+#: ../src/Application/Mail/ContactMail.php:42
+msgid "Your email"
+msgstr "Deine Email"
+
+#: ../src/Application/Mail/ContactMail.php:43
+#: ../src/Application/Form/ContactForm.php:64
+msgid "Your message"
+msgstr "Deine Nachricht"
+
+#: ../src/Application/Mail/ContactMail.php:71
+msgid "Your Contact to nakade.de"
+msgstr "Dein Kontaktaufnahme unter nakade.de"
+
+#: ../src/Application/Form/ContactForm.php:44
+msgid "Your Name"
+msgstr "Dein Name"
+
+#: ../src/Application/Form/ContactForm.php:54
+msgid "Your Email"
+msgstr "Deine Email"
+
+#: ../src/Application/Form/ContactForm.php:98
+msgid "Submit"
+msgstr "Abschicken"
+
 #: ../view/layout/layout.phtml:36
 msgid "Berliner Baduk Club e.V."
 msgstr "Berliner Baduk Club e.V."
@@ -24,7 +61,6 @@ msgid "Home"
 msgstr "Startseite"
 
 #: ../view/layout/layout.phtml:40
-#: ../view/application/training/index.phtml:4
 msgid "Location"
 msgstr "Spielort"
 
@@ -113,7 +149,6 @@ msgid "LogIn"
 msgstr "Login"
 
 #: ../view/layout/layout.phtml:159
-#: ../view/application/imprint/index.phtml:3
 msgid "Imprint"
 msgstr "Impressum"
 
@@ -206,6 +241,22 @@ msgstr "Ausnahme"
 #: ../view/error/404.phtml:1
 msgid "A 404 error occurred"
 msgstr "Es trat ein 404 Fehler auf"
+
+#: ../view/application/contact/index.phtml:8
+msgid "Feel free to contact us."
+msgstr "Wir freuen uns über deine Nachricht."
+
+#: ../view/application/contact/success.phtml:3
+msgid "Contact Message sent"
+msgstr "Kontaktanfrage erfolgreich "
+
+#: ../view/application/contact/success.phtml:8
+msgid "Thank you for contacting us."
+msgstr "Vielen Dank für deine Anfrage."
+
+#: ../view/application/contact/success.phtml:9
+msgid "A copy of your request is sent to you."
+msgstr "Eine Kopie deines Anliegens wurde an dich geschickt. "
 
 #: ../view/application/training/index.phtml:8
 msgid "Every Tuesday from 5:00 p.m. to 10:00 p.m."

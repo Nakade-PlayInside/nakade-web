@@ -2,6 +2,7 @@
 
 namespace Application\Mail;
 
+use Application\Entity\Contact;
 use Mail\NakadeMail;
 use Mail\Services\MailMessageFactory;
 use \Zend\Mail\Transport\TransportInterface;
@@ -14,6 +15,8 @@ use \Zend\Mail\Transport\TransportInterface;
 class ContactMail extends NakadeMail
 {
     private $url='http://www.nakade.de';
+    private $contact;
+
     /**
      * @param MailMessageFactory $mailService
      * @param TransportInterface $transport
@@ -31,11 +34,21 @@ class ContactMail extends NakadeMail
     {
 
         $message =
-            $this->translate('You have got a new message in your mailbox at %URL%.') . ' ' .
+            $this->translate('Dear %NAME%') . ', ' . PHP_EOL . PHP_EOL .
+            $this->translate('Thank you for contacting us at %URL%.') . ' ' .
             PHP_EOL .
-            $this->translate('Please logIn at %URL% for reading.') . ' ' .
-            PHP_EOL . PHP_EOL .
+            $this->translate('Your request is processed as soon as possible.') . PHP_EOL .
+            PHP_EOL .
+            $this->translate('Your email') . ':  %EMAIL%' . PHP_EOL .
+            $this->translate('Your message') . ':  ' . '%MESSAGE%' .
+            PHP_EOL . PHP_EOL . PHP_EOL .
             $this->getSignature()->getSignatureText();
+
+        if (!is_null($this->getContact())) {
+            $message = str_replace('%MESSAGE%', $this->getContact()->getMessage(), $message);
+            $message = str_replace('%NAME%', $this->getContact()->getName(), $message);
+            $message = str_replace('%EMAIL%', $this->getContact()->getEmail(), $message);
+        }
 
         $this->makeReplacements($message);
 
@@ -55,7 +68,7 @@ class ContactMail extends NakadeMail
      */
     public  function getSubject()
     {
-        return $this->translate('New Message at nakade.de');
+        return $this->translate('Your Contact to nakade.de');
     }
 
     /**
@@ -64,6 +77,25 @@ class ContactMail extends NakadeMail
     public function getUrl()
     {
         return $this->url;
+    }
+
+    /**
+     * @param Contact $contact
+     *
+     * @return $this
+     */
+    public function setContact(Contact $contact)
+    {
+        $this->contact = $contact;
+        return $this;
+    }
+
+    /**
+     * @return Contact
+     */
+    public function getContact()
+    {
+        return $this->contact;
     }
 
 }

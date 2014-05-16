@@ -20,8 +20,6 @@ class ContactController extends AbstractController
     {
         $form = $this->getForm('contact');
 
-
-
         /* @var $request \Zend\Http\Request */
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -32,11 +30,17 @@ class ContactController extends AbstractController
 
             if ($form->isValid()) {
 
-                $data = $form->getData();
-                print_r($form->getData()); //for debug
-                var_dump(strlen($data['subject']));
-                //$responder->sendMail($appointment->getResponder());
+                /* @var $contact \Application\Entity\Contact */
+                $contact = $form->getData();
 
+                /* @var $mail \Application\Mail\ContactMail */
+                $mail = $this->getMailService()->getMail('contact');
+                $mail->setContact($contact);
+                $mail->sendMail($contact);
+
+                $this->redirect()->toRoute('contact', array(
+                    'action' => 'success'
+                ));
 
             }
         }
@@ -47,5 +51,11 @@ class ContactController extends AbstractController
         );
     }
 
-
+    /**
+     * @return ViewModel
+     */
+    public function successAction()
+    {
+        return new ViewModel();
+    }
 }

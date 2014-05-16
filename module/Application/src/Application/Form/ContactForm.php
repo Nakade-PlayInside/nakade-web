@@ -1,6 +1,7 @@
 <?php
 namespace Application\Form;
 
+use Application\Entity\Contact;
 use Nakade\Abstracts\AbstractForm;
 use \Zend\InputFilter\InputFilter;
 use Zend\Validator\Hostname as HostnameValidator;
@@ -24,7 +25,10 @@ class ContactForm extends AbstractForm
         $this->captcha = $captcha;
         parent::__construct('ContactForm');
         $this->filter = $this->getFilter();
+        $contact = new Contact();
+        $this->bind($contact);
     }
+
 
     /**
      * init the form. It is neccessary to call this function
@@ -35,7 +39,7 @@ class ContactForm extends AbstractForm
 
         $this->add(
             array(
-                'name' => 'from',
+                'name' => 'name',
                 'type' => 'Zend\Form\Element\Text',
                 'options' => array(
                     'label' =>  $this->translate('Your Name') . ':',
@@ -55,18 +59,7 @@ class ContactForm extends AbstractForm
 
         $this->add(
             array(
-                'name'  => 'subject',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' => $this->translate('Subject') . ':',
-                ),
-            )
-        );
-
-
-        $this->add(
-            array(
-                'name'  => 'body',
+                'name'  => 'message',
                 'type'  => 'Zend\Form\Element\Textarea',
                 'options' => array(
                     'label' => $this->translate('Your message') . ':',
@@ -74,16 +67,16 @@ class ContactForm extends AbstractForm
             )
         );
 
-        $this->add(
-            array(
+       $this->add(
+           array(
                 'name'  => 'captcha',
                 'type'  => 'Zend\Form\Element\Captcha',
                 'options' => array(
                     'label' => $this->translate('Please verify you are human.'),
                     'captcha' => $this->captcha
                 ),
-            )
-        );
+           )
+       );
 
         $this->add(
             array(
@@ -121,7 +114,7 @@ class ContactForm extends AbstractForm
         $filter->add(
 
             array(
-                'name' => 'from',
+                'name' => 'name',
                 'filters'  => array(
                     array('name' => 'Alnum',
                           'options' => array (
@@ -166,30 +159,7 @@ class ContactForm extends AbstractForm
         $filter->add(
 
             array(
-                'name' => 'subject',
-                'filters'  => array(
-                    array('name' => 'Alnum',
-                        'options' => array (
-                            'allowWhiteSpace' => true
-                        )
-                    ),
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                    array('name' => 'StripNewLines'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'NotEmpty',
-                    ),
-                ),
-
-            )
-        );
-
-        $filter->add(
-
-            array(
-                'name' => 'body',
+                'name' => 'message',
                 'filters'  => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),

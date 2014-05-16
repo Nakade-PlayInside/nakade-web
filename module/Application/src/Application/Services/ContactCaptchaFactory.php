@@ -24,8 +24,8 @@ class ContactCaptchaFactory implements FactoryInterface
     {
         $spec = array('class'   => 'dumb');
         $config  = $services->get('config');
-        if ($config['captcha']) {
-            $spec    = $config['captcha'];
+        if ($config['Application']['contact']['captcha']) {
+            $spec    = $config['Application']['contact']['captcha'];
         }
 
         return CaptchaFactory::factory($spec);

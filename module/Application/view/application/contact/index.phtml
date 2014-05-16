@@ -2,34 +2,36 @@
 
 $title = $this->translate("Contact");
 $this->headTitle()->prepend($title); ?>
-<section class="contact">
 <h2><?php echo $title ?></h2>
 
 <p>
 <?php echo $this->translate("Feel free to contact us."); ?>
 </p>
-    <span style="color:red; font-weight:bold">Currently under Construction</span>
+
 <?php
 
-$this->form->prepare();
-echo $this->form()->openTag($this->form); ?>
+$form = $this->form;
+$form->prepare();
+echo $this->form()->openTag($form);
+
+?>
 <dl class="zend_form">
-<dt><?php echo  $this->formLabel($form->get('from')); ?></dt>
+<dt><?php echo  $this->formLabel($form->get('name')); ?></dt>
     <dd><?php
-        echo $this->formInput($form->get('from'));
-        echo $this->formElementErrors($form->get('from'));
+        echo $this->formInput($form->get('name'));
+        echo $this->formElementErrors($form->get('name'));
         ?></dd>
 
-    <dt><?php echo $this->formLabel($form->get('subject')); ?></dt>
+    <dt><?php echo $this->formLabel($form->get('email')); ?></dt>
     <dd><?php
-        echo $this->formInput($form->get('subject'));
-        echo $this->formElementErrors($form->get('subject'));
+        echo $this->formInput($form->get('email'));
+        echo $this->formElementErrors($form->get('email'));
         ?></dd>
 
-    <dt><?php echo $this->formLabel($form->get('body')); ?></dt>
+    <dt><?php echo $this->formLabel($form->get('message')); ?></dt>
     <dd><?php
-        echo $this->formTextarea($form->get('body'));
-        echo $this->formElementErrors($form->get('body'));
+        echo $this->formTextarea($form->get('message'));
+        echo $this->formElementErrors($form->get('message'));
         ?></dd>
 
     <dt><?php echo $this->formLabel($form->get('captcha')); ?></dt>
@@ -46,5 +48,4 @@ echo $this->form()->openTag($this->form); ?>
 
     </dl>
 
-<?php echo $this->form()->closeTag();?>
-</section>
+<?php echo $this->form()->closeTag();

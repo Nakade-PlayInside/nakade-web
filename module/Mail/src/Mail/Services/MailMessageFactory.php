@@ -91,6 +91,11 @@ class MailMessageFactory extends MailMessage implements FactoryInterface
         $toName = $this->getToName();
         $message->setTo($to, $toName);
 
+        if ($this->hasBbc()) {
+            $bbc = $this->getBbc();
+            $message->addBcc($bbc);
+        }
+
         $subject = $this->getSubject();
         if (empty($subject)) {
             throw new \RuntimeException(
