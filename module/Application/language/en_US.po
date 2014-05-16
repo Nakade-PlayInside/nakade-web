@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-13 16:23+0100\n"
-"PO-Revision-Date: 2014-05-13 16:23+0100\n"
+"POT-Creation-Date: 2014-05-16 14:26+0100\n"
+"PO-Revision-Date: 2014-05-16 14:26+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -14,6 +14,43 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../src/Application/Mail/ContactMail.php:37
+msgid "Dear %NAME%"
+msgstr ""
+
+#: ../src/Application/Mail/ContactMail.php:38
+msgid "Thank you for contacting us at %URL%."
+msgstr ""
+
+#: ../src/Application/Mail/ContactMail.php:40
+msgid "Your request is processed as soon as possible."
+msgstr ""
+
+#: ../src/Application/Mail/ContactMail.php:42
+msgid "Your email"
+msgstr ""
+
+#: ../src/Application/Mail/ContactMail.php:43
+#: ../src/Application/Form/ContactForm.php:64
+msgid "Your message"
+msgstr ""
+
+#: ../src/Application/Mail/ContactMail.php:71
+msgid "Your Contact to nakade.de"
+msgstr ""
+
+#: ../src/Application/Form/ContactForm.php:44
+msgid "Your Name"
+msgstr ""
+
+#: ../src/Application/Form/ContactForm.php:54
+msgid "Your Email"
+msgstr ""
+
+#: ../src/Application/Form/ContactForm.php:98
+msgid "Submit"
+msgstr ""
 
 #: ../view/layout/layout.phtml:36
 msgid "Berliner Baduk Club e.V."
@@ -203,6 +240,66 @@ msgstr ""
 
 #: ../view/error/404.phtml:1
 msgid "A 404 error occurred"
+msgstr ""
+
+#: ../view/application/contact/index.phtml:8
+msgid "Feel free to contact us."
+msgstr ""
+
+#: ../view/application/contact/success.phtml:3
+msgid "Contact Message sent"
+msgstr ""
+
+#: ../view/application/contact/success.phtml:8
+msgid "Thank you for contacting us."
+msgstr ""
+
+#: ../view/application/contact/success.phtml:9
+msgid "A copy of your request is sent to you."
+msgstr ""
+
+#: ../view/application/training/index.phtml:8
+msgid "Every Tuesday from 5:00 p.m. to 10:00 p.m."
+msgstr ""
+
+#: ../view/application/training/index.phtml:9
+msgid "Official training of the Bundesliga team Nakade. Guests are welcome."
+msgstr ""
+
+#: ../view/application/training/index.phtml:11
+msgid "The open training is currently closed."
+msgstr ""
+
+#: ../view/application/training/index.phtml:18
+msgid "show on a larger map"
+msgstr ""
+
+#: ../view/application/imprint/index.phtml:16
+msgid "Court of registration"
+msgstr ""
+
+#: ../view/application/imprint/index.phtml:18
+msgid "Number of registration"
+msgstr ""
+
+#: ../view/application/imprint/index.phtml:23
+msgid "Bank"
+msgstr ""
+
+#: ../view/application/imprint/index.phtml:33
+msgid "Disclaimer"
+msgstr ""
+
+#: ../view/application/imprint/index.phtml:35
+msgid "According to the German law and despite careful control, we assume no liability for the content of external links."
+msgstr ""
+
+#: ../view/application/imprint/index.phtml:36
+msgid "For the content of linked pages their operators are responsible."
+msgstr ""
+
+#: ../view/application/privacy/index.phtml:4
+msgid "Privacy"
 msgstr ""
 
 #~ msgid "Skeleton Application"

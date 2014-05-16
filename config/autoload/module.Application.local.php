@@ -33,8 +33,8 @@ return array(
             //copies form contact mail
             'bbc' => array (
                 'grrompf@gmail.com',
-                'holger.maerz@docholiday-online.de',
-                'holger@spandaugo.de'
+                'tina@nakade.de',
+                'mo@nakade.de'
             ),
         ),
     ),

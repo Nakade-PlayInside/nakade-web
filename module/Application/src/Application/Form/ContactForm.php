@@ -29,6 +29,7 @@ class ContactForm extends AbstractForm
         $this->bind($contact);
     }
 
+
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
@@ -66,17 +67,17 @@ class ContactForm extends AbstractForm
             )
         );
 
-  /*      $this->add(
-            array(
+       $this->add(
+           array(
                 'name'  => 'captcha',
                 'type'  => 'Zend\Form\Element\Captcha',
                 'options' => array(
                     'label' => $this->translate('Please verify you are human.'),
                     'captcha' => $this->captcha
                 ),
-            )
-        );
-*/
+           )
+       );
+
         $this->add(
             array(
                 'name' => 'csrf',
