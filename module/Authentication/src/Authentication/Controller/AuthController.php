@@ -95,7 +95,7 @@ class AuthController extends AbstractController
                     /* @var $session \Authentication\Session\FailureContainer */
                     $session =  $this->getSession();
                     $session->clear();
-                    return $this->redirect()->toRoute('success');
+                    return $this->redirect()->toRoute('dashboard');
                 }
 
                 $this->$this->getSessionService()->addFailedAttempt();

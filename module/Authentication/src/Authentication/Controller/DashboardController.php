@@ -9,7 +9,7 @@ use Message\Mapper\MessageMapper;
 /**
  * Success controller for successful authentication of registered users.
  */
-class SuccessController extends AbstractActionController
+class DashboardController extends AbstractActionController
 {
     /**
      * @return array|ViewModel
