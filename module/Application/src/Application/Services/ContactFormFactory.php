@@ -39,7 +39,7 @@ class ContactFormFactory extends AbstractFormFactory
             $config['Appointment']['text_domain'] : null;
 
         $translator = $services->get('translator');
-        $captcha = $services->get('Application\Services\ContactCaptchaFactory');
+        $captcha = $services->get('Nakade\Services\NakadeCaptchaFactory');
 
         $this->setCaptcha($captcha);
         $this->setTranslator($translator);

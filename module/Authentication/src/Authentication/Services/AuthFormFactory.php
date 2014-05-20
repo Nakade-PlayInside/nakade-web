@@ -30,7 +30,7 @@ class AuthFormFactory extends AbstractFormFactory
         $textDomain = isset($config['NakadeAuth']['text_domain']) ?
             $config['NakadeAuth']['text_domain'] : null;
 
-        $captcha    = $services->get('Authentication\Services\AuthCaptchaFactory');
+        $captcha    = $services->get('Nakade\Services\NakadeCaptchaFactory');
         $translator = $services->get('translator');
 
         $this->setTranslatorTextDomain($textDomain);

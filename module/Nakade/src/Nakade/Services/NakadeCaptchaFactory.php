@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Services;
+namespace Nakade\Services;
 
 use Zend\Captcha\Factory as CaptchaFactory;
 use Zend\ServiceManager\FactoryInterface;
@@ -12,7 +12,7 @@ use Zend\Stdlib\ArrayUtils;
  *
  * @package Application\Services
  */
-class ContactCaptchaFactory implements FactoryInterface
+class NakadeCaptchaFactory implements FactoryInterface
 {
 
     /**
@@ -24,10 +24,9 @@ class ContactCaptchaFactory implements FactoryInterface
     {
         $spec = array('class'   => 'dumb');
         $config  = $services->get('config');
-        if ($config['Application']['contact']['captcha']) {
-            $spec    = $config['Application']['contact']['captcha'];
+        if ($config['Nakade']['captcha']) {
+            $spec    = $config['Nakade']['captcha'];
         }
-
         return CaptchaFactory::factory($spec);
     }
 }

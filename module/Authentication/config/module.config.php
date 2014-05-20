@@ -13,13 +13,6 @@ namespace Authentication;
 
 return array(
 
-    'NakadeAuth' => array(
-        'text_domain'   => 'Auth',
-        'captcha' => array(
-            'class'   => 'dump',
-        )
-    ),
-
     'controllers' => array(
         'factories' => array(
             'Authentication\Controller\Authentication' =>
@@ -99,8 +92,6 @@ return array(
             //neccessary for using authentication in ViewHelper and Controller
             'Zend\Authentication\AuthenticationService'       =>
                 'Authentication\Services\AuthServiceFactory',
-            'Authentication\Services\AuthCaptchaFactory'       =>
-                'Authentication\Services\AuthCaptchaFactory',
             'Authentication\Services\AuthFormFactory'   =>
                 'Authentication\Services\AuthFormFactory',
             'Authentication\Services\AuthSessionService'   =>
