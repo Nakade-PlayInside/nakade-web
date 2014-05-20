@@ -222,4 +222,21 @@ class MessageController extends AbstractController
         return $this->redirect()->toRoute('message');
     }
 
+    /**
+     * @return \Zend\Http\Response|ViewModel
+     */
+    public function infoAction()
+    {
+        $user = $this->identity();
+
+        /* @var $mapper \Message\Mapper\MessageMapper */
+        $mapper = $this->getRepository()->getMapper('message');
+        $noNewMails = $mapper->getNumberOfNewMessages($user);
+
+        return new ViewModel(
+            array('noNewMails' => $noNewMails)
+        );
+
+    }
+
 }

@@ -14,16 +14,15 @@ namespace Authentication;
 return array(
 
     'controllers' => array(
+        'invokables' => array(
+            'Authentication\Controller\Dashboard' =>
+                'Authentication\Controller\DashboardController',
+        ),
         'factories' => array(
             'Authentication\Controller\Authentication' =>
                     'Authentication\Services\AuthControllerFactory',
         ),
-
-        'invokables' => array(
-            'Authentication\Controller\Dashboard' =>
-                'Authentication\Controller\DashboardController',
-            ),
-        ),
+    ),
 
     'router' => array(
         'routes' => array(

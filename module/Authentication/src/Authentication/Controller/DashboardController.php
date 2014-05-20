@@ -25,6 +25,9 @@ class DashboardController extends AbstractActionController
            $user = $this->identity()->getId();
            $noNewMails = $repo->getNumberOfNewMessages($user);
        }
+        $messageWidget  = $this->forward()
+            ->dispatch('/Message/Controller/Message', array('action' => 'info'));
+
 
         $scheduleWidget  = $this->forward()
             ->dispatch('/League/Controller/ActualSeason', array('action' => 'mySchedule'));
@@ -33,6 +36,7 @@ class DashboardController extends AbstractActionController
             ->dispatch('/Appointment/Controller/Show', array('action' => 'message'));
 
         $page = new ViewModel(array('noNewMails' => $noNewMails));
+        $page->addChild($messageWidget, 'messageWidget');
         $page->addChild($appointmentWidget, 'appointmentWidget');
         $page->addChild($scheduleWidget, 'scheduleWidget');
 

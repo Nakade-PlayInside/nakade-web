@@ -1,23 +1,9 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('Auth');
 
-$info = $this->translate("You got %number% new messages");
-$number = sprintf('<span>%s</span>', $this->noNewMails);
-$link = sprintf('<a href="%s">%s</a>',
-    $this->url('message'),
-    $this->translate("go to mailbox")
-);
-$mailInfo = str_replace("%number%", (string) $number, $info);
-$textInfo = sprintf('<div class="message"">%s%s</div>',
-    $mailInfo,
-    $link
-);
-
 $loginText = $this->translate("Logged in as %name%");
 $userName = (string) $this->identity()->getUsername();
-$login = str_replace("%name%", "<span>$userName</span>", $loginText);
-
-if ($user = $this->identity()) { ?>
+$login = str_replace("%name%", "<span>$userName</span>", $loginText); ?>
 
 <div class="loginMessage"><?php echo $login; ?>
     <a href="<?php echo $this->url('login', array('action' => 'logout'))?>">
@@ -26,19 +12,12 @@ if ($user = $this->identity()) { ?>
 </div>
 
 <?php
-    if ($this->noNewMails > 0) {
-        echo $textInfo;
-    }
-} else {
-        echo $this->translate('Not logged in');
-}
-
+echo $this->messageWidget;
 echo $this->appointmentWidget;
 ?>
 
 <hr>
 
 <?php
-
 echo $this->scheduleWidget;
 
