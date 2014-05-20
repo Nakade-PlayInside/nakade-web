@@ -2,50 +2,91 @@
 
 namespace Authentication\Services;
 
-use Traversable;
-use Authentication\Form\AuthFilter;
+use Nakade\Abstracts\AbstractFormFactory;
 use Authentication\Form\AuthForm;
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\ArrayUtils;
+use Zend\Captcha\AdapterInterface ;
 
 /**
- * Factory providing a Form for authentification
- * 
- * @author Dr. Holger Maerz <grrompf@gmail.com>
+ * Class AuthFormFactory
+ *
+ * @package Authentication\Services
  */
-class AuthFormFactory implements FactoryInterface
+class AuthFormFactory extends AbstractFormFactory
 {
-    
+    const AUTH = 'auth';
+    private $captcha;
+
     /**
-     * Creating a form with Filter, Captcha and optional translation. 
-     * You have to provide your Captcha specification in the configuration 
-     * file.  
-     * 
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
+     *
      * @return \Authentication\Form\AuthForm
      */
     public function createService(ServiceLocatorInterface $services)
     {
-      
+
         $config     = $services->get('config');
-        if ($config instanceof Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
-        }
-        
-        //get text domain from module config
-        $textDomain = $config['NakadeAuth']['text_domain'];
-        
-        $captcha    = $services->get('AuthCaptcha');
+
+        $textDomain = isset($config['NakadeAuth']['text_domain']) ?
+            $config['NakadeAuth']['text_domain'] : null;
+
+        $captcha    = $services->get('Authentication\Services\AuthCaptchaFactory');
         $translator = $services->get('translator');
-        $filter     = new AuthFilter();
-        $form       = new AuthForm($textDomain);
-        
-        $form->setCaptcha($captcha);
-        $form->setTranslator($translator);
-        $form->setTextDomain($textDomain);
-        $form->setInputFilter($filter);
-      
+
+        $this->setTranslatorTextDomain($textDomain);
+        $this->setTranslator($translator);
+        $this->setCaptcha($captcha);
+
+        return $this;
+    }
+
+    /**
+     * fabric method for getting the form needed. expecting the form name as
+     * string. Throws an exception if provided typ is unknown.
+     *
+     * @param string $typ
+     *
+     * @return \Zend\Form\Form
+     *
+     * @throws \RuntimeException
+     */
+    public function getForm($typ)
+    {
+
+        switch (strtolower($typ)) {
+
+            case self::AUTH:
+                $form = new AuthForm($this->getCaptcha());
+                break; //init made by binding entity
+
+            default:
+                throw new \RuntimeException(
+                    sprintf('An unknown form type was provided.')
+                );
+        }
+
+        $form->setTranslator($this->getTranslator());
+        $form->setTranslatorTextDomain($this->getTranslatorTextDomain());
         return $form;
     }
+
+    /**
+     * @param AdapterInterface $captcha
+     *
+     * @return $this
+     */
+    public function setCaptcha(AdapterInterface $captcha)
+    {
+        $this->captcha = $captcha;
+        return $this;
+    }
+
+    /**
+     * @return AdapterInterface
+     */
+    public function getCaptcha()
+    {
+        return $this->captcha;
+    }
+
 }

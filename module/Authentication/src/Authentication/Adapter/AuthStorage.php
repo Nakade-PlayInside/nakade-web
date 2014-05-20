@@ -1,5 +1,4 @@
 <?php
-//module/Authentication/src/Authentication/Adapter/AuthStorage.php
 namespace Authentication\Adapter;
 
 use Zend\Authentication\Storage;
@@ -16,8 +15,9 @@ class AuthStorage extends Storage\Session
     /**
      * constructor sets the namespace for session to nakade
      */
-    public function __construct() {
-        parent::__construct($namespace = 'nakade', null , null);
+    public function __construct()
+    {
+        parent::__construct('nakade', null, null);
     }
 
 
@@ -26,11 +26,11 @@ class AuthStorage extends Storage\Session
      * Life time is set in seconds.
      *
      * @param boolean $rememberMe
-     * @param int $time
+     * @param int     $time
      */
-    public function setRememberMe($rememberMe = FALSE, $time = 1209600)
+    public function setRememberMe($rememberMe=false, $time = 1209600)
     {
-         if ($rememberMe == TRUE) {
+         if ($rememberMe) {
              $this->session->getManager()->rememberMe($time);
          }
     }

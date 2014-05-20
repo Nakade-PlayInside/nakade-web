@@ -3,6 +3,7 @@
 namespace Application\Services;
 
 use Nakade\Abstracts\AbstractFormFactory;
+use Nakade\FormServiceInterface;
 use Traversable;
 use Application\Form;
 use Zend\ServiceManager\ServiceLocatorInterface;

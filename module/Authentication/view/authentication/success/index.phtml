@@ -22,7 +22,7 @@ $login = str_replace("%name%", "<span>$userName</span>", $loginText);
 if ($user = $this->identity()) { ?>
 
 <div class="loginMessage"><?php echo $login; ?>
-    <a href="<?php echo $this->url('login/process', array('action' => 'logout'))?>">
+    <a href="<?php echo $this->url('login', array('action' => 'logout'))?>">
         <?php echo $this->translate("LogOut") ?>
     </a>
 </div>

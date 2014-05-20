@@ -3,6 +3,7 @@
 namespace Appointment\Services;
 
 use Nakade\Abstracts\AbstractFormFactory;
+use Nakade\FormServiceInterface;
 use Traversable;
 use Appointment\Form;
 use Zend\ServiceManager\ServiceLocatorInterface;

@@ -1,176 +1,65 @@
 <?php
 namespace Authentication\Form;
 
-use Zend\Captcha\AdapterInterface as CaptchaAdapter;
-use Zend\Form\Element;
-use Zend\Form\Form;
+use Nakade\Abstracts\AbstractForm;
 use Zend\I18n\Translator\Translator;
 use Zend\InputFilter\InputFilter;
-use Zend\Captcha\Factory as CaptchaFactory;
+use Zend\Captcha\AdapterInterface ;
 
 /**
- * Authentication form with ReCaptcha, translation option and
- * csrf token.  
+ * Authentication form with Captcha
+ *
+ * @package Authentication\Form
  */
-class AuthForm extends Form
+class AuthForm extends AbstractForm
 {
-    protected $_captchaAdapter;
-    protected $_csrfToken;
-    protected $_translator;
-    protected $_textDomain="Auth";
-    protected $_filter=null;
-    protected $_isCaptchaShowing = false;
-    
+    private $captcha;
+    protected $showCaptcha = false;
+
     /**
-     * Constructor
+     * @param AdapterInterface $captcha
      */
-    public function __construct() 
+    public function __construct(AdapterInterface $captcha)
     {
-        //form name is AuthForm
-        parent::__construct();
-       
+        $this->captcha = $captcha;
+        parent::__construct('LoginForm');
+        $this->filter = $this->getFilter();
+        $this->init();
+        //$contact = new Contact();
+        //$this->bind($contact);
     }
 
     /**
-     * Setter for filtering the form input
-     * @param \Zend\InputFilter\InputFilter $filter
+     * @param bool $show
      */
-    public function setFilter(InputFilter $filter) 
+    public function setIsShowingCaptcha($show)
     {
-        $this->_filter = $filter;
+        $this->showCaptcha = $show;
     }
-    
+
     /**
      * getter
-     * 
-     * @return \Zend\InputFilter\InputFilter $filter
+     * @return bool $isCaptchaShowing
      */
-    public function getFilter() 
+    public function isShowingCaptcha()
     {
-        return $this->_filter;
+        return $this->showCaptcha;
     }
-    
-    /**
-     * Setter for translator in form. Enables the usage of i18N.
-     * 
-     * @param \Zend\I18n\Translator\Translator $translator
-     */
-    public function setTranslator(Translator $translator)
-    {
-        $this->_translator = $translator;
-    }
-    
-    /**
-    * getter 
-    * 
-    * @return \Zend\I18n\Translator\Translator $translator
-    */
-    public function getTranslator()
-    {
-        return $this->_translator;
-    }
-    
-    /**
-     * Setter for text domain neccessary for translation.
-     * Default value is 'Auth'. 
-     * 
-     * @param string $textDomain
-     */
-    public function setTextDomain($textDomain)
-    {
-        if (null !== $textDomain) {
-            $this->_textDomain = $textDomain;
-        }
-    }
-    
-    /**
-    * getter 
-    * 
-    * @return string $textDomain
-    */
-    public function getTextDomain()
-    {
-        return $this->_textDomain;
-    }
-    
-    /**
-     * Setter for Captcha in form
-     * @param \Zend\Captcha\AdapterInterface $captchaAdapter
-     */
-    public function setCaptcha(CaptchaAdapter $captchaAdapter)
-    {
-        $this->_captchaAdapter = $captchaAdapter;
-    }
-    
-    /**
-     * getter for Captcha in form. If no captcha is set, a dumb captcha is
-     * set.
-     * 
-     * @return \Zend\Captcha\AdapterInterface $captchaAdapter
-     */
-    public function getCaptcha()
-    {
-        
-        if(!$this->_captchaAdapter) {
-            
-          $this->_captchaAdapter=CaptchaFactory::factory(
-              array('class' => 'dumb')
-          );
-        }
-        
-        return $this->_captchaAdapter;
-    }
-    
-    /**
-     * Setter for filtering the form input
-     * @param \Zend\InputFilter\InputFilter $filter
-     */
-    public function setShowCaptcha($show) 
-    {
-        $this->_isCaptchaShowing = $show;
-    }
-    
-    /**
-     * getter
-     * @return bool $_isCaptchaShowing
-     */
-    public function isCaptcha() 
-    {
-        return $this->_isCaptchaShowing;
-    }
-    
-    /**
-     * translator function. l18n
-     * 
-     * @param type $message
-     * @return string $message
-     */
-    public function translate($message)
-    {
-        if (null === $this->_translator) {
-           return $message;
-        }
-        
-        return $this->_translator->translate(
-                $message, 
-                $this->_textDomain
-        );
-    }
-   
+
     /**
      * Initializing the form. Call this method for receiving the formular.
-     * This enables toggling the Captcha 
+     * This enables toggling the Captcha
      */
     public function init()
     {
-               
+
         //identity
         $this->add(
             array(
                 'name' => 'identity',
                 'type' => 'Zend\Form\Element\Text',
                 'options' => array(
-                    'label' =>  $this->translate('Username:'),
+                    'label' =>  $this->translate('Username').':',
                 ),
             )
         );
@@ -181,7 +70,7 @@ class AuthForm extends Form
                 'name'  => 'password',
                 'type' => 'Zend\Form\Element\Password',
                 'options' => array(
-                    'label' =>  $this->translate('Password:'),
+                    'label' =>  $this->translate('Password').':',
                 ),
             )
         );
@@ -190,32 +79,31 @@ class AuthForm extends Form
         //checkbox remember Me
         $this->add(
             array(
-                'name'  => 'rememberme',
+                'name'  => 'rememberMe',
                 'type'  => 'Zend\Form\Element\Checkbox',
                 'options' => array(
-                    'label' =>  $this->translate('Remember Me ?:'),
+                    'label' =>  $this->translate('Remember?') .':',
                 ),
             )
         );
 
-        //captcha
-        // DO NOT CHANGE THE NAME. IT IS IMPORTANT FOR TESTING 
-        $captcha = new Element\Captcha('captcha');
-        $captcha->setCaptcha($this->getCaptcha());
-        $captcha->setOptions(
-            array('label' => $this->translate('Please verify you are human.'))
-        );
-        
-        //showing captcha
-        if($this->isCaptcha()) {
-         
-            $this->add($captcha);
-        }   
-        
-        
+        if ($this->isShowingCaptcha()) {
+            $this->add(
+                array(
+                    'name'  => 'captcha',
+                    'type'  => 'Zend\Form\Element\Captcha',
+                    'options' => array(
+                        'label' => $this->translate('Please verify you are human.'),
+                        'captcha' => $this->captcha
+                    ),
+                )
+            );
+        }
+
+
         //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side 
-        //validation 
+        //this is handled by ZF2 in the background - no need for server-side
+        //validation
         $this->add(
             array(
                 'name' => 'csrf',
@@ -225,9 +113,9 @@ class AuthForm extends Form
                         'timeout' => 600
                     )
                 )
-            )    
+            )
         );
-       
+
         //submit button
         $this->add(
             array(
@@ -239,5 +127,35 @@ class AuthForm extends Form
                 ),
             )
         );
+    }
+
+    /**
+     * @return InputFilter
+     */
+    public function getFilter()
+    {
+        $filter = new InputFilter();
+
+        $filter->add(
+            array(
+                'name'       => 'identity',
+                'required'   => true,
+                'filters'    => array(
+                    array('name'    => 'StripTags'),
+                ),
+            )
+        );
+
+        $filter->add(
+            array(
+                'name'       => 'password',
+                'required'   => true,
+                'filters'    => array(
+                    array('name'    => 'StripTags'),
+                ),
+
+            )
+        );
+        return $filter;
     }
 }

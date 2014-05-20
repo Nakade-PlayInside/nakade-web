@@ -1,5 +1,4 @@
 <?php
-//module/Authentication/src/Authentication/Adapter/AuthAdapter.php
 namespace Authentication\Adapter;
 
 use DoctrineModule\Authentication\Adapter\ObjectRepository;
@@ -10,93 +9,29 @@ use Zend\I18n\Translator\Translator;
 /**
  * Doctrine authentication with md5 encryption, checking verified and active
  * flag. Furthermore, date of login is saved if authenticated.
- * 
- * @author Dr. Holger Maerz
+ *
+ * @package Authentication\Adapter
  */
-class AuthAdapter extends ObjectRepository {
-    
-    protected $_translator;
-    protected $_textDomain="Auth";
-    
-    
-    public function __construct($options = array()) 
+class AuthAdapter extends ObjectRepository
+{
+
+    private  $translator;
+    private  $textDomain="Application";
+
+    /**
+     * @param array $options
+     */
+    public function __construct($options = array())
     {
-        
         parent::__construct($options);
-       
     }
-    
-    
-     /**
-     * Setter for translator in form. Enables the usage of i18N.
-     * 
-     * @param \Zend\I18n\Translator\Translator $translator
-     * @return ObjectRepository
-     */
-    public function setTranslator(Translator $translator)
-    {
-        $this->_translator = $translator;
-        return $this;
-    }
-    
-    /**
-    * getter 
-    * 
-    * @return \Zend\I18n\Translator\Translator $translator
-    */
-    public function getTranslator()
-    {
-        return $this->_translator;
-    }
-    
-    /**
-     * Setter for text domain neccessary for translation.
-     * Default value is 'Auth'. 
-     * 
-     * @param string $textDomain
-     * @return ObjectRepository
-     */
-    public function setTextDomain($textDomain)
-    {
-        if (null !== $textDomain) {
-            $this->_textDomain = $textDomain;
-        }
-        return $this;
-    }
-    
-    /**
-    * getter 
-    * 
-    * @return string $textDomain
-    */
-    public function getTextDomain()
-    {
-        return $this->_textDomain;
-    }
-    
-    /**
-     * l18n translation.
-     * 
-     * @param type $message
-     * @return string
-     */
-    public function translate($message)
-    {
-        if (null === $this->_translator) {
-           return $message;
-        }
-        
-        return $this->_translator->translate(
-                $message, 
-                $this->_textDomain 
-        );
-    }
-    
+
     /**
      * Set the credential value to be used.
      * using md5 encryption
      *
-     * @param  mixed $credentialValue
+     * @param mixed $credentialValue
+     *
      * @return ObjectRepository
      */
     public function setCredentialValue($credentialValue)
@@ -104,19 +39,21 @@ class AuthAdapter extends ObjectRepository {
         $this->credentialValue = md5($credentialValue);
         return $this;
     }
-    
-    
+
+
     /**
-     * Overwritten method for validating the record in the resultset. 
-     * Additional action proves if the account is verified and active. 
+     * Overwritten method for validating the record in the result set.
+     * Additional action proves if the account is verified and active.
      *
-     * @param  object $identity
+     * @param object $identity
+     *
      * @throws Exception\UnexpectedValueException
+     *
      * @return AuthenticationResult
      */
     protected function validateIdentity($identity)
     {
-      
+
         $credentialProperty = $this->options->getCredentialProperty();
         $getter = 'get' . ucfirst($credentialProperty);
         $documentCredential = null;
@@ -127,7 +64,7 @@ class AuthAdapter extends ObjectRepository {
             $documentCredential = $identity->{$credentialProperty};
         } else {
             throw new Exception\UnexpectedValueException(sprintf(
-                'Property (%s) in (%s) is not accessible. 
+                'Property (%s) in (%s) is not accessible.
                 You should implement %s::%s()',
                 $credentialProperty,
                 get_class($identity),
@@ -143,63 +80,122 @@ class AuthAdapter extends ObjectRepository {
             $credentialValue = call_user_func($callable, $identity, $credentialValue);
         }
 
-        if ($credentialValue !== true && 
+        if ($credentialValue !== true &&
                 $credentialValue != $documentCredential) {
-            $this->authenticationResultInfo['code'] = 
+            $this->authenticationResultInfo['code'] =
                 AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
-            $this->authenticationResultInfo['messages'][] = 
+            $this->authenticationResultInfo['messages'][] =
                 $this->translate('Supplied credential is invalid.');
 
             return $this->createAuthenticationResult();
         }
-        
+
        //Verified Account
-       if(!$identity->isVerified()) {
-           
-            $this->authenticationResultInfo['code'] = 
+       if (!$identity->isVerified()) {
+
+            $this->authenticationResultInfo['code'] =
                     AuthenticationResult::FAILURE_UNCATEGORIZED ;
-            $this->authenticationResultInfo['messages'][] = 
-                $this->translate('Account is not verified. '.
-                    'Please check your email.');
-            
+            $this->authenticationResultInfo['messages'][] =
+                $this->translate('Account is not verified.') . ' ' .
+                $this->translate('Please check your email.');
+
             return $this->createAuthenticationResult();
-        }
-        
+       }
+
        //Active Account
-       if(!$identity->isActive()) {
-           
-            $this->authenticationResultInfo['code'] = 
+       if (!$identity->isActive()) {
+
+            $this->authenticationResultInfo['code'] =
                     AuthenticationResult::FAILURE_UNCATEGORIZED ;
-            $this->authenticationResultInfo['messages'][] = 
-                $this->translate("Account is not active. " .
-                     "Please refer an administrator.");
-            
+            $this->authenticationResultInfo['messages'][] =
+                $this->translate("Account is not active.") . ' ' .
+                $this->translate("Please refer an administrator.");
+
             return $this->createAuthenticationResult();
-        }
+       }
 
         //save LoginDate
         $date = new \DateTime();
 
-        if(is_null($identity->getFirstLogin()))
+        if (is_null($identity->getFirstLogin())) {
             $identity->setFirstLogin($date);
-        
+        }
+
         $identity->setLastLogin($date);
-        
-        //get entitity and save it
+
+        //get entity and save it
         $entityManager=$this->options->getObjectManager();
         $entityManager->flush($identity);
-        
-        
-        $this->authenticationResultInfo['code']       = 
+
+        $this->authenticationResultInfo['code']       =
                 AuthenticationResult::SUCCESS;
-        $this->authenticationResultInfo['identity']   = 
+        $this->authenticationResultInfo['identity']   =
                 $identity;
-        $this->authenticationResultInfo['messages'][] = 
+        $this->authenticationResultInfo['messages'][] =
                 $this->translate('Authentication successful.');
 
         return $this->createAuthenticationResult();
     }
 
-    
-    
+    /**
+     * @param \Zend\I18n\Translator\Translator $translator
+     *
+     * @return ObjectRepository
+     */
+    public function setTranslator(Translator $translator)
+    {
+        $this->translator = $translator;
+        return $this;
+    }
+
+    /**
+     * getter
+     *
+     * @return \Zend\I18n\Translator\Translator $translator
+     */
+    public function getTranslator()
+    {
+        return $this->translator;
+    }
+
+    /**
+     * @param string $textDomain
+     *
+     * @return ObjectRepository
+     */
+    public function setTextDomain($textDomain)
+    {
+        if (null !== $textDomain) {
+            $this->textDomain = $textDomain;
+        }
+        return $this;
+    }
+
+    /**
+     * getter
+     *
+     * @return string $textDomain
+     */
+    public function getTextDomain()
+    {
+        return $this->textDomain;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return string
+     */
+    public function translate($message)
+    {
+        if (is_null($this->translator)) {
+            return $message;
+        }
+
+        return $this->getTranslator()->translate(
+            $message,
+            $this->getTextDomain()
+        );
+    }
+
 }

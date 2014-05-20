@@ -2,6 +2,7 @@
 
 namespace Nakade\Abstracts;
 
+use Nakade\FormServiceInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -11,7 +12,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 abstract class AbstractFormFactory
     extends AbstractTranslation
-    implements FactoryInterface
+    implements FactoryInterface, FormServiceInterface
 {
 
     protected $_entityManager;
