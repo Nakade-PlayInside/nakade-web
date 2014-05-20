@@ -16,15 +16,6 @@ class DashboardController extends AbstractActionController
      */
     public function indexAction()
     {
-       $noNewMails = 0;
-       if ($this->identity()) {
-           $serviceManager = $this->getServiceLocator();
-           $entityManager = $serviceManager->get('Doctrine\ORM\EntityManager');
-           $repo = new MessageMapper();
-           $repo->setEntityManager($entityManager);
-           $user = $this->identity()->getId();
-           $noNewMails = $repo->getNumberOfNewMessages($user);
-       }
         $messageWidget  = $this->forward()
             ->dispatch('/Message/Controller/Message', array('action' => 'info'));
 
@@ -35,7 +26,7 @@ class DashboardController extends AbstractActionController
         $appointmentWidget  = $this->forward()
             ->dispatch('/Appointment/Controller/Show', array('action' => 'message'));
 
-        $page = new ViewModel(array('noNewMails' => $noNewMails));
+        $page = new ViewModel(array());
         $page->addChild($messageWidget, 'messageWidget');
         $page->addChild($appointmentWidget, 'appointmentWidget');
         $page->addChild($scheduleWidget, 'scheduleWidget');

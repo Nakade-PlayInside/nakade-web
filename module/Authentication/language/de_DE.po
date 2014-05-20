@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-06 18:28+0100\n"
-"PO-Revision-Date: 2014-04-06 18:29+0100\n"
+"POT-Creation-Date: 2014-05-21 00:39+0100\n"
+"PO-Revision-Date: 2014-05-21 00:41+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -15,61 +15,66 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Authentication/Form/AuthForm.php:173
-msgid "Username:"
-msgstr "Benutzername:"
+#: ../src/Authentication/Form/AuthForm.php:62
+msgid "Username"
+msgstr "Benutzername"
 
-#: ../src/Authentication/Form/AuthForm.php:184
-msgid "Password:"
-msgstr "Passwort:"
+#: ../src/Authentication/Form/AuthForm.php:73
+msgid "Password"
+msgstr "Passwort"
 
-#: ../src/Authentication/Form/AuthForm.php:196
-msgid "Remember Me ?:"
-msgstr "eingeloggt bleiben?:"
+#: ../src/Authentication/Form/AuthForm.php:85
+msgid "Remember?"
+msgstr "eingeloggt bleiben?"
 
-#: ../src/Authentication/Form/AuthForm.php:206
+#: ../src/Authentication/Form/AuthForm.php:96
 msgid "Please verify you are human."
 msgstr "Bitte löse das Captcha."
 
-#: ../src/Authentication/Form/AuthForm.php:237
+#: ../src/Authentication/Form/AuthForm.php:125
 msgid "Submit"
 msgstr "Abschicken"
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:151
+#: ../src/Authentication/Adapter/AuthAdapter.php:88
 msgid "Supplied credential is invalid."
 msgstr "Zugangsdaten sind ungültig."
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:162
-msgid "Account is not verified. Please check your email."
-msgstr "Dein Account ist noch nicht verifiziert. Bitte überprüfe deine emails. "
+#: ../src/Authentication/Adapter/AuthAdapter.php:99
+msgid "Account is not verified."
+msgstr "Dein Account ist noch nicht verifiziert."
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:174
-msgid "Account is not active. Please refer an administrator."
-msgstr "Der Account wurde deaktiviert. Bitte kontaktiere einen Administrator."
+#: ../src/Authentication/Adapter/AuthAdapter.php:100
+msgid "Please check your email."
+msgstr "Bitte überprüfe deine emails. "
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:198
+#: ../src/Authentication/Adapter/AuthAdapter.php:111
+msgid "Account is not active."
+msgstr "Zugang deaktiviert."
+
+#: ../src/Authentication/Adapter/AuthAdapter.php:112
+msgid "Please refer an administrator."
+msgstr "Bitte kontaktiere einen Administrator."
+
+#: ../src/Authentication/Adapter/AuthAdapter.php:135
 msgid "Authentication successful."
 msgstr "Anmeldung erfolgreich."
 
-#: ../view/authentication/success/index.phtml:6
-msgid "You got %number% new messages"
-msgstr "Du hast %number% neue Nachrichten"
-
-#: ../view/authentication/success/index.phtml:10
-msgid "go to mailbox"
-msgstr "zum Postfach"
-
-#: ../view/authentication/success/index.phtml:18
+#: ../view/authentication/dashboard/index.phtml:4
 msgid "Logged in as %name%"
 msgstr "Angemeldet als %name%"
 
-#: ../view/authentication/success/index.phtml:22
+#: ../view/authentication/dashboard/index.phtml:10
 msgid "LogOut"
 msgstr "Abmelden"
 
-#: ../view/authentication/success/index.phtml:33
-msgid "Not logged in"
-msgstr "Nicht angemeldet"
+#~ msgid "You got %number% new messages"
+#~ msgstr "Du hast %number% neue Nachrichten"
+
+#~ msgid "go to mailbox"
+#~ msgstr "zum Postfach"
+
+#~ msgid "Not logged in"
+#~ msgstr "Nicht angemeldet"
 
 #~ msgid "Feel free to contact us."
 #~ msgstr "Abschicken"
