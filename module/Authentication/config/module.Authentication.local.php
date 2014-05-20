@@ -17,5 +17,8 @@ return array(
 
         //show captcha after n failed attempts
         'max_auth_attempts' => 5,
+
+        //remember user -> time in d
+        'cookie_life_time' => 14,
     ),
 );

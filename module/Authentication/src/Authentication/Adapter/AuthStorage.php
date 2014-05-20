@@ -11,9 +11,11 @@ use Zend\Authentication\Storage;
  */
 class AuthStorage extends Storage\Session
 {
+    //in seconds
+    private $cookieLifeTime=1209600;
 
     /**
-     * constructor sets the namespace for session to nakade
+     * constructor
      */
     public function __construct()
     {
@@ -26,13 +28,12 @@ class AuthStorage extends Storage\Session
      * Life time is set in seconds.
      *
      * @param boolean $rememberMe
-     * @param int     $time
      */
-    public function setRememberMe($rememberMe=false, $time = 1209600)
+    public function setRememberMe($rememberMe=false)
     {
-         if ($rememberMe) {
-             $this->session->getManager()->rememberMe($time);
-         }
+        if ($rememberMe) {
+            $this->session->getManager()->rememberMe($this->cookieLifeTime);
+        }
     }
 
     /**
@@ -56,4 +57,13 @@ class AuthStorage extends Storage\Session
         parent::clear();
 
     }
+
+    /**
+     * @param int $cookieLifeTime
+     */
+    public function setCookieLifeTime($cookieLifeTime)
+    {
+        $this->cookieLifeTime = $cookieLifeTime;
+    }
+
 }

@@ -13,6 +13,6 @@ return array(
     'NakadeAuth' => array(
         'text_domain' => 'Auth',
         'max_auth_attempts' => 5,
-
+        'cookie_life_time' => 14,
     ),
 );

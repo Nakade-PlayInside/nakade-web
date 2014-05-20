@@ -50,6 +50,11 @@ class AuthServiceFactory implements FactoryInterface
         $textDomain = isset($config['NakadeAuth']['text_domain']) ?
             $config['NakadeAuth']['text_domain'] : null;
 
+        //lifeTime
+        $lifeTimeInDays = isset($config['NakadeAuth']['cookie_life_time']) ?
+            $config['NakadeAuth']['cookie_life_time'] : 14;
+        $lifeTime = $this->getLifeTimeInSeconds($lifeTimeInDays);
+
         //EntityManager for database access by doctrine
         if (!$services->has('Doctrine\ORM\EntityManager')) {
             throw new \RuntimeException('Entity manager is not found.');
@@ -65,6 +70,7 @@ class AuthServiceFactory implements FactoryInterface
         //creating authentication and storage adapter
         $adapter = new AuthAdapter($authOptions);
         $storage = new AuthStorage($authOptions);
+        $storage->setCookieLifeTime($lifeTime);
 
         //set translator
         $adapter->setTranslator($translator);
@@ -73,6 +79,16 @@ class AuthServiceFactory implements FactoryInterface
         //Zend Authentication Services
         return new AuthenticationService($storage, $adapter);
 
+    }
+
+    /**
+     * @param int $lifeTimeInDays
+     *
+     * @return int
+     */
+    private function getLifeTimeInSeconds($lifeTimeInDays)
+    {
+        return intval($lifeTimeInDays)*24*60*60;
     }
 
 }
