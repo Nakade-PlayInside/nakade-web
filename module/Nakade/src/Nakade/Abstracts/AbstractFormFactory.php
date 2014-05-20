@@ -10,38 +10,28 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  * Creates the form with a translator, filter and validator.
  * Adds the translation file for validation messages from zend ressources.
  */
-abstract class AbstractFormFactory
-    extends AbstractTranslation
-    implements FactoryInterface, FormServiceInterface
+abstract class AbstractFormFactory extends AbstractTranslation implements FactoryInterface, FormServiceInterface
 {
 
-    protected $_entityManager;
+    protected $entityManager;
 
     /**
-    * Sets the EntityManager
-    *
-    * @param EntityManager $entitymanager
-    * @access public
-    * @return ActionController
-    */
+     * @param mixed $em
+     *
+     * @return $this
+     */
     public function setEntityManager($em)
     {
-       $this->_entity_manager = $em;
+       $this->entityManager = $em;
        return $this;
     }
 
-   /**
-    * Returns the EntityManager
-    *
-    * Fetches the EntityManager from ServiceLocator if it has not been initiated
-    * and then returns it
-    *
-    * @access public
-    * @return EntityManager
-    */
+    /**
+     * @return mixed
+     */
     public function getEntityManager()
     {
-       return $this->_entity_manager;
+       return $this->entityManager;
     }
 
     /**
@@ -52,19 +42,18 @@ abstract class AbstractFormFactory
     */
     public function hasEntityManager()
     {
-       return isset($this->_entity_manager);
+       return isset($this->entityManager);
     }
 
     /**
-    * saves the entity.
-    * return true on success
-    *
-    * @param Entity $entity
-    */
+     * @param mixed $entity
+     *
+     * @return mixed
+     */
     public function save($entity)
     {
 
-       if($entity===null) {
+       if (isNull($entity)) {
            return $this->getEntityManager()->flush();
        }
 
@@ -78,7 +67,7 @@ abstract class AbstractFormFactory
      *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
      *
-     * @return \User\Services\FormFactory
+     * @return mixed
      */
     abstract public function createService(ServiceLocatorInterface $services);
 

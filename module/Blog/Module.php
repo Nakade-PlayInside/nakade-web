@@ -1,12 +1,12 @@
 <?php
 /**
  * Module Blog
- * 
+ *
  * Content site showing imprint and contacte data.
- * laguage file set in bootstrap 
- * 
+ * laguage file set in bootstrap
+ *
  * @author  Dr. Holger Maerz <holger@spandaugo.de>
- *  
+ *
  */
 
 // module/Blog/Module.php
@@ -20,8 +20,10 @@ use Zend\Db\TableGateway\TableGateway;
 
 class Module
 {
-    
-          
+
+    /**
+     * @return array
+     */
     public function getAutoloaderConfig()
     {
         return array(
@@ -36,12 +38,17 @@ class Module
         );
     }
 
+    /**
+     * @return mixed
+     */
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
     }
-    
-    // Add this method:
+
+    /**
+     * @return array
+     */
     public function getServiceConfig()
     {
         return array(
@@ -52,8 +59,7 @@ class Module
                     return $table;
                 },
                 'BlogTableGateway' => function ($serviceManager) {
-                    $dbAdapter = 
-                        $serviceManager->get('Zend\Db\Adapter\Adapter');
+                    $dbAdapter = $serviceManager->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Blog());
                     return new TableGateway(
@@ -63,7 +69,7 @@ class Module
             ),
         );
     }
-    
-    
+
+
 }
 

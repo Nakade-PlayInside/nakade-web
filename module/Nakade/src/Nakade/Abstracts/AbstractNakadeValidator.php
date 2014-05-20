@@ -10,29 +10,27 @@ use Zend\Validator\AbstractValidator;
  */
 abstract class AbstractNakadeValidator extends AbstractValidator
 {
-   
+
+    /**
+     * @return mixed
+     */
     abstract public function getTranslatedTemplate();
 
     /**
-    * Helper for i18N. If a translator is set to the controller, the 
-    * message is translated.
-    *  
-    * @param string $message
-    * @return string
-    */
-   public function translate($message) 
-   {
-   
+     * @param string $message
+     *
+     * @return string
+     */
+    public function translate($message)
+    {
+
        $translator = $this->getTranslator();
-       if ($translator===null)
+       if (is_null($translator)) {
            return $message;
-       
-       return $translator->translate(
-                  $message, 
-                  $this->getTranslatorTextDomain()
-              );
-       
-   }
+       }
+
+       return $translator->translate($message, $this->getTranslatorTextDomain());
+
+    }
 }
 
-?>
