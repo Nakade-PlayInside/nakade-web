@@ -61,6 +61,7 @@ class CommandController extends AbstractActionController
            $repo->save($match);
            $repo->save($appointment);
 
+           $mail->setAppointment($appointment);
            $mail->sendMail($appointment->getResponder());
            $mail->sendMail($appointment->getSubmitter());
            echo "Confirmed appointment (id=" . $appointment->getId() . ")" . PHP_EOL;
