@@ -100,10 +100,10 @@
         $league = array(
 
             $this->translate('Schedule', 'Application')   =>
-                $this->url('actual/schedule'),
+                $this->url('actual', array('action' => 'schedule')),
 
             $this->translate('Standings', 'Application')  =>
-                $this->url('actual/table'),
+                $this->url('actual', array('action' => 'table')),
 
             $this->translate('results', 'Application')    =>
                 $this->url('result', array('action' => 'myresult')),

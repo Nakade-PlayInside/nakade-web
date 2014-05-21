@@ -64,76 +64,19 @@ return array(
 
             //actual season
             'actual' => array(
-                'type'    => 'Literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/actual',
+                    'route'    => '/actual[/:action][/:sort]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'sort'     => '[a-zA-Z][a-zA-Z0-9_-]+',
+                    ),
                     'defaults' => array(
                         'controller' => 'League\Controller\ActualSeason',
                         'action'     => 'index',
                     ),
                 ),
 
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //league schedule
-                    'schedule' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/schedule[/:lid]',
-                            'constraints' => array(
-                                'lid'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'schedule',
-                            ),
-                        ),
-                    ),
-
-                    //league schedule
-                    'my-schedule' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/mySchedule[/:uid]',
-                            'constraints' => array(
-                                'uid'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'my-schedule',
-                            ),
-                        ),
-                    ),
-
-                    //league schedule
-                    'i-cal' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/iCal[/:uid]',
-                            'constraints' => array(
-                                'uid'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'i-cal',
-                            ),
-                        ),
-                    ),
-
-                    //league table
-                    'table' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/table[/:lid][/:sort]',
-                            'constraints' => array(
-                                'lid'    => '[0-9]+',
-                                'sort'   => '[a-zA-Z]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'table',
-                            ),
-                        ),
-                    ),
-
-                )
             ),
 
             'result' => array(
@@ -167,115 +110,66 @@ return array(
             ),
 
             'newseason' => array(
-                'type'    => 'Literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/newseason',
+                    'route'    => '/newseason[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
                         'controller' => 'League\Controller\Season',
                         'action'     => 'index',
                     ),
                 ),
-
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add a result
-                    'add' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/add',
-                            'defaults' => array(
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-
-
-                )
             ),
 
             'league' => array(
-                'type'    => 'Literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/league',
+                    'route'    => '/league[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
                         'controller' => 'League\Controller\League',
                         'action'     => 'index',
                     ),
                 ),
 
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add a result
-                    'add' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/add',
-                            'defaults' => array(
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-
-
-                )
             ),
 
             'player' => array(
-                'type'    => 'Literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/player',
+                    'route'    => '/player[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
                         'controller' => 'League\Controller\Player',
                         'action'     => 'index',
                     ),
                 ),
 
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add a result
-                    'add' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/add',
-                            'defaults' => array(
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-
-
-                )
             ),
 
             'schedule' => array(
-                'type'    => 'Literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/schedule',
+                    'route'    => '/schedule[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
                         'controller' => 'League\Controller\Schedule',
                         'action'     => 'index',
                     ),
                 ),
 
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add a result
-                    'add' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/add',
-                            'defaults' => array(
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-
-
-                )
             ),
            //next route
 

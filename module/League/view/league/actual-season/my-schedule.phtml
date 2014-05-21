@@ -11,7 +11,7 @@ $this->headTitle('schedule');
 
 <?php $this->placeholder('schedule')->captureStart();?>
 <h3><?php echo $this->escapeHtml($this->title); ?></h3>
-<a title="<?php echo $iCalInfo; ?>" href="/actual/iCal"><img alt="iCal" src="/images/iCal-32.png" /></a>
+<a title="<?php echo $iCalInfo; ?>" href="<?php echo $this->url('actual', array('action' => 'iCal')); ?>"><img alt="iCal" src="/images/iCal-32.png" /></a>
 <table class="league">
 <?php foreach ($this->matches as $match) : ?>
 
