@@ -9,6 +9,7 @@ return array(
         'Nakade',
         'Mail',
         'League',
+        'Season',
         'Authentication',
         'Permission',
         'Message',

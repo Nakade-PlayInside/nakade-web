@@ -35,14 +35,6 @@ return array(
                     'League\Services\ResultControllerFactory',
             'League\Controller\Matchday' =>
                     'League\Services\MatchdayControllerFactory',
-            'League\Controller\Season' =>
-                    'League\Services\SeasonControllerFactory',
-            'League\Controller\League' =>
-                    'League\Services\LeagueControllerFactory',
-            'League\Controller\Player' =>
-                    'League\Services\PlayerControllerFactory',
-            'League\Controller\Schedule' =>
-                    'League\Services\ScheduleControllerFactory',
         ),
 
     ),
@@ -108,69 +100,6 @@ return array(
                     ),
                 ),
             ),
-
-            'newseason' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/newseason[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'League\Controller\Season',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),
-
-            'league' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/league[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'League\Controller\League',
-                        'action'     => 'index',
-                    ),
-                ),
-
-            ),
-
-            'player' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/player[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'League\Controller\Player',
-                        'action'     => 'index',
-                    ),
-                ),
-
-            ),
-
-            'schedule' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/schedule[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'League\Controller\Schedule',
-                        'action'     => 'index',
-                    ),
-                ),
-
-            ),
            //next route
 
         ),
@@ -195,19 +124,12 @@ return array(
                     'League\Factory\FormFactory',
             'League\Services\ActualSeasonServiceFactory'     =>
                     'League\Services\ActualSeasonServiceFactory',
-            'League\Services\SeasonServiceFactory'  =>
-                    'League\Services\SeasonServiceFactory',
             'League\Services\MatchdayServiceFactory'  =>
                     'League\Services\MatchdayServiceFactory',
-            'League\Services\LeagueServiceFactory'  =>
-                    'League\Services\LeagueServiceFactory',
-            'League\Services\PlayerServiceFactory'  =>
-                    'League\Services\PlayerServiceFactory',
-            'League\Services\ScheduleServiceFactory'  =>
-                    'League\Services\ScheduleServiceFactory',
-
             'result_form'       => 'League\Services\ResultFormFactory',
 
+            'League\Services\PlayerServiceFactory' =>
+                'League\Services\PlayerServiceFactory',
             'League\Services\ResultServiceFactory' =>
                     'League\Services\ResultServiceFactory',
 

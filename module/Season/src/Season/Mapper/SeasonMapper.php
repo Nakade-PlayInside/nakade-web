@@ -39,7 +39,7 @@ class SeasonMapper  extends AbstractMapper
 
    /**
    * The last season is the max number of all seasons with all matches played.
-   * 
+   *
    * @return /League/Entity/Season $season
    */
    public function getLastSeason()

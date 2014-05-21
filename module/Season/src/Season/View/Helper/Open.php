@@ -2,7 +2,7 @@
 namespace Season\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use Season\Entity\Match;
+use League\Entity\Match;
 
 /**
  * View helper determining if the match was already played.
