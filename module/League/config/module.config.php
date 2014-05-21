@@ -137,84 +137,33 @@ return array(
             ),
 
             'result' => array(
-                'type'    => 'Literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/result',
+                    'route'    => '/result[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
                         'controller' => 'League\Controller\Result',
                         'action'     => 'index',
                     ),
                 ),
-
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add a result
-                    'add' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/add[/:id]',
-                            'constraints' => array(
-                                'id'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-
-                    //results of a user
-                    'myresult' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/myresult',
-                            'defaults' => array(
-                                'action' => 'myresult',
-                            ),
-                        ),
-                    ),
-
-                    //open results of a user
-                    'myopen' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/myopen',
-                            'defaults' => array(
-                                'action' => 'myopen',
-                            ),
-                        ),
-                    ),
-                )
             ),
 
             'matchday' => array(
-                'type'    => 'Literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/matchday',
+                    'route'    => '/matchday[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
                         'controller' => 'League\Controller\Matchday',
                         'action'     => 'index',
                     ),
                 ),
-
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add a result
-                    'edit' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/edit[/:id]',
-                            'constraints' => array(
-                                'id'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'edit',
-                            ),
-                        ),
-                    ),
-
-                )
             ),
 
             'newseason' => array(

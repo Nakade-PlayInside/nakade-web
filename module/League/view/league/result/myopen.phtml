@@ -1,5 +1,5 @@
 <?php
-$this->plugin('translate')->setTranslatorTextDomain('League'); 
+$this->plugin('translate')->setTranslatorTextDomain('League');
 
 $title = $this->translate('open');
 $this->headTitle($title);
@@ -19,9 +19,9 @@ $this->headTitle($title);
     <td class="versus">-</td>
     <td class="space"><?php echo $this->escapeHtml($game->getWhite()->getShortName());?></td>
     <td><?php
-       
+
         echo   sprintf('<a href="%s" title="%s">%s</a>',
-                 $this->url('result/add', array('action'=>'add', 'id'=>$game->getId()) ),
+                 $this->url('result', array('action'=>'add', 'id'=>$game->getId()) ),
                  $this->translate("Enter Result"),
                  $this->translate("open")
              );
@@ -29,10 +29,10 @@ $this->headTitle($title);
 </tr>
 <?php endforeach; ?>
 </table>
-<?php $this->placeholder('openresults')->captureEnd(); 
+<?php $this->placeholder('openresults')->captureEnd();
 
   if($this->matches!=null)
         echo $this->placeholder('openresults');
-  else  echo $this->placeholder('noresults');       
-        
+  else  echo $this->placeholder('noresults');
+
 ?>

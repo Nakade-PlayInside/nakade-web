@@ -27,7 +27,7 @@ $this->headTitle($title);
     <td><?php  if ($this->isOpen($game)) {
 
       echo   sprintf('<a href="%s" title="%s">%s</a>',
-          $this->url('result/add', array('action'=>'add', 'id'=>$game->getId())),
+          $this->url('result', array('action'=>'add', 'id'=>$game->getId())),
           $this->translate("Enter Result"),
           $this->translate("open")
       );
