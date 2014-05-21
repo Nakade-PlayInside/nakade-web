@@ -23,25 +23,6 @@ class ActualSeasonController extends AbstractController
     private $iCal=null;
 
     /**
-     * @param ICalService $service
-     *
-     * @return $this
-     */
-    public function setICalService(ICalService $service)
-    {
-        $this->iCal = $service;
-        return $this;
-    }
-
-    /**
-     * @return ICalService
-     */
-    public function getICalService()
-    {
-        return $this->iCal;
-    }
-
-    /**
     * Default action showing up the Top League table
     * in a short and compact version. This can be used as a widget.
     *
@@ -49,8 +30,15 @@ class ActualSeasonController extends AbstractController
     */
     public function indexAction()
     {
+        /* @var $seasonMapper \League\Mapper\SeasonMapper */
+        $seasonMapper = $this->getRepository()->getMapper('season');
+        $season = $seasonMapper->getActualSeason();
+        if (is_null($season)) {
+            $season = $seasonMapper->getLastSeason();
+        }
 
         return new ViewModel(
+
             array(
               'title'     => $this->getService()->getTitle(),
               'table'     => $this->getService()->getTopLeagueTable()
@@ -159,5 +147,25 @@ class ActualSeasonController extends AbstractController
 
         return $user->getId();
     }
+
+    /**
+     * @param ICalService $service
+     *
+     * @return $this
+     */
+    public function setICalService(ICalService $service)
+    {
+        $this->iCal = $service;
+        return $this;
+    }
+
+    /**
+     * @return ICalService
+     */
+    public function getICalService()
+    {
+        return $this->iCal;
+    }
+
 
 }

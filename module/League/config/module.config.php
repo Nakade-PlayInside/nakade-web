@@ -132,7 +132,8 @@ return array(
                 'League\Services\PlayerServiceFactory',
             'League\Services\ResultServiceFactory' =>
                     'League\Services\ResultServiceFactory',
-
+            'League\Services\RepositoryService' =>
+                'League\Services\RepositoryService',
             'League\Services\ICalService' =>
                 'League\Services\ICalService',
 
