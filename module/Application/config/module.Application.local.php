@@ -13,9 +13,6 @@ return array(
         'text_domain' => 'Application',
 
         'contact' => array (
-            'captcha' => array(
-                'class'   => 'dumb',
-            ),
 
             //copies form contact mail
             'bbc' => array (

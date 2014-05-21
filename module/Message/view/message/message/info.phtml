@@ -1,0 +1,18 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Message');
+?>
+<?php
+    $message = $this->translate("You have got %number% new messages");
+    $message = str_replace('%number%', "<span>$this->noNewMails</span>", $message);
+?>
+
+<?php $this->placeholder('Message')->captureStart();?>
+<div class="message"><?php echo $message; ?>
+    <a href="<?php echo $this->url('message')?>"><?php echo $this->translate("go to mailbox") ?></a>
+</div>
+<?php $this->placeholder('Message')->captureEnd();
+
+if (!empty($this->noNewMails)) {
+    echo $this->placeholder('Message');
+}
+

@@ -4,6 +4,7 @@ namespace Nakade\Abstracts;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\I18n\Translator\Translator;
+use Zend\Session\Container;
 
 /**
  * Extending for having a service getter and setter
@@ -18,6 +19,7 @@ class AbstractController extends AbstractActionController
     protected $repository;
     protected $translator;
     protected $mailService;
+    protected $session;
 
     /**
      * @return mixed
@@ -59,19 +61,17 @@ class AbstractController extends AbstractActionController
 
     /**
      * @param string $typ
-     * @param string $lang
      *
-     * @return /Zend/Form/Form
+     * @return \Zend\Form\Form
      */
-    public function getForm($typ, $lang=null)
+    public function getForm($typ)
     {
 
-        if (null === $this->formFactory) {
+        if (is_null($this->formFactory)) {
             return null;
         }
 
-        return $this->getFormFactory()->getForm($typ, $lang);
-
+        return $this->getFormFactory()->getForm($typ);
     }
 
     /**
@@ -130,4 +130,25 @@ class AbstractController extends AbstractActionController
     {
         return $this->mailService;
     }
+
+    /**
+     * @param Container $session
+     *
+     * @return $this
+     */
+    public function setSession(Container $session)
+    {
+        $this->session = $session;
+        return $this;
+    }
+
+    /**
+     * @return Container
+     */
+    public function getSession()
+    {
+        return $this->session;
+    }
+
+
 }

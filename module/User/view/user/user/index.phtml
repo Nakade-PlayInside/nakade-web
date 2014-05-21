@@ -7,7 +7,7 @@ $this->headTitle($title);
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 
-<a href="user/add"><?php echo $this->translate("add user"); ?></a>
+<a href="<?php echo $this->url('user', array('action' => 'add')); ?>"><?php echo $this->translate("add user"); ?></a>
 <table class="table" style="width:auto">
 <tr>
     <th><?php echo $this->translate("Sex"); ?></th>

@@ -1,10 +1,10 @@
 <?php
 //module/Authentication/view/authentication/auth/login.phtml
-$this->plugin('translate')->setTranslatorTextDomain('Auth'); 
+$this->plugin('translate')->setTranslatorTextDomain('Auth');
 
 $form = $this->form;
 $form->setAttribute('action', $this->url(
-    'login/process',
+    'login',
     array(
         'action'     => 'authenticate',
     )
@@ -15,10 +15,9 @@ echo $this->form()->openTag($form);
 echo $this->formCollection($form);
 echo $this->form()->closeTag();
 
-if ($this->messages){
+if ($this->messages) {
     echo '<ul>';
-    foreach($this->messages as $message)
-    {
+    foreach ($this->messages as $message) {
         echo '<li>'.$message.'</li>';
     }
     echo '</ul>';

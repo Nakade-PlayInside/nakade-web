@@ -107,8 +107,6 @@ return array(
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
             'Application\Services\ContactFormFactory'
                 => 'Application\Services\ContactFormFactory',
-            'Application\Services\ContactCaptchaFactory'
-                => 'Application\Services\ContactCaptchaFactory',
             'Application\Services\MailService'
                 => 'Application\Services\MailService',
         ),

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-16 13:16+0100\n"
-"PO-Revision-Date: 2014-04-16 13:16+0100\n"
+"POT-Creation-Date: 2014-05-21 00:43+0100\n"
+"PO-Revision-Date: 2014-05-21 00:43+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -15,6 +15,18 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
+#: ../src/Message/Mail/NotifyMail.php:34
+msgid "You have got a new message in your mailbox at %URL%."
+msgstr ""
+
+#: ../src/Message/Mail/NotifyMail.php:36
+msgid "Please logIn at %URL% for reading."
+msgstr ""
+
+#: ../src/Message/Mail/NotifyMail.php:58
+msgid "New Message at nakade.de"
+msgstr ""
+
 #: ../src/Message/Form/MessageForm.php:53
 msgid "recipient"
 msgstr ""
@@ -25,7 +37,6 @@ msgstr ""
 
 #: ../src/Message/Form/MessageForm.php:67
 #: ../src/Message/Form/ReplyForm.php:67
-#: ../view/message/message/show.phtml:39
 msgid "subject"
 msgstr ""
 
@@ -48,29 +59,12 @@ msgstr ""
 msgid "receiver"
 msgstr ""
 
-#: ../src/Message/Notify/NotifyMail.php:30
-msgid "New Nakade Message"
-msgstr ""
-
-#: ../src/Message/Notify/NotifyMail.php:38
-msgid "You have got a new message in your mailbox at nakade.de."
-msgstr ""
-
-#: ../src/Message/Notify/NotifyMail.php:39
-msgid "Please logIn for reading."
-msgstr ""
-
-#: ../src/Message/Notify/NotifyMail.php:42
-msgid "Your Nakade Team"
-msgstr ""
-
 #: ../view/message/message/index.phtml:6
 msgid "Messages - Inbox"
 msgstr ""
 
 #: ../view/message/message/index.phtml:9
 #: ../view/message/message/sent.phtml:10
-#: ../view/message/message/show.phtml:22
 msgid "No messages found"
 msgstr ""
 
@@ -85,7 +79,6 @@ msgid "Subject"
 msgstr ""
 
 #: ../view/message/message/index.phtml:20
-#: ../view/message/message/show.phtml:34
 msgid "from"
 msgstr ""
 
@@ -96,6 +89,14 @@ msgstr ""
 
 #: ../view/message/message/index.phtml:38
 msgid "delete"
+msgstr ""
+
+#: ../view/message/message/info.phtml:5
+msgid "You have got %number% new messages"
+msgstr ""
+
+#: ../view/message/message/info.phtml:11
+msgid "go to mailbox"
 msgstr ""
 
 #: ../view/message/message/sent.phtml:6
@@ -115,7 +116,6 @@ msgid "unread"
 msgstr ""
 
 #: ../view/message/message/sent.phtml:38
-#: ../view/message/message/show.phtml:46
 msgid "read"
 msgstr ""
 

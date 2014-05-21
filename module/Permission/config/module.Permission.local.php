@@ -19,6 +19,7 @@ return array(
             'Appointment\Controller\Show' => 'guest',
             'Appointment\Controller\Show\reject' => 'moderator',
             'Message\Controller\Message' => 'guest',
+            'Authentication\Controller\DashboardController' => 'guest',
         )
     ),
 );

@@ -15,7 +15,7 @@ use Nakade\Abstracts\AbstractNakadeValidator;
  */
 abstract class AbstractDoctrineValidator extends AbstractNakadeValidator
 {
-    
+
     /**
      * Error constants
      */
@@ -43,16 +43,19 @@ abstract class AbstractDoctrineValidator extends AbstractNakadeValidator
     /**
      * Entity manager to use. If null isValid() will throw an exception
      *
-     * @var Doctrine\ORM\Mapping\Driver\AnnotationDriver
+     * @var \Doctrine\ORM\Mapping\Driver\AnnotationDriver
      */
     protected $adapter = null;
-    
+
     /**
      *  @var int
      */
     protected $exclude = null;
 
-     public function getTranslatedTemplate()
+    /**
+     * @return array
+     */
+    public function getTranslatedTemplate()
     {
         //just for translation using PoE
         $template = array(
@@ -60,12 +63,12 @@ abstract class AbstractDoctrineValidator extends AbstractNakadeValidator
                 "No record matching the input was found."),
             self::ERROR_RECORD_FOUND    => $this->translate(
                 "A record matching the input was found."),
-           
+
         );
         return $template;
     }
 
-    
+
     /**
      * Provides basic configuration for use with Zend\Validator\Db Validators
      * A database adapter may optionally be supplied to avoid using the registered default adapter.
@@ -77,11 +80,12 @@ abstract class AbstractDoctrineValidator extends AbstractNakadeValidator
      * 'adapter'  => An optional doctrine adapter to use
      *
      * @param array|Traversable|Select $options Options to use for this validator
+     *
      * @throws \Zend\Validator\Exception\InvalidArgumentException
      */
     public function __construct($options = null)
     {
-       
+
         parent::__construct($options);
 
         if ($options instanceof Traversable) {
@@ -91,32 +95,32 @@ abstract class AbstractDoctrineValidator extends AbstractNakadeValidator
                 'The options parameter must be an array or a Traversable'
             );
         }
-        
+
         if (!array_key_exists('entity', $options)) {
             throw new Exception\InvalidArgumentException('Entity option missing!');
         }
         $this->setEntity($options['entity']);
-        
+
         if (!array_key_exists('property', $options)) {
             throw new Exception\InvalidArgumentException('Property option missing!');
         }
         $this->setProperty($options['property']);
-        
+
         if (array_key_exists('adapter', $options)) {
             $this->setAdapter($options['adapter']);
         }
-        
+
         if (array_key_exists('exclude', $options)) {
             $this->setExclude($options['exclude']);
         }
-        
+
     }
 
     /**
      * Returns the set adapter
      *
      * @throws \Zend\Validator\Exception\RuntimeException When no database adapter is defined
-     * @return Doctrine Entity Manager
+     * @return \Doctrine\ORM\Mapping\Driver\AnnotationDriver
      */
     public function getAdapter()
     {
@@ -126,7 +130,8 @@ abstract class AbstractDoctrineValidator extends AbstractNakadeValidator
     /**
      * Sets a new entity manager
      *
-     * @param  entity manager $adapter
+     * @param \Doctrine\ORM\Mapping\Driver\AnnotationDriver $adapter
+     *
      * @return self Provides a fluent interface
      */
     public function setAdapter($adapter)
@@ -149,7 +154,8 @@ abstract class AbstractDoctrineValidator extends AbstractNakadeValidator
      * Sets a new property
      *
      * @param string $property
-     * @return AbstractDb
+     *
+     * @return $this
      */
     public function setProperty($property)
     {
@@ -171,14 +177,15 @@ abstract class AbstractDoctrineValidator extends AbstractNakadeValidator
      * Sets a new Entity
      *
      * @param string $entity
-     * @return self Provides a fluent interface
+     *
+     * @return $this
      */
     public function setEntity($entity)
     {
         $this->entity = (string) $entity;
         return $this;
     }
-    
+
     /**
      * Returns the set excluded Id
      *
@@ -193,16 +200,17 @@ abstract class AbstractDoctrineValidator extends AbstractNakadeValidator
      * Sets a new excluded Id
      *
      * @param int $value
-     * @return self Provides a fluent interface
+     *
+     * @return $this
      */
     public function setExclude($value)
     {
-        if(is_int($value)) {
+        if (is_int($value)) {
             $this->exclude = $value;
         }
         return $this;
     }
-    
+
     /**
      * is an exlusion set
      *
@@ -226,47 +234,48 @@ abstract class AbstractDoctrineValidator extends AbstractNakadeValidator
     }
 
     /**
-     * return the exclusion query. Has to be concated 
+     * return the exclusion query. Has to be concated
      * to the regular query
-     * 
+     *
      * @return string
      */
-    protected function getExludingQuery() 
+    protected function getExludingQuery()
     {
-        return sprintf(" AND q.%s!=%s", 
+        return sprintf(" AND q.%s!=%s",
             $this->getIdentifier(),
-            $this->getExclude()    
+            $this->getExclude()
         );
-        
+
     }
-    
+
     /**
      * Run query and returns matches, or null if no matches are found.
      *
-     * @param  string $value
+     * @param string $value
+     *
      * @return array when matches are found.
      */
     protected function query($value)
     {
-     
-         $dql = sprintf("SELECT q as query FROM %s q WHERE q.%s=:value", 
-                    $this->getEntity(), 
-                    $this->getProperty()
-                );
-      
-         if($this->hasExclude()) {
+
+         $dql = sprintf("SELECT q as query FROM %s q WHERE q.%s=:value",
+             $this->getEntity(),
+             $this->getProperty()
+         );
+
+         if ($this->hasExclude()) {
             $dql .= $this->getExludingQuery();
          }
-         
+
          $result = $this->getAdapter()
                         ->createQuery($dql)
                         ->setParameter('value', $value)
                         ->getOneOrNullResult();
-      
+
          return $result['query'];
-      
+
     }
 
 }
 
-?>
+

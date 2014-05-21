@@ -46,112 +46,28 @@ return array(
 
         ),
     ),
-    //The name of the route is ‘user’ and has a type of ‘segment’. The segment
-    //route allows us to specify placeholders in the URL pattern (route) that
-    //will be mapped to named parameters in the matched route.
-    //In this case, the route is ``/user[/:action][/:id]`` which will match any
-    //URL that starts with /user.
-    //The next segment will be an optional action name, and then finally the
-    //next segment will be mapped to an optional id.
-    //The square brackets indicate that a segment is optional.
-    //The constraints section allows us to ensure that the characters within a
-    //segment are as expected, so we have limited actions to starting with a
-    //letter and then subsequent characters only being alphanumeric, underscore
-    //or hyphen. We also limit the id to a number.
+
+
     'router' => array(
         'routes' => array(
             //USER
             'user' => array(
 
-                'type'  => 'Literal',
+                'type'  => 'segment',
                 'options' => array(
-                     'route'    => '/user',
-                     'defaults' => array(
+                    'route'    => '/user[/:action][/:id]',
+                    'constraints' => array(
+                        'action' =>  '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
                         'controller' => 'User\Controller\User',
                         'action'     => 'index',
+                        'id'     => '0',
                     ),
                 ),
 
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add user
-                    'add' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/add',
-                            'defaults' => array(
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-
-                    //edit user
-                    'edit' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/edit[/:id]',
-                            'constraints' => array(
-                                'id'     => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'edit',
-                                'id'     => '0',
-                            ),
-                        ),
-                    ),
-
-                    //deactivate user
-                    'delete' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/delete[/:id]',
-                            'constraints' => array(
-                                'id'     => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'delete',
-                                'id'     => '0',
-                            ),
-                        ),
-                    ),
-
-                    //activate user
-                    'undelete' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/undelete[/:id]',
-                            'constraints' => array(
-                                'id'     => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'undelete',
-                                'id'     => '0',
-                            ),
-                        ),
-                    ),
-
-                    //reset password
-                    'resetPassword' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/resetPassword[/:id]',
-                            'constraints' => array(
-                                'id'     => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'resetPassword',
-                                'id'     => '0',
-                            ),
-                        ),
-                    ),
-
-                ),
             ),
-
-
-
-
             //PROFILE
             'profile' => array(
                 'type'    => 'segment',

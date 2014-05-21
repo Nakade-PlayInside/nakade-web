@@ -52,7 +52,7 @@
                 $this->url('user'),
 
             $this->translate('add user', 'Application')  =>
-                $this->url('user/add'),
+                $this->url('user', array('action' => 'add')),
 
             $this->translate('open results', 'Application')    =>
                 $this->url('result'),
@@ -132,7 +132,7 @@
         );
 
         echo sprintf('<li><a href="%s">%s</a></li>',
-            $this->url('login/process', array('action'=>'logout')),
+            $this->url('login', array('action'=>'logout')),
             $this->translate('Logout', 'Application')
         );
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-16 14:26+0100\n"
-"PO-Revision-Date: 2014-05-16 14:26+0100\n"
+"POT-Creation-Date: 2014-05-21 00:38+0100\n"
+"PO-Revision-Date: 2014-05-21 00:38+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -32,7 +32,7 @@ msgid "Your email"
 msgstr ""
 
 #: ../src/Application/Mail/ContactMail.php:43
-#: ../src/Application/Form/ContactForm.php:64
+#: ../src/Application/Form/ContactForm.php:65
 msgid "Your message"
 msgstr ""
 
@@ -40,15 +40,19 @@ msgstr ""
 msgid "Your Contact to nakade.de"
 msgstr ""
 
-#: ../src/Application/Form/ContactForm.php:44
+#: ../src/Application/Form/ContactForm.php:45
 msgid "Your Name"
 msgstr ""
 
-#: ../src/Application/Form/ContactForm.php:54
+#: ../src/Application/Form/ContactForm.php:55
 msgid "Your Email"
 msgstr ""
 
-#: ../src/Application/Form/ContactForm.php:98
+#: ../src/Application/Form/ContactForm.php:75
+msgid "Please verify you are human."
+msgstr ""
+
+#: ../src/Application/Form/ContactForm.php:99
 msgid "Submit"
 msgstr ""
 

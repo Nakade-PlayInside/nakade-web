@@ -9,10 +9,10 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 class Module implements AutoloaderProviderInterface
 {
     /**
-     * Adds a class map to the ClassmapAutoloader and the namespace to the 
+     * Adds a class map to the ClassmapAutoloader and the namespace to the
      * StandardAutoloader. If no files provided in the ClassmapAutoloader, fall
      * back to the StandardAutoloader.
-     * 
+     *
      * @return array
      */
     public function getAutoloaderConfig()
@@ -28,18 +28,15 @@ class Module implements AutoloaderProviderInterface
             ),
         );
     }
-    
+
     /**
      * Autoloading the module configuration file.
-     * 
+     *
      * @return array
      */
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
     }
-   
-    
-   
-  
+
 }

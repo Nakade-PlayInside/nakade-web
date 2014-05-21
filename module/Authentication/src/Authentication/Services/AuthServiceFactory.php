@@ -1,11 +1,8 @@
 <?php
-//module/Authentication/src/Authentication/Services/AuthServiceFactory.php
 namespace Authentication\Services;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\ArrayUtils;
-use RuntimeException;
 
 use Authentication\Adapter\AuthAdapter;
 use Authentication\Adapter\AuthStorage;
@@ -16,9 +13,12 @@ use DoctrineModule\Options\Authentication as AuthOptions;
  * Factory for creating the Zend Authentication Services. Using customized
  * Adapter and Storage instances.
  *
- * @author Dr. Holger Maerz <grrompf@gmail.com>
+ * Class AuthServiceFactory
+ *
+ * @package Authentication\Services
  */
-class AuthServiceFactory implements FactoryInterface {
+class AuthServiceFactory implements FactoryInterface
+{
 
 
     /**
@@ -27,58 +27,69 @@ class AuthServiceFactory implements FactoryInterface {
      * Integration of optional translation feature (i18N)
      *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
+     *
      * @return \Zend\Authentication\AuthenticationService
-     * @throws RuntimeException
+     *
+     * @throws \RuntimeException
      *
      */
     public function createService(ServiceLocatorInterface $services)
     {
 
         $config  = $services->get('config');
-        if ($config instanceof Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
-        }
-
-        //EntityManager for database access by doctrine
-        $EntityManager = $services->get('Doctrine\ORM\EntityManager');
 
         //configuration options as set in module.config
-        $key  = 'authentication';
-        $name = 'orm_default';
-        $options = isset($config['doctrine'][$key][$name]) ?
-            $config['doctrine'][$key][$name] : null;
+        $options = $config['doctrine']['authentication']['orm_default'] ?
+            $config['doctrine']['authentication']['orm_default'] : null;
 
-        if (null === $options) {
-            throw new RuntimeException(sprintf(
-                'Options with name "%s" could not be found in "doctrine.%s".',
-                $name,
-                $key
-            ));
+        if (is_null($options)) {
+            throw new \RuntimeException('ORM default options are not found.');
         }
 
-        //auth Options instance and setting the entityManager
-        $AuthOptions = new AuthOptions($options);
-        $AuthOptions->setObjectManager($EntityManager);
+        //text domain
+        $textDomain = isset($config['NakadeAuth']['text_domain']) ?
+            $config['NakadeAuth']['text_domain'] : null;
 
-        //optional translator
+        //lifeTime
+        $lifeTimeInDays = isset($config['NakadeAuth']['cookie_life_time']) ?
+            $config['NakadeAuth']['cookie_life_time'] : 14;
+        $lifeTime = $this->getLifeTimeInSeconds($lifeTimeInDays);
+
+        //EntityManager for database access by doctrine
+        if (!$services->has('Doctrine\ORM\EntityManager')) {
+            throw new \RuntimeException('Entity manager is not found.');
+        }
+        $entityManager = $services->get('Doctrine\ORM\EntityManager');
         $translator = $services->get('translator');
-        $textDomain = $config['NakadeAuth']['text_domain'];
+
+
+        //auth Options instance and setting the entityManager
+        $authOptions = new AuthOptions($options);
+        $authOptions->setObjectManager($entityManager);
 
         //creating authentication and storage adapter
-        $adapter = new AuthAdapter($AuthOptions);
-        $storage = new AuthStorage($AuthOptions);
+        $adapter = new AuthAdapter($authOptions);
+        $storage = new AuthStorage($authOptions);
+        $storage->setCookieLifeTime($lifeTime);
 
         //set translator
         $adapter->setTranslator($translator);
         $adapter->setTextDomain($textDomain);
 
         //Zend Authentication Services
-        return new AuthenticationService($storage,$adapter );
+        return new AuthenticationService($storage, $adapter);
 
     }
 
-
-
+    /**
+     * @param int $lifeTimeInDays
+     *
+     * @return int
+     */
+    private function getLifeTimeInSeconds($lifeTimeInDays)
+    {
+        return intval($lifeTimeInDays)*24*60*60;
+    }
 
 }
 

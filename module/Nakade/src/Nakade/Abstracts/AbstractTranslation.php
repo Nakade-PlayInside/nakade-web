@@ -16,28 +16,29 @@ use Zend\I18n\Translator\TranslatorAwareInterface;
 class AbstractTranslation implements TranslatorAwareInterface
 {
 
-    protected $_translator_enabled=true;
+    protected $_translatorEnabled=true;
     protected $_translator;
     protected $_textDomain='default';
 
     /**
      * Sets translator to use in helper
      *
-     * @param  Translator $translator  [optional] translator.
-     *          Default is null, which sets no translator.
-     * @param  string     $textDomain  [optional] text domain
-     *          Default is null, which skips setTranslatorTextDomain
+     * @param Translator $translator
+     * @param string     $textDomain
+     *
      * @return TranslatorAwareInterface
      */
-    public function setTranslator(
-            Translator $translator = null,
-            $textDomain = null)
+    public function setTranslator(Translator $translator = null, $textDomain = null)
     {
-        if(isset($translator))
+        if (isset($translator)) {
             $this->_translator=$translator;
+        }
 
-        if(isset($textDomain))
+
+        if (isset($textDomain)) {
             $this->_textDomain=$textDomain;
+        }
+
     }
 
     /**
@@ -61,15 +62,13 @@ class AbstractTranslation implements TranslatorAwareInterface
     }
 
     /**
-     * Sets whether translator is enabled and should be used
+     * @param bool $enabled
      *
-     * @param  bool $enabled [optional] whether translator should be used.
-     *                       Default is true.
-     * @return TranslatorAwareInterface
+     * @return $this|TranslatorAwareInterface
      */
     public function setTranslatorEnabled($enabled=true)
     {
-        $this->_translator_enabled=$enabled;
+        $this->_translatorEnabled=$enabled;
         return $this;
     }
 
@@ -80,7 +79,7 @@ class AbstractTranslation implements TranslatorAwareInterface
      */
     public function isTranslatorEnabled()
     {
-        return $this->_translator_enabled;
+        return $this->_translatorEnabled;
     }
 
     /**

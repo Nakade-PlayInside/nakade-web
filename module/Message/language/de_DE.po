@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-16 13:36+0100\n"
-"PO-Revision-Date: 2014-04-16 13:36+0100\n"
+"POT-Creation-Date: 2014-05-21 00:42+0100\n"
+"PO-Revision-Date: 2014-05-21 00:43+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -16,6 +16,18 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
+#: ../src/Message/Mail/NotifyMail.php:34
+msgid "You have got a new message in your mailbox at %URL%."
+msgstr "Du hast eine neue Nachricht in deinem Postfach bei %URL%."
+
+#: ../src/Message/Mail/NotifyMail.php:36
+msgid "Please logIn at %URL% for reading."
+msgstr "Um diese zu lesen, musst du dich bei %URL% einloggen."
+
+#: ../src/Message/Mail/NotifyMail.php:58
+msgid "New Message at nakade.de"
+msgstr "Neue Nachricht auf nakade.de"
+
 #: ../src/Message/Form/MessageForm.php:53
 msgid "recipient"
 msgstr "Empfänger"
@@ -26,7 +38,6 @@ msgstr "Bitte wählen"
 
 #: ../src/Message/Form/MessageForm.php:67
 #: ../src/Message/Form/ReplyForm.php:67
-#: ../view/message/message/show.phtml:39
 msgid "subject"
 msgstr "Betreff"
 
@@ -49,29 +60,12 @@ msgstr "Abbruch"
 msgid "receiver"
 msgstr "Empfänger"
 
-#: ../src/Message/Notify/NotifyMail.php:34
-msgid "You have got a new message in your mailbox at nakade.de."
-msgstr "Du hast eine neue Nachricht in deinem Posteingang bei nakade.de."
-
-#: ../src/Message/Notify/NotifyMail.php:35
-msgid "Please logIn at nakade.de for reading."
-msgstr "Um diese zu lesen, musst du dich bei nakade.de einloggen."
-
-#: ../src/Message/Notify/NotifyMail.php:36
-msgid "Your Nakade Team"
-msgstr "Dein Nakade Team"
-
-#: ../src/Message/Notify/NotifyMail.php:50
-msgid "New Message at nakade.de"
-msgstr "Neue Nachricht auf nakade.de"
-
 #: ../view/message/message/index.phtml:6
 msgid "Messages - Inbox"
 msgstr "Posteingang"
 
 #: ../view/message/message/index.phtml:9
 #: ../view/message/message/sent.phtml:10
-#: ../view/message/message/show.phtml:22
 msgid "No messages found"
 msgstr "Keine Nachrichten gefunden."
 
@@ -86,7 +80,6 @@ msgid "Subject"
 msgstr "Betreff"
 
 #: ../view/message/message/index.phtml:20
-#: ../view/message/message/show.phtml:34
 msgid "from"
 msgstr "von"
 
@@ -98,6 +91,14 @@ msgstr "Datum"
 #: ../view/message/message/index.phtml:38
 msgid "delete"
 msgstr "löschen"
+
+#: ../view/message/message/info.phtml:5
+msgid "You have got %number% new messages"
+msgstr "Du hast %number% neue Nachrichten"
+
+#: ../view/message/message/info.phtml:11
+msgid "go to mailbox"
+msgstr "zum Posteingang"
 
 #: ../view/message/message/sent.phtml:6
 msgid "Messages - Sent"
@@ -116,7 +117,6 @@ msgid "unread"
 msgstr "ungelesen"
 
 #: ../view/message/message/sent.phtml:38
-#: ../view/message/message/show.phtml:46
 msgid "read"
 msgstr "gelesen"
 
@@ -148,6 +148,9 @@ msgstr "gesendet"
 msgid "Send Message"
 msgstr "Nachricht schicken"
 
+#~ msgid "Your Nakade Team"
+#~ msgstr "Dein Nakade Team"
+
 #~ msgid "New Nakade Message"
 #~ msgstr "Neue Nachricht bei Nakade"
 
@@ -159,9 +162,6 @@ msgstr "Nachricht schicken"
 
 #~ msgid "Sent Box"
 #~ msgstr "Postausgang"
-
-#~ msgid "go to Inbox"
-#~ msgstr "zum Posteingang"
 
 #~ msgid "Inbox"
 #~ msgstr "Posteingang"

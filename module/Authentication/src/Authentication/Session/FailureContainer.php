@@ -1,61 +1,55 @@
 <?php
-//module/Authentication/src/Authentication/Session/FailureContainer.php
 namespace Authentication\Session;
 
 use Zend\Session\Container;
 
 /**
  * The amount of failed authentication attempts are collected in a session.
- * Basically, this is used for showing up a Captcha after too many failed 
- * attempts. You can still access the data as usual: $_SESSION[name][key] 
- * 
- * @author Dr.Holger Maerz <grrompf@gmail.com> 
+ * Basically, this is used for showing up a Captcha after too many failed
+ * attempts. You can still access the data as usual: $_SESSION[name][key]
+ *
+ * @author Dr.Holger Maerz <grrompf@gmail.com>
  */
 class FailureContainer extends Container
 {
-    
+    private $attempts = 0;
+    private $maxAttempts = 0;
+
     /**
-     * constructor sets the namespace for the session
+     * @param int $maxAttempts
      */
-    public function __construct() {
-        
+    public function __construct($maxAttempts=0)
+    {
+       $this->maxAttempts = $maxAttempts;
        parent::__construct('FailedAuthAttempts');
     }
 
 
     /**
-     * Sets the amount of failed authentication, adding one 
+     * Sets the amount of failed authentication, adding one
      * each time the method is called.
-     *    
+     *
      */
-    public function addAuthFailure()
+    public function addFailedAttempt()
     {
-         if($this->attempts===NULL) {
-             
-             $this->attempts=0;
-         }
-        
          $this->attempts++;
-         
     }
-    
+
     /**
-     * Getting ammount of failed authentications
-     *    
-     * @return int 
-     */
-    public function getAuthFailure()
-    {
-         return $this->attempts;
-    }
-     
-    /**
-     * Resets the session to 0. 
+     * Resets the session to 0.
      */
     public function clear()
     {
         $this->attempts=0;
-    } 
-    
-   
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasExceededAllowedAttempts()
+    {
+        return $this->attempts >= $this->maxAttempts;
+    }
+
+
 }

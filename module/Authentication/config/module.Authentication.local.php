@@ -1,6 +1,6 @@
 <?php
 /**
- * This is a sample "local" configuration for your application. To use it, copy 
+ * This is a sample "local" configuration for your application. To use it, copy
  * it to your config/autoload/ directory of your application, and edit to suit
  * your application.
  *
@@ -9,22 +9,16 @@
  * mail message.
  */
 return array(
-    
+
     'NakadeAuth' => array(
-        
+
         //your text domain for translation
         'text_domain' => 'Auth',
-        
-        //show captcha after n failed attempts 
+
+        //show captcha after n failed attempts
         'max_auth_attempts' => 5,
-        
-        //example google ReCaptcha data
-        'captcha' => array(
-            'class'   => 'recaptcha', 
-            'options' => array(
-                'pubkey'  => 'PUT YOUR PUBLIC KEY HERE',
-                'privkey' => 'PUT YOUR PRIVATE KEY HERE',
-            ),
-        ),
+
+        //remember user -> time in d
+        'cookie_life_time' => 14,
     ),
 );
