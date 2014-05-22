@@ -148,6 +148,8 @@ return array(
                     'Season\Services\PlayerServiceFactory',
             'Season\Services\ScheduleServiceFactory'  =>
                     'Season\Services\ScheduleServiceFactory',
+            'Season\Services\RepositoryService'      =>
+                    'Season\Services\RepositoryService',
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

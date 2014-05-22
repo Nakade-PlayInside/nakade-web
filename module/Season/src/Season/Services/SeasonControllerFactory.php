@@ -2,7 +2,7 @@
 
 namespace Season\Services;
 
-use League\Controller\SeasonController;
+use Season\Controller\SeasonController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -32,14 +32,16 @@ class SeasonControllerFactory implements FactoryInterface
             $config = ArrayUtils::iteratorToArray($config);
         }
 
-        $service    = $serviceManager->get(
-                'League\Services\SeasonServiceFactory'
-        );
-        $factory    = $serviceManager->get('League\Factory\FormFactory');
+        $service    = $serviceManager->get('Season\Services\SeasonServiceFactory');
+
+        $factory    = $serviceManager->get('Season\Factory\FormFactory');
+
+        $repository = $serviceManager->get('Season\Services\RepositoryService');
 
         $controller = new SeasonController();
         $controller->setService($service);
         $controller->setFormFactory($factory);
+        $controller->setRepository($repository);
 
         return $controller;
     }

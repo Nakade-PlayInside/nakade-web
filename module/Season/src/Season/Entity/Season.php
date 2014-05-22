@@ -4,19 +4,12 @@ namespace Season\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Entity Class representing a User
+ * Class Season
+ *
+ * @package Season\Entity
  *
  * @ORM\Entity
- * @ORM\Table(name="leagueSeason")
- * @property int $_id
- * @property int $_number
- * @property string $_title
- * @property string $_abbreviation
- * @property int $_drawpoints
- * @property int $_winpoints
- * @property string $_tiebreaker1
- * @property string $_tiebreaker2
- * @property string $_tiebreaker3
+ * @ORM\Table(name="season")
  */
 class Season
 {
@@ -24,338 +17,176 @@ class Season
    * Primary Identifier
    *
    * @ORM\Id
-   * @ORM\Column(name="sid", type="integer")
+   * @ORM\Column(name="id", type="integer")
    * @ORM\GeneratedValue(strategy="AUTO")
-   * @var integer
-   * @access protected
    */
-  protected $_id;
-
-  /**
-   * Title
-   *
-   * @ORM\Column(name="title", type="string")
-   * @var string
-   * @access protected
-   */
-  protected $_title;
-
-  /**
-   * Number
-   *
-   * @ORM\Column(name="number", type="integer")
-   * @var int
-   * @access protected
-   */
-  protected $_number;
-
-  /**
-   * Year
-   *
-   * @ORM\Column(name="year", type="date")
-   * @var DateTime
-   * @access protected
-   */
-  protected $_year;
-
-   /**
-   * drawPoints
-   *
-   * @ORM\Column(name="drawPoints", type="integer")
-   * @var int
-   * @access protected
-   */
-   protected $_drawpoints;
-
-   /**
-   * winPoints
-   *
-   * @ORM\Column(name="winPoints", type="integer")
-   * @var int
-   * @access protected
-   */
-   protected $_winpoints;
-
-   /**
-   * tiebreaker1
-   *
-   * @ORM\Column(name="tiebreaker1", type="string")
-   * @var string
-   * @access protected
-   */
-   protected $_tiebreaker1;
-
-   /**
-   * tiebreaker2
-   *
-   * @ORM\Column(name="tiebreaker2", type="string")
-   * @var string
-   * @access protected
-   */
-   protected $_tiebreaker2;
-
-   /**
-   * winPoints
-   *
-   * @ORM\Column(name="tiebreaker3", type="string")
-   * @var string
-   * @access protected
-   */
-   protected $_tiebreaker3;
-
-  /**
-   * Sets the Identifier
-   *
-   * @param int $uid
-   *
-   * @return Season
-   */
-  public function setId($uid)
-  {
-    $this->_id = $uid;
-    return $this;
-  }
-
-  /**
-   * Returns the Identifier
-   *
-   * @access public
-   * @return int
-   */
-  public function getId()
-  {
-    return $this->_id;
-  }
-
-  /**
-   * Sets the Title
-   *
-   * @param string $title
-   *
-   * @return Season
-   */
-  public function setTitle($title)
-  {
-    $this->_title = $title;
-    return $this;
-  }
-
-  /**
-   * Returns the Title
-   *
-   * @access public
-   * @return string
-   */
-  public function getTitle()
-  {
-    return $this->_title;
-  }
-
-  /**
-   * Sets the Year
-   * @param DateTime $year
-   *
-   * @return Season
-   */
-  public function setYear($year)
-  {
-    $this->_year = $year;
-    return $this;
-  }
-
-  /**
-   * Returns the Year
-   *
-   * @access public
-   * @return DateTime
-   */
-  public function getYear()
-  {
-
-      return $this->_year;
-  }
-
-   /**
-   * Sets the Number
-   * @param int $number
-   *
-   * @return Season
-   */
-  public function setNumber($number)
-  {
-    $this->_number = $number;
-    return $this;
-  }
-
-  /**
-   * Returns the Number
-   *
-   * @access public
-   * @return int
-   */
-  public function getNumber()
-  {
-      return $this->_number;
-  }
-
-  /**
-   * Sets the draw points
-   * @param int $points
-   *
-   * @return Season
-   */
-  public function setDrawpoints($points)
-  {
-    $this->_drawpoints = $points;
-    return $this;
-  }
-
-  /**
-   * Returns draw points
-   *
-   * @access public
-   * @return int
-   */
-  public function getDrawpoints()
-  {
-
-      return $this->_drawpoints;
-  }
-
-  /**
-   * Sets the win points
-   * @param int $points
-   *
-   * @return Season
-   */
-  public function setWinpoints($points)
-  {
-    $this->_winpoints = $points;
-    return $this;
-  }
-
-  /**
-   * Returns win points
-   *
-   * @access public
-   * @return int
-   */
-  public function getWinpoints()
-  {
-
-      return $this->_winpoints;
-  }
-
-  /**
-   * Sets the first tiebreaker
-   * @param int $tiebreaker
-   *
-   * @return Season
-   */
-  public function setTiebreaker1($tiebreaker)
-  {
-    $this->_tiebreaker1 = $tiebreaker;
-    return $this;
-  }
-
-  /**
-   * Returns first tiebreaker
-   *
-   * @access public
-   * @return int
-   */
-  public function getTiebreaker1()
-  {
-      return $this->_tiebreaker1;
-  }
-
-  /**
-   * Sets the second tiebreaker
-   * @param int $tiebreaker
-   *
-   * @return Season
-   */
-  public function setTiebreaker2($tiebreaker)
-  {
-    $this->_tiebreaker2 = $tiebreaker;
-    return $this;
-  }
-
-  /**
-   * Returns second tiebreaker
-   *
-   * @access public
-   * @return int
-   */
-  public function getTiebreaker2()
-  {
-      return $this->_tiebreaker2;
-  }
-
-  /**
-   * Sets the third tiebreaker
-   * @param int $tiebreaker
-   *
-   * @return Season
-   */
-  public function setTiebreaker3($tiebreaker)
-  {
-    $this->_tiebreaker3 = $tiebreaker;
-    return $this;
-  }
-
-  /**
-   * Returns third tiebreaker
-   *
-   * @access public
-   * @return int
-   */
-  public function getTiebreaker3()
-  {
-      return $this->_tiebreaker3;
-  }
-
-  /**
-   * populating data as an array.
-   * key of the array is getter methods name.
-   *
-   * @param array $data
-   */
-  public function populate($data)
-  {
-       foreach ($data as $key => $value) {
-
-           $key = str_replace('_', '', $key);
-           $method = 'set'.ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-       }
-
-  }
-
-  /**
-   * usage for creating a NEW season. Provide all neccessary values
-   * in an array.
-   *
-   * @param array $data
-   */
-    public function exchangeArray($data)
-    {
-        $this->populate($data);
-        $this->_year  = new \DateTime();
-
-    }
-
+    private $id;
 
     /**
-     * Convert the object to an array.
-     *
-     * @return array
+     * @ORM\ManyToOne(targetEntity="\Season\Entity\Title", cascade={"persist"})
+     * @ORM\JoinColumn(name="title", referencedColumnName="id", nullable=false)
      */
-    public function getArrayCopy()
+    private $title;
+
+  /**
+   * @ORM\Column(name="number", type="integer", nullable=false)
+   */
+    private $number;
+
+  /**
+   * @ORM\Column(name="startDate", type="date", nullable=false)
+   */
+    private $startDate;
+
+   /**
+   * @ORM\Column(name="winPoints", type="integer", nullable=false)
+   */
+    private $winPoints;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Season\Entity\TieBreaker", cascade={"persist"})
+     * @ORM\JoinColumn(name="tieBreaker1", referencedColumnName="id", nullable=false)
+     */
+    private $tieBreaker1;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Season\Entity\TieBreaker", cascade={"persist"})
+     * @ORM\JoinColumn(name="tieBreaker2", referencedColumnName="id", nullable=false)
+     */
+    private $tieBreaker2;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Season\Entity\TieBreaker", cascade={"persist"})
+     * @ORM\JoinColumn(name="tieBreaker3", referencedColumnName="id", nullable=false)
+     */
+    private $tieBreaker3;
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
     {
-        return get_object_vars($this);
+        $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $number
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * @param \DateTime $startDate
+     */
+    public function setStartDate($startDate)
+    {
+        $this->startDate = $startDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStartDate()
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @param TieBreaker $tieBreaker1
+     */
+    public function setTieBreaker1(TieBreaker $tieBreaker1)
+    {
+        $this->tieBreaker1 = $tieBreaker1;
+    }
+
+    /**
+     * @return TieBreaker
+     */
+    public function getTieBreaker1()
+    {
+        return $this->tieBreaker1;
+    }
+
+    /**
+     * @param TieBreaker $tieBreaker2
+     */
+    public function setTieBreaker2(TieBreaker $tieBreaker2)
+    {
+        $this->tieBreaker2 = $tieBreaker2;
+    }
+
+    /**
+     * @return TieBreaker
+     */
+    public function getTieBreaker2()
+    {
+        return $this->tieBreaker2;
+    }
+
+    /**
+     * @param TieBreaker $tieBreaker3
+     */
+    public function setTieBreaker3(TieBreaker $tieBreaker3)
+    {
+        $this->tieBreaker3 = $tieBreaker3;
+    }
+
+    /**
+     * @return TieBreaker
+     */
+    public function getTieBreaker3()
+    {
+        return $this->tieBreaker3;
+    }
+
+    /**
+     * @param Title $title
+     */
+    public function setTitle(Title $title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return Title
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param int $winPoints
+     */
+    public function setWinPoints($winPoints)
+    {
+        $this->winPoints = $winPoints;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWinPoints()
+    {
+        return $this->winPoints;
     }
 
 }

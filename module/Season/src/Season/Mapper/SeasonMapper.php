@@ -2,13 +2,71 @@
 namespace Season\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
+use Doctrine\ORM\Query\Expr\Join;
+use Season\Entity\Title;
+
 /**
- * Description of SeasonMapper
+ * Class SeasonMapper
  *
- * @author Dr.Holger Maerz <holger@nakade.de>
+ * @package Season\Mapper
  */
-class SeasonMapper  extends AbstractMapper
+class SeasonMapper extends AbstractMapper
 {
+    /**
+     * @param int $id
+     *
+     * @return object
+     */
+   public function getSeasonById($id)
+   {
+       return $this->getEntityManager()
+           ->getRepository('Season\Entity\Season')
+           ->find($id);
+   }
+
+   public function getMyActualSeason()
+   {
+       $now = new \DateTime();
+       $start = $now->modify('-2 week');
+
+       $qb = $this->getEntityManager()->createQueryBuilder('Season');
+       $qb->select('s')
+           ->from('Season\Entity\Season', 's')
+           ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._sid = s.id')
+           ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l._id = m._lid')
+           ->where('m._resultId is Null')
+           ->andWhere('s.startDate < :start')
+           ->setParameter('start', $start);
+
+       $result = $qb->getQuery()->getOneOrNullResult();
+
+       return $result;
+   }
+
+    //just one active season (by title)
+    //actual => open matches
+    //start date has passed => hasStarted
+    public function getActualSeasonByTitle($titleId=1)
+    {
+        $now = new \DateTime();
+        $start = $now->modify('-2 week');
+
+        $qb = $this->getEntityManager()->createQueryBuilder('Season');
+        $qb->select('s')
+            ->from('Season\Entity\Season', 's')
+            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._sid = s.id')
+            ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l._id = m._lid')
+            ->where('m._resultId is Null')
+            ->andWhere('s.title = :title')
+            ->andWhere('s.startDate < :start')
+            ->addOrderBy('s.startDate', 'DESC')
+            ->setParameter('title', $titleId)
+            ->setParameter('start', $start);
+
+        $result = $qb->getQuery()->getOneOrNullResult();
+
+        return $result;
+    }
 
    /**
    * Actual Season has one or more leagues, players and a match schedule.
