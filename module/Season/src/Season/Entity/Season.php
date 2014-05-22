@@ -4,189 +4,109 @@ namespace Season\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Season
+ * Class SeasonModel
  *
  * @package Season\Entity
  *
  * @ORM\Entity
  * @ORM\Table(name="season")
  */
-class Season
+class Season extends SeasonModel
 {
-  /**
-   * Primary Identifier
-   *
-   * @ORM\Id
-   * @ORM\Column(name="id", type="integer")
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-    private $id;
+
+    private $openMatches;
+    private $noMatches;
+    private $firstMatchDate;
+    private $lastMatchDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Season\Entity\Title", cascade={"persist"})
-     * @ORM\JoinColumn(name="title", referencedColumnName="id", nullable=false)
+     * @param \DateTime $firstMatchDate
      */
-    private $title;
-
-  /**
-   * @ORM\Column(name="number", type="integer", nullable=false)
-   */
-    private $number;
-
-  /**
-   * @ORM\Column(name="startDate", type="date", nullable=false)
-   */
-    private $startDate;
-
-   /**
-   * @ORM\Column(name="winPoints", type="integer", nullable=false)
-   */
-    private $winPoints;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\Season\Entity\TieBreaker", cascade={"persist"})
-     * @ORM\JoinColumn(name="tieBreaker1", referencedColumnName="id", nullable=false)
-     */
-    private $tieBreaker1;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\Season\Entity\TieBreaker", cascade={"persist"})
-     * @ORM\JoinColumn(name="tieBreaker2", referencedColumnName="id", nullable=false)
-     */
-    private $tieBreaker2;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\Season\Entity\TieBreaker", cascade={"persist"})
-     * @ORM\JoinColumn(name="tieBreaker3", referencedColumnName="id", nullable=false)
-     */
-    private $tieBreaker3;
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
+    public function setFirstMatchDate($firstMatchDate)
     {
-        $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $number
-     */
-    public function setNumber($number)
-    {
-        $this->number = $number;
-    }
-
-    /**
-     * @return int
-     */
-    public function getNumber()
-    {
-        return $this->number;
-    }
-
-    /**
-     * @param \DateTime $startDate
-     */
-    public function setStartDate($startDate)
-    {
-        $this->startDate = $startDate;
+        $this->firstMatchDate = $firstMatchDate;
     }
 
     /**
      * @return \DateTime
      */
-    public function getStartDate()
+    public function getFirstMatchDate()
     {
-        return $this->startDate;
+        return $this->firstMatchDate;
     }
 
     /**
-     * @param TieBreaker $tieBreaker1
+     * @param \DateTime $lastMatchDate
      */
-    public function setTieBreaker1(TieBreaker $tieBreaker1)
+    public function setLastMatchDate($lastMatchDate)
     {
-        $this->tieBreaker1 = $tieBreaker1;
+        $this->lastMatchDate = $lastMatchDate;
     }
 
     /**
-     * @return TieBreaker
+     * @return \DateTime
      */
-    public function getTieBreaker1()
+    public function getLastMatchDate()
     {
-        return $this->tieBreaker1;
+        return $this->lastMatchDate;
     }
 
     /**
-     * @param TieBreaker $tieBreaker2
+     * @param int $noMatches
      */
-    public function setTieBreaker2(TieBreaker $tieBreaker2)
+    public function setNoMatches($noMatches)
     {
-        $this->tieBreaker2 = $tieBreaker2;
-    }
-
-    /**
-     * @return TieBreaker
-     */
-    public function getTieBreaker2()
-    {
-        return $this->tieBreaker2;
-    }
-
-    /**
-     * @param TieBreaker $tieBreaker3
-     */
-    public function setTieBreaker3(TieBreaker $tieBreaker3)
-    {
-        $this->tieBreaker3 = $tieBreaker3;
-    }
-
-    /**
-     * @return TieBreaker
-     */
-    public function getTieBreaker3()
-    {
-        return $this->tieBreaker3;
-    }
-
-    /**
-     * @param Title $title
-     */
-    public function setTitle(Title $title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * @return Title
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param int $winPoints
-     */
-    public function setWinPoints($winPoints)
-    {
-        $this->winPoints = $winPoints;
+        $this->noMatches = $noMatches;
     }
 
     /**
      * @return int
      */
-    public function getWinPoints()
+    public function getNoMatches()
     {
-        return $this->winPoints;
+        return $this->noMatches;
+    }
+
+    /**
+     * @param int $openMatches
+     */
+    public function setOpenMatches($openMatches)
+    {
+        $this->openMatches = $openMatches;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOpenMatches()
+    {
+        return $this->openMatches;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReady()
+    {
+        //@todo: have all registered leagues also matches
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasStarted()
+    {
+        return $this->getFirstMatchDate() >= new \DateTime();
+
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasEnded()
+    {
+        return empty($this->openMatches);
     }
 
 }

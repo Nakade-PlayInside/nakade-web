@@ -52,7 +52,7 @@ class SeasonMapper extends AbstractMapper
         $start = $now->modify('-2 week');
 
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
-        $qb->select('s')
+        $qb->select('s as object, count(m) as openMatches')
             ->from('Season\Entity\Season', 's')
             ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._sid = s.id')
             ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l._id = m._lid')
@@ -65,7 +65,43 @@ class SeasonMapper extends AbstractMapper
 
         $result = $qb->getQuery()->getOneOrNullResult();
 
-        return $result;
+        if (empty($result['object'])) {
+            return null;
+        }
+
+        /* @var $entity \Season\Entity\Season */
+        $entity = $result['object'];
+        $entity->setOpenMatches($result['openMatches']);
+        $info = $this->getSeasonInfo($entity->getId());
+        if (!empty($info)) {
+            $entity->setFirstMatchDate($info['startDate']);
+            $entity->setLastMatchDate($info['endDate']);
+            $entity->setNoMatches($info['matches']);
+        }
+
+        return $entity;
+    }
+
+    /**
+     * returns a mapped array of season data
+     *
+     * @param int $seasonId
+     *
+     * @return null|array
+     */
+    public function getSeasonInfo($seasonId)
+    {
+
+        // todo: no of leagues; have all leagues matches, no of players?
+        $qb = $this->getEntityManager()->createQueryBuilder('Season');
+        $qb->select('max(m._date) as startDate, min(m._date) as endDate, count(m) as matches')
+            ->from('Season\Entity\Season', 's')
+            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._sid = s.id')
+            ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l._id = m._lid')
+            ->where('s.id = :seasonId')
+            ->setParameter('seasonId', $seasonId);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
    /**
