@@ -1,7 +1,7 @@
 <?php
 // module/user/view/user/user/index.phtml:
 $this->plugin('translate')->setTranslatorTextDomain('League');
-$title = $this->translate('Season Overview') . ' ' . $season->getTitle()->getName() . ' ' . $this->translate('League');
+$title = $this->translate('Season Overview') . ' ' . $season->getAssociation()->getName() . ' ' . $this->translate('League');
 $this->headTitle('Overview');
 /* @var $season \Season\Entity\Season */
 $season = $this->season;

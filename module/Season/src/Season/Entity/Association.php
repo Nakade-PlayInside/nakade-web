@@ -4,14 +4,14 @@ namespace Season\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Title
+ * Class Association
  *
- * @package Title\Entity
+ * @package Season\Entity
  *
  * @ORM\Entity
- * @ORM\Table(name="seasonTitle")
+ * @ORM\Table(name="association")
  */
-class Title
+class Association
 {
   /**
    * Primary Identifier

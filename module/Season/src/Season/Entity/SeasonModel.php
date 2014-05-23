@@ -22,10 +22,10 @@ class SeasonModel
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Season\Entity\Title", cascade={"persist"})
-     * @ORM\JoinColumn(name="title", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\Season\Entity\Association", cascade={"persist"})
+     * @ORM\JoinColumn(name="association", referencedColumnName="id", nullable=false)
      */
-    protected $title;
+    protected $association;
 
   /**
    * @ORM\Column(name="number", type="integer", nullable=false)
@@ -173,19 +173,19 @@ class SeasonModel
     }
 
     /**
-     * @param Title $title
+     * @param Association $association
      */
-    public function setTitle(Title $title)
+    public function setAssociation(Association $association)
     {
-        $this->title = $title;
+        $this->association = $association;
     }
 
     /**
-     * @return Title
+     * @return Association
      */
-    public function getTitle()
+    public function getAssociation()
     {
-        return $this->title;
+        return $this->association;
     }
 
     /**

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @package Season\Entity
  *
  * @ORM\Entity
- * @ORM\Table(name="leagues")
+ * @ORM\Table(name="league")
  */
 class League
 {
@@ -28,10 +28,33 @@ class League
 
   /**
   /**
-   * @ORM\ManyToOne(targetEntity="\Season\Entity\Season", cascade={"persist"})
+   * @ORM\ManyToOne(targetEntity="Season\Entity\Season", cascade={"persist"})
    * @ORM\JoinColumn(name="season", referencedColumnName="id", nullable=false)
    */
    private $season;
+
+    /**
+     * @ORM\Column(name="season", type="integer")
+     */
+    private $seasonId;
+
+    /**
+     * @param mixed $seasonId
+     */
+    public function setSeasonId($seasonId)
+    {
+        $this->seasonId = $seasonId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSeasonId()
+    {
+        return $this->seasonId;
+    }
+
+
 
   /**
    * @ORM\Column(name="number", type="integer")
@@ -39,7 +62,7 @@ class League
    private $number;
 
   /**
-   * @ORM\Column(name="title", type="string")
+   * @ORM\Column(name="name", type="string")
    */
    private $name;
 

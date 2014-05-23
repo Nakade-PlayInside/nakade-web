@@ -29,18 +29,18 @@ class SeasonMapper extends AbstractMapper
     /**
      * get all seasons of a titled league
      *
-     * @param int $titleId
+     * @param int $associationId
      *
      * @return null|Season
      */
-    public function getSeasonsByTitle($titleId=1)
+    public function getSeasonsByAssociation($associationId=1)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('s')
             ->from('Season\Entity\Season', 's')
-            ->where('s.title = :title')
+            ->where('s.association = :association')
             ->addOrderBy('s.startDate', 'DESC')
-            ->setParameter('title', $titleId);
+            ->setParameter('association', $associationId);
 
         return $qb->getQuery()->getResult();
     }
@@ -48,21 +48,21 @@ class SeasonMapper extends AbstractMapper
     /**
      * active season has already started and the isReady flag is set
      *
-     * @param int $titleId
+     * @param int $associationId
      *
      * @return null|Season
      */
-    public function getActiveSeasonByTitle($titleId=1)
+    public function getActiveSeasonByAssociation($associationId=1)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('s')
             ->from('Season\Entity\Season', 's')
             ->where('s.isReady = 1')
-            ->andWhere('s.title = :title')
+            ->andWhere('s.association = :association')
             ->andWhere('s.startDate < :start')
             ->addOrderBy('s.startDate', 'DESC')
             ->setMaxResults(1)
-            ->setParameter('title', $titleId)
+            ->setParameter('association', $associationId)
             ->setParameter('start', new \DateTime());
 
         return $qb->getQuery()->getOneOrNullResult();
@@ -71,20 +71,20 @@ class SeasonMapper extends AbstractMapper
     /**
      * new season has not yet started
      *
-     * @param int $titleId
+     * @param int $associationId
      *
      * @return null|Season
      */
-    public function getNewSeasonByTitle($titleId=1)
+    public function getNewSeasonByAssociation($associationId=1)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('s')
             ->from('Season\Entity\Season', 's')
-            ->where('s.title = :title')
+            ->where('s.association = :association')
             ->andWhere('s.startDate > :start')
             ->addOrderBy('s.startDate', 'DESC')
             ->setMaxResults(1)
-            ->setParameter('title', $titleId)
+            ->setParameter('association', $associationId)
             ->setParameter('start', new \DateTime());
 
         return $qb->getQuery()->getOneOrNullResult();
@@ -97,17 +97,27 @@ class SeasonMapper extends AbstractMapper
      *
      * @return null|Season
      */
-    public function getLastSeasonByTitle($titleId=1)
+    public function getLastSeasonByAssociation($associationId=1)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('s')
             ->from('Season\Entity\Season', 's')
-            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._sid = s.id')
-            ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l._id = m._lid')
+            ->leftJoin('Season\Entity\Season', 'l', Join::WITH, 'l.season = s.id')
+            ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l.id = m._lid')
             ->where('m._resultId is not Null')
-            ->andWhere('s.title = :title')
+            ->andWhere('s.association = :association')
             ->addOrderBy('s.startDate', 'DESC')
-            ->setParameter('title', $titleId);
+            ->setParameter('association', $associationId);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    public function getMyLeague()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Season');
+        $qb->select('l')
+            ->from('Season\Entity\League', 'l')
+            ->where('l.id=3');
 
         return $qb->getQuery()->getOneOrNullResult();
     }
@@ -126,8 +136,8 @@ class SeasonMapper extends AbstractMapper
             max(m._date) as lastMatchDate,
             count(m) as noMatches')
             ->from('Season\Entity\Season', 's')
-            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._sid = s.id')
-            ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l._id = m._lid')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
+            ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l.id = m._lid')
             ->where('s.id = :seasonId')
             ->setParameter('seasonId', $seasonId);
 
@@ -152,10 +162,10 @@ class SeasonMapper extends AbstractMapper
         $qb = $this->getEntityManager()->createQueryBuilder('League');
         $qb->select('count(m)')
             ->from('League\Entity\Match', 'm')
-            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._id = m._lid')
-            ->where('l._sid = :seasonId')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.id = m._lid')
+            ->where('l.season = :seasonId')
             ->andWhere('m._resultId is Null')
-            ->addGroupBy('l._id')
+            ->addGroupBy('l.id')
             ->setParameter('seasonId', $seasonId);
 
         return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
@@ -170,8 +180,9 @@ class SeasonMapper extends AbstractMapper
     {
         $qb = $this->getEntityManager()->createQueryBuilder('League');
         $qb->select('count(l)')
-            ->from('League\Entity\League', 'l')
-            ->where('l._sid = :seasonId')
+            ->from('Season\Entity\League', 'l')
+            ->join('l.season', 'Season')
+            ->where('Season.id = :seasonId')
             ->setParameter('seasonId', $seasonId);
 
         return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
@@ -228,9 +239,10 @@ class SeasonMapper extends AbstractMapper
 
         $qb = $this->getEntityManager()->createQueryBuilder('League');
         $qb->select('l')
-            ->from('League\Entity\League', 'l')
-            ->where('l._sid = :seasonId')
-            ->andWhere($qb->expr()->notIn('l._id', $playersInLeagues))
+            ->from('Season\Entity\League', 'l')
+            ->join('l.season', 'Season')
+            ->where('Season.id = :seasonId')
+            ->andWhere($qb->expr()->notIn('l.id', $playersInLeagues))
             ->setParameter('seasonId', $seasonId);
 
         return $qb->getQuery()->getResult();
