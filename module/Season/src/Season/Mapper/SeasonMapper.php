@@ -3,7 +3,9 @@ namespace Season\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
 use Doctrine\ORM\Query\Expr\Join;
+use Season\Entity\Season;
 use Season\Entity\Title;
+use \Doctrine\ORM\Query;
 
 /**
  * Class SeasonMapper
@@ -24,35 +26,21 @@ class SeasonMapper extends AbstractMapper
            ->find($id);
    }
 
-   public function getMyActualSeason()
-   {
-       $now = new \DateTime();
-       $start = $now->modify('-2 week');
-
-       $qb = $this->getEntityManager()->createQueryBuilder('Season');
-       $qb->select('s')
-           ->from('Season\Entity\Season', 's')
-           ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._sid = s.id')
-           ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l._id = m._lid')
-           ->where('m._resultId is Null')
-           ->andWhere('s.startDate < :start')
-           ->setParameter('start', $start);
-
-       $result = $qb->getQuery()->getOneOrNullResult();
-
-       return $result;
-   }
-
-    //just one active season (by title)
-    //actual => open matches
-    //start date has passed => hasStarted
-    public function getActualSeasonByTitle($titleId=1)
+    /**
+     * active season has already started and open matches. Only one active season per title!
+     * todo: season needs a flag for readyToStart... DO WE NEED MORE???
+     *
+     * @param int $titleId
+     *
+     * @return null|Season
+     */
+    public function getActiveSeasonByTitle($titleId=1)
     {
         $now = new \DateTime();
         $start = $now->modify('-2 week');
 
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
-        $qb->select('s as object, count(m) as openMatches')
+        $qb->select('s')
             ->from('Season\Entity\Season', 's')
             ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._sid = s.id')
             ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l._id = m._lid')
@@ -63,27 +51,12 @@ class SeasonMapper extends AbstractMapper
             ->setParameter('title', $titleId)
             ->setParameter('start', $start);
 
-        $result = $qb->getQuery()->getOneOrNullResult();
+        return $qb->getQuery()->getOneOrNullResult();
 
-        if (empty($result['object'])) {
-            return null;
-        }
-
-        /* @var $entity \Season\Entity\Season */
-        $entity = $result['object'];
-        $entity->setOpenMatches($result['openMatches']);
-        $info = $this->getSeasonInfo($entity->getId());
-        if (!empty($info)) {
-            $entity->setFirstMatchDate($info['startDate']);
-            $entity->setLastMatchDate($info['endDate']);
-            $entity->setNoMatches($info['matches']);
-        }
-
-        return $entity;
     }
 
     /**
-     * returns a mapped array of season data
+     * returns a mapped array of season info data
      *
      * @param int $seasonId
      *
@@ -91,15 +64,96 @@ class SeasonMapper extends AbstractMapper
      */
     public function getSeasonInfo($seasonId)
     {
-
-        // todo: no of leagues; have all leagues matches, no of players?
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
-        $qb->select('max(m._date) as startDate, min(m._date) as endDate, count(m) as matches')
+        $qb->select('min(m._date) as firstMatchDate,
+            max(m._date) as lastMatchDate,
+            count(m) as noMatches')
             ->from('Season\Entity\Season', 's')
             ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._sid = s.id')
             ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l._id = m._lid')
             ->where('s.id = :seasonId')
             ->setParameter('seasonId', $seasonId);
+
+        $data = $qb->getQuery()->getOneOrNullResult();
+
+        if (!empty($data)) {
+            $data['openMatches'] = $this->getNoOfOpenMatchesInSeason($seasonId);
+            $data['noLeagues'] = $this->getNoOfLeaguesInSeason($seasonId);
+            $data['noPlayers'] = $this->getNoOfPlayersInSeason($seasonId);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return int
+     */
+    public function getNoOfOpenMatchesInSeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('League');
+        $qb->select('count(m)')
+            ->from('League\Entity\Match', 'm')
+            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._id = m._lid')
+            ->where('l._sid = :seasonId')
+            ->andWhere('m._resultId is Null')
+            ->addGroupBy('l._id')
+            ->setParameter('seasonId', $seasonId);
+
+        return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return int
+     */
+    public function getNoOfLeaguesInSeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('League');
+        $qb->select('count(l)')
+            ->from('League\Entity\League', 'l')
+            ->where('l._sid = :seasonId')
+            ->setParameter('seasonId', $seasonId);
+
+        return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return int
+     */
+    public function getNoOfPlayersInSeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Player');
+        $qb->select('count(p)')
+            ->from('League\Entity\Player', 'p')
+            ->where('p.sid = :seasonId')
+            ->setParameter('seasonId', $seasonId);
+
+        return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
+    }
+
+    /**
+     * last season has no open matches. It's the last season played!
+     *
+     * @param int $titleId
+     *
+     * @return null|Season
+     */
+    public function getLastSeasonByTitle($titleId=1)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Season');
+        $qb->select('s')
+            ->from('Season\Entity\Season', 's')
+            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._sid = s.id')
+            ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l._id = m._lid')
+            ->where('m._resultId is not Null')
+            ->andWhere('s.title = :title')
+            ->addOrderBy('s.startDate', 'DESC')
+            ->setParameter('title', $titleId);
 
         return $qb->getQuery()->getOneOrNullResult();
     }
