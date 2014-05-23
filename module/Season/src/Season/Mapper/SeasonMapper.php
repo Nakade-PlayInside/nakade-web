@@ -27,8 +27,7 @@ class SeasonMapper extends AbstractMapper
    }
 
     /**
-     * active season has already started and open matches. Only one active season per title!
-     * todo: season needs a flag for readyToStart... DO WE NEED MORE???
+     * active season has already started and the isReady flag is set
      *
      * @param int $titleId
      *
@@ -36,23 +35,18 @@ class SeasonMapper extends AbstractMapper
      */
     public function getActiveSeasonByTitle($titleId=1)
     {
-        $now = new \DateTime();
-        $start = $now->modify('-2 week');
-
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('s')
             ->from('Season\Entity\Season', 's')
-            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l._sid = s.id')
-            ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l._id = m._lid')
-            ->where('m._resultId is Null')
+            ->where('s.isReady = 1')
             ->andWhere('s.title = :title')
             ->andWhere('s.startDate < :start')
             ->addOrderBy('s.startDate', 'DESC')
+            ->setMaxResults(1)
             ->setParameter('title', $titleId)
-            ->setParameter('start', $start);
+            ->setParameter('start', new \DateTime());
 
         return $qb->getQuery()->getOneOrNullResult();
-
     }
 
     /**

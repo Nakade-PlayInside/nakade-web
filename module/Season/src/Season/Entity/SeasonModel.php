@@ -72,6 +72,11 @@ class SeasonModel
     protected $komi;
 
     /**
+     * @ORM\Column(name="isReady", type="boolean")
+     */
+    protected $isReady;
+
+    /**
      * @param int $id
      */
     public function setId($id)
@@ -229,6 +234,22 @@ class SeasonModel
     public function getTime()
     {
         return $this->time;
+    }
+
+    /**
+     * @param bool $isReady
+     */
+    public function setIsReady($isReady)
+    {
+        $this->isReady = $isReady;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReady()
+    {
+        return $this->isReady;
     }
 
 }

@@ -24,13 +24,15 @@ class SeasonController extends AbstractController
 
         /* @var $repository \Season\Mapper\SeasonMapper */
         $repository = $this->getRepository()->getMapper('season');
-        $season = $repository->getActualSeasonByTitle();
+
+        /* @var $season \Season\Entity\Season */
+        $season = $repository->getActiveSeasonByTitle();
         $info = $repository->getSeasonInfo($season->getId());
         $season->exchangeArray($info);
-        var_dump($season);
 
         return new ViewModel(
             array(
+              'season' => $season,
               'actual'    => $this->getService()->getActualSeason(),
               'status'    => $this->getService()->getActualStatus(),
               'new'       => $this->getService()->getNewSeason(),
