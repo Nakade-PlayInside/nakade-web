@@ -25,10 +25,12 @@ class SeasonController extends AbstractController
         /* @var $repository \Season\Mapper\SeasonMapper */
         $repository = $this->getRepository()->getMapper('season');
 
+        var_dump($repository->getLeaguesWithNoMatchesInSeason(3));die;
         /* @var $season \Season\Entity\Season */
         $season = $repository->getActiveSeasonByTitle();
         $info = $repository->getSeasonInfo($season->getId());
         $season->exchangeArray($info);
+
 
         return new ViewModel(
             array(

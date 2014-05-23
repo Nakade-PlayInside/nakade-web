@@ -6,15 +6,12 @@ use League\Entity\Season;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Entity Class representing a League
+ * * Class League
+ *
+ * @package Season\Entity
  *
  * @ORM\Entity
- * @ORM\Table(name="leagueLigen")
- * @property int $_id
- * @property int $_sid
- * @property int $_number
- * @property string $_title
-
+ * @ORM\Table(name="leagues")
  */
 class League
 {
@@ -25,174 +22,91 @@ class League
    * @ORM\Id
    * @ORM\Column(name="id", type="integer")
    * @ORM\GeneratedValue(strategy="AUTO")
-   * @var int
-   * @access protected
    */
-  protected $_id;
+   private $id;
 
 
   /**
-   * Season Identifier
-   *
-   * @ORM\Column(name="sid", type="integer")
-   * @var int
-   * @access protected
+  /**
+   * @ORM\ManyToOne(targetEntity="\Season\Entity\Season", cascade={"persist"})
+   * @ORM\JoinColumn(name="season", referencedColumnName="id", nullable=false)
    */
-  protected $_sid;
+   private $season;
 
   /**
-   * League Order
-   * eg 1.Liga or 2.Liga
-   *
    * @ORM\Column(name="number", type="integer")
-   * @var int
-   * @access protected
    */
-  protected $_number;
+   private $number;
 
   /**
-   * Title
-   *
    * @ORM\Column(name="title", type="string")
-   * @var string
-   * @access protected
    */
-  protected $_title;
+   private $name;
 
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
-  /**
-   * Sets the Identifier
-   *
-   * @param int $lid
-   *
-   * @return Season
-   */
-  public function setId($lid)
-  {
-    $this->_id = $lid;
-    return $this;
-  }
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  /**
-   * Returns the Identifier
-   *
-   * @access public
-   * @return int
-   */
-  public function getId()
-  {
-    return $this->_id;
-  }
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
-  /**
-   * Sets the SeasonId
-   *
-   * @param int $sid
-   *
-   * @return League
-   */
-  public function setSid($sid)
-  {
-    $this->_sid = $sid;
-    return $this;
-  }
-
-  /**
-   * Returns the SeasonId
-   *
-   * @access public
-   * @return int
-   */
-  public function getSid()
-  {
-    return $this->_sid;
-  }
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
     /**
      * @param int $number
-     *
-     * @return $this
      */
-  public function setNumber($number)
-  {
-    $this->_number = $number;
-    return $this;
-  }
-
-  /**
-   * Returns the Order
-   *
-   * @access public
-   * @return int
-   */
-  public function getNumber()
-  {
-    return $this->_number;
-  }
-
-  /**
-   * Sets the Title
-   *
-   * @param string $title
-   *
-   * @return League
-   */
-  public function setTitle($title)
-  {
-    $this->_title = $title;
-    return $this;
-  }
-
-  /**
-   * Returns the Title
-   *
-   * @access public
-   * @return string
-   */
-  public function getTitle()
-  {
-    return $this->_title;
-  }
-
-  /**
-   * populating data as an array.
-   * key of the array is getter methods name.
-   *
-   * @param array $data
-   */
-  public function populate($data)
-  {
-       foreach ($data as $key => $value) {
-
-           $key = str_replace('_', '', $key);
-           $method = 'set'.ucfirst($key);
-           if (method_exists($this, $method)) {
-                $this->$method($value);
-           }
-       }
-
-  }
-
-  /**
-   * usage for creating a NEW league. Provide all neccessary values
-   * in an array.
-   *
-   * @param array $data
-   */
-  public function exchangeArray($data)
-  {
-        $this->populate($data);
-
-  }
-
-   /**
-    * Convert the object to an array.
-    *
-    * @return array
-    */
-    public function getArrayCopy()
+    public function setNumber($number)
     {
-        return get_object_vars($this);
+        $this->number = $number;
     }
+
+    /**
+     * @return int
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * @param Season $season
+     */
+    public function setSeason(Season $season)
+    {
+        $this->season = $season;
+    }
+
+    /**
+     * @return Season
+     */
+    public function getSeason()
+    {
+        return $this->season;
+    }
+
+
 
 }
