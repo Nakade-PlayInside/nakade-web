@@ -1,27 +1,32 @@
 <?php
 namespace Season\View\Helper;
 
+use Season\Entity\Season;
 use Zend\View\Helper\AbstractHelper;
 
 /**
- * View helper getting a season title.
+ * Class SeasonTitle
+ *
+ * @package Season\View\Helper
  */
 class SeasonTitle extends AbstractHelper
 {
     /**
-     * return season title
-     *
      * @param Season $season
+     *
      * @return string
      */
-    public function __invoke($season)
+    public function __invoke(Season $season)
     {
-
-       if( null == $season )
-            return;
-
-       return  $season->getTitle() . ' ' .
-               $this->getView()->translate('No.') .
-               $season->getNumber();
+       $translate = $this->getView()->plugin('translate');
+       if (is_null($season)) {
+           return $translate('Season Overview');
+       } else {
+            return sprintf('%s %s %s',
+                $translate('Season Overview'),
+                $season->getAssociation()->getName(),
+                $translate('League')
+            );
+       }
     }
 }

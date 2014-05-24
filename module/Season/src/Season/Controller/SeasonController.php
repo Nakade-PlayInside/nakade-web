@@ -6,40 +6,30 @@ use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 
 /**
- * creating a new season
+ * Class SeasonController
  *
- * @author Holger Maerz <holger@nakade.de>
+ * @package Season\Controller
  */
 class SeasonController extends AbstractController
 {
     /**
-    * Default action showing up the Top League table
-    * in a short and compact version. This can be used as a widget.
-    *
     * @return array|ViewModel
     */
     public function indexAction()
     {
-        //parameter set to one by default
+        $id = (int) $this->params()->fromRoute('id', 1);
 
         /* @var $repository \Season\Mapper\SeasonMapper */
         $repository = $this->getRepository()->getMapper('season');
 
-        //var_dump($repository->getMyLeague());
-        //var_dump($repository->getLeaguesWithNoMatchesInSeason(3));die;
         /* @var $season \Season\Entity\Season */
-        $season = $repository->getActiveSeasonByAssociation();
+        $season = $repository->getActiveSeasonByAssociation($id);
         $info = $repository->getSeasonInfo($season->getId());
         $season->exchangeArray($info);
-
 
         return new ViewModel(
             array(
               'season' => $season,
-              'actual'    => $this->getService()->getActualSeason(),
-              'status'    => $this->getService()->getActualStatus(),
-              'new'       => $this->getService()->getNewSeason(),
-              'newstatus' => $this->getService()->getNewSeasonStatus(),
             )
         );
     }

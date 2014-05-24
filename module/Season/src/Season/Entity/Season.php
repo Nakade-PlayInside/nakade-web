@@ -131,7 +131,7 @@ class Season extends SeasonModel
      */
     public function hasStarted()
     {
-        return $this->getFirstMatchDate() >= new \DateTime();
+        return $this->getFirstMatchDate() <= new \DateTime();
 
     }
 

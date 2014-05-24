@@ -33,29 +33,6 @@ class League
    */
    private $season;
 
-    /**
-     * @ORM\Column(name="season", type="integer")
-     */
-    private $seasonId;
-
-    /**
-     * @param mixed $seasonId
-     */
-    public function setSeasonId($seasonId)
-    {
-        $this->seasonId = $seasonId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSeasonId()
-    {
-        return $this->seasonId;
-    }
-
-
-
   /**
    * @ORM\Column(name="number", type="integer")
    */

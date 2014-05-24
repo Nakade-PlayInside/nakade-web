@@ -114,10 +114,11 @@ class SeasonMapper extends AbstractMapper
 
     public function getMyLeague()
     {
-        $qb = $this->getEntityManager()->createQueryBuilder('Season');
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('l')
             ->from('Season\Entity\League', 'l')
-            ->where('l.id=3');
+            ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'l.season = s')
+            ->where('l.id=1');
 
         return $qb->getQuery()->getOneOrNullResult();
     }
@@ -131,6 +132,9 @@ class SeasonMapper extends AbstractMapper
      */
     public function getSeasonInfo($seasonId)
     {
+      $data = null;
+      try {
+
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('min(m._date) as firstMatchDate,
             max(m._date) as lastMatchDate,
@@ -142,6 +146,9 @@ class SeasonMapper extends AbstractMapper
             ->setParameter('seasonId', $seasonId);
 
         $data = $qb->getQuery()->getOneOrNullResult();
+      } catch (\Exception $e) {
+          echo $e->getMessage() . PHP_EOL;
+      }
 
         if (!empty($data)) {
             $data['openMatches'] = $this->getNoOfOpenMatchesInSeason($seasonId);
