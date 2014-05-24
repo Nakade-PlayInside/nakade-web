@@ -3,7 +3,7 @@ namespace Season\Form;
 
 use Nakade\Abstracts\AbstractForm;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-use League\Entity\Season;
+use Season\Entity\Season;
 
 /**
  * Form for making a new season
@@ -11,26 +11,27 @@ use League\Entity\Season;
 class SeasonForm extends AbstractForm
 {
 
-    protected $_tiebreaker = array(
-            'Hahn'  => 'Hahn',
-            'CUSS'  => 'CUSS',
-            'SODOS' => 'SODOS',
-    );
+    private $previousSeason;
+    private $tieBreakerList;
 
-    protected $_title='Bundesliga';
-    protected $_number=1;
 
     /**
      * constructor
      */
-    public function __construct()
+    public function __construct(array $tieBreaker, Season $season)
     {
         //form name is SeasonForm
-        parent::__construct();
-        $this->setObject(new Season());
-        $this->setHydrator(new Hydrator());
+        parent::__construct('SeasonForm');
 
+        $this->previousSeason = $season;
+        $this->tieBreakerList = array();
+        /* @var $tieBreak \Season\Entity\TieBreaker */
+        foreach ($tieBreaker as $tieBreak) {
+            $this->tieBreakerList[$tieBreak->getId()]= $tieBreak->getName();
+        }
+        $this->init();
     }
+
 
 
     /**
@@ -40,16 +41,28 @@ class SeasonForm extends AbstractForm
     public function init()
     {
 
-        //title
+        //association
         $this->add(
             array(
-                'name' => 'title',
+                'name' => 'associationName',
                 'type' => 'Zend\Form\Element\Text',
                 'options' => array(
-                    'label' =>  $this->translate('Title:'),
+                    'label' =>  $this->translate('Association:'),
                 ),
                 'attributes' => array(
-                    'value' => $this->_title,
+                    'readonly' => 'readonly',
+                    'value' => $this->previousSeason->getAssociation()->getName(),
+                )
+            )
+        );
+
+        //association id
+        $this->add(
+            array(
+                'name' => 'association',
+                'type' => 'Zend\Form\Element\Hidden',
+                'attributes' => array(
+                    'value' => $this->previousSeason->getAssociation()->getId(),
                 )
             )
         );
@@ -57,23 +70,41 @@ class SeasonForm extends AbstractForm
         //number
         $this->add(
             array(
-                'type' => 'Zend\Form\Element\Text',
                 'name' => 'number',
-                 'options' => array(
-                    'label' =>  $this->translate('Number:'),
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array(
+                    'label' =>  $this->translate('Season no:'),
                 ),
                 'attributes' => array(
                     'readonly' => 'readonly',
-                    'value'  => $this->_number,
+                    'value' => $this->previousSeason->getNumber()+1,
                 )
             )
         );
 
-        //winpoints
+        //date
         $this->add(
             array(
+                'name' => 'startDate',
+                'type' => 'Zend\Form\Element\Date',
+                'options' => array(
+                    'label' =>  $this->translate('Start date').":",
+                    'format' => 'Y-m-d'
+                ),
+                'attributes' => array(
+                    'min'  => \date('Y-m-d'),
+                    //'max'  => $this->maxDate->format('Y-m-d'),
+                    'step' => '1', // days; default step interval is 1 day
+                )
+
+            )
+        );
+
+        //winPoints
+        $this->add(
+            array(
+                'name' => 'winPoints',
                 'type' => 'Zend\Form\Element\Select',
-                'name' => 'winpoints',
                 'options' => array(
                     'label' =>  $this->translate('Winning points:'),
                     'value_options' => array (
@@ -83,37 +114,25 @@ class SeasonForm extends AbstractForm
                     )
                 ),
                 'attributes' => array(
-                    'value' => 2,
+                    'value' => $this->previousSeason->getWinPoints(),
                 )
             )
         );
 
-        //drawpoints
+        //komi
         $this->add(
             array(
-                'name' => 'drawpoints',
-                'type' => 'Zend\Form\Element\Select',
+                'type' => 'Zend\Form\Element\Text',
+                'name' => 'komi',
                 'options' => array(
-                    'label' =>  $this->translate('Draw points:'),
-                    'empty_option' => $this->translate('no draw'),
-                    'value_options' => array (1 => '1', )
+                    'label' =>  $this->translate('Komi') . ':',
                 ),
                 'attributes' => array(
-                    'value' => 1,
+                    'value' => $this->previousSeason->getKomi(),
                 )
             )
         );
 
-        $this->setTiebreakerFields();
-        $this->setDefaultFields();
-
-
-
-
-    }
-
-    private function setTiebreakerFields()
-    {
         //first tb
         $this->add(
             array(
@@ -121,50 +140,43 @@ class SeasonForm extends AbstractForm
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
                     'label' =>  $this->translate('First tiebreaker:'),
-                    'empty_option' => $this->translate('no tiebreak'),
-                    'value_options' => $this->_tiebreaker
+                    'value_options' => $this->tieBreakerList
                 ),
                 'attributes' => array(
-                    'value' => 'Hahn',
+                    'value' => $this->previousSeason->getTieBreaker1()->getId(),
                 )
             )
         );
 
-        //second tb
+        //first tb
         $this->add(
             array(
                 'name' => 'tiebreaker2',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
                     'label' =>  $this->translate('Second tiebreaker:'),
-                    'empty_option' => $this->translate('no tiebreak'),
-                    'value_options' => $this->_tiebreaker
+                    'value_options' => $this->tieBreakerList
                 ),
                 'attributes' => array(
-                    'value' => 'SODOS',
+                    'value' => $this->previousSeason->getTieBreaker2()->getId(),
                 )
             )
         );
 
-        //third tb
+        //first tb
         $this->add(
             array(
                 'name' => 'tiebreaker3',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
                     'label' =>  $this->translate('Third tiebreaker:'),
-                    'empty_option' => $this->translate('no tiebreak'),
-                    'value_options' => $this->_tiebreaker
+                    'value_options' => $this->tieBreakerList
                 ),
                 'attributes' => array(
-                    'value' => 'CUSS',
+                    'value' => $this->previousSeason->getTieBreaker3()->getId(),
                 )
             )
         );
-    }
-
-    private function setDefaultFields()
-    {
 
         //cross-site scripting hash protection
         //this is handled by ZF2 in the background - no need for server-side

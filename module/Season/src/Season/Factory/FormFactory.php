@@ -18,8 +18,8 @@ use Zend\Stdlib\ArrayUtils;
 class FormFactory extends AbstractFormFactory
 {
 
-    protected $_mapper;
-    protected $_service;
+    private $mapper;
+    private $service;
     /**
      * implemented ServiceLocator
      *
@@ -54,9 +54,8 @@ class FormFactory extends AbstractFormFactory
         $entityManager = $services->get('Doctrine\ORM\EntityManager');
         $this->setEntityManager($entityManager);
 
-        $this->_mapper = $services->get('League\Factory\MapperFactory');
-        $this->_service =
-            $services->get('League\Services\PlayerServiceFactory');
+        $this->mapper = $services->get('League\Factory\MapperFactory');
+        $this->service = $services->get('League\Services\PlayerServiceFactory');
 
         return $this;
     }
@@ -82,9 +81,9 @@ class FormFactory extends AbstractFormFactory
 
            case "player":
                $form = new Form\ParticipantsForm();
-               $season = $this->_service->getNewSeason();
-               $players = $this->_service->getFreePlayers();
-               $leagues = $this->_service->getLeaguesInSeason();
+               $season = $this->service->getNewSeason();
+               $players = $this->service->getFreePlayers();
+               $leagues = $this->service->getLeaguesInSeason();
 
                $form->setPlayers($players);
                $form->setLeagues($leagues);

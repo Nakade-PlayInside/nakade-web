@@ -151,6 +151,8 @@ return array(
                     'Season\Services\ScheduleServiceFactory',
             'Season\Services\RepositoryService'      =>
                     'Season\Services\RepositoryService',
+            'Season\Services\SeasonFormService'      =>
+                'Season\Services\SeasonFormService',
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

@@ -93,7 +93,7 @@ class SeasonMapper extends AbstractMapper
     /**
      * last season has no open matches. It's the last season played!
      *
-     * @param int $titleId
+     * @param int $associationId
      *
      * @return null|Season
      */
@@ -102,11 +102,12 @@ class SeasonMapper extends AbstractMapper
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('s')
             ->from('Season\Entity\Season', 's')
-            ->leftJoin('Season\Entity\Season', 'l', Join::WITH, 'l.season = s.id')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
             ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l.id = m._lid')
             ->where('m._resultId is not Null')
             ->andWhere('s.association = :association')
             ->addOrderBy('s.startDate', 'DESC')
+            ->setMaxResults(1)
             ->setParameter('association', $associationId);
 
         return $qb->getQuery()->getOneOrNullResult();
@@ -209,6 +210,16 @@ class SeasonMapper extends AbstractMapper
             ->setParameter('seasonId', $seasonId);
 
         return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
+    }
+
+    /**
+     * @return array
+     */
+    public function getTieBreaker()
+    {
+        return $this->getEntityManager()
+            ->getRepository('Season\Entity\TieBreaker')
+            ->findAll();
     }
 
     /**

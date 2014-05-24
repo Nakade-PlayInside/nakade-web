@@ -21,6 +21,7 @@ class SeasonControllerFactory implements FactoryInterface
      * the authentication form.
      *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
+     *
      * @return \Authentication\Controller\AuthController
      */
     public function createService(ServiceLocatorInterface $services)
@@ -34,9 +35,10 @@ class SeasonControllerFactory implements FactoryInterface
 
         $service    = $serviceManager->get('Season\Services\SeasonServiceFactory');
 
-        $factory    = $serviceManager->get('Season\Factory\FormFactory');
+        $factory    = $serviceManager->get('Season\Services\SeasonFormService');
 
         $repository = $serviceManager->get('Season\Services\RepositoryService');
+
 
         $controller = new SeasonController();
         $controller->setService($service);

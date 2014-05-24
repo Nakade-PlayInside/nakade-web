@@ -1,0 +1,20 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('League');
+/* @var $season \Season\Entity\Season */
+$season = $this->season;
+$this->headTitle('Overview');
+
+?>
+
+<h3><?php echo ''?></h3>
+
+<?php echo $this->showWidget; ?>
+
+<a class="btn" href="<?php echo $this->url('newseason', array('action' => 'add')); ?>"><?php echo "create Season" ?></a>
+
+<br/><br/><br/>
+<button><?php echo "edit Season" ?></button>
+<button><?php echo "add Players" ?></button>
+<button><?php echo "add League" ?></button>
+
+

@@ -171,6 +171,9 @@ class Season extends SeasonModel
         if (isset($data['noLeagues'])) {
             $this->noLeagues = intval($data['noLeagues']);
         }
+        if (isset($data['winPoints'])) {
+            $this->winPoints = intval($data['winPoints']);
+        }
     }
 
     /**

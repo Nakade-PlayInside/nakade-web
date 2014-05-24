@@ -35,14 +35,33 @@ class SeasonController extends AbstractController
     }
 
     /**
+     * @return ViewModel
+     */
+    public function createAction()
+    {
+        $showWidget  = $this->forward()->dispatch('Season\Controller\Season', array('action' => 'index'));
+        $page = new ViewModel();
+
+        $page->addChild($showWidget, 'showWidget');
+
+        return $page;
+    }
+
+    /**
      * @return \Zend\Http\Response|ViewModel
      */
     public function addAction()
     {
         $actual = $this->getService()->getActualSeason();
         $actual->setNumber($actual->getNumber()+1);
+
+        /* @var $mapper \Season\Mapper\SeasonMapper */
+        $mapper = $this->getRepository()->getMapper('season');
+        $last = $mapper->getLastSeasonByAssociation(1);
+
+        /* @var $form \Season\Form\SeasonForm */
+
         $form = $this->getForm('season');
-        $form->bindEntity($actual);
 
        if ($this->getRequest()->isPost()) {
             //get post data, set data to from, prepare for validation
