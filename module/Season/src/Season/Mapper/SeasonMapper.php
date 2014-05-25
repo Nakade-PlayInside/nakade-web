@@ -102,7 +102,7 @@ class SeasonMapper extends AbstractMapper
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('s')
             ->from('Season\Entity\Season', 's')
-            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
+            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l.season = s')
             ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l.id = m._lid')
             ->where('m._resultId is not Null')
             ->andWhere('s.association = :association')
@@ -141,12 +141,12 @@ class SeasonMapper extends AbstractMapper
             max(m._date) as lastMatchDate,
             count(m) as noMatches')
             ->from('Season\Entity\Season', 's')
-            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
+            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l.season = s')
             ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l.id = m._lid')
             ->where('s.id = :seasonId')
             ->setParameter('seasonId', $seasonId);
-
         $data = $qb->getQuery()->getOneOrNullResult();
+
       } catch (\Exception $e) {
           echo $e->getMessage() . PHP_EOL;
       }
@@ -170,8 +170,8 @@ class SeasonMapper extends AbstractMapper
         $qb = $this->getEntityManager()->createQueryBuilder('League');
         $qb->select('count(m)')
             ->from('League\Entity\Match', 'm')
-            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.id = m._lid')
-            ->where('l.season = :seasonId')
+            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l.id = m._lid')
+            ->where('l.sid = :seasonId')
             ->andWhere('m._resultId is Null')
             ->addGroupBy('l.id')
             ->setParameter('seasonId', $seasonId);
@@ -186,11 +186,10 @@ class SeasonMapper extends AbstractMapper
      */
     public function getNoOfLeaguesInSeason($seasonId)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder('League');
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('count(l)')
-            ->from('Season\Entity\League', 'l')
-            ->join('l.season', 'Season')
-            ->where('Season.id = :seasonId')
+            ->from('League\Entity\League', 'l')
+            ->where('l.sid = :seasonId')
             ->setParameter('seasonId', $seasonId);
 
         return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
@@ -222,92 +221,6 @@ class SeasonMapper extends AbstractMapper
             ->findAll();
     }
 
-    /**
-     * Needed for getMatchesOpenForAppointmentByUser
-     *
-     * @param User $user
-     *
-     * @return array
-     */
-    public function getLeagueIdsByPlayersInSeason($seasonId)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder('Player');
-        $result = $qb
-            ->select('p.lid as league')
-            ->from('League\Entity\Player', 'p')
-            ->where('p.sid = :seasonId')
-            ->addGroupBy('p.lid')
-            ->setParameter('seasonId', $seasonId)
-            ->getQuery()
-            ->getResult();
-
-        //quicker than array_map
-        $ids = array();
-        foreach ($result as $item) {
-            $ids[] = $item['league'];
-        }
-
-        return $ids;
-    }
-
-    public function getLeaguesWithNoPlayersInSeason($seasonId)
-    {
-
-        $playersInLeagues = $this->getLeagueIdsByPlayersInSeason($seasonId);
-
-        $qb = $this->getEntityManager()->createQueryBuilder('League');
-        $qb->select('l')
-            ->from('Season\Entity\League', 'l')
-            ->join('l.season', 'Season')
-            ->where('Season.id = :seasonId')
-            ->andWhere($qb->expr()->notIn('l.id', $playersInLeagues))
-            ->setParameter('seasonId', $seasonId);
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * Needed for getMatchesOpenForAppointmentByUser
-     *
-     * @param User $user
-     *
-     * @return array
-     */
-    public function getLeagueIdsInSeason($seasonId)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder('Match');
-        $result = $qb
-            ->select('l._lid as league')
-            ->from('League\Entity\League', 'l')
-            ->where('l._sid = :seasonId')
-            ->addGroupBy('m._lid')
-            ->setParameter('seasonId', $seasonId)
-            ->getQuery()
-            ->getResult();
-
-        //quicker than array_map
-        $ids = array();
-        foreach ($result as $item) {
-            $ids[] = $item['league'];
-        }
-
-        return $ids;
-    }
-
-    public function getLeaguesWithNoMatchesInSeason($seasonId)
-    {
-
-        $matchesInLeagues = $this->getLeagueIdsInSeason($seasonId);
-
-        $qb = $this->getEntityManager()->createQueryBuilder('Match');
-        $qb->select('l')
-            ->from('League\Entity\Match', 'l')
-            ->where('l._sid = :seasonId')
-            ->andWhere($qb->expr()->notIn('l._id', $matchesInLeagues))
-            ->setParameter('seasonId', $seasonId);
-
-        return $qb->getQuery()->getResult();
-    }
 
 
    /**

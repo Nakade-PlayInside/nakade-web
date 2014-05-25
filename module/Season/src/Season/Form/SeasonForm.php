@@ -11,19 +11,17 @@ use Season\Entity\Season;
 class SeasonForm extends AbstractForm
 {
 
-    private $previousSeason;
     private $tieBreakerList;
 
 
     /**
-     * constructor
+     * @param array $tieBreaker
      */
-    public function __construct(array $tieBreaker, Season $season)
+    public function __construct(array $tieBreaker)
     {
         //form name is SeasonForm
         parent::__construct('SeasonForm');
 
-        $this->previousSeason = $season;
         $this->tieBreakerList = array();
         /* @var $tieBreak \Season\Entity\TieBreaker */
         foreach ($tieBreaker as $tieBreak) {
@@ -46,24 +44,8 @@ class SeasonForm extends AbstractForm
             array(
                 'name' => 'associationName',
                 'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('Association:'),
-                ),
-                'attributes' => array(
-                    'readonly' => 'readonly',
-                    'value' => $this->previousSeason->getAssociation()->getName(),
-                )
-            )
-        );
-
-        //association id
-        $this->add(
-            array(
-                'name' => 'association',
-                'type' => 'Zend\Form\Element\Hidden',
-                'attributes' => array(
-                    'value' => $this->previousSeason->getAssociation()->getId(),
-                )
+                'options' => array('label' =>  $this->translate('Association') . ':'),
+                'attributes' => array('readonly' => 'readonly')
             )
         );
 
@@ -72,13 +54,8 @@ class SeasonForm extends AbstractForm
             array(
                 'name' => 'number',
                 'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('Season no:'),
-                ),
-                'attributes' => array(
-                    'readonly' => 'readonly',
-                    'value' => $this->previousSeason->getNumber()+1,
-                )
+                'options' => array('label' =>  $this->translate('Season no.') . ':'),
+                'attributes' => array('readonly' => 'readonly')
             )
         );
 
@@ -93,7 +70,6 @@ class SeasonForm extends AbstractForm
                 ),
                 'attributes' => array(
                     'min'  => \date('Y-m-d'),
-                    //'max'  => $this->maxDate->format('Y-m-d'),
                     'step' => '1', // days; default step interval is 1 day
                 )
 
@@ -106,16 +82,13 @@ class SeasonForm extends AbstractForm
                 'name' => 'winPoints',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' =>  $this->translate('Winning points:'),
+                    'label' =>  $this->translate('Winning points') . ':',
                     'value_options' => array (
                         1 => '1',
                         2 => '2',
                         3 => '3'
                     )
                 ),
-                'attributes' => array(
-                    'value' => $this->previousSeason->getWinPoints(),
-                )
             )
         );
 
@@ -124,12 +97,7 @@ class SeasonForm extends AbstractForm
             array(
                 'type' => 'Zend\Form\Element\Text',
                 'name' => 'komi',
-                'options' => array(
-                    'label' =>  $this->translate('Komi') . ':',
-                ),
-                'attributes' => array(
-                    'value' => $this->previousSeason->getKomi(),
-                )
+                'options' => array('label' =>  $this->translate('Komi') . ':'),
             )
         );
 
@@ -139,12 +107,9 @@ class SeasonForm extends AbstractForm
                 'name' => 'tiebreaker1',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' =>  $this->translate('First tiebreaker:'),
+                    'label' =>  $this->translate('First tiebreaker') . ':',
                     'value_options' => $this->tieBreakerList
                 ),
-                'attributes' => array(
-                    'value' => $this->previousSeason->getTieBreaker1()->getId(),
-                )
             )
         );
 
@@ -154,12 +119,9 @@ class SeasonForm extends AbstractForm
                 'name' => 'tiebreaker2',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' =>  $this->translate('Second tiebreaker:'),
+                    'label' =>  $this->translate('Second tiebreaker') . ':',
                     'value_options' => $this->tieBreakerList
                 ),
-                'attributes' => array(
-                    'value' => $this->previousSeason->getTieBreaker2()->getId(),
-                )
             )
         );
 
@@ -169,53 +131,13 @@ class SeasonForm extends AbstractForm
                 'name' => 'tiebreaker3',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' =>  $this->translate('Third tiebreaker:'),
+                    'label' =>  $this->translate('Third tiebreaker') . ':',
                     'value_options' => $this->tieBreakerList
                 ),
-                'attributes' => array(
-                    'value' => $this->previousSeason->getTieBreaker3()->getId(),
-                )
             )
         );
 
-        //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side
-        //validation
-        $this->add(
-            array(
-                'name' => 'csrf',
-                'type'  => 'Zend\Form\Element\Csrf',
-                'options' => array(
-                    'csrf_options' => array(
-                        'timeout' => 600
-                    )
-                )
-            )
-        );
-
-        //submit button
-        $this->add(
-            array(
-                'name' => 'Send',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Submit'),
-
-                ),
-            )
-        );
-
-        //cancel button
-        $this->add(
-            array(
-                'name' => 'cancel',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Cancel'),
-
-                ),
-            )
-        );
+        $this->setDefaultElements();
 
     }
 

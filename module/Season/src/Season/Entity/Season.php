@@ -150,6 +150,7 @@ class Season extends SeasonModel
      */
     public function exchangeArray($data)
     {
+
         if (isset($data['noPlayer'])) {
             $this->noPlayers = intval($data['noPlayer']);
         }
@@ -173,6 +174,15 @@ class Season extends SeasonModel
         }
         if (isset($data['winPoints'])) {
             $this->winPoints = intval($data['winPoints']);
+        }
+        if (isset($data['komi'])) {
+            $this->komi = floatval($data['komi']);
+        }
+        if (isset($data['startDate'])) {
+            $this->startDate = \DateTime::createFromFormat('Y-m-d', $data['startDate']);
+        }
+        if (isset($data['number'])) {
+            $this->number = intval($data['number']);
         }
     }
 

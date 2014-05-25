@@ -56,8 +56,8 @@ class SeasonFormService extends AbstractFormFactory
                /* @var $mapper \Season\Mapper\SeasonMapper */
                $mapper = $this->repository->getMapper('season');
                $tieBreaker = $mapper->getTieBreaker();
-               $last = $mapper->getLastSeasonByAssociation(1);
-               $form = new Form\SeasonForm($tieBreaker, $last);
+               $form = new Form\SeasonForm($tieBreaker);
+               $form->setHydrator(new Form\SeasonHydrator());
                break;
 
            default:

@@ -2,7 +2,7 @@
 
 namespace League\Entity;
 
-use League\Entity\Season;
+use Season\Entity\Season;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,45 +10,42 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="leagueLigen")
- * @property int $_id
- * @property int $_sid
- * @property int $_number
- * @property string $_title
-
  */
 class League
 {
 
   /**
-   * Primary Identifier
-   *
    * @ORM\Id
    * @ORM\Column(name="id", type="integer")
    * @ORM\GeneratedValue(strategy="AUTO")
-   * @var int
-   * @access protected
    */
-  protected $_id;
+    private $id;
 
 
   /**
    * Season Identifier
    *
    * @ORM\Column(name="sid", type="integer")
-   * @var int
-   * @access protected
    */
-  protected $_sid;
+    private $sid;
 
-  /**
-   * League Order
-   * eg 1.Liga or 2.Liga
+    /**
+     * @ORM\ManyToOne(targetEntity="\Season\Entity\Season", cascade={"persist"})
+     * @ORM\JoinColumn(name="season", referencedColumnName="id", nullable=false)
+     */
+    private $season;
+
+    /**
+     * @ORM\Column(name="name", type="string")
+     */
+    private $name;
+
+
+    /**
    *
    * @ORM\Column(name="number", type="integer")
-   * @var int
-   * @access protected
    */
-  protected $_number;
+    private $number;
 
   /**
    * Title
@@ -57,55 +54,45 @@ class League
    * @var string
    * @access protected
    */
-  protected $_title;
+    private $title;
 
 
   /**
-   * Sets the Identifier
-   *
    * @param int $lid
    *
-   * @return Season
+   * @return $this
    */
   public function setId($lid)
   {
-    $this->_id = $lid;
+    $this->id = $lid;
     return $this;
   }
 
   /**
-   * Returns the Identifier
-   *
-   * @access public
    * @return int
    */
   public function getId()
   {
-    return $this->_id;
+    return $this->id;
   }
 
   /**
-   * Sets the SeasonId
-   *
    * @param int $sid
    *
-   * @return League
+   * @return $this
    */
   public function setSid($sid)
   {
-    $this->_sid = $sid;
+    $this->sid = $sid;
     return $this;
   }
 
   /**
-   * Returns the SeasonId
-   *
-   * @access public
    * @return int
    */
   public function getSid()
   {
-    return $this->_sid;
+    return $this->sid;
   }
 
     /**
@@ -115,44 +102,68 @@ class League
      */
   public function setNumber($number)
   {
-    $this->_number = $number;
+    $this->number = $number;
     return $this;
   }
 
   /**
-   * Returns the Order
-   *
-   * @access public
    * @return int
    */
   public function getNumber()
   {
-    return $this->_number;
+    return $this->number;
   }
 
   /**
-   * Sets the Title
-   *
    * @param string $title
    *
-   * @return League
+   * @return $this
    */
   public function setTitle($title)
   {
-    $this->_title = $title;
+    $this->title = $title;
     return $this;
   }
 
   /**
-   * Returns the Title
-   *
-   * @access public
    * @return string
    */
   public function getTitle()
   {
-    return $this->_title;
+    return $this->title;
   }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param Season $season
+     */
+    public function setSeason(Season $season)
+    {
+        $this->season = $season;
+    }
+
+    /**
+     * @return Season
+     */
+    public function getSeason()
+    {
+        return $this->season;
+    }
 
   /**
    * populating data as an array.
