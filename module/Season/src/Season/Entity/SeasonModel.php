@@ -221,15 +221,15 @@ class SeasonModel
     }
 
     /**
-     * @param int $time
+     * @param Time $time
      */
-    public function setTime($time)
+    public function setTime(Time $time)
     {
         $this->time = $time;
     }
 
     /**
-     * @return int
+     * @return Time
      */
     public function getTime()
     {

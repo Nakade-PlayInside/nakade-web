@@ -43,6 +43,11 @@ class Time
     */
    private $moves;
 
+    /**
+     * @ORM\Column(name="period", type="integer", nullable=false)
+     */
+    private $period;
+
   /**
    * @param int $id
    *
@@ -95,15 +100,15 @@ class Time
     }
 
     /**
-     * @param mixed $byoyomi
+     * @param Byoyomi $byoyomi
      */
-    public function setByoyomi($byoyomi)
+    public function setByoyomi(Byoyomi $byoyomi)
     {
         $this->byoyomi = $byoyomi;
     }
 
     /**
-     * @return mixed
+     * @return Byoyomi
      */
     public function getByoyomi()
     {
@@ -124,6 +129,54 @@ class Time
     public function getMoves()
     {
         return $this->moves;
+    }
+
+    /**
+     * @param int $period
+     */
+    public function setPeriod($period)
+    {
+        $this->period = $period;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPeriod()
+    {
+        return $this->period;
+    }
+
+    /**
+     * for form data
+     *
+     * @param array $data
+     */
+    public function exchangeArray($data)
+    {
+
+        if (isset($data['period'])) {
+            $this->period = intval($data['period']);
+        }
+        if (isset($data['moves'])) {
+            $this->moves = intval($data['period']);
+        }
+        if (isset($data['additionalTime'])) {
+            $this->additionalTime = intval($data['additionalTime']);
+        }
+        if (isset($data['baseTime'])) {
+            $this->baseTime = intval($data['baseTime']);
+        }
+    }
+
+    /**
+     * needed for form data
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
     }
 
 }

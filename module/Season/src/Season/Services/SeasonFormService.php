@@ -5,33 +5,41 @@ namespace Season\Services;
 use Nakade\Abstracts\AbstractFormFactory;
 use Season\Form;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Season\Form\Hydrator\SeasonHydrator;
 
+/**
+ * Class SeasonFormService
+ *
+ * @package Season\Services
+ */
 class SeasonFormService extends AbstractFormFactory
 {
 
     const SEASON_FORM = 'season';
-    private $repository;
+    private $seasonfieldSets;
+
+
 
     /**
      * @param ServiceLocatorInterface $services
      *
      * @return $this
+     *
+     * @throws \RuntimeException
      */
     public function createService(ServiceLocatorInterface $services)
     {
-        $config  = $services->get('config');
 
+        //EntityManager for database access by doctrine
+        $this->entityManager = $services->get('Doctrine\ORM\EntityManager');
 
-        //configuration
-        $textDomain = isset($config['Appointment']['text_domain']) ?
-            $config['Appointment']['text_domain'] : null;
+        if (is_null($this->entityManager)) {
+            throw new \RuntimeException(
+                sprintf('Entity manager could not be found in service.')
+            );
+        }
 
-        $translator = $services->get('translator');
-
-        $this->repository = $services->get('Season\Services\RepositoryService');
-
-        $this->setTranslator($translator);
-        $this->setTranslatorTextDomain($textDomain);
+       $this->seasonfieldSets = $services->get('Season\Services\SeasonFieldsetService');
 
        return $this;
     }
@@ -53,11 +61,8 @@ class SeasonFormService extends AbstractFormFactory
 
            case self::SEASON_FORM:
 
-               /* @var $mapper \Season\Mapper\SeasonMapper */
-               $mapper = $this->repository->getMapper('season');
-               $tieBreaker = $mapper->getTieBreaker();
-               $form = new Form\SeasonForm($tieBreaker);
-               $form->setHydrator(new Form\SeasonHydrator());
+               $form = new Form\SeasonForm($this->seasonfieldSets);
+               $form->setHydrator(new SeasonHydrator($this->getEntityManager()));
                break;
 
            default:
@@ -65,11 +70,7 @@ class SeasonFormService extends AbstractFormFactory
                    sprintf('An unknown form type was provided.')
                );
         }
-
-        $form->setTranslator($this->getTranslator());
-        $form->setTranslatorTextDomain($this->getTranslatorTextDomain());
         return $form;
     }
-
 
 }

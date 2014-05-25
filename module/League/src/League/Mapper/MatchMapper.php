@@ -304,8 +304,8 @@ class MatchMapper  extends AbstractMapper
         $dql = "SELECT l FROM
                League\Entity\Match m,
                League\Entity\League l
-               WHERE l._sid = :sid AND
-               m._lid=l._id   AND
+               WHERE l.sid = :sid AND
+               m._lid=l.id   AND
                (m._blackId = :uid OR
                m._whiteId = :uid)";
 

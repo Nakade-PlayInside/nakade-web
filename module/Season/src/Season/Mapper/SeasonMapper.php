@@ -221,6 +221,15 @@ class SeasonMapper extends AbstractMapper
             ->findAll();
     }
 
+    /**
+     * @return array
+     */
+    public function getByoyomi()
+    {
+        return $this->getEntityManager()
+            ->getRepository('Season\Entity\Byoyomi')
+            ->findAll();
+    }
 
 
    /**

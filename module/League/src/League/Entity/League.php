@@ -2,7 +2,7 @@
 
 namespace League\Entity;
 
-use Season\Entity\Season;
+use Season\Entity\Season as NewSeason;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -150,15 +150,15 @@ class League
     }
 
     /**
-     * @param Season $season
+     * @param NewSeason $season
      */
-    public function setSeason(Season $season)
+    public function setSeason(NewSeason $season)
     {
         $this->season = $season;
     }
 
     /**
-     * @return Season
+     * @return NewSeason
      */
     public function getSeason()
     {
