@@ -78,7 +78,7 @@ class SeasonController extends AbstractController
 
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $season = $form->getData();
-                var_dump($data['tiebreaker1']);
+               // var_dump($data['tiebreaker1']);
                 var_dump($season);
                 var_dump($data); die;
                // $season->setTieBreaker1($em->getReference('TieBreaker', ID));

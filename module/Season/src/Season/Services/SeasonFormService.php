@@ -16,7 +16,8 @@ class SeasonFormService extends AbstractFormFactory
 {
 
     const SEASON_FORM = 'season';
-    private $seasonfieldSets;
+    private $fieldSetService;
+    private $repository;
 
 
 
@@ -39,7 +40,20 @@ class SeasonFormService extends AbstractFormFactory
             );
         }
 
-       $this->seasonfieldSets = $services->get('Season\Services\SeasonFieldsetService');
+        $config  = $services->get('config');
+
+        //configuration
+        $textDomain = isset($config['Season']['text_domain']) ?
+            $config['Season']['text_domain'] : null;
+
+        $translator = $services->get('translator');
+        $repository = $services->get('Season\Services\RepositoryService');
+        $fieldSetService = $services->get('Season\Services\SeasonFieldsetService');
+
+        $this->setRepository($repository);
+        $this->setFieldSetService($fieldSetService);
+        $this->setTranslator($translator);
+        $this->setTranslatorTextDomain($textDomain);
 
        return $this;
     }
@@ -56,13 +70,20 @@ class SeasonFormService extends AbstractFormFactory
      */
     public function getForm($typ)
     {
+        /* @var $mapper \Season\Mapper\SeasonMapper */
+        $mapper = $this->getRepository()->getMapper('season');
 
         switch (strtolower($typ)) {
 
            case self::SEASON_FORM:
+               $tiebreak = $this->getFieldSetService()->getFieldset('tiebreaker');
+               $buttons = $this->getFieldSetService()->getFieldset('button');
+               $extraTime = $mapper->getByoyomi();
 
-               $form = new Form\SeasonForm($this->seasonfieldSets);
+               $form = new Form\SeasonForm($extraTime);
                $form->setHydrator(new SeasonHydrator($this->getEntityManager()));
+               $form->setTieBreaker($tiebreak);
+               $form->setButtons($buttons);
                break;
 
            default:
@@ -70,7 +91,43 @@ class SeasonFormService extends AbstractFormFactory
                    sprintf('An unknown form type was provided.')
                );
         }
+
+        $form->init();
         return $form;
     }
+
+    /**
+     * @param mixed $fieldSetService
+     */
+    public function setFieldSetService($fieldSetService)
+    {
+        $this->fieldSetService = $fieldSetService;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFieldSetService()
+    {
+        return $this->fieldSetService;
+    }
+
+    /**
+     * @param mixed $repository
+     */
+    public function setRepository($repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
+
+
 
 }

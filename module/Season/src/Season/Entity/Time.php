@@ -34,17 +34,17 @@ class Time
    private $baseTime;
 
    /**
-    * @ORM\Column(name="additionalTime", type="integer", nullable=false)
+    * @ORM\Column(name="additionalTime", type="integer")
     */
    private $additionalTime;
 
    /**
-    * @ORM\Column(name="moves", type="integer", nullable=false)
+    * @ORM\Column(name="moves", type="integer")
     */
    private $moves;
 
     /**
-     * @ORM\Column(name="period", type="integer", nullable=false)
+     * @ORM\Column(name="period", type="integer")
      */
     private $period;
 

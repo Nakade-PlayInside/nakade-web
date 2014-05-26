@@ -19,10 +19,7 @@ class SeasonFieldsetService extends AbstractFieldsetFactory
 {
 
     const TIEBREAKER_FIELD_SET = 'tiebreaker';
-    const BYOYOMI_FIELD_SET = 'byoyomi';
     const BUTTON_FIELD_SET = 'button';
-    const SEASON_FIELD_SET = 'season';
-
     /**
      * @param ServiceLocatorInterface $services
      *
@@ -42,14 +39,7 @@ class SeasonFieldsetService extends AbstractFieldsetFactory
         $this->setTranslator($translator);
         $this->setTranslatorTextDomain($textDomain);
 
-        //return a sorted array of field sets just for the season form only
-        $list = array();
-        $list[]=$this->getFieldset(self::SEASON_FIELD_SET);
-        $list[]=$this->getFieldset(self::TIEBREAKER_FIELD_SET);
-        $list[]=$this->getFieldset(self::BYOYOMI_FIELD_SET);
-        $list[]=$this->getFieldset(self::BUTTON_FIELD_SET);
-
-        return $list;
+        return $this;
     }
 
     /**
@@ -69,15 +59,6 @@ class SeasonFieldsetService extends AbstractFieldsetFactory
             case self::TIEBREAKER_FIELD_SET:
                 $tieBreaker = $mapper->getTieBreaker();
                 $fieldSet = new TieBreakerFieldset($tieBreaker);
-                break;
-
-            case self::SEASON_FIELD_SET:
-                $fieldSet = new SeasonFieldset();
-                break;
-
-            case self::BYOYOMI_FIELD_SET:
-                $extraTime = $mapper->getByoyomi();
-                $fieldSet = new TimeFieldset($extraTime);
                 break;
 
             case self::BUTTON_FIELD_SET:

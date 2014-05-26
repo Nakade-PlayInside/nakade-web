@@ -39,19 +39,19 @@ class SeasonHydrator implements HydratorInterface
                'tiebreaker2' => $season->getTieBreaker2()->getId(),
                'tiebreaker3' => $season->getTieBreaker3()->getId(),
            ),
-          'season' => array(
+
               'winPoints' => $season->getWinPoints(),
               'komi' => $season->getKomi(),
               'number' => $season->getNumber()+1,
               'associationName' => $season->getAssociation()->getName(),
-          ),
-          'time' => array (
+
+
               'baseTime' => $season->getTime()->getBaseTime(),
               'byoyomi' => $season->getTime()->getByoyomi()->getId(),
               'additionalTime' => $season->getTime()->getAdditionalTime(),
               'moves' => $season->getTime()->getMoves(),
               'period' => $season->getTime()->getPeriod(),
-           ),
+
         );
     }
 
@@ -65,9 +65,9 @@ class SeasonHydrator implements HydratorInterface
     {
         /* @var $season \Season\Entity\Season */
         $season->setId(null);
-        $season->setNumber($data['season']['number']);
-        $season->setKomi($data['season']['komi']);
-        $season->setWinPoints($data['season']['winPoints']);
+        $season->setNumber($data['number']);
+        $season->setKomi($data['komi']);
+        $season->setWinPoints($data['winPoints']);
 
         //tiebreaker
         $tiebreak1 = $this->getTieBreakerById($data['tiebreak']['tiebreaker1']);
@@ -81,8 +81,8 @@ class SeasonHydrator implements HydratorInterface
 
         //time
         $time = new Time();
-        $time->exchangeArray($data['time']);
-        $byoyomi = $this->getEntityManager()->getReference('Season\Entity\Byoyomi', $data['time']['byoyomi']);
+        $time->exchangeArray($data);
+        $byoyomi = $this->getEntityManager()->getReference('Season\Entity\Byoyomi', $data['byoyomi']);
         $time->setByoyomi($byoyomi);
         $season->setTime($time);
 
