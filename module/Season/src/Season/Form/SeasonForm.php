@@ -2,31 +2,33 @@
 namespace Season\Form;
 
 use Nakade\Abstracts\AbstractForm;
-use Season\Form\Fieldset\ButtonFieldset;
-use Season\Form\Fieldset\TieBreakerFieldset;
-use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-
+use Season\Services\SeasonFieldsetService;
 
 /**
- * Form for making a new season
+ * Class SeasonForm
+ *
+ * @package Season\Form
  */
 class SeasonForm extends AbstractForm
 {
 
     private $byoyomi;
-    private $tieBreaker;
-    private $buttons;
+    private $service;
+    private $minDate;
 
 
     /**
-     * @param array $byoyomi
+     * @param SeasonFieldsetService $service
+     * @param array                 $byoyomi
      */
-    public function __construct(array $byoyomi)
+    public function __construct(SeasonFieldsetService $service, array $byoyomi)
     {
         //form name is SeasonForm
         parent::__construct('SeasonForm');
 
+        $this->service = $service;
         $this->byoyomi = $this->getByoyomiList($byoyomi);
+        $this->minDate = \date('Y-m-d');
         $this->setInputFilter($this->getFilter());
     }
 
@@ -65,7 +67,7 @@ class SeasonForm extends AbstractForm
                     'format' => 'Y-m-d'
                 ),
                 'attributes' => array(
-                    'min'  => \date('Y-m-d'),
+                    'min'  => $this->getMinDate(),
                     'step' => '1', // days; default step interval is 1 day
                 )
 
@@ -93,13 +95,15 @@ class SeasonForm extends AbstractForm
             array(
                 'type' => 'Zend\Form\Element\Text',
                 'name' => 'komi',
-                'options' => array('label' =>  $this->translate('Komi') . ':'),
+                'options' => array(
+                    'label' =>  $this->translate('Komi') . ':'
+                )
             )
         );
 
         $this->addTimeFieldSet();
-        $this->add($this->getTieBreaker());
-        $this->add($this->getButtons());
+        $this->add($this->getService()->getFieldset(SeasonFieldsetService::TIEBREAKER_FIELD_SET));
+        $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
     }
 
     /**
@@ -163,57 +167,62 @@ class SeasonForm extends AbstractForm
     {
         $filter = new \Zend\InputFilter\InputFilter();
 
-        $filter->add(
-            array(
-                 'name' => 'komi',
-                 'required' => false,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
-                 'validators' => array(
-                     array('name'    => 'Float'),
-                  )
-            )
-        );
+        $filter->add($this->getValidation('baseTime'));
+        $filter->add($this->getValidation('additionalTime'));
+        $filter->add($this->getValidation('period'));
+        $filter->add($this->getValidation('moves'));
+        $filter->add($this->getValidation('komi', 'Float'));
+
 
         return $filter;
     }
 
     /**
-     * @param TieBreakerFieldset $tieBreaker
+     * @param string $name
+     * @param string $validation
+     *
+     * @return array
      */
-    public function setTieBreaker(TieBreakerFieldset $tieBreaker)
+    private function getValidation($name, $validation='Digits')
     {
-        $this->tieBreaker = $tieBreaker;
+
+        return array(
+            'name' => $name,
+            'required' => true,
+            'filters'  => array(
+                array('name' => 'StripTags'),
+                array('name' => 'StringTrim'),
+                array('name' => 'StripNewLines'),
+            ),
+            'validators' => array(
+                array('name'    => $validation),
+            )
+        );
     }
 
     /**
-     * @return TieBreakerFieldset
+     * @param string $minDate
      */
-    public function getTieBreaker()
+    public function setMinDate($minDate)
     {
-        return $this->tieBreaker;
+        $this->minDate = $minDate;
     }
 
     /**
-     * @param ButtonFieldset $buttons
+     * @return string
      */
-    public function setButtons(ButtonFieldset $buttons)
+    public function getMinDate()
     {
-        $this->buttons = $buttons;
+        return $this->minDate;
     }
 
     /**
-     * @return ButtonFieldset
+     * @return SeasonFieldsetService
      */
-    public function getButtons()
+    public function getService()
     {
-        return $this->buttons;
+        return $this->service;
     }
-
-
 
     /**
      * @param array $byoyomiList

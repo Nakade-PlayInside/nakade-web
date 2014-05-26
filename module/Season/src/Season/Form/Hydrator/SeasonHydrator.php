@@ -32,7 +32,6 @@ class SeasonHydrator implements HydratorInterface
     public function extract($season)
     {
         /* @var $season \Season\Entity\Season */
-
         return array(
            'tiebreak' => array(
                'tiebreaker1' => $season->getTieBreaker1()->getId(),
@@ -40,17 +39,18 @@ class SeasonHydrator implements HydratorInterface
                'tiebreaker3' => $season->getTieBreaker3()->getId(),
            ),
 
-              'winPoints' => $season->getWinPoints(),
-              'komi' => $season->getKomi(),
-              'number' => $season->getNumber()+1,
-              'associationName' => $season->getAssociation()->getName(),
+          'winPoints' => $season->getWinPoints(),
+          'komi' => $season->getKomi(),
+          'number' => $season->getNumber(),
+          'associationName' => $season->getAssociation()->getName(),
+          'startDate' => $season->getStartDate(),
 
-
-              'baseTime' => $season->getTime()->getBaseTime(),
-              'byoyomi' => $season->getTime()->getByoyomi()->getId(),
-              'additionalTime' => $season->getTime()->getAdditionalTime(),
-              'moves' => $season->getTime()->getMoves(),
-              'period' => $season->getTime()->getPeriod(),
+           //time
+          'baseTime' => $season->getTime()->getBaseTime(),
+          'byoyomi' => $season->getTime()->getByoyomi()->getId(),
+          'additionalTime' => $season->getTime()->getAdditionalTime(),
+          'moves' => $season->getTime()->getMoves(),
+          'period' => $season->getTime()->getPeriod(),
 
         );
     }
@@ -64,7 +64,6 @@ class SeasonHydrator implements HydratorInterface
     public function hydrate(array $data, $season)
     {
         /* @var $season \Season\Entity\Season */
-        $season->setId(null);
         $season->setNumber($data['number']);
         $season->setKomi($data['komi']);
         $season->setWinPoints($data['winPoints']);

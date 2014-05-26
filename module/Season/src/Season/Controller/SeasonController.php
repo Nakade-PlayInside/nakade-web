@@ -53,38 +53,45 @@ class SeasonController extends AbstractController
      */
     public function addAction()
     {
-      //  $actual = $this->getService()->getActualSeason();
-      //  $actual->setNumber($actual->getNumber()+1);
+        $id = (int) $this->params()->fromRoute('id', 1);
 
         /* @var $mapper \Season\Mapper\SeasonMapper */
         $mapper = $this->getRepository()->getMapper('season');
-        $last = $mapper->getLastSeasonByAssociation(1);
+        $last = $mapper->getLastSeasonByAssociation($id);
+        $data = $mapper->getSeasonInfo($last->getId());
+
+        $start = \DateTime::createFromFormat('Y-m-d H:i:s', $data['lastMatchDate']);
+
+        $season = new Season();
+        $season->exchangeArray($last->getArrayCopy());
+        $season->setNumber($season->getNumber()+1);
+        $season->setStartDate($start->modify('+2 week'));
 
         /* @var $form \Season\Form\SeasonForm */
         $form = $this->getForm('season');
-        $form->bind($last);
+        $form->setMinDate($start->format('Y-m-d'));
+        $form->init();
+        $form->bind($season);
 
 
        if ($this->getRequest()->isPost()) {
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
+
             //cancel
-            if ($postData['cancel']) {
-                return $this->redirect()->toRoute('newseason');
+            if ($postData['button']['cancel']) {
+                return $this->redirect()->toRoute('newseason', array('action' => 'create'));
             }
             $form->setData($postData);
 
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
+//                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $season = $form->getData();
-               // var_dump($data['tiebreaker1']);
-                var_dump($season);
-                var_dump($data); die;
-               // $season->setTieBreaker1($em->getReference('TieBreaker', ID));
-                $this->getService()->addSeason($data);
+                $season->setIsReady(false);
+                $mapper->save($season);
 
-                return $this->redirect()->toRoute('newseason');
+                return $this->redirect()->toRoute('newseason', array('action' => 'create'));
             }
        }
 
@@ -92,6 +99,53 @@ class SeasonController extends AbstractController
         return new ViewModel(
             array(
               'form' => $form,
+            )
+        );
+    }
+
+    /**
+     * @return \Zend\Http\Response|ViewModel
+     */
+    public function editAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 4);
+
+        /* @var $mapper \Season\Mapper\SeasonMapper */
+        $mapper = $this->getRepository()->getMapper('season');
+        $season = $mapper->getSeasonById($id);
+
+        /* @var $form \Season\Form\SeasonForm */
+        $form = $this->getForm('season');
+        $form->setMinDate($season->getStartDate()->format('Y-m-d'));
+        $form->init();
+        $form->bind($season);
+
+
+        if ($this->getRequest()->isPost()) {
+            //get post data, set data to from, prepare for validation
+            $postData =  $this->getRequest()->getPost();
+
+            //cancel
+            if ($postData['button']['cancel']) {
+                return $this->redirect()->toRoute('newseason', array('action' => 'create'));
+            }
+            $form->setData($postData);
+
+            if ($form->isValid()) {
+
+                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
+                //var_dump($data);die;
+                $season = $form->getData();
+                $mapper->update($season);
+
+                return $this->redirect()->toRoute('newseason', array('action' => 'create'));
+            }
+        }
+
+
+        return new ViewModel(
+            array(
+                'form' => $form,
             )
         );
     }

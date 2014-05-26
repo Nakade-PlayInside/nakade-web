@@ -184,6 +184,21 @@ class Season extends SeasonModel
         if (isset($data['number'])) {
             $this->number = intval($data['number']);
         }
+        if (isset($data['association'])) {
+            $this->association = $data['association'];
+        }
+        if (isset($data['time'])) {
+            $this->time = $data['time'];
+        }
+        if (isset($data['tieBreaker1'])) {
+            $this->tieBreaker1 = $data['tieBreaker1'];
+        }
+        if (isset($data['tieBreaker2'])) {
+            $this->tieBreaker2 = $data['tieBreaker2'];
+        }
+        if (isset($data['tieBreaker3'])) {
+            $this->tieBreaker3 = $data['tieBreaker3'];
+        }
     }
 
     /**

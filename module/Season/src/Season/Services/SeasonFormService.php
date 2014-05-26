@@ -76,14 +76,11 @@ class SeasonFormService extends AbstractFormFactory
         switch (strtolower($typ)) {
 
            case self::SEASON_FORM:
-               $tiebreak = $this->getFieldSetService()->getFieldset('tiebreaker');
-               $buttons = $this->getFieldSetService()->getFieldset('button');
+               $service = $this->getFieldSetService();
                $extraTime = $mapper->getByoyomi();
-
-               $form = new Form\SeasonForm($extraTime);
-               $form->setHydrator(new SeasonHydrator($this->getEntityManager()));
-               $form->setTieBreaker($tiebreak);
-               $form->setButtons($buttons);
+               $hydrator = new SeasonHydrator($this->entityManager);
+               $form = new Form\SeasonForm($service, $extraTime);
+               $form->setHydrator($hydrator);
                break;
 
            default:
@@ -92,7 +89,6 @@ class SeasonFormService extends AbstractFormFactory
                );
         }
 
-        $form->init();
         return $form;
     }
 
