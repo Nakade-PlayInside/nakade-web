@@ -1,11 +1,9 @@
 <?php
-$this->plugin('translate')->setTranslatorTextDomain('League');
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+$this->headTitle('New Season');
 
-$title = $this->translate('edit new season');
-$this->headTitle('Season');
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
-
+<h3><?php echo $this->translate('Edit New Season'); ?></h3>
 
 <?php
 $this->form->prepare();

@@ -21,8 +21,9 @@ return array(
             'result'     => 'Season\View\Helper\Result',
             'isActive'   => 'Season\View\Helper\Active',
             'isOpen'     => 'Season\View\Helper\Open',
-            'title'  => 'Season\View\Helper\SeasonTitle',
+            'seasonTitle'  => 'Season\View\Helper\SeasonTitle',
             'state'  => 'Season\View\Helper\SeasonState',
+            'matchDate'  => 'Season\View\Helper\MatchDate',
 
             // more helpers here ...
         )

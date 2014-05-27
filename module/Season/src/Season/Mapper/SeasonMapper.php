@@ -27,6 +27,18 @@ class SeasonMapper extends AbstractMapper
    }
 
     /**
+     * @param int $id
+     *
+     * @return object
+     */
+    public function getAssociationById($id)
+    {
+        return $this->getEntityManager()
+            ->getRepository('Season\Entity\Association')
+            ->find($id);
+    }
+
+    /**
      * get all seasons of a titled league
      *
      * @param int $associationId
@@ -113,17 +125,6 @@ class SeasonMapper extends AbstractMapper
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    public function getMyLeague()
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('l')
-            ->from('Season\Entity\League', 'l')
-            ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'l.season = s')
-            ->where('l.id=1');
-
-        return $qb->getQuery()->getOneOrNullResult();
-    }
-
     /**
      * returns a mapped array of season info data
      *
@@ -157,7 +158,9 @@ class SeasonMapper extends AbstractMapper
     /**
      * @param int $seasonId
      *
-     * @return null|\DateTime
+     * @return \DateTime
+     *
+     * @throws \RuntimeException
      */
     public function getLastMatchDateOfSeason($seasonId)
     {
@@ -169,10 +172,12 @@ class SeasonMapper extends AbstractMapper
             ->where('s.id = :id')
             ->setParameter('id', $seasonId);
         $result = $qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR);
-        if (!is_null($result)) {
-            $result = \DateTime::createFromFormat('Y-m-d H:i:s', $result);
+        if (is_null($result)) {
+            throw new \RuntimeException(
+                sprintf('No match date found! Check season with id=%s.', $seasonId)
+            );
         }
-        return $result;
+        return \DateTime::createFromFormat('Y-m-d H:i:s', $result);
     }
 
     /**
@@ -183,15 +188,19 @@ class SeasonMapper extends AbstractMapper
     public function getNoOfOpenMatchesInSeason($seasonId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('League');
-        $qb->select('count(m)')
+        $qb->select('count(m) as open')
             ->from('League\Entity\Match', 'm')
             ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l.id = m._lid')
             ->where('l.sid = :seasonId')
             ->andWhere('m._resultId is Null')
             ->addGroupBy('l.id')
             ->setParameter('seasonId', $seasonId);
+        $result = $qb->getQuery()->getOneOrNullResult();
 
-        return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
+        if (empty($result)) {
+            return $result;
+        }
+        return intval($result['open']);
     }
 
     /**
@@ -245,6 +254,8 @@ class SeasonMapper extends AbstractMapper
             ->getRepository('Season\Entity\Byoyomi')
             ->findAll();
     }
+
+
 
 
    /**

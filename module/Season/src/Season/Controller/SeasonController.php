@@ -40,12 +40,20 @@ class SeasonController extends AbstractController
      */
     public function createAction()
     {
-        $showWidget  = $this->forward()->dispatch('Season\Controller\Season', array('action' => 'index'));
-        $page = new ViewModel();
+        $id = (int) $this->params()->fromRoute('id', 1);
 
-        $page->addChild($showWidget, 'showWidget');
+        /* @var $repository \Season\Mapper\SeasonMapper */
+        $repository = $this->getRepository()->getMapper('season');
+        $season = $repository->getNewSeasonByAssociation($id);
+        $info = $repository->getSeasonInfo($season->getId());
+        $season->exchangeArray($info);
 
-        return $page;
+
+        return new ViewModel(
+            array(
+                'season' => $season,
+            )
+        );
     }
 
     /**
@@ -57,19 +65,42 @@ class SeasonController extends AbstractController
 
         /* @var $mapper \Season\Mapper\SeasonMapper */
         $mapper = $this->getRepository()->getMapper('season');
-        $last = $mapper->getLastSeasonByAssociation($id);
-        $data = $mapper->getSeasonInfo($last->getId());
+        //is new season existing
 
-        $start = \DateTime::createFromFormat('Y-m-d H:i:s', $data['lastMatchDate']);
-
+        $now = new \DateTime();
+        $minDate = clone $now;
+        $startDate = clone $now;
         $season = new Season();
-        $season->exchangeArray($last->getArrayCopy());
-        $season->setNumber($season->getNumber()+1);
-        $season->setStartDate($start->modify('+2 week'));
+        $number = 1;
+
+        $last = $mapper->getLastSeasonByAssociation($id);
+        $last = $mapper->getSeasonById(7);
+
+        if (is_null($last)) {
+            $association  = $mapper->getAssociationById(1);
+            $season->setAssociation($association);
+            $mapper->getAssociationById(1);
+        } else {
+
+            $lastMatchDate = $mapper->getLastMatchDateOfSeason($last->getId());
+            $minDate = clone $lastMatchDate;
+            $startDate = clone $lastMatchDate;
+
+            if ($lastMatchDate > $now) {
+                $minDate = clone $lastMatchDate;
+                $startDate = clone $lastMatchDate;
+            }
+            $season->exchangeArray($last->getArrayCopy());
+            $number = $last->getNumber() + 1;
+        }
+        $startDate->modify('+2 week');
+
+        $season->setNumber($number);
+        $season->setStartDate($startDate);
 
         /* @var $form \Season\Form\SeasonForm */
         $form = $this->getForm('season');
-        $form->setMinDate($start->format('Y-m-d'));
+        $form->setMinDate($minDate);
         $form->init();
         $form->bind($season);
 

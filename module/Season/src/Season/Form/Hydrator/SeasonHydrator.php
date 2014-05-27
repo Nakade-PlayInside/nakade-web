@@ -1,6 +1,7 @@
 <?php
 namespace Season\Form\Hydrator;
 
+use Season\Entity\Season;
 use Season\Entity\Time;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use Zend\Stdlib\Hydrator\HydratorInterface;
@@ -33,11 +34,7 @@ class SeasonHydrator implements HydratorInterface
     {
         /* @var $season \Season\Entity\Season */
         return array(
-           'tiebreak' => array(
-               'tiebreaker1' => $season->getTieBreaker1()->getId(),
-               'tiebreaker2' => $season->getTieBreaker2()->getId(),
-               'tiebreaker3' => $season->getTieBreaker3()->getId(),
-           ),
+           'tiebreak' => $this->getTieBreakerBySeason($season),
 
           'winPoints' => $season->getWinPoints(),
           'komi' => $season->getKomi(),
@@ -46,13 +43,48 @@ class SeasonHydrator implements HydratorInterface
           'startDate' => $season->getStartDate(),
 
            //time
-          'baseTime' => $season->getTime()->getBaseTime(),
+          'baseTime' => $this->getBaseTime($season),
+        'byoyomi' => 1,
+        'additionalTime' => 10,
+        'moves' => 30,
+        'period' => 1,
+
+          /*
           'byoyomi' => $season->getTime()->getByoyomi()->getId(),
           'additionalTime' => $season->getTime()->getAdditionalTime(),
           'moves' => $season->getTime()->getMoves(),
-          'period' => $season->getTime()->getPeriod(),
+          'period' => $season->getTime()->getPeriod(),*/
 
         );
+    }
+
+    private function getTieBreakerBySeason(Season $season)
+    {
+        $tiebreaker1=$tiebreaker2=$tiebreaker3=1;
+        if (null!==$season->getTieBreaker1()) {
+            $tiebreaker1 = $season->getTieBreaker1()->getId();
+        }
+        if (null!==$season->getTieBreaker2()) {
+            $tiebreaker2 = $season->getTieBreaker2()->getId();
+        }
+        if (null!==$season->getTieBreaker1()) {
+            $tiebreaker3 = $season->getTieBreaker3()->getId();
+        }
+
+        return array(
+            'tiebreaker1' => $tiebreaker1,
+            'tiebreaker2' => $tiebreaker2,
+            'tiebreaker3' => $tiebreaker3
+        );
+    }
+
+    private function getBaseTime(Season $season)
+    {
+        $baseTime=60;
+        if (null!==$season->getTime()) {
+            $baseTime = $season->getTime()->getBaseTime();
+        }
+        return $baseTime;
     }
 
     /**

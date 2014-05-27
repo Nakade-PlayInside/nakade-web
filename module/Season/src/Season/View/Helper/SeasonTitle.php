@@ -16,17 +16,12 @@ class SeasonTitle extends AbstractHelper
      *
      * @return string
      */
-    public function __invoke(Season $season)
+    public function __invoke(Season $season=null)
     {
-       $translate = $this->getView()->plugin('translate');
        if (is_null($season)) {
-           return $translate('Season Overview');
-       } else {
-            return sprintf('%s %s %s',
-                $translate('Season Overview'),
-                $season->getAssociation()->getName(),
-                $translate('League')
-            );
+           return '?';
        }
+       return $season->getAssociation()->getName();
+
     }
 }

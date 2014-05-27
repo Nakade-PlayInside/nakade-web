@@ -3,19 +3,56 @@ $this->plugin('translate')->setTranslatorTextDomain('League');
 /* @var $season \Season\Entity\Season */
 $season = $this->season;
 $this->headTitle('Overview');
+$title = sprintf("%s: %s %s",
+    $this->translate('Create a New Season'),
+    $this->seasonTitle($season),
+    $this->translate('League'));
 
 ?>
 
-<h3><?php echo ''?></h3>
+<h3><?php echo  $title;?></h3>
 
-<?php echo $this->showWidget; ?>
-
+<?php $this->placeholder('noSeason')->captureStart();?>
+<?php echo $this->translate("No season found."); ?>
+<hr>
 <a class="btn" href="<?php echo $this->url('newseason', array('action' => 'add')); ?>"><?php echo "create Season" ?></a>
-<a class="btn" href="<?php echo $this->url('newseason', array('action' => 'edit')); ?>"><?php echo "edit Season" ?></a>
+<?php $this->placeholder('noSeason')->captureEnd();?>
 
-<br/><br/><br/>
-<button><?php echo "edit Season" ?></button>
-<button><?php echo "add Players" ?></button>
-<button><?php echo "add League" ?></button>
+
+<?php $this->placeholder('actual')->captureStart();?>
+
+<h5><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h5>
+<ul>
+    <li><?php echo $this->translate('Number of leagues') . ': ' . $season->getNoLeagues() ?></li>
+    <li><?php echo $this->translate('Number of players') . ': ' . $season->getNoPlayers() ?></li>
+    <li><?php echo $this->translate('Number of matches') . ': ' . $season->getNoMatches() ?></li>
+    <li><?php echo $this->translate('First match') . ': ' . $this->matchDate($season->getFirstMatchDate()); ?></li>
+    <li><?php echo $this->translate('Last match') . ': ' . $this->matchDate($season->getLastMatchDate()); ?></li>
+    <li><?php echo $this->translate('State') . ': ' . $this->state($season); ?></li>
+</ul>
+
+<hr>
+    <a class="btn" href="<?php echo $this->url('newseason', array('action' => 'edit')); ?>"><?php echo "edit Season" ?></a>
+
+    <br/><br/><br/>
+    <button><?php echo "edit Season" ?></button>
+    <button><?php echo "add Players" ?></button>
+    <button><?php echo "add League" ?></button>
+
+<?php $this->placeholder('actual')->captureEnd(); ?>
+
+
+<?php
+
+if (is_null($this->season)) {
+    echo $this->placeholder('noSeason');
+} else {
+    echo $this->placeholder('actual');
+}
+
+
+
+
+
 
 

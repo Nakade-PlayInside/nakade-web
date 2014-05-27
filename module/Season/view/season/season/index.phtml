@@ -3,10 +3,13 @@ $this->plugin('translate')->setTranslatorTextDomain('League');
 /* @var $season \Season\Entity\Season */
 $season = $this->season;
 $this->headTitle('Overview');
-
+$title = sprintf("%s: %s %s",
+    $this->translate('Season Overview'),
+    $this->seasonTitle($season),
+    $this->translate('League'));
 ?>
 
-<h3><?php echo $this->title($season);?></h3>
+<h3><?php echo $title;?></h3>
 
 <?php $this->placeholder('noSeason')->captureStart();?>
       <?php echo $this->translate("No season found."); ?>
