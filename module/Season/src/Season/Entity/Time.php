@@ -31,22 +31,22 @@ class Time
   /**
    * @ORM\Column(name="baseTime", type="integer", nullable=false)
    */
-   private $baseTime;
+   private $baseTime=60;
 
    /**
     * @ORM\Column(name="additionalTime", type="integer")
     */
-   private $additionalTime;
+   private $additionalTime=10;
 
    /**
     * @ORM\Column(name="moves", type="integer")
     */
-   private $moves;
+   private $moves=30;
 
     /**
      * @ORM\Column(name="period", type="integer")
      */
-    private $period;
+    private $period=1;
 
   /**
    * @param int $id

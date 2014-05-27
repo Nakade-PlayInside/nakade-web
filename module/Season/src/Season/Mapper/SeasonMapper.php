@@ -103,6 +103,16 @@ class SeasonMapper extends AbstractMapper
     }
 
     /**
+     * @param int $associationId
+     *
+     * @return bool
+     */
+    public function hasNewSeasonByAssociation($associationId=1)
+    {
+        return !is_null($this->getNewSeasonByAssociation($associationId));
+    }
+
+    /**
      * last season has no open matches. It's the last season played!
      *
      * @param int $associationId

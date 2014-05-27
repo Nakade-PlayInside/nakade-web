@@ -22,6 +22,13 @@ class Season extends SeasonModel
     private $noPlayers;
 
     /**
+     * construct
+     */
+    public function __construct()
+    {
+        $this->time = new Time();
+    }
+    /**
      * @param \DateTime $firstMatchDate
      */
     public function setFirstMatchDate($firstMatchDate)
@@ -120,18 +127,9 @@ class Season extends SeasonModel
     /**
      * @return bool
      */
-    public function isReady()
-    {
-        //@todo: have all registered leagues also matches
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
     public function hasStarted()
     {
-        return $this->getFirstMatchDate() <= new \DateTime();
+        return !is_null($this->getFirstMatchDate()) && $this->getFirstMatchDate() <= new \DateTime();
 
     }
 
@@ -140,7 +138,23 @@ class Season extends SeasonModel
      */
     public function hasEnded()
     {
-        return empty($this->openMatches);
+        return $this->hasMatches() && !$this->hasOpenMatches();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMatches()
+    {
+        return $this->noMatches > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasOpenMatches()
+    {
+        return $this->openMatches > 0;
     }
 
     /**

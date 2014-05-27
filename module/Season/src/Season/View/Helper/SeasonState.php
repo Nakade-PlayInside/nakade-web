@@ -20,11 +20,13 @@ class SeasonState extends AbstractHelper
     {
         $translate = $this->getView()->plugin('translate');
 
-        $state = $translate('will start soon');
+        $state = $translate('in process');
         if ($season->hasEnded()) {
             $state = $translate('ended');
         } elseif ($season->hasStarted()) {
             $state = $translate('ongoing');
+        } elseif ($season->hasMatches()) {
+            $state = $translate('will start soon');
         }
 
         return $state;

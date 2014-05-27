@@ -65,21 +65,24 @@ class SeasonController extends AbstractController
 
         /* @var $mapper \Season\Mapper\SeasonMapper */
         $mapper = $this->getRepository()->getMapper('season');
-        //is new season existing
+
+
+        //new season! first play it before adding a new one. you can edit, of course
+        if ($mapper->hasNewSeasonByAssociation($id)) {
+           return $this->redirect()->toRoute('newseason', array('action' => 'create'));
+        }
+
 
         $now = new \DateTime();
         $minDate = clone $now;
         $startDate = clone $now;
         $season = new Season();
-        $number = 1;
 
         $last = $mapper->getLastSeasonByAssociation($id);
-        $last = $mapper->getSeasonById(7);
 
         if (is_null($last)) {
-            $association  = $mapper->getAssociationById(1);
+            $association  = $mapper->getAssociationById($id);
             $season->setAssociation($association);
-            $mapper->getAssociationById(1);
         } else {
 
             $lastMatchDate = $mapper->getLastMatchDateOfSeason($last->getId());
@@ -91,11 +94,9 @@ class SeasonController extends AbstractController
                 $startDate = clone $lastMatchDate;
             }
             $season->exchangeArray($last->getArrayCopy());
-            $number = $last->getNumber() + 1;
+            $season->setNumber($last->getNumber() + 1);
         }
         $startDate->modify('+2 week');
-
-        $season->setNumber($number);
         $season->setStartDate($startDate);
 
         /* @var $form \Season\Form\SeasonForm */
@@ -117,9 +118,7 @@ class SeasonController extends AbstractController
 
             if ($form->isValid()) {
 
-//                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $season = $form->getData();
-                $season->setIsReady(false);
                 $mapper->save($season);
 
                 return $this->redirect()->toRoute('newseason', array('action' => 'create'));
@@ -139,17 +138,37 @@ class SeasonController extends AbstractController
      */
     public function editAction()
     {
-        $id = (int) $this->params()->fromRoute('id', 4);
+        $id = (int) $this->params()->fromRoute('id', 1);
 
         /* @var $mapper \Season\Mapper\SeasonMapper */
         $mapper = $this->getRepository()->getMapper('season');
-        $season = $mapper->getSeasonById($id);
 
-        $lastMatchDate = $mapper->getLastMatchDateOfSeason(3);
+        //no new season! add season first
+        if (!$mapper->hasNewSeasonByAssociation($id)) {
+            return $this->redirect()->toRoute('newseason', array('action' => 'create'));
+        }
+
+        $season = $mapper->getNewSeasonByAssociation($id);
+        $now = new \DateTime();
+
+        $minDate = $season->getStartDate();
+        if ($season->getStartDate() > $now) {
+            $last = $mapper->getLastSeasonByAssociation($id);
+            if (!is_null($last)) {
+                $lastMatchDate = $mapper->getLastMatchDateOfSeason($last->getId());
+                if ($lastMatchDate > $now) {
+                    $minDate = $lastMatchDate;
+                } else {
+                    $minDate = $now;
+                }
+            }
+        }
+
+        //if startDate is in the future, now is the min date, otherwise min is the season's start date
 
         /* @var $form \Season\Form\SeasonForm */
         $form = $this->getForm('season');
-        $form->setMinDate($lastMatchDate);
+        $form->setMinDate($minDate);
         $form->init();
         $form->bind($season);
 

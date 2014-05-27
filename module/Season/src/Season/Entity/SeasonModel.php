@@ -30,7 +30,7 @@ class SeasonModel
   /**
    * @ORM\Column(name="number", type="integer", nullable=false)
    */
-    protected $number;
+    protected $number=1;
 
   /**
    * @ORM\Column(name="startDate", type="date", nullable=false)
@@ -40,7 +40,7 @@ class SeasonModel
    /**
    * @ORM\Column(name="winPoints", type="integer", nullable=false)
    */
-    protected $winPoints;
+    protected $winPoints=2;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Season\Entity\TieBreaker", cascade={"persist"})
@@ -69,12 +69,12 @@ class SeasonModel
     /**
      * @ORM\Column(name="komi", type="string")
      */
-    protected $komi;
+    protected $komi=6.5;
 
     /**
      * @ORM\Column(name="isReady", type="boolean")
      */
-    protected $isReady;
+    protected $isReady=false;
 
     /**
      * @param int $id
