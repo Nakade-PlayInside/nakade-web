@@ -159,7 +159,7 @@ class Time
             $this->period = intval($data['period']);
         }
         if (isset($data['moves'])) {
-            $this->moves = intval($data['period']);
+            $this->moves = intval($data['moves']);
         }
         if (isset($data['additionalTime'])) {
             $this->additionalTime = intval($data['additionalTime']);

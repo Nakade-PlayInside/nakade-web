@@ -134,8 +134,6 @@ class SeasonMapper extends AbstractMapper
     public function getSeasonInfo($seasonId)
     {
       $data = null;
-      try {
-
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('min(m._date) as firstMatchDate,
             max(m._date) as lastMatchDate,
@@ -147,10 +145,6 @@ class SeasonMapper extends AbstractMapper
             ->setParameter('seasonId', $seasonId);
         $data = $qb->getQuery()->getOneOrNullResult();
 
-      } catch (\Exception $e) {
-          echo $e->getMessage() . PHP_EOL;
-      }
-
         if (!empty($data)) {
             $data['openMatches'] = $this->getNoOfOpenMatchesInSeason($seasonId);
             $data['noLeagues'] = $this->getNoOfLeaguesInSeason($seasonId);
@@ -158,6 +152,27 @@ class SeasonMapper extends AbstractMapper
         }
 
         return $data;
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return null|\DateTime
+     */
+    public function getLastMatchDateOfSeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Season');
+        $qb->select('max(m._date) as lastMatchDate')
+            ->from('Season\Entity\Season', 's')
+            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l.season = s')
+            ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l.id = m._lid')
+            ->where('s.id = :id')
+            ->setParameter('id', $seasonId);
+        $result = $qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR);
+        if (!is_null($result)) {
+            $result = \DateTime::createFromFormat('Y-m-d H:i:s', $result);
+        }
+        return $result;
     }
 
     /**

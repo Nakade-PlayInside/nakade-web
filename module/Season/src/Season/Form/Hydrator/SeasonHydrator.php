@@ -73,13 +73,13 @@ class SeasonHydrator implements HydratorInterface
         $season->setTieBreaker1($tiebreak1);
 
         $tiebreak2 = $this->getTieBreakerById($data['tiebreak']['tiebreaker2']);
-        $season->setTieBreaker1($tiebreak2);
+        $season->setTieBreaker2($tiebreak2);
 
         $tiebreak3 = $this->getTieBreakerById($data['tiebreak']['tiebreaker3']);
-        $season->setTieBreaker1($tiebreak3);
+        $season->setTieBreaker3($tiebreak3);
 
         //time
-        $time = new Time();
+        $time = $season->getTime();
         $time->exchangeArray($data);
         $byoyomi = $this->getEntityManager()->getReference('Season\Entity\Byoyomi', $data['byoyomi']);
         $time->setByoyomi($byoyomi);

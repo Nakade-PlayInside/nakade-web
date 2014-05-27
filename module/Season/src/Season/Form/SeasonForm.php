@@ -3,7 +3,7 @@ namespace Season\Form;
 
 use Nakade\Abstracts\AbstractForm;
 use Season\Services\SeasonFieldsetService;
-
+use \Zend\InputFilter\InputFilter;
 /**
  * Class SeasonForm
  *
@@ -165,7 +165,7 @@ class SeasonForm extends AbstractForm
      */
     public function getFilter()
     {
-        $filter = new \Zend\InputFilter\InputFilter();
+        $filter = new InputFilter();
 
         $filter->add($this->getValidation('baseTime'));
         $filter->add($this->getValidation('additionalTime'));
@@ -201,11 +201,14 @@ class SeasonForm extends AbstractForm
     }
 
     /**
-     * @param string $minDate
+     * @param \DateTime $minDate
      */
-    public function setMinDate($minDate)
+    public function setMinDate(\DateTime $minDate=null)
     {
-        $this->minDate = $minDate;
+        if (is_null($minDate)) {
+            $minDate = new \DateTime();
+        }
+        $this->minDate = $minDate->format('Y-m-d');
     }
 
     /**

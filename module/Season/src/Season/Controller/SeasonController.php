@@ -114,9 +114,11 @@ class SeasonController extends AbstractController
         $mapper = $this->getRepository()->getMapper('season');
         $season = $mapper->getSeasonById($id);
 
+        $lastMatchDate = $mapper->getLastMatchDateOfSeason(3);
+
         /* @var $form \Season\Form\SeasonForm */
         $form = $this->getForm('season');
-        $form->setMinDate($season->getStartDate()->format('Y-m-d'));
+        $form->setMinDate($lastMatchDate);
         $form->init();
         $form->bind($season);
 
@@ -133,9 +135,9 @@ class SeasonController extends AbstractController
 
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                //var_dump($data);die;
                 $season = $form->getData();
+                $time = $season->getTime();
+                $mapper->update($time);
                 $mapper->update($season);
 
                 return $this->redirect()->toRoute('newseason', array('action' => 'create'));
