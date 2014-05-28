@@ -5,11 +5,6 @@ use Zend\Form\FormInterface;
 use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 
-/**
- * Adding players to a league after creating season and league
- *
- * @author Holger Maerz <holger@nakade.de>
- */
 class PlayerController extends AbstractController
 {
     /**

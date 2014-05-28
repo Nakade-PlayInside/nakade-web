@@ -62,12 +62,7 @@ class PlayerMapper extends AbstractMapper
 
     }
 
-     /**
-    * Get all players in a season.
-    *
-    * @param int $seasonId
-    * @return array
-    */
+
     public function getPlayersInSeason($seasonId)
     {
 

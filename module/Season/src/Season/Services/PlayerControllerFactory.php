@@ -2,7 +2,7 @@
 
 namespace Season\Services;
 
-use League\Controller\PlayerController;
+use Season\Controller\PlayerController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -25,21 +25,20 @@ class PlayerControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $services)
     {
+        /* @var $services \Zend\Mvc\Controller\AbstractController */
         $serviceManager = $services->getServiceLocator();
 
-        $config  = $serviceManager->get('config');
-        if ($config instanceof Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
-        }
+        $service    = $serviceManager->get('Season\Services\PlayerServiceFactory');
 
-        $service    = $serviceManager->get(
-                'League\Services\PlayerServiceFactory'
-        );
         $factory    = $serviceManager->get('League\Factory\FormFactory');
+
+        $repository = $serviceManager->get('Season\Services\RepositoryService');
+
 
         $controller = new PlayerController();
         $controller->setService($service);
         $controller->setFormFactory($factory);
+        $controller->setRepository($repository);
 
         return $controller;
     }
