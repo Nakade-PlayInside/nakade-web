@@ -12,10 +12,30 @@ class PlayerController extends AbstractController
      */
     public function indexAction()
     {
+        /* @var $mapper \Season\Mapper\ParticipantMapper */
+        $mapper = $this->getRepository()->getMapper('participant');
+        //var_dump(count($mapper->getAvailablePlayers()));die;
+
+        /* @var $mapper \Season\Mapper\SeasonMapper */
+        $mapper = $this->getRepository()->getMapper('season');
+
+        //no new season! add season first
+        if (!$mapper->hasNewSeasonByAssociation(1)) {
+            return $this->redirect()->toRoute('season', array('action' => 'create'));
+        }
+
+        $season = $mapper->getNewSeasonByAssociation(1);
+
+        /* @var $form \Season\Form\ParticipantForm */
+        $form = $this->getForm('participant');
+        $form->setSeason($season);
+        $form->init();
+       // $form->bind($season);
 
        return new ViewModel(
            array(
-               'players' => $this->getService()->getPlayers(),
+               //'players' => $this->getService()->getPlayers(),
+               'form' => $form,
 
            )
        );

@@ -30,8 +30,7 @@ class PlayerControllerFactory implements FactoryInterface
 
         $service    = $serviceManager->get('Season\Services\PlayerServiceFactory');
 
-        $factory    = $serviceManager->get('League\Factory\FormFactory');
-
+        $factory    = $serviceManager->get('Season\Services\SeasonFormService');
         $repository = $serviceManager->get('Season\Services\RepositoryService');
 
 

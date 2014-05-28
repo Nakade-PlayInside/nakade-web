@@ -2,6 +2,7 @@
 
 namespace Season\Services;
 
+use Season\Mapper\ParticipantMapper;
 use Season\Mapper\SeasonMapper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -17,6 +18,7 @@ class RepositoryService implements FactoryInterface
 
     const MATCH_MAPPER = 'match';
     const SEASON_MAPPER = 'season';
+    const PARTICIPANT_MAPPER = 'participant';
 
     private $entityManager;
 
@@ -60,6 +62,10 @@ class RepositoryService implements FactoryInterface
 
            case self::SEASON_MAPPER:
                $repository = new SeasonMapper();
+               break;
+
+           case self::PARTICIPANT_MAPPER:
+               $repository = new ParticipantMapper();
                break;
 
            default:

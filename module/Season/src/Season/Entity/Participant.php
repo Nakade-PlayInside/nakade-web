@@ -3,14 +3,14 @@ namespace Season\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 /**
- * Class Participants
+ * Class Participant
  *
  * @package Season\Entity
  *
  * @ORM\Entity
  * @ORM\Table(name="participants")
  */
-class Participants extends ParticipantsModel
+class Participant extends ParticipantModel
 {
     private $gamesPlayed;
     private $gamesSuspended;

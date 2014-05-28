@@ -3,24 +3,24 @@ namespace Season\Entity;
 
 use League\Entity\League;
 use User\Entity\User;
-use League\Entity\Season;
+use Season\Entity\Season as NewSeason;
 use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * Class ParticipantsModel
+ * Class ParticipantModel
  *
  * @package Season\Entity
  *
  * @ORM\MappedSuperclass
  */
-class ParticipantsModel
+class ParticipantModel
 {
   /**
    * Primary Identifier
    *
    * @ORM\Id
-   * @ORM\Column(name="pid", type="integer")
+   * @ORM\Column(name="id", type="integer")
    * @ORM\GeneratedValue(strategy="AUTO")
    */
   protected $id;
@@ -93,7 +93,7 @@ class ParticipantsModel
     /**
      * @param Season $season
      */
-    public function setSeason(Season $season)
+    public function setSeason(NewSeason $season)
     {
         $this->season = $season;
     }
