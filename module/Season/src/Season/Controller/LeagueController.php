@@ -40,7 +40,7 @@ class LeagueController extends AbstractController
        $league = $this->getService()->getNewLeague();
 
        if (null===$league) {
-            $this->redirect()->toRoute('newseason/add');
+            $this->redirect()->toRoute('season');
        }
 
        $form = $this->getForm('league');
@@ -52,7 +52,7 @@ class LeagueController extends AbstractController
             $postData =  $this->getRequest()->getPost();
             //cancel
             if ($postData['cancel']) {
-                return $this->redirect()->toRoute('newseason');
+                return $this->redirect()->toRoute('season');
             }
 
             $form->setData($postData);
@@ -62,7 +62,7 @@ class LeagueController extends AbstractController
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 $this->getService()->addLeague($data);
 
-                return $this->redirect()->toRoute('newseason');
+                return $this->redirect()->toRoute('season');
             }
        }
 

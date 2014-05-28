@@ -41,7 +41,7 @@ class ScheduleController extends AbstractController
             $postData =  $this->getRequest()->getPost();
             //cancel
             if ($postData['cancel']) {
-                return $this->redirect()->toRoute('newseason');
+                return $this->redirect()->toRoute('season');
             }
 
             $form->setData($postData);

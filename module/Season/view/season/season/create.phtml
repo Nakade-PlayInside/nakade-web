@@ -15,7 +15,7 @@ $title = sprintf("%s: %s %s",
 <?php $this->placeholder('noSeason')->captureStart();?>
 <?php echo $this->translate("No season found."); ?>
 <hr>
-<a class="btn" href="<?php echo $this->url('newseason', array('action' => 'add')); ?>"><?php echo "create Season" ?></a>
+<a class="btn" href="<?php echo $this->url('season', array('action' => 'add')); ?>"><?php echo "create Season" ?></a>
 <?php $this->placeholder('noSeason')->captureEnd();?>
 
 
@@ -32,7 +32,7 @@ $title = sprintf("%s: %s %s",
 </ul>
 
 <hr>
-    <a class="btn" href="<?php echo $this->url('newseason', array('action' => 'edit')); ?>"><?php echo "edit Season" ?></a>
+    <a class="btn" href="<?php echo $this->url('season', array('action' => 'edit')); ?>"><?php echo "edit Season" ?></a>
 
     <br/><br/><br/>
     <button><?php echo "edit Season" ?></button>

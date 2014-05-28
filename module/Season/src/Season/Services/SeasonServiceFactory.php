@@ -36,8 +36,8 @@ class SeasonServiceFactory extends AbstractService
         }
 
         //configuration
-        $textDomain = isset($config['League']['text_domain']) ?
-            $config['League']['text_domain'] : null;
+        $textDomain = isset($config['Season']['text_domain']) ?
+            $config['Season']['text_domain'] : null;
 
         $this->setMapperFactory($services->get('League\Factory\MapperFactory'));
 

@@ -16,9 +16,6 @@ class SeasonFormService extends AbstractFormFactory
 {
 
     const SEASON_FORM = 'season';
-    private $fieldSetService;
-    private $repository;
-
 
 
     /**
@@ -91,39 +88,5 @@ class SeasonFormService extends AbstractFormFactory
 
         return $form;
     }
-
-    /**
-     * @param mixed $fieldSetService
-     */
-    public function setFieldSetService($fieldSetService)
-    {
-        $this->fieldSetService = $fieldSetService;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFieldSetService()
-    {
-        return $this->fieldSetService;
-    }
-
-    /**
-     * @param mixed $repository
-     */
-    public function setRepository($repository)
-    {
-        $this->repository = $repository;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRepository()
-    {
-        return $this->repository;
-    }
-
-
 
 }

@@ -3,10 +3,7 @@
 namespace Season\Services;
 
 use Nakade\Abstracts\AbstractFieldsetFactory;
-use Season\Form\Fieldset\ButtonFieldset;
-use Season\Form\Fieldset\SeasonFieldset;
-use Season\Form\Fieldset\TieBreakerFieldset;
-use Season\Form\Fieldset\TimeFieldset;
+use Season\Form\Fieldset;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -58,11 +55,11 @@ class SeasonFieldsetService extends AbstractFieldsetFactory
 
             case self::TIEBREAKER_FIELD_SET:
                 $tieBreaker = $mapper->getTieBreaker();
-                $fieldSet = new TieBreakerFieldset($tieBreaker);
+                $fieldSet = new Fieldset\TieBreakerFieldset($tieBreaker);
                 break;
 
             case self::BUTTON_FIELD_SET:
-                $fieldSet = new ButtonFieldset();
+                $fieldSet = new Fieldset\ButtonFieldset();
                 break;
 
             default:

@@ -7,11 +7,9 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Creates the controller used for authentication.
- * make sure, you have configured the factory in the module configuration
- * file as a controller factory.
+ * Class SeasonControllerFactory
  *
- * @author Dr.Holger Maerz <grrompf@gmail.com>
+ * @package Season\Services
  */
 class SeasonControllerFactory implements FactoryInterface
 {
@@ -26,12 +24,8 @@ class SeasonControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $services)
     {
+        /* @var $services \Zend\Mvc\Controller\AbstractController */
         $serviceManager = $services->getServiceLocator();
-
-        $config  = $serviceManager->get('config');
-        if ($config instanceof Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
-        }
 
         $service    = $serviceManager->get('Season\Services\SeasonServiceFactory');
 

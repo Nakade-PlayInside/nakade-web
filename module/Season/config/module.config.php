@@ -58,10 +58,10 @@ return array(
     'router' => array(
         'routes' => array(
 
-            'newseason' => array(
+            'season' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/newseason[/:action][/:id]',
+                    'route'    => '/season[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
