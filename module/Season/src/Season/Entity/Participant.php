@@ -179,16 +179,9 @@ class Participant extends ParticipantModel
    * @param array $data
    */
 
-  public function populate($data)
+  public function exchangeArray($data)
   {
-       foreach ($data as $key => $value) {
-
-           $method = 'set'.ucfirst($key);
-
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-       }
+       return $data;
 
   }
 

@@ -84,7 +84,6 @@ class AbstractMapper extends AbstractTranslation
            $this->getEntityManager()->flush();
            return;
        }
-
        $this->getEntityManager()->persist($entity);
        $this->getEntityManager()->flush($entity);
 

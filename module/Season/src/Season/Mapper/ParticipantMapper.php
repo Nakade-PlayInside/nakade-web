@@ -12,57 +12,6 @@ use \Doctrine\ORM\Query;
 class ParticipantMapper extends AbstractMapper
 {
 
-    public function getAllPlayersInLeague($leagueId)
-    {
-         return $this->getEntityManager()
-                     ->getRepository('League\Entity\Participants')
-                     ->findBy(array('_lid' => $leagueId));
-    }
-
-
-    /**
-    * Getting the number of players in a season
-    *
-    * @param int $seasonId
-    * @return int
-    */
-    public function getPlayerNumberInSeason($seasonId)
-    {
-       $dql = "SELECT count(p) as number FROM
-               League\Entity\Participants p
-               WHERE p._sid = :sid";
-
-        return $this->getEntityManager()
-                    ->createQuery($dql)
-                    ->setParameter('sid', $seasonId)
-                    ->getSingleScalarResult();
-
-    }
-
-    /**
-    * Get free players for a season. A free player is not
-    * already participating in that season.
-    *
-    * @param int $seasonId
-    * @return array
-    */
-    public function getFreePlayersForSeason($seasonId)
-    {
-
-       $dql = "SELECT u FROM
-               User\Entity\User u
-               WHERE u.id NOT IN (SELECT p._uid FROM
-               League\Entity\Participants p
-               WHERE p._sid = :sid)";
-
-       $players = $this->getEntityManager()
-                       ->createQuery($dql)
-                       ->setParameter('sid', $seasonId)
-                       ->getResult();
-
-       return $players;
-
-    }
 
     /**
      * @param int $seasonId
@@ -86,7 +35,44 @@ class ParticipantMapper extends AbstractMapper
      *
      * @return array
      */
-    public function getInvitedPlayerIdsBySeason($seasonId)
+    public function getInvitedUsersBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('u')
+            ->from('User\Entity\User', 'u')
+            ->leftJoin('Season\Entity\Participant', 'p', Join::WITH, 'p.user = u')
+            ->innerJoin('p.season', 'Season')
+            ->where('Season.id = :seasonId')
+            ->setParameter('seasonId', $seasonId);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getAcceptingUsersBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('u')
+            ->from('User\Entity\User', 'u')
+            ->leftJoin('Season\Entity\Participant', 'p', Join::WITH, 'p.user = u')
+            ->innerJoin('p.season', 'Season')
+            ->where('Season.id = :seasonId')
+            ->andWhere('p.hasAccepted = 1')
+            ->setParameter('seasonId', $seasonId);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    private function getInvitedPlayerIdsBySeason($seasonId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Participants');
         $qb->select('u.id')
@@ -116,6 +102,10 @@ class ParticipantMapper extends AbstractMapper
     public function getAvailablePlayersBySeason($seasonId)
     {
         $notIn = $this->getInvitedPlayerIdsBySeason($seasonId);
+        //mandatory array is never empty
+        if (empty($notIn)) {
+            $notIn[]=0;
+        }
 
         $qb = $this->getEntityManager()->createQueryBuilder('Participants');
         $qb->select('u')

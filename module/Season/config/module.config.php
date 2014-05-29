@@ -24,6 +24,7 @@ return array(
             'seasonTitle'  => 'Season\View\Helper\SeasonTitle',
             'state'  => 'Season\View\Helper\SeasonState',
             'matchDate'  => 'Season\View\Helper\MatchDate',
+            'accepted'  => 'Season\View\Helper\PlayerAccepted',
 
             // more helpers here ...
         )

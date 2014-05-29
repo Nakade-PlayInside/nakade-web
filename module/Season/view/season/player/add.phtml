@@ -1,7 +1,7 @@
 <?php
-$this->plugin('translate')->setTranslatorTextDomain('League'); 
+$this->plugin('translate')->setTranslatorTextDomain('Season');
 
-$title = $this->translate('add new player');
+$title = $this->translate('add player');
 $this->headTitle('Player');
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
@@ -13,5 +13,3 @@ $this->form->prepare();
 echo $this->form()->openTag($this->form);
 echo $this->formCollection($this->form);
 echo $this->form()->closeTag();
-
-?>

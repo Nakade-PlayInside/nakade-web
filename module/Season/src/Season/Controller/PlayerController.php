@@ -1,6 +1,7 @@
 <?php
 namespace Season\Controller;
 
+use Season\Entity\Participant;
 use Zend\Form\FormInterface;
 use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
@@ -12,31 +13,26 @@ class PlayerController extends AbstractController
      */
     public function indexAction()
     {
-        /* @var $mapper \Season\Mapper\ParticipantMapper */
-        $mapper = $this->getRepository()->getMapper('participant');
-        //var_dump(count($mapper->getAvailablePlayers()));die;
+        $id = (int) $this->params()->fromRoute('id', 1);
 
         /* @var $mapper \Season\Mapper\SeasonMapper */
         $mapper = $this->getRepository()->getMapper('season');
 
         //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation(1)) {
+        if (!$mapper->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('season', array('action' => 'create'));
         }
+        $season = $mapper->getNewSeasonByAssociation($id);
 
-        $season = $mapper->getNewSeasonByAssociation(1);
-
-        /* @var $form \Season\Form\ParticipantForm */
-        $form = $this->getForm('participant');
-        $form->setSeason($season);
-        $form->init();
-       // $form->bind($season);
-
+        /* @var $playerMapper \Season\Mapper\ParticipantMapper */
+        $playerMapper = $this->getRepository()->getMapper('participant');
        return new ViewModel(
            array(
                //'players' => $this->getService()->getPlayers(),
-               'form' => $form,
-
+               'season' => $season,
+               'invited' => $playerMapper->getInvitedUsersBySeason($season->getId()),
+               'available' => $playerMapper->getAvailablePlayersBySeason($season->getId()),
+               'accepted' => $playerMapper->getAcceptingUsersBySeason($season->getId())
            )
        );
     }
@@ -46,28 +42,51 @@ class PlayerController extends AbstractController
      */
     public function addAction()
     {
-       //make sure that there are leagues
-       if (count($this->getService()->getLeaguesInSeason())==0) {
-            $this->redirect()->toRoute('league/add');
-       }
+        $id = (int) $this->params()->fromRoute('id', 1);
 
-       $form = $this->getForm('player');
+        /* @var $mapper \Season\Mapper\SeasonMapper */
+        $mapper = $this->getRepository()->getMapper('season');
 
-       if ($this->getRequest()->isPost()) {
+        //no new season! add season first
+        if (!$mapper->hasNewSeasonByAssociation($id)) {
+            return $this->redirect()->toRoute('season', array('action' => 'create'));
+        }
+        $season = $mapper->getNewSeasonByAssociation($id);
+
+       /* @var $form \Season\Form\ParticipantForm */
+       $form = $this->getForm('participant');
+       $form->setSeason($season);
+       $form->init();
+
+       /* @var $request \Zend\Http\Request */
+       $request = $this->getRequest();
+       if ($request->isPost()) {
 
             //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
+            $postData =  $request->getPost();
             //cancel
             if ($postData['cancel']) {
                 return $this->redirect()->toRoute('season');
             }
 
             $form->setData($postData);
-
             if ($form->isValid()) {
 
+                $now = new \DateTime();
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $this->getService()->addPlayer($data);
+                foreach ($data['players'] as $userId) {
+
+                    $myPlayer = new Participant();
+
+                    /* @var $user \User\Entity\User */
+                    $user = $mapper->getEntityManager()->getReference('User\Entity\User', $userId);
+                    $myPlayer->setUser($user);
+                    $myPlayer->setSeason($season);
+                    $myPlayer->setDate($now);
+                    $mapper->save($myPlayer);
+
+                }
+                //$this->getService()->addPlayer($data);
 
                 return $this->redirect()->toRoute('season');
             }

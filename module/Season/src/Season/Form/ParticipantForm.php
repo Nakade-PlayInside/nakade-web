@@ -3,28 +3,28 @@ namespace Season\Form;
 
 use Nakade\Abstracts\AbstractForm;
 use Season\Entity\Season;
+use Season\Services\RepositoryService;
 use Season\Services\SeasonFieldsetService;
 use \Zend\InputFilter\InputFilter;
 class ParticipantForm extends AbstractForm
 {
 
-    private $players;
     private $service;
+    private $repository;
     private $season;
-    private $lastSeasonPlayers;
 
 
     /**
      * @param SeasonFieldsetService $service
-     * @param array                 $byoyomi
+     * @param RepositoryService     $repository
      */
-    public function __construct(SeasonFieldsetService $service, array $players)
+    public function __construct(SeasonFieldsetService $service, RepositoryService $repository)
     {
         parent::__construct('PlayersForm');
 
         $this->service = $service;
-        $this->players = $this->getPlayerList($players);
-         //    $this->setInputFilter($this->getFilter());
+        $this->repository = $repository->getMapper('participant');
+        $this->setInputFilter($this->getFilter());
     }
 
     /**
@@ -40,7 +40,7 @@ class ParticipantForm extends AbstractForm
                 'options' => array('label' =>  $this->translate('Association') . ':'),
                 'attributes' => array(
                     'readonly' => 'readonly',
-                    'value' => $this->getSeason()->getAssociation()->getName()
+                    'value' => $this->getAssociationName()
                 )
             )
         );
@@ -53,11 +53,29 @@ class ParticipantForm extends AbstractForm
                 'options' => array('label' =>  $this->translate('Season no.') . ':'),
                 'attributes' => array(
                     'readonly' => 'readonly',
-                    'value' => $this->getSeason()->getNumber()
+                    'value' => $this->getSeasonNumber()
                 )
             )
         );
 
+  /*      $size=count($this->getInvitedPlayers());
+        if ($size > 0) {
+            $this->add(
+                array(
+                    'name' => 'invitedPlayers',
+                    'type' => 'Zend\Form\Element\Select',
+                    'options' => array(
+                        'label' =>  $this->translate('Invited players') . ':',
+                        'value_options' => $this->getInvitedPlayers()
+                    ),
+                    'attributes' => array(
+                        'disabled' => 'disabled',
+                        'size' => $size
+                    )
+                )
+            );
+        }
+  */
 
         //players
         $this->add(
@@ -65,12 +83,12 @@ class ParticipantForm extends AbstractForm
                 'name' => 'players',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' =>  $this->translate('Invite players') . ':',
-                    'value_options' => $this->players
+                    'label' =>  $this->translate('Available players') . ':',
+                    'value_options' => $this->getAvailablePlayers()
                 ),
                 'attributes' => array(
                     'multiple' => 'multiple',
-                    'size' => count($this->players)
+                    'size' => count($this->getAvailablePlayers())
                 )
             )
         );
@@ -86,38 +104,7 @@ class ParticipantForm extends AbstractForm
     public function getFilter()
     {
         $filter = new InputFilter();
-
-        $filter->add($this->getValidation('baseTime'));
-        $filter->add($this->getValidation('additionalTime'));
-        $filter->add($this->getValidation('period'));
-        $filter->add($this->getValidation('moves'));
-        $filter->add($this->getValidation('komi', 'Float'));
-
-
         return $filter;
-    }
-
-    /**
-     * @param string $name
-     * @param string $validation
-     *
-     * @return array
-     */
-    private function getValidation($name, $validation='Digits')
-    {
-
-        return array(
-            'name' => $name,
-            'required' => true,
-            'filters'  => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim'),
-                array('name' => 'StripNewLines'),
-            ),
-            'validators' => array(
-                array('name'    => $validation),
-            )
-        );
     }
 
     /**
@@ -146,24 +133,86 @@ class ParticipantForm extends AbstractForm
     }
 
     /**
-     * @param array $players
+     * @return \Season\Mapper\ParticipantMapper
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
+
+    /**
+     * @return int
+     */
+    private function getSeasonNumber()
+    {
+        $number=0;
+        if (!is_null($this->getSeason())) {
+            $number = $this->getSeason()->getNumber();
+        }
+        return $number;
+    }
+
+    /**
+     * @return string
+     */
+    private function getAssociationName()
+    {
+        $name='';
+        if (!is_null($this->getSeason())) {
+            $name = $this->getSeason()->getAssociation()->getName();
+        }
+        return $name;
+    }
+
+    /**
+     * @return array
+     */
+    private function getAvailablePlayers()
+    {
+        $list = array();
+        if (is_null($this->getSeason())) {
+            return $list;
+        }
+
+        $seasonId = $this->getSeason()->getId();
+        $playerList = $this->getRepository()->getAvailablePlayersBySeason($seasonId);
+        return $this->makePlayerList($playerList);
+    }
+
+    /**
+     * @return array
+     */
+    private function getInvitedPlayers()
+    {
+        $list = array();
+        if (is_null($this->getSeason())) {
+            return $list;
+        }
+
+        $seasonId = $this->getSeason()->getId();
+        $playerList = $this->getRepository()->getInvitedUsersBySeason($seasonId);
+
+        return $this->makePlayerList($playerList, false);
+    }
+
+    /**
+     * @param array $playerList
+     * @param bool  $selected
      *
      * @return array
      */
-    private function getPlayerList(array $players)
+    private function makePlayerList(array $playerList, $selected=true)
     {
         $list = array();
-
         /* @var $player \User\Entity\User */
-        foreach ($players as $player) {
+        foreach ($playerList as $player) {
             $list[] = array(
                 'value' => $player->getId(),
                 'label' => $player->getName(),
-                'selected' => true
+                'selected' => $selected
             );
 
         }
-        $list[0]['selected']=false;
         return $list;
     }
 }

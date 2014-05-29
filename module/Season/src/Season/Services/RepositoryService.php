@@ -7,6 +7,7 @@ use Season\Mapper\SeasonMapper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use \League\Mapper\MatchMapper;
+use \Doctrine\ORM\EntityManager;
 
 /**
  * Class RepositoryService
@@ -32,14 +33,15 @@ class RepositoryService implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $services)
     {
-        //EntityManager for database access by doctrine
-        $this->entityManager = $services->get('Doctrine\ORM\EntityManager');
+        /* @var $entityManager \Doctrine\ORM\EntityManager  */
+        $entityManager = $services->get('Doctrine\ORM\EntityManager');
 
-        if (is_null($this->entityManager)) {
+        if (is_null($entityManager)) {
             throw new \RuntimeException(
                 sprintf('Entity manager could not be found in service.')
             );
         }
+        $this->setEntityManager($entityManager);
 
         return $this;
     }
@@ -74,8 +76,25 @@ class RepositoryService implements FactoryInterface
                );
         }
 
-        $repository->setEntityManager($this->entityManager);
+        $entityManager = $this->getEntityManager();
+        $repository->setEntityManager($entityManager);
         return $repository;
+    }
+
+    /**
+     * @param \Doctrine\ORM\EntityManager $entityManager
+     */
+    public function setEntityManager(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    /**
+     * @return \Doctrine\ORM\EntityManager
+     */
+    public function getEntityManager()
+    {
+        return $this->entityManager;
     }
 
 }

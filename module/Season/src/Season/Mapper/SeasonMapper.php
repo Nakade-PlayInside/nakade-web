@@ -264,4 +264,14 @@ class SeasonMapper extends AbstractMapper
             ->findAll();
     }
 
+    /**
+     * @return array
+     */
+    public function getUserById($id)
+    {
+        return $this->getEntityManager()
+            ->getRepository('User\Entity\User')
+            ->find($id);
+    }
+
 }

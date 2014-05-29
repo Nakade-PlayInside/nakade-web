@@ -26,8 +26,8 @@ class ParticipantModel
   protected $id;
 
   /**
-   * @ORM\ManyToOne(targetEntity="\Season\Entity\Season", cascade={"persist"})
-   * @ORM\JoinColumn(name="season", referencedColumnName="id")
+   * @ORM\ManyToOne(targetEntity="\League\Entity\League", cascade={"persist"})
+   * @ORM\JoinColumn(name="league", referencedColumnName="id")
    */
   protected $league;
 
@@ -39,7 +39,7 @@ class ParticipantModel
 
  /**
   * @ORM\ManyToOne(targetEntity="\User\Entity\User", cascade={"persist"})
-  * @ORM\JoinColumn(name="user", referencedColumnName="id", nullable=false)
+  * @ORM\JoinColumn(name="user", referencedColumnName="uid", nullable=false)
   */
   protected $user;
 
@@ -49,14 +49,14 @@ class ParticipantModel
   protected $date;
 
   /**
-   * @ORM\Column(name="acceptString", type="text", nullable=false)
+   * @ORM\Column(name="acceptString", type="text")
    */
   protected $acceptString;
 
     /**
      * @ORM\Column(name="hasAccepted", type="boolean", nullable=false)
      */
-  protected $hasAccepted;
+  protected $hasAccepted=false;
 
     /**
      * @param int $id
@@ -157,7 +157,7 @@ class ParticipantModel
     /**
      * @param \DateTime $date
      */
-    public function setInvitationDate($date)
+    public function setDate($date)
     {
         $this->date = $date;
     }
@@ -165,7 +165,7 @@ class ParticipantModel
     /**
      * @return \DateTime
      */
-    public function getInvitationDate()
+    public function getDate()
     {
         return $this->date;
     }

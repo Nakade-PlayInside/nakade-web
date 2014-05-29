@@ -68,12 +68,12 @@ class SeasonFormService extends AbstractFormFactory
      */
     public function getForm($typ)
     {
+        /* @var $mapper \Season\Mapper\SeasonMapper */
+        $mapper = $this->getRepository()->getMapper('season');
 
         switch (strtolower($typ)) {
 
            case self::SEASON_FORM:
-               /* @var $mapper \Season\Mapper\SeasonMapper */
-               $mapper = $this->getRepository()->getMapper('season');
                $service = $this->getFieldSetService();
                $extraTime = $mapper->getByoyomi();
                $hydrator = new SeasonHydrator($this->entityManager);
@@ -82,14 +82,9 @@ class SeasonFormService extends AbstractFormFactory
                break;
 
            case self::PARTICIPANT_FORM:
-               /* @var $mapper \Season\Mapper\ParticipantMapper */
-               $mapper = $this->getRepository()->getMapper('participant');
-
                $service = $this->getFieldSetService();
-               $players = $mapper->getAvailablePlayersBySeason(3);
-               //$hydrator = new SeasonHydrator($this->entityManager);
-               $form = new Form\ParticipantForm($service, $players);
-               //$form->setHydrator($hydrator);
+               $repository = $this->getRepository();
+               $form = new Form\ParticipantForm($service, $repository);
                break;
 
            default:
