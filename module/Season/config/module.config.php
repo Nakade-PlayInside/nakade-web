@@ -15,12 +15,6 @@ return array(
 
     'view_helpers' => array(
         'invokables' => array(
-            'position'   => 'Season\View\Helper\Position',
-            'dateformat' => 'Season\View\Helper\DateFormat',
-            'isWinner'   => 'Season\View\Helper\Winner',
-            'result'     => 'Season\View\Helper\Result',
-            'isActive'   => 'Season\View\Helper\Active',
-            'isOpen'     => 'Season\View\Helper\Open',
             'seasonTitle'  => 'Season\View\Helper\SeasonTitle',
             'state'  => 'Season\View\Helper\SeasonState',
             'matchDate'  => 'Season\View\Helper\MatchDate',
@@ -44,17 +38,6 @@ return array(
 
     ),
 
-    'controller_plugins' => array(
-      'invokables' => array(
-          'season'  => 'Season\Controller\Plugin\SeasonPlugin',
-          'match'   => 'Season\Controller\Plugin\MatchPlugin',
-          'league'  => 'Season\Controller\Plugin\LeaguePlugin',
-          'player'  => 'Season\Controller\Plugin\PlayerPlugin',
-          'form'    => 'Season\Controller\Plugin\FormPlugin',
-
-      ),
-    ),
-
 
     'router' => array(
         'routes' => array(
@@ -74,10 +57,10 @@ return array(
                 ),
             ),
 
-            'league' => array(
+            'newLeague' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/league[/:action][/:id]',
+                    'route'    => '/newLeague[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',

@@ -2,6 +2,7 @@
 
 namespace Season\Services;
 
+use Season\Mapper\LeagueMapper;
 use Season\Mapper\ParticipantMapper;
 use Season\Mapper\SeasonMapper;
 use Zend\ServiceManager\FactoryInterface;
@@ -20,6 +21,7 @@ class RepositoryService implements FactoryInterface
     const MATCH_MAPPER = 'match';
     const SEASON_MAPPER = 'season';
     const PARTICIPANT_MAPPER = 'participant';
+    const LEAGUE_MAPPER = 'league';
 
     private $entityManager;
 
@@ -68,6 +70,10 @@ class RepositoryService implements FactoryInterface
 
            case self::PARTICIPANT_MAPPER:
                $repository = new ParticipantMapper();
+               break;
+
+           case self::LEAGUE_MAPPER:
+               $repository = new LeagueMapper();
                break;
 
            default:

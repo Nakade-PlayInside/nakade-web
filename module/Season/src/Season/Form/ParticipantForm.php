@@ -58,24 +58,17 @@ class ParticipantForm extends AbstractForm
             )
         );
 
-  /*      $size=count($this->getInvitedPlayers());
-        if ($size > 0) {
-            $this->add(
-                array(
-                    'name' => 'invitedPlayers',
-                    'type' => 'Zend\Form\Element\Select',
-                    'options' => array(
-                        'label' =>  $this->translate('Invited players') . ':',
-                        'value_options' => $this->getInvitedPlayers()
-                    ),
-                    'attributes' => array(
-                        'disabled' => 'disabled',
-                        'size' => $size
-                    )
+        $this->add(
+            array(
+                'name' => 'invitedPlayers',
+                'type' => 'Zend\Form\Element\text',
+                'options' => array('label' =>  $this->translate('No of invited players') . ':'),
+                'attributes' => array(
+                    'readonly' => 'readonly',
+                    'value' => $this->getNoInvitedPlayers()
                 )
-            );
-        }
-  */
+            )
+        );
 
         //players
         $this->add(
@@ -182,7 +175,7 @@ class ParticipantForm extends AbstractForm
     /**
      * @return array
      */
-    private function getInvitedPlayers()
+    private function getNoInvitedPlayers()
     {
         $list = array();
         if (is_null($this->getSeason())) {
@@ -192,16 +185,15 @@ class ParticipantForm extends AbstractForm
         $seasonId = $this->getSeason()->getId();
         $playerList = $this->getRepository()->getInvitedUsersBySeason($seasonId);
 
-        return $this->makePlayerList($playerList, false);
+        return count($playerList);
     }
 
     /**
      * @param array $playerList
-     * @param bool  $selected
      *
      * @return array
      */
-    private function makePlayerList(array $playerList, $selected=true)
+    private function makePlayerList(array $playerList)
     {
         $list = array();
         /* @var $player \User\Entity\User */
@@ -209,7 +201,7 @@ class ParticipantForm extends AbstractForm
             $list[] = array(
                 'value' => $player->getId(),
                 'label' => $player->getName(),
-                'selected' => $selected
+                'selected' => true
             );
 
         }

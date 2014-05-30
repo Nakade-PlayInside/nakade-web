@@ -123,7 +123,7 @@ class SeasonMapper extends AbstractMapper
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('s')
             ->from('Season\Entity\Season', 's')
-            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l.season = s')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
             ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l.id = m._lid')
             ->where('m._resultId is not Null')
             ->andWhere('s.association = :association')
@@ -149,7 +149,7 @@ class SeasonMapper extends AbstractMapper
             max(m._date) as lastMatchDate,
             count(m) as noMatches')
             ->from('Season\Entity\Season', 's')
-            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l.season = s')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
             ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l.id = m._lid')
             ->where('s.id = :seasonId')
             ->setParameter('seasonId', $seasonId);
@@ -176,7 +176,7 @@ class SeasonMapper extends AbstractMapper
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('max(m._date) as lastMatchDate')
             ->from('Season\Entity\Season', 's')
-            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l.season = s')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
             ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l.id = m._lid')
             ->where('s.id = :id')
             ->setParameter('id', $seasonId);
@@ -199,8 +199,9 @@ class SeasonMapper extends AbstractMapper
         $qb = $this->getEntityManager()->createQueryBuilder('League');
         $qb->select('count(m) as open')
             ->from('League\Entity\Match', 'm')
-            ->leftJoin('League\Entity\League', 'l', Join::WITH, 'l.id = m._lid')
-            ->where('l.sid = :seasonId')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.id = m._lid')
+            ->innerJoin('l.season', 'season')
+            ->where('season.id = :seasonId')
             ->andWhere('m._resultId is Null')
             ->addGroupBy('l.id')
             ->setParameter('seasonId', $seasonId);
@@ -221,8 +222,9 @@ class SeasonMapper extends AbstractMapper
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('count(l)')
-            ->from('League\Entity\League', 'l')
-            ->where('l.sid = :seasonId')
+            ->from('Season\Entity\League', 'l')
+            ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'l.season = s')
+            ->where('s.id = :seasonId')
             ->setParameter('seasonId', $seasonId);
 
         return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
@@ -237,8 +239,10 @@ class SeasonMapper extends AbstractMapper
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Player');
         $qb->select('count(p)')
-            ->from('League\Entity\Player', 'p')
-            ->where('p.sid = :seasonId')
+            ->from('Season\Entity\Participant', 'p')
+            ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'p.season = s')
+            ->where('s.id = :seasonId')
+            ->andWhere('p.league IS NOT NULL')
             ->setParameter('seasonId', $seasonId);
 
         return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
@@ -262,16 +266,6 @@ class SeasonMapper extends AbstractMapper
         return $this->getEntityManager()
             ->getRepository('Season\Entity\Byoyomi')
             ->findAll();
-    }
-
-    /**
-     * @return array
-     */
-    public function getUserById($id)
-    {
-        return $this->getEntityManager()
-            ->getRepository('User\Entity\User')
-            ->find($id);
     }
 
 }

@@ -17,6 +17,7 @@ class SeasonFormService extends AbstractFormFactory
 
     const SEASON_FORM = 'season';
     const PARTICIPANT_FORM = 'participant';
+    const LEAGUE_FORM = 'league';
 
 
     /**
@@ -85,6 +86,12 @@ class SeasonFormService extends AbstractFormFactory
                $service = $this->getFieldSetService();
                $repository = $this->getRepository();
                $form = new Form\ParticipantForm($service, $repository);
+               break;
+
+           case self::LEAGUE_FORM:
+               $service = $this->getFieldSetService();
+               $repository = $this->getRepository();
+               $form = new Form\LeagueForm($service, $repository);
                break;
 
            default:

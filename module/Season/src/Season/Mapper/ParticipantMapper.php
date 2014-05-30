@@ -25,10 +25,13 @@ class ParticipantMapper extends AbstractMapper
             ->from('Season\Entity\Participant', 'p')
             ->innerJoin('p.season', 'MySeason')
             ->where('MySeason.id = :seasonId')
+            ->andWhere('p.league IS NOT NULL')
             ->setParameter('seasonId', $seasonId);
 
         return $qb->getQuery()->getResult();
     }
+
+
 
     /**
      * @param int $seasonId
@@ -39,8 +42,8 @@ class ParticipantMapper extends AbstractMapper
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Participants');
         $qb->select('u')
-            ->from('User\Entity\User', 'u')
-            ->leftJoin('Season\Entity\Participant', 'p', Join::WITH, 'p.user = u')
+            ->from('Season\Entity\Participant', 'p')
+            ->leftJoin('User\Entity\User', 'u', Join::WITH, 'p.user = u')
             ->innerJoin('p.season', 'Season')
             ->where('Season.id = :seasonId')
             ->setParameter('seasonId', $seasonId);

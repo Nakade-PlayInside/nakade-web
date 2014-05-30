@@ -2,153 +2,195 @@
 namespace Season\Form;
 
 use Nakade\Abstracts\AbstractForm;
-use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-use League\Entity\League;
-
-/**
- * Form for making a new league
- */
+use Season\Entity\Season;
+use Season\Services\RepositoryService;
+use Season\Services\SeasonFieldsetService;
+use \Zend\InputFilter\InputFilter;
 class LeagueForm extends AbstractForm
 {
 
-    protected $_sid;
-    protected $_title='Top-Liga';
-    protected $_number=1;
+    private $service;
+    private $repository;
+    private $season;
+
 
     /**
-     * Constructor
+     * @param SeasonFieldsetService $service
+     * @param RepositoryService     $repository
      */
-    public function __construct()
+    public function __construct(SeasonFieldsetService $service, RepositoryService $repository)
     {
-        //form name is LeagueForm
-        parent::__construct();
-        $this->setObject(new League());
-        $this->setHydrator(new Hydrator());
+        parent::__construct('LeagueForm');
+
+        $this->service = $service;
+        $this->repository = $repository->getMapper('league');
+        $this->setInputFilter($this->getFilter());
     }
 
-
     /**
-     * init the form. It is neccessary to call this function
-     * before using the form.
+     * init
      */
     public function init()
     {
+        //association
+        $this->add(
+            array(
+                'name' => 'associationName',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array('label' =>  $this->translate('Association') . ':'),
+                'attributes' => array(
+                    'readonly' => 'readonly',
+                    'value' => $this->getAssociationName()
+                )
+            )
+        );
 
         //number
         $this->add(
             array(
-                'name' => 'number',
+                'name' => 'seasonNumber',
                 'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('League No:'),
-                ),
+                'options' => array('label' =>  $this->translate('Season no.') . ':'),
                 'attributes' => array(
-                    'value' => $this->_number,
-                    'readonly'=> true
+                    'readonly' => 'readonly',
+                    'value' => $this->getSeasonNumber()
                 )
             )
         );
 
-        //title
+        //number
         $this->add(
             array(
-                'name' => 'title',
+                'name' => 'leagueNumber',
                 'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('Title:'),
-                ),
+                'options' => array('label' =>  $this->translate('League no.') . ':'),
                 'attributes' => array(
-                    'value' => $this->_title,
-
+                    'readonly' => 'readonly',
+                    'value' => $this->getLeagueNumber()
                 )
             )
         );
 
-        //season ID
+        //players
         $this->add(
             array(
-                'type' => 'Zend\Form\Element\Text',
-                'name' => 'sid',
+                'name' => 'players',
+                'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' =>  $this->translate('SeasonId:'),
+                    'label' =>  $this->translate('Player roster') . ':',
+                    'value_options' => $this->getAcceptedPlayers()
                 ),
                 'attributes' => array(
-                    'value'  => $this->_sid,
-                    'readonly'=> true
+                    'multiple' => 'multiple',
+                    'size' => count($this->getAcceptedPlayers())
                 )
             )
         );
 
-        //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side
-        //validation
-        $this->add(
-            array(
-                'name' => 'csrf',
-                'type'  => 'Zend\Form\Element\Csrf',
-                'options' => array(
-                    'csrf_options' => array(
-                        'timeout' => 600
-                    )
-                )
-            )
-        );
 
-        //submit button
-        $this->add(
-            array(
-                'name' => 'Send',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Submit'),
-
-                ),
-            )
-        );
-
-        //cancel button
-        $this->add(
-            array(
-                'name' => 'cancel',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Cancel'),
-
-                ),
-            )
-        );
-
+        $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
     }
+
 
     /**
      * @return \Zend\InputFilter\InputFilter
      */
     public function getFilter()
     {
-        $filter = new \Zend\InputFilter\InputFilter();
-
-        $filter->add(
-            array(
-                 'name' => 'title',
-                 'required' => false,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
-                 'validators' => array(
-                     array('name'    => 'StringLength',
-                           'options' => array (
-                                  'encoding' => 'UTF-8',
-                                  'max'  => '20',
-                           )
-                     ),
-                  )
-            )
-        );
-
+        $filter = new InputFilter();
         return $filter;
     }
 
-}
+    /**
+     * @param Season $season
+     */
+    public function setSeason(Season $season)
+    {
+        $this->season = $season;
+    }
 
+    /**
+     * @return Season
+     */
+    public function getSeason()
+    {
+        return $this->season;
+    }
+
+
+    /**
+     * @return SeasonFieldsetService
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
+
+    /**
+     * @return \Season\Mapper\LeagueMapper
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
+
+    /**
+     * @return int
+     */
+    private function getLeagueNumber()
+    {
+        $number=0;
+
+        if (!is_null($this->getSeason())) {
+            $seasonId = $this->getSeason()->getId();
+            $number=$this->getRepository()->getNewLeagueNoBySeason($seasonId);
+        }
+        return $number;
+    }
+
+    /**
+     * @return int
+     */
+    private function getSeasonNumber()
+    {
+        $number=0;
+        if (!is_null($this->getSeason())) {
+            $number = $this->getSeason()->getNumber();
+        }
+        return $number;
+    }
+
+    /**
+     * @return string
+     */
+    private function getAssociationName()
+    {
+        $name='';
+        if (!is_null($this->getSeason())) {
+            $name = $this->getSeason()->getAssociation()->getName();
+        }
+        return $name;
+    }
+
+    /**
+     * @return array
+     */
+    private function getAcceptedPlayers()
+    {
+        $list = array();
+        if (is_null($this->getSeason())) {
+            return $list;
+        }
+
+        $seasonId = $this->getSeason()->getId();
+        $playerList = $this->getRepository()->getAvailableParticipantsBySeason($seasonId);
+
+        /* @var $player \Season\Entity\Participant */
+        foreach ($playerList as $player) {
+            $list[$player->getId()] = $player->getUser()->getName();
+        }
+
+        return $list;
+    }
+
+}

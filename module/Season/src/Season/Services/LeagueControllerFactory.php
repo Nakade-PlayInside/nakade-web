@@ -2,44 +2,33 @@
 
 namespace Season\Services;
 
-use League\Controller\LeagueController;
+use Season\Controller\LeagueController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Creates the controller used for authentication.
- * make sure, you have configured the factory in the module configuration
- * file as a controller factory.
+ * Class LeagueControllerFactory
  *
- * @author Dr.Holger Maerz <grrompf@gmail.com>
+ * @package Season\Services
  */
 class LeagueControllerFactory implements FactoryInterface
 {
 
     /**
-     * creates the authController. Binds the authentication service and
-     * the authentication form.
+     * @param ServiceLocatorInterface $services
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
-     *
-     * @return \Authentication\Controller\AuthController
+     * @return mixed|LeagueController
      */
     public function createService(ServiceLocatorInterface $services)
     {
+        /* @var $services \Zend\Mvc\Controller\AbstractController */
         $serviceManager = $services->getServiceLocator();
 
-        $config  = $serviceManager->get('config');
-        if ($config instanceof Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
-        }
-
-        $service    = $serviceManager->get(
-            'League\Services\LeagueServiceFactory'
-        );
-        $factory    = $serviceManager->get('League\Factory\FormFactory');
+        $factory    = $serviceManager->get('Season\Services\SeasonFormService');
+        $repository = $serviceManager->get('Season\Services\RepositoryService');
 
         $controller = new LeagueController();
-        $controller->setService($service);
+        $controller->setRepository($repository);
         $controller->setFormFactory($factory);
 
         return $controller;

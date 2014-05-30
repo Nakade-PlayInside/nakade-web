@@ -1,7 +1,6 @@
 <?php
 namespace Season\Entity;
 
-use League\Entity\League;
 use User\Entity\User;
 use Season\Entity\Season as NewSeason;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,7 +25,7 @@ class ParticipantModel
   protected $id;
 
   /**
-   * @ORM\ManyToOne(targetEntity="\League\Entity\League", cascade={"persist"})
+   * @ORM\ManyToOne(targetEntity="\Season\Entity\League", cascade={"persist"})
    * @ORM\JoinColumn(name="league", referencedColumnName="id")
    */
   protected $league;

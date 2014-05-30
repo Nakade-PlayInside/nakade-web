@@ -1,45 +1,45 @@
 <?php
-// module/user/view/user/user/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('Season');
 
-$title = 'Top-Liga Sommer 2013';
-$this->headTitle($title);
+$this->headTitle('League Roster');
+
+/* @var $season \Season\Entity\Season */
+$season = $this->season;
+$unassigned = intval($this->accepted-$this->assigned);
+
+/* @var $player \User\Entity\User */
+$title = sprintf("%s: %s %s",
+    $this->translate('Create Leagues'),
+    $this->seasonTitle($season),
+    $this->translate('League'));
 ?>
-<h3><?php echo $this->escapeHtml($title); ?></h3>
+
+    <h3><?php echo $title;?></h3>
+
+<?php $this->placeholder('noSeason')->captureStart();?>
+<?php echo $this->translate("No season found."); ?>
+<?php $this->placeholder('noSeason')->captureEnd();?>
 
 
-<table class="table" style="width:8em;margin-top: 0.5em;">
-<tr>
+<?php $this->placeholder('actual')->captureStart();?>
 
-    <th title="Position">P</th>
-    <th>Name</th>
-    <th title="gespielte Partien">GP</th>
-    <th title="Siegpunkte">SP</th>
-    <th title="Tie-Breaker">Hahn</th>
-   
-</tr>
+    <h5><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h5>
+    <hr>
+    <ul>
+        <li><?php echo $this->translate('Number of leagues') . ': ' . $season->getNoLeagues() ?></li>
+        <li><?php echo $this->translate('Number of players accepted') . ': ' . $this->accepted ?></li>
+        <li><?php echo $this->translate('Number of assigned players') . ': ' . $this->assigned ?></li>
+        <li><?php echo $this->translate('Number of unassigned players') . ': ' . $unassigned ?></li>
+        <li><?php echo $this->translate('Due date') . ': ' . $season->getStartDate()->format('d.m.Y') ?></li>
+    </ul>
+<?php $this->placeholder('actual')->captureEnd(); ?>
 
-<?php foreach ($users as $user) : ?>
-<tr style="background-color:<?php 
-    echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-    <td><?php echo $this->position($user); ?></td>
-    <td><?php echo $this->escapeHtml($this->player($user->getPlayer()));?></td>
-    <td><?php echo $this->escapeHtml($user->getGamesPlayed());?></td>
-    <td><?php echo $this->escapeHtml($user->getWin());?></td>
-    <td><?php echo $this->escapeHtml($user->getTiebreaker1());?></td>
-    
-</tr>
-<?php endforeach; ?>
-</table>
 
-<h3>Die nächsten Termine:</h3>
-<table style="width:25em;margin-top: 0.5em;">
-<?php foreach ($nextGames as $game) : ?>
-<tr>
-    <td><?php echo $game->getDate()->format('d.m.Y   H');?>h</td>
-    <td><?php echo $this->escapeHtml($this->player($game->getBlack()));?></td>
-    <td style="width:1em">-</td>
-    <td><?php echo $this->escapeHtml($this->player($game->getWhite()));?></td>
-</tr>
-<?php endforeach; ?>
-</table>
+<?php
+
+if (is_null($this->season)) {
+    echo $this->placeholder('noSeason');
+} else {
+    echo $this->placeholder('actual');
+}
 

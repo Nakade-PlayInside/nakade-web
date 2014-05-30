@@ -28,6 +28,12 @@ class Association
    private $name;
 
   /**
+   * @ORM\ManyToOne(targetEntity="\Season\Entity\MatchDay", cascade={"persist"})
+   * @ORM\JoinColumn(name="matchDay", referencedColumnName="id", nullable=false)
+   */
+   private $matchDay;
+
+  /**
    * @param int $id
    *
    * @return $this
@@ -44,6 +50,22 @@ class Association
   public function getId()
   {
     return $this->id;
+  }
+
+  /**
+   * @param MatchDay $matchDay
+   */
+  public function setMatchDay(MatchDay $matchDay)
+  {
+      $this->matchDay = $matchDay;
+  }
+
+  /**
+   * @return MatchDay
+   */
+  public function getMatchDay()
+  {
+     return $this->matchDay;
   }
 
   /**
