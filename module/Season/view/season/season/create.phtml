@@ -23,8 +23,8 @@ $title = sprintf("%s: %s %s",
 
 <h5><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h5>
 <ul>
-    <li><?php echo $this->translate('Number of leagues') . ': ' . $season->getNoLeagues() ?></li>
-    <li><?php echo $this->translate('Number of players') . ': ' . $season->getNoPlayers() ?></li>
+    <li><?php echo $this->translate('Number of leagues') . ': ' . $season->getNoLeagues() ?><a href="<?php echo $this->url('newLeague'); ?>" title="<?php echo "League Info" ?>"><img title="<?php echo "League Info" ?>" style="vertical-align:top; margin-left:10px" src="/images/info.png"></a></li>
+    <li><?php echo $this->translate('Number of players') . ': ' . $season->getNoPlayers() ?><a href="<?php echo $this->url('player'); ?>" title="<?php echo "Player Info" ?>"><img title="<?php echo "Player Info" ?>" style="vertical-align:top; margin-left:10px" src="/images/info.png"></a></li></li>
     <li><?php echo $this->translate('Number of matches') . ': ' . $season->getNoMatches() ?></li>
     <li><?php echo $this->translate('First match') . ': ' . $this->matchDate($season->getFirstMatchDate()); ?></li>
     <li><?php echo $this->translate('Last match') . ': ' . $this->matchDate($season->getLastMatchDate()); ?></li>
@@ -34,11 +34,8 @@ $title = sprintf("%s: %s %s",
 <hr>
     <a class="btn" href="<?php echo $this->url('season', array('action' => 'edit')); ?>"><?php echo "edit Season" ?></a>
     <a class="btn" href="<?php echo $this->url('player', array('action' => 'add')); ?>"><?php echo "invite Player" ?></a>
-    <a class="btn" href="<?php echo $this->url('player'); ?>"><?php echo "Player Info" ?></a>
-    <br/><br/><br/>
-    <button><?php echo "edit Season" ?></button>
-    <button><?php echo "add Players" ?></button>
-    <button><?php echo "add League" ?></button>
+    <a class="btn" href="<?php echo $this->url('newLeague', array('action' => 'add')); ?>"><?php echo "add League" ?></a>
+
 
 <?php $this->placeholder('actual')->captureEnd(); ?>
 

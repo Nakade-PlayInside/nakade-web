@@ -50,5 +50,56 @@ class LeagueMapper extends AbstractMapper
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getAssignedLeaguesBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('League');
+        $qb->select('l.id')
+            ->from('Season\Entity\Participant', 'p')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'p.league = l')
+            ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'l.season = s')
+            ->where('s.id = :seasonId')
+            ->groupBy('l.id')
+            ->setParameter('seasonId', $seasonId);
+
+        $result = $qb->getQuery()->getResult();
+
+        //quicker than array_map
+        $ids = array();
+        foreach ($result as $item) {
+            $ids[] = $item['id'];
+        }
+
+        return $ids;
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getEmptyLeaguesBySeason($seasonId)
+    {
+        $notIn = $this->getAssignedLeaguesBySeason($seasonId);
+
+        //mandatory array is never empty
+        if (empty($notIn)) {
+            $notIn[]=0;
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder('League');
+        $qb->select('l')
+            ->from('Season\Entity\League', 'l')
+            ->innerJoin('l.season', 'season')
+            ->where($qb->expr()->notIn('l.id', $notIn))
+            ->andWhere('season.id = :seasonId')
+            ->setParameter('seasonId', $seasonId);
+
+        return $qb->getQuery()->getResult();
+    }
 }
 
