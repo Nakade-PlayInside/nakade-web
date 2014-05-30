@@ -32,6 +32,8 @@ $title = sprintf("%s: %s %s",
         <li><?php echo $this->translate('Number of unassigned players') . ': ' . $unassigned ?></li>
         <li><?php echo $this->translate('Due date') . ': ' . $season->getStartDate()->format('d.m.Y') ?></li>
     </ul>
+    <hr>
+    <a class="btn" href="<?php echo $this->url('season', array('action' => 'create')); ?>"><?php echo "back" ?></a>
 <?php $this->placeholder('actual')->captureEnd(); ?>
 
 

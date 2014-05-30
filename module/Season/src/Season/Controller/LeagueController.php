@@ -114,7 +114,7 @@ class LeagueController extends AbstractController
     public function editAction()
     {
         //todo: assign more players to a league, unassign players; leagueId is needed
-        $id = (int) $this->params()->fromRoute('id', 1);
+        $id = (int) $this->params()->fromRoute('id', 4);
 
         /* @var $mapper \Season\Mapper\SeasonMapper */
         $mapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
@@ -126,7 +126,7 @@ class LeagueController extends AbstractController
         $season = $mapper->getNewSeasonByAssociation($id);
 
         /* @var $form \Season\Form\ParticipantForm */
-        $form = $this->getForm('league');
+        $form = $this->getForm('editLeague');
         $form->setSeason($season);
         $form->init();
 
