@@ -1,18 +1,17 @@
 <?php
 namespace Season\Form;
 
-use Nakade\Abstracts\AbstractForm;
-use Season\Entity\Season;
 use Season\Services\RepositoryService;
 use Season\Services\SeasonFieldsetService;
 use \Zend\InputFilter\InputFilter;
-class EditLeagueForm extends AbstractForm
+
+/**
+ * Class EditLeagueForm
+ *
+ * @package Season\Form
+ */
+class EditLeagueForm extends BaseLeagueForm
 {
-
-    private $service;
-    private $repository;
-    private $season;
-
 
     /**
      * @param SeasonFieldsetService $service
@@ -32,6 +31,8 @@ class EditLeagueForm extends AbstractForm
      */
     public function init()
     {
+        $this->prepareForm();
+
         //association
         $this->add(
             array(
@@ -74,15 +75,31 @@ class EditLeagueForm extends AbstractForm
         //players
         $this->add(
             array(
-                'name' => 'players',
+                'name' => 'assigned',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' =>  $this->translate('Player roster') . ':',
-                    'value_options' => $this->getAcceptedPlayers()
+                    'label' =>  $this->translate('Remove player') . ':',
+                    'value_options' => $this->getAssignedPlayers()
                 ),
                 'attributes' => array(
                     'multiple' => 'multiple',
-                    'size' => count($this->getAcceptedPlayers())
+                    'size' => count($this->getAssignedPlayers())
+                )
+            )
+        );
+
+        //players
+        $this->add(
+            array(
+                'name' => 'players',
+                'type' => 'Zend\Form\Element\Select',
+                'options' => array(
+                    'label' =>  $this->translate('Add player') . ':',
+                    'value_options' => $this->getAvailablePlayers()
+                ),
+                'attributes' => array(
+                    'multiple' => 'multiple',
+                    'size' => count($this->getAvailablePlayers())
                 )
             )
         );
@@ -99,98 +116,6 @@ class EditLeagueForm extends AbstractForm
     {
         $filter = new InputFilter();
         return $filter;
-    }
-
-    /**
-     * @param Season $season
-     */
-    public function setSeason(Season $season)
-    {
-        $this->season = $season;
-    }
-
-    /**
-     * @return Season
-     */
-    public function getSeason()
-    {
-        return $this->season;
-    }
-
-
-    /**
-     * @return SeasonFieldsetService
-     */
-    public function getService()
-    {
-        return $this->service;
-    }
-
-    /**
-     * @return \Season\Mapper\LeagueMapper
-     */
-    public function getRepository()
-    {
-        return $this->repository;
-    }
-
-    /**
-     * @return int
-     */
-    private function getLeagueNumber()
-    {
-        $number=0;
-
-        if (!is_null($this->getSeason())) {
-            $seasonId = $this->getSeason()->getId();
-            $number=$this->getRepository()->getNewLeagueNoBySeason($seasonId);
-        }
-        return $number;
-    }
-
-    /**
-     * @return int
-     */
-    private function getSeasonNumber()
-    {
-        $number=0;
-        if (!is_null($this->getSeason())) {
-            $number = $this->getSeason()->getNumber();
-        }
-        return $number;
-    }
-
-    /**
-     * @return string
-     */
-    private function getAssociationName()
-    {
-        $name='';
-        if (!is_null($this->getSeason())) {
-            $name = $this->getSeason()->getAssociation()->getName();
-        }
-        return $name;
-    }
-
-    /**
-     * @return array
-     */
-    private function getAcceptedPlayers()
-    {
-        $list = array();
-        if (is_null($this->getSeason())) {
-            return $list;
-        }
-
-        $seasonId = $this->getSeason()->getId();
-        $playerList = $this->getRepository()->getAvailableParticipantsBySeason($seasonId);
-
-        /* @var $player \Season\Entity\Participant */
-        foreach ($playerList as $player) {
-            $list[$player->getId()] = $player->getUser()->getName();
-        }
-
-        return $list;
     }
 
 }

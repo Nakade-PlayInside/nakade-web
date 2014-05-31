@@ -18,7 +18,7 @@ class SeasonFormService extends AbstractFormFactory
     const SEASON_FORM = 'season';
     const PARTICIPANT_FORM = 'participant';
     const LEAGUE_FORM = 'league';
-    const EDIT_LEAGUE_FORM = 'editLeague';
+    const EDIT_LEAGUE_FORM = 'edit_league';
 
 
     /**

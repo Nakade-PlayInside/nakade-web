@@ -6,6 +6,7 @@ use Zend\Form\FormInterface;
 use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 use \Season\Services\RepositoryService;
+use \Season\Services\SeasonFormService;
 
 /**
  * For adding leagues after creating a new season
@@ -114,20 +115,15 @@ class LeagueController extends AbstractController
     public function editAction()
     {
         //todo: assign more players to a league, unassign players; leagueId is needed
-        $id = (int) $this->params()->fromRoute('id', 4);
+        $leagueId = (int) $this->params()->fromRoute('id', 5);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
+        /* @var $mapper \Season\Mapper\LeagueMapper */
+        $mapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
+        $league = $mapper->getLeagueById($leagueId);
 
-        //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation($id)) {
-            return $this->redirect()->toRoute('season', array('action' => 'create'));
-        }
-        $season = $mapper->getNewSeasonByAssociation($id);
-
-        /* @var $form \Season\Form\ParticipantForm */
-        $form = $this->getForm('editLeague');
-        $form->setSeason($season);
+        /* @var $form \Season\Form\EditLeagueForm */
+        $form = $this->getForm(SeasonFormService::EDIT_LEAGUE_FORM);
+        $form->setLeague($league);
         $form->init();
 
         /* @var $request \Zend\Http\Request */
@@ -147,7 +143,7 @@ class LeagueController extends AbstractController
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
 
                 $league = new League();
-                $league->setSeason($season);
+                //$league->setSeason($league);
                 $league->setNumber($data['leagueNumber']);
                 $mapper->save($league);
 

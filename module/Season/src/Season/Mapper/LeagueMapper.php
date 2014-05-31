@@ -14,6 +14,18 @@ class LeagueMapper extends AbstractMapper
 {
 
     /**
+     * @param int $leagueId
+     *
+     * @return \Season\Entity\League
+     */
+    public function getLeagueById($leagueId)
+    {
+        return $this->getEntityManager()
+            ->getRepository('Season\Entity\League')
+            ->find($leagueId);
+    }
+
+    /**
      * @param int $seasonId
      *
      * @return int
@@ -100,6 +112,25 @@ class LeagueMapper extends AbstractMapper
             ->setParameter('seasonId', $seasonId);
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $leagueId
+     *
+     * @return array
+     */
+    public function getAssignedPlayersByLeague($leagueId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('League');
+        $qb->select('p')
+            ->from('Season\Entity\Participant', 'p')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'p.league = l')
+            ->where('l.id = :leagueId')
+            ->setParameter('leagueId', $leagueId);
+
+        return $qb->getQuery()->getResult();
+
+
     }
 }
 
