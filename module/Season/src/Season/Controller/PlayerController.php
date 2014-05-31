@@ -66,7 +66,7 @@ class PlayerController extends AbstractController
             $postData =  $request->getPost();
             //cancel
             if ($postData['cancel']) {
-                return $this->redirect()->toRoute('season');
+                return $this->redirect()->toRoute('season', array('action' => 'create'));
             }
 
             $form->setData($postData);
@@ -74,7 +74,7 @@ class PlayerController extends AbstractController
 
                 $now = new \DateTime();
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                foreach ($data['players'] as $userId) {
+                foreach ($data['addPlayer'] as $userId) {
 
                     $myPlayer = new Participant();
 
@@ -88,7 +88,7 @@ class PlayerController extends AbstractController
                 }
                 //$this->getService()->addPlayer($data);
 
-                return $this->redirect()->toRoute('season');
+                return $this->redirect()->toRoute('season', array('action' => 'create'));
             }
        }
 

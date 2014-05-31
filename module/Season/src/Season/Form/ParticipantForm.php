@@ -6,13 +6,10 @@ use Season\Entity\Season;
 use Season\Services\RepositoryService;
 use Season\Services\SeasonFieldsetService;
 use \Zend\InputFilter\InputFilter;
-class ParticipantForm extends AbstractForm
+class ParticipantForm extends BaseForm
 {
 
-    private $service;
-    private $repository;
-    private $season;
-
+    private $noInvitedPlayers=0;
 
     /**
      * @param SeasonFieldsetService $service
@@ -23,7 +20,7 @@ class ParticipantForm extends AbstractForm
         parent::__construct('PlayersForm');
 
         $this->service = $service;
-        $this->repository = $repository->getMapper('participant');
+        $this->repository = $repository;
         $this->setInputFilter($this->getFilter());
     }
 
@@ -32,6 +29,8 @@ class ParticipantForm extends AbstractForm
      */
     public function init()
     {
+        $this->prepareForm();
+
         //association
         $this->add(
             array(
@@ -73,10 +72,10 @@ class ParticipantForm extends AbstractForm
         //players
         $this->add(
             array(
-                'name' => 'players',
+                'name' => 'addPlayer',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' =>  $this->translate('Available players') . ':',
+                    'label' =>  $this->translate('Add player') . ':',
                     'value_options' => $this->getAvailablePlayers()
                 ),
                 'attributes' => array(
@@ -97,114 +96,59 @@ class ParticipantForm extends AbstractForm
     public function getFilter()
     {
         $filter = new InputFilter();
+
+        $filter->add(
+            array(
+                'name' => 'addPlayer',
+                'required' => false
+            )
+        );
         return $filter;
     }
 
     /**
-     * @param Season $season
+     * @param int $noInvitedPlayers
      */
-    public function setSeason(Season $season)
+    public function setNoInvitedPlayers($noInvitedPlayers)
     {
-        $this->season = $season;
-    }
-
-    /**
-     * @return Season
-     */
-    public function getSeason()
-    {
-        return $this->season;
-    }
-
-
-    /**
-     * @return SeasonFieldsetService
-     */
-    public function getService()
-    {
-        return $this->service;
-    }
-
-    /**
-     * @return \Season\Mapper\ParticipantMapper
-     */
-    public function getRepository()
-    {
-        return $this->repository;
+        $this->noInvitedPlayers = $noInvitedPlayers;
     }
 
     /**
      * @return int
      */
-    private function getSeasonNumber()
+    public function getNoInvitedPlayers()
     {
-        $number=0;
+        return $this->noInvitedPlayers;
+    }
+
+    /**
+     * you have to init this after setting season or league
+     */
+    protected function prepareForm()
+    {
+
         if (!is_null($this->getSeason())) {
-            $number = $this->getSeason()->getNumber();
+            $this->associationName = $this->getSeason()->getAssociation()->getName();
+            $this->seasonNumber = $this->getSeason()->getNumber();
+            $this->availablePlayers = $this->getAvailablePlayersByRepository($this->getSeason()->getId());
+            $this->noInvitedPlayers= $this->getNoInvitedPlayersByRepository($this->getSeason()->getId());
         }
-        return $number;
+
     }
 
     /**
-     * @return string
+     * @param int $seasonId
+     *
+     * @return int|void
      */
-    private function getAssociationName()
+    protected function getNoInvitedPlayersByRepository($seasonId)
     {
-        $name='';
-        if (!is_null($this->getSeason())) {
-            $name = $this->getSeason()->getAssociation()->getName();
-        }
-        return $name;
-    }
-
-    /**
-     * @return array
-     */
-    private function getAvailablePlayers()
-    {
-        $list = array();
-        if (is_null($this->getSeason())) {
-            return $list;
-        }
-
-        $seasonId = $this->getSeason()->getId();
-        $playerList = $this->getRepository()->getAvailablePlayersBySeason($seasonId);
-        return $this->makePlayerList($playerList);
-    }
-
-    /**
-     * @return array
-     */
-    private function getNoInvitedPlayers()
-    {
-        $list = array();
-        if (is_null($this->getSeason())) {
-            return $list;
-        }
-
-        $seasonId = $this->getSeason()->getId();
-        $playerList = $this->getRepository()->getInvitedUsersBySeason($seasonId);
-
+        /* @var $repository \Season\Mapper\ParticipantMapper */
+        $repository = $this->getRepository()->getMapper(RepositoryService::PARTICIPANT_MAPPER);;
+        $playerList = $repository->getInvitedUsersBySeason($seasonId);
         return count($playerList);
     }
 
-    /**
-     * @param array $playerList
-     *
-     * @return array
-     */
-    private function makePlayerList(array $playerList)
-    {
-        $list = array();
-        /* @var $player \User\Entity\User */
-        foreach ($playerList as $player) {
-            $list[] = array(
-                'value' => $player->getId(),
-                'label' => $player->getName(),
-                'selected' => true
-            );
 
-        }
-        return $list;
-    }
 }

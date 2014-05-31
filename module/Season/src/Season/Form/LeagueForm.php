@@ -6,13 +6,8 @@ use Season\Entity\Season;
 use Season\Services\RepositoryService;
 use Season\Services\SeasonFieldsetService;
 use \Zend\InputFilter\InputFilter;
-class LeagueForm extends AbstractForm
+class LeagueForm extends BaseForm
 {
-
-    private $service;
-    private $repository;
-    private $season;
-
 
     /**
      * @param SeasonFieldsetService $service
@@ -23,7 +18,7 @@ class LeagueForm extends AbstractForm
         parent::__construct('LeagueForm');
 
         $this->service = $service;
-        $this->repository = $repository->getMapper('league');
+        $this->repository = $repository;
         $this->setInputFilter($this->getFilter());
     }
 
@@ -32,6 +27,8 @@ class LeagueForm extends AbstractForm
      */
     public function init()
     {
+        $this->prepareForm();
+
         //association
         $this->add(
             array(
@@ -71,18 +68,36 @@ class LeagueForm extends AbstractForm
             )
         );
 
-        //players
+        //remove
+        if ($this->hasAssignedPlayers()) {
+            $this->add(
+                array(
+                    'name' => 'removePlayer',
+                    'type' => 'Zend\Form\Element\Select',
+                    'options' => array(
+                        'label' =>  $this->translate('Remove player') . ':',
+                        'value_options' => $this->getAssignedPlayers()
+                    ),
+                    'attributes' => array(
+                        'multiple' => 'multiple',
+                        'size' => count($this->getAssignedPlayers())
+                    )
+                )
+            );
+        }
+
+        //add
         $this->add(
             array(
-                'name' => 'players',
+                'name' => 'addPlayer',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' =>  $this->translate('Player roster') . ':',
-                    'value_options' => $this->getAcceptedPlayers()
+                    'label' =>  $this->translate('Add player') . ':',
+                    'value_options' => $this->getAvailablePlayers()
                 ),
                 'attributes' => array(
                     'multiple' => 'multiple',
-                    'size' => count($this->getAcceptedPlayers())
+                    'size' => count($this->getAvailablePlayers())
                 )
             )
         );
@@ -91,6 +106,27 @@ class LeagueForm extends AbstractForm
         $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
     }
 
+    /**
+     * you have to init this after setting season or league
+     */
+    protected function prepareForm()
+    {
+
+        if (!is_null($this->getSeason())) {
+            $this->associationName = $this->getSeason()->getAssociation()->getName();
+            $this->seasonNumber = $this->getSeason()->getNumber();
+            $this->leagueNumber=$this->getLeagueNumberByRepository($this->getSeason()->getId());
+            $this->availablePlayers = $this->getAvailablePlayersByRepository($this->getSeason()->getId());
+        } elseif (!is_null($this->getLeague())) {
+            $this->season = $this->getLeague()->getSeason();
+            $this->associationName = $this->getSeason()->getAssociation()->getName();
+            $this->seasonNumber = $this->getSeason()->getNumber();
+            $this->leagueNumber = $this->getLeague()->getNumber();
+            $this->availablePlayers = $this->getAvailablePlayersByRepository($this->getSeason()->getId());
+            $this->assignedPlayers = $this->getAssignedPlayersByRepository($this->getLeague()->getId());
+        }
+
+    }
 
     /**
      * @return \Zend\InputFilter\InputFilter
@@ -98,99 +134,34 @@ class LeagueForm extends AbstractForm
     public function getFilter()
     {
         $filter = new InputFilter();
+
+        $filter->add(
+            array(
+                'name' => 'addPlayer',
+                'required' => false
+            )
+        );
+
+        $filter->add(
+            array(
+                'name' => 'removePlayer',
+                'required' => false
+            )
+        );
+
         return $filter;
     }
 
     /**
-     * @param Season $season
+     * @param int $seasonId
+     *
+     * @return int|void
      */
-    public function setSeason(Season $season)
+    protected function getLeagueNumberByRepository($seasonId)
     {
-        $this->season = $season;
-    }
-
-    /**
-     * @return Season
-     */
-    public function getSeason()
-    {
-        return $this->season;
-    }
-
-
-    /**
-     * @return SeasonFieldsetService
-     */
-    public function getService()
-    {
-        return $this->service;
-    }
-
-    /**
-     * @return \Season\Mapper\LeagueMapper
-     */
-    public function getRepository()
-    {
-        return $this->repository;
-    }
-
-    /**
-     * @return int
-     */
-    private function getLeagueNumber()
-    {
-        $number=0;
-
-        if (!is_null($this->getSeason())) {
-            $seasonId = $this->getSeason()->getId();
-            $number=$this->getRepository()->getNewLeagueNoBySeason($seasonId);
-        }
-        return $number;
-    }
-
-    /**
-     * @return int
-     */
-    private function getSeasonNumber()
-    {
-        $number=0;
-        if (!is_null($this->getSeason())) {
-            $number = $this->getSeason()->getNumber();
-        }
-        return $number;
-    }
-
-    /**
-     * @return string
-     */
-    private function getAssociationName()
-    {
-        $name='';
-        if (!is_null($this->getSeason())) {
-            $name = $this->getSeason()->getAssociation()->getName();
-        }
-        return $name;
-    }
-
-    /**
-     * @return array
-     */
-    private function getAcceptedPlayers()
-    {
-        $list = array();
-        if (is_null($this->getSeason())) {
-            return $list;
-        }
-
-        $seasonId = $this->getSeason()->getId();
-        $playerList = $this->getRepository()->getAvailableParticipantsBySeason($seasonId);
-
-        /* @var $player \Season\Entity\Participant */
-        foreach ($playerList as $player) {
-            $list[$player->getId()] = $player->getUser()->getName();
-        }
-
-        return $list;
+        /* @var $repository \Season\Mapper\LeagueMapper */
+        $repository = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
+        return $repository->getNewLeagueNoBySeason($seasonId);
     }
 
 }

@@ -76,7 +76,7 @@ class ParticipantModel
     /**
      * @param League $league
      */
-    public function setLeague(League $league)
+    public function setLeague(League $league=null)
     {
         $this->league = $league;
     }

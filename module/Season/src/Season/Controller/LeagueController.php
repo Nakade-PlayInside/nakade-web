@@ -51,7 +51,7 @@ class LeagueController extends AbstractController
      */
     public function addAction()
     {
-
+        //@todo: validate forwarding. is league still editable, has season not yet startet ?
         $id = (int) $this->params()->fromRoute('id', 1);
 
         /* @var $mapper \Season\Mapper\SeasonMapper */
@@ -64,7 +64,7 @@ class LeagueController extends AbstractController
         $season = $mapper->getNewSeasonByAssociation($id);
 
         /* @var $form \Season\Form\ParticipantForm */
-        $form = $this->getForm('league');
+        $form = $this->getForm(SeasonFormService::LEAGUE_FORM);
         $form->setSeason($season);
         $form->init();
 
@@ -76,7 +76,7 @@ class LeagueController extends AbstractController
             $postData =  $request->getPost();
             //cancel
             if ($postData['cancel']) {
-                return $this->redirect()->toRoute('season');
+                return $this->redirect()->toRoute('season', array('action' => 'create'));
             }
 
             $form->setData($postData);
@@ -89,7 +89,7 @@ class LeagueController extends AbstractController
                 $league->setNumber($data['leagueNumber']);
                 $mapper->save($league);
 
-                foreach ($data['players'] as $playerId) {
+                foreach ($data['addPlayer'] as $playerId) {
                     /* @var $player \Season\Entity\Participant */
                     $player = $mapper->getEntityManager()->getReference('Season\Entity\Participant', $playerId);
                     $player->setLeague($league);
@@ -97,7 +97,7 @@ class LeagueController extends AbstractController
 
                 }
 
-                return $this->redirect()->toRoute('season');
+                return $this->redirect()->toRoute('season', array('action' => 'create'));
             }
         }
 
@@ -109,20 +109,30 @@ class LeagueController extends AbstractController
         );
     }
 
+    public function showAction()
+    {
+        //todo: show table with all leagues to edit
+    }
+
     /**
      * @return \Zend\Http\Response|ViewModel
      */
     public function editAction()
     {
         //todo: assign more players to a league, unassign players; leagueId is needed
-        $leagueId = (int) $this->params()->fromRoute('id', 5);
+        //@todo: validate forwarding. is league still editable, has season not yet startet ?
+        $leagueId = (int) $this->params()->fromRoute('id', 0);
 
         /* @var $mapper \Season\Mapper\LeagueMapper */
         $mapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
         $league = $mapper->getLeagueById($leagueId);
+        //no new season! add season first
+        if (is_null($league)) {
+            return $this->redirect()->toRoute('season', array('action' => 'create'));
+        }
 
-        /* @var $form \Season\Form\EditLeagueForm */
-        $form = $this->getForm(SeasonFormService::EDIT_LEAGUE_FORM);
+        /* @var $form \Season\Form\LeagueForm */
+        $form = $this->getForm(SeasonFormService::LEAGUE_FORM);
         $form->setLeague($league);
         $form->init();
 
@@ -134,28 +144,28 @@ class LeagueController extends AbstractController
             $postData =  $request->getPost();
             //cancel
             if ($postData['cancel']) {
-                return $this->redirect()->toRoute('season');
+                return $this->redirect()->toRoute('season', array('action' => 'create'));
             }
 
             $form->setData($postData);
             if ($form->isValid()) {
 
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-
-                $league = new League();
-                //$league->setSeason($league);
-                $league->setNumber($data['leagueNumber']);
-                $mapper->save($league);
-
-                foreach ($data['players'] as $playerId) {
+                foreach ($data['addPlayer'] as $playerId) {
                     /* @var $player \Season\Entity\Participant */
                     $player = $mapper->getEntityManager()->getReference('Season\Entity\Participant', $playerId);
                     $player->setLeague($league);
                     $mapper->save($player);
-
+                }
+                foreach ($data['removePlayer'] as $playerId) {
+                    /* @var $player \Season\Entity\Participant */
+                    $player = $mapper->getEntityManager()->getReference('Season\Entity\Participant', $playerId);
+                    $player->setLeague(null);
+                    $mapper->save($player);
                 }
 
-                return $this->redirect()->toRoute('season');
+
+                return $this->redirect()->toRoute('season', array('action' => 'create'));
             }
         }
 
