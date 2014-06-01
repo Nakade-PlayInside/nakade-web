@@ -1,6 +1,8 @@
 <?php
 namespace League\Controller;
 
+use League\Standings\MatchInfo;
+use League\Standings\MatchStats;
 use Nakade\Abstracts\AbstractController;
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
@@ -8,6 +10,7 @@ use League\Services\ICalService;
 use Zend\Http\PhpEnvironment\Response as iCalResponse;
 use Zend\Http\Headers;
 use League\Services\RepositoryService;
+use League\Standings\Sorting\PlayerSorting as SORT;
 
 /**
  * League tables and schedules of the actual season.
@@ -31,22 +34,28 @@ class ActualSeasonController extends AbstractController
     */
     public function indexAction()
     {
-        /* @var $seasonMapper \League\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-        $season = $seasonMapper->getActualSeason();
-        if (is_null($season)) {
-            $season = $seasonMapper->getLastSeason();
-        }
-        //@todo: actual top league
-        $league = null;
+        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $season = $seasonMapper->getActiveSeasonByAssociation(1);
+
+        /* @var $leagueMapper \League\Mapper\LeagueMapper */
+        $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
+        $topLeague = $leagueMapper->getTopLeagueBySeason($season->getId());
+
+        /* @var $matchMapper \League\Mapper\MatchMapper */
+        $matchMapper = $this->getRepository()->getMapper(RepositoryService::MATCH_MAPPER);
+        $matches = $matchMapper->getMatchesByLeague($topLeague->getId());
+
+        //var_dump($matches);die;
+        $info = new MatchStats($matches);
+        $players = $info->getMatchStats();
+        $sorting = SORT::getInstance();
+        $sorting->sorting($players);
 
         return new ViewModel(
-
             array(
-              'league'   => $league,
-              'title'     => $this->getService()->getTitle(),
-              'table'     => $this->getService()->getTopLeagueTable()
-
+              'league'   => $topLeague,
+              'table'    => $players
             )
         );
     }
@@ -60,12 +69,23 @@ class ActualSeasonController extends AbstractController
     */
     public function scheduleAction()
     {
-       $uid = $this->getUserId();
+        $userId = $this->getUserId();
+
+        //todo: show all actual tables
+        //todo: show user's table as the active table
+        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $season = $seasonMapper->getActiveSeasonByAssociation(1);
+
+        /* @var $matchMapper \League\Mapper\MatchMapper */
+        $matchMapper = $this->getRepository()->getMapper(RepositoryService::MATCH_MAPPER);
+
+        $matches = $matchMapper->getActualMatchesByUser($season->getId(), $userId);
 
        return new ViewModel(
            array(
-              'title'   => $this->getService()->getScheduleTitle($uid),
-              'matches' => $this->getService()->getSchedule($uid),
+              'season' => $season,
+              'matches' => $matches,
            )
        );
     }

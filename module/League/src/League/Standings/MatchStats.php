@@ -1,5 +1,5 @@
 <?php
-namespace League\Statistics;
+namespace League\Standings;
 
 use League\Entity\Player;
 use League\Statistics\Tiebreaker\TiebreakerFactory;
@@ -19,9 +19,11 @@ class MatchStats extends MatchInfo
     /**
      * @param array $matches
      */
-    public function __construct(array $matches=null)
+    public function __construct(array $matches)
     {
-        if (!is_null($matches)) {
+
+        if (!empty($matches)) {
+
             $this->setMatches($matches);
             /* @var $match \Season\Entity\Match */
             $match = $matches[0];
@@ -150,7 +152,6 @@ class MatchStats extends MatchInfo
                                     ->getPoints('lost'),
 
            'gamesPoints'    => $this->getPoints(),
-
 
            'firstTiebreak'  => $this->getTiebreakerFactory()
                                     ->getPoints($this->getTiebreaker1()),

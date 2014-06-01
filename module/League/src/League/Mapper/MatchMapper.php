@@ -3,6 +3,8 @@ namespace League\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
 use User\Entity\User;
+use Doctrine\ORM\Query\Expr\Join;
+use \Doctrine\ORM\Query;
 
 
 /**
@@ -13,6 +15,53 @@ use User\Entity\User;
 class MatchMapper  extends AbstractMapper
 {
 
+    /**
+     * @param int $leagueId
+     *
+     * @return array
+     */
+    public function getMatchesByLeague($leagueId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'm.league = l')
+            ->innerJoin('m.league', 'League')
+            ->where('League.id = :leagueId')
+            ->setParameter('leagueId', $leagueId)
+            ->orderBy('m.date', 'ASC');
+
+        $result = $qb->getQuery()->getResult();
+        return $result;
+    }
+
+    /**
+     * @param int $leagueId
+     *
+     * @return array
+     */
+    public function getActualMatchesByUser($seasonId, $userId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->innerJoin('m.white', 'White')
+            ->innerJoin('m.black', 'Black')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'm.league = l')
+            ->innerJoin('l.season', 'Season')
+            ->where('(White.id = :uid OR Black.id = :uid)')
+            ->andWhere('Season = :seasonId')
+            ->setParameter('uid', $userId)
+            ->setParameter('seasonId', $seasonId)
+            ->orderBy('m.date', 'ASC');
+
+        $result = $qb->getQuery()->getResult();
+        return $result;
+    }
+
+    //-----------------------------------------------------------/
     /**
      * @param int $leagueId
      *

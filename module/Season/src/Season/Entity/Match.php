@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Entity Class representing a Match
  *
  * @ORM\Entity
- * @ORM\Table(name="match")
+ * @ORM\Table(name="leaguePairings")
  */
 class Match extends MatchModel
 {
@@ -39,6 +39,43 @@ class Match extends MatchModel
             $this->getBlack()->getShortName(),
             $this->getWhite()->getShortName()
         );
+    }
+
+    /**
+     * @return int
+     */
+    public function getResultId()
+    {
+        if (is_null($this->getResult())) {
+            return null;
+        } else {
+            return $this->getResult()->getId();
+        }
+
+    }
+
+    /**
+     * @return int
+     */
+    public function getBlackId()
+    {
+            return $this->getBlack()->getId();
+    }
+
+    /**
+     * @return int
+     */
+    public function getWhiteId()
+    {
+        return $this->getWhite()->getId();
+    }
+
+    /**
+     * @return int
+     */
+    public function getWinnerId()
+    {
+        return $this->getWinner()->getId();
     }
 
 }

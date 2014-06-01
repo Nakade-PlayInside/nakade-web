@@ -2,8 +2,8 @@
 namespace Season\Entity;
 
 
-use League\Entity\League;
 use User\Entity\User;
+use League\Entity\Result;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -168,15 +168,15 @@ class MatchModel
     }
 
     /**
-     * @param mixed $result
+     * @param Result $result
      */
-    public function setResult($result)
+    public function setResult(Result $result)
     {
         $this->result = $result;
     }
 
     /**
-     * @return mixed
+     * @return Result
      */
     public function getResult()
     {

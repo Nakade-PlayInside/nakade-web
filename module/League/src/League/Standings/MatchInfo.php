@@ -1,5 +1,5 @@
 <?php
-namespace League\Statistics;
+namespace League\Standings;
 
 use League\Statistics\Tiebreaker\TiebreakerFactory;
 use League\Statistics\Games\GamesStatsFactory;
@@ -153,18 +153,6 @@ class MatchInfo
         return $this->matches;
     }
 
-    /**
-     * set the players array
-     *
-     * @param array $playersInLeague
-     *
-     * @return $this
-     */
-    public function setPlayers($playersInLeague)
-    {
-        $this->players = $playersInLeague;
-        return $this;
-    }
 
     /**
      * get the players
