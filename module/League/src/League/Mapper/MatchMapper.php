@@ -50,6 +50,23 @@ class MatchMapper  extends AbstractMapper
         return $result;
     }
 
+    //@todo: unfinished
+    public function getOpenResultsByUser($leagueId, $uid)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('League\Entity\Match', 'm')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'm.league = l')
+            ->Where('m._lid = :leagueId')
+            ->andWhere('(m._whiteId = :uid OR m._blackId = :uid)')
+            ->setParameter('lid', $leagueId)
+            ->setParameter('uid', $uid)
+            ->orderBy('m._date', 'ASC');
+
+        $result = $qb->getQuery()->getResult();
+        return $result;
+    }
     /**
      * Get all open results of the season.
      * It may happen to be more than one league only

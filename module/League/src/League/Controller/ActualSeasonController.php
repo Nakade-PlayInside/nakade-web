@@ -7,6 +7,7 @@ use Zend\View\Model\ViewModel;
 use League\Services\ICalService;
 use Zend\Http\PhpEnvironment\Response as iCalResponse;
 use Zend\Http\Headers;
+use League\Services\RepositoryService;
 
 /**
  * League tables and schedules of the actual season.
@@ -31,15 +32,18 @@ class ActualSeasonController extends AbstractController
     public function indexAction()
     {
         /* @var $seasonMapper \League\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper('season');
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActualSeason();
         if (is_null($season)) {
             $season = $seasonMapper->getLastSeason();
         }
+        //@todo: actual top league
+        $league = null;
 
         return new ViewModel(
 
             array(
+              'league'   => $league,
               'title'     => $this->getService()->getTitle(),
               'table'     => $this->getService()->getTopLeagueTable()
 

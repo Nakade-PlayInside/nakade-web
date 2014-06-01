@@ -65,7 +65,7 @@ class PlayerController extends AbstractController
             //get post data, set data to from, prepare for validation
             $postData =  $request->getPost();
             //cancel
-            if ($postData['cancel']) {
+            if ($postData['button']['cancel']) {
                 return $this->redirect()->toRoute('season', array('action' => 'create'));
             }
 

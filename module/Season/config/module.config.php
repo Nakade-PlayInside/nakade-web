@@ -122,18 +122,6 @@ return array(
 
     'service_manager' => array(
         'factories' => array(
-            'Season\Factory\MapperFactory'      =>
-                    'Season\Factory\MapperFactory',
-            'Season\Factory\FormFactory'        =>
-                    'Season\Factory\FormFactory',
-            'Season\Services\SeasonServiceFactory'  =>
-                    'Season\Services\SeasonServiceFactory',
-            'Season\Services\LeagueServiceFactory'  =>
-                    'Season\Services\LeagueServiceFactory',
-            'Season\Services\PlayerServiceFactory'  =>
-                    'Season\Services\PlayerServiceFactory',
-            'Season\Services\ScheduleServiceFactory'  =>
-                    'Season\Services\ScheduleServiceFactory',
             'Season\Services\RepositoryService'      =>
                     'Season\Services\RepositoryService',
             'Season\Services\SeasonFormService'      =>

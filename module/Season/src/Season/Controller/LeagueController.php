@@ -75,7 +75,7 @@ class LeagueController extends AbstractController
             //get post data, set data to from, prepare for validation
             $postData =  $request->getPost();
             //cancel
-            if ($postData['cancel']) {
+            if ($postData['button']['cancel']) {
                 return $this->redirect()->toRoute('season', array('action' => 'create'));
             }
 
@@ -109,9 +109,33 @@ class LeagueController extends AbstractController
         );
     }
 
+    /**
+     * @return \Zend\Http\Response|ViewModel
+     */
     public function showAction()
     {
-        //todo: show table with all leagues to edit
+
+        $associationId = (int) $this->params()->fromRoute('id', 1);
+
+        /* @var $mapper \Season\Mapper\SeasonMapper */
+        $mapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
+
+        //no new season! add season first
+        if (!$mapper->hasNewSeasonByAssociation($associationId)) {
+            return $this->redirect()->toRoute('season', array('action' => 'create'));
+        }
+        $season = $mapper->getNewSeasonByAssociation($associationId);
+
+        /* @var $leagueMapper \Season\Mapper\LeagueMapper */
+        $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
+        $leagues = $leagueMapper->getLeagueInfoBySeason($season->getId());
+
+        return new ViewModel(
+            array(
+                'season' => $season,
+                'leagues' => $leagues
+            )
+        );
     }
 
     /**
@@ -119,7 +143,6 @@ class LeagueController extends AbstractController
      */
     public function editAction()
     {
-        //todo: assign more players to a league, unassign players; leagueId is needed
         //@todo: validate forwarding. is league still editable, has season not yet startet ?
         $leagueId = (int) $this->params()->fromRoute('id', 0);
 
@@ -143,8 +166,8 @@ class LeagueController extends AbstractController
             //get post data, set data to from, prepare for validation
             $postData =  $request->getPost();
             //cancel
-            if ($postData['cancel']) {
-                return $this->redirect()->toRoute('season', array('action' => 'create'));
+            if ($postData['button']['cancel']) {
+                return $this->redirect()->toRoute('newLeague', array('action' => 'show'));
             }
 
             $form->setData($postData);

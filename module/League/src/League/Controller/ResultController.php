@@ -7,9 +7,9 @@ use Zend\View\Model\ViewModel;
 /**
  * processing user input, in detail results and postponing
  * matches.
- * 
+ *
  */
-class ResultController extends AbstractController 
+class ResultController extends AbstractController
 {
 
    /**

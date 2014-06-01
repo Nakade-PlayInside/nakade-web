@@ -28,6 +28,23 @@ class LeagueMapper extends AbstractMapper
     /**
      * @param int $seasonId
      *
+     * @return array
+     */
+    public function getLeaguesBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('l')
+            ->from('Season\Entity\League', 'l')
+            ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'l.season = s')
+            ->where('s.id = :seasonId')
+            ->setParameter('seasonId', $seasonId);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $seasonId
+     *
      * @return int
      */
     public function getNewLeagueNoBySeason($seasonId)
@@ -131,6 +148,43 @@ class LeagueMapper extends AbstractMapper
         return $qb->getQuery()->getResult();
 
 
+    }
+
+    /**
+     * @param int $leagueId
+     *
+     * @return array
+     */
+    public function getNoPlayersByLeague($leagueId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('League');
+        $qb->select('count(p)')
+            ->from('Season\Entity\Participant', 'p')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'p.league = l')
+            ->where('l.id = :leagueId')
+            ->setParameter('leagueId', $leagueId);
+
+        return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
+    }
+
+    /**
+     * leagues and number of assigned players
+     *
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getLeagueInfoBySeason($seasonId)
+    {
+        $leagues = $this->getLeaguesBySeason($seasonId);
+
+        /* @var $league \Season\Entity\League */
+        foreach ($leagues as $league) {
+            $noPlayers = $this->getNoPlayersByLeague($league->getId());
+            $league->setNoPlayers($noPlayers);
+        }
+
+        return $leagues;
     }
 }
 
