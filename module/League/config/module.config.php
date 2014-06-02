@@ -19,7 +19,7 @@ return array(
             'dateformat' => 'League\View\Helper\DateFormat',
             'isWinner'   => 'League\View\Helper\Winner',
             'result'     => 'League\View\Helper\Result',
-            'isActive'   => 'League\View\Helper\Active',
+            'highlight'   => 'League\View\Helper\Highlight',
             'isOpen'     => 'League\View\Helper\Open',
             'seasontitle'  => 'League\View\Helper\SeasonTitle',
 

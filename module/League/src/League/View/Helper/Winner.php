@@ -1,40 +1,35 @@
 <?php
 namespace League\View\Helper;
 
+use League\Standings\ResultInterface;
 use Zend\View\Helper\AbstractHelper;
-use League\Entity\Match;
+use Season\Entity\Match;
+use User\Entity\User;
 
 /**
- * View helper for underlining a winner
+ * Class Winner
+ *
+ * @package League\View\Helper
  */
-class Winner extends AbstractHelper
+class Winner extends AbstractHelper implements ResultInterface
 {
     /**
-     * if player was winning, a style is returned for making an underline.
-     * 
-     * @param type $match
+     * @param Match $match
+     * @param User  $user
+     *
      * @return string
      */
-    public function __invoke(Match $match, $userId)
+    public function __invoke(Match $match, User $user)
     {
-        if($match->getWinnerId() != $userId) 
-            return;
-           
-        if($this->isWin($match->getResultId()) ) {
-            echo 'style="text-decoration:underline"';
-        }     
-       
+        if (is_null($match->getResult()) ||
+            $match->getResult()->getId() == ResultInterface::DRAW ||
+            $match->getResult()->getId() == ResultInterface::SUSPENDED) {
+            return '';
+        } elseif ($match->getWinner() == $user) {
+            return 'underline;';
+        }
+        return '';
     }
-    
-    /**
-     * is match result a win
-     * 
-     * @param int $result
-     * @return bool
-     */
-    private function isWin($result) 
-    {
-        return $result == 1 || $result == 2 || $result == 4 ;
-    }
-   
+
+
 }

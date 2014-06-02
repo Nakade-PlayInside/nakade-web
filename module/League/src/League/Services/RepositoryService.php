@@ -19,6 +19,7 @@ class RepositoryService implements FactoryInterface
     const PLAYER_MAPPER = 'player';
     const NEW_MATCH_MAPPER = 'newmatch';
     const NEW_SEASON_MAPPER = 'newseason';
+    const SCHEDULE_MAPPER = 'schedule';
 
     private $entityManager;
 
@@ -82,6 +83,10 @@ class RepositoryService implements FactoryInterface
 
            case self::NEW_SEASON_MAPPER:
                $repository = new \Season\Mapper\SeasonMapper();
+               break;
+
+           case self::SCHEDULE_MAPPER:
+               $repository = new Mapper\ScheduleMapper();
                break;
 
            default:

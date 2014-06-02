@@ -71,16 +71,21 @@ class ActualSeasonController extends AbstractController
     {
         $userId = $this->getUserId();
 
-        //todo: show all actual tables
-        //todo: show user's table as the active table
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
         $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
-        /* @var $matchMapper \League\Mapper\MatchMapper */
-        $matchMapper = $this->getRepository()->getMapper(RepositoryService::MATCH_MAPPER);
+        /* @var $matchMapper \League\Mapper\ScheduleMapper */
+        $matchMapper = $this->getRepository()->getMapper(RepositoryService::SCHEDULE_MAPPER);
 
-        $matches = $matchMapper->getActualMatchesByUser($season->getId(), $userId);
+        $league = $matchMapper->getLeagueByUser($season->getId(), $userId);
+        if (is_null($league)) {
+            /* @var $leagueMapper \League\Mapper\LeagueMapper */
+            $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
+            $league = $leagueMapper->getTopLeagueBySeason($season->getId());
+        }
+
+        $matches = $matchMapper->getScheduleByLeague($league);
 
        return new ViewModel(
            array(

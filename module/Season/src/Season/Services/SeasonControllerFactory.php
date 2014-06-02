@@ -27,15 +27,11 @@ class SeasonControllerFactory implements FactoryInterface
         /* @var $services \Zend\Mvc\Controller\AbstractController */
         $serviceManager = $services->getServiceLocator();
 
-        $service    = $serviceManager->get('Season\Services\SeasonServiceFactory');
-
         $factory    = $serviceManager->get('Season\Services\SeasonFormService');
-
         $repository = $serviceManager->get('Season\Services\RepositoryService');
 
 
         $controller = new SeasonController();
-        $controller->setService($service);
         $controller->setFormFactory($factory);
         $controller->setRepository($repository);
 

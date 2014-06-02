@@ -32,13 +32,10 @@ class ScheduleControllerFactory implements FactoryInterface
             $config = ArrayUtils::iteratorToArray($config);
         }
 
-        $service    = $serviceManager->get(
-                'League\Services\ScheduleServiceFactory'
-        );
+
         $factory    = $serviceManager->get('League\Factory\FormFactory');
 
         $controller = new ScheduleController();
-        $controller->setService($service);
         $controller->setFormFactory($factory);
 
         return $controller;
