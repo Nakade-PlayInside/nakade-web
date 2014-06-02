@@ -24,6 +24,7 @@ return array(
             'highlightUser'  => 'League\View\Helper\HighlightUser',
             'myColor'  => 'League\View\Helper\MyColor',
             'opponent'  => 'League\View\Helper\Opponent',
+            'openResult'  => 'League\View\Helper\OpenResult',
             'sort'  => 'League\View\Helper\Sort',
             'isOpen'     => 'League\View\Helper\Open',
             'seasontitle'  => 'League\View\Helper\SeasonTitle',
@@ -141,6 +142,10 @@ return array(
                 'League\Services\RepositoryService',
             'League\Services\ICalService' =>
                 'League\Services\ICalService',
+            'League\Services\LeagueFormService' =>
+                'League\Services\LeagueFormService',
+            'League\Services\ResultService' =>
+                'League\Services\ResultService',
 
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),

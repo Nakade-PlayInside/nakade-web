@@ -39,13 +39,8 @@ class ActualSeasonControllerFactory implements FactoryInterface
             'League\Services\ActualSeasonServiceFactory'
         );
 
-        $repository    = $serviceManager->get(
-            'League\Services\RepositoryService'
-        );
-
-        $iCal    = $serviceManager->get(
-            'League\Services\ICalService'
-        );
+        $repository    = $serviceManager->get('League\Services\RepositoryService');
+        $iCal    = $serviceManager->get('League\Services\ICalService');
 
         $controller = new ActualSeasonController();
         $controller->setService($service);

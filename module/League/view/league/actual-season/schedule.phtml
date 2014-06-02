@@ -2,11 +2,12 @@
 $this->plugin('translate')->setTranslatorTextDomain('League');
 
 /* @var $match \Season\Entity\Match */
-/* @var $season \Season\Entity\Season */
-$season = $this->season;
-$association = $season->getAssociation()->getName();
-$title = $this->translate("%name% 1. League") . " " . $season->getStartDate()->format('Y');
+/* @var $league \Season\Entity\League */
+$season = $this->league;
+$association = $league->getSeason()->getAssociation()->getName();
+$title = $this->translate("%name% %no%. League") . " " . $league->getSeason()->getStartDate()->format('Y');
 $title = str_replace("%name%", $association, $title);
+$title = str_replace("%no%", $league->getNumber(), $title);
 $this->headTitle('schedule');
 ?>
 <?php $this->placeholder('noSeason')->captureStart();?>

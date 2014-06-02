@@ -1,42 +1,23 @@
 <?php
-$this->plugin('translate')->setTranslatorTextDomain('League'); 
+$this->plugin('translate')->setTranslatorTextDomain('League');
+/* @var $match \Season\Entity\Match */
+$match = $this->match;
+$info = sprintf('%s: %s - %s',
+    $this->translate('%no%.Match day'),
+    $match->getBlack()->getShortName(),
+    $match->getWhite()->getShortName()
+);
+$info = str_replace('%no%', $match->getMatchDay(), $info);
 
-$title = $this->translate('Enter Result');
+$title = $this->translate('New Result');
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<table class="league">
-<tr>
-    <td class="space"><?php 
-        echo $this->match->getDate()->format('d.m.Y   H:i');
-        ?></td>
-    <td><?php 
-        echo $this->escapeHtml(
-                $this->match->getBlack()->getShortName()
-        );
-        ?></td>
-    <td class="versus">-</td>
-    <td class="space"><?php 
-        echo $this->escapeHtml(
-                $this->match->getWhite()->getShortName()
-        );
-        ?></td>
-</tr>
-</table>
-
+<p><?php echo $info; ?></p>
 
 <?php
 
-/*
-$form->setAttribute(
-        'action', $this->url(
-                'league', 
-                array(
-                    'action' => 'add',
-                    'id' => $id,
-                )
-));*/
 $this->form->prepare();
 echo $this->form()->openTag($this->form);
 echo $this->formCollection($this->form);

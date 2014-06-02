@@ -90,7 +90,7 @@ class ActualSeasonController extends AbstractController
 
        return new ViewModel(
            array(
-              'season' => $season,
+              'league' => $league,
               'matches' => $matches,
            )
        );
@@ -133,7 +133,7 @@ class ActualSeasonController extends AbstractController
     */
     public function tableAction()
     {
-        $userId = $this->identity()->getId();
+       $userId = $this->identity()->getId();
 
        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);

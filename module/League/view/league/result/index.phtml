@@ -1,38 +1,39 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('League');
-
-$title = $this->translate('results');
-$this->headTitle($title);
+/* @var $match \Season\Entity\Match */
+/* @var $season \Season\Entity\Season */
+$season = $this->season;
+$association = $season->getAssociation()->getName();
+$title = $this->translate("%name% League - Open Results");
+$title = str_replace("%name%", $association, $title);
+$this->headTitle('Open Results');
 ?>
 
-<?php $this->placeholder('noresults')->captureStart();?>
+<?php $this->placeholder('noResults')->captureStart();?>
 <h3><?php echo $this->translate('No open results found')?></h3>
-<?php $this->placeholder('noresults')->captureEnd(); ?>
+<?php $this->placeholder('noResults')->captureEnd(); ?>
 
-<?php $this->placeholder('openresults')->captureStart();?>
-<h3><?php echo $this->translate('All open results');; ?></h3>
+<?php $this->placeholder('openResults')->captureStart();?>
+<h3><?php echo $title; ?></h3>
 <table class="league">
-<?php foreach ($this->matches as $game) : ?>
+<?php foreach ($this->matches as $match) : ?>
 <tr>
-    <td class="space"><?php echo $game->getDate()->format('d.m.y  H');?>h</td>
-    <td><?php echo $this->escapeHtml($game->getBlack()->getShortName());?></td>
+    <td class="space"><?php echo $match->getDate()->format('d.m.y  H:i');?></td>
+    <td><?php echo $match->getBlack()->getShortName();?></td>
     <td class="versus">-</td>
-    <td class="space"><?php echo $this->escapeHtml($game->getWhite()->getShortName());?></td>
-    <td><?php
-
-        echo   sprintf('<a href="%s" title="%s">%s</a>',
-                 $this->url('result', array('action'=>'add', 'id'=>$game->getId()) ),
-                 $this->translate("Enter Result"),
-                 $this->translate("open")
-             );
-    ?></td>
+    <td class="space"><?php echo $match->getWhite()->getShortName();?></td>
+    <td><a href="<?php echo $this->url('result', array('action'=>'add', 'id'=>$match->getId()));?>"
+           title="<?php echo $this->translate("Enter Result");?>"><?php echo $this->translate("open"); ?></a>
+    </td>
 </tr>
-<?php endforeach; ?>
+<?php
+endforeach; ?>
 </table>
-<?php $this->placeholder('openresults')->captureEnd();
 
-  if($this->matches!=null)
-        echo $this->placeholder('openresults');
-  else  echo $this->placeholder('noresults');
+<?php $this->placeholder('openResults')->captureEnd();
 
-?>
+  if (is_null($this->matches)) {
+      echo $this->placeholder('noResults');
+  } else {
+      echo $this->placeholder('openResults');
+  }

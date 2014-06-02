@@ -7,8 +7,9 @@ $this->headTitle('table');
 /* @var $league \Season\Entity\League */
 $league = $this->league;
 $association = $league->getSeason()->getAssociation()->getName();
-$title = $this->translate("%name% 1. League") . " " . $league->getSeason()->getStartDate()->format('Y');
+$title = $this->translate("%name% %no%. League") . " " . $league->getSeason()->getStartDate()->format('Y');
 $title = str_replace("%name%", $association, $title);
+$title = str_replace("%no%", $league->getNumber(), $title);
 
 $tb1 = $league->getSeason()->getTieBreaker1();
 $tb2 = $league->getSeason()->getTieBreaker2();

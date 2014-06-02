@@ -1,7 +1,10 @@
 <?php
 namespace League\Controller;
 
+use League\Services\LeagueFormService;
+use League\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
+use Zend\Form\FormInterface;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -20,10 +23,21 @@ class ResultController extends AbstractController
     public function indexAction()
     {
 
-       return new ViewModel(
+        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
+        /* @var $resultMapper \League\Mapper\ResultMapper */
+        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
+
+
+        $matches = $resultMapper->getOpenResultsBySeason($season->getId());
+
+
+       return new ViewModel(
            array(
-                'matches' =>  $this->getService()->getOpenResult()
+                'season' =>  $season,
+                'matches' =>  $matches
            )
        );
 
@@ -35,44 +49,25 @@ class ResultController extends AbstractController
     *
     * @return \Zend\Http\Response|ViewModel
     */
-    public function myresultAction()
+    public function myResultAction()
     {
-        $profile = $this->identity();
+        $userId = $this->identity()->getId();
 
-        if ($profile === null) {
-            return $this->redirect()->toRoute('login');
-        }
+        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
-       return new ViewModel(
+        /* @var $resultMapper \League\Mapper\ResultMapper */
+        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
 
-           array(
-               'matches' =>  $this->getService()
-                                  ->getMyResult($profile->getId())
-           )
-       );
+        $matches = $resultMapper->getResultsByUser($season->getId(), $userId);
 
-    }
-
-    /**
-    * showing open results of the actual user
-    *
-    * @return \Zend\Http\Response|ViewModel
-    */
-    public function myopenAction()
-    {
-        $profile = $this->identity();
-
-        if ($profile === null) {
-            return $this->redirect()->toRoute('login');
-        }
-
-       return new ViewModel(
-
-           array(
-                'matches' => $this->getService()
-                                  ->getMyOpenResult($profile->getId())
-           )
-       );
+        return new ViewModel(
+            array(
+               'season' =>  $season,
+               'matches' =>  $matches
+            )
+        );
 
     }
 
@@ -85,25 +80,40 @@ class ResultController extends AbstractController
     {
 
         $pid  = (int) $this->params()->fromRoute('id', 0);
-        $form = $this->getService()->setResultFormValues($pid);
-        //$form = $this->getForm('result');//->setResultFormValues($pid);
 
-        if ($this->getRequest()->isPost()) {
+        //todo: validate if user is player
+        //todo: validate if match hasResult
+
+        /* @var $resultMapper \League\Mapper\ResultMapper */
+        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
+        $match = $resultMapper->getMatchById($pid);
+
+        /* @var $form \League\Form\ResultForm */
+        $form = $this->getForm(LeagueFormService::RESULT_FORM);
+        $form->bindEntity($match);
+
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
 
             //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-            $this->getService()->prepareFormForValidation($form, $postData);
+            $postData =  $request->getPost();
+            //cancel
+            if ($postData['button']['cancel']) {
+                return $this->redirect()->toRoute('result', array('action' => 'myResult'));
+            }
 
-            //if validated data are saved to database
-            if ($this->getService()->processResultData($form)) {
-                  return $this->redirect()->toRoute('actual');
+            $form->setData($postData);
+            if ($form->isValid()) {
+
+                $data = $form->getData();var_dump($data->getResult()->getName());die;
+                return $this->redirect()->toRoute('season', array('action' => 'create'));
             }
         }
 
        return new ViewModel(
            array(
-              'id'      => $pid,
-              'match'   => $this->getService()->getMatch(),
+              'match'   => $match,
               'form'    => $form
            )
        );

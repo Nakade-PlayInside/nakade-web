@@ -2,7 +2,6 @@
 namespace Season\Form\Hydrator;
 
 use Season\Entity\Season;
-use Season\Entity\Time;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Doctrine\ORM\EntityManager;

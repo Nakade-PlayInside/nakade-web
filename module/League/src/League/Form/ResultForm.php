@@ -1,104 +1,58 @@
 <?php
 namespace League\Form;
 
+use User\Entity\User;
+use League\Standings\Results;
 use Nakade\Abstracts\AbstractForm;
+use \League\Form\Hydrator\ResultHydrator;
+use Season\Services\SeasonFieldsetService;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-use League\Entity\Match;
+use Season\Entity\Match;
 use \Zend\InputFilter\InputFilter;
 /**
  * Form for making a new result
  */
 class ResultForm extends AbstractForm
 {
-
-    protected $_pairings;
-    protected $_resultlist;
-    protected $_id;
+    private $service;
+    private $resultList;
+    private $matchPlayers=array();
 
     /**
-     * Constructor
+     * @param SeasonFieldsetService $service
+     * @param Results               $results
      */
-    public function __construct()
+    public function __construct(SeasonFieldsetService $service, Results $results)
     {
-        parent::__construct();
-    //    $this->setObject(new Match());
-     //   $this->setHydrator(new Hydrator());
+        parent::__construct('ResultForm');
+
+        $this->service = $service;
+        $this->resultList = $results->getResultTypes();
+        $this->setInputFilter($this->getFilter());
+
+    }
+    /**
+     * @param Match $object
+     */
+    public function bindEntity(Match $object)
+    {
+        $this->addPLayer($object->getBlack());
+        $this->addPLayer($object->getWhite());
+        $this->init();
+        $this->bind($object);
+    }
+
+    private function addPLayer(User $user)
+    {
+        $this->matchPlayers[$user->getId()] = $user->getShortName() . ' (' . $user->getOnlineName() .')';
     }
 
     /**
-     * get pairing
-     * @return array
+     * @return SeasonFieldsetService
      */
-    public function getPairing()
+    public function getService()
     {
-        return $this->_pairings;
-    }
-
-    protected function getPlayerName($user)
-    {
-        $player = sprintf("%s %s ",
-            $user->getFirstName(),
-            $user->getLastName()
-        );
-
-
-        if (!is_null($nick = $user->getNickname())) {
-            $player .= "($nick)";
-        }
-
-        return $player;
-    }
-    /**
-     * set pairing
-     * @param Match $pairing
-     */
-    public function setPairing($pairing)
-    {
-        $black = $this->getPlayerName($pairing->getBlack());
-        $white = $this->getPlayerName($pairing->getWhite());
-
-        $match = array(
-            $pairing->getBlackId() => $black,
-            $pairing->getWhiteId() => $white,
-        );
-
-        $this->_pairings=$match;
-    }
-
-    /**
-     * get result list
-     * @return array
-     */
-    public function getResultlist()
-    {
-        return $this->_resultlist;
-    }
-
-    /**
-     * @param array $resultlist
-     */
-    public function setResultlist($resultList)
-    {
-
-        $this->_resultlist=$resultList;
-    }
-
-    /**
-     * get id
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->_id;
-    }
-
-    /**
-     * set id
-     * @param int $pairingId
-     */
-    public function setId($pairingId)
-    {
-        $this->_id=$pairingId;
+        return $this->service;
     }
 
     /**
@@ -112,11 +66,10 @@ class ResultForm extends AbstractForm
         //pairingId
         $this->add(
             array(
-                'type' => 'Zend\Form\Element\Hidden',
-                'name' => 'pid',
-                'attributes' => array(
-                    'value' => $this->getId()
-                ),
+                'type' => 'Zend\Form\Element\Text',
+                'name' => 'id',
+                'options' => array('label' => $this->translate('Match Id:')),
+                'attributes' => array('readonly' => 'readonly')
             )
         );
 
@@ -124,11 +77,11 @@ class ResultForm extends AbstractForm
         $this->add(
             array(
                 'type' => 'Zend\Form\Element\Select',
-                'name' => 'winner',
+                'name' => 'winnerId',
                 'options' => array(
                     'label' => $this->translate('Winner'),
                     'empty_option' => $this->translate('No Winner'),
-                    'value_options' => $this->getPairing()
+                    'value_options' => $this->matchPlayers,
                 ),
             )
         );
@@ -137,11 +90,11 @@ class ResultForm extends AbstractForm
         $this->add(
             array(
                 'type' => 'Zend\Form\Element\Select',
-                'name' => 'result',
+                'name' => 'resultId',
                 'options' => array(
                     'label' => $this->translate('Result'),
                     'empty_option' => $this->translate('No Result'),
-                    'value_options' => $this->getResultlist(),
+                    'value_options' => $this->resultList,
                 ),
             )
         );
@@ -160,17 +113,7 @@ class ResultForm extends AbstractForm
             )
          );
 
-         //submit
-        $this->add(
-            array(
-                'name' => 'submit',
-                'attributes' => array(
-                    'type'  => 'submit',
-                    'value' => $this->translate('Go'),
-                    'id' => 'submitbutton',
-                ),
-            )
-        );
+        $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
 
     }
 
