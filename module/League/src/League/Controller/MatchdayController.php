@@ -1,6 +1,7 @@
 <?php
 namespace League\Controller;
 
+use League\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 
@@ -20,12 +21,21 @@ class MatchdayController extends AbstractController
     public function indexAction()
     {
 
-       return new ViewModel(
+        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
-           array(
-                'matches' =>  $this->getService()->getOpenMatches()
-           )
-       );
+        /* @var $resultMapper \League\Mapper\ResultMapper */
+        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
+
+        $matches = $resultMapper->getAllOpenResultsBySeason($season->getId());
+
+        return new ViewModel(
+            array(
+                'season' =>  $season,
+                'matches' =>  $matches
+            )
+        );
 
     }
 

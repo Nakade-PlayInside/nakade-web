@@ -1,6 +1,6 @@
 <?php
-$this->plugin('translate')->setTranslatorTextDomain('League'); 
-
+$this->plugin('translate')->setTranslatorTextDomain('League');
+/* @var $match \Season\Entity\Match */
 $title = $this->translate('edit match day');
 $this->headTitle('League');
 ?>
@@ -12,14 +12,14 @@ $this->headTitle('League');
     <th><?php echo $this->translate("League"); ?></th>
     <th><?php echo $this->translate("Black"); ?></th>
     <th><?php echo $this->translate("White"); ?></th>
-    <th style="text-align:center"><?php echo $this->translate("Date"); ?></th>     
-    <th><?php echo $this->translate("edit"); ?></th>  
+    <th style="text-align:center"><?php echo $this->translate("Date"); ?></th>
+    <th><?php echo $this->translate("edit"); ?></th>
 </tr>
-<?php 
+<?php
 
 
 foreach ($this->matches as $match) : ?>
-<tr style="background-color:<?php 
+<tr style="background-color:<?php
     echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
     <td style="text-align:center"><?php echo $match->getMatchday(); ?></td>
     <td style="text-align:center"><?php echo $match->getLeague()->getNumber(); ?></td>

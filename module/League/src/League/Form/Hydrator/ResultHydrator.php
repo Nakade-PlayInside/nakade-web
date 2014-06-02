@@ -64,7 +64,7 @@ class ResultHydrator implements HydratorInterface
     public function hydrate(array $data, $match)
     {
         //todo: winner
-        //todo: winner can be null 
+        //todo: winner can be null
         /* @var $match \Season\Entity\Match */
         $match->setPoints($data['points']);
         $result = $this->getResult($data['resultId']);
