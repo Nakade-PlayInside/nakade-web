@@ -17,7 +17,7 @@ $this->headTitle('schedule');
 <h3><?php echo $title; ?></h3>
 <table class="league">
 <?php foreach ($this->matches as $match) : ?>
-<tr style="background-color:<?php echo $this->highlight($match); ?>">
+<tr style="background-color:<?php echo $this->highlightMatch($match); ?>">
     <td class="space"><?php echo $match->getDate()->format('d.m. H:i');?></td>
     <td class="black"></td>
     <td style="text-decoration: <?php echo $this->isWinner($match, $match->getBlack()); ?>" title="<?php

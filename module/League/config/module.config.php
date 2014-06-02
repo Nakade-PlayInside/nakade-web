@@ -19,7 +19,12 @@ return array(
             'dateformat' => 'League\View\Helper\DateFormat',
             'isWinner'   => 'League\View\Helper\Winner',
             'result'     => 'League\View\Helper\Result',
-            'highlight'   => 'League\View\Helper\Highlight',
+            'hasResult' => 'League\View\Helper\HasResult',
+            'highlightMatch' => 'League\View\Helper\HighlightMatch',
+            'highlightUser'  => 'League\View\Helper\HighlightUser',
+            'myColor'  => 'League\View\Helper\MyColor',
+            'opponent'  => 'League\View\Helper\Opponent',
+            'sort'  => 'League\View\Helper\Sort',
             'isOpen'     => 'League\View\Helper\Open',
             'seasontitle'  => 'League\View\Helper\SeasonTitle',
 

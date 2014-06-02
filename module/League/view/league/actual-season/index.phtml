@@ -3,6 +3,7 @@
 $this->plugin('translate')->setTranslatorTextDomain('League');
 $this->headTitle("Top Table");
 
+/* @var $player \League\Entity\Player */
 /* @var $league \Season\Entity\League */
 $league = $this->league;
 $association = $league->getSeason()->getAssociation()->getName();

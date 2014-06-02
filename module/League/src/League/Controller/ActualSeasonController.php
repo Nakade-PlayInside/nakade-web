@@ -3,6 +3,7 @@ namespace League\Controller;
 
 use League\Standings\MatchInfo;
 use League\Standings\MatchStats;
+use League\Statistics\Sorting\SortingInterface;
 use Nakade\Abstracts\AbstractController;
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
@@ -69,7 +70,7 @@ class ActualSeasonController extends AbstractController
     */
     public function scheduleAction()
     {
-        $userId = $this->getUserId();
+        $userId = $this->identity()->getId();
 
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
         $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
@@ -100,13 +101,26 @@ class ActualSeasonController extends AbstractController
      */
     public function myScheduleAction()
     {
-        $uid = $this->getUserId();
+        $userId = $this->identity()->getId();
+
+        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $season = $seasonMapper->getActiveSeasonByAssociation(1);
+
+        /* @var $matchMapper \League\Mapper\ScheduleMapper */
+        $matchMapper = $this->getRepository()->getMapper(RepositoryService::SCHEDULE_MAPPER);
+
+        /* @var $league \Season\Entity\League */
+        $league = $matchMapper->getLeagueByUser($season->getId(), $userId);
+        $matches = array();
+        if (!is_null($league)) {
+            $matches = $matchMapper->getMyScheduleByUser($league->getId(), $userId);
+        }
 
         return new ViewModel(
             array(
-                'userId' =>  $uid,
-                'title'   => $this->getService()->getMyScheduleTitle($uid),
-                'matches' => $this->getService()->getMySchedule($uid),
+                'league' => $league,
+                'matches' => $matches,
             )
         );
     }
@@ -119,19 +133,39 @@ class ActualSeasonController extends AbstractController
     */
     public function tableAction()
     {
-       $uid = $this->getUserId();
+        $userId = $this->identity()->getId();
 
-        //sorting the table
-       $sorting  = $this->params()->fromRoute('sort', null);
+       /* @var $seasonMapper \Season\Mapper\SeasonMapper */
+       $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+       $season = $seasonMapper->getActiveSeasonByAssociation(1);
+
+       /* @var $matchMapper \League\Mapper\ScheduleMapper */
+       $matchMapper = $this->getRepository()->getMapper(RepositoryService::SCHEDULE_MAPPER);
+
+       $league = $matchMapper->getLeagueByUser($season->getId(), $userId);
+       if (is_null($league)) {
+           /* @var $leagueMapper \League\Mapper\LeagueMapper */
+           $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
+           $league = $leagueMapper->getTopLeagueBySeason($season->getId());
+       }
+
+       /* @var $matchMapper \League\Mapper\MatchMapper */
+       $matchMapper = $this->getRepository()->getMapper(RepositoryService::MATCH_MAPPER);
+       $matches = $matchMapper->getMatchesByLeague($league->getId());
+
+
+       //sorting the table
+       $sortBy  = $this->params()->fromRoute('sort', SortingInterface::BY_POINTS);
+
+       $info = new MatchStats($matches);
+       $players = $info->getMatchStats();
+       $sorting = SORT::getInstance();
+       $sorting->sorting($players, $sortBy);
 
        return new ViewModel(
            array(
-              'table'       => $this->getService()
-                                    ->getLeagueTable($uid, $sorting),
-              'tiebreakers' => $this->getService()
-                                    ->getTiebreakerNames(),
-              'title'       => $this->getService()
-                                    ->getTableTitle($uid),
+              'table'   => $players,
+              'league'  => $league,
 
            )
        );
@@ -145,10 +179,23 @@ class ActualSeasonController extends AbstractController
 
         $fileName = 'myNakade.iCal';
 
-        $uid = $this->getUserId();
-        $matches = $this->getService()->getMySchedule($uid);
+        $userId = $this->identity()->getId();
 
-        $content = $this->getICalService()->getICalSchedule($uid, $matches);
+        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $season = $seasonMapper->getActiveSeasonByAssociation(1);
+
+        /* @var $matchMapper \League\Mapper\ScheduleMapper */
+        $matchMapper = $this->getRepository()->getMapper(RepositoryService::SCHEDULE_MAPPER);
+
+        /* @var $league \Season\Entity\League */
+        $league = $matchMapper->getLeagueByUser($season->getId(), $userId);
+        $matches = array();
+        if (!is_null($league)) {
+            $matches = $matchMapper->getMyScheduleByUser($league->getId(), $userId);
+        }
+
+        $content = $this->getICalService()->getICalSchedule($userId, $matches);
 
         $headers = new Headers();
         $headers->addHeaderLine('Content-Type', 'text/calendar; charset=utf-8')
@@ -161,20 +208,6 @@ class ActualSeasonController extends AbstractController
 
         return $response;
 
-    }
-
-    /**
-     * @return \Zend\Http\Response | int
-     */
-    private function getUserId()
-    {
-        $user = $this->identity();
-
-        if (null == $user) {
-            return $this->redirect()->toRoute('login');
-        }
-
-        return $user->getId();
     }
 
     /**

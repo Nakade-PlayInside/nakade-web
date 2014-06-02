@@ -3,7 +3,7 @@
 namespace League\Services;
 
 use User\Entity\User;
-use League\Entity\Match;
+use Season\Entity\Match;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;

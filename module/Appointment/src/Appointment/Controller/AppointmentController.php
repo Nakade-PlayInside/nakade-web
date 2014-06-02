@@ -134,9 +134,11 @@ class AppointmentController extends AbstractController
 
                 $match = $appointment->getMatch();
                 $date = $appointment->getNewDate();
+                $sequence = $match->getSequence() + 1;
 
                 $appointment->setIsConfirmed(true);
                 $match->setDate($date);
+                $match->setSequence($sequence);
 
                 $repo->save($appointment);
                 $repo->save($match);

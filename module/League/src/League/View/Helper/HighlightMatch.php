@@ -9,11 +9,8 @@ use Season\Entity\Match;
  *
  * @package League\View\Helper
  */
-class Highlight extends AbstractHelper
+class HighlightMatch extends AbstractHelper implements HighlightInterface
 {
-    private $userColor = "#FFC4C4";
-    private $alternate = "#F0F0F0";
-
 
     /**
      * @param Match $match
@@ -22,11 +19,11 @@ class Highlight extends AbstractHelper
      */
     public function __invoke(Match $match)
     {
-       $color = $this->getView()->cycle(array($this->alternate,"transparent"))->next();
+       $color = $this->getView()->cycle(array(self::ALTERNATING_COLOR,self::BG_COLOR))->next();
        $id = $this->getView()->identity()->getId();
 
        if ($id == $match->getBlack()->getId() || $id == $match->getWhite()->getId()) {
-            $color =  $this->userColor;
+            $color =  self::HIGHLIGHT_COLOR;
        }
        return $color;
     }

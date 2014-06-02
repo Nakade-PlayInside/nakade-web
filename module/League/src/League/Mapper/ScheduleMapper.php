@@ -57,5 +57,30 @@ class ScheduleMapper  extends AbstractMapper
         return $result;
     }
 
+    /**
+     * @param int $leagueId
+     * @param int $uid
+     *
+     * @return array
+     */
+    public function getMyScheduleByUser($leagueId, $uid)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->innerJoin('m.league', 'League')
+            ->innerJoin('m.white', 'White')
+            ->innerJoin('m.black', 'Black')
+            ->where('(League.id = :leagueId)')
+            ->andWhere('(White.id = :uid OR Black.id = :uid)')
+            ->setParameter('leagueId', $leagueId)
+            ->setParameter('uid', $uid)
+            ->orderBy('m.date', 'ASC');
+
+        return $qb->getQuery()->getResult();
+
+    }
+
 }
 

@@ -72,6 +72,11 @@ class MatchModel
     private $matchDay;
 
     /**
+     * @ORM\Column(name="sequence", type="integer")
+     */
+    private $sequence;
+
+    /**
      * @param User $black
      */
     public function setBlack(User $black)
@@ -213,6 +218,22 @@ class MatchModel
     public function getWinner()
     {
         return $this->winner;
+    }
+
+    /**
+     * @param int $sequence
+     */
+    public function setSequence($sequence)
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSequence()
+    {
+        return $this->sequence;
     }
 
 
