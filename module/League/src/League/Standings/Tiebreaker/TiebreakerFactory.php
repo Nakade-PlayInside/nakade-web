@@ -1,7 +1,7 @@
 <?php
 namespace League\Standings\Tiebreaker;
 
-use League\Statistics\StatsFactory;
+use League\Standings\StatsFactory;
 use RuntimeException;
 
 /**
@@ -90,7 +90,7 @@ class TiebreakerFactory extends StatsFactory
 
         $this->setTiebreaker($typ);
 
-        /* @var $tiebreaker \League\Statistics\GameStats */
+        /* @var $tiebreaker \League\Standings\GameStats */
         $tiebreaker = $this->getTieBreaker();
         $allMatches = $this->getMatches();
         $tiebreaker->setMatches($allMatches);

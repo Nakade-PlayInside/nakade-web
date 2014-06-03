@@ -106,7 +106,7 @@ class ResultController extends AbstractController
             $form->setData($postData);
             if ($form->isValid()) {
 
-                $data = $form->getData();var_dump($data->getResult()->getName());die;
+                $data = $form->getData();var_dump($data->getPoints());die;
                 return $this->redirect()->toRoute('season', array('action' => 'create'));
             }
         }

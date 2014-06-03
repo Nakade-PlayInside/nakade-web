@@ -5,7 +5,6 @@ use Nakade\Abstracts\AbstractMapper;
 use Doctrine\ORM\Query\Expr\Join;
 use \Doctrine\ORM\Query;
 
-
 /**
  * Class ResultMapper
  *

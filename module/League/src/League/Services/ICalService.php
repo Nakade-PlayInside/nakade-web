@@ -85,7 +85,7 @@ class ICalService implements FactoryInterface
     {
         $myEvent = '';
 
-        /* @var $match \League\Entity\Match */
+        /* @var $match \Season\Entity\Match */
         foreach ($mySchedule as $match) {
             $myEvent .= $this->getMyEvent($match, $userId);
         }

@@ -16,6 +16,7 @@ class LeagueFormService extends AbstractFormFactory
 {
 
     const RESULT_FORM = 'result';
+    const MATCHDAY_FORM = 'matchday';
 
     private $resultList;
 
@@ -75,9 +76,16 @@ class LeagueFormService extends AbstractFormFactory
            case self::RESULT_FORM:
                $service = $this->getFieldSetService();
                $hydrator = new ResultHydrator($this->entityManager);
-
                $form = new Form\ResultForm($service, $this->resultList);
                $form->setHydrator($hydrator);
+               break;
+
+           case self::MATCHDAY_FORM:
+               $service = $this->getFieldSetService();
+               $hydrator = new Form\Hydrator\MatchDayHydrator($this->entityManager);
+               $form = new Form\MatchDayForm($service);
+               $form->setHydrator($hydrator);
+               $form->init();
                break;
 
 

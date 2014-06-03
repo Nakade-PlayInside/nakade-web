@@ -5,7 +5,7 @@ use Doctrine\ORM\Query;
 use \User\Entity\User;
 use Nakade\Abstracts\AbstractMapper;
 use Doctrine\ORM\EntityManager;
-use League\Entity\Match;
+use Season\Entity\Match;
 
 /**
  * Requesting database using doctrine
@@ -87,7 +87,7 @@ class AppointmentMapper extends AbstractMapper
             ->where('a.isConfirmed = 0')
             ->andWhere('a.isRejected = 0')
             ->andWhere('User.id = :uid')
-            ->andWhere('Match._resultId IS NULL')
+            ->andWhere('Match.result IS NULL')
             ->setParameter('uid', $user->getId());
 
         return $qb->getQuery()->getResult();
@@ -122,7 +122,7 @@ class AppointmentMapper extends AbstractMapper
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Appointment');
         $result = $qb
-            ->select('Match._id')
+            ->select('Match.id')
             ->from('Appointment\Entity\Appointment', 'a')
             ->join('a.match', 'Match')
             ->join('a.responder', 'Responder')

@@ -8,7 +8,7 @@
 namespace Appointment\Controller;
 
 use Appointment\Entity\Appointment;
-use League\Entity\Match;
+use Season\Entity\Match;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
@@ -30,7 +30,7 @@ class AppointmentController extends AbstractController
        /* @var $repo \League\Mapper\MatchMapper */
        $repo = $this->getRepository()->getMapper('match');
 
-       /* @var $match \League\Entity\Match */
+       /* @var $match \Season\Entity\Match */
        $match = $repo->getMatchById($matchId);
 
        if (!$this->getService()->isValidMatch($this->identity(), $match)) {

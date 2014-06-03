@@ -1,8 +1,8 @@
 <?php
 namespace League\Standings\Games;
 
-use League\Statistics\Results as RESULT;
-use League\Statistics\GameStats;
+use League\Standings\Results as RESULT;
+use League\Standings\GameStats;
 
 
 /**
@@ -25,10 +25,10 @@ class WonGames extends GameStats implements GameStatsInterface
         /* @var $match \Season\Entity\Match */
         foreach ($this->getMatches() as $match) {
 
-            if (is_null($match->getResult()->getId()) ||
+            if (is_null($match->getResult()) ||
+                is_null($match->getWinner()) ||
                 $match->getResult()->getId() == RESULT::DRAW ||
                 $match->getResult()->getId() == RESULT::SUSPENDED ) {
-
                 continue;
             }
 

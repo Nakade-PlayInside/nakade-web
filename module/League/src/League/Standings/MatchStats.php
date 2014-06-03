@@ -2,8 +2,8 @@
 namespace League\Standings;
 
 use League\Entity\Player;
-use League\Statistics\Tiebreaker\TiebreakerFactory;
-use League\Statistics\Games\GamesStatsFactory;
+use League\Standings\Tiebreaker\TiebreakerFactory;
+use League\Standings\Games\GamesStatsFactory;
 
 /**
  * Determining the games stats for having a sorted table of

@@ -1,6 +1,7 @@
 <?php
 namespace League\Controller;
 
+use League\Services\LeagueFormService;
 use League\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
@@ -10,7 +11,7 @@ use Zend\View\Model\ViewModel;
  * matches.
  *
  */
-class MatchdayController extends AbstractController
+class MatchDayController extends AbstractController
 {
 
    /**
@@ -21,6 +22,7 @@ class MatchdayController extends AbstractController
     public function indexAction()
     {
 
+        //todo: paginator for leagues
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
         $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
@@ -49,55 +51,43 @@ class MatchdayController extends AbstractController
 
         $id  = (int) $this->params()->fromRoute('id', 0);
 
-        /* @var $match \League\Entity\Match */
-        $match = $this->getService()->getMatch($id);
+        /* @var $mapper \League\Mapper\ResultMapper */
+        $mapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
+        $match = $mapper->getMatchById($id);
 
         if (is_null($match)) {
-            return $this->redirect()->toRoute('matchday');
+            return $this->redirect()->toRoute('matchDay');
         }
-        $form = $this->getForm('matchday');//->setResultFormValues($pid);
-        $form->bindEntity($match);
 
-        if ($this->getRequest()->isPost()) {
+        /* @var $form \League\Form\MatchDayForm */
+        $form = $this->getForm(LeagueFormService::MATCHDAY_FORM);
+        $form->bind($match);
+
+
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
 
             //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
+            $postData =  $request->getPost();
             //cancel
-            if ($postData['cancel']) {
-                return $this->redirect()->toRoute('matchday');
+            if ($postData['button']['cancel']) {
+                return $this->redirect()->toRoute('matchDay');
             }
 
             $form->setData($postData);
-
             if ($form->isValid()) {
 
+                $data = $form->getData();
+                $mapper->save($data);
+                //todo: email for both
 
-                $datetime = $postData['date']. ' ' . $postData['time'];
-                $temp = new \DateTime($datetime);
-                $match->setDate($temp);
-
-                //updating for iCal
-                $sequence = $match->getSequence() + 1;
-                $match->setSequence($sequence);
-
-                if ($postData['changeColors']) {
-
-                    $black = $match->getBlack();
-                    $white = $match->getWhite();
-
-                    $match->setBlack($white);
-                    $match->setWhite($black);
-                }
-
-                $this->getService()->getMapper('match')->save($match);
-                return $this->redirect()->toRoute('matchday');
+                return $this->redirect()->toRoute('matchDay');
             }
         }
 
        return new ViewModel(
            array(
-             // 'id'      => $pid,
-                'match'   => $match,
                 'form'    => $form
            )
        );

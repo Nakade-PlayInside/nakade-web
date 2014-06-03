@@ -187,13 +187,13 @@ class MatchMapper  extends AbstractMapper
      * get the match by id
      *
      * @param int $id
-     * @return \League\Entity\Match
+     * @return \Season\Entity\Match
      */
     public function getMatchById($id)
     {
 
        return $this->getEntityManager()
-                   ->getRepository('League\Entity\Match')
+                   ->getRepository('Season\Entity\Match')
                    ->find($id);
 
     }

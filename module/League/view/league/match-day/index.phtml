@@ -26,7 +26,7 @@ foreach ($this->matches as $match) : ?>
     <td><?php echo $this->escapeHtml($match->getBlack()->getCompleteName());?></td>
     <td><?php echo $this->escapeHtml($match->getWhite()->getCompleteName());?></td>
     <td style="text-align:center"><?php echo $match->getDate()->format('D, d.m.Y H:i');?></td>
-    <td style="text-align:center"><?php echo $this->showEdit($match->getId(), "matchday");?></td>
+    <td style="text-align:center"><?php echo $this->showEdit($match->getId(), "matchDay");?></td>
 </tr>
 <?php endforeach; ?>
 </table>

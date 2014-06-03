@@ -1,13 +1,10 @@
 <?php
 namespace League\Standings;
 
-use League\Statistics\Tiebreaker\TiebreakerFactory;
-use League\Statistics\Games\GamesStatsFactory;
-
 /**
  * Class MatchInfo
  *
- * @package League\Statistics
+ * @package League\Standings
  */
 class MatchInfo
 {

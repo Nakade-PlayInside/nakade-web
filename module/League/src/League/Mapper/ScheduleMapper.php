@@ -2,23 +2,22 @@
 namespace League\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
-use User\Entity\User;
 use Doctrine\ORM\Query\Expr\Join;
 use \Doctrine\ORM\Query;
 
-
 /**
- * Description of MatchMapper
+ * Class ScheduleMapper
  *
- * @author Dr.Holger Maerz <holger@nakade.de>
+ * @package League\Mapper
  */
 class ScheduleMapper  extends AbstractMapper
 {
 
     /**
-     * @param int $leagueId
+     * @param int $seasonId
+     * @param int $userId
      *
-     * @return array
+     * @return mixed
      */
     public function getLeagueByUser($seasonId, $userId)
     {

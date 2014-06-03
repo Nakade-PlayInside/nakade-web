@@ -68,7 +68,7 @@ class ResultForm extends AbstractForm
             array(
                 'type' => 'Zend\Form\Element\Text',
                 'name' => 'id',
-                'options' => array('label' => $this->translate('Match Id:')),
+                'options' => array('label' => $this->translate('Match Id') . ':'),
                 'attributes' => array('readonly' => 'readonly')
             )
         );
@@ -79,7 +79,7 @@ class ResultForm extends AbstractForm
                 'type' => 'Zend\Form\Element\Select',
                 'name' => 'winnerId',
                 'options' => array(
-                    'label' => $this->translate('Winner'),
+                    'label' => $this->translate('Winner') . ':',
                     'empty_option' => $this->translate('No Winner'),
                     'value_options' => $this->matchPlayers,
                 ),
@@ -92,7 +92,7 @@ class ResultForm extends AbstractForm
                 'type' => 'Zend\Form\Element\Select',
                 'name' => 'resultId',
                 'options' => array(
-                    'label' => $this->translate('Result'),
+                    'label' => $this->translate('Result') . ':',
                     'empty_option' => $this->translate('No Result'),
                     'value_options' => $this->resultList,
                 ),
@@ -108,7 +108,7 @@ class ResultForm extends AbstractForm
                   //  'pattern' => "[12]{0,1}[0-9]{1}([.][5]){0,1}"
                  ),
                  'options'  => array(
-                    'label' => $this->translate('Points')
+                    'label' => $this->translate('Points') . ':'
                  ),
             )
          );
@@ -123,6 +123,50 @@ class ResultForm extends AbstractForm
     public function getFilter()
     {
         $filter = new InputFilter();
+
+        $filter->add(
+            array(
+                'name'       => 'winnerId',
+                'required'   => false,
+            )
+        );
+
+        $filter->add(
+            array(
+                'name'       => 'resultId',
+                'required'   => true,
+            )
+        );
+
+        $filter->add(
+            array(
+                'name'       => 'points',
+                'required'   => false,
+                'filters'    => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'PregReplace',
+                        'options' => array(
+                            'pattern' => '/,/',
+                            'replacement' => '.',
+                        )
+                    ),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'Float',
+                    ),
+                    array(
+                        'name'    => 'GreaterThan',
+                        'options' => array(
+                            'min' => 0
+                        )
+                    ),
+                ),
+
+
+            )
+        );
 
         return $filter;
     }

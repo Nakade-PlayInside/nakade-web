@@ -1,8 +1,8 @@
 <?php
 namespace League\Standings\Games;
 
-use League\Statistics\Results as RESULT;
-use League\Statistics\GameStats;
+use League\Standings\Results as RESULT;
+use League\Standings\GameStats;
 
 /**
  * Class LostGames

@@ -3,22 +3,13 @@
 namespace League;
 
 /**
- * Manages a round-robin league. Registered players are connected to the
- * User Module. The league contains league tables with tie-breakers and is part
- * of a season. The pairings have a given date to play and collecting the
- * results. The ruleset decides which tie-breakers are used for the placement.
+ * Class Module
  *
- * @author Holger Maerz <holger@nakade.de>
- * @copyright Copyright (c) 2013 Dr. Holger Maerz
- *
+ * @package League
  */
 class Module
 {
     /**
-     * Adds a class map to the ClassmapAutoloader and the namespace to the
-     * StandardAutoloader. If no files provided in the ClassmapAutoloader, fall
-     * back to the StandardAutoloader.
-     *
      * @return array
      */
     public function getAutoloaderConfig()
@@ -36,8 +27,6 @@ class Module
     }
 
     /**
-     * Autoloading the module configuration file.
-     *
      * @return array
      */
     public function getConfig()

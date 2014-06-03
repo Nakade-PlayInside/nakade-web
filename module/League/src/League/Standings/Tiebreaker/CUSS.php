@@ -1,8 +1,8 @@
 <?php
 namespace League\Standings\Tiebreaker;
 
-use League\Statistics\Results as RESULT;
-use League\Statistics\GameStats;
+use League\Standings\Results as RESULT;
+use League\Standings\GameStats;
 
 
 /**

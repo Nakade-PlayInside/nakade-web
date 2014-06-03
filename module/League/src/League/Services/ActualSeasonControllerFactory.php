@@ -30,20 +30,11 @@ class ActualSeasonControllerFactory implements FactoryInterface
 
         $serviceManager = $services->getServiceLocator();
 
-        $config  = $serviceManager->get('config');
-        if ($config instanceof \Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
-        }
-
-        $service    = $serviceManager->get(
-            'League\Services\ActualSeasonServiceFactory'
-        );
 
         $repository    = $serviceManager->get('League\Services\RepositoryService');
         $iCal    = $serviceManager->get('League\Services\ICalService');
 
         $controller = new ActualSeasonController();
-        $controller->setService($service);
         $controller->setICalService($iCal);
         $controller->setRepository($repository);
 

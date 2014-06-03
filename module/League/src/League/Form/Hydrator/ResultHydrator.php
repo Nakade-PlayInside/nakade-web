@@ -63,13 +63,40 @@ class ResultHydrator implements HydratorInterface
      */
     public function hydrate(array $data, $match)
     {
-        //todo: winner
-        //todo: winner can be null
         /* @var $match \Season\Entity\Match */
-        $match->setPoints($data['points']);
-        $result = $this->getResult($data['resultId']);
-        $match->setResult($result);
+        if (isset($data['points'])) {
+            $points = intval($data['points']);
+            $match->setPoints($points);
+        }
+        if (isset($data['winnerId'])) {
+            $winner = $this->getWinner($match, $data['winnerId']);
+            if (!is_null($winner)) {
+                $match->setWinner($winner);
+            }
+        }
+        if (isset($data['resultId'])) {
+            $result = $this->getResult($data['resultId']);
+            $match->setResult($result);
+        }
+
         return $match;
+    }
+
+    /**
+     * @param Match $match
+     * @param int   $winnerId
+     *
+     * @return null|\User\Entity\User
+     */
+    private function getWinner(Match $match, $winnerId)
+    {
+        $winner = null;
+        if ($winnerId == $match->getBlack()->getId()) {
+            $winner = $match->getBlack();
+        } elseif ($winnerId == $match->getWhite()->getId()) {
+            $winner = $match->getWhite();
+        }
+        return $winner;
     }
 
     /**

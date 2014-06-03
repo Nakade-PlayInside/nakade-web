@@ -46,9 +46,10 @@ $tb3 = $league->getSeason()->getTieBreaker3();
     <th title="<?php echo $tb3->getDescription(); ?>">
          <a href="<?php echo $this->sort(Sort::BY_THIRD_TIEBREAK);?>"><?php echo $tb3->getName()?></a></th>
 </tr>
+<?php $position=1; ?>
 <?php foreach ($this->table as $player) : ?>
 <tr style="background-color:<?php  echo $this->highlightUser($player->getUser()); ?>">
-    <td><?php echo $this->position($player) ?></td>
+    <td><?php echo $position++ ?></td>
     <td style="white-space:nowrap"><?php echo $player->getUser()->getShortName();?></td>
     <td><?php echo $player->getGamesPlayed(); ?></td>
     <td><?php echo $player->getGamesSuspended(); ?></td>

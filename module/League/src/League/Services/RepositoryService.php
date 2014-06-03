@@ -14,7 +14,6 @@ class RepositoryService implements FactoryInterface
 {
 
     const MATCH_MAPPER = 'match';
-    const SEASON_MAPPER = 'season';
     const LEAGUE_MAPPER = 'league';
     const PLAYER_MAPPER = 'player';
     const NEW_MATCH_MAPPER = 'newmatch';
@@ -69,14 +68,6 @@ class RepositoryService implements FactoryInterface
             case self::MATCH_MAPPER:
                 $repository = new Mapper\MatchMapper();
                 break;
-
-            case self::PLAYER_MAPPER:
-                $repository = new Mapper\PlayerMapper();
-                break;
-
-           case self::SEASON_MAPPER:
-               $repository = new Mapper\SeasonMapper();
-               break;
 
            case self::NEW_MATCH_MAPPER:
                $repository = new \Season\Mapper\MatchMapper();

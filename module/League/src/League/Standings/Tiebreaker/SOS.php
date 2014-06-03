@@ -1,10 +1,10 @@
 <?php
 namespace League\Standings\Tiebreaker;
 
-use League\Statistics\Results as RESULT;
-use League\Statistics\GameStats;
-use League\Statistics\Games\WonGames;
-use League\Statistics\Games\DrawGames;
+use League\Standings\Results as RESULT;
+use League\Standings\GameStats;
+use League\Standings\Games\WonGames;
+use League\Standings\Games\DrawGames;
 
 /**
  * Calculating the Sum of Opponents Scores. This tiebreaker is almost intended

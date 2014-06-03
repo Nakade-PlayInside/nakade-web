@@ -147,8 +147,6 @@ class Player
      * setter of second tiebreak
      *
      * @param int $points
-     *
-     * @return \League\Entity\Participants
      */
     public function setSecondTiebreak($points)
     {

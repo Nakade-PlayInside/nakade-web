@@ -26,9 +26,7 @@ class ButtonFieldset extends AbstractFieldset
             array(
                 'name' => 'csrf',
                 'type'  => 'Zend\Form\Element\Csrf',
-                'options' => array('csrf_options'
-                => array('timeout' => 600)
-                )
+                'options' => array('csrf_options' => array('timeout' => 600))
             )
         );
 
@@ -37,7 +35,7 @@ class ButtonFieldset extends AbstractFieldset
             array(
                 'name' => 'Send',
                 'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array('value' =>   $this->translate('Submit'))
+                'attributes' => array('value' => $this->translate('Submit'))
             )
         );
 

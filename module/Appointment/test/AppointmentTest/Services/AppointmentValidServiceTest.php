@@ -2,7 +2,7 @@
 namespace Appointment\Services;
 
 use Appointment\Entity\Appointment;
-use League\Entity\Match;
+use Season\Entity\Match;
 use PHPUnit_Framework_TestCase;
 use User\Entity\User;
 

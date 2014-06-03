@@ -1,9 +1,8 @@
 <?php
 namespace League\Controller;
 
-use League\Standings\MatchInfo;
 use League\Standings\MatchStats;
-use League\Statistics\Sorting\SortingInterface;
+use League\Standings\Sorting\SortingInterface;
 use Nakade\Abstracts\AbstractController;
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;

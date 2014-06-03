@@ -70,10 +70,10 @@ class MatchMapper  extends AbstractMapper
     public function getMatchesInLeague($leagueId)
     {
        return $this->getEntityManager()
-                   ->getRepository('League\Entity\Match')
+                   ->getRepository('Season\Entity\Match')
                    ->findBy(
-                       array('_lid' => $leagueId),
-                       array('_date'=> 'ASC')
+                       array('lid' => $leagueId),
+                       array('date'=> 'ASC')
                    );
     }
 
@@ -88,12 +88,15 @@ class MatchMapper  extends AbstractMapper
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder('Match')
             ->select('m')
-            ->from('League\Entity\Match', 'm')
-            ->Where('m._lid = :lid')
-            ->andWhere('(m._whiteId = :uid OR m._blackId = :uid)')
+            ->from('Season\Entity\Match', 'm')
+            ->join('m.white', 'White')
+            ->join('m.black', 'Black')
+            ->join('m.league', 'League')
+            ->Where('League.id = :lid')
+            ->andWhere('(White.id = :uid OR Black.id = :uid)')
             ->setParameter('lid', $leagueId)
             ->setParameter('uid', $uid)
-            ->orderBy('m._date', 'ASC');
+            ->orderBy('m.date', 'ASC');
 
         $result = $qb->getQuery()->getResult();
         return $result;
@@ -116,197 +119,21 @@ class MatchMapper  extends AbstractMapper
         $result = $qb->getQuery()->getResult();
         return $result;
     }
-    /**
-     * Get all open results of the season.
-     * It may happen to be more than one league only
-     *
-     * @param int $seasonId
-     *
-     * @param int $uid
-     *
-     * @return array Match
-     */
-    public function getMyOpenResults($seasonId, $uid)
-    {
 
-       $dql = "SELECT m FROM
-               League\Entity\Match m,
-               League\Entity\League l
-               WHERE l._sid = :sid AND
-               m._lid=l._id AND
-               (m._blackId = :uid OR m._whiteId = :uid) AND
-               m._resultId IS NULL
-               AND m._date < :today
-               ORDER BY m._date ASC";
-
-       $today = new \DateTime();
-       $today->modify('-6 hours');
-
-       return $this->getEntityManager()
-                   ->createQuery($dql)
-                   ->setParameter('today', $today)
-                   ->setParameter('uid', $uid)
-                   ->setParameter('sid', $seasonId)
-                   ->getResult();
-    }
-
-    /**
-     * @param int $seasonId
-     * @param int $uid
-     *
-     * @return array
-     */
-    public function getMyResults($seasonId, $uid)
-    {
-
-       $dql = "SELECT m FROM
-               League\Entity\Match m,
-               League\Entity\League l
-               WHERE l._sid = :sid AND
-               m._lid=l._id AND
-               (m._blackId = :uid OR m._whiteId = :uid)
-               ORDER BY m._date ASC";
-
-       return $this->getEntityManager()
-                   ->createQuery($dql)
-                   ->setParameter('uid', $uid)
-                   ->setParameter('sid', $seasonId)
-                   ->getResult();
-    }
-
-
-     /**
-     * Get all open results of the season.
-     * It may happen to be more than one league only
-     *
-     * @param int $seasonId
-     * @return array objects Match
-     */
-    public function getAllOpenResults($seasonId)
-    {
-
-       $dql = "SELECT m FROM
-               League\Entity\Match m,
-               League\Entity\League l
-               WHERE l._sid = :sid AND
-               m._lid=l._id AND
-               m._resultId IS NULL
-               AND m._date < :today
-               ORDER BY m._date ASC";
-
-       $today = new \DateTime();
-       $today->modify('-6 hours');
-
-       return $this->getEntityManager()
-                   ->createQuery($dql)
-                   ->setParameter('today', $today)
-                   ->setParameter('sid', $seasonId)
-                   ->getResult();
-    }
-
-    /**
-     * get number of open matches in a season
-     *
-     * @param int $seasonId
-     * @return int
-     */
-    public function getOpenMatches($seasonId)
-    {
-
-        $dql = "SELECT count(m) as number FROM
-               League\Entity\Match m,
-               League\Entity\League l
-               WHERE l._sid = :sid AND
-               m._lid=l._id AND
-               m._resultId IS NULL";
-
-        return $this->getEntityManager()
-                    ->createQuery($dql)
-                    ->setParameter('sid', $seasonId)
-                    ->getSingleScalarResult();
-
-    }
-
-    /**
-     * get number of matches in a season
-     *
-     * @param int $seasonId
-     * @return int
-     */
-    public function getNumberOfMatches($seasonId)
-    {
-
-        $dql = "SELECT count(m) as number FROM
-               League\Entity\Match m,
-               League\Entity\League l
-               WHERE l._sid = :sid AND
-               m._lid=l._id";
-
-        return $this->getEntityManager()
-                    ->createQuery($dql)
-                    ->setParameter('sid', $seasonId)
-                    ->getSingleScalarResult();
-
-    }
 
     /**
      * get the match by id
      *
      * @param int $id
-     * @return \League\Entity\Match
+     *
+     * @return \Season\Entity\Match
      */
     public function getMatchById($id)
     {
 
        return $this->getEntityManager()
-                   ->getRepository('League\Entity\Match')
+                   ->getRepository('Season\Entity\Match')
                    ->find($id);
-
-    }
-
-    /**
-     * get all matches with a result in a league
-     *
-     * @param int $leagueId
-     *
-     * @return array League\Entity\Match
-     */
-    public function getAllMatchesWithResult($leagueId)
-    {
-
-       $dql = "SELECT m FROM
-               League\Entity\Match m
-               WHERE m._lid = :lid AND
-               m._resultId IS NOT NULL";
-
-       return $this->getEntityManager()
-                   ->createQuery($dql)
-                   ->setParameter('lid', $leagueId)
-                   ->getResult();
-
-    }
-
-    /**
-     * get all matches with a result in a league
-     *
-     * @param int $seasonId
-     *
-     * @return array League\Entity\Match
-     */
-    public function getAllOpenMatches($seasonId)
-    {
-
-       $dql = "SELECT m FROM
-               League\Entity\Match m,
-               League\Entity\League l
-               WHERE l._sid = :sid AND
-               m._lid=l._id AND
-               m._resultId IS NULL";
-
-       return $this->getEntityManager()
-                   ->createQuery($dql)
-                   ->setParameter('sid', $seasonId)
-                   ->getResult();
 
     }
 
@@ -322,10 +149,10 @@ class MatchMapper  extends AbstractMapper
         //not used
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('max(m._date)')
-            ->from('League\Entity\Match', 'm')
-            ->join('m._league', 'League')
-            ->where('League._id = :lid')
+            ->select('max(m.date)')
+            ->from('Season\Entity\Match', 'm')
+            ->join('m.league', 'League')
+            ->where('League.id = :lid')
             ->setParameter('lid', $leagueId);
 
         $endDate = $qb->getQuery()->getSingleScalarResult();
@@ -333,56 +160,6 @@ class MatchMapper  extends AbstractMapper
 
     }
 
-    public function getLastMatchDate($seasonId)
-    {
-
-        $dql = "SELECT max(m._date) as datum FROM
-               League\Entity\Match m,
-               League\Entity\League l
-               WHERE l._sid = :sid AND
-               m._lid=l._id";
-
-        return $this->getEntityManager()
-                    ->createQuery($dql)
-                    ->setParameter('sid', $seasonId)
-                    ->getSingleScalarResult();
-
-    }
-
-    public function getFirstMatchDate($seasonId)
-    {
-
-        $dql = "SELECT min(m._date) as datum FROM
-               League\Entity\Match m,
-               League\Entity\League l
-               WHERE l._sid = :sid AND
-               m._lid=l._id";
-
-        return $this->getEntityManager()
-                    ->createQuery($dql)
-                    ->setParameter('sid', $seasonId)
-                    ->getSingleScalarResult();
-
-    }
-
-    public function getLeagueInSeasonByPlayer($seasonId, $userId)
-    {
-        $dql = "SELECT l FROM
-               League\Entity\Match m,
-               League\Entity\League l
-               WHERE l.sid = :sid AND
-               m._lid=l.id   AND
-               (m._blackId = :uid OR
-               m._whiteId = :uid)";
-
-        return $this->getEntityManager()
-                    ->createQuery($dql)
-                    ->setParameter('sid', $seasonId)
-                    ->setParameter('uid', $userId)
-                    ->setMaxResults(1)
-                    ->getOneOrNullResult();
-
-    }
 
     /**
      * @param \User\Entity\User $user
@@ -396,10 +173,11 @@ class MatchMapper  extends AbstractMapper
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder('Match')
             ->select('m._date')
-            ->from('League\Entity\Match', 'm')
-            ->join('m._black', 'Black')
-            ->join('m._white', 'White')
-            ->Where('m._lid = :lid')
+            ->from('Season\Entity\Match', 'm')
+            ->join('m.black', 'Black')
+            ->join('m.white', 'White')
+            ->join('m.league', 'League')
+            ->Where('League.id = :lid')
             ->andWhere('Black.id = :uid OR White.id = :uid')
            // ->andWhere('m._date > :now')
             ->setParameter('uid', $user->getId())
@@ -431,16 +209,16 @@ class MatchMapper  extends AbstractMapper
 
         $qb = $this->getEntityManager()->createQueryBuilder('Match');
         $qb->select('m')
-            ->from('League\Entity\Match', 'm')
-            ->join('m._black', 'Black')
-            ->join('m._white', 'White')
-            ->where($qb->expr()->notIn('m._id', $shiftedMatches))
-            ->andWhere('m._resultId is Null')
+            ->from('Season\Entity\Match', 'm')
+            ->join('m.black', 'Black')
+            ->join('m.white', 'White')
+            ->where($qb->expr()->notIn('m.id', $shiftedMatches))
+            ->andWhere('m.result is Null')
             ->andWhere('Black.id = :uid OR White.id = :uid')
-            ->andWhere('m._date > :deadline')
+            ->andWhere('m.date > :deadline')
             ->setParameter('uid', $user->getId())
             ->setParameter('deadline', $now)
-            ->orderBy('m._date ', 'ASC');
+            ->orderBy('m.date ', 'ASC');
 
         $result = $qb->getQuery()->getResult();
         return $result;

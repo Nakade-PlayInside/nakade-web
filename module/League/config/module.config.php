@@ -15,8 +15,6 @@ return array(
 
     'view_helpers' => array(
         'invokables' => array(
-            'position'   => 'League\View\Helper\Position',
-            'dateformat' => 'League\View\Helper\DateFormat',
             'isWinner'   => 'League\View\Helper\Winner',
             'result'     => 'League\View\Helper\Result',
             'hasResult' => 'League\View\Helper\HasResult',
@@ -27,8 +25,6 @@ return array(
             'openResult'  => 'League\View\Helper\OpenResult',
             'sort'  => 'League\View\Helper\Sort',
             'isOpen'     => 'League\View\Helper\Open',
-            'seasontitle'  => 'League\View\Helper\SeasonTitle',
-
             // more helpers here ...
         )
     ),
@@ -39,23 +35,11 @@ return array(
                     'League\Services\ActualSeasonControllerFactory',
             'League\Controller\Result' =>
                     'League\Services\ResultControllerFactory',
-            'League\Controller\Matchday' =>
-                    'League\Services\MatchdayControllerFactory',
+            'League\Controller\MatchDay' =>
+                    'League\Services\MatchDayControllerFactory',
         ),
 
     ),
-
-    'controller_plugins' => array(
-      'invokables' => array(
-          'season'  => 'League\Controller\Plugin\SeasonPlugin',
-          'match'   => 'League\Controller\Plugin\MatchPlugin',
-          'league'  => 'League\Controller\Plugin\LeaguePlugin',
-          'player'  => 'League\Controller\Plugin\PlayerPlugin',
-          'form'    => 'League\Controller\Plugin\FormPlugin',
-
-      ),
-    ),
-
 
     'router' => array(
         'routes' => array(
@@ -92,16 +76,16 @@ return array(
                 ),
             ),
 
-            'matchday' => array(
+            'matchDay' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/matchday[/:action][/:id]',
+                    'route'    => '/matchDay[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'League\Controller\Matchday',
+                        'controller' => 'League\Controller\MatchDay',
                         'action'     => 'index',
                     ),
                 ),
@@ -110,7 +94,6 @@ return array(
 
         ),
     ),
-
 
     'view_manager' => array(
         'display_not_found_reason' => true,
@@ -124,20 +107,6 @@ return array(
 
     'service_manager' => array(
         'factories' => array(
-            'League\Factory\MapperFactory'      =>
-                    'League\Factory\MapperFactory',
-            'League\Factory\FormFactory'        =>
-                    'League\Factory\FormFactory',
-            'League\Services\ActualSeasonServiceFactory'     =>
-                    'League\Services\ActualSeasonServiceFactory',
-            'League\Services\MatchdayServiceFactory'  =>
-                    'League\Services\MatchdayServiceFactory',
-            'result_form'       => 'League\Services\ResultFormFactory',
-
-            'League\Services\PlayerServiceFactory' =>
-                'League\Services\PlayerServiceFactory',
-            'League\Services\ResultServiceFactory' =>
-                    'League\Services\ResultServiceFactory',
             'League\Services\RepositoryService' =>
                 'League\Services\RepositoryService',
             'League\Services\ICalService' =>
@@ -146,8 +115,7 @@ return array(
                 'League\Services\LeagueFormService',
             'League\Services\ResultService' =>
                 'League\Services\ResultService',
-
-            'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
+            'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
 

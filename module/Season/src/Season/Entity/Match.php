@@ -85,7 +85,7 @@ class Match extends MatchModel
      */
     public function exchangeArray($data)
     {
-
+        var_dump("HI");die;
     }
 
     /**

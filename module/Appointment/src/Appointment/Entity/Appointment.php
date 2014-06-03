@@ -4,7 +4,7 @@ namespace Appointment\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use User\Entity\User;
-use League\Entity\Match;
+use Season\Entity\Match;
 
 /**
  * model
@@ -22,7 +22,7 @@ class Appointment
       private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\League\Entity\Match", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="\Season\Entity\Match", cascade={"persist"})
      * @ORM\JoinColumn(name="pairing", referencedColumnName="id", nullable=false)
      */
     private $match;
@@ -130,7 +130,7 @@ class Appointment
     }
 
     /**
-     * @return \League\Entity\Match
+     * @return Match
      */
     public function getMatch()
     {
