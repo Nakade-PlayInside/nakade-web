@@ -35,17 +35,13 @@ class ActualSeasonController extends AbstractController
     public function indexAction()
     {
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
         /* @var $leagueMapper \League\Mapper\LeagueMapper */
         $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
         $topLeague = $leagueMapper->getTopLeagueBySeason($season->getId());
-
-        /* @var $matchMapper \League\Mapper\MatchMapper */
-        $matchMapper = $this->getRepository()->getMapper(RepositoryService::MATCH_MAPPER);
-        $matches = $matchMapper->getMatchesByLeague($topLeague->getId());
-
+        $matches = $leagueMapper->getMatchesByLeague($topLeague->getId());
 
         //var_dump($matches);die;
         $info = new MatchStats($matches);
@@ -73,7 +69,7 @@ class ActualSeasonController extends AbstractController
         $userId = $this->identity()->getId();
 
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
         /* @var $matchMapper \League\Mapper\ScheduleMapper */
@@ -104,7 +100,7 @@ class ActualSeasonController extends AbstractController
         $userId = $this->identity()->getId();
 
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
         /* @var $matchMapper \League\Mapper\ScheduleMapper */
@@ -136,22 +132,19 @@ class ActualSeasonController extends AbstractController
        $userId = $this->identity()->getId();
 
        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-       $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+       $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
        $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
        /* @var $matchMapper \League\Mapper\ScheduleMapper */
        $matchMapper = $this->getRepository()->getMapper(RepositoryService::SCHEDULE_MAPPER);
 
+       /* @var $leagueMapper \League\Mapper\LeagueMapper */
+       $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
        $league = $matchMapper->getLeagueByUser($season->getId(), $userId);
        if (is_null($league)) {
-           /* @var $leagueMapper \League\Mapper\LeagueMapper */
-           $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
            $league = $leagueMapper->getTopLeagueBySeason($season->getId());
        }
-
-       /* @var $matchMapper \League\Mapper\MatchMapper */
-       $matchMapper = $this->getRepository()->getMapper(RepositoryService::MATCH_MAPPER);
-       $matches = $matchMapper->getMatchesByLeague($league->getId());
+       $matches = $leagueMapper->getMatchesByLeague($league->getId());
 
 
        //sorting the table
@@ -182,7 +175,7 @@ class ActualSeasonController extends AbstractController
         $userId = $this->identity()->getId();
 
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
         /* @var $matchMapper \League\Mapper\ScheduleMapper */

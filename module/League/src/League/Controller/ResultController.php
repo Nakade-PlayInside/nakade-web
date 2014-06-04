@@ -24,7 +24,7 @@ class ResultController extends AbstractController
     {
 
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
         /* @var $resultMapper \League\Mapper\ResultMapper */
@@ -54,7 +54,7 @@ class ResultController extends AbstractController
         $userId = $this->identity()->getId();
 
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::NEW_SEASON_MAPPER);
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
         /* @var $resultMapper \League\Mapper\ResultMapper */

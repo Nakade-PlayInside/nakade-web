@@ -13,11 +13,8 @@ use \League\Mapper;
 class RepositoryService implements FactoryInterface
 {
 
-    const MATCH_MAPPER = 'match';
     const LEAGUE_MAPPER = 'league';
-    const PLAYER_MAPPER = 'player';
-    const NEW_MATCH_MAPPER = 'newmatch';
-    const NEW_SEASON_MAPPER = 'newseason';
+    const SEASON_MAPPER = 'season';
     const SCHEDULE_MAPPER = 'schedule';
     const RESULT_MAPPER = 'result';
 
@@ -65,15 +62,7 @@ class RepositoryService implements FactoryInterface
                 $repository = new Mapper\LeagueMapper();
                 break;
 
-            case self::MATCH_MAPPER:
-                $repository = new Mapper\MatchMapper();
-                break;
-
-           case self::NEW_MATCH_MAPPER:
-               $repository = new \Season\Mapper\MatchMapper();
-               break;
-
-           case self::NEW_SEASON_MAPPER:
+           case self::SEASON_MAPPER:
                $repository = new \Season\Mapper\SeasonMapper();
                break;
 

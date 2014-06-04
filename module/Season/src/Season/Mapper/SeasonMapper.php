@@ -13,19 +13,7 @@ use \Doctrine\ORM\Query;
  */
 class SeasonMapper extends AbstractMapper
 {
-    /**
-     * @param int $id
-     *
-     * @return object
-     */
-   public function getSeasonById($id)
-   {
-       return $this->getEntityManager()
-           ->getRepository('Season\Entity\Season')
-           ->find($id);
-   }
-
-    /**
+     /**
      * @param int $id
      *
      * @return object
@@ -37,24 +25,6 @@ class SeasonMapper extends AbstractMapper
             ->find($id);
     }
 
-    /**
-     * get all seasons of a titled league
-     *
-     * @param int $associationId
-     *
-     * @return null|Season
-     */
-    public function getSeasonsByAssociation($associationId=1)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder('Season');
-        $qb->select('s')
-            ->from('Season\Entity\Season', 's')
-            ->where('s.association = :association')
-            ->addOrderBy('s.startDate', 'DESC')
-            ->setParameter('association', $associationId);
-
-        return $qb->getQuery()->getResult();
-    }
 
     /**
      * active season has already started and the isReady flag is set
@@ -124,8 +94,8 @@ class SeasonMapper extends AbstractMapper
         $qb->select('s')
             ->from('Season\Entity\Season', 's')
             ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
-            ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l.id = m._lid')
-            ->where('m._resultId is not Null')
+            ->leftJoin('Season\Entity\Match', 'm', Join::WITH, 'l = m.league')
+            ->where('m.result IS NOT Null')
             ->andWhere('s.association = :association')
             ->addOrderBy('s.startDate', 'DESC')
             ->setMaxResults(1)
@@ -145,12 +115,12 @@ class SeasonMapper extends AbstractMapper
     {
       $data = null;
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
-        $qb->select('min(m._date) as firstMatchDate,
-            max(m._date) as lastMatchDate,
+        $qb->select('min(m.date) as firstMatchDate,
+            max(m.date) as lastMatchDate,
             count(m) as noMatches')
             ->from('Season\Entity\Season', 's')
             ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
-            ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l.id = m._lid')
+            ->leftJoin('Season\Entity\Match', 'm', Join::WITH, 'l = m.league')
             ->where('s.id = :seasonId')
             ->setParameter('seasonId', $seasonId);
         $data = $qb->getQuery()->getOneOrNullResult();
@@ -174,10 +144,10 @@ class SeasonMapper extends AbstractMapper
     public function getLastMatchDateOfSeason($seasonId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
-        $qb->select('max(m._date) as lastMatchDate')
+        $qb->select('max(m.date) as lastMatchDate')
             ->from('Season\Entity\Season', 's')
             ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
-            ->leftJoin('League\Entity\Match', 'm', Join::WITH, 'l.id = m._lid')
+            ->leftJoin('Season\Entity\Match', 'm', Join::WITH, 'l = m.league')
             ->where('s.id = :id')
             ->setParameter('id', $seasonId);
         $result = $qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR);
@@ -198,11 +168,11 @@ class SeasonMapper extends AbstractMapper
     {
         $qb = $this->getEntityManager()->createQueryBuilder('League');
         $qb->select('count(m) as open')
-            ->from('League\Entity\Match', 'm')
-            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.id = m._lid')
+            ->from('Season\Entity\Match', 'm')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l = m.league')
             ->innerJoin('l.season', 'season')
             ->where('season.id = :seasonId')
-            ->andWhere('m._resultId is Null')
+            ->andWhere('m.result IS Null')
             ->addGroupBy('l.id')
             ->setParameter('seasonId', $seasonId);
         $result = $qb->getQuery()->getOneOrNullResult();

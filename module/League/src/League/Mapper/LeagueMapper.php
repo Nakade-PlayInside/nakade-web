@@ -2,10 +2,13 @@
 namespace League\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
+use Doctrine\ORM\Query\Expr\Join;
+use \Doctrine\ORM\Query;
+
 /**
- * Description of LeagueMapper
+ * Class LeagueMapper
  *
- * @author Dr.Holger Maerz <holger@nakade.de>
+ * @package League\Mapper
  */
 class LeagueMapper extends AbstractMapper
 {
@@ -27,6 +30,27 @@ class LeagueMapper extends AbstractMapper
             ->setParameter('seasonId', $seasonId);
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param int $leagueId
+     *
+     * @return array
+     */
+    public function getMatchesByLeague($leagueId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'm.league = l')
+            ->innerJoin('m.league', 'League')
+            ->where('League.id = :leagueId')
+            ->setParameter('leagueId', $leagueId)
+            ->orderBy('m.date', 'ASC');
+
+        $result = $qb->getQuery()->getResult();
+        return $result;
     }
 
 
