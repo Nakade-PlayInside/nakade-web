@@ -2,33 +2,35 @@
 
 namespace League\Services;
 
-use League\Controller\MatchDayController;
+use League\Controller\TableController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class MatchDayControllerFactory
+ * Class TableControllerFactory
  *
  * @package League\Services
  */
-class MatchDayControllerFactory implements FactoryInterface
+class TableControllerFactory implements FactoryInterface
 {
 
     /**
      * @param ServiceLocatorInterface $services
      *
-     * @return MatchDayController|mixed
+     * @return TableController|mixed
      */
     public function createService(ServiceLocatorInterface $services)
     {
+
         $serviceManager = $services->getServiceLocator();
 
-        $repository    = $serviceManager->get('League\Services\RepositoryService');
-        $factory    = $serviceManager->get('League\Services\LeagueFormService');
 
-        $controller = new MatchDayController();
+        $repository = $serviceManager->get('League\Services\RepositoryService');
+        $table = $serviceManager->get('League\Services\TableService');
+
+        $controller = new TableController();
         $controller->setRepository($repository);
-        $controller->setFormFactory($factory);
+        $controller->setTableService($table);
 
         return $controller;
     }

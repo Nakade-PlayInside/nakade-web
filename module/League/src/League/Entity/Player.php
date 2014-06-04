@@ -22,6 +22,7 @@ class Player
     private $firstTiebreak;
     private $secondTiebreak;
     private $thirdTiebreak;
+    private $position;
 
     /**
      * @param User $user
@@ -185,6 +186,21 @@ class Player
         return $this->user;
     }
 
+    /**
+     * @param int $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
 
     /**
      * populating data as an array.

@@ -31,12 +31,12 @@ return array(
 
     'controllers' => array(
         'factories' => array(
-            'League\Controller\ActualSeason' =>
-                    'League\Services\ActualSeasonControllerFactory',
+            'League\Controller\Table' =>
+                    'League\Services\TableControllerFactory',
             'League\Controller\Result' =>
                     'League\Services\ResultControllerFactory',
-            'League\Controller\MatchDay' =>
-                    'League\Services\MatchDayControllerFactory',
+            'League\Controller\TimeTable' =>
+                    'League\Services\TimeTableControllerFactory',
         ),
 
     ),
@@ -54,7 +54,7 @@ return array(
                         'sort'     => '[a-zA-Z][a-zA-Z0-9_-]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'League\Controller\ActualSeason',
+                        'controller' => 'League\Controller\Table',
                         'action'     => 'index',
                     ),
                 ),
@@ -76,16 +76,16 @@ return array(
                 ),
             ),
 
-            'matchDay' => array(
+            'timeTable' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/matchDay[/:action][/:id]',
+                    'route'    => '/timeTable[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'League\Controller\MatchDay',
+                        'controller' => 'League\Controller\TimeTable',
                         'action'     => 'index',
                     ),
                 ),
@@ -115,6 +115,8 @@ return array(
                 'League\Services\LeagueFormService',
             'League\Services\ResultService' =>
                 'League\Services\ResultService',
+            'League\Services\TableService' =>
+                'League\Services\TableService',
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

@@ -58,7 +58,7 @@
                 $this->url('result'),
 
             $this->translate('edit match day', 'Application')    =>
-                $this->url('matchDay'),
+                $this->url('timeTable'),
 
             $this->translate('season overview', 'Application')    =>
                 $this->url('season'),
@@ -100,7 +100,7 @@
         $league = array(
 
             $this->translate('Schedule', 'Application')   =>
-                $this->url('actual', array('action' => 'schedule')),
+                $this->url('timeTable', array('action' => 'schedule')),
 
             $this->translate('Standings', 'Application')  =>
                 $this->url('actual', array('action' => 'table')),

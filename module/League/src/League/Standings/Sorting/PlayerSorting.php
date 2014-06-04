@@ -14,7 +14,6 @@ use League\Entity\Player;
  */
 class PlayerSorting implements SortingInterface
 {
-
     /**
      * instance
      * @var object
@@ -50,6 +49,7 @@ class PlayerSorting implements SortingInterface
        usort($playersInLeague, array($this, $method));
     }
 
+
     /**
      * @param Player $compA
      * @param Player $compB
@@ -75,12 +75,12 @@ class PlayerSorting implements SortingInterface
      *
      * @return int
      */
-    public function sortBySuspended(Player $compA, Player $compB)
+    public function sortByPlayed(Player $compA, Player $compB)
     {
-        $tbA =  $compA->getGamesSuspended();
-        $tbB =  $compB->getGamesSuspended();
+        $tbA =  $compA->getGamesPlayed();
+        $tbB =  $compB->getGamesPlayed();
         if ($tbA == $tbB) {
-           return $this->sortByPoints($compA, $compB);
+            return $this->sortByPoints($compA, $compB);
         }
 
         return ($tbA > $tbB)?-1:1;
@@ -92,10 +92,10 @@ class PlayerSorting implements SortingInterface
      *
      * @return int
      */
-    public function sortByPlayed(Player $compA, Player $compB)
+    public function sortBySuspended(Player $compA, Player $compB)
     {
-        $tbA =  $compA->getGamesPlayed();
-        $tbB =  $compB->getGamesPlayed();
+        $tbA =  $compA->getGamesSuspended();
+        $tbB =  $compB->getGamesSuspended();
         if ($tbA == $tbB) {
             return $this->sortByPoints($compA, $compB);
         }
@@ -160,12 +160,12 @@ class PlayerSorting implements SortingInterface
      *
      * @return int
      */
-    public function sortByPoints(Player $compA, Player $compB)
+    public function sortByTb1(Player $compA, Player $compB)
     {
-        $tbA =  $compA->getGamesPoints();
-        $tbB =  $compB->getGamesPoints();
+        $tbA =  $compA->getFirstTiebreak();
+        $tbB =  $compB->getFirstTiebreak();
         if ($tbA == $tbB) {
-            return $this->sortByFirstTiebreak($compA, $compB);
+            return $this->sortByPoints($compA, $compB);
         }
 
         return ($tbA > $tbB)?-1:1;
@@ -177,7 +177,74 @@ class PlayerSorting implements SortingInterface
      *
      * @return int
      */
-    public function sortByFirstTiebreak(Player $compA, Player $compB)
+    public function sortByTb2(Player $compA, Player $compB)
+    {
+        $tbA =  $compA->getSecondTiebreak();
+        $tbB =  $compB->getSecondTiebreak();
+        if ($tbA == $tbB) {
+            return $this->sortByPoints($compA, $compB);
+        }
+
+        return ($tbA > $tbB)?-1:1;
+    }
+
+    /**
+     * @param Player $compA
+     * @param Player $compB
+     *
+     * @return int
+     */
+    public function sortByTb3(Player $compA, Player $compB)
+    {
+        $tbA =  $compA->getThirdTiebreak();
+        $tbB =  $compB->getThirdTiebreak();
+        if ($tbA == $tbB) {
+            return $this->sortByPoints($compA, $compB);
+        }
+
+        return ($tbA > $tbB)?-1:1;
+    }
+
+    /**
+     * @param Player $compA
+     * @param Player $compB
+     *
+     * @return int
+     */
+    public function sortByPoints(Player $compA, Player $compB)
+    {
+        $tbA =  $compA->getGamesPoints();
+        $tbB =  $compB->getGamesPoints();
+        if ($tbA == $tbB) {
+            return $this->sortBySuspendedGames($compA, $compB);
+        }
+        return ($tbA > $tbB)?-1:1;
+    }
+
+    /**
+     * @param Player $compA
+     * @param Player $compB
+     *
+     * @return int
+     */
+    private function sortBySuspendedGames(Player $compA, Player $compB)
+    {
+        $tbA =  $compA->getGamesSuspended();
+        $tbB =  $compB->getGamesSuspended();
+        if ($tbA == $tbB) {
+            return $this->sortByFirstTiebreak($compA, $compB);
+        }
+
+        return ($tbA > $tbB)?1:-1;
+    }
+
+    /**
+     * @param Player $compA
+     * @param Player $compB
+     *
+     * @return int
+     */
+    private function sortByFirstTiebreak(Player $compA, Player $compB)
     {
            $tbA = $compA->getFirstTiebreak();
            $tbB = $compB->getFirstTiebreak();
@@ -194,7 +261,7 @@ class PlayerSorting implements SortingInterface
      *
      * @return int
      */
-    public function sortBySecondTiebreak(Player $compA, Player $compB)
+    private function sortBySecondTiebreak(Player $compA, Player $compB)
     {
            $tbA = $compA->getSecondTiebreak();
            $tbB = $compB->getSecondTiebreak();
@@ -212,13 +279,13 @@ class PlayerSorting implements SortingInterface
      *
      * @return int
      */
-    public function sortByThirdTiebreak(Player $compA, Player $compB)
+    private function sortByThirdTiebreak(Player $compA, Player $compB)
     {
 
            $tbA = $compA->getThirdTiebreak();
            $tbB = $compB->getThirdTiebreak();
            if ($tbA == $tbB) {
-               return $this->sortByInitialState($compA, $compB);
+               return $this->sortByGamesPlayed($compA, $compB);
            }
            return ($tbA > $tbB)?-1:1;
     }
@@ -229,13 +296,13 @@ class PlayerSorting implements SortingInterface
      *
      * @return int
      */
-    public function sortByInitialState(Player $compA, Player $compB)
+    private function sortByGamesPlayed(Player $compA, Player $compB)
     {
-           $tbA = $compA->getGamesPlayed();
-           $tbB = $compB->getGamesPlayed();
-           if ($tbA == $tbB) {
-               return 0;
-           }
+        $tbA = $compA->getGamesPlayed();
+        $tbB = $compB->getGamesPlayed();
+        if ($tbA == $tbB) {
+            return 0;
+        }
 
         return ($tbA > $tbB)?-1:1;
     }

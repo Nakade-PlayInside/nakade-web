@@ -18,7 +18,6 @@ $title = str_replace("%name%", $association, $title);
 <?php $this->placeholder('standings')->captureStart();?>
 
 <h3><?php echo $title; ?></h3>
-<?php $position=1; ?>
 <table class="table" style="width: auto; margin-top: 0.5em;">
 <tr>
     <th title="<?php echo $this->translate('Position');?>">No</th>
@@ -34,14 +33,15 @@ $title = str_replace("%name%", $association, $title);
 <?php foreach ($this->table as $player) : ?>
 <tr style="background-color:<?php
     echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-    <td><?php echo $position++; ?></td>
+    <td><?php echo $player->getPosition() ?></td>
     <td><?php echo $player->getUser()->getShortName();?></td>
     <td><?php echo $player->getGamesPlayed(); ?></td>
     <td><?php echo $player->getGamesPoints();?></td>
     <td><?php echo $player->getFirstTiebreak();?></td>
 
 </tr>
-<?php endforeach; ?>
+<?php
+endforeach; ?>
 </table>
 
 

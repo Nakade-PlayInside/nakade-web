@@ -16,7 +16,7 @@ $title = str_replace("%name%", $association, $title);
 
 <?php $this->placeholder('schedule')->captureStart();?>
 <h3><?php echo $title; ?></h3>
-<a title="<?php echo $iCalInfo; ?>" href="<?php echo $this->url('actual', array('action' => 'iCal')); ?>"><img alt="iCal" src="/images/iCal-32.png" /></a>
+<a title="<?php echo $iCalInfo; ?>" href="<?php echo $this->url('timeTable', array('action' => 'iCal')); ?>"><img alt="iCal" src="/images/iCal-32.png" /></a>
 <table class="league">
 <?php foreach ($this->matches as $match) : ?>
 <tr>

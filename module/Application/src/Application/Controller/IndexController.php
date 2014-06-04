@@ -33,7 +33,7 @@ class IndexController extends AbstractActionController
                             ->dispatch('/Blog/Controller/Blog');
 
         $tableWidget = $this->forward()
-                            ->dispatch('/League/Controller/ActualSeason');
+                            ->dispatch('/League/Controller/Table');
 
         $page = new ViewModel(array( 'No' => "5"));
 

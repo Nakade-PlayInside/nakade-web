@@ -15,9 +15,9 @@ Interface SortingInterface
     const BY_WON_GAMES='win';
     const BY_LOST_GAMES='lost';
     const BY_DRAW_GAMES='draw';
-    const BY_FIRST_TIEBREAK='firstTiebreak';
-    const BY_SECOND_TIEBREAK='secondTiebreak';
-    const BY_THIRD_TIEBREAK='thirdTiebreak';
+    const BY_FIRST_TIEBREAK='Tb1';
+    const BY_SECOND_TIEBREAK='Tb2';
+    const BY_THIRD_TIEBREAK='Tb3';
 
 }
 

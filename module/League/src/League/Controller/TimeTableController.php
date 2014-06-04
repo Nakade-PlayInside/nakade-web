@@ -1,69 +1,113 @@
 <?php
 namespace League\Controller;
 
-use League\Standings\MatchStats;
-use League\Standings\Sorting\SortingInterface;
-use Nakade\Abstracts\AbstractController;
-use Zend\Http\Response;
-use Zend\View\Model\ViewModel;
 use League\Services\ICalService;
+use League\Services\LeagueFormService;
+use League\Services\RepositoryService;
+use Nakade\Abstracts\AbstractController;
+use Zend\View\Model\ViewModel;
 use Zend\Http\PhpEnvironment\Response as iCalResponse;
 use Zend\Http\Headers;
-use League\Services\RepositoryService;
-use League\Standings\Sorting\PlayerSorting as SORT;
+
 
 /**
- * League tables and schedules of the actual season.
- * Top league table is presented by the default action index.
- * ActionSeasonServiceFactory is needed to be set.
+ * processing user input, in detail results and postponing
+ * matches.
  *
- * @author Holger Maerz <holger@nakade.de>
  */
-class ActualSeasonController extends AbstractController
+class TimeTableController extends AbstractController
 {
     /**
      * @var ICalService
      */
     private $iCal=null;
 
-    /**
-    * Default action showing up the Top League table
-    * in a short and compact version. This can be used as a widget.
+   /**
+    * showing all open results of the actual season
     *
     * @return array|ViewModel
     */
     public function indexAction()
     {
+
+        //todo: paginator for leagues
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
         $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
-        /* @var $leagueMapper \League\Mapper\LeagueMapper */
-        $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-        $topLeague = $leagueMapper->getTopLeagueBySeason($season->getId());
-        $matches = $leagueMapper->getMatchesByLeague($topLeague->getId());
+        /* @var $resultMapper \League\Mapper\ResultMapper */
+        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
 
-        //var_dump($matches);die;
-        $info = new MatchStats($matches);
-        $players = $info->getMatchStats();
-        $sorting = SORT::getInstance();
-        $sorting->sorting($players);
+        $matches = $resultMapper->getAllOpenResultsBySeason($season->getId());
 
         return new ViewModel(
             array(
-              'league'   => $topLeague,
-              'table'    => $players
+                'season' =>  $season,
+                'matches' =>  $matches
             )
         );
+
     }
 
     /**
-    * Shows actual matchplan of a user and his results.
-    * If user is not in  a league, the top league schedule
-    * is shown.
+    * Form for edit a result
     *
-    * @return array|ViewModel
+    * @return \Zend\Http\Response|ViewModel
     */
+    public function editAction()
+    {
+
+        $id  = (int) $this->params()->fromRoute('id', 0);
+
+        /* @var $mapper \League\Mapper\ResultMapper */
+        $mapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
+        $match = $mapper->getMatchById($id);
+
+        if (is_null($match)) {
+            return $this->redirect()->toRoute('timeTable');
+        }
+
+        /* @var $form \League\Form\MatchDayForm */
+        $form = $this->getForm(LeagueFormService::MATCHDAY_FORM);
+        $form->bind($match);
+
+
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+            //get post data, set data to from, prepare for validation
+            $postData =  $request->getPost();
+            //cancel
+            if ($postData['button']['cancel']) {
+                return $this->redirect()->toRoute('timeTable');
+            }
+
+            $form->setData($postData);
+            if ($form->isValid()) {
+
+                $data = $form->getData();
+                $mapper->save($data);
+                //todo: email for both
+
+                return $this->redirect()->toRoute('timeTable');
+            }
+        }
+
+       return new ViewModel(
+           array(
+                'form'    => $form
+           )
+       );
+    }
+
+    /**
+     * Shows actual matchplan of a user and his results.
+     * If user is not in  a league, the top league schedule
+     * is shown.
+     *
+     * @return array|ViewModel
+     */
     public function scheduleAction()
     {
         $userId = $this->identity()->getId();
@@ -84,13 +128,14 @@ class ActualSeasonController extends AbstractController
 
         $matches = $matchMapper->getScheduleByLeague($league);
 
-       return new ViewModel(
-           array(
-              'league' => $league,
-              'matches' => $matches,
-           )
-       );
+        return new ViewModel(
+            array(
+                'league' => $league,
+                'matches' => $matches,
+            )
+        );
     }
+
 
     /**
      * @return ViewModel
@@ -122,49 +167,6 @@ class ActualSeasonController extends AbstractController
     }
 
     /**
-    * Shows the user's league table. If user is not in a league, the
-    * Top league is shown instead. The Table is sortable.
-    *
-    * @return array|ViewModel
-    */
-    public function tableAction()
-    {
-       $userId = $this->identity()->getId();
-
-       /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-       $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-       $season = $seasonMapper->getActiveSeasonByAssociation(1);
-
-       /* @var $matchMapper \League\Mapper\ScheduleMapper */
-       $matchMapper = $this->getRepository()->getMapper(RepositoryService::SCHEDULE_MAPPER);
-
-       /* @var $leagueMapper \League\Mapper\LeagueMapper */
-       $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-       $league = $matchMapper->getLeagueByUser($season->getId(), $userId);
-       if (is_null($league)) {
-           $league = $leagueMapper->getTopLeagueBySeason($season->getId());
-       }
-       $matches = $leagueMapper->getMatchesByLeague($league->getId());
-
-
-       //sorting the table
-       $sortBy  = $this->params()->fromRoute('sort', SortingInterface::BY_POINTS);
-
-       $info = new MatchStats($matches);
-       $players = $info->getMatchStats();
-       $sorting = SORT::getInstance();
-       $sorting->sorting($players, $sortBy);
-
-       return new ViewModel(
-           array(
-              'table'   => $players,
-              'league'  => $league,
-
-           )
-       );
-    }
-
-    /**
      * @return \Zend\Http\PhpEnvironment\Response
      */
     public function iCalAction()
@@ -192,7 +194,7 @@ class ActualSeasonController extends AbstractController
 
         $headers = new Headers();
         $headers->addHeaderLine('Content-Type', 'text/calendar; charset=utf-8')
-                ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $fileName . '"');
+            ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $fileName . '"');
 
         $response = new iCalResponse();
         $response->setStatusCode(200);
@@ -221,6 +223,5 @@ class ActualSeasonController extends AbstractController
     {
         return $this->iCal;
     }
-
 
 }
