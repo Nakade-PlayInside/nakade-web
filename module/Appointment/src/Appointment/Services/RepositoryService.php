@@ -14,7 +14,6 @@ use \Appointment\Mapper\AppointmentMapper;
 class RepositoryService implements FactoryInterface
 {
 
-    const MATCH_MAPPER = 'match';
     const APPOINTMENT_MAPPER = 'appointment';
 
     private $entityManager;
@@ -56,11 +55,6 @@ class RepositoryService implements FactoryInterface
     public function getMapper($typ)
     {
         switch (strtolower($typ)) {
-
-           case self::MATCH_MAPPER:
-               $repository = new MatchMapper();
-               $repository->setEntityManager($this->entityManager);
-               break;
 
            case self::APPOINTMENT_MAPPER:
                $repository = new AppointmentMapper($this->entityManager);

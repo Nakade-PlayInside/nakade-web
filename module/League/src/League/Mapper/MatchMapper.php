@@ -121,21 +121,7 @@ class MatchMapper  extends AbstractMapper
     }
 
 
-    /**
-     * get the match by id
-     *
-     * @param int $id
-     *
-     * @return \Season\Entity\Match
-     */
-    public function getMatchById($id)
-    {
 
-       return $this->getEntityManager()
-                   ->getRepository('Season\Entity\Match')
-                   ->find($id);
-
-    }
 
 
     /**
@@ -190,38 +176,5 @@ class MatchMapper  extends AbstractMapper
         return $result;
     }
 
-    /**
-     * @param User  $user
-     * @param array $shiftedMatches
-     * @param int   $timeLimit
-     *
-     * @return array
-     */
-    public function getMatchesOpenForAppointmentByUser(User $user, array $shiftedMatches, $timeLimit=72)
-    {
-        //mandatory array is never empty
-        if (empty($shiftedMatches)) {
-            $shiftedMatches[]=0;
-        }
-
-        $now = new \DateTime();
-        $now->modify('+'.$timeLimit.' hour');
-
-        $qb = $this->getEntityManager()->createQueryBuilder('Match');
-        $qb->select('m')
-            ->from('Season\Entity\Match', 'm')
-            ->join('m.black', 'Black')
-            ->join('m.white', 'White')
-            ->where($qb->expr()->notIn('m.id', $shiftedMatches))
-            ->andWhere('m.result is Null')
-            ->andWhere('Black.id = :uid OR White.id = :uid')
-            ->andWhere('m.date > :deadline')
-            ->setParameter('uid', $user->getId())
-            ->setParameter('deadline', $now)
-            ->orderBy('m.date ', 'ASC');
-
-        $result = $qb->getQuery()->getResult();
-        return $result;
-    }
 }
 

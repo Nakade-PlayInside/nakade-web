@@ -7,6 +7,7 @@
 
 namespace Appointment\Controller;
 
+use Appointment\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
@@ -26,7 +27,7 @@ class ShowController extends AbstractController
    {
 
        /* @var $repo \Appointment\Mapper\AppointmentMapper */
-       $repo = $this->getRepository()->getMapper('appointment');
+       $repo = $this->getRepository()->getMapper(RepositoryService::APPOINTMENT_MAPPER);
        $appointments = $repo->getOpenConfirmsByUser($this->identity());
 
        return new ViewModel(
@@ -42,15 +43,12 @@ class ShowController extends AbstractController
     public function availableAction()
     {
         /* @var $repo \Appointment\Mapper\AppointmentMapper */
-        $repo = $this->getRepository()->getMapper('appointment');
-        $shiftedMatches = $repo->getMatchIdsByUser($this->identity());
+        $repo = $this->getRepository()->getMapper(RepositoryService::APPOINTMENT_MAPPER);
         $deadline = $this->getDeadline();
 
-        /* @var $matchRepo \League\Mapper\MatchMapper */
-        $matchRepo = $this->getRepository()->getMapper('match');
-        $availableMatches = $matchRepo->getMatchesOpenForAppointmentByUser(
-            $this->identity(),
-            $shiftedMatches,
+        /* @var $matchRepo \Appointment\Mapper\AppointmentMapper */
+        $availableMatches = $repo->getMatchesOpenForAppointmentByUser(
+            $this->identity()->getId(),
             $deadline
         );
 
@@ -67,7 +65,7 @@ class ShowController extends AbstractController
     public function messageAction()
     {
         /* @var $repo \Appointment\Mapper\AppointmentMapper */
-        $repo = $this->getRepository()->getMapper('appointment');
+        $repo = $this->getRepository()->getMapper(RepositoryService::APPOINTMENT_MAPPER);
         $appointments = $repo->getOpenConfirmsByUser($this->identity());
 
         return new ViewModel(
@@ -83,7 +81,7 @@ class ShowController extends AbstractController
     public function rejectAction()
     {
         /* @var $repo \Appointment\Mapper\AppointmentMapper */
-        $repo = $this->getRepository()->getMapper('appointment');
+        $repo = $this->getRepository()->getMapper(RepositoryService::APPOINTMENT_MAPPER);
         $appointments = $repo->getRejectedAppointments();
 
         return new ViewModel(

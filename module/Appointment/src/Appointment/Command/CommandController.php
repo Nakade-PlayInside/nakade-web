@@ -7,6 +7,7 @@
 
 namespace Appointment\Command;
 
+use Appointment\Services\RepositoryService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Console\Request as ConsoleRequest;
 
@@ -46,7 +47,7 @@ class CommandController extends AbstractActionController
        $mail = $mailService->getMail('confirm');
 
        /* @var $repo \Appointment\Mapper\AppointmentMapper */
-       $repo = $repoService->getMapper('Appointment');
+       $repo = $repoService->getMapper(RepositoryService::APPOINTMENT_MAPPER);
        $result = $repo->getOverdueAppointments($time);
 
        echo "Found " . count($result) . " open appointment(s)" .PHP_EOL;

@@ -8,6 +8,7 @@
 namespace Appointment\Controller;
 
 use Appointment\Entity\Appointment;
+use Appointment\Services\RepositoryService;
 use Season\Entity\Match;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
@@ -27,8 +28,8 @@ class AppointmentController extends AbstractController
    {
        $matchId  = (int) $this->params()->fromRoute('id', -1);
 
-       /* @var $repo \League\Mapper\MatchMapper */
-       $repo = $this->getRepository()->getMapper('match');
+       /* @var $repo \Appointment\Mapper\AppointmentMapper */
+       $repo = $this->getRepository()->getMapper(RepositoryService::APPOINTMENT_MAPPER);
 
        /* @var $match \Season\Entity\Match */
        $match = $repo->getMatchById($matchId);
@@ -98,7 +99,7 @@ class AppointmentController extends AbstractController
         $appointmentId  = (int) $this->params()->fromRoute('id', -1);
 
         /* @var $repo \Appointment\Mapper\AppointmentMapper */
-        $repo = $this->getRepository()->getMapper('appointment');
+        $repo = $this->getRepository()->getMapper(RepositoryService::APPOINTMENT_MAPPER);
         $appointment = $repo->getAppointmentById($appointmentId);
 
 
@@ -177,7 +178,7 @@ class AppointmentController extends AbstractController
         $appointmentId  = (int) $this->params()->fromRoute('id', -1);
 
         /* @var $repo \Appointment\Mapper\AppointmentMapper */
-        $repo = $this->getRepository()->getMapper('appointment');
+        $repo = $this->getRepository()->getMapper(RepositoryService::APPOINTMENT_MAPPER);
         $appointment = $repo->getAppointmentById($appointmentId);
 
         if (!$this->getService()->isValidConfirm($this->identity(), $appointment)) {
