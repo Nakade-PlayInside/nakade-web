@@ -39,7 +39,9 @@ class MailTestHelper extends PHPUnit_Framework_TestCase
         $this->oldDate = $this->newDate->modify('-5 day');
     }
 
-
+    /**
+     * @return Appointment
+     */
     public  function getAppointment()
     {
         $appointment = new Appointment();
@@ -54,10 +56,13 @@ class MailTestHelper extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected  function getMatchMock()
     {
         $mock = $this
-            ->getMockBuilder('League\Entity\Match')
+            ->getMockBuilder('Season\Entity\Match')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -70,6 +75,11 @@ class MailTestHelper extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * @param mixed $service
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected  function getServiceMock($service)
     {
         return $this

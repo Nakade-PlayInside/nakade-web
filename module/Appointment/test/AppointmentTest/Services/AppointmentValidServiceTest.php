@@ -95,6 +95,11 @@ class AppointmentValidServiceTest extends PHPUnit_Framework_TestCase
         $appointment->setIsRejected(true);
         $result = $this->invokeMethod('isProcessed', array($appointment));
         $this->assertTrue($result);
+
+        $appointment->setIsConfirmed(false);
+        $appointment->setIsRejected(false);
+        $result = $this->invokeMethod('isProcessed', array($appointment));
+        $this->assertFalse($result);
     }
 
     /**
@@ -155,15 +160,17 @@ class AppointmentValidServiceTest extends PHPUnit_Framework_TestCase
         $appointment->setIsConfirmed(true);
         $this->assertFalse($obj->isValidLink($confirmString, $appointment));
 
-        // hasResult
+        //hasResult ->invalid
         $appointment->setIsConfirmed(false);
         $match = new Match();
-        $match->setResultId(1);
+        $result = $this->getResultMock();
+        $match->setResult($result);
         $appointment->setMatch($match);
         $this->assertFalse($obj->isValidLink($confirmString, $appointment));
 
         //isConfirmedByLink
-        $match->setResultId(null);
+        $match = new Match();
+
         $appointment->setMatch($match);
         $appointment->setConfirmString('test');
         $this->assertFalse($obj->isValidLink($confirmString, $appointment));
@@ -174,9 +181,29 @@ class AppointmentValidServiceTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * testIsValid by null == match
+     */
+    public function  testHasResult()
+    {
+        $result = $this->invokeMethod('hasResult', array(null));
+        $this->assertFalse($result);
+
+        $match = new Match();
+        $result = $this->invokeMethod('hasResult', array($match));
+        $this->assertFalse($result);
+
+        $result = $this->getResultMock();
+        $match->setResult($result);
+        $result = $this->invokeMethod('hasResult', array($match));
+        $this->assertTrue($result);
+
+    }
+
+
+    /**
      * test isValidMatch
      */
-    public function testIsValidMatch()
+    public function testIsInvalidMatch()
     {
         $obj = $this->getObj();
 
@@ -184,9 +211,9 @@ class AppointmentValidServiceTest extends PHPUnit_Framework_TestCase
         $white = $this->getUserById(2);
         $invalid = $this->getUserById(3);
         $match = $this->getMatchByPairing($black, $white);
-        $match->setResultId(1);
+        $result = $this->getResultMock(1);
+        $match->setResult($result);
 
-        // match isNUll
         $this->assertFalse($obj->isValidMatch($black, null));
 
         // match has result
@@ -198,20 +225,51 @@ class AppointmentValidServiceTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($obj->isValidMatch($black, $match));
 
         // match has InvalidUser
-        $match->setResultId(null);
+        $result = $this->getResultMock();
+        $match->setResult($result);
         $mock = $this->getRepositoryMock(true);
         $obj->setRepository($mock);
         $this->assertFalse($obj->isValidMatch($invalid, $match));
+    }
 
-        // match has validUser
-        $mock = $this->getRepositoryMock(false);
-        $obj->setRepository($mock);
+    /**
+     * test isValidMatch
+     */
+    public function testIsValidMatch()
+    {
+        $obj = $this->getObj();
+
+        $black = $this->getUserById(1);
+        $white = $this->getUserById(2);
+        $match = $this->getMatchByPairing($black, $white);
+
+        $this->assertTrue($obj->isValidMatch($black, $match));
+
+        $match = $this->getMatchByPairing($white, $black);
         $this->assertTrue($obj->isValidMatch($black, $match));
 
     }
 
 
     /**
+     * testIsValidResponder
+     */
+    public function testIsValidResponder()
+    {
+        $appointment = new Appointment();
+        $user = $this->getUserById(1);
+        $appointment->setResponder($user);
+        $result = $this->invokeMethod('isValidResponder', array($user, $appointment));
+
+        $this->assertTrue($result);
+
+        $invalidUser = $this->getUserById(3);
+        $result = $this->invokeMethod('isValidResponder', array($invalidUser, $appointment));
+
+        $this->assertFalse($result);
+    }
+
+      /**
      * test isValidMatch
      */
     public function testIsValidConfirm()
@@ -223,7 +281,8 @@ class AppointmentValidServiceTest extends PHPUnit_Framework_TestCase
         $invalid = $this->getUserById(3);
         $appointment->setResponder($user);
         $match = new Match();
-        $match->setResultId(1);
+        $result = $this->getResultMock(1);
+        $match->setResult($result);
 
         // appointment isNUll
         $this->assertFalse($obj->isValidConfirm($user, null));
@@ -238,15 +297,46 @@ class AppointmentValidServiceTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($obj->isValidConfirm($user, $appointment));
 
         //  is not responder
-        $match->setResultId(null);
+        $match = new Match();
+        $result = $this->getResultMock();
+        $match->setResult($result);
         $appointment->setMatch($match);
+
         $this->assertFalse($obj->isValidConfirm($invalid, $appointment));
 
+
         // everyThing ok
+        $appointment = new Appointment();
+        $match = new Match();
+        $user = $this->getUserById(1);
+        $appointment->setResponder($user);
+        $appointment->setMatch($match);
+
         $this->assertTrue($obj->isValidConfirm($user, $appointment));
 
     }
 
+
+    /**
+     * @param int|null $id
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getResultMock($id=null)
+    {
+        $mock = $this
+            ->getMockBuilder('League\Entity\Result')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mock
+            ->expects($this->any())
+            ->method('getId')
+            ->will($this->returnValue($id));
+
+
+        return $mock;
+    }
 
     // testing private methods
     /**

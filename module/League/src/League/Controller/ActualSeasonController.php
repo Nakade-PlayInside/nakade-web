@@ -46,6 +46,7 @@ class ActualSeasonController extends AbstractController
         $matchMapper = $this->getRepository()->getMapper(RepositoryService::MATCH_MAPPER);
         $matches = $matchMapper->getMatchesByLeague($topLeague->getId());
 
+
         //var_dump($matches);die;
         $info = new MatchStats($matches);
         $players = $info->getMatchStats();

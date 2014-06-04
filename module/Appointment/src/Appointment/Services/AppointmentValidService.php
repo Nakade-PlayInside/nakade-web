@@ -42,15 +42,25 @@ class AppointmentValidService implements FactoryInterface
      */
     public function isValidMatch(User $user, Match $match=null)
     {
-        if (is_null($match) || $match->hasResult() || $this->hasAppointment($match)) {
+        if (is_null($match)) {
             return false;
         }
 
-        if (!$this->isValidUser($user, $match)) {
+        if ($this->hasResult($match) || $this->hasAppointment($match)) {
             return false;
         }
 
-        return true;
+        return $this->isValidUser($user, $match);
+    }
+
+    /**
+     * @param Match $match
+     *
+     * @return bool
+     */
+    private function hasResult(Match $match=null)
+    {
+        return !is_null($match) && $match->hasResult();
     }
 
     /**
@@ -65,16 +75,24 @@ class AppointmentValidService implements FactoryInterface
     public function isValidConfirm(User $user, Appointment $appointment=null)
     {
         //not confirmed or rejected, no result yet
-        if (is_null($appointment) || $this->isProcessed($appointment) || $appointment->getMatch()->hasResult()) {
+        if (is_null($appointment) || $this->isProcessed($appointment) || $this->hasResult($appointment->getMatch())) {
             return false;
         }
 
         //valid responder
-        if ($appointment->getResponder()->getId() != $user->getId()) {
-            return false;
-        }
+        return $this->isValidResponder($user, $appointment);
+    }
 
-        return true;
+    /**
+     * @param User        $user
+     * @param Appointment $appointment
+     *
+     * @return bool
+     */
+    private function isValidResponder(User $user, Appointment $appointment)
+    {
+        //valid responder
+        return $appointment->getResponder()->getId() == $user->getId();
     }
 
     /**
@@ -152,7 +170,7 @@ class AppointmentValidService implements FactoryInterface
      *
      * @return bool
      */
-    private function hasAppointment(Match $match)
+    public function hasAppointment(Match $match=null)
     {
         /* @var $mapper \Appointment\Mapper\AppointmentMapper */
         $mapper = $this->getRepository()->getMapper('appointment');
