@@ -136,5 +136,32 @@ class ResultMapper  extends AbstractMapper
             ->find($matchId);
 
     }
+
+    /**
+     * @param int $seasonId
+     * @param int $matchDay
+     *
+     * @return array
+     */
+    public function getMatchDayBySeason($seasonId, $matchDay=1)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'm.league = l')
+            ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'l.season = s')
+            ->innerJoin('l.season', 'Season')
+            ->where('Season.id = :seasonId')
+            ->andWhere('Season.id = :seasonId')
+            ->andWhere('m.matchDay = :matchDay')
+            ->setParameter('seasonId', $seasonId)
+            ->setParameter('matchDay', $matchDay)
+            ->orderBy('m.league', 'DESC')
+            ->addOrderBy('m.result', 'ASC')
+            ->addOrderBy('m.id', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
 }
 

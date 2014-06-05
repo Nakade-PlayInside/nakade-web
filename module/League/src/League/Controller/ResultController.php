@@ -1,6 +1,7 @@
 <?php
 namespace League\Controller;
 
+use League\Entity\Result;
 use League\Services\LeagueFormService;
 use League\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
@@ -80,13 +81,18 @@ class ResultController extends AbstractController
     {
 
         $pid  = (int) $this->params()->fromRoute('id', 0);
-
-        //todo: validate if user is player
-        //todo: validate if match hasResult
+        $userId = $this->identity()->getId();
 
         /* @var $resultMapper \League\Mapper\ResultMapper */
         $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
+        /* @var $match \Season\Entity\Match */
         $match = $resultMapper->getMatchById($pid);
+
+        if ($match->hasResult() || ($match->getBlack()->getId() != $userId && $match->getWhite()->getId() != $userId)) {
+            throw new \RuntimeException(
+                sprintf('You are not allowed to enter a result on this match.')
+            );
+        }
 
         /* @var $form \League\Form\ResultForm */
         $form = $this->getForm(LeagueFormService::RESULT_FORM);
@@ -118,5 +124,31 @@ class ResultController extends AbstractController
            )
        );
     }
+
+    /**
+     * results by match day
+     *
+     * @return \Zend\Http\Response|ViewModel
+     */
+    public function matchDayAction()
+    {
+        $matchDay=2;
+        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
+        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
+        $season = $seasonMapper->getActiveSeasonByAssociation(1);
+
+        /* @var $resultMapper \League\Mapper\ResultMapper */
+        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
+
+        $matches = $resultMapper->getMatchDayBySeason($season->getId(), $matchDay);
+
+        return new ViewModel(
+            array(
+                'matchDay' =>  $matchDay,
+                'matches' =>  $matches
+            )
+        );
+    }
+
 
 }
