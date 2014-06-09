@@ -7,7 +7,7 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class MatchDayControllerFactory
+ * Class TimeTableControllerFactory
  *
  * @package League\Services
  */

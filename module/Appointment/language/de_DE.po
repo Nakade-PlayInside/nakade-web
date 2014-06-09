@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-14 10:45+0100\n"
-"PO-Revision-Date: 2014-05-14 10:50+0100\n"
+"POT-Creation-Date: 2014-06-06 13:49+0100\n"
+"PO-Revision-Date: 2014-06-06 13:49+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -156,7 +156,7 @@ msgid "Reject"
 msgstr "Abweisen"
 
 #: ../src/Appointment/Form/RejectForm.php:88
-#: ../src/Appointment/Form/AppointmentForm.php:148
+#: ../src/Appointment/Form/AppointmentForm.php:149
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -164,23 +164,23 @@ msgstr "Abbrechen"
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#: ../src/Appointment/Form/AppointmentForm.php:75
+#: ../src/Appointment/Form/AppointmentForm.php:76
 msgid "New Match Date"
 msgstr "Neuer Termin"
 
-#: ../src/Appointment/Form/AppointmentForm.php:91
+#: ../src/Appointment/Form/AppointmentForm.php:92
 msgid "Time"
 msgstr "Zeit"
 
-#: ../src/Appointment/Form/AppointmentForm.php:107
+#: ../src/Appointment/Form/AppointmentForm.php:108
 msgid "I do confirm my opponent has agreed to this schedule"
 msgstr "Hiermit bestätige ich, dass mein Gegner der Terminvereinbarung zugestimmt hat."
 
-#: ../src/Appointment/Form/AppointmentForm.php:136
+#: ../src/Appointment/Form/AppointmentForm.php:137
 msgid "Submit"
 msgstr "Abschicken"
 
-#: ../src/Appointment/Form/AppointmentForm.php:177
+#: ../src/Appointment/Form/AppointmentForm.php:178
 msgid "You must confirm your opponent agreed to the new schedule."
 msgstr "Du musst bestätigen, dass dein Gegner dem neuen Termin zugestimmt hat."
 
@@ -313,7 +313,7 @@ msgstr "Dein Terminvorschlag wurde weitergeleitet."
 
 #: ../view/appointment/appointment/submitted.phtml:11
 msgid "Please show some patience until your opponent confirmed the new date."
-msgstr "Damit der neue Termin übernommen werden kann, muss dein Gegner diesen zuerst bestätigen. Bitte habe ein Geduld."
+msgstr "Damit der neue Termin übernommen werden kann, muss dein Gegner diesen zuerst bestätigen. Bitte habe ein wenig Geduld."
 
 #: ../view/appointment/appointment/submitted.phtml:12
 msgid "A reminder mail is sent to your email address."
@@ -335,7 +335,7 @@ msgstr "Datum"
 msgid "click for making an appointment"
 msgstr "hier klicken, um einen Termin zu verschieben"
 
-#: ../view/appointment/show/available.phtml:37
+#: ../view/appointment/show/available.phtml:38
 msgid "There are no appointments available to shift."
 msgstr "Keine Termine gefunden."
 

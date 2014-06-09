@@ -7,6 +7,7 @@ use League\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
 use Zend\Form\FormInterface;
 use Zend\View\Model\ViewModel;
+use Zend\Paginator\Paginator;
 
 /**
  * processing user input, in detail results and postponing
@@ -32,7 +33,7 @@ class ResultController extends AbstractController
         $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
 
 
-        $matches = $resultMapper->getOpenResultsBySeason($season->getId());
+        $matches = $resultMapper->getActualOpenResultsBySeason($season->getId());
 
 
        return new ViewModel(
@@ -132,18 +133,37 @@ class ResultController extends AbstractController
      */
     public function matchDayAction()
     {
-        $matchDay=2;
+        $matchDay  = (int) $this->params()->fromRoute('id', 0);
+
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
         $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
 
+        /* @var $leagueMapper \League\Mapper\LeagueMapper */
+        $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
+        $topLeague = $leagueMapper->getTopLeagueBySeason($season->getId());
+        //todo: topleague is null
+
+
         /* @var $resultMapper \League\Mapper\ResultMapper */
         $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
 
-        $matches = $resultMapper->getMatchDayBySeason($season->getId(), $matchDay);
+        if ($matchDay == 0) {
+            $matchDay = $resultMapper->getActualMatchDayByLeague($topLeague->getId());
+        }
+
+        $matches = $resultMapper->getMatchesByMatchDay($topLeague->getId(), $matchDay);
+        $pages = $resultMapper->getAllMatchDaysByLeague($topLeague->getId(), $matchDay);
+
+        $paginator = new Paginator(new \Zend\Paginator\Adapter\ArrayAdapter(array(1,2,3,4,5,6,7)));
+        $paginator
+            ->setCurrentPageNumber($matchDay)
+            ->setItemCountPerPage(1)
+            ->setPageRange(5);
 
         return new ViewModel(
             array(
+                'paginator' => $paginator,
                 'matchDay' =>  $matchDay,
                 'matches' =>  $matches
             )

@@ -47,6 +47,12 @@ class MatchModel
    */
     private $league;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Season\Entity\MatchingDay", cascade={"persist"})
+     * @ORM\JoinColumn(name="matchingDay", referencedColumnName="id", nullable=false)
+     */
+    private $matchingDay;
+
 
    /**
    * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
@@ -138,6 +144,22 @@ class MatchModel
     public function getLeague()
     {
         return $this->league;
+    }
+
+    /**
+     * @param MatchingDay $matchingDay
+     */
+    public function setMatchingDay(MatchingDay $matchingDay)
+    {
+        $this->matchingDay = $matchingDay;
+    }
+
+    /**
+     * @return MatchingDay
+     */
+    public function getMatchingDay()
+    {
+        return $this->matchingDay;
     }
 
     /**

@@ -4,14 +4,14 @@ namespace Season\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class MatchDay
+ * Class SeasonDates
  *
  * @package Season\Entity
  *
  * @ORM\Entity
- * @ORM\Table(name="matchDay")
+ * @ORM\Table(name="seasonDates")
  */
-class MatchDay
+class SeasonDates
 {
   /**
    * Primary Identifier

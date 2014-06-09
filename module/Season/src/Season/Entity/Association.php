@@ -28,10 +28,10 @@ class Association
    private $name;
 
   /**
-   * @ORM\ManyToOne(targetEntity="\Season\Entity\MatchDay", cascade={"persist"})
-   * @ORM\JoinColumn(name="matchDay", referencedColumnName="id", nullable=false)
+   * @ORM\ManyToOne(targetEntity="\Season\Entity\SeasonDates", cascade={"persist"})
+   * @ORM\JoinColumn(name="seasonDates", referencedColumnName="id", nullable=false)
    */
-   private $matchDay;
+   private $seasonDates;
 
   /**
    * @param int $id
@@ -53,19 +53,19 @@ class Association
   }
 
   /**
-   * @param MatchDay $matchDay
+   * @param SeasonDates $seasonDates
    */
-  public function setMatchDay(MatchDay $matchDay)
+  public function setSeasonDates(SeasonDates $seasonDates)
   {
-      $this->matchDay = $matchDay;
+      $this->seasonDates = $seasonDates;
   }
 
   /**
-   * @return MatchDay
+   * @return SeasonDates
    */
-  public function getMatchDay()
+  public function getSeasonDates()
   {
-     return $this->matchDay;
+     return $this->seasonDates;
   }
 
   /**

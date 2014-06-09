@@ -40,9 +40,12 @@ return array(
             'routes' => array(
 
                 'home' => array(
-                    'type' => 'Literal',
+                    'type' => 'segment',
                     'options' => array(
-                        'route'    => '/',
+                        'route'    => '/[:page]',
+                        'constraints' => array(
+                            'page'     => '[0-9]*',
+                        ),
                         'defaults' => array(
                             '__NAMESPACE__' => 'Application\Controller',
                             'controller' => 'Application\Controller\Index',

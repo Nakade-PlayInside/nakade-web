@@ -13,6 +13,11 @@ $this->headTitle('Actual Results');
 <?php $this->placeholder('openResults')->captureStart();?>
 
 <h3><?php echo $title; ?></h3>
+
+
+<?php echo $this->paginationControl($this->paginator,
+    'Sliding', 'Shared'); ?>
+
 <table class="league" style="width: auto; margin-top: 0.5em;">
 <?php foreach ($this->matches as $match) : ?>
 <tr>

@@ -18,7 +18,7 @@ class ResultMapper  extends AbstractMapper
      *
      * @return array
      */
-    public function getOpenResultsBySeason($seasonId)
+    public function getActualOpenResultsBySeason($seasonId)
     {
         $now = new \DateTime();
         $em = $this->getEntityManager();
@@ -138,28 +138,65 @@ class ResultMapper  extends AbstractMapper
     }
 
     /**
-     * @param int $seasonId
+     * @param int $leagueId
      * @param int $matchDay
      *
      * @return array
      */
-    public function getMatchDayBySeason($seasonId, $matchDay=1)
+    public function getMatchesByMatchDay($leagueId, $matchDay=1)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder('Match')
             ->select('m')
             ->from('Season\Entity\Match', 'm')
-            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'm.league = l')
-            ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'l.season = s')
-            ->innerJoin('l.season', 'Season')
-            ->where('Season.id = :seasonId')
-            ->andWhere('Season.id = :seasonId')
-            ->andWhere('m.matchDay = :matchDay')
-            ->setParameter('seasonId', $seasonId)
+            ->innerJoin('m.matchingDay', 'd')
+            ->innerJoin('m.league', 'League')
+            ->where('League.id = :leagueId')
+            ->andWhere('d.matchDay = :matchDay')
+            ->setParameter('leagueId', $leagueId)
             ->setParameter('matchDay', $matchDay)
-            ->orderBy('m.league', 'DESC')
-            ->addOrderBy('m.result', 'ASC')
+            ->orderBy('m.result', 'ASC')
             ->addOrderBy('m.id', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+    public function getActualMatchDayByLeague($leagueId)
+    {
+
+        $now = new \DateTime();
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('max(d.matchDay)')
+            ->distinct()
+            ->from('Season\Entity\Match', 'm')
+            ->innerJoin('m.league', 'l')
+            ->leftJoin('Season\Entity\MatchingDay', 'd', JOIN::WITH, 'm.matchingDay=d')
+            ->where('l.id = :leagueId')
+            ->andWhere('d.date < :now')
+            ->setParameter('now', $now)
+            ->setParameter('leagueId', $leagueId);
+
+        return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
+    }
+    /**
+     * @param int $leagueId
+     * @param int $matchDay
+     *
+     * @return array
+     */
+    public function getAllMatchDaysByLeague($leagueId)
+    {
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m.matchDay')
+            ->distinct()
+            ->from('Season\Entity\Match', 'm')
+            ->innerJoin('m.league', 'l')
+            ->where('l.id = :leagueId')
+            ->setParameter('leagueId', $leagueId);
 
         return $qb->getQuery()->getResult();
     }

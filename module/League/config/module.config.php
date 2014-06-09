@@ -99,6 +99,9 @@ return array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
+        'template_map' => array(
+                'Shared' => __DIR__ . '/../view/partial/paginator.phtml', // Note: the key is optional
+        ),
 
         'template_path_stack' => array(
             __DIR__ . '/../view',
