@@ -44,7 +44,7 @@ class MatchDayHydrator implements HydratorInterface
           'matchTime' => $this->matchTime,
           'blackPlayer' => $this->black,
           'whitePlayer' => $this->white,
-          'matchDay' => $match->getMatchDay(),
+          'matchDay' => $match->getMatchingDay()->getMatchDay(),
         );
     }
 
