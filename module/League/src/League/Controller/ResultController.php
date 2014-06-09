@@ -5,16 +5,18 @@ use League\Entity\Result;
 use League\Services\LeagueFormService;
 use League\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
+use Permission\Entity\RoleInterface;
 use Zend\Form\FormInterface;
 use Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator;
+
 
 /**
  * processing user input, in detail results and postponing
  * matches.
  *
  */
-class ResultController extends AbstractController
+class ResultController extends AbstractController implements RoleInterface
 {
 
    /**
@@ -35,19 +37,26 @@ class ResultController extends AbstractController
 
         $matches = $resultMapper->getActualOpenResultsBySeason($season->getId());
 
+    /*    $pages = $resultMapper->getAllMatchDaysByLeague($topLeague->getId(), $matchDay);
+        $paginator = new Paginator(new \Zend\Paginator\Adapter\ArrayAdapter(array(1,2,3,4,5,6,7)));
+        $paginator
+            ->setCurrentPageNumber($matchDay)
+            ->setItemCountPerPage(1)
+            ->setPageRange(5);
+*/
 
-       return new ViewModel(
-           array(
+        return new ViewModel(
+            array(
+              //  'paginator' => $paginator,
                 'season' =>  $season,
                 'matches' =>  $matches
-           )
-       );
+            )
+        );
 
     }
 
     /**
     * showing all results of the actual user. All open matches are indicated.
-    *
     *
     * @return \Zend\Http\Response|ViewModel
     */
@@ -74,10 +83,10 @@ class ResultController extends AbstractController
     }
 
     /**
-    * Form for adding a result
-    *
-    * @return \Zend\Http\Response|ViewModel
-    */
+     * @return \Zend\Http\Response|ViewModel
+     *
+     * @throws \RuntimeException
+     */
     public function addAction()
     {
 
@@ -89,7 +98,7 @@ class ResultController extends AbstractController
         /* @var $match \Season\Entity\Match */
         $match = $resultMapper->getMatchById($pid);
 
-        if ($match->hasResult() || ($match->getBlack()->getId() != $userId && $match->getWhite()->getId() != $userId)) {
+        if ($match->hasResult() || ($this->identity()->getRole()!= self::ROLE_ADMIN && $match->getBlack()->getId() != $userId && $match->getWhite()->getId() != $userId)) {
             throw new \RuntimeException(
                 sprintf('You are not allowed to enter a result on this match.')
             );
@@ -112,9 +121,12 @@ class ResultController extends AbstractController
 
             $form->setData($postData);
             if ($form->isValid()) {
+                /* @var $data \Season\Entity\Match */
+                $data = $form->getData();//var_dump($data->getResult()->getName());die;
+                $resultMapper->save($data);
+                //todo: email for both for results
 
-                $data = $form->getData();var_dump($data->getPoints());die;
-                return $this->redirect()->toRoute('season', array('action' => 'create'));
+                return $this->redirect()->toRoute('result', array('action' => 'success'));
             }
         }
 
@@ -133,8 +145,6 @@ class ResultController extends AbstractController
      */
     public function matchDayAction()
     {
-        $matchDay  = (int) $this->params()->fromRoute('id', 0);
-
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
         $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
@@ -147,27 +157,23 @@ class ResultController extends AbstractController
 
         /* @var $resultMapper \League\Mapper\ResultMapper */
         $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
-
-        if ($matchDay == 0) {
-            $matchDay = $resultMapper->getActualMatchDayByLeague($topLeague->getId());
-        }
-
+        $matchDay = $resultMapper->getActualMatchDayByLeague($topLeague->getId());
         $matches = $resultMapper->getMatchesByMatchDay($topLeague->getId(), $matchDay);
-        $pages = $resultMapper->getAllMatchDaysByLeague($topLeague->getId(), $matchDay);
-
-        $paginator = new Paginator(new \Zend\Paginator\Adapter\ArrayAdapter(array(1,2,3,4,5,6,7)));
-        $paginator
-            ->setCurrentPageNumber($matchDay)
-            ->setItemCountPerPage(1)
-            ->setPageRange(5);
 
         return new ViewModel(
             array(
-                'paginator' => $paginator,
                 'matchDay' =>  $matchDay,
                 'matches' =>  $matches
             )
         );
+    }
+
+    /**
+     * @return ViewModel
+     */
+    public function successAction()
+    {
+        return new ViewModel(array());
     }
 
 

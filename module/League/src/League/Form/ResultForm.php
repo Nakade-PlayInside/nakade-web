@@ -156,12 +156,6 @@ class ResultForm extends AbstractForm
                     array(
                         'name'    => 'Float',
                     ),
-                    array(
-                        'name'    => 'GreaterThan',
-                        'options' => array(
-                            'min' => 0
-                        )
-                    ),
                 ),
 
 

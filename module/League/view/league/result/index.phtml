@@ -15,6 +15,9 @@ $this->headTitle('Open Results');
 
 <?php $this->placeholder('openResults')->captureStart();?>
 <h3><?php echo $title; ?></h3>
+
+
+<?php //echo $this->paginationControl($this->paginator, 'Sliding', 'Shared'); ?>
 <table class="league">
 <?php foreach ($this->matches as $match) : ?>
 <tr>
@@ -32,7 +35,7 @@ endforeach; ?>
 
 <?php $this->placeholder('openResults')->captureEnd();
 
-  if (is_null($this->matches)) {
+  if (empty($this->matches)) {
       echo $this->placeholder('noResults');
   } else {
       echo $this->placeholder('openResults');

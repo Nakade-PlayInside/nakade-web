@@ -2,6 +2,7 @@
 namespace User\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Permission\Entity\RoleInterface;
 
 /**
  * Entity Class representing a User
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  *
  */
-class User extends UserModel implements UserInterface
+class User extends UserModel implements UserInterface, RoleInterface
 {
 
     /**

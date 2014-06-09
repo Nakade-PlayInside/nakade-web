@@ -88,7 +88,7 @@ class TimeTableController extends AbstractController
 
                 $data = $form->getData();
                 $mapper->save($data);
-                //todo: email for both
+                //todo: email for both for new date
 
                 return $this->redirect()->toRoute('timeTable');
             }

@@ -161,7 +161,11 @@ class ResultMapper  extends AbstractMapper
         return $qb->getQuery()->getResult();
     }
 
-
+    /**
+     * @param int $leagueId
+     *
+     * @return int
+     */
     public function getActualMatchDayByLeague($leagueId)
     {
 
@@ -180,25 +184,6 @@ class ResultMapper  extends AbstractMapper
 
         return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
     }
-    /**
-     * @param int $leagueId
-     * @param int $matchDay
-     *
-     * @return array
-     */
-    public function getAllMatchDaysByLeague($leagueId)
-    {
 
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder('Match')
-            ->select('m.matchDay')
-            ->distinct()
-            ->from('Season\Entity\Match', 'm')
-            ->innerJoin('m.league', 'l')
-            ->where('l.id = :leagueId')
-            ->setParameter('leagueId', $leagueId);
-
-        return $qb->getQuery()->getResult();
-    }
 }
 
