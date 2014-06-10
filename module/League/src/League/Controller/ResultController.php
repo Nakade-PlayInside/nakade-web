@@ -97,6 +97,7 @@ class ResultController extends AbstractController implements RoleInterface
         /* @var $match \Season\Entity\Match */
         $match = $resultMapper->getMatchById($pid);
 
+        //todo: validation to service ; aufräumen im mapper
         if ($match->hasResult() || ($this->identity()->getRole()!= self::ROLE_ADMIN && $match->getBlack()->getId() != $userId && $match->getWhite()->getId() != $userId)) {
             throw new \RuntimeException(
                 sprintf('You are not allowed to enter a result on this match.')
