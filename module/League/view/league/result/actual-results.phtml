@@ -22,34 +22,7 @@ $this->headTitle('Actual Results');
     <td style="text-decoration: <?php echo $this->isWinner($match, $match->getBlack()); ?>"><?php echo $match->getBlack()->getShortName();?></td>
     <td class="versus">-</td>
     <td style="text-decoration: <?php echo $this->isWinner($match, $match->getWhite()); ?>" class="space"><?php echo $match->getWhite()->getShortName();?></td>
-    <td><?php if ($match->hasResult()) {
-
-         switch($match->getResult()->getId()) {
-             case 1:
-                 $show='R';
-                 break;
-             case 2:
-                 $show = $match->getPoints();
-                 break;
-             case 3:
-                 $show='D';
-                 break;
-             case 4:
-                 $show='F';
-                 break;
-             case 5:
-                 $show='S';
-                 break;
-             case 6:
-                 $show='T';
-                 break;
-             default:
-                 $show='R';
-         }
-         echo $this->result($match) . '  (' . $show . ')';
-} else {
-         echo $match->getDate()->format('d.m.  H:i');
-}?></td>
+    <td><?php echo $this->matchDayResult($match); ?></td>
 </tr>
 <?php
 endforeach; ?>

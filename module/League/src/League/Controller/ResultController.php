@@ -147,7 +147,7 @@ class ResultController extends AbstractController implements RoleInterface
      *
      * @return \Zend\Http\Response|ViewModel
      */
-    public function matchDayAction()
+    public function actualResultsAction()
     {
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
         $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);

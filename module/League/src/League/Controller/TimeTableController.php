@@ -24,7 +24,7 @@ class TimeTableController extends AbstractController
     private $iCal=null;
 
    /**
-    * showing all open results of the actual season
+    * showing all open results of the actual season by an admin
     *
     * @return array|ViewModel
     */
@@ -51,7 +51,7 @@ class TimeTableController extends AbstractController
     }
 
     /**
-    * Form for edit a result
+    * Form for editing a match appointment
     *
     * @return \Zend\Http\Response|ViewModel
     */
@@ -108,7 +108,7 @@ class TimeTableController extends AbstractController
     }
 
     /**
-     * Shows actual matchplan of a user and his results.
+     * Shows actual match plan of a user and his results.
      * If user is not in  a league, the top league schedule
      * is shown.
      *

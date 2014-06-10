@@ -37,7 +37,7 @@ class IndexController extends AbstractActionController
                             ->dispatch('/League/Controller/Table');
 
         $resultWidget = $this->forward()->dispatch('/League/Controller/Result',
-            array('action' => 'matchDay')
+            array('action' => 'actualResults')
         );
 
         $page = new ViewModel(array( 'No' => "5"));
