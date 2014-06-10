@@ -59,6 +59,9 @@ class CommandController extends AbstractActionController
            $match = $appointment->getMatch();
            $match->setDate($newDate);
            $appointment->setIsConfirmed(true);
+           $sequence = $match->getSequence() + 1;
+           $match->setSequence($sequence);
+
            $repo->save($match);
            $repo->save($appointment);
 

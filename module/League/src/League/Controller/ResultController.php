@@ -1,14 +1,13 @@
 <?php
 namespace League\Controller;
 
-use League\Entity\Result;
 use League\Services\LeagueFormService;
 use League\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
 use Permission\Entity\RoleInterface;
-use Zend\Form\FormInterface;
 use Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator;
+use League\Services\MailService;
 
 
 /**
@@ -124,7 +123,12 @@ class ResultController extends AbstractController implements RoleInterface
                 /* @var $data \Season\Entity\Match */
                 $data = $form->getData();//var_dump($data->getResult()->getName());die;
                 $resultMapper->save($data);
-                //todo: email for both for results
+
+                /* @var $mail \League\Mail\ResultMail */
+                $mail = $this->getMailService()->getMail(MailService::RESULT_MAIL);
+                $mail->setMatch($data);
+                $mail->sendMail($data->getBlack());
+                $mail->sendMail($data->getWhite());
 
                 return $this->redirect()->toRoute('result', array('action' => 'success'));
             }
@@ -152,8 +156,6 @@ class ResultController extends AbstractController implements RoleInterface
         /* @var $leagueMapper \League\Mapper\LeagueMapper */
         $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
         $topLeague = $leagueMapper->getTopLeagueBySeason($season->getId());
-        //todo: topleague is null
-
 
         /* @var $resultMapper \League\Mapper\ResultMapper */
         $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);

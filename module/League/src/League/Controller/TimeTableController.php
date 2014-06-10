@@ -8,6 +8,7 @@ use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 use Zend\Http\PhpEnvironment\Response as iCalResponse;
 use Zend\Http\Headers;
+use League\Services\MailService;
 
 
 /**
@@ -88,7 +89,12 @@ class TimeTableController extends AbstractController
 
                 $data = $form->getData();
                 $mapper->save($data);
-                //todo: email for both for new date
+
+                /* @var $mail \League\Mail\ScheduleMail */
+                $mail = $this->getMailService()->getMail(MailService::SCHEDULE_MAIL);
+                $mail->setMatch($data);
+                $mail->sendMail($data->getBlack());
+                $mail->sendMail($data->getWhite());
 
                 return $this->redirect()->toRoute('timeTable');
             }

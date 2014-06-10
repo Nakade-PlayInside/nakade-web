@@ -41,6 +41,9 @@ class ConfirmController extends AbstractController
        $match = $appointment->getMatch();
        $date = $appointment->getNewDate();
        $match->setDate($date);
+       $sequence = $match->getSequence() + 1;
+       $match->setSequence($sequence);
+
 
        $repo->save($match);
        $repo->save($appointment);

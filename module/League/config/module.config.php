@@ -120,6 +120,8 @@ return array(
                 'League\Services\ResultService',
             'League\Services\TableService' =>
                 'League\Services\TableService',
+            'League\Services\MailService' =>
+                'League\Services\MailService',
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

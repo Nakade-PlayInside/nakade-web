@@ -25,11 +25,13 @@ class ResultControllerFactory implements FactoryInterface
 
         $repository = $serviceManager->get('League\Services\RepositoryService');
         $factory = $serviceManager->get('League\Services\LeagueFormService');
+        $mail = $serviceManager->get('League\Services\MailService');
 
         $controller = new ResultController();
 
         $controller->setFormFactory($factory);
         $controller->setRepository($repository);
+        $controller->setMailService($mail);
 
         return $controller;
     }
