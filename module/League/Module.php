@@ -2,12 +2,19 @@
 
 namespace League;
 
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
+use Zend\Console\Adapter\AdapterInterface as Console;
+
 /**
  * Class Module
  *
  * @package League
  */
-class Module
+class Module implements AutoloaderProviderInterface,
+    ConfigProviderInterface,
+    ConsoleUsageProviderInterface
 {
     /**
      * @return array
@@ -34,6 +41,20 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
 
+    /**
+     * @param Console $console
+     *
+     * @return array
+     */
+    public function getConsoleUsage(Console $console)
+    {
+        return array(
+            // Describe available commands
+            'matchReminder'    => 'send reminder before a match',
+            'resultReminder'    => 'send reminder for open matches',
+            'autoResult'    => 'automatic result of overdue open matches',
 
+        );
+    }
 
 }

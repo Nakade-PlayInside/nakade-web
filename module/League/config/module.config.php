@@ -31,6 +31,11 @@ return array(
     ),
 
     'controllers' => array(
+        'invokables' => array(
+            'League\Command\MatchReminder' => 'League\Command\MatchReminderController',
+            'League\Command\ResultReminder' => 'League\Command\ResultReminderController',
+            'League\Command\AutoResult' => 'League\Command\AutoResultController',
+        ),
         'factories' => array(
             'League\Controller\Table' =>
                     'League\Services\TableControllerFactory',
@@ -40,6 +45,44 @@ return array(
                     'League\Services\TimeTableControllerFactory',
         ),
 
+    ),
+
+    //command
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'matchReminder' => array(
+                    'options' => array(
+                        'route' => 'matchReminder',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'League\Command',
+                            'controller' => 'League\Command\MatchReminder',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+                'resultReminder' => array(
+                    'options' => array(
+                        'route' => 'resultReminder',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'League\Command',
+                            'controller' => 'League\Command\ResultReminder',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+                'autoResult' => array(
+                    'options' => array(
+                        'route' => 'autoResult',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'League\Command',
+                            'controller' => 'League\Command\AutoResult',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+            )
+        )
     ),
 
     'router' => array(

@@ -13,6 +13,7 @@ use Zend\Console\Request as ConsoleRequest;
 
 /**
  * console command for cron job
+ * crontab for www-data: php /var/www/nakade/public/index.php autoConfirm > /dev/null
  *
  * @package Appointment\Command
  */

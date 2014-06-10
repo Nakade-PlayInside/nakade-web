@@ -18,6 +18,9 @@ class MailService extends AbstractTranslation implements FactoryInterface
 
     const RESULT_MAIL = 'result';
     const SCHEDULE_MAIL = 'schedule';
+    const MATCH_REMINDER_MAIL = 'match_reminder';
+    const RESULT_REMINDER_MAIL = 'result_reminder';
+    const AUTO_RESULT_MAIL = 'auto_result';
 
     private $transport;
     private $message;
@@ -92,6 +95,18 @@ class MailService extends AbstractTranslation implements FactoryInterface
 
            case self::SCHEDULE_MAIL:
                $mail = new Mail\ScheduleMail($this->message, $this->transport);
+               break;
+
+           case self::MATCH_REMINDER_MAIL:
+               $mail = new Mail\MatchReminderMail($this->message, $this->transport);
+               break;
+
+           case self::RESULT_REMINDER_MAIL:
+               $mail = new Mail\ResultReminderMail($this->message, $this->transport);
+               break;
+
+           case self::AUTO_RESULT_MAIL:
+               $mail = new Mail\AutoResultMail($this->message, $this->transport);
                break;
 
            default:
