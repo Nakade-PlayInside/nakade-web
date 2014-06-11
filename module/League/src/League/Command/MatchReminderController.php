@@ -39,7 +39,7 @@ class MatchReminderController extends AbstractActionController
        $mailService = $sm->get('League\Services\MailService');
 
        //time
-       $time = 96;
+       $time = 48;
        $config  = $sm->get('config');
        if (isset($config['League']['match_reminder_time'])) {
            $time =  strval($config['League']['match_reminder_time']);
@@ -50,8 +50,7 @@ class MatchReminderController extends AbstractActionController
 
        /* @var $repo \League\Mapper\ScheduleMapper */
        $repo = $repoService->getMapper(RepositoryService::SCHEDULE_MAPPER);
-       //todo: abfrage matches mit datum ggf auch mit user config
-       $result = $repo->getOverdueAppointments($time);
+       $result = $repo->getNextMatchesByTimeSlot($time);
 
        echo "Found " . count($result) . " matches coming next" .PHP_EOL;
 

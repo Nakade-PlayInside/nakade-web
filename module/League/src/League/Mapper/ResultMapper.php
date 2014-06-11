@@ -65,6 +65,30 @@ class ResultMapper  extends AbstractMapper
     }
 
     /**
+     * @param int $time
+     *
+     * @return array
+     */
+    public function getActualOpenResults($time=72)
+    {
+        $now = new \DateTime();
+        $now->modify('-'.$time.' hour');
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->where('m.result IS NULL')
+            ->andWhere('m.date < :now')
+            ->setParameter('now', $now)
+            ->orderBy('m.date', 'ASC')
+            ->addOrderBy('m.id', 'ASC');
+
+        return $qb->getQuery()->getResult();
+
+    }
+
+    /**
      * @param int $seasonId
      * @param int $userId
      *

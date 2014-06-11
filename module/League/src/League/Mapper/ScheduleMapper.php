@@ -81,5 +81,37 @@ class ScheduleMapper  extends AbstractMapper
 
     }
 
+    /**
+     * open matches in an 24h time slot
+     *
+     * @param int $time
+     *
+     * @return array
+     */
+    public function getNextMatchesByTimeSlot($time=24)
+    {
+        $now = new \DateTime();
+        $before = clone $now;
+        $before->modify('+' . $time . ' hour');
+
+        $timeSlot = clone $before;
+        $timeSlot->modify('+24 hour');
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->where('m.result IS NULL')
+            ->andWhere('m.date BETWEEN :before AND :slot')
+            ->setParameter('before', $before)
+            ->setParameter('slot', $timeSlot)
+            ->orderBy('m.date', 'ASC')
+            ->addOrderBy('m.id', 'ASC');
+
+        return $qb->getQuery()->getResult();
+
+    }
+
+
 }
 

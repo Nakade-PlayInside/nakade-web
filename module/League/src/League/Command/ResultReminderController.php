@@ -48,10 +48,9 @@ class ResultReminderController extends AbstractActionController
        /* @var $mail \League\Mail\MatchReminderMail */
        $mail = $mailService->getMail(MailService::RESULT_REMINDER_MAIL);
 
-       /* @var $repo \League\Mapper\ScheduleMapper */
-       $repo = $repoService->getMapper(RepositoryService::SCHEDULE_MAPPER);
-       //todo: abfrage open matches mit datum ggf auch mit user config
-       $result = $repo->getOverdueAppointments($time);
+       /* @var $repo \League\Mapper\ResultMapper */
+       $repo = $repoService->getMapper(RepositoryService::RESULT_MAPPER);
+       $result = $repo->getActualOpenResults($time);
 
        echo "Found " . count($result) . " open matches" .PHP_EOL;
 

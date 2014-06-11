@@ -9,6 +9,7 @@ namespace League\Command;
 
 use League\Services\RepositoryService;
 use League\Services\MailService;
+use League\Standings\ResultInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Console\Request as ConsoleRequest;
 
@@ -18,7 +19,7 @@ use Zend\Console\Request as ConsoleRequest;
  *
  * @package League\Command
  */
-class AutoResultController extends AbstractActionController
+class AutoResultController extends AbstractActionController implements ResultInterface
 {
 
     /**
@@ -48,17 +49,19 @@ class AutoResultController extends AbstractActionController
        /* @var $mail \League\Mail\AutoResultMail */
        $mail = $mailService->getMail(MailService::AUTO_RESULT_MAIL);
 
-       /* @var $repo \League\Mapper\ScheduleMapper */
-       $repo = $repoService->getMapper(RepositoryService::SCHEDULE_MAPPER);
-       //todo: abfrage open matches mit datum ggf auch mit user config
-       $result = $repo->getOverdueAppointments($time);
+       /* @var $repo \League\Mapper\ResultMapper */
+       $repo = $repoService->getMapper(RepositoryService::RESULT_MAPPER);
+       $result = $repo->getActualOpenResults($time);
+       $suspend = $repo->getEntityManager()->getReference('League\Entity\Result', self::SUSPENDED);
 
        echo "Found " . count($result) . " open matches" .PHP_EOL;
 
        /* @var $match \Season\Entity\Match */
        foreach ($result as $match) {
 
-           //todo: saving match with result
+           $match->setResult($suspend);
+           $repo->save($match);
+
            $mail->setMatch($match);
            $mail->sendMail($match->getBlack());
            $mail->sendMail($match->getWhite());
