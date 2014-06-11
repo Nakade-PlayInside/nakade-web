@@ -40,6 +40,4 @@ class ResultReminderMail extends LeagueMail
     {
         return $this->translate('Your Match Result is Missing');
     }
-
-
 }
