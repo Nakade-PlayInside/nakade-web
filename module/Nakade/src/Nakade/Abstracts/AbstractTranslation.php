@@ -1,5 +1,4 @@
 <?php
-//module/Nakade/src/Abstract/AbstractTranslation.php
 namespace Nakade\Abstracts;
 
 use Zend\I18n\Translator\Translator;
@@ -16,9 +15,9 @@ use Zend\I18n\Translator\TranslatorAwareInterface;
 class AbstractTranslation implements TranslatorAwareInterface
 {
 
-    protected $_translatorEnabled=true;
-    protected $_translator;
-    protected $_textDomain='default';
+    protected $translatorEnabled=true;
+    protected $translator;
+    protected $textDomain='default';
 
     /**
      * Sets translator to use in helper
@@ -31,12 +30,12 @@ class AbstractTranslation implements TranslatorAwareInterface
     public function setTranslator(Translator $translator = null, $textDomain = null)
     {
         if (isset($translator)) {
-            $this->_translator=$translator;
+            $this->translator=$translator;
         }
 
 
         if (isset($textDomain)) {
-            $this->_textDomain=$textDomain;
+            $this->textDomain=$textDomain;
         }
 
     }
@@ -48,7 +47,7 @@ class AbstractTranslation implements TranslatorAwareInterface
      */
     public function getTranslator()
     {
-        return $this->_translator;
+        return $this->translator;
     }
 
     /**
@@ -58,17 +57,17 @@ class AbstractTranslation implements TranslatorAwareInterface
      */
     public function hasTranslator()
     {
-        return isset($this->_translator);
+        return isset($this->translator);
     }
 
     /**
      * @param bool $enabled
      *
-     * @return $this|TranslatorAwareInterface
+     * @return $this
      */
     public function setTranslatorEnabled($enabled=true)
     {
-        $this->_translatorEnabled=$enabled;
+        $this->translatorEnabled=$enabled;
         return $this;
     }
 
@@ -79,7 +78,7 @@ class AbstractTranslation implements TranslatorAwareInterface
      */
     public function isTranslatorEnabled()
     {
-        return $this->_translatorEnabled;
+        return $this->translatorEnabled;
     }
 
     /**
@@ -91,7 +90,7 @@ class AbstractTranslation implements TranslatorAwareInterface
      */
     public function setTranslatorTextDomain($textDomain = 'default')
     {
-        $this->_textDomain=$textDomain;
+        $this->textDomain=$textDomain;
     }
 
     /**
@@ -101,7 +100,7 @@ class AbstractTranslation implements TranslatorAwareInterface
      */
     public function getTranslatorTextDomain()
     {
-        return $this->_textDomain;
+        return $this->textDomain;
     }
 
     /**

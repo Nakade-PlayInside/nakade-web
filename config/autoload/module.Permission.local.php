@@ -14,6 +14,7 @@ return array(
         //resources for permission control
         'resources' => array (
             'nav-admin' => 'admin',
+            'Authentication\Controller\Dashboard' => 'guest',
 
             'User\Controller\User' => 'admin',
             'User\Controller\Profile' => 'guest',

@@ -89,16 +89,14 @@ class ResultController extends AbstractController implements RoleInterface
     public function addAction()
     {
 
-        $pid  = (int) $this->params()->fromRoute('id', 0);
-        $userId = $this->identity()->getId();
+        $matchId  = (int) $this->params()->fromRoute('id', 0);
 
         /* @var $resultMapper \League\Mapper\ResultMapper */
         $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
         /* @var $match \Season\Entity\Match */
-        $match = $resultMapper->getMatchById($pid);
+        $match = $resultMapper->getMatchById($matchId);
 
-        //todo: validation to service ; aufräumen im mapper
-        if ($match->hasResult() || ($this->identity()->getRole()!= self::ROLE_ADMIN && $match->getBlack()->getId() != $userId && $match->getWhite()->getId() != $userId)) {
+        if (!$this->getService()->isAllowed($match)) {
             throw new \RuntimeException(
                 sprintf('You are not allowed to enter a result on this match.')
             );
