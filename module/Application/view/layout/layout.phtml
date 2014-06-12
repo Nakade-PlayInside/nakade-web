@@ -44,6 +44,12 @@
 <?php
      if ($user = $this->identity()) {
 
+         echo sprintf('<li><a href="%s">%s</a></li>',
+             $this->url('dashboard'),
+             $this->translate('Dashboard', 'Application')
+         );
+
+
         if ($user->getRole()=='admin') {
 
             $admin = array(

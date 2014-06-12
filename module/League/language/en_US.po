@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-12 01:11+0100\n"
-"PO-Revision-Date: 2014-06-12 01:11+0100\n"
+"POT-Creation-Date: 2014-06-12 16:59+0100\n"
+"PO-Revision-Date: 2014-06-12 16:59+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -211,28 +211,32 @@ msgstr ""
 msgid "Points"
 msgstr ""
 
-#: ../src/League/Services/ICalService.php:187
+#: ../src/League/iCal/iCal.php:188
 msgid "white"
 msgstr ""
 
-#: ../src/League/Services/ICalService.php:189
+#: ../src/League/iCal/iCal.php:190
 msgid "black"
 msgstr ""
 
-#: ../src/League/Services/ICalService.php:203
+#: ../src/League/iCal/iCal.php:203
 msgid "My match vs %name%"
 msgstr ""
 
-#: ../src/League/Services/ICalService.php:206
+#: ../src/League/iCal/iCal.php:206
 msgid "KGS name: %name%"
 msgstr ""
 
-#: ../src/League/Services/ICalService.php:209
+#: ../src/League/iCal/iCal.php:209
 msgid "my color is %color%"
 msgstr ""
 
-#: ../src/League/Services/ICalService.php:229
+#: ../src/League/iCal/iCal.php:228
 msgid "Nakade League Match vs %name%"
+msgstr ""
+
+#: ../src/League/iCal/iCal.php:242
+msgid "No Info available"
 msgstr ""
 
 #: ../src/League/Standings/Results.php:23
@@ -369,7 +373,11 @@ msgstr ""
 msgid "No schedule found"
 msgstr ""
 
-#: ../view/league/time-table/my-schedule.phtml:24
+#: ../view/league/time-table/my-schedule.phtml:20
+msgid "Download your calendar"
+msgstr ""
+
+#: ../view/league/time-table/my-schedule.phtml:26
 msgid "my color"
 msgstr ""
 
@@ -390,6 +398,7 @@ msgid "%name% League - My Results"
 msgstr ""
 
 #: ../view/league/result/my-result.phtml:14
+#: ../view/league/result/actual-results.phtml:10
 msgid "No results found"
 msgstr ""
 
