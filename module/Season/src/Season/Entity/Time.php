@@ -148,6 +148,32 @@ class Time
     }
 
     /**
+     * @return bool
+     */
+    public function hasAdditionalTime()
+    {
+        return !empty($this->additionalTime);
+    }
+
+    /**
+     * @return string
+     */
+    public function getMatchInfo()
+    {
+        $info = $this->getBaseTime().' min.';
+
+        if ($this->hasAdditionalTime()) {
+            $extra = sprintf(', %s %s/%s',
+                $this->getByoyomi()->getName(),
+                $this->getMoves(),
+                $this->getAdditionalTime()
+            );
+            $info .= $extra;
+        }
+        return $info;
+    }
+
+    /**
      * for form data
      *
      * @param array $data

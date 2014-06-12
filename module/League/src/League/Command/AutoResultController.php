@@ -54,7 +54,7 @@ class AutoResultController extends AbstractActionController implements ResultInt
        $result = $repo->getActualOpenResults($time);
        $suspend = $repo->getEntityManager()->getReference('League\Entity\Result', self::SUSPENDED);
 
-       echo "Found " . count($result) . " open matches" .PHP_EOL;
+       echo "Found " . count($result) . " overdue matches" .PHP_EOL;
 
        /* @var $match \Season\Entity\Match */
        foreach ($result as $match) {

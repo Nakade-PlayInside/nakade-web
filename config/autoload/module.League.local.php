@@ -16,7 +16,7 @@ return array(
         'result_reminder_time' => 8,
 
         //time before a match to remind
-        'match_reminder_time' => 48,
+        'match_reminder_time' => 24,
 
         //time before making an automatic result
         'auto_result_time' => 96,

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-13 16:18+0100\n"
-"PO-Revision-Date: 2014-05-21 00:41+0100\n"
+"POT-Creation-Date: 2014-06-12 01:31+0100\n"
+"PO-Revision-Date: 2014-06-12 01:31+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -15,19 +15,19 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Mail/Services/MailSignatureService.php:48
+#: ../src/Mail/Services/MailSignatureService.php:49
 msgid "May the stones be with you."
 msgstr "Mit 361 Grüßen"
 
-#: ../src/Mail/Services/MailSignatureService.php:49
+#: ../src/Mail/Services/MailSignatureService.php:50
 msgid "Your %TEAM%."
 msgstr "Dein %TEAM%"
 
-#: ../src/Mail/Services/MailSignatureService.php:51
+#: ../src/Mail/Services/MailSignatureService.php:52
 msgid "Court of Registration"
 msgstr "Registergericht"
 
-#: ../src/Mail/Services/MailSignatureService.php:52
+#: ../src/Mail/Services/MailSignatureService.php:53
 msgid "Register No."
 msgstr "Registernummer"
 

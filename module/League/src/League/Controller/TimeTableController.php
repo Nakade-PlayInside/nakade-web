@@ -1,6 +1,7 @@
 <?php
 namespace League\Controller;
 
+use League\iCal\iCal;
 use League\Services\ICalService;
 use League\Services\LeagueFormService;
 use League\Services\RepositoryService;
@@ -177,9 +178,6 @@ class TimeTableController extends AbstractController
      */
     public function iCalAction()
     {
-
-        $fileName = 'myNakade.iCal';
-
         $userId = $this->identity()->getId();
 
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
@@ -196,18 +194,7 @@ class TimeTableController extends AbstractController
             $matches = $matchMapper->getMyScheduleByUser($league->getId(), $userId);
         }
 
-        $content = $this->getICalService()->getICalSchedule($userId, $matches);
-
-        $headers = new Headers();
-        $headers->addHeaderLine('Content-Type', 'text/calendar; charset=utf-8')
-            ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $fileName . '"');
-
-        $response = new iCalResponse();
-        $response->setStatusCode(200);
-        $response->setHeaders($headers);
-        $response->setContent($content);
-
-        return $response;
+        return $this->getICalService()->getSchedule($userId, $matches);
 
     }
 

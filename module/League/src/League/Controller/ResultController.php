@@ -42,7 +42,7 @@ class ResultController extends AbstractController implements RoleInterface
             ->setCurrentPageNumber($matchDay)
             ->setItemCountPerPage(1)
             ->setPageRange(5);
-*/
+    */
 
         return new ViewModel(
             array(

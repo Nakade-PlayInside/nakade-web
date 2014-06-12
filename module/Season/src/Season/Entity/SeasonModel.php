@@ -221,6 +221,14 @@ class SeasonModel
     }
 
     /**
+     * @return bool
+     */
+    public function hasKomi()
+    {
+        return !empty($this->komi);
+    }
+
+    /**
      * @param Time $time
      */
     public function setTime(Time $time)

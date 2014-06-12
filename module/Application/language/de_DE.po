@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-21 00:37+0100\n"
-"PO-Revision-Date: 2014-05-21 00:38+0100\n"
+"POT-Creation-Date: 2014-06-12 01:29+0100\n"
+"PO-Revision-Date: 2014-06-12 01:29+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -81,7 +81,7 @@ msgid "open results"
 msgstr "offene Ergebnisse"
 
 #: ../view/layout/layout.phtml:60
-msgid "edit matchday"
+msgid "edit match day"
 msgstr "Spieltag ändern"
 
 #: ../view/layout/layout.phtml:63

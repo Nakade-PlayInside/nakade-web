@@ -4,6 +4,7 @@ namespace League\Mapper;
 use Nakade\Abstracts\AbstractMapper;
 use Doctrine\ORM\Query\Expr\Join;
 use \Doctrine\ORM\Query;
+use Season\Entity\Match;
 
 /**
  * Class ScheduleMapper
@@ -112,6 +113,25 @@ class ScheduleMapper  extends AbstractMapper
 
     }
 
+    /**
+     * @param int $leagueId
+     *
+     * @return null|\Season\Entity\Season
+     */
+    public function getSeasonRulesByLeague($leagueId)
+    {
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Time')
+            ->select('s')
+            ->from('Season\Entity\Season', 's')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
+            ->where('l.id = :leagueId')
+            ->setParameter('leagueId', $leagueId);
+
+        return $qb->getQuery()->getOneOrNullResult();
+
+    }
 
 }
 
