@@ -55,10 +55,12 @@ class TimeTableController extends AbstractController
     * Form for editing a match appointment
     *
     * @return \Zend\Http\Response|ViewModel
+    *
+    * @throws \RuntimeException
     */
     public function editAction()
     {
-
+        //todo: move this to appointment modul
         $id  = (int) $this->params()->fromRoute('id', 0);
 
         /* @var $mapper \League\Mapper\ResultMapper */
@@ -67,6 +69,12 @@ class TimeTableController extends AbstractController
 
         if (is_null($match)) {
             return $this->redirect()->toRoute('timeTable');
+        }
+
+        if (!$this->getService()->isAllowed($match)) {
+            throw new \RuntimeException(
+                sprintf('You are not allowed to enter a result on this match.')
+            );
         }
 
         /* @var $form \League\Form\MatchDayForm */

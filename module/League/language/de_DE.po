@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-12 16:59+0100\n"
-"PO-Revision-Date: 2014-06-12 16:59+0100\n"
+"PO-Revision-Date: 2014-06-15 11:40+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -254,7 +254,7 @@ msgstr "Jigo"
 
 #: ../src/League/Standings/Results.php:26
 msgid "Lost by Forfeit"
-msgstr "Disqualifikation"
+msgstr "verloren durch Nichterscheinen"
 
 #: ../src/League/Standings/Results.php:27
 msgid "Game Suspended"

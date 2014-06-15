@@ -42,8 +42,8 @@ class LeagueFormService extends AbstractFormFactory
         $config  = $services->get('config');
 
         //configuration
-        $textDomain = isset($config['Season']['text_domain']) ?
-            $config['Season']['text_domain'] : null;
+        $textDomain = isset($config['League']['text_domain']) ?
+            $config['League']['text_domain'] : null;
 
         $translator = $services->get('translator');
 
@@ -78,6 +78,7 @@ class LeagueFormService extends AbstractFormFactory
                $hydrator = new ResultHydrator($this->entityManager);
                $form = new Form\ResultForm($service, $this->resultList);
                $form->setHydrator($hydrator);
+               $form->setTranslator($this->getTranslator(), $this->getTranslatorTextDomain());
                break;
 
            case self::MATCHDAY_FORM:
@@ -85,6 +86,7 @@ class LeagueFormService extends AbstractFormFactory
                $hydrator = new Form\Hydrator\MatchDayHydrator($this->entityManager);
                $form = new Form\MatchDayForm($service);
                $form->setHydrator($hydrator);
+               $form->setTranslator($this->getTranslator(), $this->getTranslatorTextDomain());
                $form->init();
                break;
 
