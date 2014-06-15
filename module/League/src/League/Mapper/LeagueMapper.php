@@ -2,106 +2,57 @@
 namespace League\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
-/**
- * Description of LeagueMapper
- *
- * @author Dr.Holger Maerz <holger@nakade.de>
- */
-class LeagueMapper extends AbstractMapper 
-{
-    
+use Doctrine\ORM\Query\Expr\Join;
+use \Doctrine\ORM\Query;
 
-   /**
-     * Getting the LeagueId 
-     * 
+/**
+ * Class LeagueMapper
+ *
+ * @package League\Mapper
+ */
+class LeagueMapper extends AbstractMapper
+{
+
+    /**
      * @param int $seasonId
-     * @param int $number league number
-     * @return /League/Entity/League $league
+     *
+     * @return mixed
      */
-    public function getLeague($seasonId, $number)  
+    public function getTopLeagueBySeason($seasonId)
     {
-       return $this->getEntityManager()
-                   ->getRepository('League\Entity\League')
-                   ->findOneBy(
-                        array(
-                           '_sid'   => $seasonId,
-                           '_number' => $number,
-                        )
-                     );
+        $qb = $this->getEntityManager()->createQueryBuilder('League');
+        $qb->select('l')
+            ->from('Season\Entity\League', 'l')
+            ->innerJoin('l.season', 'season')
+            ->andWhere('season.id = :seasonId')
+            ->orderBy('l.number', 'DESC')
+            ->setMaxResults(1)
+            ->setParameter('seasonId', $seasonId);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
-    
+
     /**
-     * Getting the League by Id
-     * 
      * @param int $leagueId
-     * @return /League/Entity/League $league
+     *
+     * @return array
      */
-    public function getLeagueById($leagueId)  
+    public function getMatchesByLeague($leagueId)
     {
-       return $this->getEntityManager()
-                   ->getRepository('League\Entity\League')
-                   ->find($leagueId);
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'm.league = l')
+            ->innerJoin('m.league', 'League')
+            ->where('League.id = :leagueId')
+            ->setParameter('leagueId', $leagueId)
+            ->orderBy('m.date', 'ASC');
+
+        $result = $qb->getQuery()->getResult();
+        return $result;
     }
-    
-    /**
-    * Getting the number of league in a season
-    * 
-    * @param int $seasonId
-    * @return int
-    */
-    public function getLeaguesWithPlayers($seasonId)  
-    {
-        
-       $dql = "SELECT count(l) as number FROM 
-               League\Entity\League l,
-               League\Entity\Participants p
-               WHERE l._sid = :sid AND
-               p._lid = l._id";
-       
-        return $this->getEntityManager()
-                    ->createQuery($dql)
-                    ->setParameter('sid', $seasonId)        
-                    ->getSingleScalarResult();
-       
-    }
-    
-    /**
-    * Getting the number of league in a season
-    * 
-    * @param int $seasonId
-    * @return int
-    */
-    public function getLeagueNumberInSeason($seasonId)  
-    {
-       $dql = "SELECT count(l) as number FROM 
-               League\Entity\League l
-               WHERE l._sid = :sid";
-       
-        return $this->getEntityManager()
-                    ->createQuery($dql)
-                    ->setParameter('sid', $seasonId)        
-                    ->getSingleScalarResult();
-       
-    }
-    
-    /**
-    * Get all leagues of a season
-    * 
-    * @param int $seasonId
-    * @return int
-    */
-    public function getLeaguesInSeason($seasonId)  
-    {
-       $dql = "SELECT l FROM 
-               League\Entity\League l
-               WHERE l._sid = :sid";
-       
-        return $this->getEntityManager()
-                    ->createQuery($dql)
-                    ->setParameter('sid', $seasonId)        
-                    ->getResult();
-       
-    }
+
+
 }
- 
-?>
+

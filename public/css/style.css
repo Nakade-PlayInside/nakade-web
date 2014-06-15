@@ -1,5 +1,8 @@
 @import "message.css";
 @import "appointment.css";
+@import "season.css";
+@import "league.css";
+
 
 body {
     padding-top: 60px;

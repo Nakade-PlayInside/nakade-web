@@ -5,6 +5,7 @@ return array(
         'Appointment',
         'Nakade',
         'League',
+        'Season',
         'User'
     ),
     'module_listener_options' => array(

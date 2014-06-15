@@ -21,7 +21,7 @@ class DashboardController extends AbstractActionController
 
 
         $scheduleWidget  = $this->forward()
-            ->dispatch('/League/Controller/ActualSeason', array('action' => 'mySchedule'));
+            ->dispatch('/League/Controller/TimeTable', array('action' => 'mySchedule'));
 
         $appointmentWidget  = $this->forward()
             ->dispatch('/Appointment/Controller/Show', array('action' => 'message'));

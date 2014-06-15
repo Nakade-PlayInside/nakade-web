@@ -3,7 +3,7 @@ $this->plugin('translate')->setTranslatorTextDomain('Appointment');
 $title = $this->translate("Matches available for shifting appointments");
 $this->headTitle($title);
 
-/* @var $match \League\Entity\Match */
+/* @var $match \Season\Entity\Match */
 ?>
 
 <h3><?php echo $title;?></h3>
@@ -24,7 +24,8 @@ $this->headTitle($title);
                 echo $match->getMatchInfo(); ?></a>
             </td>
     </tr>
-<?php endforeach; ?>
+<?php
+endforeach; ?>
 </table>
 
 

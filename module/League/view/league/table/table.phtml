@@ -1,0 +1,72 @@
+<?php
+use \League\View\Helper\Sort;
+$this->plugin('translate')->setTranslatorTextDomain('League');
+$this->headTitle('table');
+
+/* @var $player \League\Entity\Player */
+/* @var $league \Season\Entity\League */
+$league = $this->league;
+$association = $league->getSeason()->getAssociation()->getName();
+$title = $this->translate("%name% %no%. League") . " " . $league->getSeason()->getStartDate()->format('Y');
+$title = str_replace("%name%", $association, $title);
+$title = str_replace("%no%", $league->getNumber(), $title);
+
+$tb1 = $league->getSeason()->getTieBreaker1();
+$tb2 = $league->getSeason()->getTieBreaker2();
+$tb3 = $league->getSeason()->getTieBreaker3();
+?>
+
+<?php $this->placeholder('noSeason')->captureStart();?>
+<h3><?php echo $this->translate('No season found')?></h3>
+<?php $this->placeholder('noSeason')->captureEnd(); ?>
+
+<?php $this->placeholder('standings')->captureStart(); ?>
+<h3><?php echo $title; ?></h3>
+<table class="table" style="margin-top: 0.5em;">
+<tr>
+    <th title="<?php echo $this->translate('Position');?>">P</th>
+    <th title="<?php echo $this->translate('Player');?>">
+        <a href="<?php echo $this->sort(Sort::BY_NAME); ?>"><?php echo $this->translate('Name')?></a></th>
+    <th title="<?php echo $this->translate('played games')?>">
+        <a href="<?php echo $this->sort(Sort::BY_PLAYED_GAMES); ?>"><?php echo $this->translate('GP')?></a></th>
+    <th title="<?php echo $this->translate('Wins')?>">
+        <a href="<?php echo $this->sort(Sort::BY_WON_GAMES); ?>"><?php echo $this->translate('W')?></a></th>
+     <th title="<?php echo $this->translate('Jigo')?>">
+          <a href="<?php echo $this->sort(Sort::BY_DRAW_GAMES);?>"><?php echo $this->translate('J')?></a></th>
+     <th title="<?php echo $this->translate('Lost')?>">
+         <a href="<?php echo $this->sort(Sort::BY_LOST_GAMES);?>"><?php echo $this->translate('L')?></a></th>
+      <th title="<?php echo $this->translate('Points')?>">
+         <a href="<?php echo $this->sort(Sort::BY_POINTS);?>"><?php echo $this->translate('Pt')?></a></th>
+    <th title="<?php echo $tb1->getDescription()?>">
+        <a href="<?php echo $this->sort(Sort::BY_FIRST_TIEBREAK);?>"><?php echo $tb1->getName()?></a></th>
+    <th title="<?php echo $tb2->getDescription()?>">
+         <a href="<?php echo $this->sort(Sort::BY_SECOND_TIEBREAK);?>"><?php echo $tb2->getName()?></a></th>
+    <th title="<?php echo $tb3->getDescription(); ?>">
+         <a href="<?php echo $this->sort(Sort::BY_THIRD_TIEBREAK);?>"><?php echo $tb3->getName()?></a></th>
+</tr>
+<?php foreach ($this->table as $player) : ?>
+<tr style="background-color:<?php  echo $this->highlightUser($player->getUser()); ?>">
+    <td><?php echo $player->getPosition() ?></td>
+    <td style="white-space:nowrap"><?php echo $player->getUser()->getShortName();?></td>
+    <td><?php echo $player->getGamesPlayed(); ?></td>
+    <td><?php echo $player->getGamesWin();?></td>
+    <td><?php echo $player->getGamesDraw();?></td>
+    <td><?php echo $player->getGamesLost();?></td>
+    <td><?php echo $player->getGamesPoints();?></td>
+    <td><?php echo $player->getFirstTiebreak();?></td>
+    <td><?php echo $player->getSecondTiebreak();?></td>
+    <td><?php echo $player->getThirdTiebreak();?></td>
+
+</tr>
+<?php
+endforeach; ?>
+</table>
+<?php $this->placeholder('standings')->captureEnd();
+
+  if (is_null($this->table)) {
+      echo $this->placeholder('noSeason');
+  } else {
+      echo $this->placeholder('standings');
+  }
+
+

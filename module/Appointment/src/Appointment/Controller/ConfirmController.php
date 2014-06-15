@@ -1,16 +1,7 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for
- * the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc.
- * (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 namespace Appointment\Controller;
 
+use Appointment\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
@@ -39,7 +30,7 @@ class ConfirmController extends AbstractController
        }
 
         /* @var $repo \Appointment\Mapper\AppointmentMapper */
-       $repo = $this->getRepository()->getMapper('appointment');
+       $repo = $this->getRepository()->getMapper(RepositoryService::APPOINTMENT_MAPPER);
        $appointment = $repo->getAppointmentById($appointmentId);
 
        if (!$this->getService()->isValidLink($confirmString, $appointment)) {
@@ -50,6 +41,9 @@ class ConfirmController extends AbstractController
        $match = $appointment->getMatch();
        $date = $appointment->getNewDate();
        $match->setDate($date);
+       $sequence = $match->getSequence() + 1;
+       $match->setSequence($sequence);
+
 
        $repo->save($match);
        $repo->save($appointment);

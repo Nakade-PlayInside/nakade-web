@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="nakade" default="build">
-    
+
     <!-- this is the root dir of the source code of your git repo -->
     <property name="app-dir" value="app" />
-    
+
     <!-- path to the web source code -->
     <property name="www-dir" value="/var/www/nakade-test" />
-    
+
 
     <!-- version -->
     <property environment="env"/>
     <property name="pkg-name" value="${ant.project.name}${env.BUILD_NUMBER}" />
     <property name="MAJOR" value="0"/>
-    <property name="MINOR" value="2"/>
+    <property name="MINOR" value="3"/>
     <property name="VERSION" value="${MAJOR}.${MINOR}.${env.BUILD_NUMBER}" />
-    
+
     <!-- build project ,phpcs,phpdoc,phpcb -->
-    <target name="build" 
+    <target name="build"
             depends="prepare,version,lint,analysis,phpcs,phpdoc,phpcb,vendor,phpunit,deployment,postaction" />
-  
-       
+
+
     <!-- deleting build dir -->
     <target name="clean" description="cleanup previous build artifacts">
         <delete dir="${basedir}/build/package"/>
@@ -31,8 +31,8 @@
         <delete dir="${basedir}/vendor"/>
         <delete dir="${basedir}/data"/>
     </target>
-    
-    <!-- create new build dir after deleting existing --> 
+
+    <!-- create new build dir after deleting existing -->
     <target name="prepare" depends="clean" description="prepare build dir">
         <mkdir dir="${basedir}/build/package"/>
         <mkdir dir="${basedir}/build/code-browser"/>
@@ -60,7 +60,7 @@
             </fileset>
         </apply>
     </target>
-   
+
     <!-- combination of several tasks for code quality analysis -->
     <target name="analysis"
           description="run detection using a maximum of 2 threads.">
@@ -97,7 +97,7 @@
             <arg value="data,vendor" />
         </exec>
     </target>
-    
+
     <!-- mess detection in xml -->
     <target name="phpmd-ci"  description="mess detection xml for analysis">
         <exec executable="phpmd">
@@ -149,7 +149,7 @@
             <arg path="${basedir}" />
         </exec>
     </target>
-    
+
     <!-- line of codes -->
     <target name="phploc" description="measure lines of code">
         <exec executable="phploc">
@@ -175,7 +175,7 @@
         </exec>
     </target>
 
-   <!-- inline-documentation --> 
+   <!-- inline-documentation -->
    <target name="phpdoc" description="Generates API documentation">
        <exec executable="/usr/bin/phpdoc">
             <arg value="--directory" />
@@ -211,10 +211,10 @@
             <arg value="build" />
         </exec>
     </target>
- 
-    <!-- ****************************************************  --> 
+
+    <!-- ****************************************************  -->
     <!-- prior to unit tests the vendors need to be downloaded -->
-    <target name="vendor" 
+    <target name="vendor"
             depends="composer-download,composer-self-update,vendor-install,vendor-autoload" />
 
     <!-- downloading composer -->
@@ -232,7 +232,7 @@
              <arg value="self-update" />
         </exec>
     </target>
-    
+
     <!-- vendor download -->
     <target name="vendor-install" description="composer install">
         <exec executable="php" failonerror="true">
@@ -240,7 +240,7 @@
              <arg value="install" />
         </exec>
     </target>
-    
+
     <!-- autoloading -->
     <target name="vendor-autoload" description="performing autoload">
         <exec executable="php" failonerror="false">
@@ -255,19 +255,19 @@
     <target name="phpunit" description="Run unit tests with PHPUnit">
         <exec dir="${basedir}/tests" executable="phpunit" failonerror="false" />
     </target>
-   
+
     <!-- ******************************************************* -->
     <!-- path to the versioned app code -->
     <property name="version-dir" value="${www-dir}/version" />
-    
+
     <!-- symbolic link path -->
     <property name="link" value="${www-dir}/prod" />
-    
+
     <!-- deployment -->
-    <target name="deployment" 
+    <target name="deployment"
             depends="package,deploy.mkdir,deploy.copy,deploy.unpack,
                     deploy.rights,deploy.group,deploy.link" />
-    
+
 
     <!-- making a compressed file -->
     <target name="package" description="packaging source code">
@@ -289,10 +289,10 @@
                 <include name="**" />
             </tarfileset>
         </tar>
-        <gzip destfile="${basedir}/build/package/${pkg-name}.tar.gz" 
+        <gzip destfile="${basedir}/build/package/${pkg-name}.tar.gz"
               src="${basedir}/build/package/${pkg-name}.tar" />
     </target>
-    
+
     <!-- creating necessary directories -->
     <target name="deploy.mkdir" description="make deployment directories">
         <exec executable="mkdir" failonerror="true">
@@ -302,7 +302,7 @@
              <arg value="${version-dir}/${env.BUILD_NUMBER}" />
         </exec>
     </target>
-    
+
     <!-- copy package to temporary dir -->
     <target name="deploy.copy" description="copy deployment data">
         <exec executable="cp" failonerror="true">
@@ -311,13 +311,13 @@
         </exec>
     </target>
 
-    <!-- uncompress all files to versions directory -->    
+    <!-- uncompress all files to versions directory -->
     <target name="deploy.unpack" description="unzip deployment data">
         <gunzip src="${www-dir}/tmp/${pkg-name}.tar.gz"/>
-        <untar src="${www-dir}/tmp/${pkg-name}.tar" 
+        <untar src="${www-dir}/tmp/${pkg-name}.tar"
                dest="${version-dir}/${env.BUILD_NUMBER}/"/>
     </target>
-    
+
     <!-- set rights to 775 -->
     <target name="deploy.rights" description="set rights for files">
         <exec executable="chmod" failonerror="true">
@@ -326,17 +326,17 @@
              <arg path="${version-dir}/${env.BUILD_NUMBER}/" />
         </exec>
     </target>
-    
+
     <!-- set owner to www-data -->
     <target name="deploy.group" description="set owner to www-data">
         <exec executable="chgrp" failonerror="true">
-            <arg value="--recursive" /> 
+            <arg value="--recursive" />
             <arg value="www-data" />
             <arg path="${version-dir}/${env.BUILD_NUMBER}/" />
         </exec>
     </target>
-    
-    <!-- set symbolic link from version --> 
+
+    <!-- set symbolic link from version -->
     <target name="deploy.link" description="set symbolic link">
         <exec executable="ln" failonerror="true">
             <arg line="-nfs ${version-dir}/${env.BUILD_NUMBER} ${link}" />
@@ -349,13 +349,13 @@
     <!-- path to the cache -->
     <property name="data-cache" value="data/cache" />
 
-    
+
     <target name="postaction" depends="cache.clear,deploy.clean" />
 
     <!-- clear cache by removing all data -->
     <target name="cache.clear" description="remove data cache files">
         <exec executable="rm">
-            <arg line="-rf ${version-dir}/${env.BUILD_NUMBER}/${data-cache}/*"/> 
+            <arg line="-rf ${version-dir}/${env.BUILD_NUMBER}/${data-cache}/*"/>
         </exec>
     </target>
 

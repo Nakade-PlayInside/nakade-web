@@ -1,0 +1,13 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+$this->headTitle('New Season');
+?>
+
+<h3><?php echo $this->translate('Create New Season'); ?></h3>
+
+
+<?php
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();

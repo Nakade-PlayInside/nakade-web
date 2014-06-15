@@ -13,8 +13,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 abstract class AbstractService extends AbstractTranslation implements FactoryInterface
 {
 
-    protected $_mailFactory;
-    protected $_mapperFactory;
+    protected $mailFactory;
+    protected $mapperFactory;
 
      /**
      * get a mapper factory for DB interaction
@@ -22,7 +22,7 @@ abstract class AbstractService extends AbstractTranslation implements FactoryInt
      */
     public function getMapperFactory()
     {
-        return $this->_mapperFactory;
+        return $this->mapperFactory;
     }
 
     /**
@@ -33,7 +33,7 @@ abstract class AbstractService extends AbstractTranslation implements FactoryInt
      */
     public function setMapperFactory($factory)
     {
-        $this->_mapperFactory=$factory;
+        $this->mapperFactory=$factory;
         return $this;
     }
 
@@ -46,13 +46,13 @@ abstract class AbstractService extends AbstractTranslation implements FactoryInt
      */
     public function getMapper($name)
     {
-        if (null === $this->_mapperFactory) {
+        if (null === $this->mapperFactory) {
             throw new \RuntimeException(
                 sprintf('Mapper factory could not be found in service.')
             );
         }
 
-        return $this->_mapperFactory->getMapper($name);
+        return $this->mapperFactory->getMapper($name);
     }
 
 
@@ -63,7 +63,7 @@ abstract class AbstractService extends AbstractTranslation implements FactoryInt
      */
     public function getMailFactory()
     {
-        return $this->_mailFactory;
+        return $this->mailFactory;
     }
 
     /**
@@ -73,7 +73,7 @@ abstract class AbstractService extends AbstractTranslation implements FactoryInt
      */
     public function setMailFactory($factory)
     {
-        $this->_mailFactory=$factory;
+        $this->mailFactory=$factory;
         return $this;
     }
 

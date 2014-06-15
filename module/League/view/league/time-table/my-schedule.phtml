@@ -1,0 +1,39 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('League');
+/* @var $match \Season\Entity\Match */
+$iCalInfo = $this->translate("download your schedule calendar (iCal)");
+$this->headTitle('schedule');
+
+/* @var $league \Season\Entity\League */
+$league = $this->league;
+$association = $league->getSeason()->getAssociation()->getName();
+$title = $this->translate("My %name% League Schedule") . " " . $league->getSeason()->getStartDate()->format('Y');
+$title = str_replace("%name%", $association, $title);
+?>
+<?php $this->placeholder('noSchedule')->captureStart();?>
+<h3><?php echo $this->translate('No schedule found')?></h3>
+<?php $this->placeholder('noSchedule')->captureEnd(); ?>
+
+<?php $this->placeholder('schedule')->captureStart();?>
+<h3><?php echo $title; ?></h3>
+<a class="iCal" title="<?php echo $iCalInfo; ?>" href="<?php echo $this->url('timeTable', array('action' => 'iCal')); ?>">
+   <?php echo $this->translate("Download your calendar"); ?>
+</a>
+<table class="league">
+<?php foreach ($this->matches as $match) : ?>
+<tr>
+    <td style="text-decoration: <?php echo $this->hasResult($match) ?>" class="space"><?php echo $match->getDate()->format('d.m. H:i');?></td>
+    <td title="<?php echo $this->translate('my color')?>" class="<?php echo $this->myColor($match); ?>"></td>
+    <td class="space"><?php echo $this->opponent($match)->getShortName(); ?> (<span style='font-weight: bold'><?php echo $this->opponent($match)->getOnlineName(); ?></span>)</td>
+</tr>
+<?php
+endforeach;
+?>
+</table>
+<?php $this->placeholder('schedule')->captureEnd();
+
+  if (is_null($this->matches)) {
+      echo $this->placeholder('noSchedule');
+  } else {
+      echo $this->placeholder('schedule');
+  }

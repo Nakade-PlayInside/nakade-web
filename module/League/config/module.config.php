@@ -15,329 +15,137 @@ return array(
 
     'view_helpers' => array(
         'invokables' => array(
-            'position'   => 'League\View\Helper\Position',
-            'dateformat' => 'League\View\Helper\DateFormat',
             'isWinner'   => 'League\View\Helper\Winner',
             'result'     => 'League\View\Helper\Result',
-            'isActive'   => 'League\View\Helper\Active',
+            'hasResult' => 'League\View\Helper\HasResult',
+            'highlightMatch' => 'League\View\Helper\HighlightMatch',
+            'highlightUser'  => 'League\View\Helper\HighlightUser',
+            'myColor'  => 'League\View\Helper\MyColor',
+            'opponent'  => 'League\View\Helper\Opponent',
+            'openResult'  => 'League\View\Helper\OpenResult',
+            'sort'  => 'League\View\Helper\Sort',
             'isOpen'     => 'League\View\Helper\Open',
-            'seasontitle'  => 'League\View\Helper\SeasonTitle',
-
+            'matchDayResult'     => 'League\View\Helper\MatchDayResult',
             // more helpers here ...
         )
     ),
 
     'controllers' => array(
+        'invokables' => array(
+            'League\Command\MatchReminder' => 'League\Command\MatchReminderController',
+            'League\Command\ResultReminder' => 'League\Command\ResultReminderController',
+            'League\Command\AutoResult' => 'League\Command\AutoResultController',
+        ),
         'factories' => array(
-            'League\Controller\ActualSeason' =>
-                    'League\Services\ActualSeasonControllerFactory',
+            'League\Controller\Table' =>
+                    'League\Services\TableControllerFactory',
             'League\Controller\Result' =>
                     'League\Services\ResultControllerFactory',
-            'League\Controller\Matchday' =>
-                    'League\Services\MatchdayControllerFactory',
-            'League\Controller\Season' =>
-                    'League\Services\SeasonControllerFactory',
-            'League\Controller\League' =>
-                    'League\Services\LeagueControllerFactory',
-            'League\Controller\Player' =>
-                    'League\Services\PlayerControllerFactory',
-            'League\Controller\Schedule' =>
-                    'League\Services\ScheduleControllerFactory',
+            'League\Controller\TimeTable' =>
+                    'League\Services\TimeTableControllerFactory',
         ),
 
     ),
 
-    'controller_plugins' => array(
-      'invokables' => array(
-          'season'  => 'League\Controller\Plugin\SeasonPlugin',
-          'match'   => 'League\Controller\Plugin\MatchPlugin',
-          'league'  => 'League\Controller\Plugin\LeaguePlugin',
-          'player'  => 'League\Controller\Plugin\PlayerPlugin',
-          'form'    => 'League\Controller\Plugin\FormPlugin',
-
-      ),
+    //command
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'matchReminder' => array(
+                    'options' => array(
+                        'route' => 'matchReminder',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'League\Command',
+                            'controller' => 'League\Command\MatchReminder',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+                'resultReminder' => array(
+                    'options' => array(
+                        'route' => 'resultReminder',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'League\Command',
+                            'controller' => 'League\Command\ResultReminder',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+                'autoResult' => array(
+                    'options' => array(
+                        'route' => 'autoResult',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'League\Command',
+                            'controller' => 'League\Command\AutoResult',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+            )
+        )
     ),
-
 
     'router' => array(
         'routes' => array(
 
             //actual season
             'actual' => array(
-                'type'    => 'Literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/actual',
+                    'route'    => '/actual[/:action][/:sort]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'sort'     => '[a-zA-Z][a-zA-Z0-9_-]+',
+                    ),
                     'defaults' => array(
-                        'controller' => 'League\Controller\ActualSeason',
+                        'controller' => 'League\Controller\Table',
                         'action'     => 'index',
                     ),
                 ),
 
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //league schedule
-                    'schedule' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/schedule[/:lid]',
-                            'constraints' => array(
-                                'lid'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'schedule',
-                            ),
-                        ),
-                    ),
-
-                    //league schedule
-                    'my-schedule' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/mySchedule[/:uid]',
-                            'constraints' => array(
-                                'uid'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'my-schedule',
-                            ),
-                        ),
-                    ),
-
-                    //league schedule
-                    'i-cal' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/iCal[/:uid]',
-                            'constraints' => array(
-                                'uid'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'i-cal',
-                            ),
-                        ),
-                    ),
-
-                    //league table
-                    'table' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/table[/:lid][/:sort]',
-                            'constraints' => array(
-                                'lid'    => '[0-9]+',
-                                'sort'   => '[a-zA-Z]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'table',
-                            ),
-                        ),
-                    ),
-
-                )
             ),
 
             'result' => array(
-                'type'    => 'Literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/result',
+                    'route'    => '/result[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
                         'controller' => 'League\Controller\Result',
                         'action'     => 'index',
                     ),
                 ),
-
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add a result
-                    'add' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/add[/:id]',
-                            'constraints' => array(
-                                'id'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-
-                    //results of a user
-                    'myresult' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/myresult',
-                            'defaults' => array(
-                                'action' => 'myresult',
-                            ),
-                        ),
-                    ),
-
-                    //open results of a user
-                    'myopen' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/myopen',
-                            'defaults' => array(
-                                'action' => 'myopen',
-                            ),
-                        ),
-                    ),
-                )
             ),
 
-            'matchday' => array(
-                'type'    => 'Literal',
+            'timeTable' => array(
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/matchday',
+                    'route'    => '/timeTable[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
                     'defaults' => array(
-                        'controller' => 'League\Controller\Matchday',
+                        'controller' => 'League\Controller\TimeTable',
                         'action'     => 'index',
                     ),
                 ),
-
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add a result
-                    'edit' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/edit[/:id]',
-                            'constraints' => array(
-                                'id'    => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                                'action' => 'edit',
-                            ),
-                        ),
-                    ),
-
-                )
-            ),
-
-            'newseason' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/newseason',
-                    'defaults' => array(
-                        'controller' => 'League\Controller\Season',
-                        'action'     => 'index',
-                    ),
-                ),
-
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add a result
-                    'add' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/add',
-                            'defaults' => array(
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-
-
-                )
-            ),
-
-            'league' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/league',
-                    'defaults' => array(
-                        'controller' => 'League\Controller\League',
-                        'action'     => 'index',
-                    ),
-                ),
-
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add a result
-                    'add' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/add',
-                            'defaults' => array(
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-
-
-                )
-            ),
-
-            'player' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/player',
-                    'defaults' => array(
-                        'controller' => 'League\Controller\Player',
-                        'action'     => 'index',
-                    ),
-                ),
-
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add a result
-                    'add' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/add',
-                            'defaults' => array(
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-
-
-                )
-            ),
-
-            'schedule' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/schedule',
-                    'defaults' => array(
-                        'controller' => 'League\Controller\Schedule',
-                        'action'     => 'index',
-                    ),
-                ),
-
-                'may_terminate' => true,
-                'child_routes' => array(
-
-                    //add a result
-                    'add' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'   => '/add',
-                            'defaults' => array(
-                                'action' => 'add',
-                            ),
-                        ),
-                    ),
-
-
-                )
             ),
            //next route
 
         ),
     ),
 
-
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
+        'template_map' => array(
+                'Shared' => __DIR__ . '/../view/partial/paginator.phtml', // Note: the key is optional
+        ),
 
         'template_path_stack' => array(
             __DIR__ . '/../view',
@@ -346,32 +154,21 @@ return array(
 
     'service_manager' => array(
         'factories' => array(
-            'League\Factory\MapperFactory'      =>
-                    'League\Factory\MapperFactory',
-            'League\Factory\FormFactory'        =>
-                    'League\Factory\FormFactory',
-            'League\Services\ActualSeasonServiceFactory'     =>
-                    'League\Services\ActualSeasonServiceFactory',
-            'League\Services\SeasonServiceFactory'  =>
-                    'League\Services\SeasonServiceFactory',
-            'League\Services\MatchdayServiceFactory'  =>
-                    'League\Services\MatchdayServiceFactory',
-            'League\Services\LeagueServiceFactory'  =>
-                    'League\Services\LeagueServiceFactory',
-            'League\Services\PlayerServiceFactory'  =>
-                    'League\Services\PlayerServiceFactory',
-            'League\Services\ScheduleServiceFactory'  =>
-                    'League\Services\ScheduleServiceFactory',
-
-            'result_form'       => 'League\Services\ResultFormFactory',
-
-            'League\Services\ResultServiceFactory' =>
-                    'League\Services\ResultServiceFactory',
-
+            'League\Services\RepositoryService' =>
+                'League\Services\RepositoryService',
             'League\Services\ICalService' =>
                 'League\Services\ICalService',
-
-            'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
+            'League\Services\LeagueFormService' =>
+                'League\Services\LeagueFormService',
+            'League\Services\ResultService' =>
+                'League\Services\ResultService',
+            'League\Services\TableService' =>
+                'League\Services\TableService',
+            'League\Services\MailService' =>
+                'League\Services\MailService',
+            'League\Services\MatchVoterService' =>
+                'League\Services\MatchVoterService',
+            'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
 

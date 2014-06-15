@@ -1,0 +1,12 @@
+/*
+* Style for league
+* @package: league
+* @author: Holger Maerz
+* @date: 12.06.2014
+*/
+a.iCal {
+    background: url(../images/iCal-16.png) no-repeat left center;
+    padding-left: 20px;
+    font-weight: bold;
+}
+

@@ -1,0 +1,47 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+
+$this->headTitle('League Roster');
+
+/* @var $season \Season\Entity\Season */
+$season = $this->season;
+$unassigned = intval($this->accepted-$this->assigned);
+
+/* @var $player \User\Entity\User */
+$title = sprintf("%s: %s %s",
+    $this->translate('Create Leagues'),
+    $this->seasonTitle($season),
+    $this->translate('League'));
+?>
+
+    <h3><?php echo $title;?></h3>
+
+<?php $this->placeholder('noSeason')->captureStart();?>
+<?php echo $this->translate("No season found."); ?>
+<?php $this->placeholder('noSeason')->captureEnd();?>
+
+
+<?php $this->placeholder('actual')->captureStart();?>
+
+    <h5><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h5>
+    <hr>
+    <ul>
+        <li><?php echo $this->translate('Number of leagues') . ': ' . $season->getNoLeagues() ?></li>
+        <li><?php echo $this->translate('Number of players accepted') . ': ' . $this->accepted ?></li>
+        <li><?php echo $this->translate('Number of assigned players') . ': ' . $this->assigned ?></li>
+        <li><?php echo $this->translate('Number of unassigned players') . ': ' . $unassigned ?></li>
+        <li><?php echo $this->translate('Due date') . ': ' . $season->getStartDate()->format('d.m.Y') ?></li>
+    </ul>
+    <hr>
+    <a class="btn" href="<?php echo $this->url('season', array('action' => 'create')); ?>"><?php echo "back" ?></a>
+<?php $this->placeholder('actual')->captureEnd(); ?>
+
+
+<?php
+
+if (is_null($this->season)) {
+    echo $this->placeholder('noSeason');
+} else {
+    echo $this->placeholder('actual');
+}
+

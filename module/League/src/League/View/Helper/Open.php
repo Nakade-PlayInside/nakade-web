@@ -2,26 +2,28 @@
 namespace League\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use League\Entity\Match;
+use Season\Entity\Match;
 
 /**
- * View helper determining if the match was already played.
+ * Class Open
+ *
+ * @package League\View\Helper
  */
-class Open extends AbstractHelper
+class Open extends AbstractHelper implements HighlightInterface
 {
     /**
-     * if the match was already played.
-     * 
      * @param Match $match
-     * @return bool
+     *
+     * @return string
      */
     public function __invoke(Match $match)
     {
-       
-       if( null != $match->getResultId() )
-            return false;
-      
         $today = new \DateTime();
-        return ($match->getDate() < $today);
+        $color = $this->getView()->cycle(array(self::ALTERNATING_COLOR,self::BG_COLOR))->next();
+        if (is_null($match->getResult()) && $match->getDate() < $today) {
+            $color =  self::HIGHLIGHT_COLOR;
+        }
+        return $color;
+
     }
 }

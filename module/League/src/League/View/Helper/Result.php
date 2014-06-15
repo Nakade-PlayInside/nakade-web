@@ -1,64 +1,78 @@
 <?php
 namespace League\View\Helper;
 
+use League\Standings\ResultInterface;
 use Zend\View\Helper\AbstractHelper;
-use League\Entity\Match;
+use Season\Entity\Match;
 
 /**
- * View helper for getting a table-like result
+ * Class Result
+ *
+ * @package League\View\Helper
  */
-class Result extends AbstractHelper
+class Result extends AbstractHelper implements ResultInterface
 {
     /**
      * get the result as usual for team games.
      * 2:0 for a win, 1-1 for a draw and 0-0 for suspended games.
-     * 
+     *
      * @param Match $match
+     *
      * @return string
      */
     public function __invoke(Match $match)
     {
-        $result=$match->getResultId();
-        
-        if(null ===$result)
-            return '';
-        
-        if($this->isSuspended($result))
-            return '0-0';
-        
-        if($this->isDraw($result))
-            return '1-1';
-        
-        
-        return ($match->getWinner()==$match->getBlack()? 2:0) . 
-               "-" .
-               ($match->getWinner()==$match->getWhite()? 2:0);
-                    
-     } 
-        
-           
+        $result = '';
+        if (!is_null($match->getResult())) {
+
+             if ($this->hasWinner($match)) {
+                 $result = $this->getWinningResult($match);
+             } else {
+                 $result = $this->getNotWinningResult($match);
+             }
+        }
+        return $result;
+
+    }
+
     /**
-     * is game suspended
-     * 
-     * @param int $result
+     * @param Match $match
+     *
      * @return bool
      */
-    private function isSuspended($result) 
+    private function hasWinner(Match $match)
     {
-        return $result == 5 ;
+        return $match->getResult()->getId() != ResultInterface::SUSPENDED &&
+            $match->getResult()->getId() != ResultInterface::DRAW;
     }
-    
+
     /**
-     * is match a draw 
-     * 
-     * @param int $result
-     * @return bool
+     * @param Match $match
+     *
+     * @return string
      */
-    private function isDraw($result) 
+    private function getNotWinningResult(Match $match)
     {
-        return $result == 3 ;
+        $result = '1-1';
+        if ($match->getResult()->getId() == ResultInterface::SUSPENDED) {
+            $result = '0-0';
+        }
+        return $result;
     }
-    
-   
-   
+
+    /**
+     * @param Match $match
+     *
+     * @return string
+     */
+    private function getWinningResult(Match $match)
+    {
+        $result = '2:0';
+        if ($match->getWinner() == $match->getWhite()) {
+            $result = '0:2';
+        }
+        return $result;
+
+    }
+
 }

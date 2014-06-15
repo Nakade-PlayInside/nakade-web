@@ -44,6 +44,12 @@
 <?php
      if ($user = $this->identity()) {
 
+         echo sprintf('<li><a href="%s">%s</a></li>',
+             $this->url('dashboard'),
+             $this->translate('Dashboard', 'Application')
+         );
+
+
         if ($user->getRole()=='admin') {
 
             $admin = array(
@@ -57,11 +63,11 @@
             $this->translate('open results', 'Application')    =>
                 $this->url('result'),
 
-            $this->translate('edit matchday', 'Application')    =>
-                $this->url('matchday'),
+            $this->translate('edit match day', 'Application')    =>
+                $this->url('timeTable'),
 
             $this->translate('season overview', 'Application')    =>
-                $this->url('newseason'),
+                $this->url('season'),
 
             $this->translate('rejected appointments', 'Application')    =>
                 $this->url('appointmentShow', array('action' => 'reject')),
@@ -100,13 +106,13 @@
         $league = array(
 
             $this->translate('Schedule', 'Application')   =>
-                $this->url('actual/schedule'),
+                $this->url('timeTable', array('action' => 'schedule')),
 
             $this->translate('Standings', 'Application')  =>
-                $this->url('actual/table'),
+                $this->url('actual', array('action' => 'table')),
 
             $this->translate('results', 'Application')    =>
-                $this->url('result/myresult'),
+                $this->url('result', array('action' => 'myResult')),
 
         );
 

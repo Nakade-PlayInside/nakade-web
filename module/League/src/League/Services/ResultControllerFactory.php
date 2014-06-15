@@ -7,41 +7,34 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Creates the controller used for authentication.
- * make sure, you have configured the factory in the module configuration
- * file as a controller factory. 
- * 
- * @author Dr.Holger Maerz <grrompf@gmail.com>
+ * Class ResultControllerFactory
+ *
+ * @package League\Services
  */
 class ResultControllerFactory implements FactoryInterface
 {
-    
+
     /**
-     * creates the authController. Binds the authentication service and
-     * the authentication form.
-     *   
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
-     * @return \Authentication\Controller\AuthController
+     * @param ServiceLocatorInterface $services
+     *
+     * @return ResultController|mixed
      */
     public function createService(ServiceLocatorInterface $services)
     {
         $serviceManager = $services->getServiceLocator();
-        
-        $config  = $serviceManager->get('config');
-        if ($config instanceof Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
-        }
-        
-        $service    = $serviceManager->get(
-                'League\Services\ResultServiceFactory'
-        );
-        $factory    = $serviceManager->get('League\Factory\FormFactory');
-        
+
+        $repository = $serviceManager->get('League\Services\RepositoryService');
+        $factory = $serviceManager->get('League\Services\LeagueFormService');
+        $mail = $serviceManager->get('League\Services\MailService');
+        $voter = $serviceManager->get('League\Services\MatchVoterService');
+
         $controller = new ResultController();
-        $controller->setService($service);
+
         $controller->setFormFactory($factory);
-       
-        
+        $controller->setRepository($repository);
+        $controller->setMailService($mail);
+        $controller->setService($voter);
+
         return $controller;
     }
 }

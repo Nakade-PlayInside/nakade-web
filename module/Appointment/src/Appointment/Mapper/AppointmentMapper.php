@@ -5,7 +5,7 @@ use Doctrine\ORM\Query;
 use \User\Entity\User;
 use Nakade\Abstracts\AbstractMapper;
 use Doctrine\ORM\EntityManager;
-use League\Entity\Match;
+use Season\Entity\Match;
 
 /**
  * Requesting database using doctrine
@@ -87,7 +87,7 @@ class AppointmentMapper extends AbstractMapper
             ->where('a.isConfirmed = 0')
             ->andWhere('a.isRejected = 0')
             ->andWhere('User.id = :uid')
-            ->andWhere('Match._resultId IS NULL')
+            ->andWhere('Match.result IS NULL')
             ->setParameter('uid', $user->getId());
 
         return $qb->getQuery()->getResult();
@@ -114,31 +114,83 @@ class AppointmentMapper extends AbstractMapper
     /**
      * Needed for getMatchesOpenForAppointmentByUser
      *
-     * @param User $user
+     * @param int $userId
      *
      * @return array
      */
-    public function getMatchIdsByUser(User $user)
+    public function getMatchIdsByUser($userId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Appointment');
         $result = $qb
-            ->select('Match._id')
+            ->select('Match.id')
             ->from('Appointment\Entity\Appointment', 'a')
             ->join('a.match', 'Match')
             ->join('a.responder', 'Responder')
             ->join('a.submitter', 'Submitter')
             ->where('Responder.id = :uid OR Submitter.id = :uid')
-            ->setParameter('uid', $user->getId())
+            ->setParameter('uid', $userId)
             ->getQuery()
             ->getResult();
 
         //quicker than array_map
         $ids = array();
         foreach ($result as $item) {
-            $ids[] = $item['_id'];
+            $ids[] = $item['id'];
         }
 
         return $ids;
+    }
+
+    /**
+     * @param User  $userId
+     * @param int   $timeLimit
+     *
+     * @return array
+     */
+    public function getMatchesOpenForAppointmentByUser($userId, $timeLimit=72)
+    {
+
+        $shiftedMatches = $this->getMatchIdsByUser($userId);
+
+        //mandatory array is never empty
+        if (empty($shiftedMatches)) {
+            $shiftedMatches[]=0;
+        }
+
+        $now = new \DateTime();
+        $now->modify('+'.$timeLimit.' hour');
+
+        $qb = $this->getEntityManager()->createQueryBuilder('Match');
+        $qb->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->join('m.black', 'Black')
+            ->join('m.white', 'White')
+            ->where($qb->expr()->notIn('m.id', $shiftedMatches))
+            ->andWhere('m.result is Null')
+            ->andWhere('Black.id = :uid OR White.id = :uid')
+            ->andWhere('m.date > :deadline')
+            ->setParameter('uid', $userId)
+            ->setParameter('deadline', $now)
+            ->orderBy('m.date ', 'ASC');
+
+        $result = $qb->getQuery()->getResult();
+        return $result;
+    }
+
+    /**
+     * get the match by id
+     *
+     * @param int $id
+     *
+     * @return \Season\Entity\Match
+     */
+    public function getMatchById($id)
+    {
+
+        return $this->getEntityManager()
+            ->getRepository('Season\Entity\Match')
+            ->find($id);
+
     }
 
 }

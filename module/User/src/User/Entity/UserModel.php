@@ -135,7 +135,7 @@ class UserModel
    * pwdChange
    *
    * @ORM\Column(name="pwdChange", type="datetime")
-   * @var DateTime
+   * @var \DateTime
    */
   protected $pwdChange;
 
@@ -167,7 +167,7 @@ class UserModel
    * created
    *
    * @ORM\Column(name="created", type="datetime")
-   * @var DateTime
+   * @var \DateTime
    */
   protected $created;
 
@@ -175,7 +175,7 @@ class UserModel
    * due date
    *
    * @ORM\Column(name="due", type="datetime")
-   * @var DateTime
+   * @var \DateTime
    */
   protected $due;
 
@@ -450,7 +450,7 @@ class UserModel
   /**
    * Sets the sex
    *
-   * @param char $sex
+   * @param string $sex
    *
    * @return User
    */
@@ -463,7 +463,7 @@ class UserModel
   /**
    * Returns the sex
    *
-   * @return char
+   * @return string
    */
   public function getSex()
   {
@@ -474,7 +474,7 @@ class UserModel
    * Sets the birthday.
    * Converts to DateTime if string is provided
    *
-   * @param mixed DateTime|string $datetime
+   * @param \DateTime $datetime
    *
    * @return User
    */
@@ -487,7 +487,7 @@ class UserModel
   /**
    * Returns the birthday
    *
-   * @return DateTime
+   * @return \DateTime
    */
   public function getBirthday()
   {
@@ -545,7 +545,7 @@ class UserModel
   /**
    * Sets the Date of creation
    *
-   * @param DateTime $datetime
+   * @param \DateTime $datetime
    *
    * @return user
    */
@@ -558,7 +558,7 @@ class UserModel
   /**
    * Returns the Date  of creation
    *
-   * @return DateTime
+   * @return \DateTime
    */
   public function getCreated()
   {
@@ -568,7 +568,7 @@ class UserModel
   /**
    * Sets the Date of last time editing
    *
-   * @param DateTime $datetime
+   * @param \DateTime $datetime
    *
    * @return user
    */
@@ -581,7 +581,7 @@ class UserModel
   /**
    * Returns the Date  of last time editing
    *
-   * @return DateTime
+   * @return \DateTime
    */
   public function getEdit()
   {
@@ -591,7 +591,7 @@ class UserModel
   /**
    * Sets the Date of last time pwd change
    *
-   * @param DateTime $datetime
+   * @param \DateTime $datetime
    *
    * @return user
    */
@@ -604,7 +604,7 @@ class UserModel
   /**
    * Returns the Date  of last time pwd change
    *
-   * @return DateTime
+   * @return \DateTime
    */
   public function getPwdChange()
   {
@@ -638,7 +638,7 @@ class UserModel
   /**
    * Sets the due date.
    *
-   * @param DateTime $datetime
+   * @param \DateTime $datetime
    *
    * @return user
    */
@@ -652,7 +652,7 @@ class UserModel
   /**
    * Returns the due date
    *
-   * @return DateTime
+   * @return \DateTime
    */
   public function getDue()
   {
@@ -663,7 +663,7 @@ class UserModel
   /**
    * Sets the Date of the last Login.
    *
-   * @param DateTime $datetime
+   * @param \DateTime $datetime
    *
    * @return user
    */
@@ -677,7 +677,7 @@ class UserModel
   /**
    * Returns the Date of the last Login
    *
-   * @return DateTime
+   * @return \DateTime
    */
   public function getLastLogin()
   {
@@ -687,7 +687,7 @@ class UserModel
   /**
    * Sets the Date of the first Login.
    *
-   * @param DateTime $datetime
+   * @param \DateTime $datetime
    *
    * @return user
    */
@@ -700,7 +700,7 @@ class UserModel
   /**
    * Returns the Date of the first Login
    *
-   * @return DateTime
+   * @return \DateTime
    */
   public function getFirstLogin()
   {

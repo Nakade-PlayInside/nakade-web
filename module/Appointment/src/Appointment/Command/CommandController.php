@@ -7,11 +7,13 @@
 
 namespace Appointment\Command;
 
+use Appointment\Services\RepositoryService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Console\Request as ConsoleRequest;
 
 /**
  * console command for cron job
+ * crontab for www-data: php /var/www/nakade/public/index.php autoConfirm > /dev/null
  *
  * @package Appointment\Command
  */
@@ -46,7 +48,7 @@ class CommandController extends AbstractActionController
        $mail = $mailService->getMail('confirm');
 
        /* @var $repo \Appointment\Mapper\AppointmentMapper */
-       $repo = $repoService->getMapper('Appointment');
+       $repo = $repoService->getMapper(RepositoryService::APPOINTMENT_MAPPER);
        $result = $repo->getOverdueAppointments($time);
 
        echo "Found " . count($result) . " open appointment(s)" .PHP_EOL;
@@ -58,6 +60,9 @@ class CommandController extends AbstractActionController
            $match = $appointment->getMatch();
            $match->setDate($newDate);
            $appointment->setIsConfirmed(true);
+           $sequence = $match->getSequence() + 1;
+           $match->setSequence($sequence);
+
            $repo->save($match);
            $repo->save($appointment);
 

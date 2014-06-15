@@ -1,0 +1,57 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+
+$this->headTitle('Player Roster');
+
+/* @var $season \Season\Entity\Season */
+$season = $this->season;
+
+/* @var $player \User\Entity\User */
+$title = sprintf("%s: %s %s",
+    $this->translate('Player Roster'),
+    $this->seasonTitle($season),
+    $this->translate('League'));
+?>
+
+    <h3><?php echo $title;?></h3>
+
+<?php $this->placeholder('noSeason')->captureStart();?>
+<?php echo $this->translate("No season found."); ?>
+<?php $this->placeholder('noSeason')->captureEnd();?>
+
+
+<?php $this->placeholder('actual')->captureStart();?>
+
+    <h5><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h5>
+    <hr>
+    <h5><?php echo $this->translate("Invited players");?></h5>
+    <ul class="playerList">
+<?php foreach ($this->invited as $player) : ?>
+            <li><?php echo $this->accepted($player, $this->accepted);?></li>
+<?php
+endforeach
+?>
+    </ul>
+    <hr>
+    <h5><?php echo $this->translate("Available players");?></h5>
+    <ul class="playerList">
+<?php foreach ($this->available as $player) : ?>
+            <li><?php echo $player->getName() ?></li>
+<?php
+endforeach
+?>
+    </ul>
+<hr>
+<a class="btn" href="<?php echo $this->url('season', array('action' => 'create')); ?>"><?php echo "back" ?></a>
+<?php $this->placeholder('actual')->captureEnd(); ?>
+
+
+<?php
+
+if (is_null($this->season)) {
+    echo $this->placeholder('noSeason');
+} else {
+    echo $this->placeholder('actual');
+}
+
+

@@ -7,12 +7,14 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Creates the form with a translator, filter and validator.
- * Adds the translation file for validation messages from zend ressources.
+ * Class AbstractFormFactory
+ *
+ * @package Nakade\Abstracts
  */
 abstract class AbstractFormFactory extends AbstractTranslation implements FactoryInterface, FormServiceInterface
 {
-
+    protected $fieldSetService;
+    protected $repository;
     protected $entityManager;
 
     /**
@@ -77,5 +79,37 @@ abstract class AbstractFormFactory extends AbstractTranslation implements Factor
      * @return \Zend\Form\Form
      */
     abstract public function getForm($typ);
+
+    /**
+     * @param mixed $fieldSetService
+     */
+    public function setFieldSetService($fieldSetService)
+    {
+        $this->fieldSetService = $fieldSetService;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFieldSetService()
+    {
+        return $this->fieldSetService;
+    }
+
+    /**
+     * @param mixed $repository
+     */
+    public function setRepository($repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
 
 }
