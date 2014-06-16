@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-15 19:20+0100\n"
-"PO-Revision-Date: 2014-06-15 19:20+0100\n"
+"POT-Creation-Date: 2014-06-16 10:21+0100\n"
+"PO-Revision-Date: 2014-06-16 10:21+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -162,31 +162,6 @@ msgstr ""
 msgid "Your Match Result is Missing"
 msgstr ""
 
-#: ../src/League/View/Helper/MatchDayResult.php:49
-#: ../src/League/View/Helper/MatchDayResult.php:67
-msgid "R"
-msgstr ""
-
-#: ../src/League/View/Helper/MatchDayResult.php:52
-msgid "Pt"
-msgstr ""
-
-#: ../src/League/View/Helper/MatchDayResult.php:55
-msgid "D"
-msgstr ""
-
-#: ../src/League/View/Helper/MatchDayResult.php:58
-msgid "F"
-msgstr ""
-
-#: ../src/League/View/Helper/MatchDayResult.php:61
-msgid "S"
-msgstr ""
-
-#: ../src/League/View/Helper/MatchDayResult.php:64
-msgid "T"
-msgstr ""
-
 #: ../src/League/View/Helper/OpenResult.php:27
 msgid "Enter Result"
 msgstr ""
@@ -265,6 +240,7 @@ msgid "No Info available"
 msgstr ""
 
 #: ../src/League/Standings/Results.php:23
+#: ../src/League/Standings/Results.php:72
 msgid "Resignation"
 msgstr ""
 
@@ -273,7 +249,8 @@ msgid "Win by Points"
 msgstr ""
 
 #: ../src/League/Standings/Results.php:25
-msgid "Jigo"
+#: ../src/League/Standings/Results.php:73
+msgid "Draw"
 msgstr ""
 
 #: ../src/League/Standings/Results.php:26
@@ -286,6 +263,38 @@ msgstr ""
 
 #: ../src/League/Standings/Results.php:28
 msgid "Lost on Time"
+msgstr ""
+
+#: ../src/League/Standings/Results.php:49
+msgid "R"
+msgstr ""
+
+#: ../src/League/Standings/Results.php:50
+msgid "Pt"
+msgstr ""
+
+#: ../src/League/Standings/Results.php:51
+msgid "D"
+msgstr ""
+
+#: ../src/League/Standings/Results.php:52
+msgid "F"
+msgstr ""
+
+#: ../src/League/Standings/Results.php:53
+msgid "S"
+msgstr ""
+
+#: ../src/League/Standings/Results.php:54
+msgid "T"
+msgstr ""
+
+#: ../src/League/Standings/Results.php:74
+msgid "Forfeit"
+msgstr ""
+
+#: ../src/League/Standings/Results.php:75
+msgid "Suspended"
 msgstr ""
 
 #: ../view/league/table/index.phtml:9
@@ -352,6 +361,10 @@ msgstr ""
 
 #: ../view/league/table/table.phtml:33
 msgid "W"
+msgstr ""
+
+#: ../view/league/table/table.phtml:34
+msgid "Jigo"
 msgstr ""
 
 #: ../view/league/table/table.phtml:35

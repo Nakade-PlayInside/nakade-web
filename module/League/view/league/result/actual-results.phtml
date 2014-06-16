@@ -16,7 +16,7 @@ $this->headTitle('Actual Results');
 
 
 
-<table class="league" style="width: auto; margin-top: 0.5em;">
+<table class="results">
 <?php foreach ($this->matches as $match) : ?>
 <tr>
     <td style="text-decoration: <?php echo $this->isWinner($match, $match->getBlack()); ?>"><?php echo $match->getBlack()->getShortName();?></td>
@@ -27,6 +27,13 @@ $this->headTitle('Actual Results');
 <?php
 endforeach; ?>
 </table>
+
+<ul class='legend'>
+<?php foreach ($this->legend as $legendLine) : ?>
+<li><?php echo $legendLine; ?></li>
+<?php
+endforeach; ?>
+</ul>
 
 <?php $this->placeholder('openResults')->captureEnd();
 

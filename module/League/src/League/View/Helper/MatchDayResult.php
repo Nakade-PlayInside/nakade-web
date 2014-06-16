@@ -23,7 +23,7 @@ class MatchDayResult extends AbstractHelper implements ResultInterface
     {
         $info = $match->getDate()->format('d.m.  H:i');
         if ($match->hasResult()) {
-            $info = $this->getResult($match);
+            $info = $this->getInfo($match);
         }
         return $info;
     }
@@ -33,43 +33,64 @@ class MatchDayResult extends AbstractHelper implements ResultInterface
      *
      * @return string
      */
-    private function getResult(Match $match)
+    private function getInfo(Match $match)
     {
-        $sm = $this->getView()->getHelperPluginManager()->getServiceLocator();
 
-        /* @var $resultList \League\Standings\Results */
-        $resultList = $sm->get('League\Services\ResultService');
         $resultId = $match->getResult()->getId();
         $result = $this->getView()->result($match);
+        $title = $this->getResult($resultId);
 
-        $title = $resultList->getResult($resultId);
-
-        switch($resultId) {
-            case self::RESIGNATION:
-                $show  = $this->getView()->translate('R');
-                break;
-            case self::BYPOINTS:
-                $show = $match->getPoints() . ' ' . $this->getView()->translate('Pt');
-                break;
-            case self::DRAW:
-                $show = $this->getView()->translate('D');
-                break;
-            case self::FORFEIT:
-                $show = $this->getView()->translate('F');
-                break;
-            case self::SUSPENDED:
-                $show = $this->getView()->translate('S');
-                break;
-            case self::ONTIME:
-                $show = $this->getView()->translate('T');
-                break;
-            default:
-                $show = $this->getView()->translate('R');
+        if ($resultId == self::BYPOINTS) {
+            $show = $match->getPoints() . ' ' . $this->getAbbreviation($resultId);
+        } else {
+            $show = $this->getAbbreviation($resultId);
         }
 
         return sprintf("<span title=\"%s\">%s (%s)</span>", $title, $result, $show);
 
     }
 
+    /**
+     * @return \League\Standings\Results
+     *
+     * @throws \RuntimeException
+     */
+    private function getResultService()
+    {
+        $sm = $this->getView()->getHelperPluginManager()->getServiceLocator();
+
+        if (!$sm->has('League\Services\ResultService')) {
+            throw new \RuntimeException(
+                sprintf('Result service could not be found.')
+            );
+        }
+        return $sm->get('League\Services\ResultService');
+    }
+
+    /**
+     * @param int $resultId
+     *
+     * @return string
+     *
+     * @throws \RuntimeException
+     */
+    private function getAbbreviation($resultId)
+    {
+        $resultService = $this->getResultService();
+        return $resultService->getAbbreviation($resultId);
+    }
+
+    /**
+     * @param int $resultId
+     *
+     * @return string
+     *
+     * @throws \RuntimeException
+     */
+    private function getResult($resultId)
+    {
+        $resultService = $this->getResultService();
+        return $resultService->getResult($resultId);
+    }
 
 }

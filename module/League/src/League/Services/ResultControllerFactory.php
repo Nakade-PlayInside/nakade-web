@@ -27,6 +27,7 @@ class ResultControllerFactory implements FactoryInterface
         $factory = $serviceManager->get('League\Services\LeagueFormService');
         $mail = $serviceManager->get('League\Services\MailService');
         $voter = $serviceManager->get('League\Services\MatchVoterService');
+        $resultService = $serviceManager->get('League\Services\ResultService');
 
         $controller = new ResultController();
 
@@ -34,6 +35,7 @@ class ResultControllerFactory implements FactoryInterface
         $controller->setRepository($repository);
         $controller->setMailService($mail);
         $controller->setService($voter);
+        $controller->setResultService($resultService);
 
         return $controller;
     }

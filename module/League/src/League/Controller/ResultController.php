@@ -17,6 +17,8 @@ use League\Services\MailService;
  */
 class ResultController extends AbstractController implements RoleInterface
 {
+    /* @var $resultService \League\Services\ResultService */
+    private $resultService;
 
    /**
     * showing all open results of the actual season
@@ -163,6 +165,7 @@ class ResultController extends AbstractController implements RoleInterface
 
         return new ViewModel(
             array(
+                'legend' => $this->getResultService()->getLegend(),
                 'matchDay' =>  $matchDay,
                 'matches' =>  $matches
             )
@@ -177,5 +180,20 @@ class ResultController extends AbstractController implements RoleInterface
         return new ViewModel(array());
     }
 
+    /**
+     * @return \League\Services\ResultService
+     */
+    public function getResultService()
+    {
+        return $this->resultService;
+    }
+
+    /**
+     * @param \League\Services\ResultService $resultService
+     */
+    public function setResultService($resultService)
+    {
+        $this->resultService = $resultService;
+    }
 
 }
