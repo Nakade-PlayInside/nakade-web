@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-12 16:59+0100\n"
-"PO-Revision-Date: 2014-06-15 11:40+0100\n"
+"POT-Creation-Date: 2014-06-16 17:26+0100\n"
+"PO-Revision-Date: 2014-06-16 17:26+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -26,7 +26,7 @@ msgstr "Dies ist eine Erinnerung an deine nächste Partie am %NEW_DATE% ."
 #: ../src/League/Mail/ScheduleMail.php:21
 #: ../src/League/Mail/ResultReminderMail.php:21
 msgid "Your match: %MATCH_INFO%"
-msgstr "Deine Partie: %MATCH INFO%"
+msgstr "Deine Partie: %MATCH_INFO%"
 
 #: ../src/League/Mail/MatchReminderMail.php:23
 msgid "For any more details visit us at %URL%"
