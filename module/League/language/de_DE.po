@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-16 10:18+0100\n"
-"PO-Revision-Date: 2014-06-16 10:21+0100\n"
+"POT-Creation-Date: 2014-06-16 10:43+0100\n"
+"PO-Revision-Date: 2014-06-16 10:45+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -252,7 +252,7 @@ msgstr "Sieg nach Punkten"
 #: ../src/League/Standings/Results.php:25
 #: ../src/League/Standings/Results.php:73
 msgid "Draw"
-msgstr "Untentschieden"
+msgstr "Unentschieden"
 
 #: ../src/League/Standings/Results.php:26
 msgid "Lost by Forfeit"
@@ -292,7 +292,7 @@ msgstr "Z"
 
 #: ../src/League/Standings/Results.php:74
 msgid "Forfeit"
-msgstr "Nichterschienen"
+msgstr "nicht Erschienen"
 
 #: ../src/League/Standings/Results.php:75
 msgid "Suspended"
