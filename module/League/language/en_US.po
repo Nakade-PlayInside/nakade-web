@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-12 16:59+0100\n"
-"PO-Revision-Date: 2014-06-12 16:59+0100\n"
+"POT-Creation-Date: 2014-06-15 19:20+0100\n"
+"PO-Revision-Date: 2014-06-15 19:20+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -160,6 +160,31 @@ msgstr ""
 
 #: ../src/League/Mail/ResultReminderMail.php:41
 msgid "Your Match Result is Missing"
+msgstr ""
+
+#: ../src/League/View/Helper/MatchDayResult.php:49
+#: ../src/League/View/Helper/MatchDayResult.php:67
+msgid "R"
+msgstr ""
+
+#: ../src/League/View/Helper/MatchDayResult.php:52
+msgid "Pt"
+msgstr ""
+
+#: ../src/League/View/Helper/MatchDayResult.php:55
+msgid "D"
+msgstr ""
+
+#: ../src/League/View/Helper/MatchDayResult.php:58
+msgid "F"
+msgstr ""
+
+#: ../src/League/View/Helper/MatchDayResult.php:61
+msgid "S"
+msgstr ""
+
+#: ../src/League/View/Helper/MatchDayResult.php:64
+msgid "T"
 msgstr ""
 
 #: ../src/League/View/Helper/OpenResult.php:27
@@ -339,10 +364,6 @@ msgstr ""
 
 #: ../view/league/table/table.phtml:37
 msgid "L"
-msgstr ""
-
-#: ../view/league/table/table.phtml:39
-msgid "Pt"
 msgstr ""
 
 #: ../view/league/time-table/index.phtml:4

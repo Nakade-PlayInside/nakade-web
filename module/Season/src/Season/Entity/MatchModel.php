@@ -48,10 +48,10 @@ class MatchModel
     private $league;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Season\Entity\MatchingDay", cascade={"persist"})
-     * @ORM\JoinColumn(name="matchingDay", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Season\Entity\MatchDay", cascade={"persist"})
+     * @ORM\JoinColumn(name="matchDay", referencedColumnName="id", nullable=false)
      */
-    private $matchingDay;
+    private $matchDay;
 
 
    /**
@@ -71,11 +71,6 @@ class MatchModel
    * @ORM\JoinColumn(name="winner", referencedColumnName="uid")
    */
     private $winner;
-
-   /**
-   * @ORM\Column(name="matchday", type="integer")
-   */
-    private $matchDay;
 
     /**
      * @ORM\Column(name="sequence", type="integer")
@@ -147,36 +142,21 @@ class MatchModel
     }
 
     /**
-     * @param MatchingDay $matchingDay
+     * @param MatchDay $matchDay
      */
-    public function setMatchingDay(MatchingDay $matchingDay)
-    {
-        $this->matchingDay = $matchingDay;
-    }
-
-    /**
-     * @return MatchingDay
-     */
-    public function getMatchingDay()
-    {
-        return $this->matchingDay;
-    }
-
-    /**
-     * @param int $matchDay
-     */
-    public function setMatchDay($matchDay)
+    public function setMatchDay(MatchDay $matchDay)
     {
         $this->matchDay = $matchDay;
     }
 
     /**
-     * @return int
+     * @return MatchDay
      */
     public function getMatchDay()
     {
         return $this->matchDay;
     }
+
 
     /**
      * @param float $points

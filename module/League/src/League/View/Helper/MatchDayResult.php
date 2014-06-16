@@ -46,25 +46,25 @@ class MatchDayResult extends AbstractHelper implements ResultInterface
 
         switch($resultId) {
             case self::RESIGNATION:
-                $show  = 'R';
+                $show  = $this->getView()->translate('R');
                 break;
             case self::BYPOINTS:
-                $show = $match->getPoints();
+                $show = $match->getPoints() . ' ' . $this->getView()->translate('Pt');
                 break;
             case self::DRAW:
-                $show = 'D';
+                $show = $this->getView()->translate('D');
                 break;
             case self::FORFEIT:
-                $show = 'F';
+                $show = $this->getView()->translate('F');
                 break;
             case self::SUSPENDED:
-                $show = 'S';
+                $show = $this->getView()->translate('S');
                 break;
             case self::ONTIME:
-                $show = 'T';
+                $show = $this->getView()->translate('T');
                 break;
             default:
-                $show = 'R';
+                $show = $this->getView()->translate('R');
         }
 
         return sprintf("<span title=\"%s\">%s (%s)</span>", $title, $result, $show);

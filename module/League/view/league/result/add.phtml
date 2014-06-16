@@ -7,7 +7,7 @@ $info = sprintf('%s: %s - %s',
     $match->getBlack()->getShortName(),
     $match->getWhite()->getShortName()
 );
-$info = str_replace('%no%', $match->getMatchingDay()->getMatchDay(), $info);
+$info = str_replace('%no%', $match->getMatchDay()->getMatchDay(), $info);
 
 $title = $this->translate('New Result');
 $this->headTitle($title);

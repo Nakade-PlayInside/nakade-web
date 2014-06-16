@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Entity Class representing a Match
  *
  * @ORM\Entity
- * @ORM\Table(name="leaguePairings")
+ * @ORM\Table(name="matches")
  */
 class Match extends MatchModel
 {

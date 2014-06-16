@@ -10,9 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 * Entity Class representing a Match
 *
 * @ORM\Entity
-* @ORM\Table(name="matchingDay")
+* @ORM\Table(name="matchDay")
 */
-class MatchingDay
+class MatchDay
 {
 
   /**
