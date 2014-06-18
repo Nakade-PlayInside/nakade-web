@@ -101,6 +101,31 @@ class Results extends AbstractTranslation implements ResultInterface
     }
 
     /**
+     * @param array $matches
+     *
+     * @return array
+     */
+    public function getLegendByMatches(array $matches)
+    {
+        $legend = array();
+
+        /* @var $match \Season\Entity\Match */
+        foreach ($matches as $match) {
+            if (is_null($match->getResult()) || $match->getResult()->getId() == self::BYPOINTS) {
+                continue;
+            }
+            $resultId = $match->getResult()->getId();
+            $info = $this->getLegendInfo($resultId);
+
+            if (false === in_array($info, $legend)) {
+                $legend[] = $info;
+            }
+        }
+
+        return $legend;
+    }
+
+    /**
      * @param int $resultId
      *
      * @return string

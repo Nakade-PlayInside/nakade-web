@@ -165,7 +165,7 @@ class ResultController extends AbstractController implements RoleInterface
 
         return new ViewModel(
             array(
-                'legend' => $this->getResultService()->getLegend(),
+                'legend' => $this->getResultService()->getLegendByMatches($matches),
                 'matchDay' =>  $matchDay,
                 'matches' =>  $matches
             )
@@ -181,7 +181,7 @@ class ResultController extends AbstractController implements RoleInterface
     }
 
     /**
-     * @return \League\Services\ResultService
+     * @return \League\Standings\Results
      */
     public function getResultService()
     {
