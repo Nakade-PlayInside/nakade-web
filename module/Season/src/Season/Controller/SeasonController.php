@@ -202,4 +202,25 @@ class SeasonController extends AbstractController
         );
     }
 
+    /**
+     * @return ViewModel
+     */
+    public function showRulesAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 1);
+
+        /* @var $repository \Season\Mapper\SeasonMapper */
+        $repository = $this->getRepository()->getMapper('season');
+
+        /* @var $season \Season\Entity\Season */
+        $season = $repository->getActiveSeasonByAssociation($id);
+
+
+        return new ViewModel(
+            array(
+                'season' => $season,
+            )
+        );
+    }
+
 }

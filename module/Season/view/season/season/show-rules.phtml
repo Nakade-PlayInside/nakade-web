@@ -1,0 +1,35 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+/* @var $season \Season\Entity\Season */
+$season = $this->season;
+$this->headTitle('Rules');
+$title = $this->translate('Times and Komi');
+?>
+
+<h3><?php echo $title;?></h3>
+
+<?php $this->placeholder('noSeason')->captureStart();?>
+      <?php echo $this->translate("No season found."); ?>
+<?php $this->placeholder('noSeason')->captureEnd();?>
+
+
+<?php $this->placeholder('actual')->captureStart();?>
+
+<ul class="legend">
+<?php foreach ($this->rulesInfo($season) as $line) : ?>
+    <li><?php echo $line; ?></li>
+<?php
+endforeach; ?>
+</ul>
+
+<?php $this->placeholder('actual')->captureEnd(); ?>
+
+
+<?php
+
+ if (is_null($this->season)) {
+     echo $this->placeholder('noSeason');
+ } else {
+     echo $this->placeholder('actual');
+ }
+
