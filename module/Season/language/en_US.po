@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-12 01:11+0100\n"
-"PO-Revision-Date: 2014-06-12 01:11+0100\n"
+"POT-Creation-Date: 2014-06-18 21:56+0100\n"
+"PO-Revision-Date: 2014-06-18 21:56+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -33,6 +33,27 @@ msgstr ""
 
 #: ../src/Season/View/Helper/PlayerAccepted.php:28
 msgid "Player accepted invitation"
+msgstr ""
+
+#: ../src/Season/View/Helper/RulesInfo.php:23
+msgid "Time"
+msgstr ""
+
+#: ../src/Season/View/Helper/RulesInfo.php:24
+msgid "min."
+msgstr ""
+
+#: ../src/Season/View/Helper/RulesInfo.php:29
+msgid "Byoyomi"
+msgstr ""
+
+#: ../src/Season/View/Helper/RulesInfo.php:35
+#: ../src/Season/Form/SeasonForm.php:99
+msgid "Komi"
+msgstr ""
+
+#: ../src/Season/View/Helper/RulesInfo.php:36
+msgid "points"
 msgstr ""
 
 #: ../src/Season/Form/ParticipantForm.php:39
@@ -119,10 +140,6 @@ msgstr ""
 msgid "Winning points"
 msgstr ""
 
-#: ../src/Season/Form/SeasonForm.php:99
-msgid "Komi"
-msgstr ""
-
 #: ../src/Season/Form/SeasonForm.php:119
 msgid "Base time in minutes"
 msgstr ""
@@ -166,6 +183,7 @@ msgstr ""
 
 #: ../view/season/player/index.phtml:19
 #: ../view/season/season/index.phtml:15
+#: ../view/season/season/show-rules.phtml:12
 #: ../view/season/season/create.phtml:16
 #: ../view/season/league/index.phtml:20
 msgid "No season found."
@@ -220,6 +238,10 @@ msgstr ""
 #: ../view/season/season/index.phtml:29
 #: ../view/season/season/create.phtml:31
 msgid "State"
+msgstr ""
+
+#: ../view/season/season/show-rules.phtml:6
+msgid "Times and Komi"
 msgstr ""
 
 #: ../view/season/season/edit.phtml:6
