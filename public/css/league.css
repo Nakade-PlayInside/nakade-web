@@ -10,3 +10,21 @@ a.iCal {
     font-weight: bold;
 }
 
+ul.legend {
+    margin-top: 10px;
+    margin-left: 10px;
+    list-style-type:none;
+}
+
+table.results {
+    width: auto;
+    margin-top: 0.5em;
+}
+
+.results .versus {
+    padding: 0 6px;
+}
+
+.results .space {
+    padding-right: 10px;
+}

@@ -21,7 +21,7 @@ $this->headTitle('League');
 foreach ($this->matches as $match) : ?>
 <tr style="background-color:<?php
     echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-    <td style="text-align:center"><?php echo $match->getMatchingDay()->getMatchDay(); ?></td>
+    <td style="text-align:center"><?php echo $match->getMatchDay()->getMatchDay(); ?></td>
     <td style="text-align:center"><?php echo $match->getLeague()->getNumber(); ?></td>
     <td><?php echo $match->getBlack()->getCompleteName();?></td>
     <td><?php echo $match->getWhite()->getCompleteName();?></td>

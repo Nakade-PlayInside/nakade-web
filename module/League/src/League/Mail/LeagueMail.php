@@ -79,7 +79,7 @@ abstract class LeagueMail extends NakadeMail implements ResultInterface
 
             $message = str_replace('%MATCH_INFO%', $this->getMatch()->getMatchInfo(), $message);
             $message = str_replace('%NEW_DATE%', $this->getMatch()->getDate()->format('d.m.y H:i'), $message);
-            $message = str_replace('%OLD_DATE%', $this->getMatch()->getMatchingDay()->getDate()->format('d.m.y H:i'), $message);
+            $message = str_replace('%OLD_DATE%', $this->getMatch()->getMatchDay()->getDate()->format('d.m.y H:i'), $message);
             $message = str_replace('%RESULT%', $this->getResult($this->getMatch()), $message);
         }
     }

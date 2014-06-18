@@ -40,7 +40,7 @@ class LeagueMapper extends AbstractMapper
     public function getMatchesByLeague($leagueId)
     {
         $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder('Match')
+        $qb = $em->createQueryBuilder('myMatch')
             ->select('m')
             ->from('Season\Entity\Match', 'm')
             ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'm.league = l')

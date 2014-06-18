@@ -19,6 +19,8 @@ return array(
             'state'  => 'Season\View\Helper\SeasonState',
             'matchDate'  => 'Season\View\Helper\MatchDate',
             'accepted'  => 'Season\View\Helper\PlayerAccepted',
+            'rulesInfo'  => 'Season\View\Helper\RulesInfo',
+
 
             // more helpers here ...
         )

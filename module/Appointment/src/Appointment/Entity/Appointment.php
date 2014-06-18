@@ -10,7 +10,7 @@ use Season\Entity\Match;
  * model
  *
  * @ORM\Entity
- * @ORM\Table(name="leagueAppointments")
+ * @ORM\Table(name="appointments")
  */
 class Appointment
 {

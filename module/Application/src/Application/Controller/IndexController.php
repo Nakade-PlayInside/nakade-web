@@ -40,11 +40,16 @@ class IndexController extends AbstractActionController
             array('action' => 'actualResults')
         );
 
+        $rulesWidget = $this->forward()->dispatch('/Season/Controller/Season',
+            array('action' => 'showRules')
+        );
+
         $page = new ViewModel(array( 'No' => "5"));
 
         $page->addChild($blogWidget, 'blogWidget');
         $page->addChild($tableWidget, 'tableWidget');
         $page->addChild($resultWidget, 'resultWidget');
+        $page->addChild($rulesWidget, 'rulesWidget');
 
 
         return $page;

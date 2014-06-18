@@ -65,7 +65,7 @@ class ResultHydrator implements HydratorInterface
     {
         /* @var $match \Season\Entity\Match */
         if (isset($data['points'])) {
-            $points = intval($data['points']);
+            $points = floatval($data['points']);
             $match->setPoints($points);
         }
         if (isset($data['winnerId'])) {

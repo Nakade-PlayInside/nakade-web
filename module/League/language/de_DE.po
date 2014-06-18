@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-16 17:26+0100\n"
-"PO-Revision-Date: 2014-06-16 17:26+0100\n"
+"POT-Creation-Date: 2014-06-18 22:04+0100\n"
+"PO-Revision-Date: 2014-06-18 22:04+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -241,6 +241,7 @@ msgid "No Info available"
 msgstr "Keine Informationen verfügbar"
 
 #: ../src/League/Standings/Results.php:23
+#: ../src/League/Standings/Results.php:72
 msgid "Resignation"
 msgstr "Aufgabe"
 
@@ -249,8 +250,9 @@ msgid "Win by Points"
 msgstr "Sieg nach Punkten"
 
 #: ../src/League/Standings/Results.php:25
-msgid "Jigo"
-msgstr "Jigo"
+#: ../src/League/Standings/Results.php:73
+msgid "Draw"
+msgstr "Unentschieden"
 
 #: ../src/League/Standings/Results.php:26
 msgid "Lost by Forfeit"
@@ -263,6 +265,38 @@ msgstr "Spiel ausgesetzt"
 #: ../src/League/Standings/Results.php:28
 msgid "Lost on Time"
 msgstr "auf Zeit verloren "
+
+#: ../src/League/Standings/Results.php:49
+msgid "R"
+msgstr "A"
+
+#: ../src/League/Standings/Results.php:50
+msgid "Pt"
+msgstr "Pkt"
+
+#: ../src/League/Standings/Results.php:51
+msgid "D"
+msgstr "U"
+
+#: ../src/League/Standings/Results.php:52
+msgid "F"
+msgstr "nE"
+
+#: ../src/League/Standings/Results.php:53
+msgid "S"
+msgstr "ng"
+
+#: ../src/League/Standings/Results.php:54
+msgid "T"
+msgstr "Z"
+
+#: ../src/League/Standings/Results.php:74
+msgid "Forfeit"
+msgstr "nicht Erschienen"
+
+#: ../src/League/Standings/Results.php:75
+msgid "Suspended"
+msgstr " nicht gespielt"
 
 #: ../view/league/table/index.phtml:9
 msgid "%name% 1. League"
@@ -330,6 +364,10 @@ msgstr "Siege"
 msgid "W"
 msgstr "S"
 
+#: ../view/league/table/table.phtml:34
+msgid "Jigo"
+msgstr "Jigo"
+
 #: ../view/league/table/table.phtml:35
 msgid "J"
 msgstr "U"
@@ -341,10 +379,6 @@ msgstr "Niederlagen"
 #: ../view/league/table/table.phtml:37
 msgid "L"
 msgstr "N"
-
-#: ../view/league/table/table.phtml:39
-msgid "Pt"
-msgstr "P"
 
 #: ../view/league/time-table/index.phtml:4
 msgid "edit match day"
@@ -615,9 +649,6 @@ msgstr "Neues Ergebnis"
 
 #~ msgid "Suspended games"
 #~ msgstr "ausgesetzte Partien"
-
-#~ msgid "GS"
-#~ msgstr "AP"
 
 #~ msgid "First Tiebreaker"
 #~ msgstr "erster Tie-Breaker"
