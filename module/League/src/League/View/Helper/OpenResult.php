@@ -20,7 +20,7 @@ class OpenResult extends AbstractHelper implements HighlightInterface
     {
         $today = new \DateTime();
         $result = $this->getView()->result($match);
-        if (is_null($match->getResult()) && $match->getDate() < $today) {
+        if (!$match->hasResult() && $match->getDate() < $today) {
 
             $result = sprintf('<a href="%s" title="%s">%s</a>',
                 $this->getUrl($match),

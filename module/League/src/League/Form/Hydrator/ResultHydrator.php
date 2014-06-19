@@ -40,17 +40,17 @@ class ResultHydrator implements HydratorInterface
           'id' => $match->getId(),
           'winnerId' => $this->winnerId,
           'resultId' => $this->resultId,
-          'points' => $match->getPoints()
+          'points' => $match->getResult()->getPoints()
         );
     }
 
     private function setValues(Match $match)
     {
-        if (!is_null($match->getWinner())) {
-            $this->winnerId = $match->getWinner()->getId();
+        if (!is_null($match->getResult()) && !is_null($match->getResult()->getWinner())) {
+            $this->winnerId = $match->getResult()->getWinner()->getId();
         }
         if (!is_null($match->getResult())) {
-            $this->resultId = $match->getResult()->getId();
+            $this->resultId = $match->getResult()->getResultType()->getId();
         }
 
     }
@@ -63,6 +63,8 @@ class ResultHydrator implements HydratorInterface
      */
     public function hydrate(array $data, $match)
     {
+        //todo: setResult(new Result())
+        //todo: resultType, winner, points
         /* @var $match \Season\Entity\Match */
         if (isset($data['points'])) {
             $points = floatval($data['points']);
@@ -102,11 +104,11 @@ class ResultHydrator implements HydratorInterface
     /**
      * @param int $resultId
      *
-     * @return null|\League\Entity\Result
+     * @return null|\League\Entity\ResultType
      */
     private function getResult($resultId)
     {
-        return $this->getEntityManager()->getReference('League\Entity\Result', intval($resultId));
+        return $this->getEntityManager()->getReference('League\Entity\ResultType', intval($resultId));
     }
 
     /**

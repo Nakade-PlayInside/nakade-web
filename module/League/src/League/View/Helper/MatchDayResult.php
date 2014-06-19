@@ -36,12 +36,12 @@ class MatchDayResult extends AbstractHelper implements ResultInterface
     private function getInfo(Match $match)
     {
 
-        $resultId = $match->getResult()->getId();
+        $resultId = $match->getResult()->getResultType()->getId();
         $result = $this->getView()->result($match);
         $title = $this->getResult($resultId);
 
         if ($resultId == self::BYPOINTS) {
-            $show = $match->getPoints() . ' ' . $this->getAbbreviation($resultId);
+            $show = $match->getResult()->getPoints() . ' ' . $this->getAbbreviation($resultId);
         } else {
             $show = $this->getAbbreviation($resultId);
         }

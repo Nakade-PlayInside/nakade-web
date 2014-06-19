@@ -29,11 +29,11 @@ class CUSS extends GameStats implements  TiebreakerInterface
         /* @var $match \Season\Entity\Match */
         foreach ($this->getMatches() as $match) {
 
-            if (is_null($match->getResult()) || $match->getResult()->getId() == RESULT::SUSPENDED) {
+            if (!$match->hasResult() || $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED) {
                continue;
             }
 
-            if ($match->getWinner()->getId() == $playerId) {
+            if ($match->getResult()->getWinner()->getId() == $playerId) {
                 $wins += 1;
             }
 

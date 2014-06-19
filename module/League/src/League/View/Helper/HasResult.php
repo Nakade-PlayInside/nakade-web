@@ -20,7 +20,7 @@ class HasResult extends AbstractHelper
     public function __invoke(Match $match)
     {
         $isPlayed ='';
-        if (!is_null($match->getResult())) {
+        if ($match->hasResult()) {
             $isPlayed = "line-through;";
         }
 

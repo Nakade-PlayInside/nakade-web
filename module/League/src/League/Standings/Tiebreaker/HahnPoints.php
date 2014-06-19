@@ -36,27 +36,28 @@ class HahnPoints extends GameStats implements TiebreakerInterface
         /* @var $match \Season\Entity\Match */
         foreach ($this->getMatches() as $match) {
 
-            if (is_null($match->getResult()) ||
-               $match->getResult()->getId() == RESULT::SUSPENDED ||
-               $match->getResult()->getId() == RESULT::DRAW) {
+            if (!$match->hasResult() ||
+               $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED ||
+               $match->getResult()->getResultType()->getId() == RESULT::DRAW) {
                continue;
             }
 
-            if ($match->getResult()->getId() == RESULT::BYPOINTS && $match->getWinner()->getId() == $playerId ) {
-               $count += $match->getPoints() + self::OFFSET_POINTS;
+            if ($match->getResult()->getResultType()->getId() == RESULT::BYPOINTS &&
+                $match->getResult()->getWinner()->getId() == $playerId ) {
+               $count += $match->getResult()->getPoints() + self::OFFSET_POINTS;
                continue;
             }
 
-            if ($match->getResult()->getId() == RESULT::BYPOINTS &&
-               $match->getPoints() < self::OFFSET_POINTS  &&
+            if ($match->getResult()->getResultType()->getId() == RESULT::BYPOINTS &&
+               $match->getResult()->getPoints() < self::OFFSET_POINTS  &&
                ($match->getBlack()->getId() == $playerId ||
                 $match->getWhite()->getId() == $playerId )) {
 
-               $count += self::OFFSET_POINTS - $match->getPoints();
+               $count += self::OFFSET_POINTS - $match->getResult()->getPoints();
                continue;
             }
 
-            if ($match->getWinner()->getId() == $playerId ) {
+            if ($match->getResult()->getWinner()->getId() == $playerId ) {
                $count +=self::MAX_POINTS;
             }
         }

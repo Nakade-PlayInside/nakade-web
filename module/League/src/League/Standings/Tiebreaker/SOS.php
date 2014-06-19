@@ -30,7 +30,7 @@ class SOS extends GameStats implements TiebreakerInterface
         /* @var $match \Season\Entity\Match */
         foreach ($this->getMatches() as $match) {
 
-            if (is_null($match->getResult()) || $match->getResult()->getId() == RESULT::SUSPENDED) {
+            if (!$match->getResult() || $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED) {
                continue;
             }
 

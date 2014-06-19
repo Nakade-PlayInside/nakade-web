@@ -25,14 +25,14 @@ class WonGames extends GameStats implements GameStatsInterface
         /* @var $match \Season\Entity\Match */
         foreach ($this->getMatches() as $match) {
 
-            if (is_null($match->getResult()) ||
-                is_null($match->getWinner()) ||
-                $match->getResult()->getId() == RESULT::DRAW ||
-                $match->getResult()->getId() == RESULT::SUSPENDED ) {
+            if (!$match->hasResult() ||
+                !$match->getResult()->hasWinner() ||
+                $match->getResult()->getResultType()->getId() == RESULT::DRAW ||
+                $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED ) {
                 continue;
             }
 
-            if ($match->getWinner()->getId()==$playerId) {
+            if ($match->getResult()->getWinner()->getId()==$playerId) {
                 $count++;
             }
         }

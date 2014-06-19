@@ -27,20 +27,20 @@ class SODOS extends SOS
         /* @var $match \Season\Entity\Match */
         foreach ($this->getMatches() as $match) {
 
-            if (is_null($match->getResult()) ||
-               $match->getResult()->getId() == RESULT::SUSPENDED ||
-               $match->getResult()->getId() == RESULT::DRAW
+            if (!$match->hasResult() ||
+               $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED ||
+               $match->getResult()->getResultType()->getId() == RESULT::DRAW
             ) {
                continue;
             }
 
-            if ($match->getWinner()->getId() == $playerId && $match->getBlack()->getId() == $playerId ) {
+            if ($match->getResult()->getWinner()->getId() == $playerId && $match->getBlack()->getId() == $playerId ) {
                $opponent = $match->getWhite()->getId();
                $sos += $this->calculatePointsByOpponent($opponent);
                continue;
             }
 
-            if ($match->getWinner()->getId() == $playerId && $match->getWhite()->getId() == $playerId) {
+            if ($match->getResult()->getWinner()->getId() == $playerId && $match->getWhite()->getId() == $playerId) {
                $opponent = $match->getBlack()->getId();
                $sos += $this->calculatePointsByOpponent($opponent);
                continue;
