@@ -131,12 +131,14 @@ abstract class LeagueMail extends NakadeMail implements ResultInterface
 
     protected function getColor(Match $match)
     {
-        if (is_null($match->getResult()->getWinner())) {
+        if (!$match->getResult()->hasWinner()) {
             return $this->translate('Nobody');
         }
 
-        $color =
-            $match->getResult()->getWinner() == $match->getBlack()? $this->translate('Black'):$this->translate('White');
+        $color = $this->translate('White');
+        if ($match->getResult()->getWinner() == $match->getBlack()) {
+            $color = $this->translate('Black');
+        }
         return sprintf('%s (%s)', $color, $match->getResult()->getWinner()->getShortName());
     }
 

@@ -14,7 +14,6 @@ class MatchReminderMail extends LeagueMail
      */
     public function getMailBody()
     {
-        //todo: email body
         $message =
             $this->translate('This is a reminder of your next match at %NEW_DATE% .') . ' ' .
             PHP_EOL . PHP_EOL .
