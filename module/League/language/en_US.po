@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-16 10:45+0100\n"
-"PO-Revision-Date: 2014-06-16 10:45+0100\n"
+"POT-Creation-Date: 2014-06-20 23:58+0100\n"
+"PO-Revision-Date: 2014-06-20 23:58+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -15,11 +15,11 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/League/Mail/MatchReminderMail.php:19
+#: ../src/League/Mail/MatchReminderMail.php:18
 msgid "This is a reminder of your next match at %NEW_DATE% ."
 msgstr ""
 
-#: ../src/League/Mail/MatchReminderMail.php:21
+#: ../src/League/Mail/MatchReminderMail.php:20
 #: ../src/League/Mail/AutoResultMail.php:20
 #: ../src/League/Mail/ResultMail.php:21
 #: ../src/League/Mail/ScheduleMail.php:21
@@ -27,11 +27,11 @@ msgstr ""
 msgid "Your match: %MATCH_INFO%"
 msgstr ""
 
-#: ../src/League/Mail/MatchReminderMail.php:23
+#: ../src/League/Mail/MatchReminderMail.php:22
 msgid "For any more details visit us at %URL%"
 msgstr ""
 
-#: ../src/League/Mail/MatchReminderMail.php:37
+#: ../src/League/Mail/MatchReminderMail.php:36
 msgid "Your Match Reminder"
 msgstr ""
 
@@ -99,11 +99,11 @@ msgid "Nobody"
 msgstr ""
 
 #: ../src/League/Mail/LeagueMail.php:138
-msgid "Black"
+msgid "White"
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:138
-msgid "White"
+#: ../src/League/Mail/LeagueMail.php:140
+msgid "Black"
 msgstr ""
 
 #: ../src/League/Mail/ScheduleMail.php:18
@@ -297,28 +297,35 @@ msgstr ""
 msgid "Suspended"
 msgstr ""
 
+#: ../view/partial/pagination.phtml:6
+msgid "previous"
+msgstr ""
+
+#: ../view/partial/pagination.phtml:18
+msgid "click"
+msgstr ""
+
+#: ../view/partial/pagination.phtml:32
+msgid "next"
+msgstr ""
+
 #: ../view/league/table/index.phtml:9
 msgid "%name% 1. League"
 msgstr ""
 
 #: ../view/league/table/index.phtml:14
-#: ../view/league/table/table.phtml:20
-#: ../view/league/time-table/schedule.phtml:14
 msgid "No season found"
 msgstr ""
 
 #: ../view/league/table/index.phtml:23
-#: ../view/league/table/table.phtml:27
 msgid "Position"
 msgstr ""
 
 #: ../view/league/table/index.phtml:24
-#: ../view/league/table/table.phtml:28
 msgid "Player"
 msgstr ""
 
 #: ../view/league/table/index.phtml:25
-#: ../view/league/table/table.phtml:29
 msgid "Name"
 msgstr ""
 
