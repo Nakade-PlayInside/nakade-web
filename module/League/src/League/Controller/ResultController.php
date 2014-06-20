@@ -150,6 +150,8 @@ class ResultController extends AbstractController implements RoleInterface
      */
     public function actualResultsAction()
     {
+        $matchDay = $this->params()->fromRoute('id');
+
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
         $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
@@ -160,11 +162,22 @@ class ResultController extends AbstractController implements RoleInterface
 
         /* @var $resultMapper \League\Mapper\ResultMapper */
         $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
-        $matchDay = $resultMapper->getActualMatchDayByLeague($topLeague->getId());
+
+        if (empty($matchDay)) {
+            $matchDay = $resultMapper->getActualMatchDayByLeague($topLeague->getId());
+        }
+
         $matches = $resultMapper->getMatchesByMatchDay($topLeague->getId(), $matchDay);
+
+        $paginator = new Paginator(new \Zend\Paginator\Adapter\ArrayAdapter(array(1,2,3,4,5,6,7)));
+        $paginator
+            ->setCurrentPageNumber($matchDay)
+            ->setItemCountPerPage(1)
+            ->setPageRange(5);
 
         return new ViewModel(
             array(
+                'paginator' => $paginator,
                 'legend' => $this->getResultService()->getLegendByMatches($matches),
                 'matchDay' =>  $matchDay,
                 'matches' =>  $matches

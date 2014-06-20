@@ -4,9 +4,7 @@
             <!-- Previous page link -->
             <?php if (isset($this->previous)): ?>
                 <li>
-                    <a href="<?php echo $this->url('result', array('action' => 'matchDay', 'id' => $this->previous)); ?>">
-                        &laquo;
-                    </a>
+                    <a href="<?php echo $this->pagingUrl($this->previous); ?>">&laquo;</a>
                 </li>
             <?php else: ?>
                 <li class="disabled">
@@ -18,9 +16,7 @@ endif; ?>
             <?php foreach ($this->pagesInRange as $page): ?>
                 <?php if ($page != $this->current): ?>
                     <li>
-                        <a href="<?php echo $this->url('result', array('action' => 'matchDay', 'id' => $page));?>">
-                            <?php echo $page; ?>
-                        </a>
+                        <a href="<?php echo $this->pagingUrl($page);?>"><?php echo $page; ?></a>
                     </li>
                 <?php else: ?>
                     <li class="active">
@@ -34,9 +30,7 @@ endforeach; ?>
             <!-- Next page link -->
             <?php if (isset($this->next)): ?>
                 <li>
-                    <a href="<?php echo $this->url('result', array('action' => 'matchDay', 'id' => $this->next)); ?>">
-                        &raquo;
-                    </a>
+                    <a href="<?php echo $this->pagingUrl($this->next); ?>">&raquo;</a>
                 </li>
             <?php else: ?>
                 <li class="disabled">
@@ -46,4 +40,5 @@ endforeach; ?>
 endif; ?>
         </ul>
     </div>
-<?php endif;
+<?php
+endif;

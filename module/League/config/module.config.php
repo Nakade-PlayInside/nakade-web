@@ -26,6 +26,7 @@ return array(
             'sort'  => 'League\View\Helper\Sort',
             'isOpen'     => 'League\View\Helper\Open',
             'matchDayResult'     => 'League\View\Helper\MatchDayResult',
+            'pagingUrl'     => 'League\View\Helper\PagingUrl',
             // more helpers here ...
         )
     ),
