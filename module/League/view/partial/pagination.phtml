@@ -1,9 +1,9 @@
 <?php if ($this->pageCount): ?>
-    <div>
-        <ul class="pagination pagination-centered">
+    <div class="matchDayPagination">
+        <ul class="nakadePagination nakadePagination-centered">
             <!-- Previous page link -->
             <?php if (isset($this->previous)): ?>
-                <li>
+                <li title="<?php echo $this->translate('previous'); ?>">
                     <a href="<?php echo $this->pagingUrl($this->previous); ?>">&laquo;</a>
                 </li>
             <?php else: ?>
@@ -15,7 +15,7 @@ endif; ?>
             <!-- Numbered page links -->
             <?php foreach ($this->pagesInRange as $page): ?>
                 <?php if ($page != $this->current): ?>
-                    <li>
+                    <li title="<?php echo $this->translate('click'); ?>">
                         <a href="<?php echo $this->pagingUrl($page);?>"><?php echo $page; ?></a>
                     </li>
                 <?php else: ?>
@@ -29,7 +29,7 @@ endforeach; ?>
 
             <!-- Next page link -->
             <?php if (isset($this->next)): ?>
-                <li>
+                <li title="<?php echo $this->translate('next'); ?>">
                     <a href="<?php echo $this->pagingUrl($this->next); ?>">&raquo;</a>
                 </li>
             <?php else: ?>

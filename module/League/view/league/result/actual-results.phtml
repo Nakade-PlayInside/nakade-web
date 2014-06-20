@@ -15,7 +15,7 @@ $this->headTitle('Actual Results');
 <h3><?php echo $title; ?></h3>
 
 
-<?php echo $this->paginationControl($this->pagination, 'Sliding', 'Shared'); ?>
+<?php echo $this->paginationControl($this->pagination, 'Sliding', 'matchDay'); ?>
 <table class="results">
 <?php foreach ($this->matches as $match) : ?>
 <tr>

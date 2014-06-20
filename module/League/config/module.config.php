@@ -145,7 +145,7 @@ return array(
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
         'template_map' => array(
-                'Shared' => __DIR__ . '/../view/partial/paginator.phtml', // Note: the key is optional
+                'matchDay' => __DIR__ . '/../view/partial/pagination.phtml', // Note: the key is optional
         ),
 
         'template_path_stack' => array(
