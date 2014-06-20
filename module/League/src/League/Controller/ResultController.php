@@ -4,21 +4,20 @@ namespace League\Controller;
 use League\Services\LeagueFormService;
 use League\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
-use Permission\Entity\RoleInterface;
 use Zend\View\Model\ViewModel;
-use Zend\Paginator\Paginator;
 use League\Services\MailService;
-
+use League\Services\PaginationService;
 
 /**
  * processing user input, in detail results and postponing
  * matches.
  *
  */
-class ResultController extends AbstractController implements RoleInterface
+class ResultController extends AbstractController
 {
     /* @var $resultService \League\Services\ResultService */
     private $resultService;
+    private $paginationService;
 
    /**
     * showing all open results of the actual season
@@ -168,17 +167,13 @@ class ResultController extends AbstractController implements RoleInterface
         }
 
         $matches = $resultMapper->getMatchesByMatchDay($topLeague->getId(), $matchDay);
-
-        $paginator = new Paginator(new \Zend\Paginator\Adapter\ArrayAdapter(array(1,2,3,4,5,6,7)));
-        $paginator
-            ->setCurrentPageNumber($matchDay)
-            ->setItemCountPerPage(1)
-            ->setPageRange(5);
+        $pagination = $this->getPaginationService()->getPagination($topLeague->getId(), $matchDay);
+        $legend = $this->getResultService()->getLegendByMatches($matches);
 
         return new ViewModel(
             array(
-                'paginator' => $paginator,
-                'legend' => $this->getResultService()->getLegendByMatches($matches),
+                'pagination' => $pagination,
+                'legend' => $legend,
                 'matchDay' =>  $matchDay,
                 'matches' =>  $matches
             )
@@ -207,6 +202,22 @@ class ResultController extends AbstractController implements RoleInterface
     public function setResultService($resultService)
     {
         $this->resultService = $resultService;
+    }
+
+    /**
+     * @param PaginationService $paginationService
+     */
+    public function setPaginationService(PaginationService $paginationService)
+    {
+        $this->paginationService = $paginationService;
+    }
+
+    /**
+     * @return PaginationService
+     */
+    public function getPaginationService()
+    {
+        return $this->paginationService;
     }
 
 }

@@ -169,6 +169,8 @@ return array(
                 'League\Services\MailService',
             'League\Services\MatchVoterService' =>
                 'League\Services\MatchVoterService',
+            'League\Services\PaginationService' =>
+                'League\Services\PaginationService',
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
