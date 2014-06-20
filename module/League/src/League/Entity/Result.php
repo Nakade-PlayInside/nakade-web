@@ -30,7 +30,7 @@ class Result
 
     /**
      * @ORM\ManyToOne(targetEntity="\User\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="winner", referencedColumnName="id")
+     * @ORM\JoinColumn(name="winner", referencedColumnName="uid")
      */
     private $winner;
 
@@ -47,7 +47,7 @@ class Result
 
     /**
      * @ORM\ManyToOne(targetEntity="\User\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="enteredBy", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="enteredBy", referencedColumnName="uid", nullable=false)
      */
     private $enteredBy;
 
@@ -152,7 +152,42 @@ class Result
      */
     public function hasWinner()
     {
-        return !is_null($this->winner);
+        return !empty($this->winner);
     }
 
+    /**
+     * populating data as an array.
+     * key of the array is getter methods name.
+     *
+     * @param array $data
+     */
+
+    public function exchangeArray($data)
+    {
+        if (!empty($data['points'])) {
+            $this->points = floatval($data['points']);
+        }
+        if (!empty($data['winner'])) {
+            $this->winner = $data['winner'];
+        }
+        if (!empty($data['result'])) {
+            $this->resultType = $data['result'];
+        }
+        if (!empty($data['date'])) {
+            $this->date = $data['date'];
+        }
+        if (!empty($data['enteredBy'])) {
+            $this->enteredBy = $data['enteredBy'];
+        }
+    }
+
+    /**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
 }

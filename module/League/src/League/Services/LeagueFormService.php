@@ -19,6 +19,7 @@ class LeagueFormService extends AbstractFormFactory
     const MATCHDAY_FORM = 'matchday';
 
     private $resultList;
+    private $authenticationService;
 
     /**
      * @param ServiceLocatorInterface $services
@@ -50,6 +51,7 @@ class LeagueFormService extends AbstractFormFactory
         $repository = $services->get('Season\Services\RepositoryService');
         $fieldSetService = $services->get('Season\Services\SeasonFieldsetService');
         $this->resultList = $services->get('League\Services\ResultService');
+        $this->authenticationService = $services->get('Zend\Authentication\AuthenticationService');
 
         $this->setRepository($repository);
         $this->setFieldSetService($fieldSetService);
@@ -75,7 +77,7 @@ class LeagueFormService extends AbstractFormFactory
 
            case self::RESULT_FORM:
                $service = $this->getFieldSetService();
-               $hydrator = new ResultHydrator($this->entityManager);
+               $hydrator = new ResultHydrator($this->entityManager, $this->authenticationService);
                $form = new Form\ResultForm($service, $this->resultList);
                $form->setHydrator($hydrator);
                $form->setTranslator($this->getTranslator(), $this->getTranslatorTextDomain());
