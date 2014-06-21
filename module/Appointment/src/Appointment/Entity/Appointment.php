@@ -23,7 +23,7 @@ class Appointment
 
     /**
      * @ORM\ManyToOne(targetEntity="\Season\Entity\Match", cascade={"persist"})
-     * @ORM\JoinColumn(name="pairing", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="match", referencedColumnName="id", nullable=false)
      */
     private $match;
 

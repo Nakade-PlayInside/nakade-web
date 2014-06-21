@@ -10,7 +10,7 @@ use User\Entity\User;
  * @package League\Entity
  *
  * @ORM\Entity
- * @ORM\Table(name="new_result")
+ * @ORM\Table(name="result")
  */
 class Result
 {

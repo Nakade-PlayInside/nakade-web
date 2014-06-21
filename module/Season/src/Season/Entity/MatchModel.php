@@ -27,7 +27,7 @@ class MatchModel
 
    /**
     * @ORM\ManyToOne(targetEntity="League\Entity\Result", cascade={"persist"})
-    * @ORM\JoinColumn(name="new_result", referencedColumnName="id")
+    * @ORM\JoinColumn(name="result", referencedColumnName="id")
     */
     private $result;
 
