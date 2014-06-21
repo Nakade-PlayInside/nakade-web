@@ -111,10 +111,10 @@ class Results extends AbstractTranslation implements ResultInterface
 
         /* @var $match \Season\Entity\Match */
         foreach ($matches as $match) {
-            if (is_null($match->getResult()) || $match->getResult()->getId() == self::BYPOINTS) {
+            if (!$match->hasResult() || $match->getResult()->getResultType()->getId() == self::BYPOINTS) {
                 continue;
             }
-            $resultId = $match->getResult()->getId();
+            $resultId = $match->getResult()->getResultType()->getId();
             $info = $this->getLegendInfo($resultId);
 
             if (false === in_array($info, $legend)) {

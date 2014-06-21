@@ -21,11 +21,11 @@ class Winner extends AbstractHelper implements ResultInterface
      */
     public function __invoke(Match $match, User $user)
     {
-        if (is_null($match->getResult()) ||
-            $match->getResult()->getId() == ResultInterface::DRAW ||
-            $match->getResult()->getId() == ResultInterface::SUSPENDED) {
+        if (!$match->hasResult() ||
+            $match->getResult()->getResultType()->getId() == ResultInterface::DRAW ||
+            $match->getResult()->getResultType()->getId() == ResultInterface::SUSPENDED) {
             return '';
-        } elseif ($match->getWinner() == $user) {
+        } elseif ($match->getResult()->getWinner() == $user) {
             return 'underline;';
         }
         return '';

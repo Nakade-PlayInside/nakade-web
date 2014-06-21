@@ -42,50 +42,13 @@ class Match extends MatchModel
     }
 
     /**
-     * @return int
-     */
-    public function getResultId()
-    {
-        if (is_null($this->getResult())) {
-            return null;
-        } else {
-            return $this->getResult()->getId();
-        }
-
-    }
-
-    /**
-     * @return int
-     */
-    public function getBlackId()
-    {
-            return $this->getBlack()->getId();
-    }
-
-    /**
-     * @return int
-     */
-    public function getWhiteId()
-    {
-        return $this->getWhite()->getId();
-    }
-
-    /**
-     * @return int
-     */
-    public function getWinnerId()
-    {
-        return $this->getWinner()->getId();
-    }
-
-    /**
      * for form data
      *
      * @param array $data
      */
     public function exchangeArray($data)
     {
-        var_dump("HI");die;
+        return;
     }
 
     /**

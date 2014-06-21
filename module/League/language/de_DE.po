@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-18 22:04+0100\n"
-"PO-Revision-Date: 2014-06-18 22:04+0100\n"
+"POT-Creation-Date: 2014-06-20 23:56+0100\n"
+"PO-Revision-Date: 2014-06-20 23:57+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -16,11 +16,11 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/League/Mail/MatchReminderMail.php:19
+#: ../src/League/Mail/MatchReminderMail.php:18
 msgid "This is a reminder of your next match at %NEW_DATE% ."
 msgstr "Dies ist eine Erinnerung an deine nächste Partie am %NEW_DATE% ."
 
-#: ../src/League/Mail/MatchReminderMail.php:21
+#: ../src/League/Mail/MatchReminderMail.php:20
 #: ../src/League/Mail/AutoResultMail.php:20
 #: ../src/League/Mail/ResultMail.php:21
 #: ../src/League/Mail/ScheduleMail.php:21
@@ -28,11 +28,11 @@ msgstr "Dies ist eine Erinnerung an deine nächste Partie am %NEW_DATE% ."
 msgid "Your match: %MATCH_INFO%"
 msgstr "Deine Partie: %MATCH_INFO%"
 
-#: ../src/League/Mail/MatchReminderMail.php:23
+#: ../src/League/Mail/MatchReminderMail.php:22
 msgid "For any more details visit us at %URL%"
 msgstr "Für weitere Details besuche uns auf %URL%"
 
-#: ../src/League/Mail/MatchReminderMail.php:37
+#: ../src/League/Mail/MatchReminderMail.php:36
 msgid "Your Match Reminder"
 msgstr "Memo an deine Partie"
 
@@ -100,12 +100,12 @@ msgid "Nobody"
 msgstr "Niemand"
 
 #: ../src/League/Mail/LeagueMail.php:138
-msgid "Black"
-msgstr "Schwarz"
-
-#: ../src/League/Mail/LeagueMail.php:138
 msgid "White"
 msgstr "Weiß"
+
+#: ../src/League/Mail/LeagueMail.php:140
+msgid "Black"
+msgstr "Schwarz"
 
 #: ../src/League/Mail/ScheduleMail.php:18
 msgid "A new appointment for your match date at %URL% was set."
@@ -298,28 +298,35 @@ msgstr "nicht Erschienen"
 msgid "Suspended"
 msgstr " nicht gespielt"
 
+#: ../view/partial/pagination.phtml:6
+msgid "previous"
+msgstr "zurück"
+
+#: ../view/partial/pagination.phtml:18
+msgid "click"
+msgstr "klick"
+
+#: ../view/partial/pagination.phtml:32
+msgid "next"
+msgstr "weiter"
+
 #: ../view/league/table/index.phtml:9
 msgid "%name% 1. League"
 msgstr "%name% 1. Liga"
 
 #: ../view/league/table/index.phtml:14
-#: ../view/league/table/table.phtml:20
-#: ../view/league/time-table/schedule.phtml:14
 msgid "No season found"
 msgstr "Keine Saison gefunden."
 
 #: ../view/league/table/index.phtml:23
-#: ../view/league/table/table.phtml:27
 msgid "Position"
 msgstr "Platz"
 
 #: ../view/league/table/index.phtml:24
-#: ../view/league/table/table.phtml:28
 msgid "Player"
 msgstr "Spieler"
 
 #: ../view/league/table/index.phtml:25
-#: ../view/league/table/table.phtml:29
 msgid "Name"
 msgstr "Name"
 

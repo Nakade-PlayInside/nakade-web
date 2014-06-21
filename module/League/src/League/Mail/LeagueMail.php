@@ -90,7 +90,7 @@ abstract class LeagueMail extends NakadeMail implements ResultInterface
             return $this->translate('No result was found.');
         }
 
-        switch ($match->getResult()->getId()) {
+        switch ($match->getResult()->getResultType()->getId()) {
 
             case self::DRAW:
                 $info = $this->translate("Result is a draw.");
@@ -122,7 +122,7 @@ abstract class LeagueMail extends NakadeMail implements ResultInterface
                 );
         }
 
-        $info = str_replace('%POINTS%', $this->getMatch()->getPoints(), $info);
+        $info = str_replace('%POINTS%', $this->getMatch()->getResult()->getPoints(), $info);
         $info = str_replace('%COLOR%', $this->getColor($this->getMatch()), $info);
 
         return $info;
@@ -131,12 +131,15 @@ abstract class LeagueMail extends NakadeMail implements ResultInterface
 
     protected function getColor(Match $match)
     {
-        if (is_null($match->getWinner())) {
+        if (!$match->getResult()->hasWinner()) {
             return $this->translate('Nobody');
         }
 
-        $color = $match->getWinner() == $match->getBlack()? $this->translate('Black'):$this->translate('White');
-        return sprintf('%s (%s)', $color, $match->getWinner()->getShortName());
+        $color = $this->translate('White');
+        if ($match->getResult()->getWinner() == $match->getBlack()) {
+            $color = $this->translate('Black');
+        }
+        return sprintf('%s (%s)', $color, $match->getResult()->getWinner()->getShortName());
     }
 
 

@@ -4,21 +4,20 @@ namespace League\Controller;
 use League\Services\LeagueFormService;
 use League\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
-use Permission\Entity\RoleInterface;
 use Zend\View\Model\ViewModel;
-use Zend\Paginator\Paginator;
 use League\Services\MailService;
-
+use League\Services\PaginationService;
 
 /**
  * processing user input, in detail results and postponing
  * matches.
  *
  */
-class ResultController extends AbstractController implements RoleInterface
+class ResultController extends AbstractController
 {
     /* @var $resultService \League\Services\ResultService */
     private $resultService;
+    private $paginationService;
 
    /**
     * showing all open results of the actual season
@@ -150,6 +149,8 @@ class ResultController extends AbstractController implements RoleInterface
      */
     public function actualResultsAction()
     {
+        $matchDay = $this->params()->fromRoute('id');
+
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
         $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
@@ -160,12 +161,19 @@ class ResultController extends AbstractController implements RoleInterface
 
         /* @var $resultMapper \League\Mapper\ResultMapper */
         $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
-        $matchDay = $resultMapper->getActualMatchDayByLeague($topLeague->getId());
+
+        if (empty($matchDay)) {
+            $matchDay = $resultMapper->getActualMatchDayByLeague($topLeague->getId());
+        }
+
         $matches = $resultMapper->getMatchesByMatchDay($topLeague->getId(), $matchDay);
+        $pagination = $this->getPaginationService()->getPagination($topLeague->getId(), $matchDay);
+        $legend = $this->getResultService()->getLegendByMatches($matches);
 
         return new ViewModel(
             array(
-                'legend' => $this->getResultService()->getLegendByMatches($matches),
+                'pagination' => $pagination,
+                'legend' => $legend,
                 'matchDay' =>  $matchDay,
                 'matches' =>  $matches
             )
@@ -194,6 +202,22 @@ class ResultController extends AbstractController implements RoleInterface
     public function setResultService($resultService)
     {
         $this->resultService = $resultService;
+    }
+
+    /**
+     * @param PaginationService $paginationService
+     */
+    public function setPaginationService(PaginationService $paginationService)
+    {
+        $this->paginationService = $paginationService;
+    }
+
+    /**
+     * @return PaginationService
+     */
+    public function getPaginationService()
+    {
+        return $this->paginationService;
     }
 
 }

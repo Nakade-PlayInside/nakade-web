@@ -26,6 +26,7 @@ return array(
             'sort'  => 'League\View\Helper\Sort',
             'isOpen'     => 'League\View\Helper\Open',
             'matchDayResult'     => 'League\View\Helper\MatchDayResult',
+            'pagingUrl'     => 'League\View\Helper\PagingUrl',
             // more helpers here ...
         )
     ),
@@ -144,7 +145,7 @@ return array(
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
         'template_map' => array(
-                'Shared' => __DIR__ . '/../view/partial/paginator.phtml', // Note: the key is optional
+                'matchDay' => __DIR__ . '/../view/partial/pagination.phtml', // Note: the key is optional
         ),
 
         'template_path_stack' => array(
@@ -168,6 +169,8 @@ return array(
                 'League\Services\MailService',
             'League\Services\MatchVoterService' =>
                 'League\Services\MatchVoterService',
+            'League\Services\PaginationService' =>
+                'League\Services\PaginationService',
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

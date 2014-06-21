@@ -2,8 +2,8 @@
 namespace Season\Entity;
 
 
-use User\Entity\User;
 use League\Entity\Result;
+use User\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,16 +25,11 @@ class MatchModel
    */
    private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="League\Entity\Result", cascade={"persist"})
-     * @ORM\JoinColumn(name="result", referencedColumnName="id")
-     */
-    private $result;
-
    /**
-   * @ORM\Column(name="points", type="float")
-   */
-    private $points;
+    * @ORM\ManyToOne(targetEntity="League\Entity\Result", cascade={"persist"})
+    * @ORM\JoinColumn(name="new_result", referencedColumnName="id")
+    */
+    private $result;
 
    /**
    * @ORM\Column(name="date", type="datetime")
@@ -65,12 +60,6 @@ class MatchModel
    * @ORM\JoinColumn(name="white", referencedColumnName="uid", nullable=false)
    */
     private $white;
-
-   /**
-   * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
-   * @ORM\JoinColumn(name="winner", referencedColumnName="uid")
-   */
-    private $winner;
 
     /**
      * @ORM\Column(name="sequence", type="integer")
@@ -159,22 +148,6 @@ class MatchModel
 
 
     /**
-     * @param float $points
-     */
-    public function setPoints($points)
-    {
-        $this->points = $points;
-    }
-
-    /**
-     * @return float
-     */
-    public function getPoints()
-    {
-        return $this->points;
-    }
-
-    /**
      * @param Result $result
      */
     public function setResult(Result $result)
@@ -204,22 +177,6 @@ class MatchModel
     public function getWhite()
     {
         return $this->white;
-    }
-
-    /**
-     * @param User $winner
-     */
-    public function setWinner(User $winner)
-    {
-        $this->winner = $winner;
-    }
-
-    /**
-     * @return null|User
-     */
-    public function getWinner()
-    {
-        return $this->winner;
     }
 
     /**

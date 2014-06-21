@@ -24,10 +24,10 @@ class LostGames extends GameStats implements GameStatsInterface
         /* @var $match \Season\Entity\Match */
         foreach ($this->getMatches() as $match) {
 
-            if (is_null($match->getResult()) ||
-                $match->getResult()->getId() == RESULT::DRAW  ||
-                $match->getResult()->getId() == RESULT::SUSPENDED ||
-                $match->getWinner()->getId() == $playerId
+            if (!$match->hasResult() ||
+                $match->getResult()->getResultType()->getId() == RESULT::DRAW  ||
+                $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED ||
+                $match->getResult()->getWinner()->getId() == $playerId
             ) {
                 continue;
             }

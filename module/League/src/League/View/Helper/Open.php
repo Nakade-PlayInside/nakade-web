@@ -20,7 +20,7 @@ class Open extends AbstractHelper implements HighlightInterface
     {
         $today = new \DateTime();
         $color = $this->getView()->cycle(array(self::ALTERNATING_COLOR,self::BG_COLOR))->next();
-        if (is_null($match->getResult()) && $match->getDate() < $today) {
+        if (!$match->hasResult() && $match->getDate() < $today) {
             $color =  self::HIGHLIGHT_COLOR;
         }
         return $color;

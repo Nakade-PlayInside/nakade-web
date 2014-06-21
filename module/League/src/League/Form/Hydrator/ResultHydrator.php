@@ -1,10 +1,13 @@
 <?php
 namespace League\Form\Hydrator;
 
+use League\Entity\Result;
 use Season\Entity\Match;
+use User\Entity\User;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Doctrine\ORM\EntityManager;
+use Zend\Authentication\AuthenticationService;
 
 /**
  * Class SeasonHydrator
@@ -13,16 +16,17 @@ use Doctrine\ORM\EntityManager;
  */
 class ResultHydrator implements HydratorInterface
 {
-    private $winnerId;
-    private $resultId;
     private $entityManager;
+    private $authenticationService;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManager         $em
+     * @param AuthenticationService $auth
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, AuthenticationService $auth)
     {
         $this->entityManager = $em;
+        $this->authenticationService = $auth;
     }
 
     /**
@@ -32,27 +36,27 @@ class ResultHydrator implements HydratorInterface
      */
     public function extract($match)
     {
+        $resultId = $winnerId = -1;
+        $points = null;
 
         /* @var $match \Season\Entity\Match */
-        $this->setValues($match);
+        if ($match->hasResult()) {
+
+            $resultId = $match->getResult()->getResultType()->getId();
+            $points = $match->getResult()->getPoints();
+
+            if ($match->hasResult() && $match->getResult()->hasWinner()) {
+                $winnerId = $match->getResult()->getWinner()->getId();
+            }
+
+        }
 
         return array(
           'id' => $match->getId(),
-          'winnerId' => $this->winnerId,
-          'resultId' => $this->resultId,
-          'points' => $match->getPoints()
+          'winnerId' => $winnerId,
+          'resultId' => $resultId,
+          'points' => $points
         );
-    }
-
-    private function setValues(Match $match)
-    {
-        if (!is_null($match->getWinner())) {
-            $this->winnerId = $match->getWinner()->getId();
-        }
-        if (!is_null($match->getResult())) {
-            $this->resultId = $match->getResult()->getId();
-        }
-
     }
 
     /**
@@ -63,21 +67,20 @@ class ResultHydrator implements HydratorInterface
      */
     public function hydrate(array $data, $match)
     {
+        $result = new Result();
+
         /* @var $match \Season\Entity\Match */
-        if (isset($data['points'])) {
-            $points = floatval($data['points']);
-            $match->setPoints($points);
+        if (!empty($data['winnerId'])) {
+            $data['winner'] = $this->getWinner($match, $data['winnerId']);
         }
-        if (isset($data['winnerId'])) {
-            $winner = $this->getWinner($match, $data['winnerId']);
-            if (!is_null($winner)) {
-                $match->setWinner($winner);
-            }
+        if (!empty($data['resultId'])) {
+            $data['result'] = $this->getResult($data['resultId']);
         }
-        if (isset($data['resultId'])) {
-            $result = $this->getResult($data['resultId']);
-            $match->setResult($result);
-        }
+        $data['date'] = new \DateTime();
+        $data['enteredBy'] = $this->getEditor();
+
+        $result->exchangeArray($data);
+        $match->setResult($result);
 
         return $match;
     }
@@ -102,11 +105,33 @@ class ResultHydrator implements HydratorInterface
     /**
      * @param int $resultId
      *
-     * @return null|\League\Entity\Result
+     * @return null|\League\Entity\ResultType
      */
     private function getResult($resultId)
     {
-        return $this->getEntityManager()->getReference('League\Entity\Result', intval($resultId));
+        return $this->getEntityManager()->getReference('League\Entity\ResultType', intval($resultId));
+    }
+
+    /**
+     * @return AuthenticationService
+     */
+    public function getAuthenticationService()
+    {
+        return $this->authenticationService;
+    }
+
+    /**
+     * @return User
+     */
+    private function getEditor()
+    {
+        $authService = $this->getAuthenticationService();
+        if (!$authService->hasIdentity()) {
+            return null;
+        }
+
+        $userId = $authService->getIdentity()->getId();
+        return $this->getEntityManager()->getReference('User\Entity\User', intval($userId));
     }
 
     /**
@@ -116,5 +141,6 @@ class ResultHydrator implements HydratorInterface
     {
         return $this->entityManager;
     }
+
 
 }

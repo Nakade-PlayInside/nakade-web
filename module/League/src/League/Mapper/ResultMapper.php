@@ -209,5 +209,25 @@ class ResultMapper  extends AbstractMapper
         return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
     }
 
+    /**
+     * @param int $leagueId
+     *
+     * @return int
+     */
+    public function getNoOfMatchDaysByLeague($leagueId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('max(d.matchDay)')
+            ->from('Season\Entity\MatchDay', 'd')
+            ->leftJoin('Season\Entity\Match', 'm', JOIN::WITH, 'm.matchDay=d')
+            ->innerJoin('m.league', 'l')
+            ->where('l.id = :leagueId')
+            ->setParameter('leagueId', $leagueId);
+
+        return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
+
+    }
+
 }
 

@@ -28,6 +28,8 @@ class ResultControllerFactory implements FactoryInterface
         $mail = $serviceManager->get('League\Services\MailService');
         $voter = $serviceManager->get('League\Services\MatchVoterService');
         $resultService = $serviceManager->get('League\Services\ResultService');
+        $pagination = $serviceManager->get('League\Services\PaginationService');
+
 
         $controller = new ResultController();
 
@@ -36,6 +38,7 @@ class ResultControllerFactory implements FactoryInterface
         $controller->setMailService($mail);
         $controller->setService($voter);
         $controller->setResultService($resultService);
+        $controller->setPaginationService($pagination);
 
         return $controller;
     }

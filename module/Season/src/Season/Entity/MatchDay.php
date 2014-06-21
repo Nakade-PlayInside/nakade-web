@@ -1,13 +1,10 @@
 <?php
 namespace Season\Entity;
 
-
-use User\Entity\User;
-use League\Entity\Result;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
-* Entity Class representing a Match
+* Entity Class representing a MatchDay
 *
 * @ORM\Entity
 * @ORM\Table(name="matchDay")

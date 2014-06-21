@@ -23,7 +23,7 @@ class Result extends AbstractHelper implements ResultInterface
     public function __invoke(Match $match)
     {
         $result = '';
-        if (!is_null($match->getResult())) {
+        if ($match->hasResult()) {
 
              if ($this->hasWinner($match)) {
                  $result = $this->getWinningResult($match);
@@ -42,8 +42,8 @@ class Result extends AbstractHelper implements ResultInterface
      */
     private function hasWinner(Match $match)
     {
-        return $match->getResult()->getId() != ResultInterface::SUSPENDED &&
-            $match->getResult()->getId() != ResultInterface::DRAW;
+        return $match->getResult()->getResultType()->getId() != ResultInterface::SUSPENDED &&
+            $match->getResult()->getResultType()->getId() != ResultInterface::DRAW;
     }
 
     /**
@@ -54,7 +54,7 @@ class Result extends AbstractHelper implements ResultInterface
     private function getNotWinningResult(Match $match)
     {
         $result = '1-1';
-        if ($match->getResult()->getId() == ResultInterface::SUSPENDED) {
+        if ($match->getResult()->getResultType()->getId() == ResultInterface::SUSPENDED) {
             $result = '0-0';
         }
         return $result;
@@ -68,7 +68,7 @@ class Result extends AbstractHelper implements ResultInterface
     private function getWinningResult(Match $match)
     {
         $result = '2:0';
-        if ($match->getWinner() == $match->getWhite()) {
+        if ($match->getResult()->getWinner() == $match->getWhite()) {
             $result = '0:2';
         }
         return $result;

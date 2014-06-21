@@ -24,8 +24,8 @@ class DrawGames extends GameStats implements GameStatsInterface
         /* @var $match \Season\Entity\Match */
         foreach ($this->getMatches() as $match) {
 
-            if (is_null($match->getResult()) ||
-               $match->getResult()->getId() != RESULT::DRAW) {
+            if (!$match->hasResult() ||
+               $match->getResult()->getResultType()->getId() != RESULT::DRAW) {
                 continue;
             }
 
