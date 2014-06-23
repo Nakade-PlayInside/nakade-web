@@ -33,9 +33,9 @@ class SeasonDates
     private $time=1;
 
   /**
-   * @ORM\Column(name="span", type="integer", nullable=false)
+   * @ORM\Column(name="cycle", type="integer", nullable=false)
    */
-    private $span;
+    private $cycle;
 
     /**
      * @param int $day
@@ -70,19 +70,19 @@ class SeasonDates
     }
 
     /**
-     * @param mixed $span
+     * @param int $cycle
      */
-    public function setSpan($span)
+    public function setCycle($cycle)
     {
-        $this->span = $span;
+        $this->cycle = $cycle;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getSpan()
+    public function getCycle()
     {
-        return $this->span;
+        return $this->cycle;
     }
 
     /**
@@ -100,7 +100,5 @@ class SeasonDates
     {
         return $this->time;
     }
-
-
 
 }

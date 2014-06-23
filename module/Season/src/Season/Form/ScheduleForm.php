@@ -1,20 +1,52 @@
 <?php
 namespace Season\Form;
 
-use Nakade\Abstracts\AbstractForm;
+use Season\Services\RepositoryService;
+use Season\Services\SeasonFieldsetService;
+use \Zend\InputFilter\InputFilter;
 
-class ScheduleForm extends AbstractForm
+class ScheduleForm extends BaseForm
 {
+    const MONDAY = 1;
+    const TUESDAY = 2;
+    const WEDNESDAY = 3;
+    const THURSDAY = 4;
+    const FRIDAY = 5;
+    const SATURDAY = 6;
+    const SUNDAY = 7;
+
+    const DAILY = 1;
+    const WEEKLY = 7;
+    const FORTNIGHTLY = 14;
+    const MONTHLY = 30;
+
+    private $weekDays = array(
+        self::MONDAY => 'Monday',
+        self::TUESDAY => 'Tuesday',
+        self::WEDNESDAY => 'Wednesday',
+        self::THURSDAY => 'Thursday',
+        self::FRIDAY => 'Friday',
+        self::SATURDAY => 'Saturday',
+        self::SUNDAY => 'Sunday',
+    );
+
+    private $cycleInfo;
+    private $matchDay;
+    private $seasonStartDate;
+    private $minDate;
 
     /**
-     * Constructor
+     * @param SeasonFieldsetService $service
+     * @param RepositoryService     $repository
      */
-    public function __construct()
+    public function __construct(SeasonFieldsetService $service, RepositoryService $repository)
     {
-         //form name is AuthForm
-        parent::__construct();
-    }
+        parent::__construct('ScheduleForm');
 
+        $this->service = $service;
+        $this->repository = $repository;
+        $this->setInputFilter($this->getFilter());
+    }
 
     /**
      * init the form. It is neccessary to call this function
@@ -23,131 +55,232 @@ class ScheduleForm extends AbstractForm
     public function init()
     {
 
+        $this->prepareForm();
 
-        //matchday course
+        //association
         $this->add(
             array(
-                'name' => 'course',
-                'type' => 'Zend\Form\Element\Select',
-                'options' => array(
-                    'label' =>  $this->translate('Matchday course:'),
-                    'value_options' => array(1 => $this->translate('weekly matchday'),
-                                             2 => $this->translate('single match weekly')
-                        ),
-                ),
+                'name' => 'associationName',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array('label' =>  $this->translate('Association') . ':'),
                 'attributes' => array(
-                    'value'  => 1,
-
+                    'readonly' => 'readonly',
+                    'value' => $this->getAssociationName()
                 )
-
             )
         );
 
-        //matchday course
+        //number
         $this->add(
             array(
-                'name' => 'period',
-                'type' => 'Zend\Form\Element\Select',
-                'options' => array(
-                    'label' =>  $this->translate('Period:'),
-                    'value_options' => array(1 => $this->translate('weekly'),
-                        2 => $this->translate('fortnightly'),
-                        3 => $this->translate('three weeks'),
-                        4 => $this->translate('monthly'),
-                    ),
-                ),
+                'name' => 'number',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array('label' =>  $this->translate('Season no.') . ':'),
                 'attributes' => array(
-                    'value'  => 2,
-
+                    'readonly' => 'readonly',
+                    'value' => $this->getSeasonNumber()
                 )
-
             )
         );
 
-        //startdate
+        $this->add(
+            array(
+                'name' => 'seasonStartDate',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array('label' =>  $this->translate('Season start date') . ':'),
+                'attributes' => array(
+                    'readonly' => 'readonly',
+                    'value' => $this->getSeasonStartDate()->format('d.m.Y')
+                )
+            )
+        );
+
+        $this->add(
+            array(
+                'name' => 'cycle',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array('label' =>  $this->translate('Match cycle') . ':'),
+                'attributes' => array(
+                    'readonly' => 'readonly',
+                    'value' => $this->cycleInfo
+                )
+            )
+        );
+
+        //match Day
+        $this->add(
+            array(
+                'type' => 'Zend\Form\Element\Text',
+                'name' => 'matchDay',
+                'options' => array(
+                    'label' => $this->translate('Match day'),
+                ),
+                'attributes' => array(
+                    'readonly' => 'readonly',
+                    'value' => $this->matchDay
+                ),
+            )
+        );
+
+        //start date
         $this->add(
             array(
                 'type' => 'Zend\Form\Element\Date',
-                'name' => 'startdate',
+                'name' => 'startDate',
                 'options' => array(
-                    'label' => $this->translate('Start date'),
+                    'label' => $this->translate('Match start date'),
                     'format' => 'Y-m-d',
                 ),
                 'attributes' => array(
-                     'min'   => date('Y-m-d'),
+                     'min'   => $this->getMinDate()->format('Y-m-d'),
                      'step'  => '1',
-                     'value' => date('Y-m-d')
-                ),
-            )
-        );
-
-        //time
-        $this->add(
-            array(
-                'type' => 'Zend\Form\Element\Time',
-                'name' => 'starttime',
-                'options' => array(
-                    'label' => $this->translate('Start time'),
-                ),
-                'attributes' => array(
-                     'step'  => '900',
-                     'value' => '18:00'
+                     'value' => $this->getMinDate()->format('Y-m-d')
                 ),
             )
         );
 
 
 
-        //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side
-        //validation
-        $this->add(
-            array(
-                'name' => 'csrf',
-                'type'  => 'Zend\Form\Element\Csrf',
-                'options' => array(
-                    'csrf_options' => array(
-                        'timeout' => 600
-                    )
-                )
-            )
-        );
-
-        //submit button
-        $this->add(
-            array(
-                'name' => 'Send',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Submit'),
-                ),
-            )
-        );
-
-         //cancel button
-        $this->add(
-            array(
-                'name' => 'cancel',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Cancel'),
-
-                ),
-            )
-        );
+        $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
 
     }
+
+    /**
+     * you have to init this after setting season or league
+     */
+    protected function prepareForm()
+    {
+
+        if (!is_null($this->getSeason())) {
+            $this->associationName = $this->getSeason()->getAssociation()->getName();
+            $this->seasonNumber = $this->getSeason()->getNumber();
+            $this->cycleInfo = $this->getCycleInfo($this->getSeason()->getAssociation()->getSeasonDates()->getCycle());
+            $this->matchDay = $this->getMatchDay($this->getSeason()->getAssociation()->getSeasonDates()->getDay());
+            $this->setSeasonStartDate($this->getSeason()->getStartDate());
+            $this->setMinDate($this->getSeason()->getStartDate());
+           // $this->availablePlayers = $this->getAvailablePlayersByRepository($this->getSeason()->getId());
+           // $this->noInvitedPlayers= $this->getNoInvitedPlayersByRepository($this->getSeason()->getId());
+        }
+
+    }
+
 
     /**
      * @return \Zend\InputFilter\InputFilter
      */
     public function getFilter()
     {
-        $filter = new \Zend\InputFilter\InputFilter();
-
-
-
+        $filter = new InputFilter();
         return $filter;
     }
+
+    /**
+     * @param int $days
+     *
+     * @return string
+     */
+    private function getCycleInfo($days)
+    {
+        $info = $this->translate('every %NUMBER% days');
+        $info = str_replace('%NUMBER%', $days, $info);
+
+        switch ($days) {
+
+            case self::DAILY:
+                $info = $this->translate('daily');
+                break;
+
+            case self::WEEKLY:
+                $info = $this->translate('weekly');
+                break;
+
+            case self::FORTNIGHTLY:
+                $info = $this->translate('fortnightly');
+                break;
+
+            case self::MONTHLY:
+                $info = $this->translate('monthly');
+                break;
+        }
+
+        if ($days % 7 == 0 && $days/7 > 2) {
+            $info = $this->translate('every %NUMBER% weeks');
+            $weeks = $days/7;
+            $info = str_replace('%NUMBER%', $weeks, $info);
+        }
+
+        return $info;
+    }
+
+    /**
+     * @return array
+     */
+    private function getTranslatedWeekdays()
+    {
+        return array(
+            self::MONDAY => $this->translate('Monday'),
+            self::TUESDAY => $this->translate('Tuesday'),
+            self::WEDNESDAY => $this->translate('Wednesday'),
+            self::THURSDAY => $this->translate('Thursday'),
+            self::FRIDAY => $this->translate('Friday'),
+            self::SATURDAY => $this->translate('Saturday'),
+            self::SUNDAY => $this->translate('Sunday')
+        );
+    }
+    /**
+     * @param int $day
+     *
+     * @return string
+     */
+    private function getMatchDay($day)
+    {
+        $weekDays = $this->getTranslatedWeekdays();
+        return $weekDays[$day];
+    }
+
+    /**
+    * @param \DateTime $seasonStartDate
+    */
+    public function setSeasonStartDate($seasonStartDate)
+    {
+        $this->seasonStartDate = $seasonStartDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getSeasonStartDate()
+    {
+        return $this->seasonStartDate;
+    }
+
+    /**
+     * @param \DateTime $minDate
+     */
+    public function setMinDate($minDate)
+    {
+        $today = new \DateTime();
+        if ($today > $minDate) {
+            $minDate = $today;
+        }
+
+        if ($minDate->format('N') != $this->matchDay) {
+            $next = sprintf('next %s', $this->weekDays[$this->matchDay]);
+            $minDate->modify($next);
+        }
+
+        $this->minDate = $minDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getMinDate()
+    {
+        return $this->minDate;
+    }
+
+
+
 }
 

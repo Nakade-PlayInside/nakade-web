@@ -1,8 +1,6 @@
 <?php
 namespace Season\Form;
 
-use Nakade\Abstracts\AbstractForm;
-use Season\Entity\Season;
 use Season\Services\RepositoryService;
 use Season\Services\SeasonFieldsetService;
 use \Zend\InputFilter\InputFilter;

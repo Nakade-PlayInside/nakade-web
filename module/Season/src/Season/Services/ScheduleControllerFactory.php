@@ -33,10 +33,12 @@ class ScheduleControllerFactory implements FactoryInterface
         }
 
 
-       // $factory    = $serviceManager->get('League\Factory\FormFactory');
+        $factory    = $serviceManager->get('Season\Services\SeasonFormService');
+        $repository = $serviceManager->get('Season\Services\RepositoryService');
 
         $controller = new ScheduleController();
-      //  $controller->setFormFactory($factory);
+        $controller->setFormFactory($factory);
+        $controller->setRepository($repository);
 
         return $controller;
     }
