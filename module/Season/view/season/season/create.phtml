@@ -15,7 +15,7 @@ $title = sprintf("%s: %s %s",
 <?php $this->placeholder('noSeason')->captureStart();?>
 <?php echo $this->translate("No season found."); ?>
 <hr>
-<a class="btn" href="<?php echo $this->url('season', array('action' => 'add')); ?>"><?php echo $this->translate("create Season"); ?></a>
+<a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'add')); ?>"><?php echo $this->translate("create Season"); ?></a>
 <?php $this->placeholder('noSeason')->captureEnd();?>
 
 
@@ -23,8 +23,8 @@ $title = sprintf("%s: %s %s",
 
 <h5><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h5>
 <ul>
-    <li><?php echo $this->translate('Number of leagues') . ': ' . $season->getNoLeagues() ?><a href="<?php echo $this->url('newLeague'); ?>" title="<?php echo "League Info" ?>"><img title="<?php echo "League Info" ?>" style="vertical-align:top; margin-left:10px" src="/images/info.png"></a></li>
-    <li><?php echo $this->translate('Number of players') . ': ' . $season->getNoPlayers() ?><a href="<?php echo $this->url('player'); ?>" title="<?php echo "Player Info" ?>"><img title="<?php echo "Player Info" ?>" style="vertical-align:top; margin-left:10px" src="/images/info.png"></a></li></li>
+    <li><?php echo $this->translate('Number of leagues') . ': ' . $season->getNoLeagues() ?><a href="<?php echo $this->url('createLeague'); ?>" title="<?php echo "League Info" ?>"><img title="<?php echo "League Info" ?>" style="vertical-align:top; margin-left:10px" src="/images/info.png"></a></li>
+    <li><?php echo $this->translate('Number of players') . ': ' . $season->getNoPlayers() ?><a href="<?php echo $this->url('invitePlayer'); ?>" title="<?php echo "Player Info" ?>"><img title="<?php echo "Player Info" ?>" style="vertical-align:top; margin-left:10px" src="/images/info.png"></a></li></li>
     <li><?php echo $this->translate('Number of matches') . ': ' . $season->getNoMatches() ?></li>
     <li><?php echo $this->translate('First match') . ': ' . $this->matchDate($season->getFirstMatchDate()); ?></li>
     <li><?php echo $this->translate('Last match') . ': ' . $this->matchDate($season->getLastMatchDate()); ?></li>
@@ -32,10 +32,11 @@ $title = sprintf("%s: %s %s",
 </ul>
 
 <hr>
-<a class="btn" href="<?php echo $this->url('season', array('action' => 'edit')); ?>"><?php echo $this->translate("edit Season"); ?></a>
-<a class="btn" href="<?php echo $this->url('player', array('action' => 'add')); ?>"><?php echo $this->translate("invite Player"); ?></a>
-<a class="btn" href="<?php echo $this->url('newLeague', array('action' => 'add')); ?>"><?php echo $this->translate("add League"); ?></a>
-<a class="btn" href="<?php echo $this->url('newLeague', array('action' => 'show')); ?>"><?php echo $this->translate("edit League"); ?></a>
+<a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'edit')); ?>"><?php echo $this->translate("edit Season"); ?></a>
+<a class="btn" href="<?php echo $this->url('invitePlayer', array('action' => 'add')); ?>"><?php echo $this->translate("invite Player"); ?></a>
+<a class="btn" href="<?php echo $this->url('createLeague', array('action' => 'add')); ?>"><?php echo $this->translate("add League"); ?></a>
+<a class="btn" href="<?php echo $this->url('createLeague', array('action' => 'show')); ?>"><?php echo $this->translate("edit League"); ?></a>
+<a class="btn" href="<?php echo $this->url('createSchedule', array('action' => 'index')); ?>"><?php echo $this->translate("create Schedule"); ?></a>
 
 
 <?php $this->placeholder('actual')->captureEnd(); ?>
