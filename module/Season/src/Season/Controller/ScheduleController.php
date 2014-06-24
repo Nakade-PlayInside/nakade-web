@@ -32,16 +32,30 @@ class ScheduleController extends AbstractController
      */
     public function addAction()
     {
+        $id = (int) $this->params()->fromRoute('id', 1);
 
-       $form = $this->getForm('schedule');
+        /* @var $mapper \Season\Mapper\SeasonMapper */
+        $mapper = $this->getRepository()->getMapper('season');
 
-       if ($this->getRequest()->isPost()) {
+        //no new season! add season first
+        if (!$mapper->hasNewSeasonByAssociation($id)) {
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+        }
+        $season = $mapper->getNewSeasonByAssociation($id);
+
+        /* @var $form \Season\Form\ScheduleForm */
+        $form = $this->getForm('schedule');
+        $form->setSeason($season);
+        $form->init();
+
+
+        if ($this->getRequest()->isPost()) {
 
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
             //cancel
-            if ($postData['cancel']) {
-                return $this->redirect()->toRoute('season');
+            if (isset($postData['cancel'])) {
+                return $this->redirect()->toRoute('createSeason');
             }
 
             $form->setData($postData);
@@ -52,8 +66,7 @@ class ScheduleController extends AbstractController
 
                 return $this->redirect()->toRoute('schedule');
             }
-       }
-
+        }
 
         return new ViewModel(
             array(

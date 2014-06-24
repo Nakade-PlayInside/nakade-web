@@ -44,10 +44,10 @@ return array(
     'router' => array(
         'routes' => array(
 
-            'season' => array(
+            'createSeason' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/season[/:action][/:id]',
+                    'route'    => '/createSeason[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
@@ -59,10 +59,10 @@ return array(
                 ),
             ),
 
-            'newLeague' => array(
+            'createLeague' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/newLeague[/:action][/:id]',
+                    'route'    => '/createLeague[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
@@ -75,10 +75,10 @@ return array(
 
             ),
 
-            'player' => array(
+            'invitePlayer' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/player[/:action][/:id]',
+                    'route'    => '/invitePlayer[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
@@ -91,10 +91,10 @@ return array(
 
             ),
 
-            'schedule' => array(
+            'createSchedule' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/schedule[/:action][/:id]',
+                    'route'    => '/createSchedule[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',

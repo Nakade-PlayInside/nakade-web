@@ -114,7 +114,7 @@ class ResultController extends AbstractController
             //get post data, set data to from, prepare for validation
             $postData =  $request->getPost();
             //cancel
-            if ($postData['button']['cancel']) {
+            if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute('result', array('action' => 'myResult'));
             }
 

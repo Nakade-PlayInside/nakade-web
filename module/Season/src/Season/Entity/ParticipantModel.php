@@ -48,7 +48,7 @@ class ParticipantModel
   protected $date;
 
   /**
-   * @ORM\Column(name="acceptString", type="text")
+   * @ORM\Column(name="acceptString", type="string")
    */
   protected $acceptString;
 

@@ -20,7 +20,7 @@ class PlayerController extends AbstractController
 
         //no new season! add season first
         if (!$mapper->hasNewSeasonByAssociation($id)) {
-            return $this->redirect()->toRoute('season', array('action' => 'create'));
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
         $season = $mapper->getNewSeasonByAssociation($id);
 
@@ -49,7 +49,7 @@ class PlayerController extends AbstractController
 
         //no new season! add season first
         if (!$mapper->hasNewSeasonByAssociation($id)) {
-            return $this->redirect()->toRoute('season', array('action' => 'create'));
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
         $season = $mapper->getNewSeasonByAssociation($id);
 
@@ -65,8 +65,8 @@ class PlayerController extends AbstractController
             //get post data, set data to from, prepare for validation
             $postData =  $request->getPost();
             //cancel
-            if ($postData['button']['cancel']) {
-                return $this->redirect()->toRoute('season', array('action' => 'create'));
+            if (isset($postData['button']['cancel'])) {
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
 
             $form->setData($postData);
@@ -88,7 +88,7 @@ class PlayerController extends AbstractController
                 }
                 //$this->getService()->addPlayer($data);
 
-                return $this->redirect()->toRoute('season', array('action' => 'create'));
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
        }
 

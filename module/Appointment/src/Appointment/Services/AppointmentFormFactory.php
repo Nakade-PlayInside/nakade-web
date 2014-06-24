@@ -3,11 +3,9 @@
 namespace Appointment\Services;
 
 use Nakade\Abstracts\AbstractFormFactory;
-use Nakade\FormServiceInterface;
-use Traversable;
 use Appointment\Form;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\ArrayUtils;
+use Appointment\Form\Hydrator\AppointmentHydrator;
 
 
 
@@ -22,22 +20,32 @@ class AppointmentFormFactory extends AbstractFormFactory
     const CONFIRM_FORM = 'confirm';
     const REJECT_FORM = 'reject';
 
-    private $maxDatePeriod=4;
+    private $authenticationService;
 
     /**
      * @param ServiceLocatorInterface $services
      *
-     * @return AppointmentFormFactory
+     * @return $this
+     *
+     * @throws \RuntimeException
      */
     public function createService(ServiceLocatorInterface $services)
     {
-        $config  = $services->get('config');
-        if ($config instanceof Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
+
+        //EntityManager for database access by doctrine
+        $this->entityManager = $services->get('Doctrine\ORM\EntityManager');
+
+        if (is_null($this->entityManager)) {
+            throw new \RuntimeException(
+                sprintf('Entity manager could not be found in service.')
+            );
         }
 
-        $this->maxDatePeriod = isset($config['Appointment']['max_date_period']) ?
-            $config['Appointment']['max_date_period'] : 4;
+        $this->authenticationService = $services->get('Zend\Authentication\AuthenticationService');
+
+        $fieldSetService = $services->get('Season\Services\SeasonFieldsetService');
+
+        $config  = $services->get('config');
 
         //configuration
         $textDomain = isset($config['Appointment']['text_domain']) ?
@@ -47,6 +55,7 @@ class AppointmentFormFactory extends AbstractFormFactory
 
         $this->setTranslator($translator);
         $this->setTranslatorTextDomain($textDomain);
+        $this->setFieldSetService($fieldSetService);
 
        return $this;
     }
@@ -68,8 +77,10 @@ class AppointmentFormFactory extends AbstractFormFactory
 
            case self::APPOINTMENT_FORM:
                $period = $this->getMaxDatePeriod();
-               $form = new Form\AppointmentForm($period);
-               break; //init made by binding entity
+               $form = new Form\AppointmentForm($this->getFieldSetService());
+               $hydrator = new AppointmentHydrator($this->entityManager, $this->authenticationService);
+               $form->setHydrator($hydrator);
+               break;
 
            case self::CONFIRM_FORM:
                $form = new Form\ConfirmForm();

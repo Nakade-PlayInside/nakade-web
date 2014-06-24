@@ -63,7 +63,7 @@ class UserModel
    * Birthday
    *
    * @ORM\Column(name="geburtsdatum", type="date")
-   * @var DateTime
+   * @var \DateTime
    */
   protected $birthday;
 
@@ -143,7 +143,7 @@ class UserModel
    * edit
    *
    * @ORM\Column(name="edit", type="datetime")
-   * @var DateTime
+   * @var \DateTime
    */
   protected $edit;
 
@@ -151,7 +151,7 @@ class UserModel
    * lastLogin
    *
    * @ORM\Column(name="lastLogin", type="datetime")
-   * @var DateTime
+   * @var \DateTime
    */
   protected $lastLogin;
 
@@ -159,7 +159,7 @@ class UserModel
    * firstLogin
    *
    * @ORM\Column(name="firstLogin", type="datetime")
-   * @var DateTime
+   * @var \DateTime
    */
   protected $firstLogin;
 

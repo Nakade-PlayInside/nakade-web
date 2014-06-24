@@ -20,17 +20,18 @@ class ConfirmForm extends AbstractForm
     {
         //form name
         parent::__construct('ConfirmForm');
+        $this->setInputFilter($this->getFilter());
 
     }
 
     /**
      * @param Appointment $object
      */
-    public function bindEntity(Appointment $object)
+    public function bindEntity($object)
     {
-        $this->bind($object);
         $this->init();
-        $this->setInputFilter($this->getFilter());
+        $this->bind($object);
+
     }
 
     /**

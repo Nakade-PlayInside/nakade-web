@@ -23,10 +23,10 @@ foreach ($this->leagues as $league) : ?>
             <td style="text-align:center"><?php echo $league->getId(); ?></td>
             <td style="text-align:center"><?php echo $league->getNumber();?></td>
             <td style="text-align:center"><?php echo $league->getNoPlayers();?></td>
-            <td style="text-align:center" title="<?php echo $this->translate("edit");?>"><a href="<?php echo $this->url('newLeague', array('action' => 'edit', 'id' => $league->getId()));  ?>"><img src="/images/edit.png"></a></td>
+            <td style="text-align:center" title="<?php echo $this->translate("edit");?>"><a href="<?php echo $this->url('createLeague', array('action' => 'edit', 'id' => $league->getId()));  ?>"><img src="/images/edit.png"></a></td>
         </tr>
 <?php
 endforeach;
 ?>
 </table>
-<a class="btn" href="<?php echo $this->url('season', array('action' => 'create')); ?>"><?php echo "back" ?></a>
+<a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'create')); ?>"><?php echo "back" ?></a>

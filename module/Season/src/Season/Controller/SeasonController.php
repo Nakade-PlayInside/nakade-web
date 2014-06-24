@@ -69,7 +69,7 @@ class SeasonController extends AbstractController
 
         //new season! first play it before adding a new one. you can edit, of course
         if ($mapper->hasNewSeasonByAssociation($id)) {
-           return $this->redirect()->toRoute('season', array('action' => 'create'));
+           return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
 
 
@@ -111,8 +111,8 @@ class SeasonController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['button']['cancel']) {
-                return $this->redirect()->toRoute('season', array('action' => 'create'));
+            if (isset($postData['button']['cancel'])) {
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
             $form->setData($postData);
 
@@ -121,7 +121,7 @@ class SeasonController extends AbstractController
                 $season = $form->getData();
                 $mapper->save($season);
 
-                return $this->redirect()->toRoute('season', array('action' => 'create'));
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
        }
 
@@ -145,7 +145,7 @@ class SeasonController extends AbstractController
 
         //no new season! add season first
         if (!$mapper->hasNewSeasonByAssociation($id)) {
-            return $this->redirect()->toRoute('season', array('action' => 'create'));
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
 
         $season = $mapper->getNewSeasonByAssociation($id);
@@ -178,8 +178,8 @@ class SeasonController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['button']['cancel']) {
-                return $this->redirect()->toRoute('season', array('action' => 'create'));
+            if (isset($postData['button']['cancel'])) {
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
             $form->setData($postData);
 
@@ -190,7 +190,7 @@ class SeasonController extends AbstractController
                 $mapper->update($time);
                 $mapper->update($season);
 
-                return $this->redirect()->toRoute('season', array('action' => 'create'));
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
         }
 

@@ -28,7 +28,7 @@ class LeagueController extends AbstractController
 
         //no new season! add season first
         if (!$mapper->hasNewSeasonByAssociation($id)) {
-            return $this->redirect()->toRoute('season', array('action' => 'create'));
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
         $season = $mapper->getNewSeasonByAssociation($id);
 
@@ -59,7 +59,7 @@ class LeagueController extends AbstractController
 
         //no new season! add season first
         if (!$mapper->hasNewSeasonByAssociation($id)) {
-            return $this->redirect()->toRoute('season', array('action' => 'create'));
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
         $season = $mapper->getNewSeasonByAssociation($id);
 
@@ -75,8 +75,8 @@ class LeagueController extends AbstractController
             //get post data, set data to from, prepare for validation
             $postData =  $request->getPost();
             //cancel
-            if ($postData['button']['cancel']) {
-                return $this->redirect()->toRoute('season', array('action' => 'create'));
+            if (isset($postData['button']['cancel'])) {
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
 
             $form->setData($postData);
@@ -97,7 +97,7 @@ class LeagueController extends AbstractController
 
                 }
 
-                return $this->redirect()->toRoute('season', array('action' => 'create'));
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
         }
 
@@ -122,7 +122,7 @@ class LeagueController extends AbstractController
 
         //no new season! add season first
         if (!$mapper->hasNewSeasonByAssociation($associationId)) {
-            return $this->redirect()->toRoute('season', array('action' => 'create'));
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
         $season = $mapper->getNewSeasonByAssociation($associationId);
 
@@ -151,7 +151,7 @@ class LeagueController extends AbstractController
         $league = $mapper->getLeagueById($leagueId);
         //no new season! add season first
         if (is_null($league)) {
-            return $this->redirect()->toRoute('season', array('action' => 'create'));
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
 
         /* @var $form \Season\Form\LeagueForm */
@@ -166,8 +166,8 @@ class LeagueController extends AbstractController
             //get post data, set data to from, prepare for validation
             $postData =  $request->getPost();
             //cancel
-            if ($postData['button']['cancel']) {
-                return $this->redirect()->toRoute('newLeague', array('action' => 'show'));
+            if (isset($postData['button']['cancel'])) {
+                return $this->redirect()->toRoute('createLeague', array('action' => 'show'));
             }
 
             $form->setData($postData);
@@ -188,7 +188,7 @@ class LeagueController extends AbstractController
                 }
 
 
-                return $this->redirect()->toRoute('season', array('action' => 'create'));
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
         }
 
@@ -213,7 +213,7 @@ class LeagueController extends AbstractController
         $mapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         //no new season! add season first
         if (!$mapper->hasNewSeasonByAssociation($id)) {
-            return $this->redirect()->toRoute('season', array('action' => 'create'));
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
         $season = $mapper->getNewSeasonByAssociation($id);
 

@@ -40,7 +40,8 @@ class AppointmentController extends AbstractController
            ));
        }
 
-       $appointment = $this->makeAppointmentByUser($match);
+       $appointment = new Appointment();
+       $appointment->setMatch($match);
 
        /* @var $form \Appointment\Form\AppointmentForm */
        $form = $this->getFormFactory()->getForm('appointment');
@@ -53,8 +54,8 @@ class AppointmentController extends AbstractController
            $postData =  $request->getPost();
 
            //cancel
-           if ($postData['cancel']) {
-               return $this->redirect()->toRoute('appointmentShow');
+           if (isset($postData['button']['cancel'])) {
+               return $this->redirect()->toRoute('appointmentShow', array('action' => 'available'));
            }
 
            $form->setData($postData);
@@ -63,6 +64,7 @@ class AppointmentController extends AbstractController
 
                /* @var $appointment \Appointment\Entity\Appointment */
                $appointment = $form->getData();
+              // var_dump($appointment->getMatch()->getId());die;
                $repo->save($appointment);
 
                /* @var $submit \Appointment\Mail\SubmitterMail */
@@ -119,7 +121,7 @@ class AppointmentController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //reject
-            if ($postData['reject']) {
+            if (isset($postData['reject'])) {
                 return $this->redirect()->toRoute('appointment', array(
                         'action' => 'reject',
                         'id' => $appointmentId,
@@ -197,7 +199,7 @@ class AppointmentController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['cancel']) {
+            if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('appointment', array(
                     'action' => 'confirm',
                     'id' => $appointmentId
@@ -268,33 +270,6 @@ class AppointmentController extends AbstractController
         return new ViewModel();
     }
 
-    /**
-     * @param Match $match
-     *
-     * @return Appointment
-     */
-    private function makeAppointmentByUser(Match $match)
-    {
-        /* @var $user \User\Entity\User */
-        $user = $this->identity();
 
-        $appointment = new Appointment();
-
-
-        $appointment->setMatch($match);
-        $appointment->setSubmitDate(new \DateTime());
-        $appointment->setOldDate($match->getDate());
-        $responder = $match->getBlack();
-        $submitter = $match->getWhite();
-        if ($user->getId() == $match->getBlack()->getId()) {
-            $submitter = $match->getBlack();
-            $responder = $match->getWhite();
-        }
-        $appointment->setSubmitter($submitter);
-        $appointment->setResponder($responder);
-
-        return $appointment;
-
-    }
 
 }

@@ -23,7 +23,7 @@ class Appointment
 
     /**
      * @ORM\ManyToOne(targetEntity="\Season\Entity\Match", cascade={"persist"})
-     * @ORM\JoinColumn(name="match", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="myMatch", referencedColumnName="id", nullable=false)
      */
     private $match;
 
@@ -76,7 +76,7 @@ class Appointment
   private $rejectReason;
 
   /**
-   * @ORM\Column(name="confirmString", type="text", nullable=true)
+   * @ORM\Column(name="confirmString", type="string", nullable=true)
    */
   private $confirmString;
 
@@ -296,9 +296,6 @@ class Appointment
     {
         if (isset($data['confirmString'])) {
             $this->confirmString = $data['confirmString'];
-        }
-        if (isset($data['date']) &&  isset($data['time'])) {
-            $this->newDate = \DateTime::createFromFormat('Y-m-d H:i:s', $data['date'] . ' ' . $data['time']);
         }
         if (isset($data['reason'])) {
             $this->rejectReason = $data['reason'];

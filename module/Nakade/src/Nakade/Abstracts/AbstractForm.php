@@ -94,7 +94,7 @@ abstract class AbstractForm extends Form implements TranslatorAwareInterface
     }
 
     /**
-     * Binds an entitiy object to the form, populating
+     * Binds an entitity object to the form, populating
      * the form values. The identifier of the
      * entity is set and the filter are reset. This is mandatory
      * if the DBNoRecordExist validator is used with the exclude
