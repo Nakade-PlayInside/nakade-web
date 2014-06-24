@@ -49,7 +49,7 @@ class User extends UserModel implements UserInterface, RoleInterface
      * Sets the birthday.
      * Converts to DateTime if string is provided
      *
-     * @param mixed DateTime|string $datetime
+     * @param \DateTime|string $datetime
      *
      * @return User
      */

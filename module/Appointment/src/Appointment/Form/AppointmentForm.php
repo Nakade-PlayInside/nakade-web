@@ -5,6 +5,7 @@ use Appointment\Entity\Appointment;
 use Nakade\Abstracts\AbstractForm;
 use \Zend\InputFilter\InputFilter;
 use \Zend\Validator\Identical;
+use Season\Services\SeasonFieldsetService;
 
 /**
  * Class AppointmentForm
@@ -16,55 +17,56 @@ class AppointmentForm extends AbstractForm
 
     const USER_CONFIRM = "1";
 
-    /* @var $maxDate \DateTime */
-    private $maxDate;
-    private $confirmString;
-    private $period;
-
     /**
-     * @param int        $maxDatePeriod
+     * @param SeasonFieldsetService $service
      */
-    public function __construct($maxDatePeriod=4)
+    public function __construct(SeasonFieldsetService $service)
     {
 
         //form name
         parent::__construct('AppointmentForm');
-
-        $this->period = sprintf('+%d weeks', $maxDatePeriod);
-        $this->maxDate = new \DateTime();
-        $this->maxDate->modify($this->period);
+        $this->service = $service;
     }
 
     /**
      * @param Appointment $object
      */
-    public function bindEntity(Appointment $object)
+    public function bindEntity($object)
     {
-        $date = clone $object->getOldDate();
-        $date->modify($this->period);
-        $this->maxDate = $date;
-        $this->confirmString = md5(uniqid(rand(), true));
-
-        $this->bind($object);
         $this->init();
         $this->setInputFilter($this->getFilter());
+        $this->bind($object);
+
     }
 
 
     /**
-     * init the form. It is neccessary to call this function
+     * init the form. It is necessary to call this function
      * before using the form.
      */
     public function init()
     {
+
+        //info
         $this->add(
             array(
-                'name' => 'confirmString',
-                'type' => 'Zend\Form\Element\Hidden',
-                'attributes' => array(
-                    'value'  => $this->confirmString,
-                )
+                'type' => 'Zend\Form\Element\Text',
+                'name' => 'oldDate',
+                'options' => array('label' => $this->translate('Old date') . ':'),
+                'attributes' => array('readonly' => 'readonly')
+            )
+        );
 
+        $this->add(
+            array(
+                'name' => 'submitterId',
+                'type' => 'Zend\Form\Element\Hidden',
+        ));
+
+        $this->add(
+            array(
+                'name' => 'responderId',
+                'type' => 'Zend\Form\Element\Hidden',
         ));
 
         //date
@@ -78,7 +80,6 @@ class AppointmentForm extends AbstractForm
                 ),
                 'attributes' => array(
                     'min'  => \date('Y-m-d'),
-                    'max'  => $this->maxDate->format('Y-m-d'),
                     'step' => '1', // days; default step interval is 1 day
                 )
 
@@ -116,41 +117,7 @@ class AppointmentForm extends AbstractForm
             )
         );
 
-        $this->add(
-            array(
-                'name' => 'csrf',
-                'type'  => 'Zend\Form\Element\Csrf',
-                'options' => array(
-                    'csrf_options' => array(
-                        'timeout' => 600
-                    )
-                )
-            )
-        );
-
-        //submit button
-        $this->add(
-            array(
-                'name' => 'Send',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Submit'),
-
-                ),
-            )
-        );
-
-        //cancel button
-        $this->add(
-            array(
-                'name' => 'cancel',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Cancel'),
-
-                ),
-            )
-        );
+        $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
 
     }
 
@@ -185,6 +152,14 @@ class AppointmentForm extends AbstractForm
         );
 
         return $filter;
+    }
+
+    /**
+     * @return SeasonFieldsetService
+     */
+    public function getService()
+    {
+        return $this->service;
     }
 
 }

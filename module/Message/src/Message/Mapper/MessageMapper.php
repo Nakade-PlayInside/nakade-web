@@ -26,7 +26,7 @@ class MessageMapper extends AbstractMapper
             ->andWhere('Receiver.id = :uid')
             ->andWhere('m.hidden = 0')
             ->setParameter('uid', $uid)
-            ->orderBy('m.sendDate', DESC);
+            ->orderBy('m.sendDate', 'DESC');
 
         $result = $qb->getQuery()->getResult();
 
@@ -47,7 +47,7 @@ class MessageMapper extends AbstractMapper
             ->join('m.sender', 'Sender')
             ->andWhere('Sender.id = :uid')
             ->setParameter('uid', $uid)
-            ->orderBy('m.sendDate', DESC);
+            ->orderBy('m.sendDate', 'DESC');
 
         $result = $qb->getQuery()->getResult();
 
@@ -101,7 +101,7 @@ class MessageMapper extends AbstractMapper
             ->Where('m.id = :mid')
             ->orWhere('m.threadId = :mid')
             ->setParameter('mid', $mid)
-            ->orderBy('m.sendDate', DESC);
+            ->orderBy('m.sendDate', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
@@ -123,7 +123,7 @@ class MessageMapper extends AbstractMapper
             ->Where('m.id = :mid')
             ->orWhere('m.threadId = :mid')
             ->setParameter('mid', $messageId)
-            ->orderBy("m.sendDate", DESC)
+            ->orderBy("m.sendDate", 'DESC')
             ->setMaxResults(1);
 
 

@@ -11,9 +11,6 @@ return array(
         //your text domain for translation
         'text_domain' => 'Appointment',
 
-        //showing max date for selecting an appointment date in weeks
-        'max_date_period' => 4,
-
         //automatic confirmation after given time in hours
         'auto_confirm_time' => 72,
 
