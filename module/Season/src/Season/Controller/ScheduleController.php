@@ -54,7 +54,7 @@ class ScheduleController extends AbstractController
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
             //cancel
-            if ($postData['cancel']) {
+            if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('createSeason');
             }
 

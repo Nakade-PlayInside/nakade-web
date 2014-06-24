@@ -121,7 +121,7 @@ class AppointmentController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //reject
-            if ($postData['reject']) {
+            if (isset($postData['reject'])) {
                 return $this->redirect()->toRoute('appointment', array(
                         'action' => 'reject',
                         'id' => $appointmentId,
@@ -199,7 +199,7 @@ class AppointmentController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['cancel']) {
+            if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('appointment', array(
                     'action' => 'confirm',
                     'id' => $appointmentId

@@ -111,7 +111,7 @@ class SeasonController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['button']['cancel']) {
+            if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
             $form->setData($postData);
@@ -178,7 +178,7 @@ class SeasonController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['button']['cancel']) {
+            if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
             $form->setData($postData);

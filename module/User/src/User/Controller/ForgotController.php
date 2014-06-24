@@ -2,9 +2,9 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for 
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for
  * the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. 
+ * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc.
  * (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
@@ -23,7 +23,7 @@ class ForgotController extends AbstractController
 
     /**
      * Showing the new pwd input request
-     * 
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function indexAction()
@@ -35,7 +35,7 @@ class ForgotController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['cancel']) {
+            if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('profile');
             }
 
@@ -64,7 +64,7 @@ class ForgotController extends AbstractController
 
     /**
      * new credentials are set and send by mail to the given email adress
-     * 
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function successAction()
@@ -74,7 +74,7 @@ class ForgotController extends AbstractController
 
     /**
      * email not found in the database.
-     * 
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function failureAction()

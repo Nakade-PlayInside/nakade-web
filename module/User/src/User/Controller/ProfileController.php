@@ -63,7 +63,7 @@ class ProfileController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['cancel']) {
+            if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('profile');
             }
 
@@ -105,7 +105,7 @@ class ProfileController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['cancel']) {
+            if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('profile');
             }
 
@@ -146,7 +146,7 @@ class ProfileController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['cancel']) {
+            if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('profile');
             }
 
@@ -186,7 +186,7 @@ class ProfileController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['cancel']) {
+            if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('profile');
             }
 
@@ -228,7 +228,7 @@ class ProfileController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['cancel']) {
+            if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('profile');
             }
 
@@ -272,7 +272,7 @@ class ProfileController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if ($postData['cancel']) {
+            if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('profile');
             }
 
