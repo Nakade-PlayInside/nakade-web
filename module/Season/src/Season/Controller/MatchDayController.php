@@ -1,16 +1,17 @@
 <?php
 namespace Season\Controller;
 
-use Zend\Form\FormInterface;
+use Season\Entity\Schedule;
+use Season\Services\SeasonFormService;
 use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 
 /**
- * Creating a schedule of the newly created season
+ * Class MatchDayController
  *
- * @author Holger Maerz <holger@nakade.de>
+ * @package Season\Controller
  */
-class ScheduleController extends AbstractController
+class MatchDayController extends AbstractController
 {
     /**
      * @return array|ViewModel
@@ -18,6 +19,7 @@ class ScheduleController extends AbstractController
     public function indexAction()
     {
 
+        //todo: showing all match days
         return new ViewModel(
             array(
                'players' => null, //$this->getService()->getPlayers(),
@@ -42,11 +44,15 @@ class ScheduleController extends AbstractController
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
         $season = $mapper->getNewSeasonByAssociation($id);
+        $noOfMatchDays = $mapper->getNoOfMatchDaysBySeason($season->getId());
 
-        /* @var $form \Season\Form\ScheduleForm */
-        $form = $this->getForm('schedule');
-        $form->setSeason($season);
-        $form->init();
+        $schedule = new Schedule();
+        $schedule->setSeason($season);
+        $schedule->setNoOfMatchDays($noOfMatchDays);
+
+        /* @var $form \Season\Form\MatchDayForm */
+        $form = $this->getForm(SeasonFormService::MATCH_DAY_FORM);
+        $form->bindEntity($schedule);
 
 
         if ($this->getRequest()->isPost()) {
@@ -54,17 +60,17 @@ class ScheduleController extends AbstractController
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
             //cancel
-            if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('createSeason');
+            if (isset($postData['button']['cancel'])) {
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
 
             $form->setData($postData);
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $this->getService()->addSchedule($data);
+                $data = $form->getData();
+                //$this->getService()->addSchedule($data);
 
-                return $this->redirect()->toRoute('schedule');
+                return $this->redirect()->toRoute('createSeason');
             }
         }
 

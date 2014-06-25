@@ -2,7 +2,7 @@
 
 namespace Season\Services;
 
-use Season\Controller\ScheduleController;
+use Season\Controller\MatchDayController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -13,7 +13,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  *
  * @author Dr.Holger Maerz <grrompf@gmail.com>
  */
-class ScheduleControllerFactory implements FactoryInterface
+class MatchDayControllerFactory implements FactoryInterface
 {
 
     /**
@@ -36,7 +36,7 @@ class ScheduleControllerFactory implements FactoryInterface
         $factory    = $serviceManager->get('Season\Services\SeasonFormService');
         $repository = $serviceManager->get('Season\Services\RepositoryService');
 
-        $controller = new ScheduleController();
+        $controller = new MatchDayController();
         $controller->setFormFactory($factory);
         $controller->setRepository($repository);
 

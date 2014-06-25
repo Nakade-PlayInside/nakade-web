@@ -122,24 +122,5 @@ class ParticipantMapper extends AbstractMapper
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @param int $seasonId
-     *
-     * @return int
-     */
-    public function getNoOfMatchDaysBySeason($seasonId)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
-        $qb->select('count(p) as no')
-            ->from('Season\Entity\Participant', 'p')
-            ->where('p.season = :seasonId')
-            ->setParameter('seasonId', $seasonId)
-            ->andWhere('p.league IS NOT NULL')
-            ->andWhere('p.hasAccepted  = 1')
-            ->groupBy('p.league')
-            ->orderBy('no', 'DESC')
-            ->setMaxResults(1);
 
-        return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
-    }
 }

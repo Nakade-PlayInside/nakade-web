@@ -6,6 +6,7 @@ use Nakade\Abstracts\AbstractFormFactory;
 use Season\Form;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Season\Form\Hydrator\SeasonHydrator;
+use Season\Form\Hydrator\MatchDayHydrator;
 
 /**
  * Class SeasonFormService
@@ -18,7 +19,7 @@ class SeasonFormService extends AbstractFormFactory
     const SEASON_FORM = 'season';
     const PARTICIPANT_FORM = 'participant';
     const LEAGUE_FORM = 'league';
-    const SCHEDULE_FORM = 'schedule';
+    const MATCH_DAY_FORM = 'match_day';
 
     /**
      * @param ServiceLocatorInterface $services
@@ -41,7 +42,7 @@ class SeasonFormService extends AbstractFormFactory
 
         $config  = $services->get('config');
 
-        //configuration
+        //text domain
         $textDomain = isset($config['Season']['text_domain']) ?
             $config['Season']['text_domain'] : null;
 
@@ -51,8 +52,7 @@ class SeasonFormService extends AbstractFormFactory
 
         $this->setRepository($repository);
         $this->setFieldSetService($fieldSetService);
-        $this->setTranslator($translator);
-        $this->setTranslatorTextDomain($textDomain);
+        $this->setTranslator($translator, $textDomain);
 
        return $this;
     }
@@ -71,11 +71,12 @@ class SeasonFormService extends AbstractFormFactory
     {
         /* @var $mapper \Season\Mapper\SeasonMapper */
         $mapper = $this->getRepository()->getMapper('season');
+        $service = $this->getFieldSetService();
+        $repository = $this->getRepository();
 
         switch (strtolower($typ)) {
 
            case self::SEASON_FORM:
-               $service = $this->getFieldSetService();
                $extraTime = $mapper->getByoyomi();
                $hydrator = new SeasonHydrator($this->entityManager);
                $form = new Form\SeasonForm($service, $extraTime);
@@ -83,21 +84,17 @@ class SeasonFormService extends AbstractFormFactory
                break;
 
            case self::PARTICIPANT_FORM:
-               $service = $this->getFieldSetService();
-               $repository = $this->getRepository();
                $form = new Form\ParticipantForm($service, $repository);
                break;
 
            case self::LEAGUE_FORM:
-               $service = $this->getFieldSetService();
-               $repository = $this->getRepository();
                $form = new Form\LeagueForm($service, $repository);
                break;
 
-           case self::SCHEDULE_FORM:
-               $service = $this->getFieldSetService();
-               $repository = $this->getRepository();
-               $form = new Form\ScheduleForm($service, $repository);
+           case self::MATCH_DAY_FORM:
+               $form = new Form\MatchDayForm($service);
+               $hydrator = new MatchDayHydrator($this->entityManager, $this->translator);
+               $form->setHydrator($hydrator);
                break;
 
            default:
@@ -106,6 +103,7 @@ class SeasonFormService extends AbstractFormFactory
                );
         }
 
+        $form->setTranslator($this->translator, $this->textDomain);
         return $form;
     }
 

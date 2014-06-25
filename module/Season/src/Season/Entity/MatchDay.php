@@ -4,11 +4,11 @@ namespace Season\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
-* Entity Class representing a MatchDay
-*
-* @ORM\Entity
-* @ORM\Table(name="matchDay")
-*/
+ * Entity Class representing a MatchDay
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="matchDay")
+ */
 class MatchDay
 {
 
