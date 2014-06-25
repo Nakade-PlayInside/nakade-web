@@ -34,6 +34,7 @@ class ScheduleForm extends BaseForm
     private $matchDay;
     private $seasonStartDate;
     private $minDate;
+    private $noOfMatchDays;
 
     /**
      * @param SeasonFieldsetService $service
@@ -122,6 +123,21 @@ class ScheduleForm extends BaseForm
             )
         );
 
+        //match Day
+        $this->add(
+            array(
+                'type' => 'Zend\Form\Element\Text',
+                'name' => 'matchDay',
+                'options' => array(
+                    'label' => $this->translate('No of match days'),
+                ),
+                'attributes' => array(
+                    'readonly' => 'readonly',
+                    'value' => $this->noOfMatchDays
+                ),
+            )
+        );
+
         //start date
         $this->add(
             array(
@@ -158,8 +174,8 @@ class ScheduleForm extends BaseForm
             $this->matchDay = $this->getMatchDay($this->getSeason()->getAssociation()->getSeasonDates()->getDay());
             $this->setSeasonStartDate($this->getSeason()->getStartDate());
             $this->setMinDate($this->getSeason()->getStartDate());
-           // $this->availablePlayers = $this->getAvailablePlayersByRepository($this->getSeason()->getId());
-           // $this->noInvitedPlayers= $this->getNoInvitedPlayersByRepository($this->getSeason()->getId());
+            $this->noOfMatchDays = $this->getNoOfMatchdays($this->getSeason()->getId());
+
         }
 
     }
@@ -280,7 +296,25 @@ class ScheduleForm extends BaseForm
         return $this->minDate;
     }
 
+    /**
+     * @return RepositoryService
+     */
+    public function getRepositoryService()
+    {
+        return $this->repository;
+    }
 
+    /**
+     * @param int $seasonId
+     *
+     * @return int
+     */
+    public function getNoOfMatchdays($seasonId)
+    {
+        /* @var $mapper \Season\Mapper\ParticipantMapper */
+        $mapper = $this->getRepositoryService()->getMapper(RepositoryService::PARTICIPANT_MAPPER);
+        return $mapper->getNoOfMatchDaysBySeason($seasonId);
+    }
 
 }
 
