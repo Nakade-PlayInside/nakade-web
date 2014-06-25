@@ -61,6 +61,20 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
             )
         );
 
+        //rounds
+        $this->add(
+            array(
+                'name' => 'noOfMatchDays',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array(
+                    'label' => $this->translate('No of rounds') . ':',
+                ),
+                'attributes' => array(
+                    'readonly' => 'readonly',
+                ),
+            )
+        );
+
         $this->add(
             array(
                 'name' => 'cycleInfo',
@@ -86,20 +100,6 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
             )
         );
 
-        //match Day
-        $this->add(
-            array(
-                'name' => 'noOfMatchDays',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' => $this->translate('No of rounds') . ':',
-                ),
-                'attributes' => array(
-                    'readonly' => 'readonly',
-                ),
-            )
-        );
-
         //start date
         $this->add(
             array(
@@ -113,6 +113,19 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
                      'min'   => \date('Y-m-d'),
                      'step'  => '1',
                 ),
+            )
+        );
+
+        //time
+        $this->add(
+            array(
+                'type' => 'Zend\Form\Element\Time',
+                'name' => 'matchTime',
+                'options' => array('label' => $this->translate('Time') . ':'),
+                'attributes' => array(
+                    'value' => '18:30',
+                    'step'  => '900'
+                )
             )
         );
 

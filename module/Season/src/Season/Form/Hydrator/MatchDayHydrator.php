@@ -20,13 +20,10 @@ class MatchDayHydrator extends AbstractTranslation implements HydratorInterface,
 
     /**
      * @param EntityManager $em
-     * @param Translator    $translator
      */
-    public function __construct(EntityManager $em, Translator $translator)
+    public function __construct(EntityManager $em)
     {
         $this->entityManager = $em;
-        $this->translator = $translator;
-        $this->textDomain = 'Season';
     }
 
     /**
@@ -41,10 +38,10 @@ class MatchDayHydrator extends AbstractTranslation implements HydratorInterface,
             $schedule->getSeason()->getAssociation()->getName()
         );
 
-        $cycle = $schedule->getSeason()->getAssociation()->getSeasonDates()->getCycle();
+        $cycle = $schedule->getCycle();
         $cycleInfo = $this->getCycleInfo($cycle);
 
-        $matchDay = $schedule->getSeason()->getAssociation()->getSeasonDates()->getDay();
+        $matchDay = $schedule->getMatchDay();
         $matchDayInfo = $this->getWeekDay($matchDay);
 
         return array(
@@ -53,42 +50,22 @@ class MatchDayHydrator extends AbstractTranslation implements HydratorInterface,
            'noOfMatchDays' => $schedule->getNoOfMatchdays(),
            'cycleInfo' => $cycleInfo,
            'matchDayInfo' => $matchDayInfo,
-
-        );
+       );
     }
 
 
     /**
-     * @param array  $data
-     * @param object $season
+     * @param array                   $data
+     * @param \Season\Entity\Schedule $schedule
      *
      * @return object
      */
-    public function hydrate(array $data, $season)
+    public function hydrate(array $data, $schedule)
     {
         /* @var $season \Season\Entity\Season */
-        $season->setNumber($data['number']);
-        $season->setKomi($data['komi']);
-        $season->setWinPoints($data['winPoints']);
+        $schedule->setDate($data['startDate']);
 
-        //tiebreaker
-        $tiebreak1 = $this->getTieBreakerById($data['tiebreak']['tiebreaker1']);
-        $season->setTieBreaker1($tiebreak1);
-
-        $tiebreak2 = $this->getTieBreakerById($data['tiebreak']['tiebreaker2']);
-        $season->setTieBreaker2($tiebreak2);
-
-        $tiebreak3 = $this->getTieBreakerById($data['tiebreak']['tiebreaker3']);
-        $season->setTieBreaker3($tiebreak3);
-
-        //time
-        $time = $season->getTime();
-        $time->exchangeArray($data);
-        $byoyomi = $this->getEntityManager()->getReference('Season\Entity\Byoyomi', $data['byoyomi']);
-        $time->setByoyomi($byoyomi);
-        $season->setTime($time);
-
-        return $season;
+        return $schedule;
     }
 
     /**

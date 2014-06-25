@@ -46,9 +46,7 @@ class MatchDayController extends AbstractController
         $season = $mapper->getNewSeasonByAssociation($id);
         $noOfMatchDays = $mapper->getNoOfMatchDaysBySeason($season->getId());
 
-        $schedule = new Schedule();
-        $schedule->setSeason($season);
-        $schedule->setNoOfMatchDays($noOfMatchDays);
+        $schedule = new Schedule($season, $noOfMatchDays);
 
         /* @var $form \Season\Form\MatchDayForm */
         $form = $this->getForm(SeasonFormService::MATCH_DAY_FORM);

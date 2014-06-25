@@ -4,23 +4,28 @@ namespace Season\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
-* Entity Class representing a MatchDay
-*
-* @ORM\Entity
-* @ORM\Table(name="matchDay")
-*/
+ * Class Schedule
+ *
+ * @package Season\Entity
+ */
 class Schedule
 {
-
     private $season;
     private $noOfMatchDays;
+    private $date;
+    private $matchDay;
+    private $cycle;
 
     /**
-     * @param int $noOfMatchDays
+     * @param Season $season
+     * @param int    $noOfMatchDays
      */
-    public function setNoOfMatchDays($noOfMatchDays)
+    public function __construct(Season $season, $noOfMatchDays)
     {
+        $this->season = $season;
         $this->noOfMatchDays = $noOfMatchDays;
+        $this->cycle = $this->getSeason()->getAssociation()->getSeasonDates()->getCycle();
+        $this->matchDay = $this->getSeason()->getAssociation()->getSeasonDates()->getDay();
     }
 
     /**
@@ -31,13 +36,6 @@ class Schedule
         return $this->noOfMatchDays;
     }
 
-    /**
-     * @param Season $season
-     */
-    public function setSeason(Season $season)
-    {
-        $this->season = $season;
-    }
 
     /**
      * @return Season
@@ -45,6 +43,54 @@ class Schedule
     public function getSeason()
     {
         return $this->season;
+    }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param int $cycle
+     */
+    public function setCycle($cycle)
+    {
+        $this->cycle = $cycle;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCycle()
+    {
+        return $this->cycle;
+    }
+
+    /**
+     * @param int $matchDay
+     */
+    public function setMatchDay($matchDay)
+    {
+        $this->matchDay = $matchDay;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMatchDay()
+    {
+        return $this->matchDay;
     }
 
 }

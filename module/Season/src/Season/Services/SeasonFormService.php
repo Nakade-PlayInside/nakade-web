@@ -93,7 +93,8 @@ class SeasonFormService extends AbstractFormFactory
 
            case self::MATCH_DAY_FORM:
                $form = new Form\MatchDayForm($service);
-               $hydrator = new MatchDayHydrator($this->entityManager, $this->translator);
+               $hydrator = new MatchDayHydrator($this->entityManager);
+               $hydrator->setTranslator($this->translator, $this->textDomain);
                $form->setHydrator($hydrator);
                break;
 
