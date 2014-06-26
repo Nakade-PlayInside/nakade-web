@@ -70,6 +70,7 @@ class SeasonFieldsetService extends AbstractFieldsetFactory
 
         $fieldSet->setTranslator($this->getTranslator());
         $fieldSet->setTranslatorTextDomain($this->getTranslatorTextDomain());
+        $fieldSet->init();
         return $fieldSet;
     }
 

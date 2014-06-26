@@ -15,6 +15,7 @@ class Schedule
     private $date;
     private $matchDay;
     private $cycle;
+    private $time;
 
     /**
      * @param Season $season
@@ -26,6 +27,8 @@ class Schedule
         $this->noOfMatchDays = $noOfMatchDays;
         $this->cycle = $this->getSeason()->getAssociation()->getSeasonDates()->getCycle();
         $this->matchDay = $this->getSeason()->getAssociation()->getSeasonDates()->getDay();
+        $this->time = $this->getSeason()->getAssociation()->getSeasonDates()->getTime();
+        $this->date = $this->getSeason()->getStartDate();
     }
 
     /**
@@ -91,6 +94,33 @@ class Schedule
     public function getMatchDay()
     {
         return $this->matchDay;
+    }
+
+    /**
+     * @param Time $time
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+    }
+
+    /**
+     * @return Time
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * @return string
+     */
+    public function  getSeasonInfo()
+    {
+        return sprintf('%s. %s League',
+            $this->getSeason()->getNumber(),
+            $this->getSeason()->getAssociation()->getName()
+        );
     }
 
 }

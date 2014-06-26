@@ -18,7 +18,13 @@ class ButtonFieldset extends AbstractFieldset
     {
         //form name is SeasonForm
         parent::__construct('button');
+    }
 
+    /**
+     * init
+     */
+    public function init()
+    {
         //cross-site scripting hash protection
         //this is handled by ZF2 in the background - no need for server-side
         //validation
@@ -47,7 +53,6 @@ class ButtonFieldset extends AbstractFieldset
                 'attributes' => array('value' => $this->translate('Cancel'))
             )
         );
-
     }
 
     /**

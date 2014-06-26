@@ -1,33 +1,26 @@
 <?php
 namespace Season\Form;
 
+use Season\Form\Hydrator\MatchDayHydrator;
 use Season\Services\SeasonFieldsetService;
+use Doctrine\ORM\EntityManager;
 use \Zend\InputFilter\InputFilter;
 
 class MatchDayForm extends BaseForm implements WeekDayInterface
 {
 
-    private $weekDays = array(
-        self::MONDAY => 'Monday',
-        self::TUESDAY => 'Tuesday',
-        self::WEDNESDAY => 'Wednesday',
-        self::THURSDAY => 'Thursday',
-        self::FRIDAY => 'Friday',
-        self::SATURDAY => 'Saturday',
-        self::SUNDAY => 'Sunday',
-    );
-
-    private $matchDay;
-    private $minDate;
-
     /**
      * @param SeasonFieldsetService $service
+     * @param EntityManager         $em
      */
-    public function __construct(SeasonFieldsetService $service)
+    public function __construct(SeasonFieldsetService $service, EntityManager $em)
     {
         parent::__construct('MatchDayForm');
 
         $this->service = $service;
+        $hydration = new MatchDayHydrator($em);
+        $this->setHydrator($hydration);
+
         $this->setInputFilter($this->getFilter());
     }
 
@@ -77,11 +70,14 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
 
         $this->add(
             array(
-                'name' => 'cycleInfo',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array('label' =>  $this->translate('Cycle') . ':'),
+                'name' => 'cycle',
+                'type' => 'Zend\Form\Element\Select',
+                'options' => array(
+                    'label' =>  $this->translate('Cycle') . ':',
+                    'value_options' => $this->getCycle()
+                ),
                 'attributes' => array(
-                    'readonly' => 'readonly',
+                    'size' => 1,
                 )
             )
         );
@@ -89,13 +85,14 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
         //match Day
         $this->add(
             array(
-                'type' => 'Zend\Form\Element\Text',
-                'name' => 'matchDayInfo',
+                'type' => 'Zend\Form\Element\Select',
+                'name' => 'matchDay',
                 'options' => array(
                     'label' => $this->translate('Match day') . ':',
+                    'value_options' => $this->getWeekdays()
                 ),
                 'attributes' => array(
-                    'readonly' => 'readonly',
+                    'size' => 1
                 ),
             )
         );
@@ -120,19 +117,15 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
         $this->add(
             array(
                 'type' => 'Zend\Form\Element\Time',
-                'name' => 'matchTime',
+                'name' => 'time',
                 'options' => array('label' => $this->translate('Time') . ':'),
                 'attributes' => array(
-                    'value' => '18:30',
-                    'step'  => '900'
+                     'step'  => '900'
                 )
             )
         );
 
-
-
         $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
-
     }
 
     /**
@@ -152,31 +145,35 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
         return $filter;
     }
 
-
     /**
-     * @param \DateTime $minDate
+     * @return array
      */
-    public function setMinDate($minDate)
+    public function getWeekdays()
     {
-        $today = new \DateTime();
-        if ($today > $minDate) {
-            $minDate = $today;
-        }
-
-        if ($minDate->format('N') != $this->matchDay) {
-            $next = sprintf('next %s', $this->weekDays[$this->matchDay]);
-            $minDate->modify($next);
-        }
-
-        $this->minDate = $minDate;
+        return array(
+            self::MONDAY => $this->translate('Monday'),
+            self::TUESDAY => $this->translate('Tuesday'),
+            self::WEDNESDAY => $this->translate('Wednesday'),
+            self::THURSDAY => $this->translate('Thursday'),
+            self::FRIDAY => $this->translate('Friday'),
+            self::SATURDAY => $this->translate('Saturday'),
+            self::SUNDAY => $this->translate('Sunday')
+        );
     }
 
     /**
-     * @return \DateTime
+     * @return array
      */
-    public function getMinDate()
+    public function getCycle()
     {
-        return $this->minDate;
+       return array(
+            self::DAILY => $this->translate('daily'),
+            self::WEEKDAYS => $this->translate('on weekdays'),
+            self::WEEKLY => $this->translate('weekly'),
+            self::FORTNIGHTLY => $this->translate('fortnightly'),
+            self::ALL_THREE_WEEKS => $this->translate('all 3 weeks'),
+            self::MONTHLY => $this->translate('monthly'),
+       );
     }
 
 }

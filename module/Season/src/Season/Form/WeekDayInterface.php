@@ -12,8 +12,10 @@ interface WeekDayInterface
     const SUNDAY = 7;
 
     const DAILY = 1;
+    const WEEKDAYS = 5;
     const WEEKLY = 7;
     const FORTNIGHTLY = 14;
+    const ALL_THREE_WEEKS = 21;
     const MONTHLY = 30;
 
 }

@@ -28,9 +28,9 @@ class SeasonDates
     private $day;
 
   /**
-   * @ORM\Column(name="time", type="integer", nullable=false)
+   * @ORM\Column(name="time", type="time", nullable=false)
    */
-    private $time=1;
+    private $time;
 
   /**
    * @ORM\Column(name="cycle", type="integer", nullable=false)
@@ -54,7 +54,7 @@ class SeasonDates
     }
 
     /**
-     * @param mixed $id
+     * @param int $id
      */
     public function setId($id)
     {
@@ -62,7 +62,7 @@ class SeasonDates
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId()
     {
@@ -86,7 +86,7 @@ class SeasonDates
     }
 
     /**
-     * @param mixed $time
+     * @param Time $time
      */
     public function setTime($time)
     {
@@ -94,7 +94,7 @@ class SeasonDates
     }
 
     /**
-     * @return mixed
+     * @return Time
      */
     public function getTime()
     {

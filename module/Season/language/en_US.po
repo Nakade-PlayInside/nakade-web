@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-25 23:07+0100\n"
-"PO-Revision-Date: 2014-06-25 23:07+0100\n"
+"POT-Creation-Date: 2014-06-26 10:12+0100\n"
+"PO-Revision-Date: 2014-06-26 10:12+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -36,6 +36,7 @@ msgid "Player accepted invitation"
 msgstr ""
 
 #: ../src/Season/View/Helper/RulesInfo.php:23
+#: ../src/Season/Form/MatchDayForm.php:121
 msgid "Time"
 msgstr ""
 
@@ -77,25 +78,77 @@ msgstr ""
 msgid "Add player"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayForm.php:57
+#: ../src/Season/Form/MatchDayForm.php:50
 msgid "Season"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayForm.php:68
-msgid "Cycle"
-msgstr ""
-
-#: ../src/Season/Form/MatchDayForm.php:81
-msgid "Match day"
-msgstr ""
-
-#: ../src/Season/Form/MatchDayForm.php:95
+#: ../src/Season/Form/MatchDayForm.php:63
 msgid "No of rounds"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayForm.php:109
+#: ../src/Season/Form/MatchDayForm.php:76
+msgid "Cycle"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:91
+msgid "Match day"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:106
 #: ../src/Season/Form/SeasonForm.php:66
 msgid "Start date"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:154
+msgid "Monday"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:155
+msgid "Tuesday"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:156
+msgid "Wednesday"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:157
+msgid "Thursday"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:158
+msgid "Friday"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:159
+msgid "Saturday"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:160
+msgid "Sunday"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:170
+msgid "daily"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:171
+msgid "on weekdays"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:172
+msgid "weekly"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:173
+msgid "fortnightly"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:174
+msgid "all 3 weeks"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:175
+msgid "monthly"
 msgstr ""
 
 #: ../src/Season/Form/LeagueForm.php:61
@@ -145,58 +198,6 @@ msgstr ""
 
 #: ../src/Season/Form/Fieldset/ButtonFieldset.php:47
 msgid "Cancel"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:101
-msgid "every %NUMBER% days"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:107
-msgid "daily"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:111
-msgid "weekly"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:115
-msgid "fortnightly"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:119
-msgid "monthly"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:124
-msgid "every %NUMBER% weeks"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:149
-msgid "Monday"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:150
-msgid "Tuesday"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:151
-msgid "Wednesday"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:152
-msgid "Thursday"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:153
-msgid "Friday"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:154
-msgid "Saturday"
-msgstr ""
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:155
-msgid "Sunday"
 msgstr ""
 
 #: ../view/season/player/index.phtml:11
@@ -300,7 +301,7 @@ msgid "edit League"
 msgstr ""
 
 #: ../view/season/season/create.phtml:39
-msgid "create Match Days"
+msgid "configure Match Days"
 msgstr ""
 
 #: ../view/season/season/add.phtml:6
@@ -328,7 +329,7 @@ msgid "number of league"
 msgstr ""
 
 #: ../view/season/match-day/add.phtml:4
-msgid "Create Match Days"
+msgid "Match Day Configuration"
 msgstr ""
 
 #: ../view/season/league/index.phtml:12

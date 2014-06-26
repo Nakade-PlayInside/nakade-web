@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-25 23:05+0100\n"
-"PO-Revision-Date: 2014-06-25 23:07+0100\n"
+"POT-Creation-Date: 2014-06-26 10:20+0100\n"
+"PO-Revision-Date: 2014-06-26 10:20+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -37,6 +37,7 @@ msgid "Player accepted invitation"
 msgstr "Zusagen von Spielern "
 
 #: ../src/Season/View/Helper/RulesInfo.php:23
+#: ../src/Season/Form/MatchDayForm.php:121
 msgid "Time"
 msgstr "Zeit"
 
@@ -78,26 +79,78 @@ msgstr "Anzahl eingeladener Spieler"
 msgid "Add player"
 msgstr "Spieler hinzufügen"
 
-#: ../src/Season/Form/MatchDayForm.php:57
+#: ../src/Season/Form/MatchDayForm.php:50
 msgid "Season"
 msgstr "Saison"
 
-#: ../src/Season/Form/MatchDayForm.php:68
-msgid "Cycle"
-msgstr "Turnus"
-
-#: ../src/Season/Form/MatchDayForm.php:81
-msgid "Match day"
-msgstr "Spieltag"
-
-#: ../src/Season/Form/MatchDayForm.php:95
+#: ../src/Season/Form/MatchDayForm.php:63
 msgid "No of rounds"
 msgstr "Spieltage"
 
-#: ../src/Season/Form/MatchDayForm.php:109
+#: ../src/Season/Form/MatchDayForm.php:76
+msgid "Cycle"
+msgstr "Turnus"
+
+#: ../src/Season/Form/MatchDayForm.php:91
+msgid "Match day"
+msgstr "Spieltag"
+
+#: ../src/Season/Form/MatchDayForm.php:106
 #: ../src/Season/Form/SeasonForm.php:66
 msgid "Start date"
 msgstr "Beginn "
+
+#: ../src/Season/Form/MatchDayForm.php:154
+msgid "Monday"
+msgstr "Montag"
+
+#: ../src/Season/Form/MatchDayForm.php:155
+msgid "Tuesday"
+msgstr "Dienstag"
+
+#: ../src/Season/Form/MatchDayForm.php:156
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+#: ../src/Season/Form/MatchDayForm.php:157
+msgid "Thursday"
+msgstr "Donnerstag"
+
+#: ../src/Season/Form/MatchDayForm.php:158
+msgid "Friday"
+msgstr "Freitag"
+
+#: ../src/Season/Form/MatchDayForm.php:159
+msgid "Saturday"
+msgstr "Samstag"
+
+#: ../src/Season/Form/MatchDayForm.php:160
+msgid "Sunday"
+msgstr "Sonntag"
+
+#: ../src/Season/Form/MatchDayForm.php:170
+msgid "daily"
+msgstr "täglich"
+
+#: ../src/Season/Form/MatchDayForm.php:171
+msgid "on weekdays"
+msgstr "werktags"
+
+#: ../src/Season/Form/MatchDayForm.php:172
+msgid "weekly"
+msgstr "wöchentlich"
+
+#: ../src/Season/Form/MatchDayForm.php:173
+msgid "fortnightly"
+msgstr "14-täglich"
+
+#: ../src/Season/Form/MatchDayForm.php:174
+msgid "all 3 weeks"
+msgstr "alle 3 Wochen"
+
+#: ../src/Season/Form/MatchDayForm.php:175
+msgid "monthly"
+msgstr "monatlich"
 
 #: ../src/Season/Form/LeagueForm.php:61
 msgid "League no."
@@ -128,77 +181,25 @@ msgstr "Perioden"
 msgid "Moves per extra time"
 msgstr "Züge per Periode"
 
-#: ../src/Season/Form/Fieldset/TieBreakerFieldset.php:48
+#: ../src/Season/Form/Fieldset/TieBreakerFieldset.php:47
 msgid "First tiebreaker"
 msgstr "erster Tiebreak"
 
-#: ../src/Season/Form/Fieldset/TieBreakerFieldset.php:60
+#: ../src/Season/Form/Fieldset/TieBreakerFieldset.php:59
 msgid "Second tiebreaker"
 msgstr "zweiter Tiebreak"
 
-#: ../src/Season/Form/Fieldset/TieBreakerFieldset.php:72
+#: ../src/Season/Form/Fieldset/TieBreakerFieldset.php:71
 msgid "Third tiebreaker"
 msgstr "dritter Tiebreak"
 
-#: ../src/Season/Form/Fieldset/ButtonFieldset.php:38
+#: ../src/Season/Form/Fieldset/ButtonFieldset.php:44
 msgid "Submit"
 msgstr "Abschicken"
 
-#: ../src/Season/Form/Fieldset/ButtonFieldset.php:47
+#: ../src/Season/Form/Fieldset/ButtonFieldset.php:53
 msgid "Cancel"
 msgstr "Abbruch"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:101
-msgid "every %NUMBER% days"
-msgstr "alle  %NUMBER% Tage"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:107
-msgid "daily"
-msgstr "täglich"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:111
-msgid "weekly"
-msgstr "wöchentlich"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:115
-msgid "fortnightly"
-msgstr "14-täglich"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:119
-msgid "monthly"
-msgstr "monatlich"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:124
-msgid "every %NUMBER% weeks"
-msgstr "alle %NUMBER% Wochen"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:149
-msgid "Monday"
-msgstr "Montag"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:150
-msgid "Tuesday"
-msgstr "Dienstag"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:151
-msgid "Wednesday"
-msgstr "Mittwoch"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:152
-msgid "Thursday"
-msgstr "Donnerstag"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:153
-msgid "Friday"
-msgstr "Freitag"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:154
-msgid "Saturday"
-msgstr "Samstag"
-
-#: ../src/Season/Form/Hydrator/MatchDayHydrator.php:155
-msgid "Sunday"
-msgstr "Sonntag"
 
 #: ../view/season/player/index.phtml:11
 msgid "Player Roster"
@@ -301,8 +302,8 @@ msgid "edit League"
 msgstr "Liga bearbeiten"
 
 #: ../view/season/season/create.phtml:39
-msgid "create Match Days"
-msgstr "erzeuge Spieltage"
+msgid "configure Match Days"
+msgstr "konfiguriere Spieltage"
 
 #: ../view/season/season/add.phtml:6
 msgid "Create New Season"
@@ -329,8 +330,8 @@ msgid "number of league"
 msgstr "Liga-Nummer"
 
 #: ../view/season/match-day/add.phtml:4
-msgid "Create Match Days"
-msgstr "Spieltagerstellung"
+msgid "Match Day Configuration"
+msgstr "Konfiguration der Spieltage"
 
 #: ../view/season/league/index.phtml:12
 msgid "Create Leagues"
@@ -388,6 +389,15 @@ msgstr "Ligen ohne Zuordnung"
 #: ../view/season/league/empty.phtml:22
 msgid "No unassigned leagues found."
 msgstr "Keine Ligen ohne Zuordnung gefunden."
+
+#~ msgid "every %NUMBER% days"
+#~ msgstr "alle  %NUMBER% Tage"
+
+#~ msgid "every %NUMBER% weeks"
+#~ msgstr "alle %NUMBER% Wochen"
+
+#~ msgid "Create Match Days"
+#~ msgstr "Spieltagerstellung"
 
 #~ msgid "create Schedule"
 #~ msgstr "Spielplan erstellen"

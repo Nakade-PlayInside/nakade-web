@@ -91,10 +91,10 @@ return array(
 
             ),
 
-            'createMatchDay' => array(
+            'configMatchDay' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/createMatchDay[/:action][/:id]',
+                    'route'    => '/configMatchDay[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
