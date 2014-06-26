@@ -78,8 +78,8 @@ class MatchDayHydrator implements HydratorInterface
         $sequence = $match->getSequence() + 1;
         $match->setSequence($sequence);
 
+        //todo:isset proof
         if ($data['changeColors']) {
-
            $black = $match->getBlack();
            $white = $match->getWhite();
 

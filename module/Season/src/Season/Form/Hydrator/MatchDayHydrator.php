@@ -35,7 +35,7 @@ class MatchDayHydrator implements HydratorInterface
            'startDate' => $schedule->getDate()->format('Y-m-d'),
            'noOfMatchDays' => $schedule->getNoOfMatchdays(),
            'cycle' => $schedule->getCycle(),
-           'matchDay' => $schedule->getMatchDay(),
+           'day' => $schedule->getDay(),
            'time' => $schedule->getTime(),
        );
     }
@@ -49,8 +49,13 @@ class MatchDayHydrator implements HydratorInterface
      */
     public function hydrate(array $data, $schedule)
     {
-        /* @var $season \Season\Entity\Season */
-        $schedule->setDate($data['startDate']);
+        $datetime = $data['startDate']. ' ' . $data['time'];
+        $temp = new \DateTime($datetime);
+        $schedule->setDate($temp);
+        $schedule->setTime($temp);
+
+        $schedule->setCycle($data['cycle']);
+        $schedule->setDay($data['day']);
 
         return $schedule;
     }

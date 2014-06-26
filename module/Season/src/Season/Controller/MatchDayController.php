@@ -65,10 +65,15 @@ class MatchDayController extends AbstractController
             $form->setData($postData);
             if ($form->isValid()) {
 
-                $data = $form->getData();
-                //$this->getService()->addSchedule($data);
+                /* @var $schedule \Season\Entity\Schedule */
+                $schedule = $form->getData();
 
-                return $this->redirect()->toRoute('createSeason');
+                /* @var $seasonDates \Season\Entity\SeasonDates */
+                $seasonDates = $schedule->getSeason()->getAssociation()->getSeasonDates();
+                $seasonDates->exchangeArray($schedule->getArrayCopy());
+                $mapper->save($seasonDates);
+
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
         }
 

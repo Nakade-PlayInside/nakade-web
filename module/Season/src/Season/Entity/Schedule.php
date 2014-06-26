@@ -13,7 +13,7 @@ class Schedule
     private $season;
     private $noOfMatchDays;
     private $date;
-    private $matchDay;
+    private $day;
     private $cycle;
     private $time;
 
@@ -81,23 +81,23 @@ class Schedule
     }
 
     /**
-     * @param int $matchDay
+     * @param int $day
      */
-    public function setMatchDay($matchDay)
+    public function setDay($day)
     {
-        $this->matchDay = $matchDay;
+        $this->day = $day;
     }
 
     /**
      * @return int
      */
-    public function getMatchDay()
+    public function getDay()
     {
-        return $this->matchDay;
+        return $this->day;
     }
 
     /**
-     * @param Time $time
+     * @param \DateTime $time
      */
     public function setTime($time)
     {
@@ -105,7 +105,7 @@ class Schedule
     }
 
     /**
-     * @return Time
+     * @return \DateTime
      */
     public function getTime()
     {
@@ -122,5 +122,16 @@ class Schedule
             $this->getSeason()->getAssociation()->getName()
         );
     }
+
+    /**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+
 
 }

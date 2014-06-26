@@ -86,7 +86,7 @@ class SeasonDates
     }
 
     /**
-     * @param Time $time
+     * @param \DateTime $time
      */
     public function setTime($time)
     {
@@ -94,11 +94,29 @@ class SeasonDates
     }
 
     /**
-     * @return Time
+     * @return \DateTime
      */
     public function getTime()
     {
         return $this->time;
+    }
+
+
+    /**
+     * @param array $data
+     */
+    public function exchangeArray(array $data)
+    {
+        if (isset($data['cycle'])) {
+            $this->cycle = intval($data['cycle']);
+        }
+        if (isset($data['day'])) {
+            $this->day = intval($data['day']);
+        }
+        if (isset($data['time'])) {
+            $this->time = $data['time'];
+        }
+
     }
 
 }

@@ -86,7 +86,7 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
         $this->add(
             array(
                 'type' => 'Zend\Form\Element\Select',
-                'name' => 'matchDay',
+                'name' => 'day',
                 'options' => array(
                     'label' => $this->translate('Match day') . ':',
                     'value_options' => $this->getWeekdays()
@@ -141,6 +141,7 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
      */
     public function getFilter()
     {
+        //todo: values for time and start date
         $filter = new InputFilter();
         return $filter;
     }
