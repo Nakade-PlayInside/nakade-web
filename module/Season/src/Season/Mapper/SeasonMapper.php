@@ -259,4 +259,21 @@ class SeasonMapper extends AbstractMapper
         return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
     }
 
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getMatchDaysBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('MatchDay');
+        $qb->select('m')
+            ->from('Season\Entity\MatchDay', 'm')
+            ->where('m.season = :seasonId')
+            ->setParameter('seasonId', $seasonId)
+            ->orderBy('m.matchDay', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
 }
