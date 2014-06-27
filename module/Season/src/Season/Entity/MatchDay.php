@@ -22,6 +22,12 @@ class MatchDay
    private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\Season\Entity\Season", cascade={"persist"})
+     * @ORM\JoinColumn(name="season", referencedColumnName="id", nullable=false)
+     */
+    private $season;
+
+    /**
      * @ORM\Column(name="matchDay", type="integer")
      */
     private $matchDay;
@@ -77,6 +83,22 @@ class MatchDay
     public function getMatchDay()
     {
         return $this->matchDay;
+    }
+
+    /**
+     * @param Season $season
+     */
+    public function setSeason(Season $season)
+    {
+        $this->season = $season;
+    }
+
+    /**
+     * @return Season
+     */
+    public function getSeason()
+    {
+        return $this->season;
     }
 
 }

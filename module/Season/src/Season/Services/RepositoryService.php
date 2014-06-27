@@ -7,7 +7,7 @@ use Season\Mapper\ParticipantMapper;
 use Season\Mapper\SeasonMapper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use \League\Mapper\MatchMapper;
+use Season\Mapper\MatchMapper;
 use \Doctrine\ORM\EntityManager;
 
 /**

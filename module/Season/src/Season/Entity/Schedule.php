@@ -26,7 +26,7 @@ class Schedule
         $this->season = $season;
         $this->noOfMatchDays = $noOfMatchDays;
         $this->cycle = $this->getSeason()->getAssociation()->getSeasonDates()->getCycle();
-        $this->matchDay = $this->getSeason()->getAssociation()->getSeasonDates()->getDay();
+        $this->day = $this->getSeason()->getAssociation()->getSeasonDates()->getDay();
         $this->time = $this->getSeason()->getAssociation()->getSeasonDates()->getTime();
         $this->date = $this->getSeason()->getStartDate();
     }

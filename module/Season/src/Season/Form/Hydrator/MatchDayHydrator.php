@@ -54,8 +54,8 @@ class MatchDayHydrator implements HydratorInterface
         $schedule->setDate($temp);
         $schedule->setTime($temp);
 
-        $schedule->setCycle($data['cycle']);
-        $schedule->setDay($data['day']);
+        $schedule->setCycle(intval($data['cycle']));
+        $schedule->setDay(intval($data['day']));
 
         return $schedule;
     }

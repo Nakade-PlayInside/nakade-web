@@ -1,7 +1,9 @@
 <?php
 namespace Season\Controller;
 
+use Season\Entity\MatchDay;
 use Season\Entity\Schedule;
+use Season\Schedule\ScheduleDates;
 use Season\Services\SeasonFormService;
 use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
@@ -71,7 +73,21 @@ class MatchDayController extends AbstractController
                 /* @var $seasonDates \Season\Entity\SeasonDates */
                 $seasonDates = $schedule->getSeason()->getAssociation()->getSeasonDates();
                 $seasonDates->exchangeArray($schedule->getArrayCopy());
+
                 $mapper->save($seasonDates);
+
+                $object = new ScheduleDates($schedule);
+                $dates = $object->getScheduleDates();
+
+                $round = 1;
+                foreach ($dates as $matchDate) {
+                    $matchDay = new MatchDay();
+                    $matchDay->setMatchDay($round);
+                    $matchDay->setSeason($season);
+                    $matchDay->setDate($matchDate);
+                    $round++;
+                    $mapper->save($matchDay);
+                }
 
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
@@ -83,5 +99,6 @@ class MatchDayController extends AbstractController
             )
         );
     }
+
 
 }
