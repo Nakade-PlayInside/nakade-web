@@ -125,14 +125,11 @@ class MatchDayController extends AbstractController
         if (!$mapper->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $mapper->getNewSeasonByAssociation($id);
-        $noOfMatchDays = $mapper->getNoOfMatchDaysBySeason($season->getId());
-
-        $schedule = new Schedule($season, $noOfMatchDays);
+        //todo: get MatchDay by ID
 
         /* @var $form \Season\Form\MatchDayForm */
         $form = $this->getForm(SeasonFormService::MATCH_DAY_FORM);
-        $form->bindEntity($schedule);
+       // $form->bindEntity($schedule);
 
 
         if ($this->getRequest()->isPost()) {
@@ -155,19 +152,6 @@ class MatchDayController extends AbstractController
                 $seasonDates->exchangeArray($schedule->getArrayCopy());
 
                 $mapper->save($seasonDates);
-
-                $object = new ScheduleDates($schedule);
-                $dates = $object->getScheduleDates();
-
-                $round = 1;
-                foreach ($dates as $matchDate) {
-                    $matchDay = new MatchDay();
-                    $matchDay->setMatchDay($round);
-                    $matchDay->setSeason($season);
-                    $matchDay->setDate($matchDate);
-                    $round++;
-                    $mapper->save($matchDay);
-                }
 
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
