@@ -56,7 +56,7 @@ $this->moveLastToFirst($teams);
  *
             }*/
 
-            $this->moveLastToFirst($teams);
+            $this->moveLastToSecond($teams);
 
                 for ($noPairing=0; $noPairing<(count($teams)/2); $noPairing++) {
 
@@ -91,7 +91,7 @@ $this->moveLastToFirst($teams);
     /**
      * @param array &$players
      */
-    private function moveLastToFirst(array &$players)
+    private function moveLastToSecond(array &$players)
     {
         $first = $players[1];
         $last = array_pop($players); //cut last and pop it
