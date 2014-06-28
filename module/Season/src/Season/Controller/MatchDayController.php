@@ -36,8 +36,7 @@ class MatchDayController extends AbstractController
         return new ViewModel(
             array(
                'matchDays' => $matchDays,
-               'schedule'=> null,
-                                 //->getSchedule(null),
+               'season'=> $season,
             )
         );
     }
@@ -90,6 +89,7 @@ class MatchDayController extends AbstractController
                 $object = new ScheduleDates($schedule);
                 $dates = $object->getScheduleDates();
 
+                var_dump($dates);die;
                 $round = 1;
                 foreach ($dates as $matchDate) {
                     $matchDay = new MatchDay();

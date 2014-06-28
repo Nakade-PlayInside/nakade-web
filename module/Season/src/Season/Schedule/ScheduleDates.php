@@ -12,8 +12,7 @@ class ScheduleDates
 {
     private $cycle;
     private $rounds;
-    private $startDate;
-    private $startTime;
+    private $date;
     private $day;
 
     private $weekDays = array(
@@ -31,14 +30,14 @@ class ScheduleDates
      */
     public function __construct(Schedule $schedule)
     {
-        $this->cycle = $schedule->getCycle();
         $this->rounds = $schedule->getNoOfMatchDays();
-        $this->startDate = $schedule->getDate();
-        $this->startTime = $schedule->getTime()->format('H:i:s');
+        $this->date = $schedule->getDate();
         $this->day = $schedule->getDay();
+        $this->cycle = $this->getRelativeDateFormat($schedule->getCycle());
 
-        $startModify = sprintf('%s %s', $this->getWeekday($this->day), $this->startTime);
-        $this->startDate->modify($startModify);
+        $startTime = $schedule->getTime()->format('H:i:s');
+        $startModify = sprintf('%s %s', $this->getWeekday($this->day), $startTime);
+        $this->date->modify($startModify);
     }
 
     /**
@@ -64,21 +63,50 @@ class ScheduleDates
      */
     public function getScheduleDates()
     {
-        $scheduleDates = array();
+        $scheduleDates = array($this->getDate());
 
         for ($i=0; $this->getRounds()>$i; $i++) {
-            $date = clone $this->getStartDate();
-            $dateCycle = sprintf('+%d day', $i * $this->getCycle());
-            $date->modify($dateCycle);
+            $date = clone $this->getDate();
+            $date->modify($this->getCycle());
             $scheduleDates[]=$date;
+            $this->setDate($date);
         }
 
         return $scheduleDates;
     }
 
-    private function getDateCycle($cycle, $round)
+    /**
+     * @param int $cycle
+     *
+     * @return string
+     */
+    public function getRelativeDateFormat($cycle)
     {
-        //todo: unterscheidung täglich, wöchentlich, monatlich, (wochentags)
+
+        switch ($cycle) {
+            case 1:
+                $dateCycle="next day";
+                break;
+            case 5:
+                $dateCycle="next weekday";
+                break;
+            case 7:
+                $dateCycle="next week";
+                break;
+            case 14:
+                $dateCycle="next fortnight";
+                break;
+            case 21:
+                $dateCycle="+3 week";
+                break;
+            case 30:
+                $dateCycle=sprintf("+4 %s", strtolower($this->getWeekday($this->day)));
+                break;
+            default:
+                $dateCycle=sprintf("+ %d day", $cycle);
+        }
+
+        return $dateCycle;
     }
 
 
@@ -101,9 +129,17 @@ class ScheduleDates
     /**
      * @return \DateTime
      */
-    public function getStartDate()
+    public function getDate()
     {
-        return $this->startDate;
+        return $this->date;
+    }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 
 }

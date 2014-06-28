@@ -167,10 +167,9 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
      */
     public function getCycle()
     {
-        //todo: special calculation for weekdays is needed
        return array(
             self::DAILY => $this->translate('daily'),
-        //    self::WEEKDAYS => $this->translate('on weekdays'),
+            self::WEEKDAYS => $this->translate('on weekdays'),
             self::WEEKLY => $this->translate('weekly'),
             self::FORTNIGHTLY => $this->translate('fortnightly'),
             self::ALL_THREE_WEEKS => $this->translate('all 3 weeks'),
