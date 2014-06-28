@@ -3,36 +3,41 @@ namespace Season\Form;
 
 use Season\Form\Hydrator\MatchDayHydrator;
 use Season\Services\SeasonFieldsetService;
-use Doctrine\ORM\EntityManager;
 use \Zend\InputFilter\InputFilter;
 
 class MatchDayForm extends BaseForm implements WeekDayInterface
 {
 
+    private $minDate;
+    private $maxDate;
+
     /**
      * @param SeasonFieldsetService $service
-     * @param EntityManager         $em
      */
-    public function __construct(SeasonFieldsetService $service, EntityManager $em)
+    public function __construct(SeasonFieldsetService $service)
     {
         parent::__construct('MatchDayForm');
 
         $this->service = $service;
-        $hydration = new MatchDayHydrator($em);
+        $hydration = new MatchDayHydrator();
         $this->setHydrator($hydration);
-
         $this->setInputFilter($this->getFilter());
     }
 
     /**
-     * @param \Season\Entity\Schedule $object
+     * @param \Season\Entity\MatchDay $object
      */
     public function bindEntity($object)
     {
+        $date = $object->getDate();
+        $minDate = clone $date;
+        $maxDate = clone $date;
+        $this->minDate = $minDate->modify('-2 week')->format('Y-m-d');
+        $this->maxDate = $maxDate->modify('+2 week')->format('Y-m-d');
+
         $this->init();
         $this->setInputFilter($this->getFilter());
         $this->bind($object);
-
     }
 
     /**
@@ -57,10 +62,10 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
         //rounds
         $this->add(
             array(
-                'name' => 'noOfMatchDays',
+                'name' => 'round',
                 'type' => 'Zend\Form\Element\Text',
                 'options' => array(
-                    'label' => $this->translate('No of rounds') . ':',
+                    'label' => $this->translate('Round') . ':',
                 ),
                 'attributes' => array(
                     'readonly' => 'readonly',
@@ -68,47 +73,19 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
             )
         );
 
-        $this->add(
-            array(
-                'name' => 'cycle',
-                'type' => 'Zend\Form\Element\Select',
-                'options' => array(
-                    'label' =>  $this->translate('Cycle') . ':',
-                    'value_options' => $this->getCycle()
-                ),
-                'attributes' => array(
-                    'size' => 1,
-                )
-            )
-        );
-
-        //match Day
-        $this->add(
-            array(
-                'type' => 'Zend\Form\Element\Select',
-                'name' => 'day',
-                'options' => array(
-                    'label' => $this->translate('Match day') . ':',
-                    'value_options' => $this->getWeekdays()
-                ),
-                'attributes' => array(
-                    'size' => 1
-                ),
-            )
-        );
-
         //start date
         $this->add(
             array(
-                'name' => 'startDate',
+                'name' => 'date',
                 'type' => 'Zend\Form\Element\Date',
                 'options' => array(
-                    'label' => $this->translate('Start date'),
+                    'label' => $this->translate('Date'),
                     'format' => 'Y-m-d',
                 ),
                 'attributes' => array(
-                     'min'   => \date('Y-m-d'),
-                     'step'  => '1',
+                    'min'   => $this->getMinDate(),
+                    'step'  => '1',
+                    'max'   => $this->getMaxDate()
                 ),
             )
         );
@@ -120,10 +97,11 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
                 'name' => 'time',
                 'options' => array('label' => $this->translate('Time') . ':'),
                 'attributes' => array(
-                     'step'  => '900'
+                    'step'  => '900'
                 )
             )
         );
+
 
         $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
     }
@@ -141,40 +119,24 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
      */
     public function getFilter()
     {
-        //todo: values for time and start date
         $filter = new InputFilter();
         return $filter;
     }
 
     /**
-     * @return array
+     * @return \DateTime
      */
-    public function getWeekdays()
+    public function getMinDate()
     {
-        return array(
-            self::MONDAY => $this->translate('Monday'),
-            self::TUESDAY => $this->translate('Tuesday'),
-            self::WEDNESDAY => $this->translate('Wednesday'),
-            self::THURSDAY => $this->translate('Thursday'),
-            self::FRIDAY => $this->translate('Friday'),
-            self::SATURDAY => $this->translate('Saturday'),
-            self::SUNDAY => $this->translate('Sunday')
-        );
+        return $this->minDate;
     }
 
     /**
-     * @return array
+     * @return \DateTime
      */
-    public function getCycle()
+    public function getMaxDate()
     {
-       return array(
-            self::DAILY => $this->translate('daily'),
-            self::WEEKDAYS => $this->translate('on weekdays'),
-            self::WEEKLY => $this->translate('weekly'),
-            self::FORTNIGHTLY => $this->translate('fortnightly'),
-            self::ALL_THREE_WEEKS => $this->translate('all 3 weeks'),
-            self::MONTHLY => $this->translate('monthly'),
-       );
+        return $this->maxDate;
     }
 
 }

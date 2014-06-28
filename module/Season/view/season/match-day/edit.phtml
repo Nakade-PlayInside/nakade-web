@@ -1,0 +1,12 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+$this->headTitle('Edit');
+
+?>
+<h3><?php echo $this->translate('Edit Match Days'); ?></h3>
+
+<?php
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();

@@ -25,6 +25,17 @@ class SeasonMapper extends AbstractMapper
             ->find($id);
     }
 
+    /**
+     * @param int $matchId
+     *
+     * @return \Season\Entity\MatchDay
+     */
+    public function getMatchDayById($matchId)
+    {
+        return $this->getEntityManager()
+            ->getRepository('Season\Entity\MatchDay')
+            ->find($matchId);
+    }
 
     /**
      * active season has already started and the isReady flag is set
@@ -274,6 +285,22 @@ class SeasonMapper extends AbstractMapper
             ->orderBy('m.matchDay', 'ASC');
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function removeMatchDaysBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('MatchDay');
+        $qb->delete('m')
+            ->from('Season\Entity\MatchDay', 'm')
+            ->where('m.season = :seasonId')
+            ->setParameter('seasonId', $seasonId);
+
+        return $qb->getQuery()->execute();
     }
 
 }

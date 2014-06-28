@@ -158,6 +158,17 @@ class Season extends SeasonModel
     }
 
     /**
+     * @return string
+     */
+    public function  getSeasonInfo()
+    {
+        return sprintf('%s. %s League',
+            $this->getNumber(),
+            $this->getAssociation()->getName()
+        );
+    }
+
+    /**
      * for form data
      *
      * @param array $data

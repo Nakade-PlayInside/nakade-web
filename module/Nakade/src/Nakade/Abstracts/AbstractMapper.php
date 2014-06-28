@@ -89,9 +89,9 @@ class AbstractMapper extends AbstractTranslation
 
    }
 
-    /**
-     * @param object $entity
-     */
+   /**
+    * @param object $entity
+    */
    public function update($entity)
    {
 
@@ -104,4 +104,20 @@ class AbstractMapper extends AbstractTranslation
        $this->getEntityManager()->flush($entity);
 
    }
+
+    /**
+     * @param object $entity
+     */
+    public function delete($entity)
+    {
+
+        if (is_null($entity)) {
+            $this->getEntityManager()->flush();
+            return;
+        }
+
+        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->flush($entity);
+
+    }
 }

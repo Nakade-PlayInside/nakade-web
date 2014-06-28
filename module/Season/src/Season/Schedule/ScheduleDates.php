@@ -63,12 +63,16 @@ class ScheduleDates
      */
     public function getScheduleDates()
     {
-        $scheduleDates = array($this->getDate());
+        $matchDays = range(1, $this->getRounds());
+        $scheduleDates = array();
 
-        for ($i=0; $this->getRounds()>$i; $i++) {
+        foreach ($matchDays as $round) {
+
             $date = clone $this->getDate();
-            $date->modify($this->getCycle());
-            $scheduleDates[]=$date;
+            if ($round>1) {
+                $date->modify($this->getCycle());
+            }
+            $scheduleDates[$round]=$date;
             $this->setDate($date);
         }
 

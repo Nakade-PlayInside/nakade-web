@@ -38,7 +38,7 @@ class MatchDay
     private $date;
 
     /**
-     * @param mixed $date
+     * @param \DateTime $date
      */
     public function setDate($date)
     {
@@ -46,7 +46,7 @@ class MatchDay
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDate()
     {

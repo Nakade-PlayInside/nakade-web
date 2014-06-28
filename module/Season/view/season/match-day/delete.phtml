@@ -1,5 +1,6 @@
 <?php
-$head = 'Match Days';
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+$head = 'Remove Match Days';
 $this->headTitle($head);
 /* @var $matchDay \Season\Entity\MatchDay */
 ?>
@@ -9,12 +10,14 @@ $this->headTitle($head);
 <?php $this->placeholder('noData')->captureEnd(); ?>
 
 <?php $this->placeholder('data')->captureStart();?>
-<h1><?php echo $this->translate("Match Days of the Next Season"); ?></h1>
+<h1><?php echo $this->translate("Remove all Match Days?"); ?></h1>
+<p><?php echo $this->translate("These are all match days of the next season.");?><br/>
+    <?php echo $this->translate("If deleted, you will have to renew the match day configuration.");?>
+</p>
 <table class="table" style="width: auto; margin-top: 0.5em;text-align: center;">
 <tr>
     <th><?php echo $this->translate("round"); ?></th>
     <th><?php echo $this->translate("date"); ?></th>
-    <th><?php echo $this->translate("edit"); ?></th>
 </tr>
 
 <?php foreach ($this->matchDays as $matchDay) : ?>
@@ -22,12 +25,18 @@ $this->headTitle($head);
     echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
     <td><?php echo $matchDay->getMatchDay();?></td>
     <td><?php echo $matchDay->getDate()->format('D, d.m.Y H:i');?></td>
-    <td style="text-align: center;"><?php echo $this->showEdit($matchDay->getId(), "configMatchDay");?></td>
 </tr>
 <?php
 endforeach; ?>
 </table>
-<a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'create')); ?>"><?php echo "back" ?></a>
+
+<?php
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();
+?>
+
 <?php $this->placeholder('data')->captureEnd();
 
 

@@ -37,6 +37,8 @@ $title = sprintf("%s: %s %s",
 <a class="btn" href="<?php echo $this->url('createLeague', array('action' => 'add')); ?>"><?php echo $this->translate("add League"); ?></a>
 <a class="btn" href="<?php echo $this->url('createLeague', array('action' => 'show')); ?>"><?php echo $this->translate("edit League"); ?></a>
 <a class="btn" href="<?php echo $this->url('configMatchDay', array('action' => 'add')); ?>"><?php echo $this->translate("configure Match Days"); ?></a>
+<a class="btn" href="<?php echo $this->url('configMatchDay'); ?>"><?php echo $this->translate("edit Match Days"); ?></a>
+<a class="btn" href="<?php echo $this->url('configMatchDay', array('action' => 'delete')); ?>"><?php echo $this->translate("remove Match Days"); ?></a>
 
 
 <?php $this->placeholder('actual')->captureEnd(); ?>

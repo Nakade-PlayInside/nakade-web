@@ -113,17 +113,6 @@ class Schedule
     }
 
     /**
-     * @return string
-     */
-    public function  getSeasonInfo()
-    {
-        return sprintf('%s. %s League',
-            $this->getSeason()->getNumber(),
-            $this->getSeason()->getAssociation()->getName()
-        );
-    }
-
-    /**
      * Convert the object to an array.
      *
      * @return array

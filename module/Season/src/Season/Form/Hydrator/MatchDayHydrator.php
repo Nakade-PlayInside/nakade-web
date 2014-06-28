@@ -3,7 +3,6 @@ namespace Season\Form\Hydrator;
 
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use Zend\Stdlib\Hydrator\HydratorInterface;
-use Doctrine\ORM\EntityManager;
 
 /**
  * Class ScheduleHydrator
@@ -13,59 +12,36 @@ use Doctrine\ORM\EntityManager;
 class MatchDayHydrator implements HydratorInterface
 {
 
-    private $entityManager;
-
     /**
-     * @param EntityManager $em
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->entityManager = $em;
-    }
-
-    /**
-     * @param \Season\Entity\Schedule $schedule
+     * @param \Season\Entity\MatchDay $matchDay
      *
      * @return array
      */
-    public function extract($schedule)
+    public function extract($matchDay)
     {
         return array(
-           'seasonInfo' => $schedule->getSeasonInfo(),
-           'startDate' => $schedule->getDate()->format('Y-m-d'),
-           'noOfMatchDays' => $schedule->getNoOfMatchdays(),
-           'cycle' => $schedule->getCycle(),
-           'day' => $schedule->getDay(),
-           'time' => $schedule->getTime(),
+           'seasonInfo' => $matchDay->getSeason()->getSeasonInfo(),
+           'round' => $matchDay->getMatchDay(),
+           'date' => $matchDay->getDate()->format('Y-m-d'),
+           'time' => $matchDay->getDate()->format('H:i:s'),
        );
     }
 
 
     /**
      * @param array                   $data
-     * @param \Season\Entity\Schedule $schedule
+     * @param \Season\Entity\MatchDay $matchDay
      *
      * @return object
      */
-    public function hydrate(array $data, $schedule)
+    public function hydrate(array $data, $matchDay)
     {
-        $datetime = $data['startDate']. ' ' . $data['time'];
+        $datetime = $data['date']. ' ' . $data['time'];
         $temp = new \DateTime($datetime);
-        $schedule->setDate($temp);
-        $schedule->setTime($temp);
+        $matchDay->setDate($temp);
 
-        $schedule->setCycle(intval($data['cycle']));
-        $schedule->setDay(intval($data['day']));
-
-        return $schedule;
+        return $matchDay;
     }
 
 
-    /**
-     * @return EntityManager
-     */
-    public function getEntityManager()
-    {
-        return $this->entityManager;
-    }
 }

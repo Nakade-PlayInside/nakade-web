@@ -19,7 +19,9 @@ class SeasonFormService extends AbstractFormFactory
     const SEASON_FORM = 'season';
     const PARTICIPANT_FORM = 'participant';
     const LEAGUE_FORM = 'league';
+    const MATCH_DAY_CONFIG_FORM = 'match_day_config';
     const MATCH_DAY_FORM = 'match_day';
+    const DELETE_FORM = 'delete';
 
     /**
      * @param ServiceLocatorInterface $services
@@ -91,8 +93,16 @@ class SeasonFormService extends AbstractFormFactory
                $form = new Form\LeagueForm($service, $repository);
                break;
 
+           case self::MATCH_DAY_CONFIG_FORM:
+               $form = new Form\MatchDayConfigForm($service);
+               break;
+
            case self::MATCH_DAY_FORM:
-               $form = new Form\MatchDayForm($service, $this->entityManager);
+               $form = new Form\MatchDayForm($service);
+               break;
+
+           case self::DELETE_FORM:
+               $form = new Form\DeleteForm();
                break;
 
            default:
