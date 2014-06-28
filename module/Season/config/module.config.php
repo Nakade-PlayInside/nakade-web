@@ -36,6 +36,8 @@ return array(
                     'Season\Services\PlayerControllerFactory',
             'Season\Controller\MatchDay' =>
                     'Season\Services\MatchDayControllerFactory',
+            'Season\Controller\Schedule' =>
+                'Season\Services\ScheduleControllerFactory',
         ),
 
     ),
@@ -101,6 +103,22 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Season\Controller\MatchDay',
+                        'action'     => 'index',
+                    ),
+                ),
+
+            ),
+
+            'createSchedule' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/createSchedule[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Season\Controller\Schedule',
                         'action'     => 'index',
                     ),
                 ),
