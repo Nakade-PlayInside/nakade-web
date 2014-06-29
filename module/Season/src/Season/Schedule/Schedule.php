@@ -8,13 +8,17 @@ namespace Season\Schedule;
  */
 class Schedule {
 
-    const BYE = 'FREILOS';
-    protected $_startdate;
+    const BYE = 'JOKER';
+    private $matchDates;
+    private $players;
     protected $_week=0;
 
-    public function __construct($date) {
-
-        $this->_startdate = $date;
+    /**
+     * @param array $matchDates
+     */
+    public function __construct(array $matchDates)
+    {
+        $this->matchDates = $matchDates;
     }
 
     public function makeSchedule($teams) {
@@ -25,7 +29,7 @@ class Schedule {
             array_push($teams, self::BYE);
         }
 
-        $plan       = array();  // Array für den kompletten Spielplan
+        $schedule   = array();  // Array für den kompletten Spielplan
         $noGame     = 0;        // Zähler für Spielnummer
 
         for ($round=1; $round<count($teams); $round++) {
@@ -57,8 +61,9 @@ $this->moveLastToFirst($teams);
             }*/
 
             $this->moveLastToSecond($teams);
+            $schedule[] = $this->makePairingsForMatchDay($teams);
 
-                for ($noPairing=0; $noPairing<(count($teams)/2); $noPairing++) {
+      /*          for ($noPairing=0; $noPairing<(count($teams)/2); $noPairing++) {
 
                     $home =  $teams[$noPairing];
                     $away =  $teams[(count($teams)-1)-$noPairing];
@@ -81,6 +86,8 @@ $this->moveLastToFirst($teams);
 
                 }
         }
+      */
+        }
         ksort($plan); // nach Spieltagen sortieren
 
         $pairing  = $this->makePairings($plan);
@@ -97,6 +104,39 @@ $this->moveLastToFirst($teams);
         $last = array_pop($players); //cut last and pop it
         $replacement = array($last,$first);
         array_splice($players, 1, 1, $replacement);
+    }
+
+    public function makePairingsForMatchDay($teams)
+    {
+        $roundPairings = array();
+        $isPair=true;
+        while (count($teams) > 0) {
+
+            $black =  array_shift($teams);
+            $white =  array_pop($teams);
+            $pairing = array($black, $white);
+
+            if (in_array(self::BYE, $pairing)) {
+                continue;
+            }
+
+            //change home and away
+            if ($isPair) {
+                $this->changeColors($pairing);
+            }
+
+            $roundPairings[] = $pairing;
+            $isPair = !$isPair;
+        }
+
+        return $roundPairings;
+    }
+
+
+    public function changeColors(&$pairing)
+    {
+        $white = array_shift($pairing);
+        array_push($pairing, $white);
     }
 
     private function makePairings($plan)
@@ -137,6 +177,14 @@ $this->moveLastToFirst($teams);
 
        return $date->modify($modify);
 
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMatchDates()
+    {
+        return $this->matchDates;
     }
 
 }

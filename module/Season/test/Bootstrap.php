@@ -1,5 +1,5 @@
 <?php
-namespace LeagueTest;//Change this namespace for your test
+namespace SeasonTest;//Change this namespace for your test
 
 use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;
@@ -10,12 +10,20 @@ use RuntimeException;
 error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
 
+/**
+ * Class Bootstrap
+ *
+ * @package SeasonTest
+ */
 class Bootstrap
 {
     protected static $serviceManager;
     protected static $config;
     protected static $bootstrap;
 
+    /**
+     * init
+     */
     public static function init()
     {
         // Load the user-defined test configuration file, if it exists; otherwise, load
@@ -58,11 +66,17 @@ class Bootstrap
         static::$config = $config;
     }
 
+    /**
+     * @return mixed
+     */
     public static function getServiceManager()
     {
         return static::$serviceManager;
     }
 
+    /**
+     * @return mixed
+     */
     public static function getConfig()
     {
         return static::$config;
@@ -101,7 +115,9 @@ class Bootstrap
         $previousDir = '.';
         while (!is_dir($dir . '/' . $path)) {
             $dir = dirname($dir);
-            if ($previousDir === $dir) return false;
+            if ($previousDir === $dir) {
+                return false;
+            }
             $previousDir = $dir;
         }
         return $dir . '/' . $path;
