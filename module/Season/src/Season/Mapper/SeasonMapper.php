@@ -253,6 +253,8 @@ class SeasonMapper extends AbstractMapper
      * @param int $seasonId
      *
      * @return int
+     *
+     * //todo: this shows the max no of players per league. is this the no of matchDays?
      */
     public function getNoOfMatchDaysBySeason($seasonId)
     {
