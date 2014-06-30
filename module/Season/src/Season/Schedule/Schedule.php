@@ -10,6 +10,8 @@ class Schedule {
 
     const BYE = 'JOKER';
     private $matchDates;
+    private $noMatch;
+    private $noPlayers=8;
     protected $_week=0;
 
     /**
@@ -22,8 +24,10 @@ class Schedule {
 
     public function makePairingsForLeague($players) {
 
-        shuffle($players);
 
+        shuffle($players);
+        $this->noPlayers = count($players);
+        $this->noMatch=0;
         if (count($players) % 2 ) {
             array_push($players, self::BYE);
         }
@@ -64,9 +68,10 @@ class Schedule {
             if (in_array(self::BYE, $pairing)) {
                 continue;
             }
+            $this->noMatch++;
 
             //change home and away
-            if ($isPair) {
+            if ($this->noMatch%$this->noPlayers!=1 && $isPair) {
                 $pairing = $this->changeColors($pairing);
             }
 

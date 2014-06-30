@@ -84,25 +84,14 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 
         $res = $this->invokeMethod($this->getObject(), 'makePairingsForMatchDay', array($test));
 
-        $this->assertTrue(in_array(array(8,1), $res));
-        $this->assertTrue(in_array(array(2,7), $res));
-        $this->assertTrue(in_array(array(6,3), $res));
-        $this->assertTrue(in_array(array(4,5), $res));
+        $player = array();
+        foreach ($res as $pairing) {
+            $player = array_merge($player, $pairing);
+        }
+        $msg = sprintf("duplicate match found");
+        $this->assertTrue(count(array_unique($player))==count($test), $msg); //no duplicates
     }
 
-    /**
-     * expected pairing and its color changed
-     */
-    public function testExpectedPairingByImpairPairings()
-    {
-        $test = array(1,2,3,4,5,6,7,Schedule::BYE);
-
-        $res = $this->invokeMethod($this->getObject(), 'makePairingsForMatchDay', array($test));
-
-        $this->assertTrue(in_array(array(7,2), $res));
-        $this->assertTrue(in_array(array(3,6), $res));
-        $this->assertTrue(in_array(array(5,4), $res));
-    }
 
     /**
      * number of match days
@@ -284,6 +273,78 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
         }
 
     }
+
+    /**
+     * correct of number of matches playing black and white
+     */
+    public function testCorrectAmountOfColor()
+    {
+        $test = array(1,2,3,4,5,6,7,8);
+        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
+
+        foreach ($test as $player) {
+            $noWhite=0;
+            $noBlack=0;
+            foreach ($res as $matchDays) {
+                foreach ($matchDays as $match) {
+                    if (in_array($player, $match)) {
+
+                        $black = array_shift($match);
+                        $white = array_pop($match);
+                        if ($player == $black) {
+                            $noBlack++;
+                        } elseif ($player == $white) {
+                            $noWhite++;
+                        }
+                    }
+                }
+            }
+            $isCorrect = $noBlack>2 && $noBlack<5 && $noWhite>2 && $noWhite<5;
+            $msg = sprintf('no correct alternating colors of player %s', $player);
+            $this->assertTrue($isCorrect, $msg); //no of black matches
+
+            if ($noBlack == 3) {
+                $this->assertSame(4, $noWhite);
+            } elseif ($noWhite == 3) {
+                $this->assertSame(4, $noBlack);
+            }
+        }
+
+    }
+
+    /**
+     * correct of number of matches playing black and white
+     */
+    public function testCorrectAmountOfColorUsingBye()
+    {
+        $test = array(1,2,3,4,5,6,7);
+        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
+
+        foreach ($test as $player) {
+            $noWhite=0;
+            $noBlack=0;
+            foreach ($res as $matchDays) {
+                foreach ($matchDays as $match) {
+                    if (in_array($player, $match)) {
+
+                        $black = array_shift($match);
+                        $white = array_pop($match);
+                        if ($player == $black) {
+                            $noBlack++;
+                        } elseif ($player == $white) {
+                            $noWhite++;
+                        }
+                    }
+                }
+            }
+            $msg = sprintf('player %s playing white: %d - black: %d', $player, $noWhite, $noBlack);
+            $this->assertSame(3, $noWhite, $msg);
+            $this->assertSame(3, $noBlack, $msg);
+
+        }
+
+    }
+
 
     /**
      * @param array $players
