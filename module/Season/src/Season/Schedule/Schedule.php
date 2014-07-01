@@ -2,16 +2,16 @@
 namespace Season\Schedule;
 
 /**
- * Description of Schedule
+ * Class Schedule
  *
- * @author Dr.Holger Maerz <holger@nakade.de>
+ * @package Season\Schedule
  */
-class Schedule {
+class Schedule
+{
 
     const BYE = 'JOKER';
     private $matchDates;
     private $noMatch;
-    private $noPlayers=8;
     protected $_week=0;
 
     /**
@@ -22,21 +22,26 @@ class Schedule {
         $this->matchDates = $matchDates;
     }
 
-    public function makePairingsForLeague($players) {
+    /**
+     * pairings of a league with balanced color, randomized order and using a bye if impair
+     *
+     * @param array $players
+     *
+     * @return array
+     */
+    private function makePairingsForLeague(array $players) {
 
-
+        $pairing = array();
         shuffle($players);
-        $this->noPlayers = count($players);
         $this->noMatch=0;
+
         if (count($players) % 2 ) {
             array_push($players, self::BYE);
         }
 
-        $pairing   = array();  // Array für den kompletten Spielplan
-
         for ($round=1; $round<count($players); $round++) {
-            $this->moveLastToSecond($players);
             $pairing[$round] = $this->makePairingsForMatchDay($players);
+            $this->moveLastToSecond($players);
         }
 //        ksort($plan); // nach Spieltagen sortieren
 
@@ -45,6 +50,8 @@ class Schedule {
     }
 
     /**
+     * League system s. https://de.wikipedia.org/wiki/Spielplan_(Sport)
+     *
      * @param array &$players
      */
     private function moveLastToSecond(array &$players)
@@ -55,80 +62,70 @@ class Schedule {
         array_splice($players, 1, 1, $replacement);
     }
 
-    private function makePairingsForMatchDay($teams)
+    /**
+     * @param array $players
+     *
+     * @return array
+     */
+    private function makePairingsForMatchDay(array $players)
     {
+        $teams = $players;
         $roundPairings = array();
-        $isPair=true;
+        $no=0;
+
         while (count($teams) > 0) {
+
+            $this->noMatch++;
+            $no++;
 
             $black =  array_shift($teams);
             $white =  array_pop($teams);
             $pairing = array($black, $white);
 
-            if (in_array(self::BYE, $pairing)) {
-                continue;
-            }
-            $this->noMatch++;
-
-            //change home and away
-            if ($this->noMatch%$this->noPlayers!=1 && $isPair) {
+            if ($this->hasToChangeColor($players, $no)) {
                 $pairing = $this->changeColors($pairing);
             }
 
-            $roundPairings[] = $pairing;
-            $isPair = !$isPair;
+            if (!in_array(self::BYE, $pairing)) {
+                $roundPairings[] = $pairing;
+            }
         }
 
         return $roundPairings;
     }
 
+    /**
+     * balanced pairing for players having black.
+     *
+     * @param array $players
+     * @param int   $no
+     *
+     * @return bool
+     */
+    private function hasToChangeColor(array $players, $no)
+    {
+        $noMatch = $this->getNoMatch();
+        $noPlayers = count($players);
 
-    private function changeColors($pairing)
+        if (in_array(self::BYE, $players)) {
+            $noRealPlayers = $noPlayers-1;
+            return ($no%2 && $noMatch%$noPlayers!=1 || $noMatch%$noRealPlayers==0);
+        }
+
+        return $noMatch%$noPlayers!=1;
+    }
+
+    /**
+     * @param array $pairing
+     *
+     * @return array
+     */
+    private function changeColors(array $pairing)
     {
         $white = array_shift($pairing);
         array_push($pairing, $white);
 
         return $pairing;
-    }
-
-    private function makePairings($plan)
-    {
-        $pairings = array();
-        foreach ($plan as $matchday => $matchdaypairing) {
-
-            //each matchday another date
-            $date =  $this->getMatchDate($matchday);
-
-            foreach ($matchdaypairing as $game => $pairing) {
-
-                $data['matchday'] = $matchday;
-                $data['league']   = $pairing['away']->getLeague();
-                $data['lid']      = $pairing['away']->getLid();
-                $data['date']     = $date;
-                $data['black']    = $pairing['home']->getPlayer();
-                $data['blackId']  = $pairing['home']->getId();
-                $data['white']    = $pairing['away']->getPlayer();
-                $data['whiteId']  = $pairing['away']->getId();
-
-                $match = new \League\Entity\Match();
-                $match->exchangeArray($data);
-
-                array_push($pairings, $match);
-            }
-        }
-
-        return $pairings;
-
-    }
-
-    private function getMatchDate($week)
-    {
-        /* @todo: given matchday -> making 3-4 weeks cycle */
-       $modify = sprintf('+%s week', $week-1);
-       $date = new \DateTime($this->_startdate);
-
-       return $date->modify($modify);
-
     }
 
     /**
@@ -137,6 +134,14 @@ class Schedule {
     public function getMatchDates()
     {
         return $this->matchDates;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNoMatch()
+    {
+        return $this->noMatch;
     }
 
 }

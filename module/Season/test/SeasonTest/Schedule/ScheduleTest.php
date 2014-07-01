@@ -41,7 +41,6 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
         return $method->invokeArgs($object, $parameters);
     }
 
-
     /**
      * changeColors
      */
@@ -221,22 +220,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
         $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
 
         foreach ($test as $player) {
-            $opponents=array();
-            foreach ($res as $matchDays) {
-                foreach ($matchDays as $match) {
-                    if (in_array($player, $match)) {
-
-                        $black = array_shift($match);
-                        $white = array_pop($match);
-                        if ($player == $black) {
-                            $opponents[] = $white;
-                        } else {
-                            $opponents[] = $black;
-                        }
-                    }
-                }
-            }
-            asort($opponents);
+            $opponents = $this->getOpponentsByPlayer($res, $player);
             $msg = sprintf('duplicate opponents found: %s', implode($opponents, ","));
             $this->assertTrue(count(array_unique($opponents))==count($opponents), $msg); //no duplicates
         }
@@ -252,26 +236,32 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
         $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
 
         foreach ($test as $player) {
-            $opponents=array();
-            foreach ($res as $matchDays) {
-                foreach ($matchDays as $match) {
-                    if (in_array($player, $match)) {
-
-                        $black = array_shift($match);
-                        $white = array_pop($match);
-                        if ($player == $black) {
-                            $opponents[] = $white;
-                        } else {
-                            $opponents[] = $black;
-                        }
-                    }
-                }
-            }
-            asort($opponents);
+            $opponents = $this->getOpponentsByPlayer($res, $player);
             $msg = sprintf('duplicate opponents found: %s', implode($opponents, ","));
             $this->assertTrue(count(array_unique($opponents))==count($opponents), $msg); //no duplicates
         }
 
+    }
+
+    private function getOpponentsByPlayer(array $pairings, $player)
+    {
+        $opponents=array();
+        foreach ($pairings as $matchDays) {
+            foreach ($matchDays as $match) {
+                if (in_array($pairings, $match)) {
+
+                    $black = array_shift($match);
+                    $white = array_pop($match);
+                    if ($player == $black) {
+                        $opponents[] = $white;
+                    } else {
+                        $opponents[] = $black;
+                    }
+                }
+            }
+        }
+        asort($opponents);
+        return $opponents;
     }
 
     /**
@@ -281,27 +271,13 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
     {
         $test = array(1,2,3,4,5,6,7,8);
         $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
+        $msg = PHP_EOL;
 
         foreach ($test as $player) {
-            $noWhite=0;
-            $noBlack=0;
-            foreach ($res as $matchDays) {
-                foreach ($matchDays as $match) {
-                    if (in_array($player, $match)) {
 
-                        $black = array_shift($match);
-                        $white = array_pop($match);
-                        if ($player == $black) {
-                            $noBlack++;
-                        } elseif ($player == $white) {
-                            $noWhite++;
-                        }
-                    }
-                }
-            }
-            $isCorrect = $noBlack>2 && $noBlack<5 && $noWhite>2 && $noWhite<5;
-            $msg = sprintf('no correct alternating colors of player %s', $player);
-            $this->assertTrue($isCorrect, $msg); //no of black matches
+            $noBlack=$this->getNoOfGamesWithBlackByPlayer($res, $player);
+            $noWhite=7-$noBlack;
+            $msg .= sprintf('Player %s: B=%s / W=%s', $player, $noBlack, $noWhite) . PHP_EOL;
 
             if ($noBlack == 3) {
                 $this->assertSame(4, $noWhite);
@@ -309,7 +285,6 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
                 $this->assertSame(4, $noBlack);
             }
         }
-
     }
 
     /**
@@ -319,30 +294,31 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
     {
         $test = array(1,2,3,4,5,6,7);
         $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
-
+        $msg = PHP_EOL;
         foreach ($test as $player) {
-            $noWhite=0;
-            $noBlack=0;
-            foreach ($res as $matchDays) {
-                foreach ($matchDays as $match) {
-                    if (in_array($player, $match)) {
+            $noBlack=$this->getNoOfGamesWithBlackByPlayer($res, $player);
+            $noWhite=6-$noBlack;
+            $msg .= sprintf('Player %s: B=%s / W=%s', $player, $noBlack, $noWhite) . PHP_EOL;
+            $this->assertSame(3, $noBlack, $msg);
+        }
 
-                        $black = array_shift($match);
-                        $white = array_pop($match);
-                        if ($player == $black) {
-                            $noBlack++;
-                        } elseif ($player == $white) {
-                            $noWhite++;
-                        }
+    }
+
+    private function getNoOfGamesWithBlackByPlayer(array $pairing, $player)
+    {
+        $noBlack=0;
+        foreach ($pairing as $matchDays) {
+            foreach ($matchDays as $match) {
+                if (in_array($player, $match)) {
+
+                    $black = array_shift($match);
+                    if ($player == $black) {
+                        $noBlack++;
                     }
                 }
             }
-            $msg = sprintf('player %s playing white: %d - black: %d', $player, $noWhite, $noBlack);
-            $this->assertSame(3, $noWhite, $msg);
-            $this->assertSame(3, $noBlack, $msg);
-
         }
-
+        return $noBlack;
     }
 
 
