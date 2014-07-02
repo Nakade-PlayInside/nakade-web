@@ -1,7 +1,10 @@
 <?php
 namespace Season\Schedule;
 
+use Season\Entity\Match;
 use Season\Services\RepositoryService;
+use Season\Entity\MatchDay;
+use Season\Entity\League;
 /**
  * Class Schedule
  *
@@ -9,9 +12,12 @@ use Season\Services\RepositoryService;
  */
 class Schedule
 {
-    private $matchDates;
-    private $repositoryService;
+    const BLACK=0;
+    const WHITE=0;
 
+    private $matchDays;
+    private $repositoryService;
+    private $leaguePairingService;
 
     /**
      * @param RepositoryService $repositoryService
@@ -19,8 +25,12 @@ class Schedule
     public function __construct(RepositoryService $repositoryService)
     {
         $this->repositoryService = $repositoryService;
+        $this->leaguePairingService = new HarmonicLeaguePairing();
     }
 
+    /**
+     * @param int $seasonId
+     */
     public function getSchedule($seasonId)
     {
         $leagues = $this->getLeagueMapper()->getLeaguesBySeason($seasonId);
@@ -29,21 +39,81 @@ class Schedule
         /* @var $league \Season\Entity\League */
         foreach ($leagues as $league) {
             $players = $this->getParticipantMapper()->getParticipantsByLeague($league->getId());
+            $leaguePairings = $this->getLeaguePairingService()->getPairings($players);
+            $this->makeLeagueMatches($league, $leaguePairings);
         }
     }
 
     /**
-     * @return mixed
+     * @param League $league
+     * @param array  $leaguePairings
      */
-    public function getMatchDates()
+    private function makeLeagueMatches($league, array $leaguePairings)
     {
-        return $this->matchDates;
+        foreach ($leaguePairings as $round => $pairing) {
+
+            $matchDay = $this->getMatchDay($round);
+            $this->makeMatchDayPairings($league, $matchDay, $pairing);
+        }
+    }
+
+    /**
+     * @param League   $league
+     * @param MatchDay $matchDay
+     * @param array    $matchDayPairings
+     */
+    private function makeMatchDayPairings($league, $matchDay, array $matchDayPairings)
+    {
+        $matchDate = $matchDay->getDate();
+
+        foreach ($matchDayPairings as $pairing) {
+            $match = $this->createMatch($pairing);
+            $match->setMatchDay($matchDay);
+            $match->setDate($matchDate);
+            $match->setLeague($league);
+            $this->getLeagueMapper()->save($match);
+        }
+    }
+
+    /**
+     * @param array $pairing
+     *
+     * @return Match
+     */
+    private function createMatch(array $pairing)
+    {
+        $black = array_shift($pairing)->getUser();
+        $white = array_pop($pairing)->getUser();
+
+        $match = new Match();
+        $match->setBlack($black);
+        $match->setWhite($white);
+        $match->setSequence(0);
+
+        return $match;
+    }
+
+    /**
+     * @param int $matchDay
+     *
+     * @return MatchDay
+     *
+     * @throws \RuntimeException
+     */
+    private function getMatchDay($matchDay)
+    {
+        if (empty($this->matchDays) || !array_key_exists($matchDay, $this->matchDays)) {
+            throw new \RuntimeException(
+                sprintf('Match day is not existing.')
+            );
+        }
+        return $this->matchDays[$matchDay];
     }
 
     /**
      * @return \Season\Services\RepositoryService
      */
-    public function getRepositoryService()
+    private function getRepositoryService()
     {
         return $this->repositoryService;
     }
@@ -51,7 +121,7 @@ class Schedule
     /**
      * @return \Season\Mapper\LeagueMapper
      */
-    public function getLeagueMapper()
+    private function getLeagueMapper()
     {
         $repo = $this->getRepositoryService();
         return $repo->getMapper(RepositoryService::LEAGUE_MAPPER);
@@ -60,7 +130,7 @@ class Schedule
     /**
      * @return \Season\Mapper\ParticipantMapper
      */
-    public function getParticipantMapper()
+    private function getParticipantMapper()
     {
         $repo = $this->getRepositoryService();
         return $repo->getMapper(RepositoryService::PARTICIPANT_MAPPER);
@@ -69,10 +139,18 @@ class Schedule
     /**
      * @return \Season\Mapper\SeasonMapper
      */
-    public function getSeasonMapper()
+    private function getSeasonMapper()
     {
         $repo = $this->getRepositoryService();
         return $repo->getMapper(RepositoryService::SEASON_MAPPER);
+    }
+
+    /**
+     * @return \Season\Schedule\HarmonicLeaguePairing
+     */
+    private function getLeaguePairingService()
+    {
+        return $this->leaguePairingService;
     }
 
 }

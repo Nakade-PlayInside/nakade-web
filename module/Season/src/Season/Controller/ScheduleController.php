@@ -55,21 +55,6 @@ class ScheduleController extends AbstractController
         }
 
         $season = $mapper->getNewSeasonByAssociation($id);
-        $matchDays = $mapper->getMatchDaysBySeason($season->getId());
-
-        /* @var $leagueMapper \Season\Mapper\LeagueMapper */
-        $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-        $leagues = $leagueMapper->getLeaguesBySeason($season->getId());
-
-        /* @var $playerMapper \Season\Mapper\ParticipantMapper */
-        $playerMapper = $this->getRepository()->getMapper(RepositoryService::PARTICIPANT_MAPPER);
-
-        foreach ($leagues as $league) {
-            $players = $playerMapper->getParticipantsByLeague($league->getId());
-        }
-
-
-
         $form = $this->getForm(SeasonFormService::CREATE_FORM);
 
         if ($this->getRequest()->isPost()) {
@@ -83,7 +68,10 @@ class ScheduleController extends AbstractController
 
             if (isset($postData['create'])) {
 
-                //todo: magic
+                /* @var $schedule \Season\Schedule\Schedule */
+                $schedule = $this->getService()->getSchedule();
+                $schedule->getSchedule($season->getId());
+
                 return $this->redirect()->toRoute('createSeason');
             }
 
@@ -92,7 +80,6 @@ class ScheduleController extends AbstractController
         return new ViewModel(
             array(
                 'form' => $form,
-                'matchDays' => $matchDays,
                 'season'=> $season,
             )
         );

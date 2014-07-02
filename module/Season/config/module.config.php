@@ -148,6 +148,8 @@ return array(
                 'Season\Services\SeasonFormService',
             'Season\Services\SeasonFieldsetService'      =>
                 'Season\Services\SeasonFieldsetService',
+            'Season\Services\ScheduleService'      =>
+                'Season\Services\ScheduleService',
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
