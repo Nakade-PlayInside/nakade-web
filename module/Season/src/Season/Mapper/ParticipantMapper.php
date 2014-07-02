@@ -31,6 +31,23 @@ class ParticipantMapper extends AbstractMapper
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param int $leagueId
+     *
+     * @return array
+     */
+    public function getParticipantsByLeague($leagueId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('p')
+            ->from('Season\Entity\Participant', 'p')
+            ->innerJoin('p.league', 'League')
+            ->where('League.id = :leagueId')
+            ->setParameter('leagueId', $leagueId);
+
+        return $qb->getQuery()->getResult();
+    }
+
 
 
     /**

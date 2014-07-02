@@ -1,6 +1,7 @@
 <?php
 namespace Season\Schedule;
 
+use Season\Services\RepositoryService;
 /**
  * Class Schedule
  *
@@ -8,124 +9,27 @@ namespace Season\Schedule;
  */
 class Schedule
 {
-
-    const BYE = 'JOKER';
     private $matchDates;
-    private $noMatch;
-    protected $_week=0;
+    private $repositoryService;
+
 
     /**
-     * @param array $matchDates
+     * @param RepositoryService $repositoryService
      */
-    public function __construct(array $matchDates)
+    public function __construct(RepositoryService $repositoryService)
     {
-        $this->matchDates = $matchDates;
+        $this->repositoryService = $repositoryService;
     }
 
-    /**
-     * pairings of a league with balanced color, randomized order and using a bye if impair
-     *
-     * @param array $players
-     *
-     * @return array
-     */
-    private function makePairingsForLeague(array $players) {
+    public function getSchedule($seasonId)
+    {
+        $leagues = $this->getLeagueMapper()->getLeaguesBySeason($seasonId);
+        $this->matchDays = $this->getSeasonMapper()->getMatchDaysBySeason($seasonId);
 
-        $pairing = array();
-        shuffle($players);
-        $this->noMatch=0;
-
-        if (count($players) % 2 ) {
-            array_push($players, self::BYE);
+        /* @var $league \Season\Entity\League */
+        foreach ($leagues as $league) {
+            $players = $this->getParticipantMapper()->getParticipantsByLeague($league->getId());
         }
-
-        for ($round=1; $round<count($players); $round++) {
-            $pairing[$round] = $this->makePairingsForMatchDay($players);
-            $this->moveLastToSecond($players);
-        }
-//        ksort($plan); // nach Spieltagen sortieren
-
-        return $pairing;
-
-    }
-
-    /**
-     * League system s. https://de.wikipedia.org/wiki/Spielplan_(Sport)
-     *
-     * @param array &$players
-     */
-    private function moveLastToSecond(array &$players)
-    {
-        $first = $players[1];
-        $last = array_pop($players); //cut last and pop it
-        $replacement = array($last,$first);
-        array_splice($players, 1, 1, $replacement);
-    }
-
-    /**
-     * @param array $players
-     *
-     * @return array
-     */
-    private function makePairingsForMatchDay(array $players)
-    {
-        $teams = $players;
-        $roundPairings = array();
-        $no=0;
-
-        while (count($teams) > 0) {
-
-            $this->noMatch++;
-            $no++;
-
-            $black =  array_shift($teams);
-            $white =  array_pop($teams);
-            $pairing = array($black, $white);
-
-            if ($this->hasToChangeColor($players, $no)) {
-                $pairing = $this->changeColors($pairing);
-            }
-
-            if (!in_array(self::BYE, $pairing)) {
-                $roundPairings[] = $pairing;
-            }
-        }
-
-        return $roundPairings;
-    }
-
-    /**
-     * balanced pairing for players having black.
-     *
-     * @param array $players
-     * @param int   $no
-     *
-     * @return bool
-     */
-    private function hasToChangeColor(array $players, $no)
-    {
-        $noMatch = $this->getNoMatch();
-        $noPlayers = count($players);
-
-        if (in_array(self::BYE, $players)) {
-            $noRealPlayers = $noPlayers-1;
-            return ($no%2 && $noMatch%$noPlayers!=1 || $noMatch%$noRealPlayers==0);
-        }
-
-        return $noMatch%$noPlayers!=1;
-    }
-
-    /**
-     * @param array $pairing
-     *
-     * @return array
-     */
-    private function changeColors(array $pairing)
-    {
-        $white = array_shift($pairing);
-        array_push($pairing, $white);
-
-        return $pairing;
     }
 
     /**
@@ -137,11 +41,38 @@ class Schedule
     }
 
     /**
-     * @return int
+     * @return \Season\Services\RepositoryService
      */
-    public function getNoMatch()
+    public function getRepositoryService()
     {
-        return $this->noMatch;
+        return $this->repositoryService;
+    }
+
+    /**
+     * @return \Season\Mapper\LeagueMapper
+     */
+    public function getLeagueMapper()
+    {
+        $repo = $this->getRepositoryService();
+        return $repo->getMapper(RepositoryService::LEAGUE_MAPPER);
+    }
+
+    /**
+     * @return \Season\Mapper\ParticipantMapper
+     */
+    public function getParticipantMapper()
+    {
+        $repo = $this->getRepositoryService();
+        return $repo->getMapper(RepositoryService::PARTICIPANT_MAPPER);
+    }
+
+    /**
+     * @return \Season\Mapper\SeasonMapper
+     */
+    public function getSeasonMapper()
+    {
+        $repo = $this->getRepositoryService();
+        return $repo->getMapper(RepositoryService::SEASON_MAPPER);
     }
 
 }

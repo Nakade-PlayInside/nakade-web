@@ -8,10 +8,8 @@ use PHPUnit_Framework_TestCase;
  *
  * @package Season\Schedule
  */
-class ScheduleTest extends PHPUnit_Framework_TestCase
+class HarmonicLeaguePairingTest extends PHPUnit_Framework_TestCase
 {
-
-    private $matchDates;
     private $object;
 
     /**
@@ -19,8 +17,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->matchDates =  array (1,2,3);
-        $this->object = new Schedule($this->matchDates);
+        $this->object = new HarmonicLeaguePairing();
     }
 
     /**
@@ -93,76 +90,12 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * number of match days
-     */
-    public function testNumberOfMatchDaysForSingleLeague()
-    {
-        $test = array(1,2,3,4,5,6,7,8);
-        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
-        $matchDays = $this->getNumberOfMatchDays($test);
-
-        $this->assertSame($matchDays, count($res));
-    }
-
-    /**
-     * number of match days using bye
-     */
-    public function testNumberOfMatchDaysForSingleLeagueWithImpairNoOfPlayers()
-    {
-        $test = array(1,2,3,4,5,6,7);
-        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
-        $matchDays = $this->getNumberOfMatchDays($test);
-
-        $this->assertSame($matchDays, count($res));
-    }
-
-    /**
-     * total number of matches in a league
-     */
-    public function testNumberOfMatchesForSingleLeague()
-    {
-        $test = array(1,2,3,4,5,6,7,8);
-        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
-
-        $matchDays = $this->getNumberOfMatchDays($test);
-        $paringsPerMatchDay = count($test)/2;
-        $totalMatches = $matchDays*$paringsPerMatchDay;
-
-        $numberOfMatches=0;
-        foreach ($res as $matchDayPairings) {
-            $numberOfMatches += count($matchDayPairings);
-        }
-
-        $this->assertSame($totalMatches, $numberOfMatches);
-    }
-
-    /**
-     * total number of matches in a league
-     */
-    public function testNumberOfMatchesForSingleLeagueUsingBye()
-    {
-        $test = array(1,2,3,4,5,6,7,Schedule::BYE);
-        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
-
-        $matchDays = $this->getNumberOfMatchDays($test);
-        $paringsPerMatchDay = count($test)/2 - 1;
-        $totalMatches = $matchDays*$paringsPerMatchDay;
-
-        $numberOfMatches=0;
-        foreach ($res as $matchDayPairings) {
-            $numberOfMatches += count($matchDayPairings);
-        }
-
-        $this->assertSame($totalMatches, $numberOfMatches);
-    }
-
-    /**
      * number of match days in a league
      */
     public function testNumberOfMatchDays()
     {
         $test = array(1,2,3,4,5,6,7,8);
-        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
+        $res = $this->getObject()->getPairings($test);
 
         $matchDays = $this->getNumberOfMatchDays($test);
         $this->assertSame($matchDays, count($res));
@@ -174,7 +107,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
     public function testNumberOfMatchesForEachPlayer()
     {
         $test = array(1,2,3,4,5,6,7,8);
-        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
+        $res = $this->getObject()->getPairings($test);
 
         foreach ($test as $player) {
             $no=0;
@@ -188,28 +121,6 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
             $this->assertSame(count($test)-1, $no); //no of matches
         }
     }
-
-    /**
-     * each player's number of matches using bye
-     */
-    public function testNumberOfMatchesForEachPlayerUsingBye()
-    {
-        $test = array(1,2,3,4,5,6,7);
-        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
-
-        foreach ($test as $player) {
-            $no=0;
-            foreach ($res as $matchDays) {
-                foreach ($matchDays as $match) {
-                    if (in_array($player, $match)) {
-                        $no++;
-                    }
-                }
-            }
-            $this->assertSame(count($test)-1, $no); //no of matches
-        }
-    }
-
 
     /**
      * playing each opponent
@@ -217,7 +128,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
     public function testMatchingAllOpponents()
     {
         $test = array(1,2,3,4,5,6,7,8);
-        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
+        $res = $this->getObject()->getPairings($test);
 
         foreach ($test as $player) {
             $opponents = $this->getOpponentsByPlayer($res, $player);
@@ -233,7 +144,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
     public function testMatchingAllOpponentsUsingBye()
     {
         $test = array(1,2,3,4,5,6,7);
-        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
+        $res = $this->getObject()->getPairings($test);
 
         foreach ($test as $player) {
             $opponents = $this->getOpponentsByPlayer($res, $player);
@@ -270,7 +181,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
     public function testCorrectAmountOfColor()
     {
         $test = array(1,2,3,4,5,6,7,8);
-        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
+        $res = $this->getObject()->getPairings($test);
         $msg = PHP_EOL;
 
         foreach ($test as $player) {
@@ -293,7 +204,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
     public function testCorrectAmountOfColorUsingBye()
     {
         $test = array(1,2,3,4,5,6,7);
-        $res = $this->invokeMethod($this->getObject(), 'makePairingsForLeague', array($test));
+        $res = $this->getObject()->getPairings($test);
         $msg = PHP_EOL;
         foreach ($test as $player) {
             $noBlack=$this->getNoOfGamesWithBlackByPlayer($res, $player);
@@ -336,15 +247,7 @@ class ScheduleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return array
-     */
-    public function getMatchDates()
-    {
-        return $this->matchDates;
-    }
-
-    /**
-     * @return Schedule
+     * @return HarmonicLeaguePairing
      */
     public function getObject()
     {
