@@ -15,7 +15,12 @@ use Mail\Services\MailMessageFactory;
 class PasswordMail extends UserMail
 {
 
-
+    protected $expire='72';
+    protected $prefix = 'Nakade';
+    protected $signature='Nakade Team';
+    protected $club='Berliner Baduk Club e.V.';
+    protected $register_court='Berlin-Charlottenburg';
+    protected $register_no='VR31852';
 
     /**
      * Translated mail template. Needed for Poedit usage.
