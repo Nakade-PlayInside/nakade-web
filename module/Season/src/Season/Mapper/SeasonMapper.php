@@ -177,21 +177,16 @@ class SeasonMapper extends AbstractMapper
      */
     public function getNoOfOpenMatchesInSeason($seasonId)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder('League');
-        $qb->select('count(m) as open')
+        $qb = $this->getEntityManager()->createQueryBuilder('Match');
+        $qb->select('count(m)')
             ->from('Season\Entity\Match', 'm')
-            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l = m.league')
-            ->innerJoin('l.season', 'season')
-            ->where('season.id = :seasonId')
-            ->andWhere('m.result IS Null')
-            ->addGroupBy('l.id')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'm.league = l')
+            ->innerJoin('l.season', 'mySeason')
+            ->where('mySeason.id = :seasonId')
+            ->andWhere('m.result IS NULL')
             ->setParameter('seasonId', $seasonId);
-        $result = $qb->getQuery()->getOneOrNullResult();
+        return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
 
-        if (empty($result)) {
-            return $result;
-        }
-        return intval($result['open']);
     }
 
     /**
