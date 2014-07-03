@@ -11,7 +11,7 @@ $title = sprintf("%s: %s %s",
 ?>
 
 <h2><?php echo  $title;?></h2>
-<hr>
+<hr/>
 <?php $this->placeholder('noSeason')->captureStart();?>
 <?php echo $this->translate("No season found."); ?>
 <a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'add')); ?>"><?php echo $this->translate("create Season"); ?></a>
@@ -28,17 +28,27 @@ $title = sprintf("%s: %s %s",
     <li><?php echo $this->translate('Last match') . ': ' . $this->matchDate($season->getLastMatchDate()); ?></li>
     <li><?php echo $this->translate('State') . ': ' . $this->state($season); ?></li>
 </ul>
+<hr/>
 
-<hr>
-<a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'edit')); ?>"><?php echo $this->translate("edit Season"); ?></a>
-<a class="btn" href="<?php echo $this->url('invitePlayer', array('action' => 'add')); ?>"><?php echo $this->translate("invite Player"); ?></a>
-<a class="btn" href="<?php echo $this->url('createLeague', array('action' => 'add')); ?>"><?php echo $this->translate("add League"); ?></a>
-<a class="btn" href="<?php echo $this->url('createLeague', array('action' => 'show')); ?>"><?php echo $this->translate("edit League"); ?></a>
-<a class="btn" href="<?php echo $this->url('configMatchDay', array('action' => 'add')); ?>"><?php echo $this->translate("configure Match Days"); ?></a>
-<a class="btn" href="<?php echo $this->url('configMatchDay'); ?>"><?php echo $this->translate("edit Match Days"); ?></a>
-<a class="btn" href="<?php echo $this->url('configMatchDay', array('action' => 'delete')); ?>"><?php echo $this->translate("remove Match Days"); ?></a>
+<?php if ($season->getNoPlayers() == 0): ?>
+    <a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'edit')); ?>"><?php echo $this->translate("edit Season"); ?></a>
+<?php
+endif; ?>
+
+
+
+<?php if ($season->hasMatchDays()): //todo: hasSchedule ?>
+    <a class="btn" href="<?php echo $this->url('configMatchDay'); ?>"><?php echo $this->translate("edit Match Days"); ?></a>
+    <a class="btn" href="<?php echo $this->url('configMatchDay', array('action' => 'delete')); ?>"><?php echo $this->translate("remove Match Days"); ?></a>
+<?php else: //todo: hasLeagues && hasPlayers for configure match days ?>
+    <a class="btn" href="<?php echo $this->url('invitePlayer', array('action' => 'add')); ?>"><?php echo $this->translate("invite Player"); ?></a>
+    <a class="btn" href="<?php echo $this->url('createLeague', array('action' => 'add')); ?>"><?php echo $this->translate("add League"); ?></a>
+    <a class="btn" href="<?php echo $this->url('createLeague', array('action' => 'show')); ?>"><?php echo $this->translate("edit League"); ?></a>
+    <a class="btn" href="<?php echo $this->url('configMatchDay', array('action' => 'add')); ?>"><?php echo $this->translate("configure Match Days"); ?></a>
+<?php
+endif; ?>
+
 <a class="btn" href="<?php echo $this->url('createSchedule', array('action' => 'create')); ?>"><?php echo $this->translate("create Schedule"); ?></a>
-
 
 <?php $this->placeholder('actual')->captureEnd(); ?>
 

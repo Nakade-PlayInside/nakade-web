@@ -140,6 +140,9 @@ class SeasonMapper extends AbstractMapper
             $data['openMatches'] = $this->getNoOfOpenMatchesInSeason($seasonId);
             $data['noLeagues'] = $this->getNoOfLeaguesInSeason($seasonId);
             $data['noPlayers'] = $this->getNoOfPlayersInSeason($seasonId);
+
+            $matchDays = $this->getMatchDaysBySeason($seasonId);
+            $data['hasMatchDays'] = !empty($matchDays);
         }
 
         return $data;

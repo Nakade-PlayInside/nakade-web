@@ -20,6 +20,7 @@ class Season extends SeasonModel
     private $lastMatchDate;
     private $noLeagues;
     private $noPlayers;
+    private $hasMatchDays;
 
     /**
      * construct
@@ -150,6 +151,22 @@ class Season extends SeasonModel
     }
 
     /**
+     * @param bool $hasMatchDays
+     */
+    public function setHasMatchDays($hasMatchDays)
+    {
+        $this->hasMatchDays = $hasMatchDays;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMatchDays()
+    {
+        return $this->hasMatchDays;
+    }
+
+    /**
      * @return bool
      */
     public function hasOpenMatches()
@@ -223,6 +240,9 @@ class Season extends SeasonModel
         }
         if (isset($data['tieBreaker3'])) {
             $this->tieBreaker3 = $data['tieBreaker3'];
+        }
+        if (isset($data['hasMatchDays'])) {
+            $this->hasMatchDays = $data['hasMatchDays'];
         }
     }
 
