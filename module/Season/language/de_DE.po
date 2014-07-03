@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-26 10:20+0100\n"
-"PO-Revision-Date: 2014-06-26 10:20+0100\n"
+"POT-Creation-Date: 2014-07-03 11:22+0100\n"
+"PO-Revision-Date: 2014-07-03 11:30+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -37,7 +37,8 @@ msgid "Player accepted invitation"
 msgstr "Zusagen von Spielern "
 
 #: ../src/Season/View/Helper/RulesInfo.php:23
-#: ../src/Season/Form/MatchDayForm.php:121
+#: ../src/Season/Form/MatchDayConfigForm.php:121
+#: ../src/Season/Form/MatchDayForm.php:98
 msgid "Time"
 msgstr "Zeit"
 
@@ -50,7 +51,6 @@ msgid "Byoyomi"
 msgstr "Byoyomi"
 
 #: ../src/Season/View/Helper/RulesInfo.php:35
-#: ../src/Season/Form/SeasonForm.php:99
 msgid "Komi"
 msgstr "Komi"
 
@@ -58,15 +58,97 @@ msgstr "Komi"
 msgid "points"
 msgstr "Punkte"
 
+#: ../src/Season/Form/DeleteForm.php:41
+msgid "Delete"
+msgstr "Löschen"
+
+#: ../src/Season/Form/DeleteForm.php:50
+#: ../src/Season/Form/CreateForm.php:50
+msgid "Cancel"
+msgstr "Abbruch"
+
+#: ../src/Season/Form/CreateForm.php:41
+msgid "Create"
+msgstr "Anlegen"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:50
+#: ../src/Season/Form/MatchDayForm.php:55
+msgid "Season"
+msgstr "Saison"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:63
+msgid "No of rounds"
+msgstr "Spieltage"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:76
+msgid "Cycle"
+msgstr "Turnus"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:91
+msgid "Match day"
+msgstr "Spieltag"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:106
+msgid "Start date"
+msgstr "Beginn "
+
+#: ../src/Season/Form/MatchDayConfigForm.php:154
+msgid "Monday"
+msgstr "Montag"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:155
+msgid "Tuesday"
+msgstr "Dienstag"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:156
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:157
+msgid "Thursday"
+msgstr "Donnerstag"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:158
+msgid "Friday"
+msgstr "Freitag"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:159
+msgid "Saturday"
+msgstr "Samstag"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:160
+msgid "Sunday"
+msgstr "Sonntag"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:170
+msgid "daily"
+msgstr "täglich"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:171
+msgid "on weekdays"
+msgstr "werktags"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:172
+msgid "weekly"
+msgstr "wöchentlich"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:173
+msgid "fortnightly"
+msgstr "14-täglich"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:174
+msgid "all 3 weeks"
+msgstr "alle 3 Wochen"
+
+#: ../src/Season/Form/MatchDayConfigForm.php:175
+msgid "monthly"
+msgstr "monatlich"
+
 #: ../src/Season/Form/ParticipantForm.php:37
-#: ../src/Season/Form/LeagueForm.php:35
-#: ../src/Season/Form/SeasonForm.php:45
 msgid "Association"
 msgstr "Verein"
 
 #: ../src/Season/Form/ParticipantForm.php:50
-#: ../src/Season/Form/LeagueForm.php:48
-#: ../src/Season/Form/SeasonForm.php:55
 msgid "Season no."
 msgstr "Saison Nr."
 
@@ -75,82 +157,16 @@ msgid "No of invited players"
 msgstr "Anzahl eingeladener Spieler"
 
 #: ../src/Season/Form/ParticipantForm.php:76
-#: ../src/Season/Form/LeagueForm.php:93
 msgid "Add player"
 msgstr "Spieler hinzufügen"
 
-#: ../src/Season/Form/MatchDayForm.php:50
-msgid "Season"
-msgstr "Saison"
+#: ../src/Season/Form/MatchDayForm.php:68
+msgid "Round"
+msgstr "Runde"
 
-#: ../src/Season/Form/MatchDayForm.php:63
-msgid "No of rounds"
-msgstr "Spieltage"
-
-#: ../src/Season/Form/MatchDayForm.php:76
-msgid "Cycle"
-msgstr "Turnus"
-
-#: ../src/Season/Form/MatchDayForm.php:91
-msgid "Match day"
-msgstr "Spieltag"
-
-#: ../src/Season/Form/MatchDayForm.php:106
-#: ../src/Season/Form/SeasonForm.php:66
-msgid "Start date"
-msgstr "Beginn "
-
-#: ../src/Season/Form/MatchDayForm.php:154
-msgid "Monday"
-msgstr "Montag"
-
-#: ../src/Season/Form/MatchDayForm.php:155
-msgid "Tuesday"
-msgstr "Dienstag"
-
-#: ../src/Season/Form/MatchDayForm.php:156
-msgid "Wednesday"
-msgstr "Mittwoch"
-
-#: ../src/Season/Form/MatchDayForm.php:157
-msgid "Thursday"
-msgstr "Donnerstag"
-
-#: ../src/Season/Form/MatchDayForm.php:158
-msgid "Friday"
-msgstr "Freitag"
-
-#: ../src/Season/Form/MatchDayForm.php:159
-msgid "Saturday"
-msgstr "Samstag"
-
-#: ../src/Season/Form/MatchDayForm.php:160
-msgid "Sunday"
-msgstr "Sonntag"
-
-#: ../src/Season/Form/MatchDayForm.php:170
-msgid "daily"
-msgstr "täglich"
-
-#: ../src/Season/Form/MatchDayForm.php:171
-msgid "on weekdays"
-msgstr "werktags"
-
-#: ../src/Season/Form/MatchDayForm.php:172
-msgid "weekly"
-msgstr "wöchentlich"
-
-#: ../src/Season/Form/MatchDayForm.php:173
-msgid "fortnightly"
-msgstr "14-täglich"
-
-#: ../src/Season/Form/MatchDayForm.php:174
-msgid "all 3 weeks"
-msgstr "alle 3 Wochen"
-
-#: ../src/Season/Form/MatchDayForm.php:175
-msgid "monthly"
-msgstr "monatlich"
+#: ../src/Season/Form/MatchDayForm.php:82
+msgid "Date"
+msgstr "Datum"
 
 #: ../src/Season/Form/LeagueForm.php:61
 msgid "League no."
@@ -197,25 +213,17 @@ msgstr "dritter Tiebreak"
 msgid "Submit"
 msgstr "Abschicken"
 
-#: ../src/Season/Form/Fieldset/ButtonFieldset.php:53
-msgid "Cancel"
-msgstr "Abbruch"
-
 #: ../view/season/player/index.phtml:11
 msgid "Player Roster"
 msgstr "Spielerliste"
 
 #: ../view/season/player/index.phtml:13
 #: ../view/season/season/index.phtml:9
-#: ../view/season/season/create.phtml:9
-#: ../view/season/match-day/index.phtml:48
 msgid "League"
 msgstr "Liga"
 
 #: ../view/season/player/index.phtml:19
 #: ../view/season/season/index.phtml:15
-#: ../view/season/season/show-rules.phtml:12
-#: ../view/season/season/create.phtml:16
 msgid "No season found."
 msgstr "Keine Saison gefunden."
 
@@ -236,17 +244,14 @@ msgid "Season Overview"
 msgstr "Saisonübersicht"
 
 #: ../view/season/season/index.phtml:23
-#: ../view/season/season/create.phtml:26
 msgid "Number of leagues"
 msgstr "Anzahl an Ligen"
 
 #: ../view/season/season/index.phtml:24
-#: ../view/season/season/create.phtml:27
 msgid "Number of players"
 msgstr "Anzahl an Spielern"
 
 #: ../view/season/season/index.phtml:25
-#: ../view/season/season/create.phtml:28
 msgid "Number of matches"
 msgstr "Spielanzahl"
 
@@ -255,17 +260,14 @@ msgid "Open matches"
 msgstr "offene Partien"
 
 #: ../view/season/season/index.phtml:27
-#: ../view/season/season/create.phtml:29
 msgid "First match"
 msgstr "erste Partie"
 
 #: ../view/season/season/index.phtml:28
-#: ../view/season/season/create.phtml:30
 msgid "Last match"
 msgstr "letzte Partie"
 
 #: ../view/season/season/index.phtml:29
-#: ../view/season/season/create.phtml:31
 msgid "State"
 msgstr "Status"
 
@@ -279,59 +281,124 @@ msgstr "Neue Saison bearbeiten"
 
 #: ../view/season/season/create.phtml:7
 msgid "Create a New Season"
-msgstr "neue Saison anlegen"
+msgstr "Neue Saison anlegen"
 
-#: ../view/season/season/create.phtml:18
+#: ../view/season/season/create.phtml:17
 msgid "create Season"
 msgstr "Saison anlegen"
 
-#: ../view/season/season/create.phtml:35
-msgid "edit Season"
-msgstr "Saison bearbeiten"
+#: ../view/season/season/create.phtml:24
+msgid "Leagues"
+msgstr "Ligen"
 
-#: ../view/season/season/create.phtml:36
+#: ../view/season/season/create.phtml:25
+msgid "Participants"
+msgstr "Teilnehmer"
+
+#: ../view/season/season/create.phtml:26
+msgid "Matches"
+msgstr "Partien"
+
+#: ../view/season/season/create.phtml:33
+msgid "edit Season"
+msgstr "bearbeite Saison"
+
+#: ../view/season/season/create.phtml:34
 msgid "invite Player"
 msgstr "Spieler einladen"
 
-#: ../view/season/season/create.phtml:37
+#: ../view/season/season/create.phtml:35
 msgid "add League"
 msgstr "Liga hinzufügen"
 
-#: ../view/season/season/create.phtml:38
+#: ../view/season/season/create.phtml:36
 msgid "edit League"
-msgstr "Liga bearbeiten"
+msgstr "bearbeite Liga "
 
-#: ../view/season/season/create.phtml:39
+#: ../view/season/season/create.phtml:37
 msgid "configure Match Days"
 msgstr "konfiguriere Spieltage"
+
+#: ../view/season/season/create.phtml:38
+msgid "edit Match Days"
+msgstr "bearbeite Spieltage "
+
+#: ../view/season/season/create.phtml:39
+msgid "remove Match Days"
+msgstr "lösche Spieltage"
+
+#: ../view/season/season/create.phtml:40
+msgid "create Schedule"
+msgstr "Spielplan erstellen"
 
 #: ../view/season/season/add.phtml:6
 msgid "Create New Season"
 msgstr "neue Saison anlegen"
 
 #: ../view/season/match-day/index.phtml:8
-msgid "No players found"
-msgstr "Keine Spieler gefunden"
+#: ../view/season/match-day/delete.phtml:9
+#: ../view/season/schedule/index.phtml:8
+msgid "No match days found."
+msgstr "Keine Spieltage gefunden."
 
-#: ../view/season/match-day/index.phtml:40
-msgid "Participants of the new Season"
-msgstr "Teilnehmer der neuen Saison"
+#: ../view/season/match-day/index.phtml:12
+#: ../view/season/schedule/index.phtml:12
+msgid "Match Days of the Next Season"
+msgstr "Spieltage der neuen Saison"
 
-#: ../view/season/match-day/index.phtml:45
-msgid "player's name"
-msgstr "Spieler Name"
+#: ../view/season/match-day/index.phtml:15
+#: ../view/season/match-day/delete.phtml:19
+#: ../view/season/schedule/index.phtml:15
+msgid "round"
+msgstr "Runde"
 
-#: ../view/season/match-day/index.phtml:46
-msgid "Name"
-msgstr "Name"
+#: ../view/season/match-day/index.phtml:16
+#: ../view/season/match-day/delete.phtml:20
+#: ../view/season/schedule/index.phtml:16
+msgid "date"
+msgstr "Datum"
 
-#: ../view/season/match-day/index.phtml:47
-msgid "number of league"
-msgstr "Liga-Nummer"
+#: ../view/season/match-day/index.phtml:17
+#: ../view/season/schedule/index.phtml:17
+#: ../view/season/league/show.phtml:26
+msgid "edit"
+msgstr "bearbeiten"
+
+#: ../view/season/match-day/delete.phtml:13
+msgid "Remove all Match Days?"
+msgstr "Alle Spieltage löschen?"
+
+#: ../view/season/match-day/delete.phtml:14
+msgid "These are all match days of the next season."
+msgstr "Dies sind alle Spieltage der neuen Saison."
+
+#: ../view/season/match-day/delete.phtml:15
+msgid "If deleted, you will have to renew the match day configuration."
+msgstr "Nach dem Löschen musst du die Spieltagkonfiguration erneut ausführen."
+
+#: ../view/season/match-day/edit.phtml:6
+msgid "Edit Match Days"
+msgstr "bearbeite Spieltage"
 
 #: ../view/season/match-day/add.phtml:4
 msgid "Match Day Configuration"
 msgstr "Konfiguration der Spieltage"
+
+#: ../view/season/schedule/create.phtml:7
+msgid "Create Schedule?"
+msgstr "erstelle Spielplan?"
+
+#: ../view/season/schedule/create.phtml:8
+msgid "This is the final step of a new season."
+msgstr "Mit diesem letzten Schritt wird die Erstellung einer neuen Saison abgeschlossen."
+
+#: ../view/season/schedule/create.phtml:9
+msgid "All participating players will receive their match schedule by email."
+msgstr "Alle Teilnehmer erhalten ihren Spielplan per email."
+
+#: ../view/season/schedule/create.phtml:10
+msgid "The new season will automatically become active."
+msgstr "Die neue Saision wird automatisch aktiviert."
 
 #: ../view/season/league/index.phtml:12
 msgid "Create Leagues"
@@ -369,10 +436,6 @@ msgstr "Nr"
 msgid "Player"
 msgstr "Spieler"
 
-#: ../view/season/league/show.phtml:26
-msgid "edit"
-msgstr "bearbeiten"
-
 #: ../view/season/league/edit.phtml:4
 #: ../view/season/league/add.phtml:4
 msgid "add new league"
@@ -390,17 +453,23 @@ msgstr "Ligen ohne Zuordnung"
 msgid "No unassigned leagues found."
 msgstr "Keine Ligen ohne Zuordnung gefunden."
 
+#~ msgid "No players found"
+#~ msgstr "Keine Spieler gefunden"
+
+#~ msgid "player's name"
+#~ msgstr "Spieler Name"
+
+#~ msgid "Name"
+#~ msgstr "Name"
+
+#~ msgid "number of league"
+#~ msgstr "Liga-Nummer"
+
 #~ msgid "every %NUMBER% days"
 #~ msgstr "alle  %NUMBER% Tage"
 
 #~ msgid "every %NUMBER% weeks"
 #~ msgstr "alle %NUMBER% Wochen"
-
-#~ msgid "Create Match Days"
-#~ msgstr "Spieltagerstellung"
-
-#~ msgid "create Schedule"
-#~ msgstr "Spielplan erstellen"
 
 #~ msgid "add new matchplan"
 #~ msgstr "Neuen Spielplan erzeugen"
@@ -459,9 +528,6 @@ msgstr "Keine Ligen ohne Zuordnung gefunden."
 #~ msgid "Go"
 #~ msgstr "Los!"
 
-#~ msgid "Date"
-#~ msgstr "Datum"
-
 #~ msgid "Change Colors"
 #~ msgstr "Farben tauschen"
 
@@ -494,9 +560,6 @@ msgstr "Keine Ligen ohne Zuordnung gefunden."
 
 #~ msgid "leagues"
 #~ msgstr "Ligen"
-
-#~ msgid "participants"
-#~ msgstr "Teilnehmer"
 
 #~ msgid "match schedule"
 #~ msgstr "Spielplan"
@@ -666,14 +729,8 @@ msgstr "Keine Ligen ohne Zuordnung gefunden."
 #~ msgid "edit match date"
 #~ msgstr "Spieltag bearbeiten"
 
-#~ msgid "Leagues:"
-#~ msgstr "Ligen:"
-
 #~ msgid "Players:"
 #~ msgstr "Spieler:"
-
-#~ msgid "Matches:"
-#~ msgstr "Partien:"
 
 #~ msgid "First Match:"
 #~ msgstr "Erste Partie:"
@@ -725,9 +782,6 @@ msgstr "Keine Ligen ohne Zuordnung gefunden."
 
 #~ msgid "No actual season found."
 #~ msgstr "Keine laufende Saison gefunden."
-
-#~ msgid "No last season found."
-#~ msgstr "Keine letzte Saison gefunden."
 
 #~ msgid "Open Results"
 #~ msgstr "Offene Ergebnisse"

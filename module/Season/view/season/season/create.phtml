@@ -10,22 +10,20 @@ $title = sprintf("%s: %s %s",
 
 ?>
 
-<h3><?php echo  $title;?></h3>
-
+<h2><?php echo  $title;?></h2>
+<hr>
 <?php $this->placeholder('noSeason')->captureStart();?>
 <?php echo $this->translate("No season found."); ?>
-<hr>
 <a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'add')); ?>"><?php echo $this->translate("create Season"); ?></a>
 <?php $this->placeholder('noSeason')->captureEnd();?>
 
 
 <?php $this->placeholder('actual')->captureStart();?>
-
-<h5><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h5>
-<ul>
-    <li><?php echo $this->translate('Number of leagues') . ': ' . $season->getNoLeagues() ?><a href="<?php echo $this->url('createLeague'); ?>" title="<?php echo "League Info" ?>"><img title="<?php echo "League Info" ?>" style="vertical-align:top; margin-left:10px" src="/images/info.png"></a></li>
-    <li><?php echo $this->translate('Number of players') . ': ' . $season->getNoPlayers() ?><a href="<?php echo $this->url('invitePlayer'); ?>" title="<?php echo "Player Info" ?>"><img title="<?php echo "Player Info" ?>" style="vertical-align:top; margin-left:10px" src="/images/info.png"></a></li></li>
-    <li><?php echo $this->translate('Number of matches') . ': ' . $season->getNoMatches() ?></li>
+<h4><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h4>
+<ul style="margin-top:10px;">
+    <li><?php echo $this->translate('Leagues') . ': ' . $season->getNoLeagues() ?><a href="<?php echo $this->url('createLeague'); ?>" title="<?php echo "League Info" ?>"><img title="<?php echo "League Info" ?>" style="vertical-align:top; margin-left:10px" src="/images/info.png"></a></li>
+    <li><?php echo $this->translate('Participants') . ': ' . $season->getNoPlayers() ?><a href="<?php echo $this->url('invitePlayer'); ?>" title="<?php echo "Player Info" ?>"><img title="<?php echo "Player Info" ?>" style="vertical-align:top; margin-left:10px" src="/images/info.png"></a></li></li>
+    <li><?php echo $this->translate('Matches') . ': ' . $season->getNoMatches() ?></li>
     <li><?php echo $this->translate('First match') . ': ' . $this->matchDate($season->getFirstMatchDate()); ?></li>
     <li><?php echo $this->translate('Last match') . ': ' . $this->matchDate($season->getLastMatchDate()); ?></li>
     <li><?php echo $this->translate('State') . ': ' . $this->state($season); ?></li>
