@@ -37,18 +37,28 @@ endif; ?>
 
 
 
-<?php if ($season->hasMatchDays()): //todo: hasSchedule ?>
-    <a class="btn" href="<?php echo $this->url('configMatchDay'); ?>"><?php echo $this->translate("edit Match Days"); ?></a>
-    <a class="btn" href="<?php echo $this->url('configMatchDay', array('action' => 'delete')); ?>"><?php echo $this->translate("remove Match Days"); ?></a>
-<?php else: //todo: hasLeagues && hasPlayers for configure match days ?>
+<?php if ($season->hasMatchDays()):  ?>
+    <?php if ($season->hasSchedule()): ?>
+        <a class="btn" href="<?php echo $this->url('createSchedule', array('action' => 'delete')); ?>"><?php echo $this->translate("remove Schedule"); ?></a>
+    <?php else: ?>
+        <a class="btn" href="<?php echo $this->url('configMatchDay'); ?>"><?php echo $this->translate("edit Match Days"); ?></a>
+        <a class="btn" href="<?php echo $this->url('configMatchDay', array('action' => 'delete')); ?>"><?php echo $this->translate("remove Match Days"); ?></a>
+        <a class="btn" href="<?php echo $this->url('createSchedule', array('action' => 'create')); ?>"><?php echo $this->translate("create Schedule"); ?></a>
+    <?php
+endif; ?>
+<?php else: ?>
+    <?php if ($season->hasAvailablePlayers()): ?>
     <a class="btn" href="<?php echo $this->url('invitePlayer', array('action' => 'add')); ?>"><?php echo $this->translate("invite Player"); ?></a>
+    <?php endif; ?>
     <a class="btn" href="<?php echo $this->url('createLeague', array('action' => 'add')); ?>"><?php echo $this->translate("add League"); ?></a>
     <a class="btn" href="<?php echo $this->url('createLeague', array('action' => 'show')); ?>"><?php echo $this->translate("edit League"); ?></a>
+    <?php if ($season->hasLeagues()): ?>
     <a class="btn" href="<?php echo $this->url('configMatchDay', array('action' => 'add')); ?>"><?php echo $this->translate("configure Match Days"); ?></a>
-<?php
+    <?php
+endif;
 endif; ?>
 
-<a class="btn" href="<?php echo $this->url('createSchedule', array('action' => 'create')); ?>"><?php echo $this->translate("create Schedule"); ?></a>
+
 
 <?php $this->placeholder('actual')->captureEnd(); ?>
 

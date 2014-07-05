@@ -21,6 +21,7 @@ class Season extends SeasonModel
     private $noLeagues;
     private $noPlayers;
     private $hasMatchDays;
+    private $hasAvailablePlayers;
 
     /**
      * construct
@@ -175,6 +176,47 @@ class Season extends SeasonModel
     }
 
     /**
+     * @return bool
+     */
+    public function hasSchedule()
+    {
+        return $this->noMatches > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasLeagues()
+    {
+        return $this->noLeagues > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPlayers()
+    {
+        return $this->noPlayers > 0;
+    }
+
+    /**
+     * @param bool $hasAvailablePlayers
+     */
+    public function setHasAvailablePlayers($hasAvailablePlayers)
+    {
+        $this->hasAvailablePlayers = $hasAvailablePlayers;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAvailablePlayers()
+    {
+        return $this->hasAvailablePlayers;
+    }
+
+
+    /**
      * @return string
      */
     public function  getSeasonInfo()
@@ -243,6 +285,9 @@ class Season extends SeasonModel
         }
         if (isset($data['hasMatchDays'])) {
             $this->hasMatchDays = $data['hasMatchDays'];
+        }
+        if (isset($data['hasAvailablePlayers'])) {
+            $this->hasAvailablePlayers = $data['hasAvailablePlayers'];
         }
     }
 

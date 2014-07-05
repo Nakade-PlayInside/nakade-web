@@ -1,0 +1,35 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+$head = 'Remove Schedule';
+$this->headTitle($head);
+$info = $this->translate("There are %NUMBER% matches scheduled for the next season.");
+$info = str_replace('%NUMBER%', count($this->matches), $info);
+/* @var $match \Season\Entity\Match */
+?>
+
+<?php $this->placeholder('noData')->captureStart();?>
+<h3><?php echo $this->translate('No schedule found.')?></h3>
+<?php $this->placeholder('noData')->captureEnd(); ?>
+
+<?php $this->placeholder('data')->captureStart();?>
+<h1><?php echo $this->translate("Remove Schedule?"); ?></h1>
+<p><?php echo $info;?><br/>
+<?php echo $this->translate("If deleted, you will have to renew the match schedule.");?>
+</p>
+
+
+<?php
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();
+?>
+
+<?php $this->placeholder('data')->captureEnd();
+
+
+  if (count($this->matches)>0) {
+      echo $this->placeholder('data');
+  } else {
+      echo $this->placeholder('noData');
+  }

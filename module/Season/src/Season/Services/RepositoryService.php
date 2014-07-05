@@ -18,7 +18,6 @@ use \Doctrine\ORM\EntityManager;
 class RepositoryService implements FactoryInterface
 {
 
-    const MATCH_MAPPER = 'match';
     const SEASON_MAPPER = 'season';
     const PARTICIPANT_MAPPER = 'participant';
     const LEAGUE_MAPPER = 'league';
@@ -59,10 +58,6 @@ class RepositoryService implements FactoryInterface
     public function getMapper($typ)
     {
         switch (strtolower($typ)) {
-
-           case self::MATCH_MAPPER:
-               $repository = new MatchMapper();
-               break;
 
            case self::SEASON_MAPPER:
                $repository = new SeasonMapper();
