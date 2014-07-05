@@ -1,17 +1,15 @@
 <?php
 namespace Season\Controller;
 
-use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 use Season\Services\SeasonFormService;
-use Season\Services\RepositoryService;
 
 /**
- * Class SeasonController
+ * Class ScheduleController
  *
  * @package Season\Controller
  */
-class ScheduleController extends AbstractController
+class ScheduleController extends DefaultController
 {
     /**
     * @return array|ViewModel
@@ -20,16 +18,13 @@ class ScheduleController extends AbstractController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-
-        //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation($id)) {
+      //no new season! add season first
+        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
 
-        $season = $mapper->getNewSeasonByAssociation($id);
-        $matchDays = $mapper->getMatchDaysBySeason($season->getId());
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        $matchDays = $this->getSeasonMapper()->getMatchDaysBySeason($season->getId());
 
         return new ViewModel(
             array(
@@ -46,15 +41,12 @@ class ScheduleController extends AbstractController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-
         //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation($id)) {
+        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
 
-        $season = $mapper->getNewSeasonByAssociation($id);
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
         $form = $this->getForm(SeasonFormService::CREATE_FORM);
 
         if ($this->getRequest()->isPost()) {
@@ -92,15 +84,12 @@ class ScheduleController extends AbstractController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-
         //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation($id)) {
+        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $mapper->getNewSeasonByAssociation($id);
-        $matches = $mapper->getMatchesBySeason($season->getId());
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        $matches = $this->getSeasonMapper()->getMatchesBySeason($season->getId());
 
         /* @var $form \Season\Form\MatchDayForm */
         $form = $this->getForm(SeasonFormService::DELETE_FORM);
@@ -115,7 +104,7 @@ class ScheduleController extends AbstractController
             if (isset($postData['delete'])) {
 
                 foreach ($matches as $match) {
-                    $mapper->delete($match);
+                    $this->getSeasonMapper()->delete($match);
                 }
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }

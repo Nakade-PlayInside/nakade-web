@@ -3,17 +3,14 @@ namespace Season\Controller;
 
 use Season\Entity\League;
 use Zend\Form\FormInterface;
-use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
-use \Season\Services\RepositoryService;
-use \Season\Services\SeasonFormService;
 
 /**
  * For adding leagues after creating a new season
  *
  * @author Holger Maerz <holger@nakade.de>
  */
-class LeagueController extends AbstractController
+class LeagueController extends DefaultController
 {
 
     /**
@@ -23,23 +20,20 @@ class LeagueController extends AbstractController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-
         //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation($id)) {
+        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $mapper->getNewSeasonByAssociation($id);
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
 
-        $noLeagues = $mapper->getNoOfLeaguesInSeason($season->getId());
+        $noLeagues = $this->getSeasonMapper()->getNoOfLeaguesInSeason($season->getId());
         $season->setNoLeagues($noLeagues);
 
         return new ViewModel(
             array(
                'season' => $season,
-               'accepted' => count($mapper->getAcceptingUsersBySeason($season->getId())),
-               'assigned' => count($mapper->getParticipantsBySeason($season->getId())),
+               'accepted' => count($this->getSeasonMapper()->getAcceptingUsersBySeason($season->getId())),
+               'assigned' => count($this->getSeasonMapper()->getParticipantsBySeason($season->getId())),
             )
         );
     }
@@ -52,19 +46,19 @@ class LeagueController extends AbstractController
         //@todo: validate forwarding. is league still editable, has season not yet startet ?
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-
         //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation($id)) {
+        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $mapper->getNewSeasonByAssociation($id);
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        $no = $this->getLeagueMapper()->getNewLeagueNoBySeason($season->getId());
 
-        //todo: new league()
-        /* @var $form \Season\Form\ParticipantForm */
-        $form = $this->getForm(SeasonFormService::LEAGUE_FORM);
-        $form->bindEntity();
+        $league = new League();
+        $league->setNumber($no);
+        $league->setSeason($season);
+
+        $form = $this->getLeagueForm();
+        $form->bindEntity($league);
 
         /* @var $request \Zend\Http\Request */
         $request = $this->getRequest();
@@ -85,13 +79,13 @@ class LeagueController extends AbstractController
                 $league = new League();
                 $league->setSeason($season);
                 $league->setNumber($data['leagueNumber']);
-                $mapper->save($league);
+                $this->getLeagueMapper()->save($league);
 
                 foreach ($data['addPlayer'] as $playerId) {
                     /* @var $player \Season\Entity\Participant */
-                    $player = $mapper->getEntityManager()->getReference('Season\Entity\Participant', $playerId);
+                    $player = $this->getLeagueMapper()->getEntityManager()->getReference('Season\Entity\Participant', $playerId);
                     $player->setLeague($league);
-                    $mapper->save($player);
+                    $this->getLeagueMapper()->save($player);
 
                 }
 
@@ -115,18 +109,12 @@ class LeagueController extends AbstractController
 
         $associationId = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-
         //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation($associationId)) {
+        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($associationId)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $mapper->getNewSeasonByAssociation($associationId);
-
-        /* @var $leagueMapper \Season\Mapper\LeagueMapper */
-        $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-        $leagues = $leagueMapper->getLeagueInfoBySeason($season->getId());
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($associationId);
+        $leagues = $this->getLeagueMapper()->getLeagueInfoBySeason($season->getId());
 
         return new ViewModel(
             array(
@@ -144,16 +132,13 @@ class LeagueController extends AbstractController
         //@todo: validate forwarding. is league still editable, has season not yet startet ?
         $leagueId = (int) $this->params()->fromRoute('id', 0);
 
-        /* @var $mapper \Season\Mapper\LeagueMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-        $league = $mapper->getLeagueById($leagueId);
+        $league = $this->getLeagueMapper()->getLeagueById($leagueId);
         //no new season! add season first
         if (is_null($league)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
 
-        /* @var $form \Season\Form\LeagueForm */
-        $form = $this->getForm(SeasonFormService::LEAGUE_FORM);
+        $form = $this->getLeagueForm();
         $form->bindEntity($league);
 
         /* @var $request \Zend\Http\Request */
@@ -173,15 +158,15 @@ class LeagueController extends AbstractController
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
                 foreach ($data['addPlayer'] as $playerId) {
                     /* @var $player \Season\Entity\Participant */
-                    $player = $mapper->getEntityManager()->getReference('Season\Entity\Participant', $playerId);
+                    $player = $this->getLeagueMapper()->getEntityManager()->getReference('Season\Entity\Participant', $playerId);
                     $player->setLeague($league);
-                    $mapper->save($player);
+                    $this->getLeagueMapper()->save($player);
                 }
                 foreach ($data['removePlayer'] as $playerId) {
                     /* @var $player \Season\Entity\Participant */
-                    $player = $mapper->getEntityManager()->getReference('Season\Entity\Participant', $playerId);
+                    $player = $this->getLeagueMapper()->getEntityManager()->getReference('Season\Entity\Participant', $playerId);
                     $player->setLeague(null);
-                    $mapper->save($player);
+                    $this->getLeagueMapper()->save($player);
                 }
 
 
@@ -206,17 +191,12 @@ class LeagueController extends AbstractController
         //todo: remove all league from season with no players assigned during schedule macth making
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation($id)) {
+        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $mapper->getNewSeasonByAssociation($id);
-
-        /* @var $playerMapper \Season\Mapper\LeagueMapper */
-        $playerMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-        $unassignedLeagues = $playerMapper->getEmptyLeaguesBySeason($season->getId());
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        $unassignedLeagues = $this->getLeagueMapper()->getEmptyLeaguesBySeason($season->getId());
 
         return new ViewModel(
             array(
