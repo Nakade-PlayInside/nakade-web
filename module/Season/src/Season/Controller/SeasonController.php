@@ -2,6 +2,7 @@
 namespace Season\Controller;
 
 use Season\Entity\Season;
+use Season\Services\SeasonFormService;
 use Zend\Form\FormInterface;
 use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
@@ -72,39 +73,30 @@ class SeasonController extends AbstractController
            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
 
-
-        $now = new \DateTime();
-        $minDate = clone $now;
-        $startDate = clone $now;
+        $association  = $mapper->getAssociationById($id);
         $season = new Season();
+        $season->setAssociation($association);
+        $season->setNumber(1);
 
-        $last = $mapper->getLastSeasonByAssociation($id);
-
-        if (is_null($last)) {
-            $association  = $mapper->getAssociationById($id);
-            $season->setAssociation($association);
-        } else {
-
-            $lastMatchDate = $mapper->getLastMatchDateOfSeason($last->getId());
-            $minDate = clone $lastMatchDate;
-            $startDate = clone $lastMatchDate;
-
-            if ($lastMatchDate > $now) {
-                $minDate = clone $lastMatchDate;
-                $startDate = clone $lastMatchDate;
+        $lastSeason = $mapper->getLastSeasonByAssociation($id);
+        if (!is_null($lastSeason)) {
+            $data = $lastSeason->getArrayCopy();
+            $season->exchangeArray($data);
+            $no = $lastSeason->getNumber() + 1;
+            $season->setNumber($no);
+            $lastMatchDate = $mapper->getLastMatchDateOfSeason($lastSeason->getId());
+            $newStartDate = clone $lastMatchDate;
+            $newStartDate->modify('+2 week');
+            $now = new \DateTime();
+            if ($now > $newStartDate) {
+                $newStartDate = $now;
             }
-            $season->exchangeArray($last->getArrayCopy());
-            $season->setNumber($last->getNumber() + 1);
+            $season->setStartDate($newStartDate);
         }
-        $startDate->modify('+2 week');
-        $season->setStartDate($startDate);
 
         /* @var $form \Season\Form\SeasonForm */
-        $form = $this->getForm('season');
-        $form->setMinDate($minDate);
-        $form->init();
-        $form->bind($season);
-
+        $form = $this->getForm(SeasonFormService::SEASON_FORM);
+        $form->bindEntity($season);
 
        if ($this->getRequest()->isPost()) {
             //get post data, set data to from, prepare for validation
@@ -125,12 +117,10 @@ class SeasonController extends AbstractController
             }
        }
 
-
-        return new ViewModel(
-            array(
-              'form' => $form,
-            )
-        );
+       return new ViewModel(array(
+             'form' => $form,
+           )
+       );
     }
 
     /**
@@ -149,29 +139,10 @@ class SeasonController extends AbstractController
         }
 
         $season = $mapper->getNewSeasonByAssociation($id);
-        $now = new \DateTime();
-
-        $minDate = $season->getStartDate();
-        if ($season->getStartDate() > $now) {
-            $last = $mapper->getLastSeasonByAssociation($id);
-            if (!is_null($last)) {
-                $lastMatchDate = $mapper->getLastMatchDateOfSeason($last->getId());
-                if ($lastMatchDate > $now) {
-                    $minDate = $lastMatchDate;
-                } else {
-                    $minDate = $now;
-                }
-            }
-        }
-
-        //if startDate is in the future, now is the min date, otherwise min is the season's start date
 
         /* @var $form \Season\Form\SeasonForm */
-        $form = $this->getForm('season');
-        $form->setMinDate($minDate);
-        $form->init();
-        $form->bind($season);
-
+        $form = $this->getForm(SeasonFormService::SEASON_FORM);
+        $form->bindEntity($season);
 
         if ($this->getRequest()->isPost()) {
             //get post data, set data to from, prepare for validation

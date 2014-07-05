@@ -31,4 +31,27 @@ class League extends LeagueModel
         return $this->noPlayers;
     }
 
+    /**
+     * for form data
+     *
+     * @param array $data
+     */
+    public function exchangeArray($data)
+    {
+
+        if (isset($data['noPlayer'])) {
+            $this->noPlayers = intval($data['noPlayer']);
+        }
+    }
+
+    /**
+     * needed for form data
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+
 }

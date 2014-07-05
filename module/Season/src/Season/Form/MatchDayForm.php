@@ -18,7 +18,8 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
     {
         parent::__construct('MatchDayForm');
 
-        $this->service = $service;
+        $this->setFieldSetService($service);
+
         $hydration = new MatchDayHydrator();
         $this->setHydrator($hydration);
         $this->setInputFilter($this->getFilter());
@@ -32,8 +33,8 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
         $date = $object->getDate();
         $minDate = clone $date;
         $maxDate = clone $date;
-        $this->minDate = $minDate->modify('-2 week')->format('Y-m-d');
-        $this->maxDate = $maxDate->modify('+2 week')->format('Y-m-d');
+        $this->setMinDate($minDate->modify('-2 week')->format('Y-m-d'));
+        $this->setMaxDate($maxDate->modify('+2 week')->format('Y-m-d'));
 
         $this->init();
         $this->setInputFilter($this->getFilter());
@@ -103,14 +104,7 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
         );
 
 
-        $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
-    }
-
-    /**
-     * you have to init this after setting season or league
-     */
-    protected function prepareForm()
-    {
+        $this->add($this->getButtonFieldSet());
     }
 
 
@@ -129,6 +123,22 @@ class MatchDayForm extends BaseForm implements WeekDayInterface
     public function getMinDate()
     {
         return $this->minDate;
+    }
+
+    /**
+     * @param string $minDate
+     */
+    public function setMinDate($minDate)
+    {
+        $this->minDate = $minDate;
+    }
+
+    /**
+     * @param string $maxDate
+     */
+    public function setMaxDate($maxDate)
+    {
+        $this->maxDate = $maxDate;
     }
 
     /**

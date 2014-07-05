@@ -11,15 +11,11 @@ use Doctrine\ORM\EntityManager;
  *
  * @package Season\Form
  */
-class SeasonHydrator implements HydratorInterface
+class LeagueHydrator implements HydratorInterface
 {
 
     private $entityManager;
 
-    private $tieBreaker1=1;
-    private $tieBreaker2=2;
-    private $tieBreaker3=4;
-    private $byoyomi=1;
 
     /**
      * @param EntityManager $em
@@ -30,45 +26,16 @@ class SeasonHydrator implements HydratorInterface
     }
 
     /**
-     * @param object $season
+     * @param \Season\Entity\League $object
      *
      * @return array
      */
-    public function extract($season)
+    public function extract($object)
     {
-        if (null!==$season->getTieBreaker1()) {
-            $this->tieBreaker1 = $season->getTieBreaker1()->getId();
-        }
-        if (null!==$season->getTieBreaker2()) {
-            $this->tieBreaker2 = $season->getTieBreaker2()->getId();
-        }
-        if (null!==$season->getTieBreaker3()) {
-            $this->tieBreaker3 = $season->getTieBreaker3()->getId();
-        }
-        if (null!==$season->getTime()->getByoyomi()) {
-            $this->byoyomi = $season->getTime()->getByoyomi()->getId();
-        }
-
-        /* @var $season \Season\Entity\Season */
         return array(
-           'tiebreak' => array(
-                'tiebreaker1' => $this->tieBreaker1,
-                'tiebreaker2' => $this->tieBreaker2,
-                'tiebreaker3' => $this->tieBreaker3
-            ),
-
-          'winPoints' => $season->getWinPoints(),
-          'komi' => $season->getKomi(),
-          'number' => $season->getNumber(),
-          'associationName' => $season->getAssociation()->getName(),
-          'startDate' => $season->getStartDate(),
-
-           //time
-          'baseTime' => $season->getTime()->getBaseTime(),
-          'byoyomi' => $this->byoyomi,
-          'additionalTime' => $season->getTime()->getAdditionalTime(),
-          'moves' => $season->getTime()->getMoves(),
-          'period' => $season->getTime()->getPeriod(),
+          'seasonNumber' => $object->getSeason()->getNumber(),
+          'associationName' => $object->getSeason()->getAssociation()->getName(),
+          'leagueNumber' => $object->getNumber(),
         );
     }
 

@@ -1,8 +1,9 @@
 <?php
 namespace Season\Controller;
 
+use Season\Services\RepositoryService;
 use Season\Entity\Participant;
-use Zend\Form\FormInterface;
+use Season\Services\SeasonFormService;
 use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 
@@ -16,7 +17,7 @@ class PlayerController extends AbstractController
         $id = (int) $this->params()->fromRoute('id', 1);
 
         /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper('season');
+        $mapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
 
         //no new season! add season first
         if (!$mapper->hasNewSeasonByAssociation($id)) {
@@ -24,17 +25,14 @@ class PlayerController extends AbstractController
         }
         $season = $mapper->getNewSeasonByAssociation($id);
 
-        /* @var $playerMapper \Season\Mapper\ParticipantMapper */
-        $playerMapper = $this->getRepository()->getMapper('participant');
-       return new ViewModel(
-           array(
+        return new ViewModel(array(
                //'players' => $this->getService()->getPlayers(),
                'season' => $season,
-               'invited' => $playerMapper->getInvitedUsersBySeason($season->getId()),
-               'available' => $playerMapper->getAvailablePlayersBySeason($season->getId()),
-               'accepted' => $playerMapper->getAcceptingUsersBySeason($season->getId())
+               'invited' => $mapper->getInvitedUsersBySeason($season->getId()),
+               'available' => $mapper->getAvailablePlayersBySeason($season->getId()),
+               'accepted' => $mapper->getAcceptingUsersBySeason($season->getId())
            )
-       );
+        );
     }
 
     /**
@@ -54,9 +52,8 @@ class PlayerController extends AbstractController
         $season = $mapper->getNewSeasonByAssociation($id);
 
        /* @var $form \Season\Form\ParticipantForm */
-       $form = $this->getForm('participant');
-       $form->setSeason($season);
-       $form->init();
+       $form = $this->getForm(SeasonFormService::PARTICIPANT_FORM);
+       $form->bindEntity($season);
 
        /* @var $request \Zend\Http\Request */
        $request = $this->getRequest();
@@ -72,19 +69,20 @@ class PlayerController extends AbstractController
             $form->setData($postData);
             if ($form->isValid()) {
 
+                $object = $form->getData();
                 $now = new \DateTime();
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                foreach ($data['addPlayer'] as $userId) {
+                $playerList = $object->getAvailablePlayers();
 
-                    $myPlayer = new Participant();
+                foreach ($playerList as $user) {
+                    $acceptString = md5(uniqid(rand(), true));
 
-                    /* @var $user \User\Entity\User */
-                    $user = $mapper->getEntityManager()->getReference('User\Entity\User', $userId);
-                    $myPlayer->setUser($user);
-                    $myPlayer->setSeason($season);
-                    $myPlayer->setDate($now);
-                    $mapper->save($myPlayer);
+                    $participant = new Participant();
+                    $participant->setUser($user);
+                    $participant->setSeason($season);
+                    $participant->setDate($now);
+                    $participant->setAcceptString($acceptString);
 
+                    $mapper->save($participant);
                 }
                 //$this->getService()->addPlayer($data);
 

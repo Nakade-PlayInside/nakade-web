@@ -5,8 +5,7 @@ namespace Season\Services;
 use Nakade\Abstracts\AbstractFormFactory;
 use Season\Form;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Season\Form\Hydrator\SeasonHydrator;
-use Season\Form\Hydrator\MatchDayHydrator;
+
 
 /**
  * Class SeasonFormService
@@ -72,18 +71,13 @@ class SeasonFormService extends AbstractFormFactory
      */
     public function getForm($typ)
     {
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper('season');
         $service = $this->getFieldSetService();
         $repository = $this->getRepository();
 
         switch (strtolower($typ)) {
 
            case self::SEASON_FORM:
-               $extraTime = $mapper->getByoyomi();
-               $hydrator = new SeasonHydrator($this->entityManager);
-               $form = new Form\SeasonForm($service, $extraTime);
-               $form->setHydrator($hydrator);
+               $form = new Form\SeasonForm($service, $repository);
                break;
 
            case self::PARTICIPANT_FORM:

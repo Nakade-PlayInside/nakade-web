@@ -17,8 +17,9 @@ class MatchDayConfigForm extends BaseForm implements WeekDayInterface
     {
         parent::__construct('MatchDayConfigForm');
 
-        $this->service = $service;
-        $this->minDate = \date('Y-m-d');
+        $this->setFieldSetService($service);
+
+        $this->setMinDate(\date('Y-m-d'));
         $hydration = new MatchDayConfigHydrator();
         $this->setHydrator($hydration);
         $this->setInputFilter($this->getFilter());
@@ -29,7 +30,7 @@ class MatchDayConfigForm extends BaseForm implements WeekDayInterface
      */
     public function bindEntity($object)
     {
-        $this->minDate = $object->getDate()->format('Y-m-d');
+        $this->setMinDate($object->getDate()->format('Y-m-d'));
         $this->init();
         $this->setInputFilter($this->getFilter());
         $this->bind($object);
@@ -125,14 +126,7 @@ class MatchDayConfigForm extends BaseForm implements WeekDayInterface
             )
         );
 
-        $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
-    }
-
-    /**
-     * you have to init this after setting season or league
-     */
-    protected function prepareForm()
-    {
+        $this->add($this->getButtonFieldSet());
     }
 
 
@@ -183,6 +177,15 @@ class MatchDayConfigForm extends BaseForm implements WeekDayInterface
     {
         return $this->minDate;
     }
+
+    /**
+     * @param string $minDate
+     */
+    public function setMinDate($minDate)
+    {
+        $this->minDate = $minDate;
+    }
+
 
 }
 

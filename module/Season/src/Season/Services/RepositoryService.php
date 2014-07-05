@@ -19,7 +19,6 @@ class RepositoryService implements FactoryInterface
 {
 
     const SEASON_MAPPER = 'season';
-    const PARTICIPANT_MAPPER = 'participant';
     const LEAGUE_MAPPER = 'league';
 
     private $entityManager;
@@ -61,10 +60,6 @@ class RepositoryService implements FactoryInterface
 
            case self::SEASON_MAPPER:
                $repository = new SeasonMapper();
-               break;
-
-           case self::PARTICIPANT_MAPPER:
-               $repository = new ParticipantMapper();
                break;
 
            case self::LEAGUE_MAPPER:

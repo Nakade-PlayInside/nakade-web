@@ -1,7 +1,8 @@
 <?php
 namespace Season\Form;
 
-use Nakade\Abstracts\AbstractForm;
+use Season\Services\RepositoryService;
+use Season\Form\Hydrator\SeasonHydrator;
 use Season\Services\SeasonFieldsetService;
 use \Zend\InputFilter\InputFilter;
 /**
@@ -9,28 +10,52 @@ use \Zend\InputFilter\InputFilter;
  *
  * @package Season\Form
  */
-class SeasonForm extends AbstractForm
+class SeasonForm extends BaseForm
 {
 
-    private $byoyomi;
-    private $service;
+    private $extraTime = array();
     private $minDate;
 
 
     /**
      * @param SeasonFieldsetService $service
-     * @param array                 $byoyomi
+     * @param RepositoryService     $repository
      */
-    public function __construct(SeasonFieldsetService $service, array $byoyomi)
+    public function __construct(SeasonFieldsetService $service, RepositoryService $repository)
     {
         //form name is SeasonForm
         parent::__construct('SeasonForm');
 
-        $this->service = $service;
-        $this->byoyomi = $this->getByoyomiList($byoyomi);
-        $this->minDate = \date('Y-m-d');
+        $this->setFieldSetService($service);
+        $this->setRepository($repository);
+
+        $this->setMinDate(\date('Y-m-d'));
+
         $this->setInputFilter($this->getFilter());
+        $byoyomiList = $this->getSeasonMapper()->getByoyomi();
+        /* @var $object \Season\Entity\Byoyomi */
+        foreach ($byoyomiList as $object) {
+            $this->extraTime[$object->getId()]= $object->getName();
+        }
+
+        $hydrator = new SeasonHydrator($this->getEntityManager());
+        $this->setHydrator($hydrator);
     }
+
+    /**
+     * @param \Season\Entity\Season $object
+     */
+    public function bindEntity($object)
+    {
+        if (!is_null($object->getStartDate())) {
+            $this->setMinDate($object->getStartDate()->format('Y-m-d'));
+        }
+
+        $this->init();
+        $this->setInputFilter($this->getFilter());
+        $this->bind($object);
+    }
+
 
     /**
      * init
@@ -102,8 +127,8 @@ class SeasonForm extends AbstractForm
         );
 
         $this->addTimeFieldSet();
-        $this->add($this->getService()->getFieldset(SeasonFieldsetService::TIEBREAKER_FIELD_SET));
-        $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
+        $this->add($this->getTieBreakerFieldSet());
+        $this->add($this->getButtonFieldSet());
     }
 
     /**
@@ -127,7 +152,7 @@ class SeasonForm extends AbstractForm
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
                     'label' =>  $this->translate('Extra time') . ':',
-                    'value_options' => $this->byoyomi
+                    'value_options' => $this->getExtraTime()
                 ),
             )
         );
@@ -159,6 +184,7 @@ class SeasonForm extends AbstractForm
             )
         );
     }
+
 
     /**
      * @return \Zend\InputFilter\InputFilter
@@ -201,14 +227,11 @@ class SeasonForm extends AbstractForm
     }
 
     /**
-     * @param \DateTime $minDate
+     * @param string $minDate
      */
-    public function setMinDate(\DateTime $minDate=null)
+    public function setMinDate($minDate)
     {
-        if (is_null($minDate)) {
-            $minDate = new \DateTime();
-        }
-        $this->minDate = $minDate->format('Y-m-d');
+        $this->minDate = $minDate;
     }
 
     /**
@@ -220,25 +243,11 @@ class SeasonForm extends AbstractForm
     }
 
     /**
-     * @return SeasonFieldsetService
-     */
-    public function getService()
-    {
-        return $this->service;
-    }
-
-    /**
-     * @param array $byoyomiList
-     *
      * @return array
      */
-    private function getByoyomiList(array $byoyomiList)
+    public function getExtraTime()
     {
-        $list = array();
-        /* @var $byoyomi \Season\Entity\Byoyomi */
-        foreach ($byoyomiList as $byoyomi) {
-            $list[$byoyomi->getId()]= $byoyomi->getName();
-        }
-        return $list;
+        return $this->extraTime;
     }
+
 }

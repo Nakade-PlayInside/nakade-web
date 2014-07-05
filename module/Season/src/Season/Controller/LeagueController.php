@@ -32,16 +32,14 @@ class LeagueController extends AbstractController
         }
         $season = $mapper->getNewSeasonByAssociation($id);
 
-        /* @var $playerMapper \Season\Mapper\ParticipantMapper */
-        $playerMapper = $this->getRepository()->getMapper(RepositoryService::PARTICIPANT_MAPPER);
         $noLeagues = $mapper->getNoOfLeaguesInSeason($season->getId());
         $season->setNoLeagues($noLeagues);
 
         return new ViewModel(
             array(
                'season' => $season,
-               'accepted' => count($playerMapper->getAcceptingUsersBySeason($season->getId())),
-               'assigned' => count($playerMapper->getParticipantsBySeason($season->getId())),
+               'accepted' => count($mapper->getAcceptingUsersBySeason($season->getId())),
+               'assigned' => count($mapper->getParticipantsBySeason($season->getId())),
             )
         );
     }
@@ -63,10 +61,10 @@ class LeagueController extends AbstractController
         }
         $season = $mapper->getNewSeasonByAssociation($id);
 
+        //todo: new league()
         /* @var $form \Season\Form\ParticipantForm */
         $form = $this->getForm(SeasonFormService::LEAGUE_FORM);
-        $form->setSeason($season);
-        $form->init();
+        $form->bindEntity();
 
         /* @var $request \Zend\Http\Request */
         $request = $this->getRequest();
@@ -156,8 +154,7 @@ class LeagueController extends AbstractController
 
         /* @var $form \Season\Form\LeagueForm */
         $form = $this->getForm(SeasonFormService::LEAGUE_FORM);
-        $form->setLeague($league);
-        $form->init();
+        $form->bindEntity($league);
 
         /* @var $request \Zend\Http\Request */
         $request = $this->getRequest();

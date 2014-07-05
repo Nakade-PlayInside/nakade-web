@@ -38,7 +38,7 @@ class Schedule
 
         /* @var $league \Season\Entity\League */
         foreach ($leagues as $league) {
-            $players = $this->getParticipantMapper()->getParticipantsByLeague($league->getId());
+            $players = $this->getSeasonMapper()->getParticipantsByLeague($league->getId());
             $leaguePairings = $this->getLeaguePairingService()->getPairings($players);
             $this->makeLeagueMatches($league, $leaguePairings);
         }
@@ -125,15 +125,6 @@ class Schedule
     {
         $repo = $this->getRepositoryService();
         return $repo->getMapper(RepositoryService::LEAGUE_MAPPER);
-    }
-
-    /**
-     * @return \Season\Mapper\ParticipantMapper
-     */
-    private function getParticipantMapper()
-    {
-        $repo = $this->getRepositoryService();
-        return $repo->getMapper(RepositoryService::PARTICIPANT_MAPPER);
     }
 
     /**

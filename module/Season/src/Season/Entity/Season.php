@@ -22,6 +22,7 @@ class Season extends SeasonModel
     private $noPlayers;
     private $hasMatchDays;
     private $hasAvailablePlayers;
+    private $availablePlayers = array();
 
     /**
      * construct
@@ -200,11 +201,19 @@ class Season extends SeasonModel
     }
 
     /**
-     * @param bool $hasAvailablePlayers
+     * @param array $availablePlayers
      */
-    public function setHasAvailablePlayers($hasAvailablePlayers)
+    public function setAvailablePlayers(array $availablePlayers)
     {
-        $this->hasAvailablePlayers = $hasAvailablePlayers;
+        $this->availablePlayers = $availablePlayers;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAvailablePlayers()
+    {
+        return $this->availablePlayers;
     }
 
     /**
@@ -212,7 +221,7 @@ class Season extends SeasonModel
      */
     public function hasAvailablePlayers()
     {
-        return $this->hasAvailablePlayers;
+        return !empty($this->availablePlayers);
     }
 
 
@@ -286,8 +295,8 @@ class Season extends SeasonModel
         if (isset($data['hasMatchDays'])) {
             $this->hasMatchDays = $data['hasMatchDays'];
         }
-        if (isset($data['hasAvailablePlayers'])) {
-            $this->hasAvailablePlayers = $data['hasAvailablePlayers'];
+        if (isset($data['availablePlayers'])) {
+            $this->availablePlayers = $data['availablePlayers'];
         }
     }
 

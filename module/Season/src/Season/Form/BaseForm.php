@@ -1,9 +1,8 @@
 <?php
 namespace Season\Form;
 
-use Season\Entity\League;
+
 use Nakade\Abstracts\AbstractForm;
-use Season\Entity\Season;
 use Season\Services\SeasonFieldsetService;
 use Season\Services\RepositoryService;
 
@@ -14,56 +13,15 @@ use Season\Services\RepositoryService;
  */
 abstract class BaseForm extends AbstractForm
 {
-
-    protected  $service;
+    protected $fieldSetService;
     protected $repository;
-    protected $season;
-    protected $league;
-    protected $availablePlayers=array();
-    protected $assignedPlayers=array();
-    protected $associationName='unnamed';
-    protected $seasonNumber=1;
-    protected $leagueNumber=1;
-
-    /**
-     * @param League $league
-     */
-    public function setLeague(League $league)
-    {
-        $this->league = $league;
-    }
-
-    /**
-     * @return League
-     */
-    public function getLeague()
-    {
-        return $this->league;
-    }
-
-    /**
-     * @param Season $season
-     */
-    public function setSeason(Season $season)
-    {
-        $this->season = $season;
-    }
-
-    /**
-     * @return Season
-     */
-    public function getSeason()
-    {
-        return $this->season;
-    }
-
 
     /**
      * @return SeasonFieldsetService
      */
-    public function getService()
+    public function getFieldSetService()
     {
-        return $this->service;
+        return $this->fieldSetService;
     }
 
     /**
@@ -75,104 +33,59 @@ abstract class BaseForm extends AbstractForm
     }
 
     /**
-     * @return int
+     * @return \Season\Mapper\LeagueMapper
      */
-    public function getLeagueNumber()
+    public function getLeagueMapper()
     {
-        return $this->leagueNumber;
+        return $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
     }
 
     /**
-     * @return int
+     * @return \Season\Mapper\SeasonMapper
      */
-    public function getSeasonNumber()
+    public function getSeasonMapper()
     {
-        return $this->seasonNumber;
+        return $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
     }
 
     /**
-     * @return string
+     * @return \Season\Form\Fieldset\ButtonFieldset
      */
-    public function getAssociationName()
+    public function getButtonFieldSet()
     {
-        return $this->associationName;
+        return $this->getFieldSetService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET);
     }
 
     /**
-     * @return array
+     * @return \Season\Form\Fieldset\TieBreakerFieldset
      */
-    public function getAssignedPlayers()
+    public function getTieBreakerFieldSet()
     {
-        return $this->assignedPlayers;
+        return $this->getFieldSetService()->getFieldset(SeasonFieldsetService::TIEBREAKER_FIELD_SET);
     }
 
     /**
-     * @return bool
+     * @return \Doctrine\ORM\EntityManager
      */
-    public function hasAssignedPlayers()
+    public function getEntityManager()
     {
-        return !empty($this->assignedPlayers);
+        return $this->getSeasonMapper()->getEntityManager();
     }
 
     /**
-     * @return array
+     * @param \Season\Services\RepositoryService $repository
      */
-    public function getAvailablePlayers()
+    public function setRepository(RepositoryService $repository)
     {
-        return $this->availablePlayers;
+        $this->repository = $repository;
     }
 
     /**
-     * @return bool
+     * @param SeasonFieldsetService $fieldSetService
      */
-    public function hasAvailablePlayers()
+    public function setFieldSetService(SeasonFieldsetService $fieldSetService)
     {
-        return !empty($this->availablePlayers);
-    }
-
-    /**
-     * @return mixed
-     */
-    abstract protected function prepareForm();
-
-    /**
-     * @param int $leagueId
-     *
-     * @return array
-     */
-    protected function getAssignedPlayersByRepository($leagueId)
-    {
-        $list = array();
-        /* @var $repository \Season\Mapper\LeagueMapper */
-        $repository = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-        $playerList = $repository->getAssignedPlayersByLeague($leagueId);
-
-        /* @var $player \Season\Entity\Participant */
-        foreach ($playerList as $player) {
-            $list[$player->getId()] = $player->getUser()->getName();
-        }
-
-        return $list;
-    }
-
-    /**
-     * @param int $seasonId
-     *
-     * @return array
-     */
-    protected function getAvailablePlayersByRepository($seasonId)
-    {
-        $list = array();
-        /* @var $repository \Season\Mapper\LeagueMapper */
-        $repository = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-        $playerList = $repository->getAvailableParticipantsBySeason($seasonId);
-
-        /* @var $player \Season\Entity\Participant */
-        foreach ($playerList as $player) {
-            $list[$player->getId()] = $player->getUser()->getName();
-        }
-
-        return $list;
+        $this->fieldSetService = $fieldSetService;
     }
 
 }
