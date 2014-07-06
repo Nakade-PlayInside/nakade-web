@@ -1,26 +1,20 @@
 <?php
 
-namespace League\Services;
+namespace Season\Services;
 
-use League\Mail;
+use Season\Mail;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Nakade\Abstracts\AbstractTranslation;
-use \Mail\Services\MailMessageFactory;
-use \Mail\Services\MailTransportFactory;
 /**
  * Class MailService
  *
- * @package League\Services
+ * @package Season\Services
  */
 class MailService extends AbstractTranslation implements FactoryInterface
 {
 
-    const RESULT_MAIL = 'result';
-    const SCHEDULE_MAIL = 'schedule';
-    const MATCH_REMINDER_MAIL = 'match_reminder';
-    const RESULT_REMINDER_MAIL = 'result_reminder';
-    const AUTO_RESULT_MAIL = 'auto_result';
+    const INVITATION_MAIL = 'invite';
 
     private $transport;
     private $message;
@@ -60,12 +54,12 @@ class MailService extends AbstractTranslation implements FactoryInterface
         $config  = $services->get('config');
 
         //text domain
-        $textDomain = isset($config['League']['text_domain']) ?
-            $config['League']['text_domain'] : null;
+        $textDomain = isset($config['Season']['text_domain']) ?
+            $config['Season']['text_domain'] : null;
 
         //url
-        if (isset($config['League']['url'])) {
-            $this->url =  $config['League']['url'];
+        if (isset($config['Season']['url'])) {
+            $this->url =  $config['Season']['url'];
         }
 
 
@@ -81,7 +75,7 @@ class MailService extends AbstractTranslation implements FactoryInterface
     /**
      * @param string $typ
      *
-     * @return \League\Mail\LeagueMail
+     * @return \Season\Mail\SeasonMail
      *
      * @throws \RuntimeException
      */
@@ -89,24 +83,8 @@ class MailService extends AbstractTranslation implements FactoryInterface
     {
         switch (strtolower($typ)) {
 
-           case self::RESULT_MAIL:
-               $mail = new Mail\ResultMail($this->message, $this->transport);
-               break;
-
-           case self::SCHEDULE_MAIL:
-               $mail = new Mail\ScheduleMail($this->message, $this->transport);
-               break;
-
-           case self::MATCH_REMINDER_MAIL:
-               $mail = new Mail\MatchReminderMail($this->message, $this->transport);
-               break;
-
-           case self::RESULT_REMINDER_MAIL:
-               $mail = new Mail\ResultReminderMail($this->message, $this->transport);
-               break;
-
-           case self::AUTO_RESULT_MAIL:
-               $mail = new Mail\AutoResultMail($this->message, $this->transport);
+           case self::INVITATION_MAIL:
+               $mail = new Mail\InvitationMail($this->message, $this->transport);
                break;
 
            default:

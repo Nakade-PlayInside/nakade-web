@@ -38,6 +38,7 @@ return array(
                     'Season\Services\MatchDayControllerFactory',
             'Season\Controller\Schedule' =>
                 'Season\Services\ScheduleControllerFactory',
+
         ),
 
     ),
@@ -150,6 +151,8 @@ return array(
                 'Season\Services\SeasonFieldsetService',
             'Season\Services\ScheduleService'      =>
                 'Season\Services\ScheduleService',
+            'Season\Services\MailService'      =>
+                'Season\Services\MailService',
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

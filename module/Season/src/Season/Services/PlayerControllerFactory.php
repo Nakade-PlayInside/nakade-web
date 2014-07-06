@@ -30,11 +30,13 @@ class PlayerControllerFactory implements FactoryInterface
 
         $factory    = $serviceManager->get('Season\Services\SeasonFormService');
         $repository = $serviceManager->get('Season\Services\RepositoryService');
+        $mail = $serviceManager->get('Season\Services\MailService');
 
 
         $controller = new PlayerController();
         $controller->setFormFactory($factory);
         $controller->setRepository($repository);
+        $controller->setMailService($mail);
 
         return $controller;
     }
