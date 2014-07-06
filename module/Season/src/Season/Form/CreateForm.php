@@ -4,7 +4,7 @@ namespace Season\Form;
 use Nakade\Abstracts\AbstractForm;
 use \Zend\InputFilter\InputFilter;
 
-class CreateForm extends AbstractForm implements WeekDayInterface
+class CreateForm extends AbstractForm
 {
 
     /**

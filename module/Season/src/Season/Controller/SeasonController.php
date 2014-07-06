@@ -2,6 +2,7 @@
 namespace Season\Controller;
 
 use Season\Entity\Season;
+use Season\Services\SeasonFormService;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -37,6 +38,10 @@ class SeasonController extends DefaultController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
+        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
+            return $this->redirect()->toRoute('createSeason', array('action' => 'add'));
+        }
+
         $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
         $info = $this->getSeasonMapper()->getSeasonInfo($season->getId());
         $season->exchangeArray($info);
@@ -57,7 +62,7 @@ class SeasonController extends DefaultController
 
         //new season! first play it before adding a new one. you can edit, of course
         if ($this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
-           return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+           return $this->redirect()->toRoute('createSeason');
         }
 
         $association  = $this->getSeasonMapper()->getAssociationById($id);
@@ -90,7 +95,7 @@ class SeasonController extends DefaultController
 
             //cancel
             if (isset($postData['button']['cancel'])) {
-                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+                return $this->redirect()->toRoute('createSeason');
             }
             $form->setData($postData);
 
@@ -151,6 +156,47 @@ class SeasonController extends DefaultController
         return new ViewModel(
             array(
                 'form' => $form,
+            )
+        );
+    }
+
+    /**
+     * @return ViewModel
+     */
+    public function activateAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 1);
+
+        //no new season! add season first
+        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+        }
+
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        $form = $this->getForm(SeasonFormService::QUESTION_FORM);
+
+        if ($this->getRequest()->isPost()) {
+
+            //get post data, set data to from, prepare for validation
+            $postData =  $this->getRequest()->getPost();
+            //cancel
+            if (isset($postData['cancel'])) {
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+            }
+
+            if (isset($postData['submit'])) {
+
+                $season->setIsReady(true);
+                $this->getSeasonMapper()->save($season);
+                return $this->redirect()->toRoute('createSeason');
+            }
+
+        }
+
+        return new ViewModel(
+            array(
+                'form' => $form,
+                'season'=> $season,
             )
         );
     }

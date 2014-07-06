@@ -4,7 +4,7 @@ namespace Season\Form;
 use Nakade\Abstracts\AbstractForm;
 use \Zend\InputFilter\InputFilter;
 
-class DeleteForm extends AbstractForm
+class QuestionForm extends AbstractForm
 {
 
     /**
@@ -12,7 +12,7 @@ class DeleteForm extends AbstractForm
      */
     public function __construct()
     {
-        parent::__construct('DeleteForm');
+        parent::__construct('QuestionForm');
         $this->setInputFilter($this->getFilter());
         $this->init();
     }
@@ -33,21 +33,21 @@ class DeleteForm extends AbstractForm
             )
         );
 
-        //delete
-        $this->add(
-            array(
-                'name' => 'delete',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array('value' => $this->translate('Delete'))
-            )
-        );
-
         //cancel button
         $this->add(
             array(
                 'name' => 'cancel',
                 'type'  => 'Zend\Form\Element\Submit',
                 'attributes' => array('value' => $this->translate('Cancel'))
+            )
+        );
+
+        //yes
+        $this->add(
+            array(
+                'name' => 'submit',
+                'type'  => 'Zend\Form\Element\Submit',
+                'attributes' => array('value' => $this->translate('YES'))
             )
         );
     }

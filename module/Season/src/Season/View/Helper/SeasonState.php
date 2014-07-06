@@ -7,6 +7,8 @@ use Zend\View\Helper\AbstractHelper;
 /**
  * Class SeasonState
  *
+ * representing the actual state of a new season
+ *
  * @package Season\View\Helper
  */
 class SeasonState extends AbstractHelper
@@ -20,16 +22,25 @@ class SeasonState extends AbstractHelper
     {
         $translate = $this->getView()->plugin('translate');
 
-        $state = $translate('in process');
-        if ($season->hasEnded()) {
-            $state = $translate('ended');
-        } elseif ($season->hasStarted()) {
-            $state = $translate('ongoing');
-        } elseif ($season->hasMatches()) {
-            $state = $translate('will start soon');
+        if (!$season->hasPlayers()) {
+            return $translate('invite participants');
         }
-
-        return $state;
+        if (!$season->hasLeagues()) {
+            return $translate('create leagues');
+        }
+        if (!$season->hasMatchDays()) {
+            return $translate('configure match days');
+        }
+        if (!$season->hasMatches()) {
+            return $translate('create matches');
+        }
+        if (!$season->hasSchedule()) {
+            return $translate('create schedule');
+        }
+        if (!$season->isReady()) {
+            return $translate('activate season');
+        }
+        return $translate('in process');
 
     }
 

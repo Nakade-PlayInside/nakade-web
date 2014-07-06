@@ -22,6 +22,7 @@ class SeasonFormService extends AbstractFormFactory
     const MATCH_DAY_FORM = 'match_day';
     const DELETE_FORM = 'delete';
     const CREATE_FORM = 'create';
+    const QUESTION_FORM = 'question';
 
     /**
      * @param ServiceLocatorInterface $services
@@ -102,6 +103,10 @@ class SeasonFormService extends AbstractFormFactory
 
            case self::CREATE_FORM:
                $form = new Form\CreateForm();
+               break;
+
+           case self::QUESTION_FORM:
+               $form = new Form\QuestionForm();
                break;
 
            default:

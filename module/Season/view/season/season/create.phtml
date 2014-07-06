@@ -40,6 +40,7 @@ endif; ?>
 <?php if ($season->hasMatchDays()):  ?>
     <?php if ($season->hasSchedule()): ?>
         <a class="btn" href="<?php echo $this->url('createSchedule', array('action' => 'delete')); ?>"><?php echo $this->translate("remove Schedule"); ?></a>
+        <a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'activate')); ?>"><?php echo $this->translate("activate Season"); ?></a>
     <?php else: ?>
         <a class="btn" href="<?php echo $this->url('configMatchDay'); ?>"><?php echo $this->translate("edit Match Days"); ?></a>
         <a class="btn" href="<?php echo $this->url('configMatchDay', array('action' => 'delete')); ?>"><?php echo $this->translate("remove Match Days"); ?></a>
