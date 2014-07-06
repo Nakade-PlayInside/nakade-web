@@ -27,11 +27,6 @@ class LeagueModel
      */
     protected $season;
 
-    /**
-     * @ORM\Column(name="name", type="string")
-     */
-    protected $name;
-
    /**
    *
    * @ORM\Column(name="number", type="integer")
@@ -52,22 +47,6 @@ class LeagueModel
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**

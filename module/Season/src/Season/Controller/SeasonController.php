@@ -41,7 +41,6 @@ class SeasonController extends DefaultController
         $info = $this->getSeasonMapper()->getSeasonInfo($season->getId());
         $season->exchangeArray($info);
 
-
         return new ViewModel(
             array(
                 'season' => $season,
@@ -157,6 +156,8 @@ class SeasonController extends DefaultController
     }
 
     /**
+     * widget for time, extra time and komi
+     *
      * @return ViewModel
      */
     public function showRulesAction()

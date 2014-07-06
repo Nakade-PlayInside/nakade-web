@@ -73,11 +73,10 @@ class SeasonMapper extends AbstractMapper
         $qb->select('s')
             ->from('Season\Entity\Season', 's')
             ->where('s.association = :association')
-            ->andWhere('s.startDate > :start')
+            ->andWhere('s.isReady = 0')
             ->addOrderBy('s.startDate', 'DESC')
             ->setMaxResults(1)
-            ->setParameter('association', $associationId)
-            ->setParameter('start', new \DateTime());
+            ->setParameter('association', $associationId);
 
         return $qb->getQuery()->getOneOrNullResult();
     }
@@ -106,7 +105,7 @@ class SeasonMapper extends AbstractMapper
             ->from('Season\Entity\Season', 's')
             ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
             ->leftJoin('Season\Entity\Match', 'm', Join::WITH, 'l = m.league')
-            ->where('m.result IS NOT Null')
+            ->where('m.result IS NOT NULL')
             ->andWhere('s.association = :association')
             ->addOrderBy('s.startDate', 'DESC')
             ->setMaxResults(1)

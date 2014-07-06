@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-12 01:30+0100\n"
-"PO-Revision-Date: 2014-06-12 01:30+0100\n"
+"POT-Creation-Date: 2014-07-06 11:39+0100\n"
+"PO-Revision-Date: 2014-07-06 11:39+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -151,36 +151,35 @@ msgid "Reject Reason"
 msgstr "Begründung"
 
 #: ../src/Appointment/Form/RejectForm.php:76
-#: ../src/Appointment/Form/ConfirmForm.php:75
+#: ../src/Appointment/Form/ConfirmForm.php:76
 msgid "Reject"
 msgstr "Abweisen"
 
 #: ../src/Appointment/Form/RejectForm.php:88
-#: ../src/Appointment/Form/AppointmentForm.php:149
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: ../src/Appointment/Form/ConfirmForm.php:63
+#: ../src/Appointment/Form/ConfirmForm.php:64
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#: ../src/Appointment/Form/AppointmentForm.php:76
+#: ../src/Appointment/Form/AppointmentForm.php:55
+msgid "Old date"
+msgstr "Altes Datum"
+
+#: ../src/Appointment/Form/AppointmentForm.php:78
 msgid "New Match Date"
 msgstr "Neuer Termin"
 
-#: ../src/Appointment/Form/AppointmentForm.php:92
+#: ../src/Appointment/Form/AppointmentForm.php:93
 msgid "Time"
 msgstr "Zeit"
 
-#: ../src/Appointment/Form/AppointmentForm.php:108
+#: ../src/Appointment/Form/AppointmentForm.php:109
 msgid "I do confirm my opponent has agreed to this schedule"
 msgstr "Hiermit bestätige ich, dass mein Gegner der Terminvereinbarung zugestimmt hat."
 
-#: ../src/Appointment/Form/AppointmentForm.php:137
-msgid "Submit"
-msgstr "Abschicken"
-
-#: ../src/Appointment/Form/AppointmentForm.php:178
+#: ../src/Appointment/Form/AppointmentForm.php:145
 msgid "You must confirm your opponent agreed to the new schedule."
 msgstr "Du musst bestätigen, dass dein Gegner dem neuen Termin zugestimmt hat."
 
@@ -398,6 +397,9 @@ msgstr "Du hast %x% unbestätigte Termine."
 #: ../view/appointment/show/message.phtml:11
 msgid "go to confirmation"
 msgstr "zur Bestätigung"
+
+#~ msgid "Submit"
+#~ msgstr "Abschicken"
 
 #~ msgid "Username:"
 #~ msgstr "Benutzername:"
