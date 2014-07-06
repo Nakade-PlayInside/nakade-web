@@ -2,7 +2,6 @@
 namespace Season\Controller;
 
 use Zend\View\Model\ViewModel;
-use Season\Services\SeasonFormService;
 
 /**
  * Class ScheduleController
@@ -47,7 +46,7 @@ class ScheduleController extends DefaultController
         }
 
         $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
-        $form = $this->getForm(SeasonFormService::CREATE_FORM);
+        $form = $this->getConfirmForm();
 
         if ($this->getRequest()->isPost()) {
 
@@ -55,16 +54,16 @@ class ScheduleController extends DefaultController
             $postData =  $this->getRequest()->getPost();
             //cancel
             if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('configMatchDay');
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
 
-            if (isset($postData['create'])) {
+            if (isset($postData['submit'])) {
 
                 /* @var $schedule \Season\Schedule\Schedule */
                 $schedule = $this->getService()->getSchedule();
                 $schedule->getSchedule($season->getId());
 
-                return $this->redirect()->toRoute('createSeason');
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
 
         }
@@ -92,7 +91,7 @@ class ScheduleController extends DefaultController
         $matches = $this->getSeasonMapper()->getMatchesBySeason($season->getId());
 
         /* @var $form \Season\Form\MatchDayForm */
-        $form = $this->getForm(SeasonFormService::DELETE_FORM);
+        $form = $this->getConfirmForm();
         if ($this->getRequest()->isPost()) {
 
             //get post data, set data to from, prepare for validation
@@ -101,7 +100,7 @@ class ScheduleController extends DefaultController
             if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
-            if (isset($postData['delete'])) {
+            if (isset($postData['submit'])) {
 
                 foreach ($matches as $match) {
                     $this->getSeasonMapper()->delete($match);

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-03 11:30+0100\n"
-"PO-Revision-Date: 2014-07-03 11:31+0100\n"
+"POT-Creation-Date: 2014-07-06 23:05+0100\n"
+"PO-Revision-Date: 2014-07-06 23:05+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -15,20 +15,32 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Season/View/Helper/SeasonState.php:23
-msgid "in process"
-msgstr ""
-
-#: ../src/Season/View/Helper/SeasonState.php:25
-msgid "ended"
-msgstr ""
-
-#: ../src/Season/View/Helper/SeasonState.php:27
-msgid "ongoing"
+#: ../src/Season/View/Helper/SeasonState.php:26
+msgid "invite participants"
 msgstr ""
 
 #: ../src/Season/View/Helper/SeasonState.php:29
-msgid "will start soon"
+msgid "create leagues"
+msgstr ""
+
+#: ../src/Season/View/Helper/SeasonState.php:32
+msgid "configure match days"
+msgstr ""
+
+#: ../src/Season/View/Helper/SeasonState.php:35
+msgid "create matches"
+msgstr ""
+
+#: ../src/Season/View/Helper/SeasonState.php:38
+msgid "create schedule"
+msgstr ""
+
+#: ../src/Season/View/Helper/SeasonState.php:41
+msgid "activate season"
+msgstr ""
+
+#: ../src/Season/View/Helper/SeasonState.php:43
+msgid "in process"
 msgstr ""
 
 #: ../src/Season/View/Helper/PlayerAccepted.php:28
@@ -36,8 +48,8 @@ msgid "Player accepted invitation"
 msgstr ""
 
 #: ../src/Season/View/Helper/RulesInfo.php:23
-#: ../src/Season/Form/MatchDayConfigForm.php:121
-#: ../src/Season/Form/MatchDayForm.php:98
+#: ../src/Season/Form/MatchDayConfigForm.php:122
+#: ../src/Season/Form/MatchDayForm.php:99
 msgid "Time"
 msgstr ""
 
@@ -57,142 +69,140 @@ msgstr ""
 msgid "points"
 msgstr ""
 
-#: ../src/Season/Form/DeleteForm.php:41
-msgid "Delete"
-msgstr ""
-
-#: ../src/Season/Form/DeleteForm.php:50
-#: ../src/Season/Form/CreateForm.php:50
+#: ../src/Season/Form/ConfirmForm.php:41
 msgid "Cancel"
 msgstr ""
 
-#: ../src/Season/Form/CreateForm.php:41
-msgid "Create"
+#: ../src/Season/Form/ConfirmForm.php:50
+msgid "YES"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:50
-#: ../src/Season/Form/MatchDayForm.php:55
+#: ../src/Season/Form/MatchDayConfigForm.php:51
+#: ../src/Season/Form/MatchDayForm.php:56
 msgid "Season"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:63
+#: ../src/Season/Form/MatchDayConfigForm.php:64
 msgid "No of rounds"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:76
+#: ../src/Season/Form/MatchDayConfigForm.php:77
 msgid "Cycle"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:91
+#: ../src/Season/Form/MatchDayConfigForm.php:92
 msgid "Match day"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:106
+#: ../src/Season/Form/MatchDayConfigForm.php:107
 msgid "Start date"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:154
+#: ../src/Season/Form/MatchDayConfigForm.php:148
 msgid "Monday"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:155
+#: ../src/Season/Form/MatchDayConfigForm.php:149
 msgid "Tuesday"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:156
+#: ../src/Season/Form/MatchDayConfigForm.php:150
 msgid "Wednesday"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:157
+#: ../src/Season/Form/MatchDayConfigForm.php:151
 msgid "Thursday"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:158
+#: ../src/Season/Form/MatchDayConfigForm.php:152
 msgid "Friday"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:159
+#: ../src/Season/Form/MatchDayConfigForm.php:153
 msgid "Saturday"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:160
+#: ../src/Season/Form/MatchDayConfigForm.php:154
 msgid "Sunday"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:170
+#: ../src/Season/Form/MatchDayConfigForm.php:164
 msgid "daily"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:171
+#: ../src/Season/Form/MatchDayConfigForm.php:165
 msgid "on weekdays"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:172
+#: ../src/Season/Form/MatchDayConfigForm.php:166
 msgid "weekly"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:173
+#: ../src/Season/Form/MatchDayConfigForm.php:167
 msgid "fortnightly"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:174
+#: ../src/Season/Form/MatchDayConfigForm.php:168
 msgid "all 3 weeks"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayConfigForm.php:175
+#: ../src/Season/Form/MatchDayConfigForm.php:169
 msgid "monthly"
 msgstr ""
 
-#: ../src/Season/Form/ParticipantForm.php:37
+#: ../src/Season/Form/ParticipantForm.php:57
+#: ../src/Season/Form/LeagueForm.php:65
 msgid "Association"
 msgstr ""
 
-#: ../src/Season/Form/ParticipantForm.php:50
+#: ../src/Season/Form/ParticipantForm.php:69
+#: ../src/Season/Form/LeagueForm.php:77
 msgid "Season no."
 msgstr ""
 
-#: ../src/Season/Form/ParticipantForm.php:62
+#: ../src/Season/Form/ParticipantForm.php:80
 msgid "No of invited players"
 msgstr ""
 
-#: ../src/Season/Form/ParticipantForm.php:76
+#: ../src/Season/Form/ParticipantForm.php:93
+#: ../src/Season/Form/LeagueForm.php:120
 msgid "Add player"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayForm.php:68
+#: ../src/Season/Form/MatchDayForm.php:69
 msgid "Round"
 msgstr ""
 
-#: ../src/Season/Form/MatchDayForm.php:82
+#: ../src/Season/Form/MatchDayForm.php:83
 msgid "Date"
 msgstr ""
 
-#: ../src/Season/Form/LeagueForm.php:61
+#: ../src/Season/Form/LeagueForm.php:89
 msgid "League no."
 msgstr ""
 
-#: ../src/Season/Form/LeagueForm.php:76
+#: ../src/Season/Form/LeagueForm.php:103
 msgid "Remove player"
 msgstr ""
 
-#: ../src/Season/Form/SeasonForm.php:83
+#: ../src/Season/Form/SeasonForm.php:108
 msgid "Winning points"
 msgstr ""
 
-#: ../src/Season/Form/SeasonForm.php:119
+#: ../src/Season/Form/SeasonForm.php:144
 msgid "Base time in minutes"
 msgstr ""
 
-#: ../src/Season/Form/SeasonForm.php:129
-#: ../src/Season/Form/SeasonForm.php:149
+#: ../src/Season/Form/SeasonForm.php:154
+#: ../src/Season/Form/SeasonForm.php:174
 msgid "Extra time"
 msgstr ""
 
-#: ../src/Season/Form/SeasonForm.php:140
+#: ../src/Season/Form/SeasonForm.php:165
 msgid "Periods"
 msgstr ""
 
-#: ../src/Season/Form/SeasonForm.php:158
+#: ../src/Season/Form/SeasonForm.php:183
 msgid "Moves per extra time"
 msgstr ""
 
@@ -282,52 +292,68 @@ msgstr ""
 msgid "Create a New Season"
 msgstr ""
 
-#: ../view/season/season/create.phtml:17
-msgid "create Season"
-msgstr ""
-
-#: ../view/season/season/create.phtml:24
+#: ../view/season/season/create.phtml:18
 msgid "Leagues"
 msgstr ""
 
-#: ../view/season/season/create.phtml:25
+#: ../view/season/season/create.phtml:19
 msgid "Participants"
 msgstr ""
 
-#: ../view/season/season/create.phtml:26
+#: ../view/season/season/create.phtml:20
 msgid "Matches"
 msgstr ""
 
-#: ../view/season/season/create.phtml:33
+#: ../view/season/season/create.phtml:28
 msgid "edit Season"
 msgstr ""
 
-#: ../view/season/season/create.phtml:34
+#: ../view/season/season/create.phtml:32
 msgid "invite Player"
 msgstr ""
 
-#: ../view/season/season/create.phtml:35
+#: ../view/season/season/create.phtml:36
 msgid "add League"
 msgstr ""
 
-#: ../view/season/season/create.phtml:36
+#: ../view/season/season/create.phtml:40
 msgid "edit League"
 msgstr ""
 
-#: ../view/season/season/create.phtml:37
+#: ../view/season/season/create.phtml:41
 msgid "configure Match Days"
 msgstr ""
 
-#: ../view/season/season/create.phtml:38
+#: ../view/season/season/create.phtml:45
 msgid "edit Match Days"
 msgstr ""
 
-#: ../view/season/season/create.phtml:39
+#: ../view/season/season/create.phtml:46
 msgid "remove Match Days"
 msgstr ""
 
-#: ../view/season/season/create.phtml:40
+#: ../view/season/season/create.phtml:47
 msgid "create Schedule"
+msgstr ""
+
+#: ../view/season/season/create.phtml:51
+msgid "remove Schedule"
+msgstr ""
+
+#: ../view/season/season/create.phtml:52
+msgid "activate Season"
+msgstr ""
+
+#: ../view/season/season/activate.phtml:7
+msgid "Activate Season?"
+msgstr ""
+
+#: ../view/season/season/activate.phtml:8
+msgid "This is the final step of a new season."
+msgstr ""
+
+#: ../view/season/season/activate.phtml:9
+msgid "All participating players will receive their match schedule."
 msgstr ""
 
 #: ../view/season/season/add.phtml:6
@@ -383,20 +409,32 @@ msgstr ""
 msgid "Match Day Configuration"
 msgstr ""
 
+#: ../view/season/schedule/delete.phtml:5
+msgid "There are %NUMBER% matches scheduled for the next season."
+msgstr ""
+
+#: ../view/season/schedule/delete.phtml:11
+msgid "No schedule found."
+msgstr ""
+
+#: ../view/season/schedule/delete.phtml:15
+msgid "Remove Schedule?"
+msgstr ""
+
+#: ../view/season/schedule/delete.phtml:17
+msgid "If deleted, you will have to renew the match schedule."
+msgstr ""
+
 #: ../view/season/schedule/create.phtml:7
 msgid "Create Schedule?"
 msgstr ""
 
 #: ../view/season/schedule/create.phtml:8
-msgid "This is the final step of a new season."
+msgid "This will create a match plan for all players."
 msgstr ""
 
 #: ../view/season/schedule/create.phtml:9
-msgid "All participating players will receive their match schedule by email."
-msgstr ""
-
-#: ../view/season/schedule/create.phtml:10
-msgid "The new season will automatically become active."
+msgid "Afterwards you will have to activate the new season."
 msgstr ""
 
 #: ../view/season/league/index.phtml:12
@@ -436,8 +474,11 @@ msgid "Player"
 msgstr ""
 
 #: ../view/season/league/edit.phtml:4
+msgid "Edit League"
+msgstr ""
+
 #: ../view/season/league/add.phtml:4
-msgid "add new league"
+msgid "Add New League"
 msgstr ""
 
 #: ../view/season/league/empty.phtml:9

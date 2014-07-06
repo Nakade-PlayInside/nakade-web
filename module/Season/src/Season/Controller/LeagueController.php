@@ -2,7 +2,6 @@
 namespace Season\Controller;
 
 use Season\Entity\League;
-use Zend\Form\FormInterface;
 use Zend\View\Model\ViewModel;
 
 /**

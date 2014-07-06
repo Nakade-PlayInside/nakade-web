@@ -51,7 +51,6 @@ class Schedule
     private function makeLeagueMatches($league, array $leaguePairings)
     {
         foreach ($leaguePairings as $round => $pairing) {
-
             $matchDay = $this->getMatchDay($round);
             $this->makeMatchDayPairings($league, $matchDay, $pairing);
         }
@@ -102,12 +101,13 @@ class Schedule
      */
     private function getMatchDay($matchDay)
     {
-        if (empty($this->matchDays) || !array_key_exists($matchDay, $this->matchDays)) {
+        $round = $matchDay - 1;
+        if (empty($this->matchDays) || !array_key_exists($round, $this->matchDays)) {
             throw new \RuntimeException(
-                sprintf('Match day is not existing.')
+                sprintf('Match day %s is not existing.', $round)
             );
         }
-        return $this->matchDays[$matchDay];
+        return $this->matchDays[$round];
     }
 
     /**

@@ -2,7 +2,6 @@
 namespace Season\Controller;
 
 use Season\Entity\Season;
-use Season\Services\SeasonFormService;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -173,7 +172,7 @@ class SeasonController extends DefaultController
         }
 
         $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
-        $form = $this->getForm(SeasonFormService::QUESTION_FORM);
+        $form = $this->getConfirmForm();
 
         if ($this->getRequest()->isPost()) {
 

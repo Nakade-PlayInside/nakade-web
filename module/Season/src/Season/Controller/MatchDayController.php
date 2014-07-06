@@ -4,7 +4,6 @@ namespace Season\Controller;
 use Season\Entity\MatchDay;
 use Season\Entity\Schedule;
 use Season\Schedule\ScheduleDates;
-use Season\Services\SeasonFormService;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -159,7 +158,7 @@ class MatchDayController extends DefaultController
         $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
         $matchDays = $this->getSeasonMapper()->getMatchDaysBySeason($season->getId());
 
-        $form = $this->getForm(SeasonFormService::DELETE_FORM);
+        $form = $this->getConfirmForm();
 
         if ($this->getRequest()->isPost()) {
 
@@ -169,7 +168,7 @@ class MatchDayController extends DefaultController
             if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
-            if (isset($postData['delete'])) {
+            if (isset($postData['submit'])) {
 
                 foreach ($matchDays as $matchDay) {
                     $this->getSeasonMapper()->delete($matchDay);

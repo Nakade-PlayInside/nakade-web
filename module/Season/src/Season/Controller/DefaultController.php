@@ -77,5 +77,13 @@ class DefaultController extends AbstractController
         return $this->getForm(SeasonFormService::MATCH_DAY_CONFIG_FORM);
     }
 
+    /**
+     * @return \Season\Form\ConfirmForm
+     */
+    public function getConfirmForm()
+    {
+        return $this->getForm(SeasonFormService::CONFIRM_FORM);
+    }
+
 
 }

@@ -20,9 +20,7 @@ class SeasonFormService extends AbstractFormFactory
     const LEAGUE_FORM = 'league';
     const MATCH_DAY_CONFIG_FORM = 'match_day_config';
     const MATCH_DAY_FORM = 'match_day';
-    const DELETE_FORM = 'delete';
-    const CREATE_FORM = 'create';
-    const QUESTION_FORM = 'question';
+    const CONFIRM_FORM = 'confirm';
 
     /**
      * @param ServiceLocatorInterface $services
@@ -97,16 +95,10 @@ class SeasonFormService extends AbstractFormFactory
                $form = new Form\MatchDayForm($service);
                break;
 
-           case self::DELETE_FORM:
-               $form = new Form\DeleteForm();
-               break;
-
-           case self::CREATE_FORM:
-               $form = new Form\CreateForm();
-               break;
-
-           case self::QUESTION_FORM:
-               $form = new Form\QuestionForm();
+           case self::CONFIRM_FORM:
+               $form = new Form\ConfirmForm();
+               $form->setTranslator($this->translator, $this->textDomain);
+               $form->init();
                break;
 
            default:
