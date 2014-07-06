@@ -41,47 +41,34 @@ class LeagueHydrator implements HydratorInterface
 
 
     /**
-     * @param array  $data
-     * @param object $season
+     * @param array                 $data
+     * @param \Season\Entity\League $object
      *
-     * @return object
+     * @return \Season\Entity\League
      */
-    public function hydrate(array $data, $season)
+    public function hydrate(array $data, $object)
     {
-        /* @var $season \Season\Entity\Season */
-        $season->setNumber($data['number']);
-        $season->setKomi($data['komi']);
-        $season->setWinPoints($data['winPoints']);
-
-        //tiebreaker
-        $tiebreak1 = $this->getTieBreakerById($data['tiebreak']['tiebreaker1']);
-        $season->setTieBreaker1($tiebreak1);
-
-        $tiebreak2 = $this->getTieBreakerById($data['tiebreak']['tiebreaker2']);
-        $season->setTieBreaker2($tiebreak2);
-
-        $tiebreak3 = $this->getTieBreakerById($data['tiebreak']['tiebreaker3']);
-        $season->setTieBreaker3($tiebreak3);
-
-        //time
-        $time = $season->getTime();
-        $time->exchangeArray($data);
-        $byoyomi = $this->getEntityManager()->getReference('Season\Entity\Byoyomi', $data['byoyomi']);
-        $time->setByoyomi($byoyomi);
-        $season->setTime($time);
-
-        return $season;
+        $playerList = array();
+        foreach ($data['addPlayer'] as $participantId) {
+            $playerList[] = $this->getParticipantById($participantId);
+        }
+        $removeList = array();
+        foreach ($data['removePlayer'] as $participantId) {
+            $removeList[] = $this->getParticipantById($participantId);
+        }
+        $object->setPlayers($playerList);
+        $object->setRemovePlayers($removeList);
+        return $object;
     }
 
     /**
-     * @param int $tiebreakId
+     * @param int $participantId
      *
-     * @return \Season\Entity\TieBreaker
+     * @return \Season\Entity\Participant
      */
-
-    private function getTieBreakerById($tiebreakId)
+    private function getParticipantById($participantId)
     {
-        return $this->getEntityManager()->getReference('Season\Entity\TieBreaker', $tiebreakId);
+        return $this->getEntityManager()->getReference('Season\Entity\Participant', $participantId);
     }
 
     /**

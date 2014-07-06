@@ -74,19 +74,13 @@ class LeagueController extends DefaultController
             $form->setData($postData);
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-
-                $league = new League();
-                $league->setSeason($season);
-                $league->setNumber($data['leagueNumber']);
+                $object = $form->getData();
                 $this->getLeagueMapper()->save($league);
 
-                foreach ($data['addPlayer'] as $playerId) {
-                    /* @var $player \Season\Entity\Participant */
-                    $player = $this->getLeagueMapper()->getEntityManager()->getReference('Season\Entity\Participant', $playerId);
-                    $player->setLeague($league);
-                    $this->getLeagueMapper()->save($player);
-
+                foreach ($object->getPlayers() as $participant) {
+                    /* @var $participant \Season\Entity\Participant */
+                    $participant->setLeague($league);
+                    $this->getLeagueMapper()->save($participant);
                 }
 
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
@@ -155,20 +149,18 @@ class LeagueController extends DefaultController
             $form->setData($postData);
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                foreach ($data['addPlayer'] as $playerId) {
-                    /* @var $player \Season\Entity\Participant */
-                    $player = $this->getLeagueMapper()->getEntityManager()->getReference('Season\Entity\Participant', $playerId);
-                    $player->setLeague($league);
-                    $this->getLeagueMapper()->save($player);
-                }
-                foreach ($data['removePlayer'] as $playerId) {
-                    /* @var $player \Season\Entity\Participant */
-                    $player = $this->getLeagueMapper()->getEntityManager()->getReference('Season\Entity\Participant', $playerId);
-                    $player->setLeague(null);
-                    $this->getLeagueMapper()->save($player);
-                }
+                $object = $form->getData();
 
+                foreach ($object->getPlayers() as $participant) {
+                    /* @var $participant \Season\Entity\Participant */
+                    $participant->setLeague($league);
+                    $this->getLeagueMapper()->save($participant);
+                }
+                foreach ($object->getRemovePlayers() as $participant) {
+                    /* @var $participant \Season\Entity\Participant */
+                    $participant->setLeague(null);
+                    $this->getLeagueMapper()->save($participant);
+                }
 
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }

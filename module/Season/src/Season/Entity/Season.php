@@ -21,8 +21,9 @@ class Season extends SeasonModel
     private $noLeagues;
     private $noPlayers;
     private $hasMatchDays;
-    private $hasAvailablePlayers;
+    private $acceptingPlayers;
     private $availablePlayers = array();
+    private $unassignedPlayers = array();
 
     /**
      * construct
@@ -224,6 +225,53 @@ class Season extends SeasonModel
         return !empty($this->availablePlayers);
     }
 
+    /**
+     * @param array $acceptingPlayers
+     */
+    public function setAcceptingPlayers(array $acceptingPlayers)
+    {
+        $this->acceptingPlayers = $acceptingPlayers;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAcceptingPlayers()
+    {
+        return $this->acceptingPlayers;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAcceptingPlayers()
+    {
+        return !empty($this->acceptingPlayers);
+    }
+
+    /**
+     * @param array $unassignedPlayers
+     */
+    public function setUnassignedPlayers($unassignedPlayers)
+    {
+        $this->unassignedPlayers = $unassignedPlayers;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUnassignedPlayers()
+    {
+        return $this->unassignedPlayers;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasUnassignedPlayers()
+    {
+        return !empty($this->unassignedPlayers);
+    }
 
     /**
      * @return string
@@ -297,6 +345,12 @@ class Season extends SeasonModel
         }
         if (isset($data['availablePlayers'])) {
             $this->availablePlayers = $data['availablePlayers'];
+        }
+        if (isset($data['acceptingPlayers'])) {
+            $this->acceptingPlayers = $data['acceptingPlayers'];
+        }
+        if (isset($data['unassignedPlayers'])) {
+            $this->unassignedPlayers = $data['unassignedPlayers'];
         }
     }
 

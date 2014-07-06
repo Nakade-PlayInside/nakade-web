@@ -33,18 +33,18 @@ class LeagueForm extends BaseForm
     public function bindEntity($object)
     {
         $seasonId = $object->getSeason()->getId();
-        $playerList = $this->getLeagueMapper()->getAvailableParticipantsBySeason($seasonId);
+        $playerList = $this->getSeasonMapper()->getUnassignedParticipantsBySeason($seasonId);
 
         /* @var $participant \Season\Entity\Participant */
         foreach ($playerList as $participant) {
             $user = $participant->getUser();
-            $this->availablePlayerList[$user->getId()] = $user->getName();
+            $this->availablePlayerList[$participant->getId()] = $user->getName();
         }
 
         $assignedList = $this->getLeagueMapper()->getAssignedPlayersByLeague($object->getId());
         foreach ($assignedList as $participant) {
             $user = $participant->getUser();
-            $this->assignedPlayerList[$user->getId()] = $user->getName();
+            $this->assignedPlayerList[$participant->getId()] = $user->getName();
         }
 
         $this->init();

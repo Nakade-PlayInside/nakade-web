@@ -141,8 +141,9 @@ class SeasonMapper extends AbstractMapper
 
             $matchDays = $this->getMatchDaysBySeason($seasonId);
             $data['hasMatchDays'] = !empty($matchDays);
-
+            $data['acceptingPlayers'] = $this->getAcceptingUsersBySeason($seasonId);
             $data['availablePlayers'] = $this->getAvailablePlayersBySeason($seasonId);
+            $data['unassignedPlayers'] = $this->getUnassignedParticipantsBySeason($seasonId);
         }
 
         return $data;
@@ -389,6 +390,25 @@ class SeasonMapper extends AbstractMapper
             ->leftJoin('Season\Entity\Participant', 'p', Join::WITH, 'p.user = u')
             ->innerJoin('p.season', 'Season')
             ->where('Season.id = :seasonId')
+            ->andWhere('p.hasAccepted = 1')
+            ->setParameter('seasonId', $seasonId);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getUnassignedParticipantsBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('p')
+            ->from('Season\Entity\Participant', 'p')
+            ->innerJoin('p.season', 'MySeason')
+            ->where('MySeason.id = :seasonId')
+            ->andWhere('p.league IS NULL')
             ->andWhere('p.hasAccepted = 1')
             ->setParameter('seasonId', $seasonId);
 

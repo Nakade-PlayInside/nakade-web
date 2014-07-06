@@ -14,6 +14,8 @@ class League extends LeagueModel
 {
 
   private $noPlayers=0;
+  private $players = array();
+  private $removePlayers = array();
 
     /**
      * @param int $noPlayers
@@ -32,6 +34,38 @@ class League extends LeagueModel
     }
 
     /**
+     * @param array $players
+     */
+    public function setPlayers($players)
+    {
+        $this->players = $players;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPlayers()
+    {
+        return $this->players;
+    }
+
+    /**
+     * @param array $removePlayers
+     */
+    public function setRemovePlayers($removePlayers)
+    {
+        $this->removePlayers = $removePlayers;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRemovePlayers()
+    {
+        return $this->removePlayers;
+    }
+
+    /**
      * for form data
      *
      * @param array $data
@@ -41,6 +75,12 @@ class League extends LeagueModel
 
         if (isset($data['noPlayer'])) {
             $this->noPlayers = intval($data['noPlayer']);
+        }
+        if (isset($data['players'])) {
+            $this->players = $data['players'];
+        }
+        if (isset($data['removePlayers'])) {
+            $this->removePlayers = $data['removePlayers'];
         }
     }
 
