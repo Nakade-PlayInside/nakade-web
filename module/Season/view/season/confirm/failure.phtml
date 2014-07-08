@@ -1,0 +1,11 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+$title = $this->translate("Confirmation failed");
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+<?php echo $this->translate("Your confirmation failed.");?><br \>
+<?php echo $this->translate("Probably, you accepted your invitation already.");?><br \>
+<?php echo $this->translate("Log in to find out!");?><br \>
+</p>

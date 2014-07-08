@@ -25,7 +25,7 @@ class ConfirmController extends AbstractController
        $confirmString   = $this->params()->fromQuery('confirm', null);
 
        //no params -> error
-       if (!isset($appointmentId) || !isset($confirmString)) {
+       if (empty($appointmentId) || empty($confirmString)) {
            return $this->redirect()->toRoute('appointmentConfirm', array('action' => 'error'));
        }
 

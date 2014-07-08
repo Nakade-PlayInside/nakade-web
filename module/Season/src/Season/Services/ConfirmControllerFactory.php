@@ -2,34 +2,31 @@
 
 namespace Season\Services;
 
-use Season\Controller\SeasonController;
+use Season\Controller\ConfirmController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class SeasonControllerFactory
+ * Class ConfirmControllerFactory
  *
  * @package Season\Services
  */
-class SeasonControllerFactory implements FactoryInterface
+class ConfirmControllerFactory implements FactoryInterface
 {
 
     /**
      * @param ServiceLocatorInterface $services
      *
-     * @return mixed|SeasonController
+     * @return mixed|ConfirmController
      */
     public function createService(ServiceLocatorInterface $services)
     {
         /* @var $services \Zend\Mvc\Controller\AbstractController */
         $serviceManager = $services->getServiceLocator();
 
-        $factory    = $serviceManager->get('Season\Services\SeasonFormService');
         $repository = $serviceManager->get('Season\Services\RepositoryService');
 
-
-        $controller = new SeasonController();
-        $controller->setFormFactory($factory);
+        $controller = new ConfirmController();
         $controller->setRepository($repository);
 
         return $controller;

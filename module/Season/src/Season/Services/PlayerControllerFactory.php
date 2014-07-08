@@ -17,11 +17,9 @@ class PlayerControllerFactory implements FactoryInterface
 {
 
     /**
-     * creates the authController. Binds the authentication service and
-     * the authentication form.
+     * @param ServiceLocatorInterface $services
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
-     * @return \Authentication\Controller\AuthController
+     * @return mixed|PlayerController
      */
     public function createService(ServiceLocatorInterface $services)
     {

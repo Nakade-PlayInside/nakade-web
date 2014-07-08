@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-06 11:39+0100\n"
-"PO-Revision-Date: 2014-07-06 11:39+0100\n"
+"PO-Revision-Date: 2014-07-08 19:36+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -201,7 +201,7 @@ msgstr "Log dich ein, um es herauszufinden!"
 
 #: ../view/appointment/confirm/error.phtml:3
 msgid "Data Transmission Error"
-msgstr "Datenübetragungsfehler"
+msgstr "Datenübertragungsfehler"
 
 #: ../view/appointment/confirm/error.phtml:8
 msgid "Expected data not found."

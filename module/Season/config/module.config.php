@@ -38,9 +38,9 @@ return array(
                     'Season\Services\MatchDayControllerFactory',
             'Season\Controller\Schedule' =>
                 'Season\Services\ScheduleControllerFactory',
-
+            'Season\Controller\Confirm' =>
+                'Season\Services\ConfirmControllerFactory',
         ),
-
     ),
 
 
@@ -123,7 +123,23 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
+            ),
 
+            'playerConfirm' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/playerConfirm[/:action][/:id][/:confirm]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                        'confirm' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Season\Controller',
+                        'controller'    => 'Season\Controller\Confirm',
+                        'action'        => 'index',
+                    ),
+                ),
             ),
            //next route
 

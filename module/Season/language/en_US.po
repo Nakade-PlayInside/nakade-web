@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-08 11:45+0100\n"
-"PO-Revision-Date: 2014-07-08 11:45+0100\n"
+"POT-Creation-Date: 2014-07-08 19:37+0100\n"
+"PO-Revision-Date: 2014-07-08 19:37+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -267,6 +267,50 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
+#: ../view/season/confirm/failure.phtml:3
+msgid "Confirmation failed"
+msgstr ""
+
+#: ../view/season/confirm/failure.phtml:8
+msgid "Your confirmation failed."
+msgstr ""
+
+#: ../view/season/confirm/failure.phtml:9
+msgid "Probably, you accepted your invitation already."
+msgstr ""
+
+#: ../view/season/confirm/failure.phtml:10
+msgid "Log in to find out!"
+msgstr ""
+
+#: ../view/season/confirm/error.phtml:3
+msgid "Data Transmission Error"
+msgstr ""
+
+#: ../view/season/confirm/error.phtml:8
+msgid "Expected data not found."
+msgstr ""
+
+#: ../view/season/confirm/error.phtml:9
+msgid "Did you really use the correct link provided by email?"
+msgstr ""
+
+#: ../view/season/confirm/success.phtml:3
+msgid "Participation is confirmed"
+msgstr ""
+
+#: ../view/season/confirm/success.phtml:10
+msgid "Your participation is confirmed."
+msgstr ""
+
+#: ../view/season/confirm/success.phtml:11
+msgid "It will take some time before the new schedule is announced."
+msgstr ""
+
+#: ../view/season/confirm/success.phtml:12
+msgid "You can follow the actual stage of development on the dashboard."
+msgstr ""
+
 #: ../view/season/player/index.phtml:11
 msgid "Player Roster"
 msgstr ""
@@ -411,30 +455,22 @@ msgid "Create New Season"
 msgstr ""
 
 #: ../view/season/match-day/index.phtml:9
-#: ../view/season/match-day/delete.phtml:9
-#: ../view/season/schedule/index.phtml:9
 msgid "No match days found."
 msgstr ""
 
 #: ../view/season/match-day/index.phtml:13
-#: ../view/season/schedule/index.phtml:13
 msgid "Match Days of the Next Season"
 msgstr ""
 
 #: ../view/season/match-day/index.phtml:16
-#: ../view/season/match-day/delete.phtml:19
-#: ../view/season/schedule/index.phtml:16
 msgid "round"
 msgstr ""
 
 #: ../view/season/match-day/index.phtml:17
-#: ../view/season/match-day/delete.phtml:20
-#: ../view/season/schedule/index.phtml:17
 msgid "date"
 msgstr ""
 
 #: ../view/season/match-day/index.phtml:18
-#: ../view/season/schedule/index.phtml:18
 msgid "edit"
 msgstr ""
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-08 11:31+0100\n"
-"PO-Revision-Date: 2014-07-08 11:49+0100\n"
+"POT-Creation-Date: 2014-07-08 19:32+0100\n"
+"PO-Revision-Date: 2014-07-08 19:38+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -268,6 +268,50 @@ msgstr "monatlich"
 msgid "unknown"
 msgstr "unbekannt"
 
+#: ../view/season/confirm/failure.phtml:3
+msgid "Confirmation failed"
+msgstr "Bestätigung fehlgeschlagen"
+
+#: ../view/season/confirm/failure.phtml:8
+msgid "Your confirmation failed."
+msgstr "Deine Bestätigung ist fehlgeschlagen."
+
+#: ../view/season/confirm/failure.phtml:9
+msgid "Probably, you accepted your invitation already."
+msgstr "Möglicherweise hast du deine Einladung schon bestätigt."
+
+#: ../view/season/confirm/failure.phtml:10
+msgid "Log in to find out!"
+msgstr "Log dich ein, um es herauszufinden!"
+
+#: ../view/season/confirm/error.phtml:3
+msgid "Data Transmission Error"
+msgstr "Datenübertragungsfehler"
+
+#: ../view/season/confirm/error.phtml:8
+msgid "Expected data not found."
+msgstr "Erwartete Daten wurden nicht gefunden."
+
+#: ../view/season/confirm/error.phtml:9
+msgid "Did you really use the correct link provided by email?"
+msgstr "Hast du den korrekten Link der Email benutzt?"
+
+#: ../view/season/confirm/success.phtml:3
+msgid "Participation is confirmed"
+msgstr "Teilnahme ist bestätigt."
+
+#: ../view/season/confirm/success.phtml:10
+msgid "Your participation is confirmed."
+msgstr "Deine Teilnahme wurde bestätigt."
+
+#: ../view/season/confirm/success.phtml:11
+msgid "It will take some time before the new schedule is announced."
+msgstr "Es wird ein wenig dauern, bis der neue Spielplan bekanntgegeben wird."
+
+#: ../view/season/confirm/success.phtml:12
+msgid "You can follow the actual stage of development on the dashboard."
+msgstr "Du kannst den aktuellen Stand auf deinem Dashboard mitverfolgen."
+
 #: ../view/season/player/index.phtml:11
 msgid "Player Roster"
 msgstr "Spielerliste"
@@ -412,30 +456,22 @@ msgid "Create New Season"
 msgstr "neue Saison anlegen"
 
 #: ../view/season/match-day/index.phtml:9
-#: ../view/season/match-day/delete.phtml:9
-#: ../view/season/schedule/index.phtml:9
 msgid "No match days found."
 msgstr "Keine Spieltage gefunden."
 
 #: ../view/season/match-day/index.phtml:13
-#: ../view/season/schedule/index.phtml:13
 msgid "Match Days of the Next Season"
 msgstr "Spieltage der neuen Saison"
 
 #: ../view/season/match-day/index.phtml:16
-#: ../view/season/match-day/delete.phtml:19
-#: ../view/season/schedule/index.phtml:16
 msgid "round"
 msgstr "Runde"
 
 #: ../view/season/match-day/index.phtml:17
-#: ../view/season/match-day/delete.phtml:20
-#: ../view/season/schedule/index.phtml:17
 msgid "date"
 msgstr "Datum"
 
 #: ../view/season/match-day/index.phtml:18
-#: ../view/season/schedule/index.phtml:18
 msgid "edit"
 msgstr "bearbeiten"
 

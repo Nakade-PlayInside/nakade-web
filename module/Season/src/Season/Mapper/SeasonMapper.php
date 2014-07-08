@@ -449,4 +449,16 @@ class SeasonMapper extends AbstractMapper
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @param int $id
+     *
+     * @return \Season\Entity\Participant
+     */
+    public function getParticipantById($id)
+    {
+        return $this->getEntityManager()
+            ->getRepository('Season\Entity\Participant')
+            ->find($id);
+    }
 }
