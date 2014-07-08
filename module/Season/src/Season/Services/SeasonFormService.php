@@ -14,13 +14,14 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class SeasonFormService extends AbstractFormFactory
 {
-
     const SEASON_FORM = 'season';
     const PARTICIPANT_FORM = 'participant';
     const LEAGUE_FORM = 'league';
     const MATCH_DAY_CONFIG_FORM = 'match_day_config';
     const MATCH_DAY_FORM = 'match_day';
     const CONFIRM_FORM = 'confirm';
+
+    private $dateHelper;
 
     /**
      * @param ServiceLocatorInterface $services
@@ -50,6 +51,7 @@ class SeasonFormService extends AbstractFormFactory
         $translator = $services->get('translator');
         $repository = $services->get('Season\Services\RepositoryService');
         $fieldSetService = $services->get('Season\Services\SeasonFieldsetService');
+        $this->dateHelper = $services->get('Season\Services\DateHelperService');
 
         $this->setRepository($repository);
         $this->setFieldSetService($fieldSetService);
@@ -88,7 +90,7 @@ class SeasonFormService extends AbstractFormFactory
                break;
 
            case self::MATCH_DAY_CONFIG_FORM:
-               $form = new Form\MatchDayConfigForm($service);
+               $form = new Form\MatchDayConfigForm($service, $this->dateHelper);
                break;
 
            case self::MATCH_DAY_FORM:

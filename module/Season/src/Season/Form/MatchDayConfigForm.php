@@ -2,22 +2,25 @@
 namespace Season\Form;
 
 use Season\Form\Hydrator\MatchDayConfigHydrator;
+use Season\Schedule\DateHelper;
 use Season\Services\SeasonFieldsetService;
 use \Zend\InputFilter\InputFilter;
 
-class MatchDayConfigForm extends BaseForm implements WeekDayInterface
+class MatchDayConfigForm extends BaseForm
 {
-
+    private $dateHelper;
     private $minDate;
 
     /**
      * @param SeasonFieldsetService $service
+     * @param DateHelper            $dateHelper
      */
-    public function __construct(SeasonFieldsetService $service)
+    public function __construct(SeasonFieldsetService $service, DateHelper $dateHelper)
     {
         parent::__construct('MatchDayConfigForm');
 
         $this->setFieldSetService($service);
+        $this->setDateHelper($dateHelper);
 
         $this->setMinDate(\date('Y-m-d'));
         $hydration = new MatchDayConfigHydrator();
@@ -75,7 +78,7 @@ class MatchDayConfigForm extends BaseForm implements WeekDayInterface
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
                     'label' =>  $this->translate('Cycle') . ':',
-                    'value_options' => $this->getCycle()
+                    'value_options' => $this->getDateHelper()->getCycles()
                 ),
                 'attributes' => array(
                     'size' => 1,
@@ -90,7 +93,7 @@ class MatchDayConfigForm extends BaseForm implements WeekDayInterface
                 'name' => 'day',
                 'options' => array(
                     'label' => $this->translate('Match day') . ':',
-                    'value_options' => $this->getWeekdays()
+                    'value_options' => $this->getDateHelper()->getWeekdays()
                 ),
                 'attributes' => array(
                     'size' => 1
@@ -140,34 +143,19 @@ class MatchDayConfigForm extends BaseForm implements WeekDayInterface
     }
 
     /**
-     * @return array
+     * @param DateHelper $dateHelper
      */
-    public function getWeekdays()
+    public function setDateHelper(DateHelper $dateHelper)
     {
-        return array(
-            self::MONDAY => $this->translate('Monday'),
-            self::TUESDAY => $this->translate('Tuesday'),
-            self::WEDNESDAY => $this->translate('Wednesday'),
-            self::THURSDAY => $this->translate('Thursday'),
-            self::FRIDAY => $this->translate('Friday'),
-            self::SATURDAY => $this->translate('Saturday'),
-            self::SUNDAY => $this->translate('Sunday')
-        );
+        $this->dateHelper = $dateHelper;
     }
 
     /**
-     * @return array
+     * @return DateHelper
      */
-    public function getCycle()
+    public function getDateHelper()
     {
-       return array(
-            self::DAILY => $this->translate('daily'),
-            self::WEEKDAYS => $this->translate('on weekdays'),
-            self::WEEKLY => $this->translate('weekly'),
-            self::FORTNIGHTLY => $this->translate('fortnightly'),
-            self::ALL_THREE_WEEKS => $this->translate('all 3 weeks'),
-            self::MONTHLY => $this->translate('monthly'),
-       );
+        return $this->dateHelper;
     }
 
     /**

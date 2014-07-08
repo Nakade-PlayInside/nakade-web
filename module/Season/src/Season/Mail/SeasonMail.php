@@ -3,7 +3,8 @@ namespace Season\Mail;
 
 use Mail\NakadeMail;
 use Mail\Services\MailMessageFactory;
-use Season\Entity\Season;
+use Season\Entity\Participant;
+use Season\Schedule\DateHelper;
 use \Zend\Mail\Transport\TransportInterface;
 
 /**
@@ -14,16 +15,21 @@ use \Zend\Mail\Transport\TransportInterface;
 abstract class SeasonMail extends NakadeMail
 {
     protected $url = 'http://www.nakade.de';
+    protected $dateHelper;
     protected $season;
+    protected $seasonDates;
+    protected $participant;
 
-     /**
+    /**
      * @param MailMessageFactory $mailService
      * @param TransportInterface $transport
+     * @param DateHelper         $dateHelper
      */
-    public function __construct(MailMessageFactory $mailService, TransportInterface $transport)
+    public function __construct(MailMessageFactory $mailService, TransportInterface $transport, DateHelper $dateHelper)
     {
         $this->mailService = $mailService;
         $this->transport = $transport;
+        $this->dateHelper = $dateHelper;
     }
 
     /**
@@ -46,42 +52,65 @@ abstract class SeasonMail extends NakadeMail
     }
 
     /**
-     * @param Season $season
-     *
-     * @return $this
+     * @param Participant $participant
      */
-    public function setMatch(Season $season)
+    public function setParticipant(Participant $participant)
     {
-        $this->season = $season;
-        return $this;
+        $this->participant = $participant;
     }
 
     /**
-     * @return Season
+     * @return Participant
      */
-    public function getSeason()
+    public function getParticipant()
     {
-        return $this->season;
+        return $this->participant;
     }
+
 
     protected function makeReplacements(&$message)
     {
         $message = str_replace('%URL%', $this->getUrl(), $message);
 
-        if (!is_null($this->getSeason())) {
+        if (!is_null($this->participant)) {
 
-            $message = str_replace('%ASSOCIATION%', $this->getSeason()->getAssociation()->getName(), $message);
-            $message = str_replace('%NUMBER%', $this->getSeason()->getNumber(), $message);
-            $message = str_replace('%START_DATE%', $this->getSeason()->getStartDate()->format('d.m.y'), $message);
-            $message = str_replace('%BASE_TIME%', $this->getSeason()->getTime()->getBaseTime(), $message);
-            $message = str_replace('%ADDITIONAL_TIME%', $this->getSeason()->getTime()->getAdditionalTime(), $message);
-            $message = str_replace('%MOVES%', $this->getSeason()->getTime()->getMoves(), $message);
-            $message = str_replace('%BYOYOMI%', $this->getSeason()->getTime()->getByoyomi()->getName(), $message);
-            $message = str_replace('%KOMI%', $this->getSeason()->getKomi(), $message);
-            $message = str_replace('%TIEBREAK_1%', $this->getSeason()->getTieBreaker1()->getName(), $message);
-            $message = str_replace('%TIEBREAK_2%', $this->getSeason()->getTieBreaker2()->getName(), $message);
-            $message = str_replace('%TIEBREAK_3%', $this->getSeason()->getTieBreaker3()->getName(), $message);
+            $season = $this->getParticipant()->getSeason();
+            $seasonDates = $season->getAssociation()->getSeasonDates();
+            $time = $season->getTime();
+
+            $day = $seasonDates->getDay();
+            $matchDay = $this->getDateHelper()->getDay($day);
+
+            $period = $seasonDates->getCycle();
+            $cycle = $this->getDateHelper()->getCycle($period);
+
+            $link = sprintf('%s/playerConfirm?id=%d&confirm=%s',
+                $this->getUrl(),
+                $this->getParticipant()->getId(),
+                $this->getParticipant()->getAcceptString()
+            );
+
+            $message = str_replace('%ASSOCIATION%', $season->getAssociation()->getName(), $message);
+            $message = str_replace('%NUMBER%', $season->getNumber(), $message);
+            $message = str_replace('%DATE%', $season->getStartDate()->format('d.m.y'), $message);
+            $message = str_replace('%BASE_TIME%', $time->getBaseTime(), $message);
+            $message = str_replace('%ADDITIONAL_TIME%', $time->getAdditionalTime(), $message);
+            $message = str_replace('%MOVES%', $time->getMoves(), $message);
+            $message = str_replace('%BYOYOMI%', $time->getByoyomi()->getName(), $message);
+            $message = str_replace('%KOMI%', $season->getKomi(), $message);
+            $message = str_replace('%CYCLE%', $cycle, $message);
+            $message = str_replace('%TIME%', $seasonDates->getTime()->format('H:i'), $message);
+            $message = str_replace('%MATCH_DAY%', $matchDay, $message);
+            $message = str_replace('%CONFIRM_LINK%', $link, $message);
         }
+    }
+
+    /**
+     * @return DateHelper
+     */
+    public function getDateHelper()
+    {
+        return $this->dateHelper;
     }
 
 }

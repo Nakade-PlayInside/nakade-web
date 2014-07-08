@@ -2,9 +2,9 @@
 namespace Season\Mail;
 
 /**
- * mail for both players after editing match date by an admin
+ * Class InvitationMail
  *
- * @package League\Mail
+ * @package Season\Mail
  */
 class InvitationMail extends SeasonMail
 {
@@ -14,22 +14,27 @@ class InvitationMail extends SeasonMail
      */
     public function getMailBody()
     {
-        //TODO
         $message =
             $this->translate('A new season is announced at %URL%.') . ' ' .
-            $this->translate('The date was edited by a league manager on request.') .
+            $this->translate('We are happy to invite you to participate in the %NUMBER%. %ASSOCIATION% League.') . ' ' .
+            $this->translate('The starting date is tentatively scheduled for the %DATE%.') .
             PHP_EOL . PHP_EOL .
-            $this->translate('Your match: %MATCH_INFO%') .
+            $this->translate('Base time') . ': %BASE_TIME%' .
             PHP_EOL .
-            $this->translate('Actual match date: %OLD_DATE%') .
+            $this->translate('Byoyomi') . ': %BYOYOMI%, %MOVES%/%ADDITIONAL_TIME%' .
             PHP_EOL .
-            $this->translate('New match date: %NEW_DATE%') .
+            $this->translate('Komi') . ': %KOMI%' .
             PHP_EOL . PHP_EOL .
-            $this->translate('This new date is binding even without confirming.') . ' ' .
-            $this->translate('If you use a calendar application, do not forget to update.') . ' ' .
-            $this->translate('An updated iCal is found on your site after login at %URL%.') .
+            $this->translate('Match day') . ': %MATCH_DAY%, %CYCLE% - %TIME%' .
+            PHP_EOL . PHP_EOL .
+            $this->translate('To ensure being in the league, please confirm your participation as soon as possible.') .
             PHP_EOL .
-            $this->translate('In case of a mistake, please contact a league manager.') .
+            $this->translate('You can do so by clicking on the link provided below.') .
+            PHP_EOL . PHP_EOL . '%CONFIRM_LINK%' . PHP_EOL . PHP_EOL .
+            $this->translate('Or you just login at %URL% and confirm your participation on your site.') .
+            PHP_EOL .
+            $this->translate('The deadline for confirming your participation is a month before starting date.') . ' ' .
+            $this->translate('All later applications will be ignored.') .
             PHP_EOL . PHP_EOL .
             $this->getSignature()->getSignatureText();
 
@@ -43,7 +48,10 @@ class InvitationMail extends SeasonMail
      */
     public function getSubject()
     {
-        return $this->translate('Invitation - New Nakade Season');
+        $subject = $this->translate('Invitation - %NUMBER%. %ASSOCIATION% League');
+        $this->makeReplacements($subject);
+
+        return $subject;
     }
 
 

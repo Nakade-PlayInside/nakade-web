@@ -3,6 +3,7 @@ namespace Season\Controller;
 
 
 use Season\Entity\Participant;
+use Season\Services\MailService;
 use Zend\View\Model\ViewModel;
 
 class PlayerController extends DefaultController
@@ -64,6 +65,9 @@ class PlayerController extends DefaultController
                 $now = new \DateTime();
                 $playerList = $object->getAvailablePlayers();
 
+                /* @var $mail \Season\Mail\InvitationMail */
+                $mail = $this->getMailService()->getMail(MailService::INVITATION_MAIL);
+
                 foreach ($playerList as $user) {
                     $acceptString = md5(uniqid(rand(), true));
 
@@ -74,8 +78,10 @@ class PlayerController extends DefaultController
                     $participant->setAcceptString($acceptString);
 
                     $this->getSeasonMapper()->save($participant);
+
+                    $mail->setParticipant($participant);
+                    $mail->sendMail($user);
                 }
-                //$this->getService()->addPlayer($data);
 
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }

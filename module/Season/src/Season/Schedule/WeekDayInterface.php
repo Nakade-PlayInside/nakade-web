@@ -1,5 +1,5 @@
 <?php
-namespace Season\Form;
+namespace Season\Schedule;
 
 interface WeekDayInterface
 {

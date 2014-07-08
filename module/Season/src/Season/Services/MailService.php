@@ -19,6 +19,7 @@ class MailService extends AbstractTranslation implements FactoryInterface
     private $transport;
     private $message;
     private $signature;
+    private $dateHelper;
     private $url='http://www.nakade.de';
 
     /**
@@ -50,6 +51,8 @@ class MailService extends AbstractTranslation implements FactoryInterface
                 sprintf('Mail Signature Service is not found.')
             );
         }
+
+        $this->dateHelper = $services->get('Season\Services\DateHelperService');
 
         $config  = $services->get('config');
 
@@ -84,7 +87,7 @@ class MailService extends AbstractTranslation implements FactoryInterface
         switch (strtolower($typ)) {
 
            case self::INVITATION_MAIL:
-               $mail = new Mail\InvitationMail($this->message, $this->transport);
+               $mail = new Mail\InvitationMail($this->message, $this->transport, $this->dateHelper);
                break;
 
            default:

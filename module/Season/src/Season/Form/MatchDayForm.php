@@ -5,7 +5,7 @@ use Season\Form\Hydrator\MatchDayHydrator;
 use Season\Services\SeasonFieldsetService;
 use \Zend\InputFilter\InputFilter;
 
-class MatchDayForm extends BaseForm implements WeekDayInterface
+class MatchDayForm extends BaseForm
 {
 
     private $minDate;

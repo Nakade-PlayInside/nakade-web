@@ -153,6 +153,8 @@ return array(
                 'Season\Services\ScheduleService',
             'Season\Services\MailService'      =>
                 'Season\Services\MailService',
+            'Season\Services\DateHelperService'      =>
+                'Season\Services\DateHelperService',
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
