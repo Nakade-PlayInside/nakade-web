@@ -61,6 +61,34 @@ class SeasonMapper extends AbstractMapper
     }
 
     /**
+     * @return array
+     */
+    public function getNewSeasons()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Season');
+        $qb->select('s')
+            ->from('Season\Entity\Season', 's')
+            ->where('s.isReady = false')
+            ->addOrderBy('s.startDate', 'DESC');
+
+        $result = $qb->getQuery()->getResult();
+
+        /* @var $season \Season\Entity\Season */
+        foreach ($result as $season) {
+            $data = array();
+            $data['noLeagues'] = $this->getNoOfLeaguesInSeason($season->getId());
+            $data['noPlayers'] = $this->getNoOfPlayersInSeason($season->getId());
+
+            $matchDays = $this->getMatchDaysBySeason($season->getId());
+            $data['hasMatchDays'] = !empty($matchDays);
+
+            $season->exchangeArray($data);
+        }
+
+        return $result;
+    }
+
+    /**
      * new season has not yet started
      *
      * @param int $associationId

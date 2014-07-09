@@ -20,6 +20,7 @@ return array(
             'matchDate'  => 'Season\View\Helper\MatchDate',
             'accepted'  => 'Season\View\Helper\PlayerAccepted',
             'rulesInfo'  => 'Season\View\Helper\RulesInfo',
+            'dateCycle'  => 'Season\View\Helper\DateCycle',
 
 
             // more helpers here ...

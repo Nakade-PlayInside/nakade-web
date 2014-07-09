@@ -1,0 +1,43 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+/* @var $season \Season\Entity\Season */
+$season = $this->season;
+$this->headTitle('New Season');
+$title = $this->translate("Call for Registration");
+?>
+
+<h3><?php echo $title;?></h3>
+
+<?php $this->placeholder('noSeason')->captureStart();?>
+      <?php echo $this->translate("No season found."); ?>
+<?php $this->placeholder('noSeason')->captureEnd();?>
+
+
+<?php $this->placeholder('actual')->captureStart();?>
+
+<?php foreach ($this->newSeasons as $season) : ?>
+<h4 class="call"><?php echo $season->getAssociation()->getName() . ' ' . $this->translate("League No.") . ' ' . $season->getNumber()?></h4>
+<ul class='call_info'>
+    <li><?php echo $this->translate('Base Time') . ': ' . $season->getTime()->getBaseTime() . ' ' . $this->translate('min.'); ?></li>
+    <li><?php echo $season->getTime()->getByoyomiInfo(); ?></li>
+    <li><?php echo $this->translate('Komi') . ': ' . $season->getKomi(); ?></li>
+    <li><?php echo $this->translate('Start') . ': ' . $season->getStartDate()->format('d.m.y'); ?></li>
+    <li><?php echo $this->translate('Cycle') . ': ' . $this->dateCycle($season->getAssociation()->getSeasonDates()); ?></li>
+    <li><?php echo $this->translate('Participants') . ': ' . $season->getNoPlayers(); ?></li>
+    <li><?php echo $this->translate('Stage') . ': ' . $this->state($season); ?></li>
+</ul>
+    <a class="btn_call" href="">Register NOW!</a>
+<?php
+endforeach ?>
+
+<?php $this->placeholder('actual')->captureEnd(); ?>
+
+
+<?php
+
+ if (is_null($this->newSeasons)) {
+     echo $this->placeholder('noSeason');
+ } else {
+     echo $this->placeholder('actual');
+ }
+

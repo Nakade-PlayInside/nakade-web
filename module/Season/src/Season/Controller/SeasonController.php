@@ -31,6 +31,21 @@ class SeasonController extends DefaultController
     }
 
     /**
+     * @return array|ViewModel
+     */
+    public function showAction()
+    {
+        /* @var $season \Season\Entity\Season */
+        $seasons = $this->getSeasonMapper()->getNewSeasons();
+
+        return new ViewModel(
+            array(
+                'newSeasons' => $seasons,
+            )
+        );
+    }
+
+    /**
      * @return ViewModel
      */
     public function createAction()
