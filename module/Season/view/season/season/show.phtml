@@ -20,12 +20,7 @@ $title = $this->translate("Call for Participation");
     <li><?php echo $this->translate('Participants') . ': ' . $season->getNoPlayers(); ?></li>
     <li><?php echo $this->translate('Stage') . ': ' . $this->state($season); ?></li>
 </ul>
-<?php if(!$season->isRegistered()) : ?>
-    <a class="btn" href="<?php echo $this->url('playerConfirm', array('action' => 'register', 'id' => $season->getId()));?>"><?php echo $this->translate('Register NOW!'); ?></a>
-<?php else : ?>
-     <h5><?php echo $this->translate("You registered already!"); ?></h5>
-<?php
-endif ?>
+<?php echo $this->participationInfo($season); ?>
 <?php
 endforeach ?>
 </div>

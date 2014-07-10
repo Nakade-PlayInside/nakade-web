@@ -542,6 +542,7 @@ class SeasonMapper extends AbstractMapper
             ->innerJoin('p.user', 'u')
             ->where('s.id = :seasonId')
             ->andWhere('u.id = :userId')
+            ->andWhere('p.hasAccepted = true')
             ->setParameter('seasonId', $seasonId)
             ->setParameter('userId', $userId);
 

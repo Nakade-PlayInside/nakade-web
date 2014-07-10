@@ -21,6 +21,7 @@ return array(
             'accepted'  => 'Season\View\Helper\PlayerAccepted',
             'rulesInfo'  => 'Season\View\Helper\RulesInfo',
             'dateCycle'  => 'Season\View\Helper\DateCycle',
+            'participationInfo'  => 'Season\View\Helper\ParticipationInfo',
 
 
             // more helpers here ...

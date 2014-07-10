@@ -2,9 +2,7 @@
 namespace Season\Controller;
 
 use Season\Entity\Participant;
-use Season\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
-use Nakade\Abstracts\AbstractController;
 
 /**
  * Confirm of an invitation by using link provided by email
@@ -37,7 +35,8 @@ class ConfirmController extends DefaultController
        }
 
        $participant->setHasAccepted(true);
-        $this->getSeasonMapper()->save($participant);
+       $participant->setDate(new \DateTime());
+       $this->getSeasonMapper()->save($participant);
 
        return $this->redirect()->toRoute('playerConfirm', array('action' => 'success'));
 
@@ -53,10 +52,8 @@ class ConfirmController extends DefaultController
         $seasonId = (int) $this->params()->fromRoute('id', -1);
         $userId = $this->identity()->getId();
 
-        //todo: isOpenForRegistration
-
         $season = $this->getSeasonMapper()->getSeasonById($seasonId);
-        if (empty($season) || $season->isReady()) {
+        if (empty($season) || $season->isReady() || $season->hasMatchDays()) {
             return $this->redirect()->toRoute('dashboard');
         }
 
@@ -79,6 +76,8 @@ class ConfirmController extends DefaultController
                     $participant->setUser($user);
                     $participant->setSeason($season);
                 }
+
+                $participant->setDate(new \DateTime());
                 $participant->setHasAccepted(true);
                 $this->getSeasonMapper()->save($participant);
                 return $this->redirect()->toRoute('dashboard');
