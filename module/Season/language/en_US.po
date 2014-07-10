@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-08 19:37+0100\n"
-"PO-Revision-Date: 2014-07-08 19:37+0100\n"
+"POT-Creation-Date: 2014-07-09 21:35+0100\n"
+"PO-Revision-Date: 2014-07-09 21:35+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -104,7 +104,6 @@ msgstr ""
 
 #: ../src/Season/View/Helper/RulesInfo.php:23
 #: ../src/Season/Form/MatchDayConfigForm.php:125
-#: ../src/Season/Form/MatchDayForm.php:99
 msgid "Time"
 msgstr ""
 
@@ -125,7 +124,6 @@ msgid "YES"
 msgstr ""
 
 #: ../src/Season/Form/MatchDayConfigForm.php:54
-#: ../src/Season/Form/MatchDayForm.php:56
 msgid "Season"
 msgstr ""
 
@@ -324,6 +322,7 @@ msgstr ""
 #: ../view/season/player/index.phtml:19
 #: ../view/season/season/index.phtml:15
 #: ../view/season/season/show-rules.phtml:12
+#: ../view/season/season/show.phtml:12
 msgid "No season found."
 msgstr ""
 
@@ -378,6 +377,31 @@ msgstr ""
 msgid "Times and Komi"
 msgstr ""
 
+#: ../view/season/season/show.phtml:6
+msgid "Call for Registration"
+msgstr ""
+
+#: ../view/season/season/show.phtml:19
+msgid "League No."
+msgstr ""
+
+#: ../view/season/season/show.phtml:21
+msgid "Base Time"
+msgstr ""
+
+#: ../view/season/season/show.phtml:24
+msgid "Start"
+msgstr ""
+
+#: ../view/season/season/show.phtml:26
+#: ../view/season/season/create.phtml:19
+msgid "Participants"
+msgstr ""
+
+#: ../view/season/season/show.phtml:27
+msgid "Stage"
+msgstr ""
+
 #: ../view/season/season/edit.phtml:6
 msgid "Edit New Season"
 msgstr ""
@@ -388,10 +412,6 @@ msgstr ""
 
 #: ../view/season/season/create.phtml:18
 msgid "Leagues"
-msgstr ""
-
-#: ../view/season/season/create.phtml:19
-msgid "Participants"
 msgstr ""
 
 #: ../view/season/season/create.phtml:20
@@ -455,22 +475,31 @@ msgid "Create New Season"
 msgstr ""
 
 #: ../view/season/match-day/index.phtml:9
+#: ../view/season/match-day/delete.phtml:9
+#: ../view/season/schedule/index.phtml:9
 msgid "No match days found."
 msgstr ""
 
 #: ../view/season/match-day/index.phtml:13
+#: ../view/season/schedule/index.phtml:13
 msgid "Match Days of the Next Season"
 msgstr ""
 
 #: ../view/season/match-day/index.phtml:16
+#: ../view/season/match-day/delete.phtml:19
+#: ../view/season/schedule/index.phtml:16
 msgid "round"
 msgstr ""
 
 #: ../view/season/match-day/index.phtml:17
+#: ../view/season/match-day/delete.phtml:20
+#: ../view/season/schedule/index.phtml:17
 msgid "date"
 msgstr ""
 
 #: ../view/season/match-day/index.phtml:18
+#: ../view/season/schedule/index.phtml:18
+#: ../view/season/league/show.phtml:26
 msgid "edit"
 msgstr ""
 

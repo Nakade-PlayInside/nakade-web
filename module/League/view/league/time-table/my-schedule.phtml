@@ -7,7 +7,7 @@ $this->headTitle('schedule');
 /* @var $league \Season\Entity\League */
 $league = $this->league;
 $association = $league->getSeason()->getAssociation()->getName();
-$title = $this->translate("My %name% League Schedule") . " " . $league->getSeason()->getStartDate()->format('Y');
+$title = $this->translate("%name% League Schedule") . " " . $league->getSeason()->getStartDate()->format('Y');
 $title = str_replace("%name%", $association, $title);
 ?>
 <?php $this->placeholder('noSchedule')->captureStart();?>
@@ -15,6 +15,7 @@ $title = str_replace("%name%", $association, $title);
 <?php $this->placeholder('noSchedule')->captureEnd(); ?>
 
 <?php $this->placeholder('schedule')->captureStart();?>
+<div class="widget">
 <h3><?php echo $title; ?></h3>
 <a class="iCal" title="<?php echo $iCalInfo; ?>" href="<?php echo $this->url('timeTable', array('action' => 'iCal')); ?>">
    <?php echo $this->translate("Download your calendar"); ?>
@@ -30,6 +31,7 @@ $title = str_replace("%name%", $association, $title);
 endforeach;
 ?>
 </table>
+</div>
 <?php $this->placeholder('schedule')->captureEnd();
 
   if (is_null($this->matches)) {
