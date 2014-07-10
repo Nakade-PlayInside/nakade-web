@@ -1,6 +1,7 @@
 <?php
 namespace Season\Controller;
 
+use Season\Entity\Participant;
 use Season\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
@@ -10,7 +11,7 @@ use Nakade\Abstracts\AbstractController;
  *
  * @package Season\Controller
  */
-class ConfirmController extends AbstractController
+class ConfirmController extends DefaultController
 {
     /**
      * Verification action. A direct link to this action is provided
@@ -29,19 +30,67 @@ class ConfirmController extends AbstractController
            return $this->redirect()->toRoute('playerConfirm', array('action' => 'error'));
        }
 
-        /* @var $repo \Season\Mapper\SeasonMapper */
-       $repo = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-       $participant = $repo->getParticipantById($id);
+       $participant = $this->getSeasonMapper()->getParticipantById($id);
 
        if (is_null($participant) || 0 != strcmp($participant->getAcceptString(), $confirmString) || $participant->hasAccepted()) {
            return $this->redirect()->toRoute('playerConfirm', array('action' => 'failure'));
        }
 
        $participant->setHasAccepted(true);
-       $repo->save($participant);
+        $this->getSeasonMapper()->save($participant);
 
        return $this->redirect()->toRoute('playerConfirm', array('action' => 'success'));
 
+    }
+
+    /**
+     * register for new season by user
+     *
+     * @return ViewModel
+     */
+    public function registerAction()
+    {
+        $seasonId = (int) $this->params()->fromRoute('id', -1);
+        $userId = $this->identity()->getId();
+
+        //todo: isOpenForRegistration
+
+        $season = $this->getSeasonMapper()->getSeasonById($seasonId);
+        if (empty($season) || $season->isReady()) {
+            return $this->redirect()->toRoute('dashboard');
+        }
+
+        $form = $this->getConfirmForm();
+        if ($this->getRequest()->isPost()) {
+
+            //get post data, set data to from, prepare for validation
+            $postData =  $this->getRequest()->getPost();
+            //cancel
+            if (isset($postData['cancel'])) {
+                return $this->redirect()->toRoute('dashboard');
+            }
+
+            if (isset($postData['submit'])) {
+                $participant = $this->getSeasonMapper()->getParticipantByUserAndSeason($userId, $seasonId);
+
+                if (is_null($participant)) {
+                    $participant = new Participant();
+                    $user = $this->getSeasonMapper()->getEntityManager()->getReference('\User\Entity\User', $userId);
+                    $participant->setUser($user);
+                    $participant->setSeason($season);
+                }
+                $participant->setHasAccepted(true);
+                $this->getSeasonMapper()->save($participant);
+                return $this->redirect()->toRoute('dashboard');
+            }
+
+        }
+
+        return new ViewModel(
+            array(
+                'form' => $form,
+            )
+        );
     }
 
     /**

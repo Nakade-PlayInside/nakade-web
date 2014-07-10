@@ -61,9 +61,23 @@ class SeasonMapper extends AbstractMapper
     }
 
     /**
+     * @param int $seasonId
+     *
+     * @return \Season\Entity\Season
+     */
+    public function getSeasonById($seasonId)
+    {
+        return $this->getEntityManager()
+            ->getRepository('Season\Entity\Season')
+            ->find($seasonId);
+    }
+
+    /**
+     * @param int $userId
+     *
      * @return array
      */
-    public function getNewSeasons()
+    public function getNewSeasonsByUser($userId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('s')
@@ -81,6 +95,7 @@ class SeasonMapper extends AbstractMapper
 
             $matchDays = $this->getMatchDaysBySeason($season->getId());
             $data['hasMatchDays'] = !empty($matchDays);
+            $data['isRegistered'] = $this->isUserParticipatingInSeason($userId, $season->getId());
 
             $season->exchangeArray($data);
         }
@@ -462,6 +477,28 @@ class SeasonMapper extends AbstractMapper
     }
 
     /**
+     * @param int $userId
+     * @param int $seasonId
+     *
+     * @return \Season\Entity\Participant
+     */
+    public function getParticipantByUserAndSeason($userId, $seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('p')
+            ->from('Season\Entity\Participant', 'p')
+            ->innerJoin('p.season', 's')
+            ->innerJoin('p.user', 'u')
+            ->where('s.id = :seasonId')
+            ->andWhere('u.id = :userId')
+            ->setParameter('seasonId', $seasonId)
+            ->setParameter('userId', $userId);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+
+    /**
      * @param int $leagueId
      *
      * @return array
@@ -488,5 +525,27 @@ class SeasonMapper extends AbstractMapper
         return $this->getEntityManager()
             ->getRepository('Season\Entity\Participant')
             ->find($id);
+    }
+
+    /**
+     * @param int $userId
+     * @param int $seasonId
+     *
+     * @return bool
+     */
+    public function isUserParticipatingInSeason($userId, $seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('p')
+            ->from('Season\Entity\Participant', 'p')
+            ->innerJoin('p.season', 's')
+            ->innerJoin('p.user', 'u')
+            ->where('s.id = :seasonId')
+            ->andWhere('u.id = :userId')
+            ->setParameter('seasonId', $seasonId)
+            ->setParameter('userId', $userId);
+
+        $result = $qb->getQuery()->getResult();
+        return !empty($result);
     }
 }

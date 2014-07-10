@@ -102,11 +102,16 @@ div.widget {
     margin: 1em 0 1em 0;
 }
 
-.widget h3, .widget h4 {
+.widget h3, .widget h4, .widget h5 {
     margin: 0 0 10px 0;
     color: #68b604;
     font-weight: bold;
     text-shadow:0 1px 1px rgba(155, 155, 255, 0.45);
+}
+
+.widget h5 {
+    margin: 0;
+    color: #0088cc;
 }
 
 .widget .btn {

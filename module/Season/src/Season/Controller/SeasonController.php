@@ -31,12 +31,16 @@ class SeasonController extends DefaultController
     }
 
     /**
+     * widget for new season invitation
+     *
      * @return array|ViewModel
      */
     public function showAction()
     {
+        $userId = $this->identity()->getId();
+
         /* @var $season \Season\Entity\Season */
-        $seasons = $this->getSeasonMapper()->getNewSeasons();
+        $seasons = $this->getSeasonMapper()->getNewSeasonsByUser($userId);
 
         return new ViewModel(
             array(
@@ -214,6 +218,8 @@ class SeasonController extends DefaultController
             )
         );
     }
+
+
 
     /**
      * widget for time, extra time and komi

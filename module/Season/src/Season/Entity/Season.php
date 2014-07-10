@@ -24,6 +24,7 @@ class Season extends SeasonModel
     private $acceptingPlayers;
     private $availablePlayers = array();
     private $unassignedPlayers = array();
+    private $isRegistered = false;
 
     /**
      * construct
@@ -274,6 +275,22 @@ class Season extends SeasonModel
     }
 
     /**
+     * @param boolean $isRegistered
+     */
+    public function setIsRegistered($isRegistered)
+    {
+        $this->isRegistered = $isRegistered;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isRegistered()
+    {
+        return $this->isRegistered;
+    }
+
+    /**
      * @return string
      */
     public function  getSeasonInfo()
@@ -351,6 +368,9 @@ class Season extends SeasonModel
         }
         if (isset($data['unassignedPlayers'])) {
             $this->unassignedPlayers = $data['unassignedPlayers'];
+        }
+        if (isset($data['isRegistered'])) {
+            $this->isRegistered = $data['isRegistered'];
         }
     }
 

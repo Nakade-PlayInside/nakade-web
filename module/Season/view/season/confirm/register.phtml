@@ -1,0 +1,17 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+$head = 'Participation';
+$this->headTitle($head);
+?>
+
+<h1><?php echo $this->translate("Register for New Season?"); ?></h1>
+<p><?php echo $this->translate("Your registration is binding.");?><br/>
+<?php echo $this->translate("The match schedule is released subsequently after ending of registration.");?><br/>
+</p>
+
+<?php
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();
+

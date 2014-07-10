@@ -25,9 +25,11 @@ class ConfirmControllerFactory implements FactoryInterface
         $serviceManager = $services->getServiceLocator();
 
         $repository = $serviceManager->get('Season\Services\RepositoryService');
+        $form    = $serviceManager->get('Season\Services\SeasonFormService');
 
         $controller = new ConfirmController();
         $controller->setRepository($repository);
+        $controller->setFormFactory($form);
 
         return $controller;
     }

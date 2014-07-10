@@ -6,11 +6,6 @@ $this->headTitle('New Season');
 $title = $this->translate("Call for Participation");
 ?>
 
-<?php $this->placeholder('noSeason')->captureStart();?>
-      <?php echo $this->translate("No season found."); ?>
-<?php $this->placeholder('noSeason')->captureEnd();?>
-
-
 <?php $this->placeholder('actual')->captureStart();?>
 <div class="widget">
 <h3><?php echo $title;?></h3>
@@ -25,7 +20,12 @@ $title = $this->translate("Call for Participation");
     <li><?php echo $this->translate('Participants') . ': ' . $season->getNoPlayers(); ?></li>
     <li><?php echo $this->translate('Stage') . ': ' . $this->state($season); ?></li>
 </ul>
-    <a class="btn" href="">Register NOW!</a>
+<?php if(!$season->isRegistered()) : ?>
+    <a class="btn" href="<?php echo $this->url('playerConfirm', array('action' => 'register', 'id' => $season->getId()));?>"><?php echo $this->translate('Register NOW!'); ?></a>
+<?php else : ?>
+     <h5><?php echo $this->translate("You registered already!"); ?></h5>
+<?php
+endif ?>
 <?php
 endforeach ?>
 </div>
@@ -34,9 +34,7 @@ endforeach ?>
 
 <?php
 
- if (is_null($this->newSeasons)) {
-     echo $this->placeholder('noSeason');
- } else {
+ if (!is_null($this->newSeasons)) {
      echo $this->placeholder('actual');
  }
 
