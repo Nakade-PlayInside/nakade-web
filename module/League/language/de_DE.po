@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-03 11:31+0100\n"
-"PO-Revision-Date: 2014-07-03 11:31+0100\n"
+"POT-Creation-Date: 2014-07-10 12:17+0100\n"
+"PO-Revision-Date: 2014-07-10 12:17+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -411,18 +411,18 @@ msgid "download your schedule calendar (iCal)"
 msgstr "lade deinen Spielplan runter (iCal)  "
 
 #: ../view/league/time-table/my-schedule.phtml:10
-msgid "My %name% League Schedule"
-msgstr "Mein %name% Liga Spielplan"
+msgid "%name% League Schedule"
+msgstr "%name% Liga Spielplan"
 
 #: ../view/league/time-table/my-schedule.phtml:14
 msgid "No schedule found"
 msgstr "Kein Spielplan gefunden"
 
-#: ../view/league/time-table/my-schedule.phtml:20
+#: ../view/league/time-table/my-schedule.phtml:21
 msgid "Download your calendar"
 msgstr "Lade dir deinen Spielplan runter"
 
-#: ../view/league/time-table/my-schedule.phtml:26
+#: ../view/league/time-table/my-schedule.phtml:27
 msgid "my color"
 msgstr "Meine Spielfarbe"
 

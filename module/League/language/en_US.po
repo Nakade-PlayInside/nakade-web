@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-20 23:58+0100\n"
-"PO-Revision-Date: 2014-06-20 23:58+0100\n"
+"POT-Creation-Date: 2014-07-10 12:17+0100\n"
+"PO-Revision-Date: 2014-07-10 12:17+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -314,18 +314,22 @@ msgid "%name% 1. League"
 msgstr ""
 
 #: ../view/league/table/index.phtml:14
+#: ../view/league/table/table.phtml:20
 msgid "No season found"
 msgstr ""
 
 #: ../view/league/table/index.phtml:23
+#: ../view/league/table/table.phtml:27
 msgid "Position"
 msgstr ""
 
 #: ../view/league/table/index.phtml:24
+#: ../view/league/table/table.phtml:28
 msgid "Player"
 msgstr ""
 
 #: ../view/league/table/index.phtml:25
+#: ../view/league/table/table.phtml:29
 msgid "Name"
 msgstr ""
 
@@ -350,7 +354,6 @@ msgid "TB"
 msgstr ""
 
 #: ../view/league/table/table.phtml:10
-#: ../view/league/time-table/schedule.phtml:8
 msgid "%name% %no%. League"
 msgstr ""
 
@@ -407,18 +410,18 @@ msgid "download your schedule calendar (iCal)"
 msgstr ""
 
 #: ../view/league/time-table/my-schedule.phtml:10
-msgid "My %name% League Schedule"
+msgid "%name% League Schedule"
 msgstr ""
 
 #: ../view/league/time-table/my-schedule.phtml:14
 msgid "No schedule found"
 msgstr ""
 
-#: ../view/league/time-table/my-schedule.phtml:20
+#: ../view/league/time-table/my-schedule.phtml:21
 msgid "Download your calendar"
 msgstr ""
 
-#: ../view/league/time-table/my-schedule.phtml:26
+#: ../view/league/time-table/my-schedule.phtml:27
 msgid "my color"
 msgstr ""
 
