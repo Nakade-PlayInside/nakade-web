@@ -19,20 +19,20 @@ class LeagueController extends DefaultController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        //no new season! add season first
-        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        $info = $this->getSeasonMapper()->getSeasonInfo($season->getId());
+        $season->exchangeArray($info);
+
+        if (is_null($season) || $season->hasMatchDays()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
 
-        $noLeagues = $this->getSeasonMapper()->getNoOfLeaguesInSeason($season->getId());
-        $season->setNoLeagues($noLeagues);
+        $leagues = $this->getLeagueMapper()->getLeagueInfoBySeason($season->getId());
 
         return new ViewModel(
             array(
-               'season' => $season,
-               'accepted' => count($this->getSeasonMapper()->getAcceptingUsersBySeason($season->getId())),
-               'assigned' => count($this->getSeasonMapper()->getParticipantsBySeason($season->getId())),
+                'season' => $season,
+                'leagues' => $leagues
             )
         );
     }
@@ -42,14 +42,16 @@ class LeagueController extends DefaultController
      */
     public function addAction()
     {
-        //@todo: validate forwarding. is league still editable, has season not yet startet ?
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        //no new season! add season first
-        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        $info = $this->getSeasonMapper()->getSeasonInfo($season->getId());
+        $season->exchangeArray($info);
+
+        if (is_null($season) || $season->hasMatchDays()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+
         $no = $this->getLeagueMapper()->getNewLeagueNoBySeason($season->getId());
 
         $league = new League();
@@ -97,37 +99,18 @@ class LeagueController extends DefaultController
     /**
      * @return \Zend\Http\Response|ViewModel
      */
-    public function showAction()
-    {
-
-        $associationId = (int) $this->params()->fromRoute('id', 1);
-
-        //no new season! add season first
-        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($associationId)) {
-            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
-        }
-        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($associationId);
-        $leagues = $this->getLeagueMapper()->getLeagueInfoBySeason($season->getId());
-
-        return new ViewModel(
-            array(
-                'season' => $season,
-                'leagues' => $leagues
-            )
-        );
-    }
-
-    /**
-     * @return \Zend\Http\Response|ViewModel
-     */
     public function editAction()
     {
-        //@todo: validate forwarding. is league still editable, has season not yet startet ?
         $leagueId = (int) $this->params()->fromRoute('id', 0);
-
         $league = $this->getLeagueMapper()->getLeagueById($leagueId);
-        //no new season! add season first
+
         if (is_null($league)) {
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+        }
+
+        $season = $league->getSeason();;
+        $matchDays = $this->getSeasonMapper()->getMatchDaysBySeason($season->getId());
+        if (!empty($matchDays)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
 
@@ -142,7 +125,7 @@ class LeagueController extends DefaultController
             $postData =  $request->getPost();
             //cancel
             if (isset($postData['button']['cancel'])) {
-                return $this->redirect()->toRoute('createLeague', array('action' => 'show'));
+                return $this->redirect()->toRoute('createLeague');
             }
 
             $form->setData($postData);
@@ -165,7 +148,6 @@ class LeagueController extends DefaultController
             }
         }
 
-
         return new ViewModel(
             array(
                 'form' => $form,
@@ -173,27 +155,4 @@ class LeagueController extends DefaultController
         );
     }
 
-    /**
-     * @return \Zend\Http\Response|ViewModel
-     */
-    public function emptyAction()
-    {
-
-        //todo: remove all league from season with no players assigned during schedule macth making
-        $id = (int) $this->params()->fromRoute('id', 1);
-
-        //no new season! add season first
-        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
-            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
-        }
-        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
-        $unassignedLeagues = $this->getLeagueMapper()->getEmptyLeaguesBySeason($season->getId());
-
-        return new ViewModel(
-            array(
-                'season' => $season,
-                'unassigned' => $unassignedLeagues,
-            )
-        );
-    }
 }

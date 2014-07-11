@@ -37,7 +37,7 @@ $title = sprintf("%s: %s %s",
 <?php $this->placeholder('newLeague')->captureEnd(); ?>
 
 <?php $this->placeholder('league')->captureStart();?>
-    <a class="btn" href="<?php echo $this->url('createLeague', array('action' => 'show')); ?>"><?php echo $this->translate("edit League"); ?></a>
+    <a class="btn" href="<?php echo $this->url('createLeague'); ?>"><?php echo $this->translate("edit League"); ?></a>
     <a class="btn" href="<?php echo $this->url('configMatchDay', array('action' => 'add')); ?>"><?php echo $this->translate("configure Match Days"); ?></a>
 <?php $this->placeholder('league')->captureEnd(); ?>
 

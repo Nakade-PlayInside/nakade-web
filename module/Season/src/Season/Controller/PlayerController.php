@@ -14,7 +14,7 @@ class PlayerController extends DefaultController
     public function indexAction()
     {
         $id = (int) $this->params()->fromRoute('id', 1);
-
+//todo: validate matchDay are not existing
         //no new season! add season first
         if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
@@ -37,7 +37,7 @@ class PlayerController extends DefaultController
     public function addAction()
     {
         $id = (int) $this->params()->fromRoute('id', 1);
-
+//todo: validate matchDay are not existing
          //no new season! add season first
         if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));

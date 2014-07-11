@@ -19,7 +19,7 @@ class MatchDayController extends DefaultController
     public function indexAction()
     {
         $id = (int) $this->params()->fromRoute('id', 1);
-
+//todo: validate schedule was not created
         //no new season! add season first
         if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
@@ -43,7 +43,8 @@ class MatchDayController extends DefaultController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-
+//todo: validate schedule was not created
+        //todo: cleanup unused and empty leagues
         //no new season! add season first
         if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
@@ -107,6 +108,7 @@ class MatchDayController extends DefaultController
     {
         $id = (int) $this->params()->fromRoute('id', -1);
 
+        //todo: validate schedule was not created
         $matchDay = $this->getSeasonMapper()->getMatchDayById($id);
         if (is_null($matchDay)) {
             return $this->redirect()->toRoute('configMatchDay');

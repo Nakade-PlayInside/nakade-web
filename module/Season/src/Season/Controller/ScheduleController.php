@@ -16,7 +16,7 @@ class ScheduleController extends DefaultController
     public function indexAction()
     {
         $id = (int) $this->params()->fromRoute('id', 1);
-
+//todo: validate season is not active
       //no new season! add season first
         if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
@@ -39,7 +39,7 @@ class ScheduleController extends DefaultController
     public function createAction()
     {
         $id = (int) $this->params()->fromRoute('id', 1);
-
+//todo: validate season is not active
         //no new season! add season first
         if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
@@ -82,7 +82,7 @@ class ScheduleController extends DefaultController
     public function deleteAction()
     {
         $id = (int) $this->params()->fromRoute('id', 1);
-
+//todo: validate season is not active
         //no new season! add season first
         if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
