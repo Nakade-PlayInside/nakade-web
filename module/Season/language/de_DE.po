@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-10 12:18+0100\n"
-"PO-Revision-Date: 2014-07-10 12:20+0100\n"
+"POT-Creation-Date: 2014-07-11 11:49+0100\n"
+"PO-Revision-Date: 2014-07-11 11:53+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -70,6 +70,18 @@ msgstr "Alle späteren Rückmeldungen werden ignoriert."
 #: ../src/Season/Mail/InvitationMail.php:51
 msgid "Invitation - %NUMBER%. %ASSOCIATION% League"
 msgstr "Einladung zur %NUMBER%. %ASSOCIATION% Liga"
+
+#: ../src/Season/View/Helper/ParticipationInfo.php:23
+msgid "Registration Closed"
+msgstr "Anmeldefrist abgelaufen"
+
+#: ../src/Season/View/Helper/ParticipationInfo.php:26
+msgid "You registered already!"
+msgstr "Du bist schon angemeldet!"
+
+#: ../src/Season/View/Helper/ParticipationInfo.php:30
+msgid "Register NOW!"
+msgstr "JETZT Anmelden!"
 
 #: ../src/Season/View/Helper/SeasonState.php:26
 msgid "invite participants"
@@ -310,20 +322,30 @@ msgstr "Es wird ein wenig dauern, bis der neue Spielplan bekanntgegeben wird."
 msgid "You can follow the actual stage of development on the dashboard."
 msgstr "Du kannst den aktuellen Stand auf deinem Dashboard mitverfolgen."
 
+#: ../view/season/confirm/register.phtml:7
+msgid "Register for New Season?"
+msgstr "Für die neue Saison anmelden?"
+
+#: ../view/season/confirm/register.phtml:8
+msgid "Your registration is binding."
+msgstr "Deine Anmeldung ist verbindlich."
+
+#: ../view/season/confirm/register.phtml:9
+msgid "The match schedule is released subsequently after ending of registration."
+msgstr "Der Spielplan wird zeitnah nach Beendigung der Anmeldefrist veröffentlicht. "
+
 #: ../view/season/player/index.phtml:11
 msgid "Player Roster"
 msgstr "Spielerliste"
 
 #: ../view/season/player/index.phtml:13
 #: ../view/season/season/index.phtml:9
-#: ../view/season/season/create.phtml:9
 msgid "League"
 msgstr "Liga"
 
 #: ../view/season/player/index.phtml:19
 #: ../view/season/season/index.phtml:15
 #: ../view/season/season/show-rules.phtml:12
-#: ../view/season/season/show.phtml:10
 msgid "No season found."
 msgstr "Keine Saison gefunden."
 
@@ -360,17 +382,14 @@ msgid "Open matches"
 msgstr "offene Partien"
 
 #: ../view/season/season/index.phtml:27
-#: ../view/season/season/create.phtml:21
 msgid "First match"
 msgstr "erste Partie"
 
 #: ../view/season/season/index.phtml:28
-#: ../view/season/season/create.phtml:22
 msgid "Last match"
 msgstr "letzte Partie"
 
 #: ../view/season/season/index.phtml:29
-#: ../view/season/season/create.phtml:23
 msgid "State"
 msgstr "Status"
 
@@ -382,24 +401,23 @@ msgstr "Bedenkzeit und Komi"
 msgid "Call for Participation"
 msgstr "Einladung zur neuen Saison"
 
-#: ../view/season/season/show.phtml:18
+#: ../view/season/season/show.phtml:13
 msgid "League No."
 msgstr "Liga Nr."
 
-#: ../view/season/season/show.phtml:20
+#: ../view/season/season/show.phtml:15
 msgid "Base Time"
 msgstr "Bedenkzeit"
 
-#: ../view/season/season/show.phtml:23
+#: ../view/season/season/show.phtml:18
 msgid "Start"
 msgstr "Beginn "
 
-#: ../view/season/season/show.phtml:25
-#: ../view/season/season/create.phtml:19
+#: ../view/season/season/show.phtml:20
 msgid "Participants"
 msgstr "Teilnehmer"
 
-#: ../view/season/season/show.phtml:26
+#: ../view/season/season/show.phtml:21
 msgid "Stage"
 msgstr "Status"
 

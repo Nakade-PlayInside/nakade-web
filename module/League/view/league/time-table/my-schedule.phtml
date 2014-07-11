@@ -6,9 +6,10 @@ $this->headTitle('schedule');
 
 /* @var $league \Season\Entity\League */
 $league = $this->league;
-$association = $league->getSeason()->getAssociation()->getName();
-$title = $this->translate("%name% League Schedule") . " " . $league->getSeason()->getStartDate()->format('Y');
-$title = str_replace("%name%", $association, $title);
+
+$title = $this->translate("%NAME% League No. %NUMBER%");
+$title = str_replace("%NAME%", $league->getSeason()->getAssociation()->getName(), $title);
+$title = str_replace("%NUMBER%", $league->getSeason()->getNumber(), $title);
 ?>
 <?php $this->placeholder('noSchedule')->captureStart();?>
 <h3><?php echo $this->translate('No schedule found')?></h3>
