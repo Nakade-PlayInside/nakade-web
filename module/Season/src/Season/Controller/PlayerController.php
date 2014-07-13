@@ -14,15 +14,13 @@ class PlayerController extends DefaultController
     public function indexAction()
     {
         $id = (int) $this->params()->fromRoute('id', 1);
-//todo: validate matchDay are not existing
-        //no new season! add season first
-        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
+
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        if (is_null($season) || $season->hasMatchDays()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
 
         return new ViewModel(array(
-               //'players' => $this->getService()->getPlayers(),
                'season' => $season,
                'invited' => $this->getSeasonMapper()->getInvitedUsersBySeason($season->getId()),
                'available' => $this->getSeasonMapper()->getAvailablePlayersBySeason($season->getId()),
@@ -37,12 +35,11 @@ class PlayerController extends DefaultController
     public function addAction()
     {
         $id = (int) $this->params()->fromRoute('id', 1);
-//todo: validate matchDay are not existing
-         //no new season! add season first
-        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
+
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        if (is_null($season) || $season->hasMatchDays()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
 
        $form = $this->getParticipantForm();
        $form->bindEntity($season);

@@ -19,18 +19,15 @@ class MatchDayController extends DefaultController
     public function indexAction()
     {
         $id = (int) $this->params()->fromRoute('id', 1);
-//todo: validate schedule was not created
-        //no new season! add season first
-        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
+
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        if (is_null($season) || $season->hasSchedule()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
 
-        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
-        $matchDays = $this->getSeasonMapper()->getMatchDaysBySeason($season->getId());
-
         return new ViewModel(
             array(
-               'matchDays' => $matchDays,
+               'matchDays' => $season->getMatchDays(),
                'season'=> $season,
             )
         );
@@ -43,15 +40,12 @@ class MatchDayController extends DefaultController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-//todo: validate schedule was not created
         //todo: cleanup unused and empty leagues
-        //no new season! add season first
-        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        if (is_null($season) || $season->hasSchedule()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
-        $noOfMatchDays = $this->getSeasonMapper()->getNoOfMatchDaysBySeason($season->getId());
-
+        $noOfMatchDays = $this->getSeasonMapper()->getMaxParticipantsInLeagueBySeason($season->getId());
         $schedule = new Schedule($season, $noOfMatchDays);
 
         $form = $this->getMatchDayConfigForm();
@@ -108,7 +102,11 @@ class MatchDayController extends DefaultController
     {
         $id = (int) $this->params()->fromRoute('id', -1);
 
-        //todo: validate schedule was not created
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        if (is_null($season) || $season->hasSchedule()) {
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+        }
+
         $matchDay = $this->getSeasonMapper()->getMatchDayById($id);
         if (is_null($matchDay)) {
             return $this->redirect()->toRoute('configMatchDay');
@@ -151,17 +149,12 @@ class MatchDayController extends DefaultController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        //todo: validate schedule was not created
-
-        //no new season! add season first
-        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        if (is_null($season) || $season->hasSchedule()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
-        $matchDays = $this->getSeasonMapper()->getMatchDaysBySeason($season->getId());
 
         $form = $this->getConfirmForm();
-
         if ($this->getRequest()->isPost()) {
 
             //get post data, set data to from, prepare for validation
@@ -172,7 +165,7 @@ class MatchDayController extends DefaultController
             }
             if (isset($postData['submit'])) {
 
-                foreach ($matchDays as $matchDay) {
+                foreach ($season->getMatchDays() as $matchDay) {
                     $this->getSeasonMapper()->delete($matchDay);
                 }
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
@@ -182,7 +175,7 @@ class MatchDayController extends DefaultController
 
         return new ViewModel(
             array(
-                'matchDays' => $matchDays,
+                'matchDays' => $season->getMatchDays(),
                 'season'=> $season,
                 'form'=> $form,
             )

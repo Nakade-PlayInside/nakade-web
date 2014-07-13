@@ -23,7 +23,7 @@ $title = sprintf("%s: %s %s",
     <li><?php echo $this->translate('Number of leagues') . ': ' . $season->getNoLeagues() ?></li>
     <li><?php echo $this->translate('Number of players') . ': ' . $season->getNoPlayers() ?></li>
     <li><?php echo $this->translate('Number of matches') . ': ' . $season->getNoMatches() ?></li>
-    <li><?php echo $this->translate('Open matches') . ': ' . $season->getOpenMatches() ?></li>
+    <li><?php echo $this->translate('Open matches') . ': ' . $season->getNoOpenMatches() ?></li>
     <li><?php echo $this->translate('First match') . ': ' . $season->getFirstMatchDate()->format('d.m.Y H:i'); ?></li>
     <li><?php echo $this->translate('Last match') . ': ' . $season->getLastMatchDate()->format('d.m.Y H:i'); ?></li>
     <li><?php echo $this->translate('State') . ': ' . $this->state($season); ?></li>

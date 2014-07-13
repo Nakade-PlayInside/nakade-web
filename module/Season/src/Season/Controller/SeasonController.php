@@ -59,10 +59,7 @@ class SeasonController extends DefaultController
         if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'add'));
         }
-
         $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
-        $info = $this->getSeasonMapper()->getSeasonInfo($season->getId());
-        $season->exchangeArray($info);
 
         return new ViewModel(
             array(

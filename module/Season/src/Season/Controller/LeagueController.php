@@ -20,9 +20,6 @@ class LeagueController extends DefaultController
         $id = (int) $this->params()->fromRoute('id', 1);
 
         $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
-        $info = $this->getSeasonMapper()->getSeasonInfo($season->getId());
-        $season->exchangeArray($info);
-
         if (is_null($season) || $season->hasMatchDays()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
@@ -45,9 +42,6 @@ class LeagueController extends DefaultController
         $id = (int) $this->params()->fromRoute('id', 1);
 
         $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
-        $info = $this->getSeasonMapper()->getSeasonInfo($season->getId());
-        $season->exchangeArray($info);
-
         if (is_null($season) || $season->hasMatchDays()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }

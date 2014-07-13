@@ -31,16 +31,13 @@ class SeasonState extends AbstractHelper
         if (!$season->hasMatchDays()) {
             return $translate('configure match days');
         }
-        if (!$season->hasMatches()) {
-            return $translate('create matches');
-        }
         if (!$season->hasSchedule()) {
             return $translate('create schedule');
         }
         if (!$season->isReady()) {
             return $translate('activate season');
         }
-        return $translate('in process');
+        return $translate('active season');
 
     }
 
