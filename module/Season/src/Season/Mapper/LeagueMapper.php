@@ -70,8 +70,8 @@ class LeagueMapper extends AbstractMapper
         $qb = $this->getEntityManager()->createQueryBuilder('League');
         $qb->select('l.id')
             ->from('Season\Entity\Participant', 'p')
-            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'p.league = l')
-            ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'l.season = s')
+            ->innerJoin('p.league', 'l')
+            ->innerJoin('l.season', 's')
             ->where('s.id = :seasonId')
             ->groupBy('l.id')
             ->setParameter('seasonId', $seasonId);
@@ -134,7 +134,7 @@ class LeagueMapper extends AbstractMapper
     /**
      * @param int $leagueId
      *
-     * @return array
+     * @return int
      */
     public function getNoPlayersByLeague($leagueId)
     {

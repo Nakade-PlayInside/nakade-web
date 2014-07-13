@@ -7,11 +7,9 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Creates the controller used for authentication.
- * make sure, you have configured the factory in the module configuration
- * file as a controller factory.
+ * Class PlayerControllerFactory
  *
- * @author Dr.Holger Maerz <grrompf@gmail.com>
+ * @package Season\Services
  */
 class PlayerControllerFactory implements FactoryInterface
 {

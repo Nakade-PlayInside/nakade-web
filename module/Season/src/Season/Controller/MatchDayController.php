@@ -2,7 +2,6 @@
 namespace Season\Controller;
 
 use Season\Entity\MatchDay;
-use Season\Entity\Schedule;
 use Season\Schedule\ScheduleDates;
 use Zend\View\Model\ViewModel;
 
@@ -40,13 +39,12 @@ class MatchDayController extends DefaultController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        //todo: cleanup unused and empty leagues
         $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
         if (is_null($season) || $season->hasSchedule()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $noOfMatchDays = $this->getSeasonMapper()->getMaxParticipantsInLeagueBySeason($season->getId());
-        $schedule = new Schedule($season, $noOfMatchDays);
+
+        $schedule = $this->getService()->getScheduleEntity($season);
 
         $form = $this->getMatchDayConfigForm();
         $form->bindEntity($schedule);
