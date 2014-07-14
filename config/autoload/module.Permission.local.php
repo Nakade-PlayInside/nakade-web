@@ -37,9 +37,11 @@ return array(
             'League\Controller\TimeTable\schedule' => 'guest',
 
             'Season\Controller\Season' => 'admin',
-            'Season\Controller\League' => 'admin',
             'Season\Controller\Player' => 'admin',
+            'Season\Controller\League' => 'admin',
+            'Season\Controller\MatchDay' => 'admin',
             'Season\Controller\Schedule' => 'admin',
+            'Season\Controller\Confirm\register' => 'guest',
 
         )
     ),
