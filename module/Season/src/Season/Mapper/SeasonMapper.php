@@ -529,4 +529,6 @@ class SeasonMapper extends AbstractMapper
         $result = $qb->getQuery()->getResult();
         return !empty($result);
     }
+
+
 }

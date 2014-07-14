@@ -12,9 +12,6 @@ use Season\Entity\League;
  */
 class Schedule
 {
-    const BLACK=0;
-    const WHITE=0;
-
     private $matchDays;
     private $repositoryService;
     private $leaguePairingService;

@@ -15,6 +15,7 @@ class MailService extends AbstractTranslation implements FactoryInterface
 {
 
     const INVITATION_MAIL = 'invite';
+    const SCHEDULE_MAIL = 'schedule';
 
     private $transport;
     private $message;
@@ -88,6 +89,10 @@ class MailService extends AbstractTranslation implements FactoryInterface
 
            case self::INVITATION_MAIL:
                $mail = new Mail\InvitationMail($this->message, $this->transport, $this->dateHelper);
+               break;
+
+           case self::SCHEDULE_MAIL:
+               $mail = new Mail\ScheduleMail($this->message, $this->transport, $this->dateHelper);
                break;
 
            default:

@@ -204,6 +204,9 @@ class SeasonController extends DefaultController
 
                 $season->setIsReady(true);
                 $this->getSeasonMapper()->save($season);
+                $this->getService()->sendMails($season);
+
+                //for each get schedule
                 return $this->redirect()->toRoute('createSeason');
             }
 

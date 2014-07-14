@@ -4,6 +4,7 @@ namespace Season\Mail;
 use Mail\NakadeMail;
 use Mail\Services\MailMessageFactory;
 use Season\Entity\Participant;
+use Season\Entity\Season;
 use Season\Schedule\DateHelper;
 use \Zend\Mail\Transport\TransportInterface;
 
@@ -17,7 +18,6 @@ abstract class SeasonMail extends NakadeMail
     protected $url = 'http://www.nakade.de';
     protected $dateHelper;
     protected $season;
-    protected $seasonDates;
     protected $participant;
 
     /**
@@ -57,6 +57,7 @@ abstract class SeasonMail extends NakadeMail
     public function setParticipant(Participant $participant)
     {
         $this->participant = $participant;
+        $this->setSeason($participant->getSeason());
     }
 
     /**
@@ -67,28 +68,35 @@ abstract class SeasonMail extends NakadeMail
         return $this->participant;
     }
 
+    /**
+     * @param Season $season
+     */
+    public function setSeason(Season $season)
+    {
+        $this->season = $season;
+    }
+
+    /**
+     * @return Season
+     */
+    public function getSeason()
+    {
+        return $this->season;
+    }
 
     protected function makeReplacements(&$message)
     {
         $message = str_replace('%URL%', $this->getUrl(), $message);
 
-        if (!is_null($this->participant)) {
+        if (!is_null($this->season)) {
 
-            $season = $this->getParticipant()->getSeason();
+            $season = $this->getSeason();
             $seasonDates = $season->getAssociation()->getSeasonDates();
             $time = $season->getTime();
-
             $day = $seasonDates->getDay();
             $matchDay = $this->getDateHelper()->getDay($day);
-
             $period = $seasonDates->getCycle();
             $cycle = $this->getDateHelper()->getCycle($period);
-
-            $link = sprintf('%s/playerConfirm?id=%d&confirm=%s',
-                $this->getUrl(),
-                $this->getParticipant()->getId(),
-                $this->getParticipant()->getAcceptString()
-            );
 
             $message = str_replace('%ASSOCIATION%', $season->getAssociation()->getName(), $message);
             $message = str_replace('%NUMBER%', $season->getNumber(), $message);
@@ -101,6 +109,17 @@ abstract class SeasonMail extends NakadeMail
             $message = str_replace('%CYCLE%', $cycle, $message);
             $message = str_replace('%TIME%', $seasonDates->getTime()->format('H:i'), $message);
             $message = str_replace('%MATCH_DAY%', $matchDay, $message);
+
+        }
+
+        if (!is_null($this->participant)) {
+
+            $link = sprintf('%s/playerConfirm?id=%d&confirm=%s',
+                $this->getUrl(),
+                $this->getParticipant()->getId(),
+                $this->getParticipant()->getAcceptString()
+            );
+
             $message = str_replace('%CONFIRM_LINK%', $link, $message);
         }
     }

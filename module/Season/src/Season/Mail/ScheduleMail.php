@@ -1,5 +1,6 @@
 <?php
 namespace Season\Mail;
+use Season\Entity\Match;
 
 /**
  * Class ScheduleMail
@@ -9,32 +10,29 @@ namespace Season\Mail;
 class ScheduleMail extends SeasonMail
 {
 
+    private $matches;
+
     /**
      * @return string
      */
     public function getMailBody()
     {
-
-        $schedule = sprintf('test');
-        //todo: info all matches, appointments, rules, results, dashboard, rememberMails
-        $message =
-            $this->translate('This is your actual schedule for the new season at %URL%.') .
+         $message =
+            $this->translate('This is your actual schedule for the %NUMBER%.%ASSOCIATION% League at %URL%.') .
             PHP_EOL . PHP_EOL .
-            $schedule .
+            $this->getSchedule() .
             PHP_EOL . PHP_EOL .
             $this->translate('All matches are officially played on KGS.') . ' ' .
+            PHP_EOL . PHP_EOL .
             $this->translate('Time') . ': %BASE_TIME%' .
             PHP_EOL .
             $this->translate('Byoyomi') . ': %BYOYOMI%, %MOVES%/%ADDITIONAL_TIME%' .
             PHP_EOL .
             $this->translate('Komi') . ': %KOMI%' .
-            PHP_EOL . PHP_EOL .
-            $this->translate('Match day') . ': %MATCH_DAY%, %CYCLE% - %TIME%' .
             PHP_EOL .
-            $this->translate('You have to provide your KGS name, so your opponent will recognize you.') . ' ' .
+            $this->translate('Match day') . ': %MATCH_DAY%, %CYCLE% - %TIME%' .
             PHP_EOL . PHP_EOL .
-
-
+            $this->translate('You have to provide your KGS name, so your opponent can recognize you.') . ' ' .
             PHP_EOL . PHP_EOL .
             $this->translate('In case of a match appointment, find your actual schedule on your dashboard .') . ' ' .
             $this->translate('You can also download your actual schedule for ICal.') .
@@ -51,24 +49,6 @@ class ScheduleMail extends SeasonMail
             $this->translate('Any further details on the tournament rules, you can find online.') . ' ' .
             $this->translate('If you have problems, please contact a league manager.') . ' ' .
             $this->translate('We hope you enjoy your matches and have a wonderful time on %URL%.') . ' ' .
-            PHP_EOL . PHP_EOL .
-
-            $this->translate('Base time') . ': %BASE_TIME%' .
-            PHP_EOL .
-            $this->translate('Byoyomi') . ': %BYOYOMI%, %MOVES%/%ADDITIONAL_TIME%' .
-            PHP_EOL .
-            $this->translate('Komi') . ': %KOMI%' .
-            PHP_EOL . PHP_EOL .
-            $this->translate('Match day') . ': %MATCH_DAY%, %CYCLE% - %TIME%' .
-            PHP_EOL . PHP_EOL .
-            $this->translate('To ensure being in the league, please confirm your participation as soon as possible.') .
-            PHP_EOL .
-            $this->translate('You can do so by clicking on the link provided below.') .
-            PHP_EOL . PHP_EOL . '%CONFIRM_LINK%' . PHP_EOL . PHP_EOL .
-            $this->translate('Or you just login at %URL% and confirm your participation on your site.') .
-            PHP_EOL .
-            $this->translate('The deadline for confirming your participation is a month before starting date.') . ' ' .
-            $this->translate('All later applications will be ignored.') .
             PHP_EOL . PHP_EOL .
             $this->getSignature()->getSignatureText();
 
@@ -88,5 +68,51 @@ class ScheduleMail extends SeasonMail
         return $subject;
     }
 
+    /**
+     * @return string
+     */
+    private function getSchedule()
+    {
+        $schedule = '';
+        foreach ($this->getMatches() as $match) {
+            $schedule .= $this->getPairing($match);
+        }
+
+        return $schedule;
+    }
+
+    /**
+     * @param Match $match
+     *
+     * @return string
+     */
+    private function getPairing(Match $match)
+    {
+        $matchInfo = sprintf('%s  %s (%s) - %s (%s)',
+            $match->getDate()->format('d.m. H:i'),
+            $match->getBlack()->getShortName(),
+            $match->getBlack()->getOnlineName(),
+            $match->getWhite()->getShortName(),
+            $match->getWhite()->getOnlineName()
+        );
+        $matchInfo = $matchInfo . PHP_EOL;
+        return $matchInfo;
+    }
+
+    /**
+     * @param array $matches
+     */
+    public function setMatches($matches)
+    {
+        $this->matches = $matches;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMatches()
+    {
+        return $this->matches;
+    }
 
 }
