@@ -67,6 +67,7 @@ class AuthFormFactory extends AbstractFormFactory
 
         $form->setTranslator($this->getTranslator());
         $form->setTranslatorTextDomain($this->getTranslatorTextDomain());
+        $form->init();
         return $form;
     }
 
