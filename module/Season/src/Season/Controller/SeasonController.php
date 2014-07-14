@@ -182,7 +182,6 @@ class SeasonController extends DefaultController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        //todo: send emails with match schedule to all participants
         //no new season! add season first
         if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));

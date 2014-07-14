@@ -10,10 +10,9 @@ use Season\Entity\League;
  *
  * @package Season\Schedule
  */
-class Schedule
+class Schedule extends SeasonRepositoryBase
 {
     private $matchDays;
-    private $repositoryService;
     private $leaguePairingService;
 
     /**
@@ -21,7 +20,7 @@ class Schedule
      */
     public function __construct(RepositoryService $repositoryService)
     {
-        $this->repositoryService = $repositoryService;
+        parent::__construct($repositoryService);
         $this->leaguePairingService = new HarmonicLeaguePairing();
     }
 
@@ -105,32 +104,6 @@ class Schedule
             );
         }
         return $this->matchDays[$round];
-    }
-
-    /**
-     * @return \Season\Services\RepositoryService
-     */
-    private function getRepositoryService()
-    {
-        return $this->repositoryService;
-    }
-
-    /**
-     * @return \Season\Mapper\LeagueMapper
-     */
-    private function getLeagueMapper()
-    {
-        $repo = $this->getRepositoryService();
-        return $repo->getMapper(RepositoryService::LEAGUE_MAPPER);
-    }
-
-    /**
-     * @return \Season\Mapper\SeasonMapper
-     */
-    private function getSeasonMapper()
-    {
-        $repo = $this->getRepositoryService();
-        return $repo->getMapper(RepositoryService::SEASON_MAPPER);
     }
 
     /**
