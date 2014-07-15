@@ -110,6 +110,9 @@ class MatchDayForm extends AbstractForm
                 'type' => 'Zend\Form\Element\Checkbox',
                 'name' => 'changeColors',
                 'options' => array('label' => $this->translate('Change Colors')),
+                'attributes' => array(
+                    'class' => 'checkbox',
+                ),
             )
         );
 

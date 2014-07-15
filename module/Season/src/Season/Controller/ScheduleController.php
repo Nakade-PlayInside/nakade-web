@@ -1,53 +1,47 @@
 <?php
 namespace Season\Controller;
 
-use Zend\Form\FormInterface;
-use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 
 /**
- * Creating a schedule of the newly created season
+ * Class ScheduleController
  *
- * @author Holger Maerz <holger@nakade.de>
+ * @package Season\Controller
  */
-class ScheduleController extends AbstractController
+class ScheduleController extends DefaultController
 {
     /**
-     * @return array|ViewModel
-     */
+    * @return array|ViewModel
+    */
     public function indexAction()
     {
+        $id = (int) $this->params()->fromRoute('id', 1);
+
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        if (is_null($season) || $season->isReady()) {
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+        }
 
         return new ViewModel(
             array(
-               'players' => null, //$this->getService()->getPlayers(),
-               'schedule'=> null, //$this->getService()
-                                 //->getSchedule(null),
+                'matchDays' => $season->getMatchDays(),
+                'season'=> $season,
             )
         );
     }
 
     /**
-     * @return \Zend\Http\Response|ViewModel
+     * @return ViewModel
      */
-    public function addAction()
+    public function createAction()
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper('season');
-
-        //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation($id)) {
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        if (is_null($season) || $season->isReady()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $mapper->getNewSeasonByAssociation($id);
-
-        /* @var $form \Season\Form\ScheduleForm */
-        $form = $this->getForm('schedule');
-        $form->setSeason($season);
-        $form->init();
-
+        $form = $this->getConfirmForm();
 
         if ($this->getRequest()->isPost()) {
 
@@ -55,22 +49,66 @@ class ScheduleController extends AbstractController
             $postData =  $this->getRequest()->getPost();
             //cancel
             if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('createSeason');
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
 
-            $form->setData($postData);
-            if ($form->isValid()) {
+            if (isset($postData['submit'])) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $this->getService()->addSchedule($data);
+                /* @var $schedule \Season\Schedule\Schedule */
+                $schedule = $this->getService()->getSchedule();
+                $schedule->getSchedule($season->getId());
 
-                return $this->redirect()->toRoute('schedule');
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
+
         }
 
         return new ViewModel(
             array(
-              'form' => $form,
+                'form' => $form,
+                'season'=> $season,
+            )
+        );
+    }
+
+    /**
+     * @return ViewModel
+     */
+    public function deleteAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 1);
+
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        if (is_null($season) || $season->isReady()) {
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+        }
+        $matches = $this->getSeasonMapper()->getMatchesBySeason($season->getId());
+
+        /* @var $form \Season\Form\MatchDayForm */
+        $form = $this->getConfirmForm();
+        if ($this->getRequest()->isPost()) {
+
+            //get post data, set data to from, prepare for validation
+            $postData =  $this->getRequest()->getPost();
+            //cancel
+            if (isset($postData['cancel'])) {
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+            }
+            if (isset($postData['submit'])) {
+
+                foreach ($matches as $match) {
+                    $this->getSeasonMapper()->delete($match);
+                }
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+            }
+        }
+
+
+        return new ViewModel(
+            array(
+                'matches' => $matches,
+                'season'=> $season,
+                'form'=> $form,
             )
         );
     }

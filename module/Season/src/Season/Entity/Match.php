@@ -42,13 +42,11 @@ class Match extends MatchModel
     }
 
     /**
-     * for form data
-     *
      * @param array $data
      */
     public function exchangeArray($data)
     {
-        return;
+        //todo: needed?
     }
 
     /**

@@ -25,6 +25,17 @@ class SeasonMapper extends AbstractMapper
             ->find($id);
     }
 
+    /**
+     * @param int $matchId
+     *
+     * @return \Season\Entity\MatchDay
+     */
+    public function getMatchDayById($matchId)
+    {
+        return $this->getEntityManager()
+            ->getRepository('Season\Entity\MatchDay')
+            ->find($matchId);
+    }
 
     /**
      * active season has already started and the isReady flag is set
@@ -50,6 +61,43 @@ class SeasonMapper extends AbstractMapper
     }
 
     /**
+     * @param int $seasonId
+     *
+     * @return \Season\Entity\Season
+     */
+    public function getSeasonById($seasonId)
+    {
+        return $this->getEntityManager()
+            ->getRepository('Season\Entity\Season')
+            ->find($seasonId);
+    }
+
+    /**
+     * @param int $userId
+     *
+     * @return array
+     */
+    public function getNewSeasonsByUser($userId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Season');
+        $qb->select('s')
+            ->from('Season\Entity\Season', 's')
+            ->where('s.isReady = false')
+            ->addOrderBy('s.startDate', 'DESC');
+
+        $result = $qb->getQuery()->getResult();
+
+        /* @var $season \Season\Entity\Season */
+        foreach ($result as $season) {
+            $data = $this->getSeasonInfo($season->getId());
+            $data['isRegistered'] = $this->isUserParticipatingInSeason($userId, $season->getId());
+
+            $season->exchangeArray($data);
+        }
+        return $result;
+    }
+
+    /**
      * new season has not yet started
      *
      * @param int $associationId
@@ -62,13 +110,20 @@ class SeasonMapper extends AbstractMapper
         $qb->select('s')
             ->from('Season\Entity\Season', 's')
             ->where('s.association = :association')
-            ->andWhere('s.startDate > :start')
+            ->andWhere('s.isReady = 0')
             ->addOrderBy('s.startDate', 'DESC')
             ->setMaxResults(1)
-            ->setParameter('association', $associationId)
-            ->setParameter('start', new \DateTime());
+            ->setParameter('association', $associationId);
 
-        return $qb->getQuery()->getOneOrNullResult();
+        $season = $qb->getQuery()->getOneOrNullResult();
+
+        /* @var $season \Season\Entity\Season */
+        if (!empty($season)) {
+            $data = $this->getSeasonInfo($season->getId());
+            $season->exchangeArray($data);
+        }
+
+        return $season;
     }
 
     /**
@@ -94,8 +149,7 @@ class SeasonMapper extends AbstractMapper
         $qb->select('s')
             ->from('Season\Entity\Season', 's')
             ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
-            ->leftJoin('Season\Entity\Match', 'm', Join::WITH, 'l = m.league')
-            ->where('m.result IS NOT Null')
+            ->where('s.isReady = 1')
             ->andWhere('s.association = :association')
             ->addOrderBy('s.startDate', 'DESC')
             ->setMaxResults(1)
@@ -116,8 +170,7 @@ class SeasonMapper extends AbstractMapper
       $data = null;
         $qb = $this->getEntityManager()->createQueryBuilder('Season');
         $qb->select('min(m.date) as firstMatchDate,
-            max(m.date) as lastMatchDate,
-            count(m) as noMatches')
+            max(m.date) as lastMatchDate')
             ->from('Season\Entity\Season', 's')
             ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l.season = s')
             ->leftJoin('Season\Entity\Match', 'm', Join::WITH, 'l = m.league')
@@ -126,9 +179,13 @@ class SeasonMapper extends AbstractMapper
         $data = $qb->getQuery()->getOneOrNullResult();
 
         if (!empty($data)) {
-            $data['openMatches'] = $this->getNoOfOpenMatchesInSeason($seasonId);
-            $data['noLeagues'] = $this->getNoOfLeaguesInSeason($seasonId);
-            $data['noPlayers'] = $this->getNoOfPlayersInSeason($seasonId);
+            $data['openMatches'] = $this->getOpenMatchesInSeason($seasonId);
+            $data['matches'] = $this->getMatchesBySeason($seasonId);
+            $data['leagues'] = $this->getLeaguesInSeason($seasonId);
+            $data['players'] = $this->getPlayersInSeason($seasonId);
+            $data['matchDays'] = $this->getMatchDaysBySeason($seasonId);
+            $data['availablePlayers'] = $this->getAvailablePlayersBySeason($seasonId);
+            $data['unassignedPlayers'] = $this->getUnassignedParticipantsBySeason($seasonId);
         }
 
         return $data;
@@ -162,60 +219,55 @@ class SeasonMapper extends AbstractMapper
     /**
      * @param int $seasonId
      *
-     * @return int
+     * @return array
      */
-    public function getNoOfOpenMatchesInSeason($seasonId)
+    public function getOpenMatchesInSeason($seasonId)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder('League');
-        $qb->select('count(m) as open')
+        $qb = $this->getEntityManager()->createQueryBuilder('Match');
+        $qb->select('m')
             ->from('Season\Entity\Match', 'm')
-            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'l = m.league')
-            ->innerJoin('l.season', 'season')
-            ->where('season.id = :seasonId')
-            ->andWhere('m.result IS Null')
-            ->addGroupBy('l.id')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'm.league = l')
+            ->innerJoin('l.season', 'mySeason')
+            ->where('mySeason.id = :seasonId')
+            ->andWhere('m.result IS NULL')
             ->setParameter('seasonId', $seasonId);
-        $result = $qb->getQuery()->getOneOrNullResult();
+        return $qb->getQuery()->getResult();
 
-        if (empty($result)) {
-            return $result;
-        }
-        return intval($result['open']);
     }
 
     /**
      * @param int $seasonId
      *
-     * @return int
+     * @return array
      */
-    public function getNoOfLeaguesInSeason($seasonId)
+    public function getLeaguesInSeason($seasonId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('count(l)')
+        $qb->select('l')
             ->from('Season\Entity\League', 'l')
             ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'l.season = s')
             ->where('s.id = :seasonId')
             ->setParameter('seasonId', $seasonId);
 
-        return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
+        return $qb->getQuery()->getResult();
     }
 
     /**
      * @param int $seasonId
      *
-     * @return int
+     * @return array
      */
-    public function getNoOfPlayersInSeason($seasonId)
+    public function getPlayersInSeason($seasonId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('Player');
-        $qb->select('count(p)')
+        $qb->select('p')
             ->from('Season\Entity\Participant', 'p')
             ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'p.season = s')
             ->where('s.id = :seasonId')
             ->andWhere('p.league IS NOT NULL')
             ->setParameter('seasonId', $seasonId);
 
-        return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -237,5 +289,246 @@ class SeasonMapper extends AbstractMapper
             ->getRepository('Season\Entity\Byoyomi')
             ->findAll();
     }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return int
+     *
+     */
+    public function getMaxParticipantsInLeagueBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('count(p) as no')
+            ->from('Season\Entity\Participant', 'p')
+            ->where('p.season = :seasonId')
+            ->setParameter('seasonId', $seasonId)
+            ->andWhere('p.league IS NOT NULL')
+            ->andWhere('p.hasAccepted  = 1')
+            ->groupBy('p.league')
+            ->orderBy('no', 'DESC')
+            ->setMaxResults(1);
+
+        return intval($qb->getQuery()->getResult(Query::HYDRATE_SINGLE_SCALAR));
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getMatchDaysBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('MatchDay');
+        $qb->select('m')
+            ->from('Season\Entity\MatchDay', 'm')
+            ->where('m.season = :seasonId')
+            ->setParameter('seasonId', $seasonId)
+            ->orderBy('m.matchDay', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getMatchesBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Matches');
+        $qb->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->innerJoin('m.league', 'l')
+            ->innerJoin('l.season', 's')
+            ->where('s.id = :seasonId')
+            ->setParameter('seasonId', $seasonId);
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getInvitedUsersBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('u')
+            ->from('Season\Entity\Participant', 'p')
+            ->leftJoin('User\Entity\User', 'u', Join::WITH, 'p.user = u')
+            ->innerJoin('p.season', 'Season')
+            ->where('Season.id = :seasonId')
+            ->setParameter('seasonId', $seasonId);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    private function getInvitedPlayerIdsBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('u.id')
+            ->from('User\Entity\User', 'u')
+            ->leftJoin('Season\Entity\Participant', 'p', Join::WITH, 'u = p.user')
+            ->innerJoin('p.season', 'Season')
+            ->where('Season.id = :seasonId')
+            ->setParameter('seasonId', $seasonId);
+
+        $result = $qb->getQuery()->getResult();
+
+        //quicker than array_map
+        $ids = array();
+        foreach ($result as $item) {
+            $ids[] = $item['id'];
+        }
+
+        return $ids;
+    }
+
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getAvailablePlayersBySeason($seasonId)
+    {
+        $notIn = $this->getInvitedPlayerIdsBySeason($seasonId);
+        //mandatory array is never empty
+        if (empty($notIn)) {
+            $notIn[]=0;
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('u')
+            ->from('User\Entity\User', 'u')
+            ->where($qb->expr()->notIn('u.id', $notIn))
+            ->andWhere('u.active = true')
+            ->andWhere('u.verified = true')
+            ->orderBy('u.firstname', 'ASC')
+            ->addOrderBy('u.lastname', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getAcceptingUsersBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('u')
+            ->from('User\Entity\User', 'u')
+            ->leftJoin('Season\Entity\Participant', 'p', Join::WITH, 'p.user = u')
+            ->innerJoin('p.season', 'Season')
+            ->where('Season.id = :seasonId')
+            ->andWhere('p.hasAccepted = 1')
+            ->setParameter('seasonId', $seasonId);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getUnassignedParticipantsBySeason($seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('p')
+            ->from('Season\Entity\Participant', 'p')
+            ->innerJoin('p.season', 'MySeason')
+            ->where('MySeason.id = :seasonId')
+            ->andWhere('p.league IS NULL')
+            ->andWhere('p.hasAccepted = 1')
+            ->setParameter('seasonId', $seasonId);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $userId
+     * @param int $seasonId
+     *
+     * @return \Season\Entity\Participant
+     */
+    public function getParticipantByUserAndSeason($userId, $seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('p')
+            ->from('Season\Entity\Participant', 'p')
+            ->innerJoin('p.season', 's')
+            ->innerJoin('p.user', 'u')
+            ->where('s.id = :seasonId')
+            ->andWhere('u.id = :userId')
+            ->setParameter('seasonId', $seasonId)
+            ->setParameter('userId', $userId);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+
+    /**
+     * @param int $leagueId
+     *
+     * @return array
+     */
+    public function getParticipantsByLeague($leagueId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('p')
+            ->from('Season\Entity\Participant', 'p')
+            ->innerJoin('p.league', 'League')
+            ->where('League.id = :leagueId')
+            ->setParameter('leagueId', $leagueId);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Season\Entity\Participant
+     */
+    public function getParticipantById($id)
+    {
+        return $this->getEntityManager()
+            ->getRepository('Season\Entity\Participant')
+            ->find($id);
+    }
+
+    /**
+     * @param int $userId
+     * @param int $seasonId
+     *
+     * @return bool
+     */
+    public function isUserParticipatingInSeason($userId, $seasonId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
+        $qb->select('p')
+            ->from('Season\Entity\Participant', 'p')
+            ->innerJoin('p.season', 's')
+            ->innerJoin('p.user', 'u')
+            ->where('s.id = :seasonId')
+            ->andWhere('u.id = :userId')
+            ->andWhere('p.hasAccepted = true')
+            ->setParameter('seasonId', $seasonId)
+            ->setParameter('userId', $userId);
+
+        $result = $qb->getQuery()->getResult();
+        return !empty($result);
+    }
+
 
 }

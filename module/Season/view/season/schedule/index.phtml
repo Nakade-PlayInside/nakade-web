@@ -1,69 +1,39 @@
 <?php
-$title = 'Participants';
-$this->headTitle($title);
-/* @var $match \Season\Entity\Match */
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+$head = 'Match Days';
+$this->headTitle($head);
+/* @var $matchDay \Season\Entity\MatchDay */
 ?>
 
-<?php $this->placeholder('noseason')->captureStart();?>
-<h3><?php echo $this->translate('No players found')?></h3>
-<?php $this->placeholder('noseason')->captureEnd(); ?>
+<?php $this->placeholder('noData')->captureStart();?>
+<h3><?php echo $this->translate('No match days found.')?></h3>
+<?php $this->placeholder('noData')->captureEnd(); ?>
 
-<?php $this->placeholder('schedule')->captureStart();?>
-<table class="table" style="margin-top: 0.5em;">
+<?php $this->placeholder('data')->captureStart();?>
+<h1><?php echo $this->translate("Match Days of the Next Season"); ?></h1>
+<table class="table" style="width: auto; margin-top: 0.5em;text-align: center;">
 <tr>
-    <th>day</th>
-    <th>liga</th>
-    <th>date</th>
-    <th>blackId</th>
-    <th>black</th>
-    <th>whiteId</th>
-    <th>white</th>
+    <th><?php echo $this->translate("round"); ?></th>
+    <th><?php echo $this->translate("date"); ?></th>
+    <th><?php echo $this->translate("edit"); ?></th>
 </tr>
 
-<?php foreach ($this->schedule as $match) : ?>
+<?php foreach ($this->matchDays as $matchDay) : ?>
 <tr style="background-color:<?php
     echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-    <td><?php echo $match->getMatchDay()->getMatchDay();?></td>
-    <td><?php echo $match->getLeague()->getTitle();?></td>
-    <td><?php echo $match->getDate()->format('D, d.m.Y H:i');?></td>
-    <td><?php echo $match->getBlack()->getId();?></td>
-    <td><?php echo $match->getBlack()->getPlayer()->getShortName();?></td>
-    <td><?php echo $match->getWhite()->getId();?></td>
-    <td><?php echo $match->getWhite()->getPlayer()->getShortName();?></td>
+    <td><?php echo $matchDay->getMatchDay();?></td>
+    <td><?php echo $matchDay->getDate()->format('D, d.m.Y H:i');?></td>
+    <td style="text-align: center;"><?php echo $this->showEdit($matchDay->getId(), "configMatchDay");?></td>
 </tr>
-<?php endforeach; ?>
+<?php
+endforeach; ?>
 </table>
-<?php $this->placeholder('schedule')->captureEnd();?>
-
-<?php $this->placeholder('players')->captureStart();?>
-<h3><?php echo $this->escapeHtml(
-                $this->translate('Participants of the new Season'));
- ?></h3>
-
-<table class="table" style="margin-top: 0.5em;">
-<tr>
-    <th title="<?php echo $this->translate("player's name"); ?>"><?php
-        echo $this->translate("Name"); ?></th>
-    <th title="<?php echo $this->translate("number of league"); ?>"><?php
-        echo $this->translate("League"); ?></th>
-</tr>
-
-<?php foreach ($this->players as $user) : ?>
-<tr style="background-color:<?php
-    echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-    <td><?php echo $this->escapeHtml($user->getPlayer()->getName());?></td>
-    <td><?php echo $this->escapeHtml($user->getLeague()->getNumber());?></td>
-</tr>
-<?php endforeach; ?>
-</table>
-<?php $this->placeholder('players')->captureEnd();
-
-  if($this->players!=null)
-      echo $this->placeholder('players');
-  else echo $this->placeholder('noseason');
-
-if($this->schedule!=null)
-      echo $this->placeholder('schedule');
-  else echo $this->placeholder('noseason');
+<a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'create')); ?>"><?php echo "back" ?></a>
+<?php $this->placeholder('data')->captureEnd();
 
 
+  if (count($this->matchDays)>0) {
+      echo $this->placeholder('data');
+  } else {
+      echo $this->placeholder('noData');
+  }

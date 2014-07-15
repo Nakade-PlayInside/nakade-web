@@ -24,3 +24,42 @@ ul.playerList li img {
     margin-left:10px;
     vertical-align: text-top;
 }
+
+
+.info {
+    list-style: none;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+ul.createSeason {
+    margin-top:10px;
+}
+
+ul.createSeason li a {
+    background: url(../images/info.png) no-repeat center center;
+    padding-left: 10px;
+    height: 16px;
+    width:16px;
+    display: inline-block;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+table.edit {
+    width:auto;
+}
+
+table.edit td {
+    text-align:center;
+}
+
+table.edit td a {
+    background: url(../images/edit.png) no-repeat center center;
+    padding-left: 10px;
+    height: 16px;
+    width:16px;
+    display: inline-block;
+    font-weight: bold;
+    vertical-align: top;
+}

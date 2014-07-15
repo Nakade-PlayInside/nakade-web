@@ -27,7 +27,6 @@ class TieBreakerFieldset extends AbstractFieldset
         foreach ($tieBreaker as $tieBreak) {
             $this->tieBreakerList[$tieBreak->getId()]= $tieBreak->getName();
         }
-        $this->init();
     }
 
 

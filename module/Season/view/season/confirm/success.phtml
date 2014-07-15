@@ -1,0 +1,13 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Season');
+$title = $this->translate("Participation is confirmed");
+$this->headTitle($title);
+
+?>
+
+<h3><?php echo $title;?></h3>
+<p>
+    <?php echo $this->translate("Your participation is confirmed."); ?><br/>
+    <?php echo $this->translate("It will take some time before the new schedule is announced."); ?><br/>
+    <?php echo $this->translate("You can follow the actual stage of development on the dashboard."); ?><br/>
+</p>

@@ -7,21 +7,17 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Creates the controller used for authentication.
- * make sure, you have configured the factory in the module configuration
- * file as a controller factory.
+ * Class PlayerControllerFactory
  *
- * @author Dr.Holger Maerz <grrompf@gmail.com>
+ * @package Season\Services
  */
 class PlayerControllerFactory implements FactoryInterface
 {
 
     /**
-     * creates the authController. Binds the authentication service and
-     * the authentication form.
+     * @param ServiceLocatorInterface $services
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
-     * @return \Authentication\Controller\AuthController
+     * @return mixed|PlayerController
      */
     public function createService(ServiceLocatorInterface $services)
     {
@@ -30,11 +26,13 @@ class PlayerControllerFactory implements FactoryInterface
 
         $factory    = $serviceManager->get('Season\Services\SeasonFormService');
         $repository = $serviceManager->get('Season\Services\RepositoryService');
+        $mail = $serviceManager->get('Season\Services\MailService');
 
 
         $controller = new PlayerController();
         $controller->setFormFactory($factory);
         $controller->setRepository($repository);
+        $controller->setMailService($mail);
 
         return $controller;
     }

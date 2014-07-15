@@ -27,7 +27,7 @@ endforeach; ?>
 
 <?php
 
- if (is_null($this->season)) {
+ if (empty($this->season)) {
      echo $this->placeholder('noSeason');
  } else {
      echo $this->placeholder('actual');

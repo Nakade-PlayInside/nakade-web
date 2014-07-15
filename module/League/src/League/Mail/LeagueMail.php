@@ -14,9 +14,9 @@ use Season\Entity\Match;
 use \Zend\Mail\Transport\TransportInterface;
 
 /**
- * Class AppointmentMail
+ * Class LeagueMail
  *
- * @package Appointment\Mail
+ * @package League\Mail
  */
 abstract class LeagueMail extends NakadeMail implements ResultInterface
 {

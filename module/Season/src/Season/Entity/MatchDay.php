@@ -4,11 +4,11 @@ namespace Season\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
-* Entity Class representing a MatchDay
-*
-* @ORM\Entity
-* @ORM\Table(name="matchDay")
-*/
+ * Entity Class representing a MatchDay
+ *
+ * @ORM\Entity
+ * @ORM\Table(name="matchDay")
+ */
 class MatchDay
 {
 
@@ -22,6 +22,12 @@ class MatchDay
    private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\Season\Entity\Season", cascade={"persist"})
+     * @ORM\JoinColumn(name="season", referencedColumnName="id", nullable=false)
+     */
+    private $season;
+
+    /**
      * @ORM\Column(name="matchDay", type="integer")
      */
     private $matchDay;
@@ -32,7 +38,7 @@ class MatchDay
     private $date;
 
     /**
-     * @param mixed $date
+     * @param \DateTime $date
      */
     public function setDate($date)
     {
@@ -40,7 +46,7 @@ class MatchDay
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -77,6 +83,22 @@ class MatchDay
     public function getMatchDay()
     {
         return $this->matchDay;
+    }
+
+    /**
+     * @param Season $season
+     */
+    public function setSeason(Season $season)
+    {
+        $this->season = $season;
+    }
+
+    /**
+     * @return Season
+     */
+    public function getSeason()
+    {
+        return $this->season;
     }
 
 }

@@ -23,8 +23,7 @@ class AuthForm extends AbstractForm
     {
         $this->captcha = $captcha;
         parent::__construct('LoginForm');
-        $this->filter = $this->getFilter();
-        $this->init();
+        $this->setInputFilter($this->getFilter());
         //$contact = new Contact();
         //$this->bind($contact);
     }
@@ -83,6 +82,9 @@ class AuthForm extends AbstractForm
                 'type'  => 'Zend\Form\Element\Checkbox',
                 'options' => array(
                     'label' =>  $this->translate('Remember?') .':',
+                ),
+                'attributes' => array(
+                    'class' => 'checkbox',
                 ),
             )
         );

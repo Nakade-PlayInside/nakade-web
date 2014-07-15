@@ -12,17 +12,15 @@ $title = sprintf("%s: %s %s",
     $this->seasonTitle($season),
     $this->translate('League'));
 ?>
-
-    <h3><?php echo $title;?></h3>
+<h3><?php echo $title;?></h3>
 
 <?php $this->placeholder('noSeason')->captureStart();?>
 <?php echo $this->translate("No season found."); ?>
 <?php $this->placeholder('noSeason')->captureEnd();?>
 
-
 <?php $this->placeholder('actual')->captureStart();?>
-
-    <h5><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h5>
+    <br/>
+    <h4><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h4>
     <hr>
     <h5><?php echo $this->translate("Invited players");?></h5>
     <ul class="playerList">

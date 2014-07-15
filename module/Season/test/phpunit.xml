@@ -3,7 +3,7 @@
 <phpunit bootstrap="Bootstrap.php" colors="true">
     <testsuites>
         <testsuite name="zf2tutorial">
-            <directory>./LeagueTest</directory>
+            <directory>./SeasonTest</directory>
         </testsuite>
     </testsuites>
 </phpunit>

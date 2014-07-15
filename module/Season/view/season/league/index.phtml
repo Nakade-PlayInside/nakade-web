@@ -1,47 +1,49 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('Season');
 
-$this->headTitle('League Roster');
-
-/* @var $season \Season\Entity\Season */
-$season = $this->season;
-$unassigned = intval($this->accepted-$this->assigned);
-
-/* @var $player \User\Entity\User */
-$title = sprintf("%s: %s %s",
-    $this->translate('Create Leagues'),
-    $this->seasonTitle($season),
-    $this->translate('League'));
+$title = $this->translate("Edit Leagues");
+$this->headTitle('League');
 ?>
-
-    <h3><?php echo $title;?></h3>
-
-<?php $this->placeholder('noSeason')->captureStart();?>
-<?php echo $this->translate("No season found."); ?>
-<?php $this->placeholder('noSeason')->captureEnd();?>
-
+<h1><?php echo $this->escapeHtml($title); ?></h1><hr/>
+<?php $this->placeholder('nothing')->captureStart();?>
+    <p><?php echo $this->translate("No league found."); ?></p>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
 
 <?php $this->placeholder('actual')->captureStart();?>
+<h4><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h4><br/>
+<table class="table edit">
+    <tr>
+        <th><?php echo $this->translate("Id"); ?></th>
+        <th><?php echo $this->translate("No"); ?></th>
+        <th><?php echo $this->translate("Player"); ?></th>
+        <th></th>
+    </tr>
+    <?php
 
-    <h5><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h5>
-    <hr>
-    <ul>
-        <li><?php echo $this->translate('Number of leagues') . ': ' . $season->getNoLeagues() ?></li>
-        <li><?php echo $this->translate('Number of players accepted') . ': ' . $this->accepted ?></li>
-        <li><?php echo $this->translate('Number of assigned players') . ': ' . $this->assigned ?></li>
-        <li><?php echo $this->translate('Number of unassigned players') . ': ' . $unassigned ?></li>
-        <li><?php echo $this->translate('Due date') . ': ' . $season->getStartDate()->format('d.m.Y') ?></li>
-    </ul>
-    <hr>
-    <a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'create')); ?>"><?php echo "back" ?></a>
+/* @var $league \Season\Entity\League */
+foreach ($this->leagues as $league) : ?>
+    <tr style="background-color:<?php
+    echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+      <td><?php echo $league->getId(); ?></td>
+      <td><?php echo $league->getNumber();?></td>
+      <td><?php echo $league->getNoPlayers();?></td>
+      <td title="<?php echo $this->translate("edit");?>">
+         <a href="<?php echo $this->url('createLeague', array('action' => 'edit', 'id' => $league->getId()));  ?>"></a>
+      </td>
+    </tr>
+<?php
+endforeach;
+?>
 <?php $this->placeholder('actual')->captureEnd(); ?>
-
 
 <?php
 
-if (is_null($this->season)) {
-    echo $this->placeholder('noSeason');
-} else {
+if (!empty($this->leagues)) {
     echo $this->placeholder('actual');
+} else {
+    echo $this->placeholder('nothing');
 }
+?>
 
+</table>
+<a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'create')); ?>"><?php echo "back" ?></a>

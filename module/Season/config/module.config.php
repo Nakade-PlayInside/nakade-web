@@ -20,6 +20,8 @@ return array(
             'matchDate'  => 'Season\View\Helper\MatchDate',
             'accepted'  => 'Season\View\Helper\PlayerAccepted',
             'rulesInfo'  => 'Season\View\Helper\RulesInfo',
+            'dateCycle'  => 'Season\View\Helper\DateCycle',
+            'participationInfo'  => 'Season\View\Helper\ParticipationInfo',
 
 
             // more helpers here ...
@@ -34,10 +36,13 @@ return array(
                     'Season\Services\LeagueControllerFactory',
             'Season\Controller\Player' =>
                     'Season\Services\PlayerControllerFactory',
+            'Season\Controller\MatchDay' =>
+                    'Season\Services\MatchDayControllerFactory',
             'Season\Controller\Schedule' =>
-                    'Season\Services\ScheduleControllerFactory',
+                'Season\Services\ScheduleControllerFactory',
+            'Season\Controller\Confirm' =>
+                'Season\Services\ConfirmControllerFactory',
         ),
-
     ),
 
 
@@ -91,6 +96,22 @@ return array(
 
             ),
 
+            'configMatchDay' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/configMatchDay[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Season\Controller\MatchDay',
+                        'action'     => 'index',
+                    ),
+                ),
+
+            ),
+
             'createSchedule' => array(
                 'type'    => 'segment',
                 'options' => array(
@@ -104,7 +125,23 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
+            ),
 
+            'playerConfirm' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/playerConfirm[/:action][/:id][/:confirm]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                        'confirm' => '[a-zA-Z0-9]*',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Season\Controller',
+                        'controller'    => 'Season\Controller\Confirm',
+                        'action'        => 'index',
+                    ),
+                ),
             ),
            //next route
 
@@ -130,6 +167,16 @@ return array(
                 'Season\Services\SeasonFormService',
             'Season\Services\SeasonFieldsetService'      =>
                 'Season\Services\SeasonFieldsetService',
+            'Season\Services\ScheduleService'      =>
+                'Season\Services\ScheduleService',
+            'Season\Services\MailService'      =>
+                'Season\Services\MailService',
+            'Season\Services\DateHelperService'      =>
+                'Season\Services\DateHelperService',
+            'Season\Services\MatchDayService'      =>
+                'Season\Services\MatchDayService',
+            'Season\Services\SeasonService'      =>
+                'Season\Services\SeasonService',
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

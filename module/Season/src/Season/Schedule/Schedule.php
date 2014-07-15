@@ -1,120 +1,117 @@
 <?php
 namespace Season\Schedule;
 
+use Season\Entity\Match;
+use Season\Services\RepositoryService;
+use Season\Entity\MatchDay;
+use Season\Entity\League;
 /**
- * Description of Schedule
+ * Class Schedule
  *
- * @author Dr.Holger Maerz <holger@nakade.de>
+ * @package Season\Schedule
  */
-class Schedule {
+class Schedule extends SeasonRepositoryBase
+{
+    private $matchDays;
+    private $leaguePairingService;
 
-    const BYE = 'FREILOS';
-    protected $_startdate;
-    protected $_isSingleGameAMatchday;
-    protected $_week=0;
-
-    public function __construct($date, $course=false) {
-
-        $this->_isSingleGameAMatchday=$course;
-        $this->_startdate = $date;
-    }
-
-    public function makeSchedule($teams) {
-
-        shuffle($teams);
-
-        if (count($teams) % 2 ) {
-            array_push($teams, self::BYE);
-        }
-
-        $plan       = array();  // Array für den kompletten Spielplan
-        $nogame     = 0;        // Zähler für Spielnummer
-
-
-
-        for ($matchday=1; $matchday<count($teams); $matchday++) {
-
-          //rearrangement of team array
-          array_splice($teams, 1, 1, array(array_pop($teams),$teams[1]));
-
-
-                for ($nopairing=0; $nopairing<(count($teams)/2); $nopairing++) {
-
-                    $home =  $teams[$nopairing];
-                    $away =  $teams[(count($teams)-1)-$nopairing];
-
-                    if ($home == self::BYE || $away == self::BYE ) {
-                        continue;
-                    }
-
-                    $nogame++;
-
-                    //change home and away
-                    if ( ($nogame%count($teams)==1) && ($nopairing%2==0) ) {
-                        $temp = $home;
-                        $home = $away;
-                        $away = $temp;
-                    }
-
-                    $plan[$matchday][$nogame]['away'] = $away;
-                    $plan[$matchday][$nogame]['home'] = $home;
-
-                }
-        }
-        ksort($plan); // nach Spieltagen sortieren
-
-        $pairing  = $this->makePairings($plan);
-        return $pairing;
-
-    }
-
-    private function makePairings($plan)
+    /**
+     * @param RepositoryService $repositoryService
+     */
+    public function __construct(RepositoryService $repositoryService)
     {
-        $pairings = array();
-        foreach ($plan as $matchday => $matchdaypairing) {
-
-            //each matchday another date
-            $date =  $this->getMatchDate($matchday);
-
-            foreach ($matchdaypairing as $game => $pairing) {
-
-                //each game another date
-                if ($this->_isSingleGameAMatchday) {
-                    $date = $this->getMatchDate($game);
-                }
-
-                $data['matchday'] = $matchday;
-                $data['league']   = $pairing['away']->getLeague();
-                $data['lid']      = $pairing['away']->getLid();
-                $data['date']     = $date;
-                $data['black']    = $pairing['home']->getPlayer();
-                $data['blackId']  = $pairing['home']->getId();
-                $data['white']    = $pairing['away']->getPlayer();
-                $data['whiteId']  = $pairing['away']->getId();
-
-                $match = new \League\Entity\Match();
-                $match->exchangeArray($data);
-
-                array_push($pairings, $match);
-            }
-        }
-
-        return $pairings;
-
+        parent::__construct($repositoryService);
+        $this->leaguePairingService = new HarmonicLeaguePairing();
     }
 
-    private function getMatchDate($week)
+    /**
+     * @param int $seasonId
+     */
+    public function getSchedule($seasonId)
     {
-        /* @todo: given matchday -> making 3-4 weeks cycle */
-       $modify = sprintf('+%s week', $week-1);
-       $date = new \DateTime($this->_startdate);
+        $leagues = $this->getLeagueMapper()->getLeaguesBySeason($seasonId);
+        $this->matchDays = $this->getSeasonMapper()->getMatchDaysBySeason($seasonId);
 
-       return $date->modify($modify);
-
+        /* @var $league \Season\Entity\League */
+        foreach ($leagues as $league) {
+            $players = $this->getSeasonMapper()->getParticipantsByLeague($league->getId());
+            $leaguePairings = $this->getLeaguePairingService()->getPairings($players);
+            $this->makeLeagueMatches($league, $leaguePairings);
+        }
     }
 
+    /**
+     * @param League $league
+     * @param array  $leaguePairings
+     */
+    private function makeLeagueMatches($league, array $leaguePairings)
+    {
+        foreach ($leaguePairings as $round => $pairing) {
+            $matchDay = $this->getMatchDay($round);
+            $this->makeMatchDayPairings($league, $matchDay, $pairing);
+        }
+    }
 
+    /**
+     * @param League   $league
+     * @param MatchDay $matchDay
+     * @param array    $matchDayPairings
+     */
+    private function makeMatchDayPairings($league, $matchDay, array $matchDayPairings)
+    {
+        $matchDate = $matchDay->getDate();
+
+        foreach ($matchDayPairings as $pairing) {
+            $match = $this->createMatch($pairing);
+            $match->setMatchDay($matchDay);
+            $match->setDate($matchDate);
+            $match->setLeague($league);
+            $this->getLeagueMapper()->save($match);
+        }
+    }
+
+    /**
+     * @param array $pairing
+     *
+     * @return Match
+     */
+    private function createMatch(array $pairing)
+    {
+        $black = array_shift($pairing)->getUser();
+        $white = array_pop($pairing)->getUser();
+
+        $match = new Match();
+        $match->setBlack($black);
+        $match->setWhite($white);
+        $match->setSequence(0);
+
+        return $match;
+    }
+
+    /**
+     * @param int $matchDay
+     *
+     * @return MatchDay
+     *
+     * @throws \RuntimeException
+     */
+    private function getMatchDay($matchDay)
+    {
+        $round = $matchDay - 1;
+        if (empty($this->matchDays) || !array_key_exists($round, $this->matchDays)) {
+            throw new \RuntimeException(
+                sprintf('Match day %s is not existing.', $round)
+            );
+        }
+        return $this->matchDays[$round];
+    }
+
+    /**
+     * @return \Season\Schedule\HarmonicLeaguePairing
+     */
+    private function getLeaguePairingService()
+    {
+        return $this->leaguePairingService;
+    }
 
 }
-
-?>

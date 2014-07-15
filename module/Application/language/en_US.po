@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-12 01:28+0100\n"
-"PO-Revision-Date: 2014-06-12 01:29+0100\n"
+"POT-Creation-Date: 2014-07-06 11:40+0100\n"
+"PO-Revision-Date: 2014-07-06 11:40+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -68,99 +68,103 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: ../view/layout/layout.phtml:51
-msgid "User overview"
-msgstr ""
-
-#: ../view/layout/layout.phtml:54
-msgid "add user"
+#: ../view/layout/layout.phtml:49
+msgid "Dashboard"
 msgstr ""
 
 #: ../view/layout/layout.phtml:57
-msgid "open results"
+msgid "User overview"
 msgstr ""
 
 #: ../view/layout/layout.phtml:60
-msgid "edit match day"
+msgid "add user"
 msgstr ""
 
 #: ../view/layout/layout.phtml:63
-msgid "season overview"
+msgid "open results"
 msgstr ""
 
 #: ../view/layout/layout.phtml:66
+msgid "edit match day"
+msgstr ""
+
+#: ../view/layout/layout.phtml:69
+msgid "new season"
+msgstr ""
+
+#: ../view/layout/layout.phtml:72
 msgid "rejected appointments"
 msgstr ""
 
-#: ../view/layout/layout.phtml:78
+#: ../view/layout/layout.phtml:84
 msgid "Profile"
 msgstr ""
 
-#: ../view/layout/layout.phtml:83
+#: ../view/layout/layout.phtml:89
 msgid "Inbox"
 msgstr ""
 
-#: ../view/layout/layout.phtml:86
+#: ../view/layout/layout.phtml:92
 msgid "New Message"
 msgstr ""
 
-#: ../view/layout/layout.phtml:89
+#: ../view/layout/layout.phtml:95
 msgid "Sent"
 msgstr ""
 
-#: ../view/layout/layout.phtml:96
+#: ../view/layout/layout.phtml:102
 msgid "Messages"
 msgstr ""
 
-#: ../view/layout/layout.phtml:102
+#: ../view/layout/layout.phtml:108
 msgid "Schedule"
 msgstr ""
 
-#: ../view/layout/layout.phtml:105
+#: ../view/layout/layout.phtml:111
 msgid "Standings"
 msgstr ""
 
-#: ../view/layout/layout.phtml:108
+#: ../view/layout/layout.phtml:114
 msgid "results"
 msgstr ""
 
-#: ../view/layout/layout.phtml:114
+#: ../view/layout/layout.phtml:120
 msgid "League"
 msgstr ""
 
-#: ../view/layout/layout.phtml:119
+#: ../view/layout/layout.phtml:125
 msgid "Appointments"
 msgstr ""
 
-#: ../view/layout/layout.phtml:121
+#: ../view/layout/layout.phtml:127
 msgid "Shift Date"
 msgstr ""
 
-#: ../view/layout/layout.phtml:123
+#: ../view/layout/layout.phtml:129
 msgid "Confirm"
 msgstr ""
 
-#: ../view/layout/layout.phtml:130
+#: ../view/layout/layout.phtml:136
 msgid "Logged in as "
 msgstr ""
 
-#: ../view/layout/layout.phtml:136
+#: ../view/layout/layout.phtml:142
 msgid "Logout"
 msgstr ""
 
-#: ../view/layout/layout.phtml:143
+#: ../view/layout/layout.phtml:149
 msgid "LogIn"
 msgstr ""
 
-#: ../view/layout/layout.phtml:159
+#: ../view/layout/layout.phtml:165
 msgid "Imprint"
 msgstr ""
 
-#: ../view/layout/layout.phtml:160
+#: ../view/layout/layout.phtml:166
 msgid "Contact"
 msgstr ""
 
-#: ../view/layout/layout.phtml:162
+#: ../view/layout/layout.phtml:168
 msgid "All rights reserved."
 msgstr ""
 

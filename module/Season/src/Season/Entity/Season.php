@@ -13,13 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Season extends SeasonModel
 {
-
     private $openMatches;
-    private $noMatches;
+    private $matches;
+    private $leagues;
     private $firstMatchDate;
     private $lastMatchDate;
-    private $noLeagues;
-    private $noPlayers;
+    private $players;
+    private $matchDays;
+    private $availablePlayers = array();
+    private $unassignedPlayers = array();
+    private $isRegistered = false;
 
     /**
      * construct
@@ -27,13 +30,6 @@ class Season extends SeasonModel
     public function __construct()
     {
         $this->time = new Time();
-    }
-    /**
-     * @param \DateTime $firstMatchDate
-     */
-    public function setFirstMatchDate($firstMatchDate)
-    {
-        $this->firstMatchDate = $firstMatchDate;
     }
 
     /**
@@ -45,14 +41,6 @@ class Season extends SeasonModel
     }
 
     /**
-     * @param \DateTime $lastMatchDate
-     */
-    public function setLastMatchDate($lastMatchDate)
-    {
-        $this->lastMatchDate = $lastMatchDate;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getLastMatchDate()
@@ -61,11 +49,11 @@ class Season extends SeasonModel
     }
 
     /**
-     * @param int $noMatches
+     * @return array
      */
-    public function setNoMatches($noMatches)
+    public function getMatches()
     {
-        $this->noMatches = $noMatches;
+        return $this->matches;
     }
 
     /**
@@ -73,19 +61,11 @@ class Season extends SeasonModel
      */
     public function getNoMatches()
     {
-        return $this->noMatches;
+        return count($this->matches);
     }
 
     /**
-     * @param int $openMatches
-     */
-    public function setOpenMatches($openMatches)
-    {
-        $this->openMatches = $openMatches;
-    }
-
-    /**
-     * @return int
+     * @return array
      */
     public function getOpenMatches()
     {
@@ -93,11 +73,19 @@ class Season extends SeasonModel
     }
 
     /**
-     * @param int $noLeagues
+     * @return int
      */
-    public function setNoLeagues($noLeagues)
+    public function getNoOpenMatches()
     {
-        $this->noLeagues = $noLeagues;
+        return count($this->openMatches);
+    }
+
+    /**
+     * @return array
+     */
+    public function getLeagues()
+    {
+        return $this->leagues;
     }
 
     /**
@@ -105,56 +93,135 @@ class Season extends SeasonModel
      */
     public function getNoLeagues()
     {
-        return $this->noLeagues;
+        return count($this->leagues);
     }
 
     /**
-     * @param int $noPlayers
+     * @return array
      */
-    public function setNoPlayers($noPlayers)
+    public function getPlayers()
     {
-        $this->noPlayers = $noPlayers;
+        return $this->players;
+    }
+
+    /**
+     * @return array
+     */
+    public function getNoPlayers()
+    {
+        return count($this->players);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSchedule()
+    {
+        return !empty($this->matches);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasLeagues()
+    {
+        return count($this->leagues) > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPlayers()
+    {
+        return $this->getNoPlayers() > 0;
+    }
+
+    /**
+     * @param array $availablePlayers
+     */
+    public function setAvailablePlayers(array $availablePlayers)
+    {
+        $this->availablePlayers = $availablePlayers;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAvailablePlayers()
+    {
+        return $this->availablePlayers;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAvailablePlayers()
+    {
+        return !empty($this->availablePlayers);
+    }
+
+    /**
+     * @param array $unassignedPlayers
+     */
+    public function setUnassignedPlayers($unassignedPlayers)
+    {
+        $this->unassignedPlayers = $unassignedPlayers;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasUnassignedPlayers()
+    {
+        return !empty($this->unassignedPlayers);
+    }
+
+    /**
+     * @param boolean $isRegistered
+     */
+    public function setIsRegistered($isRegistered)
+    {
+        $this->isRegistered = $isRegistered;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isRegistered()
+    {
+        return $this->isRegistered;
+    }
+
+    /**
+     * @param array $matchDays
+     */
+    public function setMatchDays(array $matchDays)
+    {
+        $this->matchDays = $matchDays;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMatchDays()
+    {
+        return $this->matchDays;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMatchDays()
+    {
+        return !empty($this->matchDays);
     }
 
     /**
      * @return int
      */
-    public function getNoPlayers()
+    public function getNoMatchDays()
     {
-        return $this->noPlayers;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasStarted()
-    {
-        return !is_null($this->getFirstMatchDate()) && $this->getFirstMatchDate() <= new \DateTime();
-
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasEnded()
-    {
-        return $this->hasMatches() && !$this->hasOpenMatches();
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasMatches()
-    {
-        return $this->noMatches > 0;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasOpenMatches()
-    {
-        return $this->openMatches > 0;
+        return count($this->matchDays);
     }
 
     /**
@@ -164,27 +231,23 @@ class Season extends SeasonModel
      */
     public function exchangeArray($data)
     {
-
-        if (isset($data['noPlayer'])) {
-            $this->noPlayers = intval($data['noPlayer']);
-        }
         if (isset($data['firstMatchDate'])) {
             $this->firstMatchDate = \DateTime::createFromFormat('Y-m-d H:i:s', $data['firstMatchDate']);
         }
         if (isset($data['lastMatchDate'])) {
             $this->lastMatchDate = \DateTime::createFromFormat('Y-m-d H:i:s', $data['lastMatchDate']);
         }
-        if (isset($data['noMatches'])) {
-            $this->noMatches = intval($data['noMatches']);
+        if (isset($data['matches'])) {
+            $this->matches = $data['matches'];
         }
         if (isset($data['openMatches'])) {
-            $this->openMatches = intval($data['openMatches']);
+            $this->openMatches = $data['openMatches'];
         }
-        if (isset($data['noPlayers'])) {
-            $this->noPlayers = intval($data['noPlayers']);
+        if (isset($data['players'])) {
+            $this->players = $data['players'];
         }
-        if (isset($data['noLeagues'])) {
-            $this->noLeagues = intval($data['noLeagues']);
+        if (isset($data['leagues'])) {
+            $this->leagues = $data['leagues'];
         }
         if (isset($data['winPoints'])) {
             $this->winPoints = intval($data['winPoints']);
@@ -212,6 +275,18 @@ class Season extends SeasonModel
         }
         if (isset($data['tieBreaker3'])) {
             $this->tieBreaker3 = $data['tieBreaker3'];
+        }
+        if (isset($data['matchDays'])) {
+            $this->matchDays = $data['matchDays'];
+        }
+        if (isset($data['availablePlayers'])) {
+            $this->availablePlayers = $data['availablePlayers'];
+        }
+        if (isset($data['unassignedPlayers'])) {
+            $this->unassignedPlayers = $data['unassignedPlayers'];
+        }
+        if (isset($data['isRegistered'])) {
+            $this->isRegistered = $data['isRegistered'];
         }
     }
 

@@ -28,9 +28,9 @@ class SeasonDates
     private $day;
 
   /**
-   * @ORM\Column(name="time", type="integer", nullable=false)
+   * @ORM\Column(name="time", type="time", nullable=false)
    */
-    private $time=1;
+    private $time;
 
   /**
    * @ORM\Column(name="cycle", type="integer", nullable=false)
@@ -54,7 +54,7 @@ class SeasonDates
     }
 
     /**
-     * @param mixed $id
+     * @param int $id
      */
     public function setId($id)
     {
@@ -62,7 +62,7 @@ class SeasonDates
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId()
     {
@@ -86,7 +86,7 @@ class SeasonDates
     }
 
     /**
-     * @param mixed $time
+     * @param \DateTime $time
      */
     public function setTime($time)
     {
@@ -94,11 +94,29 @@ class SeasonDates
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getTime()
     {
         return $this->time;
+    }
+
+
+    /**
+     * @param array $data
+     */
+    public function exchangeArray(array $data)
+    {
+        if (isset($data['cycle'])) {
+            $this->cycle = intval($data['cycle']);
+        }
+        if (isset($data['day'])) {
+            $this->day = intval($data['day']);
+        }
+        if (isset($data['time'])) {
+            $this->time = $data['time'];
+        }
+
     }
 
 }

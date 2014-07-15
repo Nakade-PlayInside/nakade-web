@@ -26,7 +26,11 @@ class DashboardController extends AbstractActionController
         $appointmentWidget  = $this->forward()
             ->dispatch('/Appointment/Controller/Show', array('action' => 'message'));
 
+        $participationWidget  = $this->forward()
+            ->dispatch('/Season/Controller/Season', array('action' => 'show'));
+
         $page = new ViewModel(array());
+        $page->addChild($participationWidget, 'participationWidget');
         $page->addChild($messageWidget, 'messageWidget');
         $page->addChild($appointmentWidget, 'appointmentWidget');
         $page->addChild($scheduleWidget, 'scheduleWidget');

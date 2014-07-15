@@ -2,8 +2,6 @@
 namespace Season\Controller;
 
 use Season\Entity\Season;
-use Zend\Form\FormInterface;
-use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -11,7 +9,7 @@ use Zend\View\Model\ViewModel;
  *
  * @package Season\Controller
  */
-class SeasonController extends AbstractController
+class SeasonController extends DefaultController
 {
     /**
     * @return array|ViewModel
@@ -20,17 +18,33 @@ class SeasonController extends AbstractController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $repository \Season\Mapper\SeasonMapper */
-        $repository = $this->getRepository()->getMapper('season');
-
         /* @var $season \Season\Entity\Season */
-        $season = $repository->getActiveSeasonByAssociation($id);
-        $info = $repository->getSeasonInfo($season->getId());
+        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation($id);
+        $info = $this->getSeasonMapper()->getSeasonInfo($season->getId());
         $season->exchangeArray($info);
 
         return new ViewModel(
             array(
               'season' => $season,
+            )
+        );
+    }
+
+    /**
+     * widget for new season invitation
+     *
+     * @return array|ViewModel
+     */
+    public function showAction()
+    {
+        $userId = $this->identity()->getId();
+
+        /* @var $season \Season\Entity\Season */
+        $seasons = $this->getSeasonMapper()->getNewSeasonsByUser($userId);
+
+        return new ViewModel(
+            array(
+                'newSeasons' => $seasons,
             )
         );
     }
@@ -42,12 +56,10 @@ class SeasonController extends AbstractController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $repository \Season\Mapper\SeasonMapper */
-        $repository = $this->getRepository()->getMapper('season');
-        $season = $repository->getNewSeasonByAssociation($id);
-        $info = $repository->getSeasonInfo($season->getId());
-        $season->exchangeArray($info);
-
+        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
+            return $this->redirect()->toRoute('createSeason', array('action' => 'add'));
+        }
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
 
         return new ViewModel(
             array(
@@ -63,48 +75,34 @@ class SeasonController extends AbstractController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper('season');
-
-
         //new season! first play it before adding a new one. you can edit, of course
-        if ($mapper->hasNewSeasonByAssociation($id)) {
-           return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+        if ($this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
+           return $this->redirect()->toRoute('createSeason');
         }
 
-
-        $now = new \DateTime();
-        $minDate = clone $now;
-        $startDate = clone $now;
+        $association  = $this->getSeasonMapper()->getAssociationById($id);
         $season = new Season();
+        $season->setAssociation($association);
+        $season->setNumber(1);
 
-        $last = $mapper->getLastSeasonByAssociation($id);
-
-        if (is_null($last)) {
-            $association  = $mapper->getAssociationById($id);
-            $season->setAssociation($association);
-        } else {
-
-            $lastMatchDate = $mapper->getLastMatchDateOfSeason($last->getId());
-            $minDate = clone $lastMatchDate;
-            $startDate = clone $lastMatchDate;
-
-            if ($lastMatchDate > $now) {
-                $minDate = clone $lastMatchDate;
-                $startDate = clone $lastMatchDate;
+        $lastSeason = $this->getSeasonMapper()->getLastSeasonByAssociation($id);
+        if (!is_null($lastSeason)) {
+            $data = $lastSeason->getArrayCopy();
+            $season->exchangeArray($data);
+            $no = $lastSeason->getNumber() + 1;
+            $season->setNumber($no);
+            $lastMatchDate = $this->getSeasonMapper()->getLastMatchDateOfSeason($lastSeason->getId());
+            $newStartDate = clone $lastMatchDate;
+            $newStartDate->modify('+2 week');
+            $now = new \DateTime();
+            if ($now > $newStartDate) {
+                $newStartDate = $now;
             }
-            $season->exchangeArray($last->getArrayCopy());
-            $season->setNumber($last->getNumber() + 1);
+            $season->setStartDate($newStartDate);
         }
-        $startDate->modify('+2 week');
-        $season->setStartDate($startDate);
 
-        /* @var $form \Season\Form\SeasonForm */
-        $form = $this->getForm('season');
-        $form->setMinDate($minDate);
-        $form->init();
-        $form->bind($season);
-
+        $form = $this->getSeasonForm();
+        $form->bindEntity($season);
 
        if ($this->getRequest()->isPost()) {
             //get post data, set data to from, prepare for validation
@@ -112,25 +110,23 @@ class SeasonController extends AbstractController
 
             //cancel
             if (isset($postData['button']['cancel'])) {
-                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+                return $this->redirect()->toRoute('createSeason');
             }
             $form->setData($postData);
 
             if ($form->isValid()) {
 
                 $season = $form->getData();
-                $mapper->save($season);
+                $this->getSeasonMapper()->save($season);
 
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
        }
 
-
-        return new ViewModel(
-            array(
-              'form' => $form,
-            )
-        );
+       return new ViewModel(array(
+             'form' => $form,
+           )
+       );
     }
 
     /**
@@ -140,38 +136,15 @@ class SeasonController extends AbstractController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper('season');
-
         //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation($id)) {
+        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
 
-        $season = $mapper->getNewSeasonByAssociation($id);
-        $now = new \DateTime();
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
 
-        $minDate = $season->getStartDate();
-        if ($season->getStartDate() > $now) {
-            $last = $mapper->getLastSeasonByAssociation($id);
-            if (!is_null($last)) {
-                $lastMatchDate = $mapper->getLastMatchDateOfSeason($last->getId());
-                if ($lastMatchDate > $now) {
-                    $minDate = $lastMatchDate;
-                } else {
-                    $minDate = $now;
-                }
-            }
-        }
-
-        //if startDate is in the future, now is the min date, otherwise min is the season's start date
-
-        /* @var $form \Season\Form\SeasonForm */
-        $form = $this->getForm('season');
-        $form->setMinDate($minDate);
-        $form->init();
-        $form->bind($season);
-
+        $form = $this->getSeasonForm();
+        $form->bindEntity($season);
 
         if ($this->getRequest()->isPost()) {
             //get post data, set data to from, prepare for validation
@@ -187,8 +160,8 @@ class SeasonController extends AbstractController
 
                 $season = $form->getData();
                 $time = $season->getTime();
-                $mapper->update($time);
-                $mapper->update($season);
+                $this->getSeasonMapper()->update($time);
+                $this->getSeasonMapper()->update($season);
 
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
@@ -205,15 +178,60 @@ class SeasonController extends AbstractController
     /**
      * @return ViewModel
      */
+    public function activateAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 1);
+
+        //no new season! add season first
+        if (!$this->getSeasonMapper()->hasNewSeasonByAssociation($id)) {
+            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+        }
+
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        $form = $this->getConfirmForm();
+
+        if ($this->getRequest()->isPost()) {
+
+            //get post data, set data to from, prepare for validation
+            $postData =  $this->getRequest()->getPost();
+            //cancel
+            if (isset($postData['cancel'])) {
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
+            }
+
+            if (isset($postData['submit'])) {
+
+                $season->setIsReady(true);
+                $this->getSeasonMapper()->save($season);
+                $this->getService()->sendMails($season);
+
+                //for each get schedule
+                return $this->redirect()->toRoute('createSeason');
+            }
+
+        }
+
+        return new ViewModel(
+            array(
+                'form' => $form,
+                'season'=> $season,
+            )
+        );
+    }
+
+
+
+    /**
+     * widget for time, extra time and komi
+     *
+     * @return ViewModel
+     */
     public function showRulesAction()
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $repository \Season\Mapper\SeasonMapper */
-        $repository = $this->getRepository()->getMapper('season');
-
         /* @var $season \Season\Entity\Season */
-        $season = $repository->getActiveSeasonByAssociation($id);
+        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation($id);
 
 
         return new ViewModel(

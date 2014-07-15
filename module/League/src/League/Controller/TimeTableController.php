@@ -153,6 +153,8 @@ class TimeTableController extends AbstractController
 
 
     /**
+     * widget schedule
+     *
      * @return ViewModel
      */
     public function myScheduleAction()

@@ -11,7 +11,7 @@ use \Mail\Services\MailTransportFactory;
 /**
  * Class MailService
  *
- * @package Appointment\Services
+ * @package League\Services
  */
 class MailService extends AbstractTranslation implements FactoryInterface
 {
@@ -81,7 +81,7 @@ class MailService extends AbstractTranslation implements FactoryInterface
     /**
      * @param string $typ
      *
-     * @return \Appointment\Mail\AppointmentMail
+     * @return \League\Mail\LeagueMail
      *
      * @throws \RuntimeException
      */

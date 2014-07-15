@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-14 10:50+0100\n"
-"PO-Revision-Date: 2014-05-14 10:50+0100\n"
+"POT-Creation-Date: 2014-07-06 11:39+0100\n"
+"PO-Revision-Date: 2014-07-06 11:39+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -151,36 +151,35 @@ msgid "Reject Reason"
 msgstr ""
 
 #: ../src/Appointment/Form/RejectForm.php:76
-#: ../src/Appointment/Form/ConfirmForm.php:75
+#: ../src/Appointment/Form/ConfirmForm.php:76
 msgid "Reject"
 msgstr ""
 
 #: ../src/Appointment/Form/RejectForm.php:88
-#: ../src/Appointment/Form/AppointmentForm.php:148
 msgid "Cancel"
 msgstr ""
 
-#: ../src/Appointment/Form/ConfirmForm.php:63
+#: ../src/Appointment/Form/ConfirmForm.php:64
 msgid "Confirm"
 msgstr ""
 
-#: ../src/Appointment/Form/AppointmentForm.php:75
+#: ../src/Appointment/Form/AppointmentForm.php:55
+msgid "Old date"
+msgstr ""
+
+#: ../src/Appointment/Form/AppointmentForm.php:78
 msgid "New Match Date"
 msgstr ""
 
-#: ../src/Appointment/Form/AppointmentForm.php:91
+#: ../src/Appointment/Form/AppointmentForm.php:93
 msgid "Time"
 msgstr ""
 
-#: ../src/Appointment/Form/AppointmentForm.php:107
+#: ../src/Appointment/Form/AppointmentForm.php:109
 msgid "I do confirm my opponent has agreed to this schedule"
 msgstr ""
 
-#: ../src/Appointment/Form/AppointmentForm.php:136
-msgid "Submit"
-msgstr ""
-
-#: ../src/Appointment/Form/AppointmentForm.php:177
+#: ../src/Appointment/Form/AppointmentForm.php:145
 msgid "You must confirm your opponent agreed to the new schedule."
 msgstr ""
 
@@ -335,7 +334,7 @@ msgstr ""
 msgid "click for making an appointment"
 msgstr ""
 
-#: ../view/appointment/show/available.phtml:37
+#: ../view/appointment/show/available.phtml:38
 msgid "There are no appointments available to shift."
 msgstr ""
 

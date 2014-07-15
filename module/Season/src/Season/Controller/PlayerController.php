@@ -1,12 +1,12 @@
 <?php
 namespace Season\Controller;
 
+
 use Season\Entity\Participant;
-use Zend\Form\FormInterface;
-use Nakade\Abstracts\AbstractController;
+use Season\Services\MailService;
 use Zend\View\Model\ViewModel;
 
-class PlayerController extends AbstractController
+class PlayerController extends DefaultController
 {
     /**
      * @return array|ViewModel
@@ -15,26 +15,18 @@ class PlayerController extends AbstractController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper('season');
-
-        //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation($id)) {
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        if (is_null($season) || $season->hasMatchDays()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $mapper->getNewSeasonByAssociation($id);
 
-        /* @var $playerMapper \Season\Mapper\ParticipantMapper */
-        $playerMapper = $this->getRepository()->getMapper('participant');
-       return new ViewModel(
-           array(
-               //'players' => $this->getService()->getPlayers(),
+        return new ViewModel(array(
                'season' => $season,
-               'invited' => $playerMapper->getInvitedUsersBySeason($season->getId()),
-               'available' => $playerMapper->getAvailablePlayersBySeason($season->getId()),
-               'accepted' => $playerMapper->getAcceptingUsersBySeason($season->getId())
+               'invited' => $this->getSeasonMapper()->getInvitedUsersBySeason($season->getId()),
+               'available' => $this->getSeasonMapper()->getAvailablePlayersBySeason($season->getId()),
+               'accepted' => $this->getSeasonMapper()->getAcceptingUsersBySeason($season->getId())
            )
-       );
+        );
     }
 
     /**
@@ -44,19 +36,13 @@ class PlayerController extends AbstractController
     {
         $id = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $mapper \Season\Mapper\SeasonMapper */
-        $mapper = $this->getRepository()->getMapper('season');
-
-        //no new season! add season first
-        if (!$mapper->hasNewSeasonByAssociation($id)) {
+        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
+        if (is_null($season) || $season->hasMatchDays()) {
             return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
         }
-        $season = $mapper->getNewSeasonByAssociation($id);
 
-       /* @var $form \Season\Form\ParticipantForm */
-       $form = $this->getForm('participant');
-       $form->setSeason($season);
-       $form->init();
+       $form = $this->getParticipantForm();
+       $form->bindEntity($season);
 
        /* @var $request \Zend\Http\Request */
        $request = $this->getRequest();
@@ -72,21 +58,27 @@ class PlayerController extends AbstractController
             $form->setData($postData);
             if ($form->isValid()) {
 
+                $object = $form->getData();
                 $now = new \DateTime();
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                foreach ($data['addPlayer'] as $userId) {
+                $playerList = $object->getAvailablePlayers();
 
-                    $myPlayer = new Participant();
+                /* @var $mail \Season\Mail\InvitationMail */
+                $mail = $this->getMailService()->getMail(MailService::INVITATION_MAIL);
 
-                    /* @var $user \User\Entity\User */
-                    $user = $mapper->getEntityManager()->getReference('User\Entity\User', $userId);
-                    $myPlayer->setUser($user);
-                    $myPlayer->setSeason($season);
-                    $myPlayer->setDate($now);
-                    $mapper->save($myPlayer);
+                foreach ($playerList as $user) {
+                    $acceptString = md5(uniqid(rand(), true));
 
+                    $participant = new Participant();
+                    $participant->setUser($user);
+                    $participant->setSeason($season);
+                    $participant->setDate($now);
+                    $participant->setAcceptString($acceptString);
+
+                    $this->getSeasonMapper()->save($participant);
+
+                    $mail->setParticipant($participant);
+                    $mail->sendMail($user);
                 }
-                //$this->getService()->addPlayer($data);
 
                 return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }

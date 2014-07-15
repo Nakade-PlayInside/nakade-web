@@ -2,43 +2,36 @@
 
 namespace Season\Services;
 
+
 use Season\Controller\ScheduleController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Creates the controller used for authentication.
- * make sure, you have configured the factory in the module configuration
- * file as a controller factory.
+ * Class ScheduleControllerFactory
  *
- * @author Dr.Holger Maerz <grrompf@gmail.com>
+ * @package Season\Services
  */
 class ScheduleControllerFactory implements FactoryInterface
 {
 
     /**
-     * creates the authController. Binds the authentication service and
-     * the authentication form.
+     * @param ServiceLocatorInterface $services
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
-     * @return \Authentication\Controller\AuthController
+     * @return mixed|ScheduleController
      */
     public function createService(ServiceLocatorInterface $services)
     {
         $serviceManager = $services->getServiceLocator();
 
-        $config  = $serviceManager->get('config');
-        if ($config instanceof Traversable) {
-            $config = ArrayUtils::iteratorToArray($config);
-        }
-
-
         $factory    = $serviceManager->get('Season\Services\SeasonFormService');
         $repository = $serviceManager->get('Season\Services\RepositoryService');
+        $service = $serviceManager->get('Season\Services\ScheduleService');
 
         $controller = new ScheduleController();
         $controller->setFormFactory($factory);
         $controller->setRepository($repository);
+        $controller->setService($service);
 
         return $controller;
     }

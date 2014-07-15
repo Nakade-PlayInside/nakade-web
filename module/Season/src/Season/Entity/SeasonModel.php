@@ -260,4 +260,15 @@ class SeasonModel
         return $this->isReady;
     }
 
+    /**
+     * @return string
+     */
+    public function  getSeasonInfo()
+    {
+        return sprintf('%s. %s League',
+            $this->getNumber(),
+            $this->getAssociation()->getName()
+        );
+    }
+
 }

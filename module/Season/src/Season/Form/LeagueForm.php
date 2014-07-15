@@ -1,11 +1,15 @@
 <?php
 namespace Season\Form;
 
+use Season\Form\Hydrator\LeagueHydrator;
 use Season\Services\RepositoryService;
 use Season\Services\SeasonFieldsetService;
 use \Zend\InputFilter\InputFilter;
+
 class LeagueForm extends BaseForm
 {
+    private $availablePlayerList = array();
+    private $assignedPlayerList = array();
 
     /**
      * @param SeasonFieldsetService $service
@@ -15,9 +19,37 @@ class LeagueForm extends BaseForm
     {
         parent::__construct('LeagueForm');
 
-        $this->service = $service;
-        $this->repository = $repository;
+        $this->setFieldSetService($service);
+        $this->setRepository($repository);
+
+        $hydrator = new LeagueHydrator($this->getRepository()->getEntityManager());
+        $this->setHydrator($hydrator);
         $this->setInputFilter($this->getFilter());
+    }
+
+    /**
+     * @param \Season\Entity\League $object
+     */
+    public function bindEntity($object)
+    {
+        $seasonId = $object->getSeason()->getId();
+        $playerList = $this->getSeasonMapper()->getUnassignedParticipantsBySeason($seasonId);
+
+        /* @var $participant \Season\Entity\Participant */
+        foreach ($playerList as $participant) {
+            $user = $participant->getUser();
+            $this->availablePlayerList[$participant->getId()] = $user->getName();
+        }
+
+        $assignedList = $this->getLeagueMapper()->getAssignedPlayersByLeague($object->getId());
+        foreach ($assignedList as $participant) {
+            $user = $participant->getUser();
+            $this->assignedPlayerList[$participant->getId()] = $user->getName();
+        }
+
+        $this->init();
+        $this->setInputFilter($this->getFilter());
+        $this->bind($object);
     }
 
     /**
@@ -25,8 +57,6 @@ class LeagueForm extends BaseForm
      */
     public function init()
     {
-        $this->prepareForm();
-
         //association
         $this->add(
             array(
@@ -35,7 +65,6 @@ class LeagueForm extends BaseForm
                 'options' => array('label' =>  $this->translate('Association') . ':'),
                 'attributes' => array(
                     'readonly' => 'readonly',
-                    'value' => $this->getAssociationName()
                 )
             )
         );
@@ -48,7 +77,6 @@ class LeagueForm extends BaseForm
                 'options' => array('label' =>  $this->translate('Season no.') . ':'),
                 'attributes' => array(
                     'readonly' => 'readonly',
-                    'value' => $this->getSeasonNumber()
                 )
             )
         );
@@ -61,7 +89,6 @@ class LeagueForm extends BaseForm
                 'options' => array('label' =>  $this->translate('League no.') . ':'),
                 'attributes' => array(
                     'readonly' => 'readonly',
-                    'value' => $this->getLeagueNumber()
                 )
             )
         );
@@ -74,11 +101,11 @@ class LeagueForm extends BaseForm
                     'type' => 'Zend\Form\Element\Select',
                     'options' => array(
                         'label' =>  $this->translate('Remove player') . ':',
-                        'value_options' => $this->getAssignedPlayers()
+                        'value_options' => $this->getAssignedPlayerList()
                     ),
                     'attributes' => array(
                         'multiple' => 'multiple',
-                        'size' => count($this->getAssignedPlayers())
+                        'size' => count($this->getAssignedPlayerList())
                     )
                 )
             );
@@ -91,40 +118,19 @@ class LeagueForm extends BaseForm
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
                     'label' =>  $this->translate('Add player') . ':',
-                    'value_options' => $this->getAvailablePlayers()
+                    'value_options' => $this->getAvailablePlayerList()
                 ),
                 'attributes' => array(
                     'multiple' => 'multiple',
-                    'size' => count($this->getAvailablePlayers())
+                    'size' => count($this->getAvailablePlayerList())
                 )
             )
         );
 
 
-        $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
+        $this->add($this->getButtonFieldSet());
     }
 
-    /**
-     * you have to init this after setting season or league
-     */
-    protected function prepareForm()
-    {
-
-        if (!is_null($this->getSeason())) {
-            $this->associationName = $this->getSeason()->getAssociation()->getName();
-            $this->seasonNumber = $this->getSeason()->getNumber();
-            $this->leagueNumber=$this->getLeagueNumberByRepository($this->getSeason()->getId());
-            $this->availablePlayers = $this->getAvailablePlayersByRepository($this->getSeason()->getId());
-        } elseif (!is_null($this->getLeague())) {
-            $this->season = $this->getLeague()->getSeason();
-            $this->associationName = $this->getSeason()->getAssociation()->getName();
-            $this->seasonNumber = $this->getSeason()->getNumber();
-            $this->leagueNumber = $this->getLeague()->getNumber();
-            $this->availablePlayers = $this->getAvailablePlayersByRepository($this->getSeason()->getId());
-            $this->assignedPlayers = $this->getAssignedPlayersByRepository($this->getLeague()->getId());
-        }
-
-    }
 
     /**
      * @return \Zend\InputFilter\InputFilter
@@ -151,15 +157,26 @@ class LeagueForm extends BaseForm
     }
 
     /**
-     * @param int $seasonId
-     *
-     * @return int|void
+     * @return array
      */
-    protected function getLeagueNumberByRepository($seasonId)
+    public function getAssignedPlayerList()
     {
-        /* @var $repository \Season\Mapper\LeagueMapper */
-        $repository = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-        return $repository->getNewLeagueNoBySeason($seasonId);
+        return $this->assignedPlayerList;
     }
 
+    /**
+     * @return array
+     */
+    public function getAvailablePlayerList()
+    {
+        return $this->availablePlayerList;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAssignedPlayers()
+    {
+        return !empty($this->assignedPlayerList);
+    }
 }

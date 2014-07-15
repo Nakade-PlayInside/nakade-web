@@ -22,7 +22,7 @@ class UserServiceFactory extends AbstractService
      *
      * @var int
      */
-    protected $_expire=72;
+    protected $expire=72;
 
     /**
      * Creating service for the controller.
@@ -43,10 +43,11 @@ class UserServiceFactory extends AbstractService
         }
 
         //expire verification in hours: default 72h
-        $this->_expire = isset($config['User']['email_options']['expire']) ?
+        $this->expire = isset($config['User']['email_options']['expire']) ?
             $config['User']['email_options']['expire'] : 72;
 
-        $this->_mailFactory = $services->get('User\Factory\UserMailFactory');
+        $mailFactory = $services->get('User\Factory\UserMailFactory');
+        $this->setMailFactory($mailFactory);
 
         $mapper = $services->get('User\Factory\MapperFactory');
         $this->setMapperFactory($mapper);
@@ -112,7 +113,7 @@ class UserServiceFactory extends AbstractService
 
          //expire verification
          $now  = new \DateTime();
-         $dueTime  = sprintf('+ %s hour', $this->_expire);
+         $dueTime  = sprintf('+ %s hour', $this->expire);
          $data['due'] = $now->modify($dueTime);
 
          $data['verified'] = 0;
@@ -186,6 +187,8 @@ class UserServiceFactory extends AbstractService
      * @param array $data
      *
      * @throws RuntimeException
+     *
+     * @return true;
      */
     public function resetPassword(array $data)
     {
@@ -219,6 +222,7 @@ class UserServiceFactory extends AbstractService
          $mail->setData($mailData);
          $mail->setRecipient($user->getEmail(), $user->getName());
          $mail->send();
+         return true;
 
     }
 

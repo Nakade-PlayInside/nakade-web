@@ -7,7 +7,7 @@ use Season\Mapper\ParticipantMapper;
 use Season\Mapper\SeasonMapper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use \League\Mapper\MatchMapper;
+use Season\Mapper\MatchMapper;
 use \Doctrine\ORM\EntityManager;
 
 /**
@@ -18,9 +18,7 @@ use \Doctrine\ORM\EntityManager;
 class RepositoryService implements FactoryInterface
 {
 
-    const MATCH_MAPPER = 'match';
     const SEASON_MAPPER = 'season';
-    const PARTICIPANT_MAPPER = 'participant';
     const LEAGUE_MAPPER = 'league';
 
     private $entityManager;
@@ -60,16 +58,8 @@ class RepositoryService implements FactoryInterface
     {
         switch (strtolower($typ)) {
 
-           case self::MATCH_MAPPER:
-               $repository = new MatchMapper();
-               break;
-
            case self::SEASON_MAPPER:
                $repository = new SeasonMapper();
-               break;
-
-           case self::PARTICIPANT_MAPPER:
-               $repository = new ParticipantMapper();
                break;
 
            case self::LEAGUE_MAPPER:

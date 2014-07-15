@@ -65,32 +65,13 @@ class LeagueMapper extends AbstractMapper
      *
      * @return array
      */
-    public function getAvailableParticipantsBySeason($seasonId)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder('Participants');
-        $qb->select('p')
-            ->from('Season\Entity\Participant', 'p')
-            ->innerJoin('p.season', 'MySeason')
-            ->where('MySeason.id = :seasonId')
-            ->andWhere('p.league IS NULL')
-            ->andWhere('p.hasAccepted = 1')
-            ->setParameter('seasonId', $seasonId);
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * @param int $seasonId
-     *
-     * @return array
-     */
     public function getAssignedLeaguesBySeason($seasonId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('League');
         $qb->select('l.id')
             ->from('Season\Entity\Participant', 'p')
-            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'p.league = l')
-            ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'l.season = s')
+            ->innerJoin('p.league', 'l')
+            ->innerJoin('l.season', 's')
             ->where('s.id = :seasonId')
             ->groupBy('l.id')
             ->setParameter('seasonId', $seasonId);
@@ -153,7 +134,7 @@ class LeagueMapper extends AbstractMapper
     /**
      * @param int $leagueId
      *
-     * @return array
+     * @return int
      */
     public function getNoPlayersByLeague($leagueId)
     {
@@ -185,6 +166,31 @@ class LeagueMapper extends AbstractMapper
         }
 
         return $leagues;
+    }
+
+    /**
+     * @param int $leagueId
+     * @param int $uid
+     *
+     * @return array
+     */
+    public function getPlayerScheduleByLeague($leagueId, $uid)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->innerJoin('m.league', 'League')
+            ->innerJoin('m.white', 'White')
+            ->innerJoin('m.black', 'Black')
+            ->where('(League.id = :leagueId)')
+            ->andWhere('(White.id = :uid OR Black.id = :uid)')
+            ->setParameter('leagueId', $leagueId)
+            ->setParameter('uid', $uid)
+            ->orderBy('m.date', 'ASC');
+
+        return $qb->getQuery()->getResult();
+
     }
 
 

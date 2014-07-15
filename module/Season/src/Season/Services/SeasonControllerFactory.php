@@ -3,6 +3,7 @@
 namespace Season\Services;
 
 use Season\Controller\SeasonController;
+use Season\Schedule\ScheduleMail;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -15,12 +16,9 @@ class SeasonControllerFactory implements FactoryInterface
 {
 
     /**
-     * creates the authController. Binds the authentication service and
-     * the authentication form.
+     * @param ServiceLocatorInterface $services
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
-     *
-     * @return \Authentication\Controller\AuthController
+     * @return mixed|SeasonController
      */
     public function createService(ServiceLocatorInterface $services)
     {
@@ -29,11 +27,12 @@ class SeasonControllerFactory implements FactoryInterface
 
         $factory    = $serviceManager->get('Season\Services\SeasonFormService');
         $repository = $serviceManager->get('Season\Services\RepositoryService');
-
+        $service = $serviceManager->get('Season\Services\SeasonService');
 
         $controller = new SeasonController();
         $controller->setFormFactory($factory);
         $controller->setRepository($repository);
+        $controller->setService($service);
 
         return $controller;
     }

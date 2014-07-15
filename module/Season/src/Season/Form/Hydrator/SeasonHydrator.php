@@ -36,7 +36,18 @@ class SeasonHydrator implements HydratorInterface
      */
     public function extract($season)
     {
-        $this->setValues($season);
+        if (null!==$season->getTieBreaker1()) {
+            $this->tieBreaker1 = $season->getTieBreaker1()->getId();
+        }
+        if (null!==$season->getTieBreaker2()) {
+            $this->tieBreaker2 = $season->getTieBreaker2()->getId();
+        }
+        if (null!==$season->getTieBreaker3()) {
+            $this->tieBreaker3 = $season->getTieBreaker3()->getId();
+        }
+        if (null!==$season->getTime()->getByoyomi()) {
+            $this->byoyomi = $season->getTime()->getByoyomi()->getId();
+        }
 
         /* @var $season \Season\Entity\Season */
         return array(
@@ -58,26 +69,9 @@ class SeasonHydrator implements HydratorInterface
           'additionalTime' => $season->getTime()->getAdditionalTime(),
           'moves' => $season->getTime()->getMoves(),
           'period' => $season->getTime()->getPeriod(),
-
-
         );
     }
 
-    private function setValues(Season $season)
-    {
-        if (null!==$season->getTieBreaker1()) {
-            $this->tieBreaker1 = $season->getTieBreaker1()->getId();
-        }
-        if (null!==$season->getTieBreaker2()) {
-            $this->tieBreaker2 = $season->getTieBreaker2()->getId();
-        }
-        if (null!==$season->getTieBreaker3()) {
-            $this->tieBreaker3 = $season->getTieBreaker3()->getId();
-        }
-        if (null!==$season->getTime()->getByoyomi()) {
-            $this->byoyomi = $season->getTime()->getByoyomi()->getId();
-        }
-    }
 
     /**
      * @param array  $data
