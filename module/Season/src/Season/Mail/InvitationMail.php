@@ -19,7 +19,7 @@ class InvitationMail extends SeasonMail
             $this->translate('We are happy to invite you to participate in the %NUMBER%. %ASSOCIATION% League.') . ' ' .
             $this->translate('The starting date is tentatively scheduled for the %DATE%.') .
             PHP_EOL . PHP_EOL .
-            $this->translate('Base time') . ': %BASE_TIME%' .
+            $this->translate('Base time: %BASE_TIME% min.') .
             PHP_EOL .
             $this->translate('Byoyomi') . ': %BYOYOMI%, %MOVES%/%ADDITIONAL_TIME%' .
             PHP_EOL .

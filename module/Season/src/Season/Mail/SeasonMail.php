@@ -37,6 +37,7 @@ abstract class SeasonMail extends NakadeMail
      */
     public function getUrl()
     {
+        //todo: detect url see ViewHelper getServerUrl
         return $this->url;
     }
 

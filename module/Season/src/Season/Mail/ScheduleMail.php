@@ -24,7 +24,7 @@ class ScheduleMail extends SeasonMail
             PHP_EOL . PHP_EOL .
             $this->translate('All matches are officially played on KGS.') . ' ' .
             PHP_EOL . PHP_EOL .
-            $this->translate('Time') . ': %BASE_TIME%' .
+            $this->translate('Base time: %BASE_TIME% min.') .
             PHP_EOL .
             $this->translate('Byoyomi') . ': %BYOYOMI%, %MOVES%/%ADDITIONAL_TIME%' .
             PHP_EOL .

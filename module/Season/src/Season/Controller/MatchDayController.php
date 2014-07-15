@@ -100,11 +100,6 @@ class MatchDayController extends DefaultController
     {
         $id = (int) $this->params()->fromRoute('id', -1);
 
-        $season = $this->getSeasonMapper()->getNewSeasonByAssociation($id);
-        if (is_null($season) || $season->hasSchedule()) {
-            return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
-        }
-
         $matchDay = $this->getSeasonMapper()->getMatchDayById($id);
         if (is_null($matchDay)) {
             return $this->redirect()->toRoute('configMatchDay');
@@ -129,7 +124,7 @@ class MatchDayController extends DefaultController
                 $matchDay = $form->getData();
                 $this->getSeasonMapper()->save($matchDay);
 
-                return $this->redirect()->toRoute('createSeason');
+                return $this->redirect()->toRoute('createSeason', array('action' => 'create'));
             }
         }
 

@@ -145,6 +145,14 @@ class Season extends SeasonModel
     }
 
     /**
+     * @return array
+     */
+    public function getAvailablePlayers()
+    {
+        return $this->availablePlayers;
+    }
+
+    /**
      * @return bool
      */
     public function hasAvailablePlayers()

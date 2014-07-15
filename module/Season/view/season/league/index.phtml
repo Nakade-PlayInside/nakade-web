@@ -11,7 +11,7 @@ $this->headTitle('League');
 
 <?php $this->placeholder('actual')->captureStart();?>
 <h4><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h4><br/>
-<table class="table" style="width:auto">
+<table class="table edit">
     <tr>
         <th><?php echo $this->translate("Id"); ?></th>
         <th><?php echo $this->translate("No"); ?></th>
@@ -24,14 +24,12 @@ $this->headTitle('League');
 foreach ($this->leagues as $league) : ?>
     <tr style="background-color:<?php
     echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-        <td style="text-align:center"><?php echo $league->getId(); ?></td>
-        <td style="text-align:center"><?php echo $league->getNumber();?></td>
-        <td style="text-align:center"><?php echo $league->getNoPlayers();?></td>
-        <td style="text-align:center" title="<?php echo $this->translate("edit");?>">
-            <a href="<?php echo $this->url('createLeague', array('action' => 'edit', 'id' => $league->getId()));  ?>">
-                <img src="/images/edit.png">
-            </a>
-        </td>
+      <td><?php echo $league->getId(); ?></td>
+      <td><?php echo $league->getNumber();?></td>
+      <td><?php echo $league->getNoPlayers();?></td>
+      <td title="<?php echo $this->translate("edit");?>">
+         <a href="<?php echo $this->url('createLeague', array('action' => 'edit', 'id' => $league->getId()));  ?>"></a>
+      </td>
     </tr>
 <?php
 endforeach;
