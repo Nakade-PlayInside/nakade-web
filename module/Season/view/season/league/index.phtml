@@ -1,12 +1,16 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('Season');
 
-$title = $this->translate("Edit New Season's Leagues");
+$title = $this->translate("Edit Leagues");
 $this->headTitle('League');
 ?>
-    <h1><?php echo $this->escapeHtml($title); ?></h1>
+<h1><?php echo $this->escapeHtml($title); ?></h1><hr/>
+<?php $this->placeholder('nothing')->captureStart();?>
+    <p><?php echo $this->translate("No league found."); ?></p>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
 
-    <h5><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h5>
+<?php $this->placeholder('actual')->captureStart();?>
+<h4><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h4><br/>
 <table class="table" style="width:auto">
     <tr>
         <th><?php echo $this->translate("Id"); ?></th>
@@ -32,5 +36,16 @@ foreach ($this->leagues as $league) : ?>
 <?php
 endforeach;
 ?>
+<?php $this->placeholder('actual')->captureEnd(); ?>
+
+<?php
+
+if (!empty($this->leagues)) {
+    echo $this->placeholder('actual');
+} else {
+    echo $this->placeholder('nothing');
+}
+?>
+
 </table>
-    <a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'create')); ?>"><?php echo "back" ?></a>
+<a class="btn" href="<?php echo $this->url('createSeason', array('action' => 'create')); ?>"><?php echo "back" ?></a>

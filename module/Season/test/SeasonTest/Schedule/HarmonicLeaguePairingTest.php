@@ -65,7 +65,7 @@ class HarmonicLeaguePairingTest extends PHPUnit_Framework_TestCase
      */
     public function testNumberOfMatchesByImpairPairings()
     {
-        $test = array(1,2,3,4,5,6,7,Schedule::BYE);
+        $test = array(1,2,3,4,5,6,7,HarmonicLeaguePairing::BYE);
 
         $res = $this->invokeMethod($this->getObject(), 'makePairingsForMatchDay', array($test));
         $this->assertSame(3, count($res));

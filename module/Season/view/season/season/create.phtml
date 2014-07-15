@@ -4,7 +4,7 @@ $this->plugin('translate')->setTranslatorTextDomain('Season');
 $season = $this->season;
 $this->headTitle('Overview');
 $title = sprintf("%s: %s %s",
-    $this->translate('Create a New Season'),
+    $this->translate('Create Season'),
     $this->seasonTitle($season),
     $this->translate('League'));
 
@@ -12,11 +12,14 @@ $title = sprintf("%s: %s %s",
 
 <h2><?php echo  $title;?></h2>
 <hr/>
-
-    <h4><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h4>
-<ul style="margin-top:10px;">
-    <li><?php echo $this->translate('Leagues') . ': ' . $season->getNoLeagues() ?><a href="<?php echo $this->url('createLeague'); ?>" title="<?php echo "League Info" ?>"><img title="<?php echo "League Info" ?>" style="vertical-align:top; margin-left:10px" src="/images/info.png"></a></li>
-    <li><?php echo $this->translate('Participants') . ': ' . $season->getNoPlayers() ?><a href="<?php echo $this->url('invitePlayer'); ?>" title="<?php echo "Player Info" ?>"><img title="<?php echo "Player Info" ?>" style="vertical-align:top; margin-left:10px" src="/images/info.png"></a></li></li>
+<h4><?php echo $this->translate("Season no.") . ' ' . $season->getNumber()?></h4>
+<ul class="createSeason">
+    <li><?php echo $this->translate('Leagues') . ': ' . $season->getNoLeagues() ?>
+        <a href="<?php echo $this->url('createLeague'); ?>" title="<?php echo "League Info" ?>"></a>
+    </li>
+    <li><?php echo $this->translate('Participants') . ': ' . $season->getNoPlayers() ?>
+        <a href="<?php echo $this->url('invitePlayer'); ?>" title="<?php echo "Player Info" ?>"></a>
+    </li>
     <li><?php echo $this->translate('Matches') . ': ' . $season->getNoMatches() ?></li>
     <li><?php echo $this->translate('First match') . ': ' . $this->matchDate($season->getFirstMatchDate()); ?></li>
     <li><?php echo $this->translate('Last match') . ': ' . $this->matchDate($season->getLastMatchDate()); ?></li>
