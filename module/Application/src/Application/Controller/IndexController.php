@@ -29,9 +29,10 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         $matchDay  = $this->params('id');
+        $page  = intval($this->params('page', 1));
 
         $blogWidget  = $this->forward()
-                            ->dispatch('/Blog/Controller/Blog');
+                            ->dispatch('/Blog/Controller/Blog', array ('action' => 'index', 'page' => $page));
 
         $tableWidget = $this->forward()
                             ->dispatch('/League/Controller/Table');

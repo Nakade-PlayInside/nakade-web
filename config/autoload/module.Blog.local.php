@@ -1,19 +1,17 @@
 <?php
-/**
- * This is a sample "local" configuration for your application. To use it, copy 
- * it to your config/autoload/ directory of your application, and edit to suit
- * your application.
- *
- * This configuration example demonstrates using an SMTP mail transport, a
- * ReCaptcha CAPTCHA adapter, and setting the to and sender addresses for the
- * mail message.
- */
 
 return array(
-    'db_blog' => array(
-        'username' => 'wordpress',
-        'password' => 'j7F9wMWKLdXEJTbP',
-	
+
+    'blog_database_connection' => array(
+        'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+        'host'        => 'localhost',
+        'port'        => '3306',
+        'user'        => 'wordpress',
+        'password'    => 'j7F9wMWKLdXEJTbP',
+        'dbname'      => 'bbc-blog',
+        'driverOptions' => array(
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
+        ),
     ),
 
 );

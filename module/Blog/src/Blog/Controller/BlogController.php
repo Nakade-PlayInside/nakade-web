@@ -1,38 +1,23 @@
 <?php
-/**
- * Controller Blog
- *
- * @author Dr. Holger Maerz <holger@spandaugo.de>
- */
-
-// module/Blog/src/Blog/Controller/BlogController.php:
 namespace Blog\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 
-class BlogController extends AbstractActionController
+class BlogController extends AbstractController
 {
-  
-   protected $_blogTable;
-    
+
+    /**
+     * @return array|ViewModel
+     */
    public function indexAction()
    {
-        return new ViewModel(
-            array(
-               'blog' => $this->getBlogTable()->fetchAll(),
-            )
-        );
+       $page  = (int) $this->params()->fromRoute('page', 1);
+
+       return new ViewModel(array(
+             'post' =>  $this->getService()->getCarouselPaging($page),
+          )
+       );
    }
 
-   public function getBlogTable()
-   {
-        if (!$this->_blogTable) {
-            $serviceManager = $this->getServiceLocator();
-            $this->_blogTable = $serviceManager->get('Blog\Model\BlogTable');
-        }
-        return $this->_blogTable;
-   }
-    
-    
 }
