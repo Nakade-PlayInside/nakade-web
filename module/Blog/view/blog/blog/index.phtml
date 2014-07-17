@@ -6,15 +6,12 @@ $this->headTitle($title);
 /* @var $post \Blog\Entity\Post */
 ?>
 
-<div class="blog">
-
-<?php foreach ($blog as $post) : ?>
-<div style="border: 1px solid red; max-width:800px;">
+<a class="btn"><</a>
+<?php $post = $blog[0]; ?>
+<div class="post">
     <h3><?php echo $post->getTitle();?></h3>
-    <p style="font-size:13px;line-height:1.3;"><?php echo $post->getContent();?><br/>
-    <span style="color:grey; font-size:smaller;line-height:0;padding:0;">gepostet am <?php echo $post->getDate()->format('d.m.y');?></span>
-    </p>
+    <p><?php echo $post->getContent();?></p>
+    <div class="info">gepostet am <?php echo $post->getDate()->format('d.m.y');?></div>
 </div>
-<?php endforeach; ?>
-</div>
+<a class="btn">></a>
 
