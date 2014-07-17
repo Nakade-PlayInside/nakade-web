@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-17 17:05+0100\n"
-"PO-Revision-Date: 2014-07-17 17:05+0100\n"
+"POT-Creation-Date: 2014-07-17 17:13+0100\n"
+"PO-Revision-Date: 2014-07-17 17:13+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -19,9 +19,17 @@ msgstr ""
 msgid "News"
 msgstr "Aktuelles"
 
-#: ../view/blog/blog/index.phtml:13
+#: ../view/blog/blog/index.phtml:8
+msgid "previous"
+msgstr "vorheriger"
+
+#: ../view/blog/blog/index.phtml:14
 msgid "posted at"
 msgstr "veröffentlicht am"
+
+#: ../view/blog/blog/index.phtml:17
+msgid "next"
+msgstr "nächster"
 
 #~ msgid "May the stones be with you."
 #~ msgstr "Mit 361 Grüßen"

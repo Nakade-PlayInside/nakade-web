@@ -5,7 +5,8 @@ $this->headTitle($title);
 /* @var $post \Blog\Paginator\CarouselPaging */
 ?>
 
-<a class="btn" href="<?php echo $this->url('home', array('action' => 'index', 'page' => $post->getPrevious()));?>"><</a>
+<a class="btn" title="<?php echo $this->translate('previous')?>"
+   href="<?php echo $this->url('home', array('action' => 'index', 'page' => $post->getPrevious()));?>"><</a>
 <div class="post">
     <h3><?php echo $post->getActualPost()->getTitle();?></h3>
     <p><?php echo $post->getActualPost()->getContent();?></p>
@@ -13,5 +14,6 @@ $this->headTitle($title);
         <?php echo $this->translate("posted at"). ' ' . $post->getActualPost()->getDate()->format('d.m.y');?>
     </div>
 </div>
-<a class="btn" href="<?php echo $this->url('home', array('action' => 'index', 'page' => $post->getNext()));?>">></a>
+<a class="btn" title="<?php echo $this->translate('next')?>"
+   href="<?php echo $this->url('home', array('action' => 'index', 'page' => $post->getNext()));?>">></a>
 
