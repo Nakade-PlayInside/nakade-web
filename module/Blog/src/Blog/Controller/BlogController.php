@@ -1,38 +1,38 @@
 <?php
-/**
- * Controller Blog
- *
- * @author Dr. Holger Maerz <holger@spandaugo.de>
- */
-
-// module/Blog/src/Blog/Controller/BlogController.php:
 namespace Blog\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Blog\Services\RepositoryService;
+use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 
-class BlogController extends AbstractActionController
+class BlogController extends AbstractController
 {
-  
-   protected $_blogTable;
-    
+
+    /**
+     * @return array|ViewModel
+     */
    public function indexAction()
    {
-        return new ViewModel(
-            array(
-               'blog' => $this->getBlogTable()->fetchAll(),
+        return new ViewModel(array(
+               'blog' => $this->getBlogMapper()->getLatestPosts(),
             )
         );
    }
 
-   public function getBlogTable()
+   /**
+    * @return \Blog\Services\RepositoryService
+    */
+   public function getRepository()
    {
-        if (!$this->_blogTable) {
-            $serviceManager = $this->getServiceLocator();
-            $this->_blogTable = $serviceManager->get('Blog\Model\BlogTable');
-        }
-        return $this->_blogTable;
+        return $this->repository;
    }
-    
-    
+
+   /**
+    * @return \Blog\Mapper\BlogMapper
+    */
+   public function getBlogMapper()
+   {
+       return $this->getRepository()->getMapper(RepositoryService::BLOG_MAPPER);
+   }
+
 }
