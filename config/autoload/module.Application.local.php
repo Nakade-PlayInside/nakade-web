@@ -10,11 +10,6 @@
  */
 
 return array(
-    'db' => array(
-        'dsn'      => 'mysql:dbname=bbc-blog;host=localhost',
-        'username' => 'wordpress',
-        'password' => 'j7F9wMWKLdXEJTbP',
-    ),
 
     'Application' => array(
 
