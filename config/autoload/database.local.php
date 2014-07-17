@@ -13,9 +13,6 @@ return array(
                     'user'     => 'nakade',
                     'password' => 'NidBLT2012',
                     'dbname'   => 'nakade',
-                    'driverOptions' => array(
-                        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
-                    ),
                 )
             ),
         ),

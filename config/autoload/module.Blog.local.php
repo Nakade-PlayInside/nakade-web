@@ -14,4 +14,9 @@ return array(
         ),
     ),
 
+
+    'Blog' => array(
+        'text_domain' => 'Blog',
+    ),
+
 );
