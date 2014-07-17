@@ -42,9 +42,10 @@ return array(
                 'home' => array(
                     'type' => 'segment',
                     'options' => array(
-                        'route'    => '/[:id]',
+                        'route'    => '/[:id][p:page]',
                         'constraints' => array(
                             'id'     => '[0-9]*',
+                            'page'     => '[0-9]*',
                         ),
                         'defaults' => array(
                             '__NAMESPACE__' => 'Application\Controller',

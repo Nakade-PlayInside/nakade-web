@@ -1,17 +1,17 @@
 <?php
-// module/Impressum/view/impressum/impressum/index.phtml:
 $this->plugin('translate')->setTranslatorTextDomain('Blog');
 $title = $this->translate("News");
 $this->headTitle($title);
-/* @var $post \Blog\Entity\Post */
+/* @var $post \Blog\Paginator\CarouselPaging */
 ?>
 
-<a class="btn"><</a>
-<?php $post = $blog[0]; ?>
+<a class="btn" href="<?php echo $this->url('home', array('action' => 'index', 'page' => $post->getPrevious()));?>"><</a>
 <div class="post">
-    <h3><?php echo $post->getTitle();?></h3>
-    <p><?php echo $post->getContent();?></p>
-    <div class="info">gepostet am <?php echo $post->getDate()->format('d.m.y');?></div>
+    <h3><?php echo $post->getActualPost()->getTitle();?></h3>
+    <p><?php echo $post->getActualPost()->getContent();?></p>
+    <div class="info">
+        <?php echo $this->translate("posted at"). ' ' . $post->getActualPost()->getDate()->format('d.m.y');?>
+    </div>
 </div>
-<a class="btn">></a>
+<a class="btn" href="<?php echo $this->url('home', array('action' => 'index', 'page' => $post->getNext()));?>">></a>
 

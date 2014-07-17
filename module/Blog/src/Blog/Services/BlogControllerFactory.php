@@ -25,9 +25,9 @@ class BlogControllerFactory implements FactoryInterface
         /* @var $services \Zend\Mvc\Controller\AbstractController */
         $serviceManager = $services->getServiceLocator();
 
-        $repository = $serviceManager->get('Blog\Services\RepositoryService');
+        $service = $serviceManager->get('Blog\Services\CarouselPostService');
         $controller = new BlogController();
-        $controller->setRepository($repository);
+        $controller->setService($service);
 
         return $controller;
     }
