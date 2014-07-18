@@ -77,6 +77,9 @@ class UserForm extends DefaultForm
                     'label' =>  $this->translate('use nick always (anonymizer):'),
                     'checked_value' => true,
                 ),
+                'attributes' => array(
+                    'class' => 'checkbox',
+                ),
             )
         );
 
