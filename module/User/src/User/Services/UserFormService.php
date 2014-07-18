@@ -47,10 +47,10 @@ class UserFormService extends AbstractFormFactory
             $config['User']['text_domain'] : null;
 
         $translator = $services->get('translator');
-        $repository = $services->get('User\Services\RepositoryService');
+      //  $repository = $services->get('User\Services\RepositoryService');
         $fieldSetService = $services->get('Season\Services\SeasonFieldsetService');
 
-        $this->setRepository($repository);
+   //     $this->setRepository($repository);
         $this->setFieldSetService($fieldSetService);
         $this->setTranslator($translator, $textDomain);
 
@@ -64,10 +64,10 @@ class UserFormService extends AbstractFormFactory
      *
      * @throws \RuntimeException
      */
-    public function getForm($typ, $language=null)
+    public function getForm($typ)
     {
         $service = $this->getFieldSetService();
-        $repository = $this->getRepository();
+     //   $repository = $this->getRepository();
 
         switch (strtolower($typ)) {
 
@@ -81,6 +81,10 @@ class UserFormService extends AbstractFormFactory
 
            case self::FORGOT_PASSWORD_FORM:
                $form = new Form\ForgotPasswordForm();
+               $entityManager = $this->getEntityManager();
+               $form->setEntityManager($entityManager);
+               $form->init();
+               $form->setInputFilter($form->getFilter());
                break;
 
            case self::KGS_FORM:
@@ -88,20 +92,23 @@ class UserFormService extends AbstractFormFactory
                break;
 
            case self::NICK_FORM:
-               $form = new Form\NickForm();
+               $form = new Form\NickForm($service);
                break;
 
            case self::PASSWORD_FORM:
-               $form = new Form\PasswordForm();
+               $form = new Form\PasswordForm($service);
                break;
 
            case self::USER_FORM:
                $form = new Form\UserForm();
+               $entityManager = $this->getEntityManager();
+               $form->setEntityManager($entityManager);
+               $form->init();
+               $form->setInputFilter($form->getFilter());
                break;
 
             case self::LANGUAGE_FORM:
-                $form = new Form\LanguageForm();
-                $form->setLanguage($language);
+                $form = new Form\LanguageForm($service);
                 break;
 
            default:

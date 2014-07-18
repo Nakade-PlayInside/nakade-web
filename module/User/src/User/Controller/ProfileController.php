@@ -1,22 +1,15 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for
- * the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc.
- * (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 namespace User\Controller;
 
-use Zend\Form\FormInterface;
+use User\Services\RepositoryService;
+use User\Services\UserFormService;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
 /**
- * Editing the user's own profile
+ * Class ProfileController
+ *
+ * @package User\Controller
  */
 class ProfileController extends AbstractController
 {
@@ -28,19 +21,13 @@ class ProfileController extends AbstractController
      */
     public function indexAction()
     {
-        //redirection does not work here if the
-        //protected method is provided!
-        $profile = $this->identity();
-
-        if ($profile === null) {
-            return $this->redirect()->toRoute('login');
-        }
+        $user = $this->getUser();
 
         return new ViewModel(
             array(
-               'profile'    => $profile,
-               'name'       => $profile->getName(),
-               'username'   => $profile->getUsername(),
+               'profile'    => $user,
+               'name'       => $user->getName(),
+               'username'   => $user->getUsername(),
            )
         );
     }
@@ -52,10 +39,10 @@ class ProfileController extends AbstractController
      */
     public function birthdayAction()
     {
-        $profile = $this->getProfile();
-
-        $form = $this->getForm('birthday');
-        $form->bindEntity($profile);
+        /* @var $form \User\Form\BirthdayForm */
+        $form = $this->getForm(UserFormService::BIRTHDAY_FORM);
+        $user = $this->getUser();
+        $form->bindEntity($user);
 
         if ($this->getRequest()->isPost()) {
 
@@ -70,10 +57,8 @@ class ProfileController extends AbstractController
             $form->setData($postData);
 
             if ($form->isValid()) {
-
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['uid']=$this->getProfile()->getId();
-                $this->getService()->editProfile($data);
+                $user = $form->getData();
+                $this->getUserMapper()->save($user);
 
                 return $this->redirect()->toRoute('profile');
             }
@@ -87,6 +72,8 @@ class ProfileController extends AbstractController
 
     }
 
+
+
     /**
      * edit the nickname
      *
@@ -94,11 +81,10 @@ class ProfileController extends AbstractController
      */
     public function nickAction()
     {
-        $profile = $this->getProfile();
-
-        $form = $this->getForm('nick');
-        $form->bindEntity($profile);
-
+        /* @var $form \User\Form\NickForm */
+        $form = $this->getForm(UserFormService::NICK_FORM);
+        $user = $this->getUser();
+        $form->bindEntity($user);
         if ($this->getRequest()->isPost()) {
 
             //get post data, set data to from, prepare for validation
@@ -108,14 +94,12 @@ class ProfileController extends AbstractController
             if (isset($postData['cancel'])) {
                 return $this->redirect()->toRoute('profile');
             }
-
             $form->setData($postData);
 
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['uid']=$this->getProfile()->getId();
-                $this->getService()->editProfile($data);
+                $user = $form->getData();
+                $this->getUserMapper()->save($user);
 
                 return $this->redirect()->toRoute('profile');
             }
@@ -135,10 +119,10 @@ class ProfileController extends AbstractController
      */
     public function kgsAction()
     {
-        $profile = $this->getProfile();
-
-        $form = $this->getForm('kgs');
-        $form->bindEntity($profile);
+        /* @var $form \User\Form\KgsForm */
+        $form = $this->getForm(UserFormService::KGS_FORM);
+        $user = $this->getUser();
+        $form->bindEntity($user);
 
         if ($this->getRequest()->isPost()) {
 
@@ -154,9 +138,8 @@ class ProfileController extends AbstractController
 
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['uid']=$this->getProfile()->getId();
-                $this->getService()->editProfile($data);
+                $user = $form->getData();
+                $this->getUserMapper()->save($user);
 
                 return $this->redirect()->toRoute('profile');
             }
@@ -176,9 +159,11 @@ class ProfileController extends AbstractController
      */
     public function emailAction()
     {
-        $profile = $this->getProfile();
-        $form = $this->getForm('email');
-        $form->bindEntity($profile);
+        /* @var $form \User\Form\EmailForm */
+        $form = $this->getForm(UserFormService::EMAIL_FORM);
+        $user = $this->getUser();
+        $form->bindEntity($user);
+
 
         if ($this->getRequest()->isPost()) {
 
@@ -194,9 +179,8 @@ class ProfileController extends AbstractController
 
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['uid']=$this->getProfile()->getId();
-                $this->getService()->editProfile($data);
+                $user = $form->getData();
+                $this->getUserMapper()->save($user);
 
                 return $this->redirect()->toRoute('profile');
             }
@@ -217,11 +201,11 @@ class ProfileController extends AbstractController
     public function passwordAction()
     {
 
-        if ($this->identity() === null) {
-            return $this->redirect()->toRoute('login');
-        }
+        /* @var $form \User\Form\PasswordForm */
+        $form = $this->getForm(UserFormService::PASSWORD_FORM);
+        $user = $this->getUser();
+        $form->bindEntity($user);
 
-        $form = $this->getForm('password');
         if ($this->getRequest()->isPost()) {
 
             //get post data, set data to from, prepare for validation
@@ -236,9 +220,8 @@ class ProfileController extends AbstractController
 
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['uid']=$this->getProfile()->getId();
-                $this->getService()->editPassword($data);
+                $user = $form->getData();
+                $this->getUserMapper()->save($user);
 
                 return $this->redirect()->toRoute('profile');
             }
@@ -259,13 +242,11 @@ class ProfileController extends AbstractController
     public function languageAction()
     {
 
-        if ($this->identity() === null) {
-            return $this->redirect()->toRoute('login');
-        }
-        $user = $this->identity();
-        $lang = $user->getLanguage();
+        /* @var $form \User\Form\LanguageForm */
+        $form = $this->getForm(UserFormService::LANGUAGE_FORM);
+        $user = $this->getUser();
+        $form->bindEntity($user);
 
-        $form = $this->getForm('language', $lang);
         if ($this->getRequest()->isPost()) {
 
             //get post data, set data to from, prepare for validation
@@ -280,19 +261,11 @@ class ProfileController extends AbstractController
 
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['uid']=$this->getProfile()->getId();
+                $user = $form->getData();
+                $this->getUserMapper()->save($user);
 
-                //no language selected
-                if ($data['language'] == 'no_NO') {
-                    $data['language']=null;
-                }
-                $this->getService()->editProfile($data);
-
-                //todo: refactoring
-                $auth = $this->getService()->getAuthService();
-                $user = $auth->getIdentity();
-                $user->setLanguage($data['language']);
+                $identity = $this->getService()->getIdentity();
+                $identity->setLanguage($user->getLanguage());
 
                 return $this->redirect()->toRoute('profile');
             }
@@ -306,19 +279,22 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * get the user's profile. Redirect to the login if not logged in.
-     *
-     * @return mixed
+     * @return \User\Mapper\UserMapper
      */
-    protected function getProfile()
+    private function getUserMapper()
+    {
+        /* @var $repo \User\Services\RepositoryService */
+        $repo = $this->getRepository();
+        return $repo->getMapper(RepositoryService::USER_MAPPER);
+    }
+
+    /**
+     * @return \User\Entity\User
+     */
+    private function getUser()
     {
         $profile = $this->identity();
-
-        if ($profile === null) {
-            return $this->redirect()->toRoute('login');
-        }
-
-        return $profile;
+        return $this->getUserMapper()->getUserById($profile->getId());
     }
 
 }

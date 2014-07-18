@@ -5,11 +5,11 @@ use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
 /**
- * Class KgsHydrator
+ * Class NickHydrator
  *
- * @package User\Form
+ * @package User\Form\Hydrator
  */
-class BirthdayHydrator implements HydratorInterface
+class NickHydrator implements HydratorInterface
 {
 
     /**
@@ -19,13 +19,9 @@ class BirthdayHydrator implements HydratorInterface
      */
     public function extract($object)
     {
-        $birthday = null;
-        if (null!==$object->getBirthday()) {
-            $birthday = $object->getBirthday()->format('Y-m-d');
-        }
-
         return array(
-                'birthday' => $birthday
+                'nickname' => $object->getNickname(),
+                'anonym' => $object->isAnonym()
         );
     }
 
@@ -37,11 +33,12 @@ class BirthdayHydrator implements HydratorInterface
      */
     public function hydrate(array $data, $object)
     {
-        if (!empty($data['birthday'])) {
-            $date = $data['birthday'];
-            $birthday = new \DateTime($date);
-            $object->setBirthday($birthday);
+        $nick = null;
+        if (!empty($data['nickname'])) {
+            $nick = $data['nickname'];
         }
+        $object->setNickname($nick);
+        $object->setAnonym($data['anonym']);
 
         return $object;
     }

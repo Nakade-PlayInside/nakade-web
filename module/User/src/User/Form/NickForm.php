@@ -1,17 +1,41 @@
 <?php
 namespace User\Form;
 
+use Season\Services\SeasonFieldsetService;
+use User\Form\Hydrator\NickHydrator;
 use \Zend\InputFilter\InputFilter;
 
 /**
- * Form for nick name changing.
- * Use a factory for needed settings after constructing.
- * Successive settings: setEntityManager(), setInputFilter(), init().
- * Use bindingEntity for setting values.
+ * Class NickForm
+ *
+ * @package User\Form
  */
-class NickForm extends DefaultForm
+class NickForm extends BaseForm
 {
 
+    /**
+     * @param SeasonFieldsetService $service
+     */
+    public function __construct(SeasonFieldsetService $service)
+    {
+        parent::__construct('NickForm');
+
+        $this->setFieldSetService($service);
+
+        $hydrator = new NickHydrator();
+        $this->setHydrator($hydrator);
+        $this->setInputFilter($this->getFilter());
+    }
+
+    /**
+     * @param \User\Entity\User $object
+     */
+    public function bindEntity($object)
+    {
+        $this->init();
+        $this->setInputFilter($this->getFilter());
+        $this->bind($object);
+    }
 
     /**
      * init the form. It is neccessary to call this function
@@ -20,10 +44,14 @@ class NickForm extends DefaultForm
     public function init()
     {
 
-        //nick name
         $this->add(
-            $this->getTextField('nickname', 'Nick (opt.):')
-
+            array(
+                'name' => 'nickname',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array(
+                    'label' =>  $this->translate('Nick (opt.):'),
+                ),
+            )
         );
 
         //anonym
@@ -41,7 +69,7 @@ class NickForm extends DefaultForm
             )
         );
 
-        $this->setDefaultFields();
+        $this->add($this->getButtonFieldSet());
 
     }
 
@@ -56,7 +84,32 @@ class NickForm extends DefaultForm
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add($this->getUniqueDbFilter('nickname', null, '20', false));
+        $filter->add(array(
+            'name' => 'nickname',
+            'filters' => array(
+                array('name' => 'StripTags'),
+                array('name' => 'StringTrim'),
+                array('name' => 'StripNewLines'),
+            ),
+            'validators'=> array(
+                array(
+                    'name' => 'StringLength',
+                    'options' => array (
+                        'encoding' => 'UTF-8',
+                        'max' => 20
+                    )
+                ),
+                /*  array(
+                      'name'     => 'User\Form\Validator\DBNoRecordExist',
+                      'options' => array(
+                          'entity'   => 'User\Entity\User',
+                          'property' => 'email',
+                          'exclude'  => $this->getIdentifierValue(),
+                          'adapter'  => $this->getEntityManager(),
+                      )
+                  )*/
+            )
+        ));
 
         return $filter;
     }

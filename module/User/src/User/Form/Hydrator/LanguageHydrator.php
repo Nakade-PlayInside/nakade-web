@@ -5,11 +5,11 @@ use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
 /**
- * Class KgsHydrator
+ * Class LanguageHydrator
  *
- * @package User\Form
+ * @package User\Form\Hydrator
  */
-class BirthdayHydrator implements HydratorInterface
+class LanguageHydrator implements HydratorInterface
 {
 
     /**
@@ -19,13 +19,13 @@ class BirthdayHydrator implements HydratorInterface
      */
     public function extract($object)
     {
-        $birthday = null;
-        if (null!==$object->getBirthday()) {
-            $birthday = $object->getBirthday()->format('Y-m-d');
+        $language = 'no_NO';
+        if (null!==$object->getLanguage()) {
+            $language = $object->getLanguage();
         }
 
         return array(
-                'birthday' => $birthday
+                'language' => $language
         );
     }
 
@@ -37,11 +37,11 @@ class BirthdayHydrator implements HydratorInterface
      */
     public function hydrate(array $data, $object)
     {
-        if (!empty($data['birthday'])) {
-            $date = $data['birthday'];
-            $birthday = new \DateTime($date);
-            $object->setBirthday($birthday);
+        $lang = null;
+        if ($data['language']!= 'no_NO') {
+            $lang = $data['language'];
         }
+        $object->setLanguage($lang);
 
         return $object;
     }

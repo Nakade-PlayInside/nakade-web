@@ -1,24 +1,39 @@
 <?php
 namespace User\Form;
 
+use Season\Services\SeasonFieldsetService;
+use User\Form\Hydrator\LanguageHydrator;
 use \Zend\InputFilter\InputFilter;
 
 /**
- * Form for nick name changing.
- * Use a factory for needed settings after constructing.
- * Successive settings: setEntityManager(), setInputFilter(), init().
- * Use bindingEntity for setting values.
+ * Class LanguageForm
+ *
+ * @package User\Form
  */
-class LanguageForm extends DefaultForm
+class LanguageForm extends BaseForm
 {
-    private $language;
+    /**
+     * @param SeasonFieldsetService $service
+     */
+    public function __construct(SeasonFieldsetService $service)
+    {
+        parent::__construct('EmailForm');
+
+        $this->setFieldSetService($service);
+
+        $hydrator = new LanguageHydrator();
+        $this->setHydrator($hydrator);
+        $this->setInputFilter($this->getFilter());
+    }
 
     /**
-     * @param string $language
+     * @param \User\Entity\User $object
      */
-    public function setLanguage($language)
+    public function bindEntity($object)
     {
-        $this->language=$language;
+        $this->init();
+        $this->setInputFilter($this->getFilter());
+        $this->bind($object);
     }
 
     /**
@@ -40,13 +55,10 @@ class LanguageForm extends DefaultForm
                         'en_US' => $this->translate('English'),
                     )
                 ),
-                'attributes' => array(
-                        'value' => $this->language
-                )
            )
         );
 
-        $this->setDefaultFields();
+        $this->add($this->getButtonFieldSet());
 
     }
 

@@ -137,10 +137,12 @@ return array(
                     'User\Factory\MapperFactory',
             'User\Factory\FormFactory'  =>
                     'User\Factory\FormFactory',
-            'User\Services\ProfileService' =>
-                    'User\Services\ProfileServiceFactory',
             'User\Services\UserService'    =>
                     'User\Services\UserServiceFactory',
+            'User\Services\UserFormService'    =>
+                'User\Services\UserFormService',
+            'User\Services\RepositoryService'=>
+                'User\Services\RepositoryService',
             'translator'  => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
