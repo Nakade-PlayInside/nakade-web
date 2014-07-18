@@ -4,12 +4,14 @@ $this->plugin('translate')->setTranslatorTextDomain('League');
 $iCalInfo = $this->translate("download your schedule calendar (iCal)");
 $this->headTitle('schedule');
 
-/* @var $league \Season\Entity\League */
-$league = $this->league;
+/* @var $this->league \Season\Entity\League */
 
 $title = $this->translate("%NAME% League No. %NUMBER%");
-$title = str_replace("%NAME%", $league->getSeason()->getAssociation()->getName(), $title);
-$title = str_replace("%NUMBER%", $league->getSeason()->getNumber(), $title);
+
+if (!is_null($this->league)) {
+    $title = str_replace("%NAME%", $this->league->getSeason()->getAssociation()->getName(), $title);
+    $title = str_replace("%NUMBER%", $this->league->getSeason()->getNumber(), $title);
+}
 ?>
 <?php $this->placeholder('noSchedule')->captureStart();?>
 <h3><?php echo $this->translate('No schedule found')?></h3>
@@ -35,7 +37,7 @@ endforeach;
 </div>
 <?php $this->placeholder('schedule')->captureEnd();
 
-  if (is_null($this->matches)) {
+  if (is_null($this->league)) {
       echo $this->placeholder('noSchedule');
   } else {
       echo $this->placeholder('schedule');

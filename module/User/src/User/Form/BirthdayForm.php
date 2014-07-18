@@ -1,30 +1,42 @@
 <?php
 namespace User\Form;
 
+use Season\Services\SeasonFieldsetService;
+use User\Form\Hydrator\BirthdayHydrator;
 use Zend\InputFilter\InputFilter;
-use User\Form\Fields\Birthday;
 
 /**
- * Form for editing the user's birthday.
- * Use a factory for needed settings after constructing.
- * Successive settings: setEntityManager(), setInputFilter(), init().
- * Use bindingEntity for setting values.
+ * Class BirthdayForm
+ *
+ * @package User\Form
  */
-class BirthdayForm extends DefaultForm
+class BirthdayForm extends BaseForm
 {
-    private $field;
 
     /**
-     * @return Birthday
+     * @param SeasonFieldsetService $service
      */
-    public function getField()
+    public function __construct(SeasonFieldsetService $service)
     {
-        if (is_null($this->field)) {
-            $this->field=new Birthday($this->getTranslator(), $this->getTranslatorTextDomain());
-        }
-        return $this->field;
+        parent::__construct('BirthdayForm');
+
+        $this->setFieldSetService($service);
+
+        $hydrator = new BirthdayHydrator();
+        $this->setHydrator($hydrator);
+        $this->setInputFilter($this->getFilter());
     }
 
+
+    /**
+     * @param \User\Entity\User $object
+     */
+    public function bindEntity($object)
+    {
+        $this->init();
+        $this->setInputFilter($this->getFilter());
+        $this->bind($object);
+    }
 
     /**
      * init the form. It is neccessary to call this function
@@ -32,11 +44,23 @@ class BirthdayForm extends DefaultForm
      */
     public function init()
     {
-
         //birthday
-        $this->add($this->getField()->getField());
+        $this->add(array(
+            'name' => 'birthday',
+            'type' => 'Zend\Form\Element\Date',
+            'options' => array(
+                'label' =>  $this->translate('Birthday:'),
+                'format' => 'Y-m-d',
+                ),
+            'attributes' => array(
+                'min' => '1900-01-01',
+                'max' => date('Y-m-d'),
+                'step' => '1',
+                )
+            )
+        );
 
-        $this->setDefaultFields();
+        $this->add($this->getButtonFieldSet());
     }
 
     /**
@@ -47,9 +71,19 @@ class BirthdayForm extends DefaultForm
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add($this->getField()->getFilter());
 
+        $filter->add(array(
+            'name' => 'birthday',
+            'required' => false,
+            'validators' => array(
+                array('name'    => 'Date',
+                    'options' => array (
+                        'format' => 'Y-m-d',
+                    )
+                ),
+            ),
+        ));
 
-         return $filter;
+        return $filter;
     }
 }
