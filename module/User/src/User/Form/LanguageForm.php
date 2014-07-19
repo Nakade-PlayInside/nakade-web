@@ -27,39 +27,13 @@ class LanguageForm extends BaseForm
     }
 
     /**
-     * @param \User\Entity\User $object
-     */
-    public function bindEntity($object)
-    {
-        $this->init();
-        $this->setInputFilter($this->getFilter());
-        $this->bind($object);
-    }
-
-    /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
     public function init()
     {
-
-        $this->add(
-            array(
-                'name' => 'language',
-                'type' => 'Zend\Form\Element\Select',
-                'options' => array(
-                    'label' =>  $this->translate('language:'),
-                    'value_options' => array(
-                        'no_NO' => $this->translate('No language'),
-                        'de_DE' => $this->translate('German'),
-                        'en_US' => $this->translate('English'),
-                    )
-                ),
-           )
-        );
-
+        $this->addLanguage();
         $this->add($this->getButtonFieldSet());
-
     }
 
     /**

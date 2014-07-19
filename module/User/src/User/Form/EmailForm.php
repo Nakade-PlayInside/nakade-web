@@ -28,38 +28,12 @@ class EmailForm extends BaseForm
     }
 
     /**
-     * @param \User\Entity\User $object
-     */
-    public function bindEntity($object)
-    {
-        $this->init();
-        $this->setInputFilter($this->getFilter());
-        $this->bind($object);
-    }
-
-    /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
     public function init()
     {
-
-        //email
-        $this->add(
-            array(
-                'name' => 'email',
-                'type' => 'Zend\Form\Element\Email',
-                'options' => array(
-                    'label' =>  $this->translate('email:'),
-
-                ),
-                'attributes' => array(
-                    'multiple' => false,
-                    'required' => 'required',
-                )
-            )
-        );
-
+        $this->addEmail();
         $this->add($this->getButtonFieldSet());
     }
 

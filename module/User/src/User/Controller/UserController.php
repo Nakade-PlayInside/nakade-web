@@ -11,6 +11,8 @@
 
 namespace User\Controller;
 
+use Season\Services\RepositoryService;
+use User\Services\UserFormService;
 use Zend\Form\FormInterface;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
@@ -31,9 +33,7 @@ class UserController extends AbstractController
     {
         return new ViewModel(
             array(
-              'users' => $this->getService()
-                              ->getMapper('user')
-                              ->getAllUser(),
+              'users' => $this->getUserMapper()->getAllUser()
             )
         );
     }
@@ -114,9 +114,9 @@ class UserController extends AbstractController
         //get param
        $uid  = $this->params()->fromRoute('id', null);
 
-       $user=$this->getService()->getMapper('user')->getUserById($uid);
-
-       $form = $this->getForm('user');
+       /* @var $form \User\Form\UserForm */
+       $form = $this->getForm(UserFormService::USER_FORM);
+       $user=$this->getUserMapper()->getUserById($uid);
        $form->bindEntity($user);
 
        if ($this->getRequest()->isPost()) {
@@ -174,5 +174,16 @@ class UserController extends AbstractController
 
        return $this->redirect()->toRoute('user');
     }
+
+    /**
+     * @return \User\Mapper\UserMapper
+     */
+    private function getUserMapper()
+    {
+        /* @var $repo \User\Services\RepositoryService */
+        $repo = $this->getRepository();
+        return $repo->getMapper(\User\Services\RepositoryService::USER_MAPPER);
+    }
+
 
 }

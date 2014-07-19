@@ -1,29 +1,25 @@
 <?php
 namespace User\Form;
 
-use User\Form\Fields\ForgotPassword;
+use Season\Services\SeasonFieldsetService;
 use Zend\InputFilter\InputFilter;
 
 /**
- * Form for changing email adress.
- * Use a factory for needed settings after constructing.
- * Successive settings: setEntityManager(), setInputFilter(), init().
- * Use bindingEntity for setting values.
+ * Class ForgotPasswordForm
+ *
+ * @package User\Form
  */
-class ForgotPasswordForm extends DefaultForm
+class ForgotPasswordForm extends BaseForm
 {
 
-    private $field;
-
     /**
-     * @return ForgotPassword
+     * @param SeasonFieldsetService $service
      */
-    public function getField()
+    public function __construct(SeasonFieldsetService $service)
     {
-        if (is_null($this->field)) {
-            $this->field=new ForgotPassword($this->getTranslator(), $this->getTranslatorTextDomain());
-        }
-        return $this->field;
+        parent::__construct('PasswordForgotForm');
+        $this->setFieldSetService($service);
+        $this->setInputFilter($this->getFilter());
     }
 
     /**
@@ -32,15 +28,10 @@ class ForgotPasswordForm extends DefaultForm
      */
     public function init()
     {
-
         //email
-        $this->add($this->getField()->getField());
-        $this->setDefaultFields();
-
+        $this->addEmail();
+        $this->add($this->getButtonFieldSet());
     }
-
-
-
 
     /**
      * get the InputFilter

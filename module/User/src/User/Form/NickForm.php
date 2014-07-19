@@ -28,49 +28,13 @@ class NickForm extends BaseForm
     }
 
     /**
-     * @param \User\Entity\User $object
-     */
-    public function bindEntity($object)
-    {
-        $this->init();
-        $this->setInputFilter($this->getFilter());
-        $this->bind($object);
-    }
-
-    /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
     public function init()
     {
-
-        $this->add(
-            array(
-                'name' => 'nickname',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('Nick (opt.):'),
-                ),
-            )
-        );
-
-        //anonym
-        $this->add(
-            array(
-                'name' => 'anonym',
-                'type' => 'Zend\Form\Element\Checkbox',
-                'options' => array(
-                    'label' =>  $this->translate('use nick always (anonymizer):'),
-                    'checked_value' => true,
-                ),
-                'attributes' => array(
-                    'class' => 'checkbox',
-                ),
-            )
-        );
-
+        $this->addNick();
         $this->add($this->getButtonFieldSet());
-
     }
 
 

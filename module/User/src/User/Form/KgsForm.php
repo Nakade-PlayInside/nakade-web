@@ -28,31 +28,12 @@ class KgsForm extends BaseForm
     }
 
     /**
-     * @param \User\Entity\User $object
-     */
-    public function bindEntity($object)
-    {
-        $this->init();
-        $this->setInputFilter($this->getFilter());
-        $this->bind($object);
-    }
-
-    /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
     public function init()
     {
-        $this->add(
-            array(
-                'name' => 'kgs',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('KGS (opt.):'),
-                ),
-            )
-        );
-
+        $this->addKgs();
         $this->add($this->getButtonFieldSet());
     }
 

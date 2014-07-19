@@ -1,27 +1,30 @@
 <?php
 namespace User\Form;
 
-use User\Form\Fields\Birthday;
+use Permission\Entity\RoleInterface;
+use Season\Services\SeasonFieldsetService;
+use User\Form\Hydrator\UserHydrator;
 use \Zend\InputFilter\InputFilter;
-/**
- * Form for adding or editing a new User.
- * Use a factory for needed settings after constructing.
- * Successive settings: setEntityManager(), setInputFilter(), init().
- * Use bindingEntity for setting values.
- */
-class UserForm extends DefaultForm
-{
-    private $birthday;
 
+/**
+ * Class UserForm
+ *
+ * @package User\Form
+ */
+class UserForm extends BaseForm implements RoleInterface
+{
     /**
-     * @return Birthday
+     * @param SeasonFieldsetService $service
      */
-    public function getBirthday()
+    public function __construct(SeasonFieldsetService $service)
     {
-        if (is_null($this->birthday)) {
-            $this->birthday=new Birthday($this->getTranslator(), $this->getTranslatorTextDomain());
-        }
-        return $this->birthday;
+        parent::__construct('UserForm');
+
+        $this->setFieldSetService($service);
+
+        $hydrator = new UserHydrator();
+        $this->setHydrator($hydrator);
+        $this->setInputFilter($this->getFilter());
     }
 
     /**
@@ -31,122 +34,112 @@ class UserForm extends DefaultForm
     public function init()
     {
 
+        $this->addProfile();
+        $this->addNick();
+        $this->addBirthday();
 
+        //User name
+        $this->add(array(
+                'name' => 'username',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array(
+                    'label' =>  $this->translate('User Name') . ':',
+                ),
+        ));
+
+        $this->addKgs();
+        $this->addEmail();
+
+        //role
+        $this->add(array(
+                'name' => 'role',
+                'type' => 'Zend\Form\Element\Select',
+                'options' => array(
+                    'label' => $this->translate('Role') . ':',
+                    'value_options' => $this->getRoles(),
+                ),
+                'attributes' => array(
+                    'value' => 'user'
+                )
+        ));
+
+        $this->add($this->getButtonFieldSet());
+    }
+
+    /**
+     * add Profile
+     */
+    private function addProfile()
+    {
         $this->add(
             array(
                 'name' => 'sex',
                 'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' =>  $this->translate('Salutation:'),
-                    'value_options' => array(
-                        'm' => $this->translate('Herr'),
-                        'f' => $this->translate('Frau'),
-                    )
-                ),
+                    'label' =>  $this->translate('Salutation') . ':',
+                    'value_options' => $this->getSex()
+                    ),
             )
         );
 
         //Title
         $this->add(
-            $this->getTextField('title', 'Title (opt.):')
+            array(
+                'name' => 'title',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array(
+                    'label' =>  $this->translate('Title (opt.)') . ':',
+                ),
+            )
         );
 
         //first name
         $this->add(
-            $this->getTextField('firstname', 'First Name:')
-
+            array(
+                'name' => 'firstName',
+                'type' => 'Zend\Form\Element\Text',
+                'options' => array(
+                    'label' =>  $this->translate('First Name') . ':',
+                ),
+            )
         );
 
         //family name
         $this->add(
-            $this->getTextField('lastname', 'Family Name:')
-        );
-
-        //nick name
-        $this->add(
-            $this->getTextField('nickname', 'Nick (opt.):')
-
-        );
-
-        //anonym
-        $this->add(
             array(
-                'name' => 'anonym',
-                'type' => 'Zend\Form\Element\Checkbox',
+                'name' => 'lastName',
+                'type' => 'Zend\Form\Element\Text',
                 'options' => array(
-                    'label' =>  $this->translate('use nick always (anonymizer):'),
-                    'checked_value' => true,
-                ),
-                'attributes' => array(
-                    'class' => 'checkbox',
+                    'label' =>  $this->translate('Family Name') . ':',
                 ),
             )
         );
-
-
-         //birthday
-        $this->add($this->getBirthday()->getField());
-
-        //User name
-        $this->add(
-            $this->getTextField('username', 'User Name:')
-
-        );
-
-        //kgs name
-        $this->add(
-            $this->getTextField('kgs', 'KGS (opt.):')
-        );
-
-        //email
-        $this->add(
-            array(
-                'name' => 'email',
-                'type' => 'Zend\Form\Element\Email',
-                'options' => array(
-                    'label' =>  $this->translate('email:'),
-
-                ),
-                'attributes' => array(
-                    'multiple' => false,
-                )
-            )
-        );
-
-        $this->setRoleFields();
-        $this->setDefaultFields();
-
     }
 
-
-    private function setRoleFields()
+    /**
+     * @return array
+     */
+    private function getRoles()
     {
-        //roles
-        $this->add(
-            array(
-                'name' => 'role',
-                'type' => 'Zend\Form\Element\Select',
-                'options' => array(
-                    'label' => $this->translate('Role'),
-                    'value_options' => array(
-                        'guest'     => $this->translate('Guest'),
-                        'user'      => $this->translate('User'),
-                        'member'    => $this->translate('Member'),
-                        'moderator' => $this->translate('Moderator'),
-                        'admin'     => $this->translate('Administrator'),
-
-                    )
-                ),
-                'attributes' => array(
-                    'value' => 'user'
-                )
-
-            )
-
-
+        return array(
+            self::ROLE_GUEST  => $this->translate('Guest'),
+            self::ROLE_USER   => $this->translate('User'),
+            self::ROLE_MEMBER => $this->translate('Member'),
+            self::ROLE_MODERATOR => $this->translate('Moderator'),
+            self::ROLE_ADMIN  => $this->translate('Administrator'),
         );
     }
 
+    /**
+     * @return array
+     */
+    private function getSex()
+    {
+        return array(
+                'm' => $this->translate('Herr'),
+                'f' => $this->translate('Frau'),
+        );
+    }
 
     /**
      * get the InputFilter
@@ -155,8 +148,8 @@ class UserForm extends DefaultForm
      */
     public function getFilter()
     {
-        $this->filter = new InputFilter();
-        $this->setPersonFilter('title', '10', false);
+        $filter = new InputFilter();
+     /*   $this->setPersonFilter('title', '10', false);
         $this->setPersonFilter('firstname', '20');
         $this->setPersonFilter('lastname', '30');
 
@@ -164,9 +157,9 @@ class UserForm extends DefaultForm
         $this->filter->add($this->getUniqueDbFilter('nickname', null, '20', false));
         $this->filter->add($this->getUniqueDbFilter('username', null, '20'));
         $this->filter->add($this->getUniqueDbFilter('email', '6', '120'));
-        $this->filter->add($this->getBirthday()->getFilter());
+        $this->filter->add($this->getBirthday()->getFilter());*/
 
-        return $this->filter;
+        return $filter;
     }
 
 

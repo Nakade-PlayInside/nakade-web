@@ -100,11 +100,7 @@ class UserFormService extends AbstractFormFactory
                break;
 
            case self::USER_FORM:
-               $form = new Form\UserForm();
-               $entityManager = $this->getEntityManager();
-               $form->setEntityManager($entityManager);
-               $form->init();
-               $form->setInputFilter($form->getFilter());
+               $form = new Form\UserForm($service);
                break;
 
             case self::LANGUAGE_FORM:
