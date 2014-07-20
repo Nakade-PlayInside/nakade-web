@@ -47,10 +47,7 @@ class UserFormService extends AbstractFormFactory
             $config['User']['text_domain'] : null;
 
         $translator = $services->get('translator');
-      //  $repository = $services->get('User\Services\RepositoryService');
         $fieldSetService = $services->get('Season\Services\SeasonFieldsetService');
-
-   //     $this->setRepository($repository);
         $this->setFieldSetService($fieldSetService);
         $this->setTranslator($translator, $textDomain);
 
@@ -67,7 +64,7 @@ class UserFormService extends AbstractFormFactory
     public function getForm($typ)
     {
         $service = $this->getFieldSetService();
-     //   $repository = $this->getRepository();
+        $entityManager = $this->getEntityManager();
 
         switch (strtolower($typ)) {
 
@@ -76,15 +73,11 @@ class UserFormService extends AbstractFormFactory
                break;
 
            case self::EMAIL_FORM:
-               $form = new Form\EmailForm($service);
+               $form = new Form\EmailForm($service, $entityManager);
                break;
 
            case self::FORGOT_PASSWORD_FORM:
-               $form = new Form\ForgotPasswordForm();
-               $entityManager = $this->getEntityManager();
-               $form->setEntityManager($entityManager);
-               $form->init();
-               $form->setInputFilter($form->getFilter());
+               $form = new Form\ForgotPasswordForm($service);
                break;
 
            case self::KGS_FORM:

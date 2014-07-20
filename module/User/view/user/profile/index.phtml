@@ -3,6 +3,7 @@
 $this->plugin('translate')->setTranslatorTextDomain('User');
 $title = $this->translate('Profile');
 $this->headTitle($title);
+/* @var $profile \User\Entity\User */
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
@@ -10,34 +11,59 @@ $this->headTitle($title);
 <tr>
     <td><?php echo $this->translate("Name:");?></td>
     <td><?php echo $this->escapeHtml($this->name);?></td>
+    <td></td>
 </tr>
 <tr>
     <td><?php echo $this->translate("Birthday:");?></td>
     <td><?php echo $this->editBirthday($this->profile); ?></td>
+    <td>
+        <a href="<?php echo $this->url('profile', array('action' => 'birthday'));?>"><?php echo $this->translate("edit");?></a>
+    </td>
 </tr>
 <tr>
     <td><?php echo $this->translate("Nick:");?></td>
-    <td><?php echo $this->editNick($this->profile); ?></td>
+    <td><?php echo $profile->getNickname() //$this->editNick($this->profile); ?>
+        <?php if ($profile->isAnonym()) : ?>
+        <img style="padding-left: 5px;" src="/images/anonymous.png">
+        <?php
+endif ?>
+    </td>
+    <td>
+        <a href="<?php echo $this->url('profile', array('action' => 'nick'));?>"><?php echo $this->translate("edit");?></a>
+    </td>
 </tr>
 <tr>
     <td><?php echo $this->translate("email:");?></td>
     <td><?php echo $this->editEmail($this->profile);  ?></td>
+    <td>
+        <a href="<?php echo $this->url('profile', array('action' => 'email'));?>"><?php echo $this->translate("edit");?></a>
+    </td>
 </tr>
 <tr>
     <td><?php echo $this->translate("KGS:");?></td>
     <td><?php echo $this->editKgs($this->profile);  ?></td>
+    <td>
+        <a href="<?php echo $this->url('profile', array('action' => 'kgs'));?>"><?php echo $this->translate("edit");?></a>
+    </td>
 </tr>
 <tr>
     <td><?php echo $this->translate("Username:");?></td>
     <td><?php echo $this->escapeHtml($this->username);?></td>
+    <td></td>
 </tr>
 <tr>
     <td><?php echo $this->translate("Password");?></td>
     <td><?php echo $this->editPassword($this->profile);  ?></td>
+    <td>
+        <a href="<?php echo $this->url('profile', array('action' => 'password'));?>"><?php echo $this->translate("edit");?></a>
+    </td>
 </tr>
 <tr>
     <td><?php echo $this->translate("Language");?></td>
     <td><?php echo $this->editLanguage($this->profile);  ?></td>
+    <td>
+        <a href="<?php echo $this->url('profile', array('action' => 'language'));?>"><?php echo $this->translate("edit");?></a>
+    </td>
 </tr>
 
 </table>

@@ -21,7 +21,7 @@ class NickHydrator implements HydratorInterface
     {
         return array(
                 'nickname' => $object->getNickname(),
-                'anonym' => $object->isAnonym()
+                'anonymous' => $object->isAnonym()
         );
     }
 
@@ -38,7 +38,7 @@ class NickHydrator implements HydratorInterface
             $nick = $data['nickname'];
         }
         $object->setNickname($nick);
-        $object->setAnonym($data['anonym']);
+        $object->setAnonym($data['anonymous']);
 
         return $object;
     }

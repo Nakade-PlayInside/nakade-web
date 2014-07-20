@@ -4,6 +4,7 @@ namespace User\Form;
 use Season\Services\SeasonFieldsetService;
 use User\Form\Hydrator\EmailHydrator;
 use \Zend\InputFilter\InputFilter;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Class EmailForm
@@ -15,12 +16,14 @@ class EmailForm extends BaseForm
 
     /**
      * @param SeasonFieldsetService $service
+     * @param EntityManager         $entityManager
      */
-    public function __construct(SeasonFieldsetService $service)
+    public function __construct(SeasonFieldsetService $service, EntityManager $entityManager)
     {
         parent::__construct('EmailForm');
 
         $this->setFieldSetService($service);
+        $this->setEntityManager($entityManager);
 
         $hydrator = new EmailHydrator();
         $this->setHydrator($hydrator);
@@ -46,38 +49,40 @@ class EmailForm extends BaseForm
     {
 
         $filter = new InputFilter();
-        $filter->add(array(
-        'name' => 'email',
-        'required' => true,
-        'filters' => array(
-            array('name' => 'StripTags'),
-            array('name' => 'StringTrim'),
-            array('name' => 'StripNewLines'),
-        ),
-        'validators'=> array(
+        $filter->add(
             array(
-                'name' => 'StringLength',
-                'options' => array (
-                    'encoding' => 'UTF-8',
-                    'min' => 6,
-                    'max' => 120
+                'name' => 'email',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripNewLines'),
+                ),
+                'validators'=> array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array (
+                            'encoding' => 'UTF-8',
+                            'min' => 6,
+                            'max' => 120
+                        )
+                    ),
+                    array(
+                        'name' => 'EmailAddress',
+                        'break_chain_on_failure' => true,
+                    ),
+                  /*  array(
+                        'name'     => 'User\Form\Validator\DBNoRecordExist',
+                        'options' => array(
+                            'entity'   => 'User\Entity\User',
+                            'property' => 'email',
+                         //   'exclude'  => $this->getIdentifierValue(),
+                            'adapter'  => $this->getEntityManager(),
+                        )
+                    )*/
                 )
-            ),
-            array(
-            'name' => 'EmailAddress',
-            'break_chain_on_failure' => true,
-            ),
-          /*  array(
-                'name'     => 'User\Form\Validator\DBNoRecordExist',
-                'options' => array(
-                    'entity'   => 'User\Entity\User',
-                    'property' => 'email',
-                    'exclude'  => $this->getIdentifierValue(),
-                    'adapter'  => $this->getEntityManager(),
-                )
-            )*/
-        )
-        ));
+            )
+        );
 
          return $filter;
     }

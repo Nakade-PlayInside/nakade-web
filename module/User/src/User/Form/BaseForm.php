@@ -13,7 +13,7 @@ use User\Services\RepositoryService;
 abstract class BaseForm extends AbstractForm
 {
     protected $fieldSetService;
-    protected $repository;
+    protected $entityManager;
 
     /**
      * @return SeasonFieldsetService
@@ -24,43 +24,11 @@ abstract class BaseForm extends AbstractForm
     }
 
     /**
-     * @return RepositoryService
-     */
-    public function getRepository()
-    {
-        return $this->repository;
-    }
-
-    /**
-     * @return \Season\Mapper\LeagueMapper
-     */
-    public function getUserMapper()
-    {
-        return $this->getRepository()->getMapper(RepositoryService::USER_MAPPER);
-    }
-
-    /**
      * @return \Season\Form\Fieldset\ButtonFieldset
      */
     public function getButtonFieldSet()
     {
         return $this->getFieldSetService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET);
-    }
-
-    /**
-     * @return \Doctrine\ORM\EntityManager
-     */
-    public function getEntityManager()
-    {
-        return $this->getUserMapper()->getEntityManager();
-    }
-
-    /**
-     * @param RepositoryService $repository
-     */
-    public function setRepository(RepositoryService $repository)
-    {
-        $this->repository = $repository;
     }
 
     /**
