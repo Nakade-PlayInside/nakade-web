@@ -102,7 +102,7 @@ abstract class AbstractDoctrineValidator extends AbstractNakadeValidator
         $this->setEntity($options['entity']);
 
         if (!array_key_exists('property', $options)) {
-            throw new Exception\InvalidArgumentException('Property option missing!');
+            throw new Exception\InvalidArgumentException('Entity property or table field is missing!');
         }
         $this->setProperty($options['property']);
 

@@ -1,25 +1,23 @@
 <?php
 namespace User\Form\Validator;
 
-use Traversable;
-use Zend\Stdlib\ArrayUtils;
+use Zend\Validator\AbstractValidator;
 use Zend\Validator\Exception;
-use Nakade\Abstracts\AbstractNakadeValidator;
 
 /**
- * Validating password complexity against a treshold.
- * A password should contain uper- and lowercase letters, digits, special
+ * Validating password complexity against a threshold.
+ * A password can contain upper- and lowercase letters, digits, special
  * chars, spaces and umlauts. Additional penalties are given for repeating
  * letters or words.
- * 
- * The following additional option keys are supported:
- * 'length'    => optimal length of a password
- * 'treshold'  => optional treshold for validation (110 by default)
  *
- * @author Dr.Holger Maerz <holger@nakade.de>
+ * The following option keys are supported:
+ * 'length'    => length of a password
+ * 'threshold'  => threshold for validation
+ *
+ * @package User\Form\Validator
  */
-class PasswordComplexity extends AbstractNakadeValidator {
-    
+class PasswordComplexity extends AbstractValidator {
+
     const INVALID   = 'invalidType';
     const LENGTH    = 'optimal password length';
     const NO_DIGITS = 'no digits found';
@@ -29,14 +27,14 @@ class PasswordComplexity extends AbstractNakadeValidator {
     const NO_UMLAUT  = 'no umlauts found';
     const NO_REPEAT_CHARS  = 'do not repeat letters';
     const NO_REPEAT_WORDS  = 'do not repeat words';
-    
-    const MAJOR_PENALTY=20;
-    const MINOR_PENALTY=5;
-    const OPTIMAL_STRENGTH=130;
-    
-    protected $length;
-    protected $treshold;
-    
+
+    const MAJOR_PENALTY = 20;
+    const MINOR_PENALTY = 5;
+    const OPTIMAL_STRENGTH = 130;
+
+    private $length = 8;
+    private $threshold = 80;
+
     /**
      * @var array
      */
@@ -50,7 +48,7 @@ class PasswordComplexity extends AbstractNakadeValidator {
         self::NO_UMLAUT => "No umlauts found.",
         self::NO_REPEAT_CHARS=>  "Do not repeat letters.",
         self::NO_REPEAT_WORDS => "Do not repeat words.",
-        
+
     );
 
     /**
@@ -60,343 +58,196 @@ class PasswordComplexity extends AbstractNakadeValidator {
         'length' => 'length',
     );
 
-    public function getTranslatedTemplate()
-    {
-        //just for translation using PoE
-        $template = array(
-            self::INVALID           => $this->translate(
-                "Invalid type given. String expected."),
-            self::LENGTH            => $this->translate(
-                "Optimal password length: '%length%'."),
-            self::NO_DIGITS         => $this->translate(
-                "No digits found."),
-            self::NO_UPPER          => $this->translate(
-                "No uppercase letters found."),
-            self::NO_LOWER          => $this->translate(
-                "No lowercase letters found."),
-            self::NO_SPECIAL        => $this->translate(
-                "No special chars found."),
-            self::NO_UMLAUT         => $this->translate(
-                "No umlauts found."),
-            self::NO_REPEAT_CHARS   =>  $this->translate(
-                "Do not repeat letters."),
-            self::NO_REPEAT_WORDS   => $this->translate(
-                "Do not repeat words."),
-        );
-        return $template;
-    }
-
-    
     /**
-     * Sets validator options
-     *
-     * @param  string|Traversable $pattern
-     * @throws Exception\InvalidArgumentException On missing 'pattern' parameter
+     * @param null $options
      */
     public function __construct($options = null)
     {
-     //@todo: Übersetzung
-        
-        if ($options instanceof Traversable) {
-            $options = ArrayUtils::iteratorToArray($options);
-        }
-       
-        if (!is_array($options)) {
-            
-            $options = func_get_args();
-            $temp['length'] = array_shift($options);
+     //@todo: translation
 
-            if (!empty($options)) {
-                $temp['treshold'] = array_shift($options);
+        if (!empty($options)  && is_array($options)) {
+
+            if (array_key_exists('length', $options)) {
+                $this->length = $options['length'];
             }
 
-            $options = $temp;
+            if (array_key_exists('threshold', $options)) {
+                $this->threshold = $options['threshold'];
+            }
         }
-
-        if (!array_key_exists('length', $options)) {
-            throw new Exception\InvalidArgumentException(
-                "Missing option 'length'"
-            );
-        }
-
-        if (!array_key_exists('treshold', $options)) {
-            $options['treshold'] = 110;
-        }
-        
-        
-        $this->setLength($options['length'])
-             ->setTreshold($options['treshold']);
 
         parent::__construct($options);
     }
 
     /**
-     * Returns the optimal length option
+     * @param mixed $value
      *
-     * @return int
-     */
-    public function getLength()
-    {
-        return $this->length;
-    }
-
-    /**
-     * Sets the length option
-     *
-     * @param  int $length
-     * @return PasswordComplexity Provides a fluent interface
-     */
-    public function setLength($length)
-    {
-        $this->length = $length;
-        return $this;
-    }
-    
-    /**
-     * Returns the optimal treshold option
-     *
-     * @return int
-     */
-    public function getTreshold()
-    {
-        return $this->treshold;
-    }
-
-    /**
-     * Sets the treshold option
-     *
-     * @param  int $treshold
-     * @return PasswordComplexity Provides a fluent interface
-     */
-    public function setTreshold($treshold)
-    {
-        $this->treshold = $treshold;
-        return $this;
-    }
-   
-
-    /**
-     * Returns true if and only if $value matches against the treshold option
-     *
-     * @param  string $value
      * @return bool
      */
     public function isValid($value)
     {
-        
-        if (!is_string($value)) {
-            $this->error(self::INVALID);
-            return false;
-        }
-
+        $value = strval($value);
         $this->setValue($value);
 
         $strength = self::OPTIMAL_STRENGTH - $this->checkViolations($value);
-        if ($this->getTreshold() >= $strength) {
+        if ($this->threshold >= $strength) {
              return false;
         }
-        
+
 
         return true;
     }
-    
+
     /**
-     * check for violations against proper 
-     * password composition. For each violations
-     * a penalty is added. Bonus are given for exceeded
-     * length and using more than one word.
-     * 
      * @param string $value
+     *
      * @return int
      */
-    
-    public function checkViolations($value)
+    private function checkViolations($value)
     {
         $violation=0;
-        
-        $violation+=$this->testOptimalLength($value);
-        $violation+=$this->testSentences($value);
-        
-        if(false === $this->testLowcase($value)){
+
+        $lenFactor = $this->length - strlen($value);
+        if ($lenFactor > 0) {
+            $this->error(self::LENGTH);
+        }
+        $violation+= $lenFactor * self::MINOR_PENALTY;
+
+        //better for sentences
+        $violation+= (1-str_word_count($value)) * self::MINOR_PENALTY;
+
+        if (!$this->hasLowercaseLetters($value)) {
             $this->error(self::NO_LOWER);
             $violation+=self::MAJOR_PENALTY;
-        }  
-         
-        if(false === $this->testUppercase($value)){
+        }
+
+        if (!$this->hasUppercaseLetter($value)) {
             $this->error(self::NO_UPPER);
             $violation+=self::MAJOR_PENALTY;
         }
-        
-        if(false === $this->testSpecialChars($value)){
+
+        if (!$this->hasSpecialChars($value)) {
             $this->error(self::NO_SPECIAL);
             $violation+=self::MAJOR_PENALTY;
-        } 
-        
-        if(false === $this->testDigits($value)){
+        }
+
+        if (!$this->hasDigits($value)) {
             $this->error(self::NO_DIGITS);
             $violation+=self::MAJOR_PENALTY;
-        } 
-        
-        if(false === $this->testWhitespaces($value)){
+        }
+
+        if (!$this->hasWhitespaces($value)) {
             $violation+=self::MINOR_PENALTY;
-        }  
-        
-        if(false === $this->testUmlaute($value)){
+        }
+
+        if (!$this->hasUmlaute($value)) {
             $this->error(self::NO_UMLAUT);
             $violation+=self::MINOR_PENALTY;
         }
-        
-        if(true === $this->testRepeatingChars($value)){
+
+        if ($this->hasRepeatingChars($value)) {
             $this->error(self::NO_REPEAT_CHARS);
             $violation+=self::MAJOR_PENALTY;
-        }  
-        
-        if(true === $this->testRepeatingWords($value)){
+        }
+
+        if ($this->hasRepeatingWords($value)) {
             $this->error(self::NO_REPEAT_WORDS);
             $violation+=self::MAJOR_PENALTY;
-        }  
-       
+        }
+
         return $violation;
     }
-    
+
     /**
-     * Test for optimal length. 
-     * if exceeded, a bonus is provided. otherwise
-     * a penalty is given for each letter missing.
-     * 
      * @param string $value
-     * @return int
+     *
+     * @return bool
      */
-    public function testOptimalLength($value)
-    {
-        $res = $this->getLength() - strlen($value);
-        if($res > 0) {
-            $this->error(self::LENGTH);
-        }
-        return $res * self::MINOR_PENALTY;
-    }
-    
-    /**
-     * Test for words found. 
-     * if exceeded, a bonus is provided.
-     * 
-     * @param string $value
-     * @return int
-     */
-    public function testSentences($value)
-    {
-        $res = 1-str_word_count($value);
-        return $res * self::MINOR_PENALTY;
-    }
-    
-    /**
-     * Test value for lowcase letters. 
-     * return false if not found
-     * 
-     * @param string $value
-     * @return boolean
-     */
-    public function testLowcase($value)
+    public function hasLowercaseLetters($value)
     {
         $pattern = '/[a-z]/';
         return (bool) preg_match($pattern, $value);
-        
+
     }
-    
+
     /**
-     * Test value for uppercase letters. 
-     * return false if not found
-     * 
      * @param string $value
-     * @return boolean
+     *
+     * @return bool
      */
-    public function testUppercase($value)
+    public function hasUppercaseLetter($value)
     {
         $pattern = '/[A-Z]/';
         return (bool) preg_match($pattern, $value);
     }
-    
+
     /**
-     * Test value for special chars. 
-     * return false if not found
-     * 
      * @param string $value
+     *
      * @return boolean
      */
-    public function testSpecialChars($value)
+    public function hasSpecialChars($value)
     {
-        $pattern = sprintf('/[%s]/', 
-                 preg_quote('+-*=%&#_.,;:\§@€µ?$!{}[]()|'));
-              
+        $pattern = sprintf('/[%s]/',
+            preg_quote('+-*=%&#_.,;:\§@€µ?$!{}[]()|'));
+
         return (bool) preg_match($pattern, $value);
     }
-    
+
     /**
-     * Test value for digits. 
-     * return false if not found
-     * 
      * @param string $value
+     *
      * @return boolean
      */
-    public function testDigits($value)
+    public function hasDigits($value)
     {
         $pattern = '/[0-9]/';
         return (bool) preg_match($pattern, $value);
     }
-    
+
     /**
-     * Test value for spaces. 
-     * return false if not found
-     * 
      * @param string $value
+     *
      * @return boolean
      */
-    public function testWhitespaces($value)
+    public function hasWhitespaces($value)
     {
         $pattern = '/[[:space:]]/';
         return (bool) preg_match($pattern, $value);
     }
-    
+
     /**
-     * Test value for Umlaute. 
-     * return false if not found
-     * 
      * @param string $value
+     *
      * @return boolean
      */
-    public function testUmlaute($value)
+    public function hasUmlaute($value)
     {
         $pattern = '/[äöüßÄÖÜÀÁáÂâÈèÉéÊêÙùÚúÇç]/';
         return (bool) preg_match($pattern, $value);
     }
-    
+
      /**
-     * Test value for repeating chars.
-     * return true if found more than three in a row . 
-     * 
      * @param string $value
+      *
      * @return boolean
      */
-    public function testRepeatingChars($value)
+    public function hasRepeatingChars($value)
     {
         $pattern = '/(.)\1\1/';
         return (bool) preg_match($pattern, $value);
     }
-    
+
     /**
-     * Test value for repeating words.
-     * return true if found more than three in a row . 
-     * 
      * @param string $value
+     *
      * @return boolean
      */
-    public function testRepeatingWords($value)
+    public function hasRepeatingWords($value)
     {
         $pattern = '/([a-zA-Z]{3,})(.)*\1\z/';
         return (bool) preg_match($pattern, $value);
     }
-   
-   
-}
 
-?>
+
+}

@@ -16,18 +16,13 @@ return array(
      'view_helpers' => array(
         'invokables' => array(
             'salutation' => 'User\View\Helper\Salutation',
-            'birthday'   => 'User\View\Helper\Birthday',
             'showActive'    => 'User\View\Helper\ShowActive',
             'showTrigger'   => 'User\View\Helper\ShowTrigger',
             'showVerified'  => 'User\View\Helper\ShowVerified',
             'showEdit'      => 'User\View\Helper\ShowEdit',
             'showPwdReset'  => 'User\View\Helper\ShowPwdReset',
-            'editBirthday'  => 'User\View\Helper\EditBirthday',
-            'editNick'      => 'User\View\Helper\EditNick',
-            'editEmail'     => 'User\View\Helper\EditEmail',
-            'editPassword'  => 'User\View\Helper\EditPassword',
-            'editKgs'  => 'User\View\Helper\EditKgs',
-            'editLanguage'  => 'User\View\Helper\EditLanguage',
+            'showLanguage'  => 'User\View\Helper\ShowLanguage',
+            'showPwdInfo'  => 'User\View\Helper\ShowPwdChangeInfo',
             // more helpers here ...
         )
     ),

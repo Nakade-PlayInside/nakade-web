@@ -27,7 +27,7 @@ class EmailForm extends BaseForm
 
         $hydrator = new EmailHydrator();
         $this->setHydrator($hydrator);
-        $this->setInputFilter($this->getFilter());
+       // $this->setInputFilter($this->getFilter());
     }
 
     /**
@@ -71,15 +71,15 @@ class EmailForm extends BaseForm
                         'name' => 'EmailAddress',
                         'break_chain_on_failure' => true,
                     ),
-                  /*  array(
-                        'name'     => 'User\Form\Validator\DBNoRecordExist',
+                   array(
+                        'name'     => '\User\Form\Validator\DBNoRecordExist',
                         'options' => array(
                             'entity'   => 'User\Entity\User',
                             'property' => 'email',
-                         //   'exclude'  => $this->getIdentifierValue(),
-                            'adapter'  => $this->getEntityManager(),
+                            'excludeId'  => 1,
+                            'entityManager'  => $this->getEntityManager(),
                         )
-                    )*/
+                   )
                 )
             )
         );

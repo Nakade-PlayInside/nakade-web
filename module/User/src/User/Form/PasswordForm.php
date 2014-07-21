@@ -62,9 +62,6 @@ class PasswordForm extends BaseForm
 
     }
 
-
-
-
     /**
      * get the InputFilter
      *
@@ -73,63 +70,8 @@ class PasswordForm extends BaseForm
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add(
-            array(
-                 'name' => 'password',
-                 'required' => true,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                 ),
-                 'validators' => array(
-                     array(
-                         'name' => 'StringLength',
-                         'options' => array (
-                             'encoding' => 'UTF-8',
-                             'min' => 6,
-                             'max' => 50
-                         )
-                    ),
-                    array('name' => 'Identical',
-                          'break_chain_on_failure' => true,
-                          'options' => array (
-                              'token' => 'repeat',
-                          )
-                     ),
-                    array('name' => 'User\Form\Validator\PasswordComplexity',
-                          'break_chain_on_failure' => true,
-                          'options' => array (
-                              'length'   => '8',
-                              'treshold' => '80',
-
-                          )
-                    ),
-                    array('name' => 'User\Form\Validator\CommonPassword',
-                          'break_chain_on_failure' => true,
-                          'options' => array (
-                               'commons'  => array(
-                                                'password',
-                                                '123456',
-                                                'qwert',
-                                                'abc123',
-                                                'letmein',
-                                                'myspace',
-                                                'monkey',
-                                                'iloveyou',
-                                                'sunshine',
-                                                'trustno1',
-                                                'welcome',
-                                                'shadow',
-                              )
-                         )
-                    ),
-
-                 )
-             )
-        );
-
-         return $filter;
+        $filter->add($this->getUserFilter(self::FILTER_PASSWORD));
+        return $filter;
     }
 }
 

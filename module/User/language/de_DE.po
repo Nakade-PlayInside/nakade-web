@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-22 18:15+0100\n"
-"PO-Revision-Date: 2014-04-22 18:18+0100\n"
+"POT-Creation-Date: 2014-07-20 13:34+0100\n"
+"PO-Revision-Date: 2014-07-20 14:05+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -15,102 +15,104 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/User/Mail/PasswordMail.php:21
-#: ../src/User/Mail/VerifyMail.php:113
+#: ../src/User/Mail/PasswordMail.php:34
+#: ../src/User/Mail/VerifyMail.php:41
 msgid "Welcome %firstname%"
 msgstr "Willkommen %firstname%"
 
-#: ../src/User/Mail/PasswordMail.php:22
+#: ../src/User/Mail/PasswordMail.php:35
 msgid "Your password at nakade.de was reset."
 msgstr "Dein Passwort auf nakade.de  wurde neu gesetzt."
 
-#: ../src/User/Mail/PasswordMail.php:26
-#: ../src/User/Mail/VerifyMail.php:118
+#: ../src/User/Mail/PasswordMail.php:39
+#: ../src/User/Mail/VerifyMail.php:46
 msgid "Your Credentials"
 msgstr "Deine Zugangsdaten"
 
-#: ../src/User/Mail/PasswordMail.php:27
-#: ../src/User/Mail/VerifyMail.php:119
+#: ../src/User/Mail/PasswordMail.php:40
+#: ../src/User/Mail/VerifyMail.php:47
 msgid "username"
 msgstr "Benutzername"
 
-#: ../src/User/Mail/PasswordMail.php:28
-#: ../src/User/Mail/VerifyMail.php:120
+#: ../src/User/Mail/PasswordMail.php:41
+#: ../src/User/Mail/VerifyMail.php:48
 msgid "password"
 msgstr "Passwort"
 
-#: ../src/User/Mail/PasswordMail.php:32
-#: ../src/User/Mail/VerifyMail.php:124
+#: ../src/User/Mail/PasswordMail.php:45
+#: ../src/User/Mail/VerifyMail.php:52
 msgid "Your account requires activation during the next %expire% hours."
 msgstr "Dein Konto muss binnen der nächsten %expire% Stunden aktiviert werden."
 
-#: ../src/User/Mail/PasswordMail.php:33
-#: ../src/User/Mail/VerifyMail.php:125
+#: ../src/User/Mail/PasswordMail.php:46
+#: ../src/User/Mail/VerifyMail.php:53
 msgid "Please click on the link for activation."
 msgstr "Bitte klicke auf den  Link für die Aktivierung."
 
-#: ../src/User/Mail/PasswordMail.php:34
-#: ../src/User/Mail/VerifyMail.php:126
+#: ../src/User/Mail/PasswordMail.php:47
+#: ../src/User/Mail/VerifyMail.php:54
 msgid "If you fail to activate your account in time, you have to reset your password using the 'forgot password' option."
 msgstr "Falls du deinen Zugang nicht innerhalb der gegebenen Frist aktivierst, musst du dein Passwort über die 'Passwort vergessen' Option zurücksetzen."
 
-#: ../src/User/Mail/PasswordMail.php:38
-#: ../src/User/Mail/VerifyMail.php:130
+#: ../src/User/Mail/PasswordMail.php:51
+#: ../src/User/Mail/VerifyMail.php:58
 msgid "May the stones be with you."
 msgstr "Mit 361 Grüßen"
 
-#: ../src/User/Mail/PasswordMail.php:39
-#: ../src/User/Mail/VerifyMail.php:131
+#: ../src/User/Mail/PasswordMail.php:52
+#: ../src/User/Mail/VerifyMail.php:59
 msgid "Your %signature%."
 msgstr "Dein %signature%"
 
-#: ../src/User/Mail/PasswordMail.php:43
-#: ../src/User/Mail/VerifyMail.php:135
+#: ../src/User/Mail/PasswordMail.php:56
+#: ../src/User/Mail/VerifyMail.php:63
 msgid "Court of Registration"
 msgstr "Amtsgericht"
 
-#: ../src/User/Mail/PasswordMail.php:44
-#: ../src/User/Mail/VerifyMail.php:136
+#: ../src/User/Mail/PasswordMail.php:57
+#: ../src/User/Mail/VerifyMail.php:64
 msgid "Register No."
 msgstr "Registernummer"
 
-#: ../src/User/Mail/PasswordMail.php:47
+#: ../src/User/Mail/PasswordMail.php:60
 msgid "%prefix% - Your New Credentials"
 msgstr "%prefix% - Deine neuen Zugangsdaten"
 
-#: ../src/User/Mail/VerifyMail.php:114
+#: ../src/User/Mail/VerifyMail.php:42
 msgid "Thank you for your registration at nakade.de"
 msgstr "Vielen Dank, dass du dich für nakade.de entschieden hast."
 
-#: ../src/User/Mail/VerifyMail.php:139
+#: ../src/User/Mail/VerifyMail.php:67
 msgid "%prefix% - Your Credentials"
 msgstr "%prefix% - Deine Zugangsdaten"
 
-#: ../src/User/View/Helper/ShowActive.php:16
+#: ../src/User/View/Helper/ShowActive.php:20
 msgid "inactive"
 msgstr "inaktiv"
 
-#: ../src/User/View/Helper/ShowActive.php:21
+#: ../src/User/View/Helper/ShowActive.php:25
 msgid "active"
 msgstr "aktiv"
 
-#: ../src/User/View/Helper/ShowEdit.php:16
+#: ../src/User/View/Helper/ShowEdit.php:21
 msgid "edit"
 msgstr "bearbeiten"
 
-#: ../src/User/View/Helper/ShowTrigger.php:20
+#: ../src/User/View/Helper/ShowTrigger.php:26
 msgid "activate"
 msgstr "aktivieren"
 
-#: ../src/User/View/Helper/ShowTrigger.php:26
+#: ../src/User/View/Helper/ShowTrigger.php:32
 msgid "deactivate"
 msgstr "deaktivieren"
 
 #: ../src/User/View/Helper/EditLanguage.php:31
+#: ../src/User/Form/BaseForm.php:158
 msgid "German"
 msgstr "Deutsch"
 
 #: ../src/User/View/Helper/EditLanguage.php:34
+#: ../src/User/Form/BaseForm.php:159
 msgid "English"
 msgstr "Englisch"
 
@@ -118,107 +120,137 @@ msgstr "Englisch"
 msgid "auto detect"
 msgstr "automatische Erkennung"
 
-#: ../src/User/View/Helper/ShowVerified.php:21
+#: ../src/User/View/Helper/ShowVerified.php:27
 msgid "not verified"
 msgstr "unbestätigt"
 
-#: ../src/User/View/Helper/ShowVerified.php:26
+#: ../src/User/View/Helper/ShowVerified.php:32
 msgid "verified"
 msgstr "bestätigt"
 
-#: ../src/User/View/Helper/ShowVerified.php:31
+#: ../src/User/View/Helper/ShowVerified.php:36
 msgid "waiting for verification"
 msgstr "warte auf Bestätigung"
 
-#: ../src/User/View/Helper/AbstractProfileEditHelper.php:77
+#: ../src/User/View/Helper/AbstractProfileEditHelper.php:79
 msgid "Incognito"
 msgstr "Inkognito"
 
-#: ../src/User/View/Helper/AbstractProfileEditHelper.php:78
+#: ../src/User/View/Helper/AbstractProfileEditHelper.php:80
 msgid "password was never changed"
 msgstr "Passwort wurde noch nie geändert"
 
-#: ../src/User/View/Helper/AbstractProfileEditHelper.php:80
+#: ../src/User/View/Helper/AbstractProfileEditHelper.php:82
 msgid "last time edited on %pwdChangeDate%"
 msgstr "letzte Änderung am %pwdChangeDate%"
 
-#: ../src/User/View/Helper/ShowPwdReset.php:16
+#: ../src/User/View/Helper/ShowPwdReset.php:21
 msgid "reset password"
 msgstr "Password zurücksetzen"
 
-#: ../src/User/Form/PasswordForm.php:27
+#: ../src/User/Form/PasswordForm.php:42
 msgid "enter new password:"
 msgstr "Neues Passwort:"
 
-#: ../src/User/Form/PasswordForm.php:39
+#: ../src/User/Form/PasswordForm.php:54
 msgid "repeat new password:"
 msgstr "Eingabe wiederholen:"
 
-#: ../src/User/Form/EmailForm.php:28
-#: ../src/User/Form/UserForm.php:101
-msgid "email:"
-msgstr "Email:"
+#: ../src/User/Form/BaseForm.php:63
+msgid "email"
+msgstr "Email"
 
-#: ../src/User/Form/NickForm.php:34
-#: ../src/User/Form/UserForm.php:74
-msgid "use nick always (anonymizer):"
-msgstr "immer Spitznamen verwenden (anonym)"
+#: ../src/User/Form/BaseForm.php:84
+msgid "KGS (opt.)"
+msgstr "KGS Name (opt.)"
 
-#: ../src/User/Form/UserForm.php:37
-msgid "Salutation:"
-msgstr "Anrede:"
+#: ../src/User/Form/BaseForm.php:101
+msgid "Birthday"
+msgstr "Geburtstag"
 
-#: ../src/User/Form/UserForm.php:39
-msgid "Herr"
-msgstr "Herr"
+#: ../src/User/Form/BaseForm.php:124
+msgid "Nick (opt.)"
+msgstr "Spitzname (opt.)"
 
-#: ../src/User/Form/UserForm.php:40
-msgid "Frau"
-msgstr "Frau"
+#: ../src/User/Form/BaseForm.php:135
+msgid "use nick always (anonymous)"
+msgstr "Immer Spitznamen verwenden"
 
-#: ../src/User/Form/UserForm.php:124
-msgid "Role"
-msgstr "Rolle"
-
-#: ../src/User/Form/UserForm.php:126
-msgid "Guest"
-msgstr "Gast"
-
-#: ../src/User/Form/UserForm.php:127
-msgid "User"
-msgstr "Benutzer"
-
-#: ../src/User/Form/UserForm.php:128
-msgid "Member"
-msgstr "Mitglied"
-
-#: ../src/User/Form/UserForm.php:129
-msgid "Moderator"
-msgstr "Moderator"
-
-#: ../src/User/Form/UserForm.php:130
-msgid "Administrator"
-msgstr "Administrator"
-
-#: ../src/User/Form/LanguageForm.php:28
+#: ../src/User/Form/BaseForm.php:155
 msgid "language:"
 msgstr "Sprache:"
 
-#: ../src/User/Form/LanguageForm.php:30
+#: ../src/User/Form/BaseForm.php:157
 msgid "No language"
 msgstr "keine Sprache"
 
-#: ../src/User/Form/DefaultForm.php:48
+#: ../src/User/Form/UserForm.php:46
+msgid "User Name"
+msgstr "Benutzername"
+
+#: ../src/User/Form/UserForm.php:58
+msgid "Role"
+msgstr "Rolle"
+
+#: ../src/User/Form/UserForm.php:79
+msgid "Salutation"
+msgstr "Anrede"
+
+#: ../src/User/Form/UserForm.php:91
+msgid "Title (opt.)"
+msgstr "Titel (opt.)"
+
+#: ../src/User/Form/UserForm.php:102
+msgid "First Name"
+msgstr "Vorname"
+
+#: ../src/User/Form/UserForm.php:113
+msgid "Family Name"
+msgstr "Nachname"
+
+#: ../src/User/Form/UserForm.php:125
+msgid "Guest"
+msgstr "Gast"
+
+#: ../src/User/Form/UserForm.php:126
+msgid "User"
+msgstr "Benutzer"
+
+#: ../src/User/Form/UserForm.php:127
+msgid "Member"
+msgstr "Mitglied"
+
+#: ../src/User/Form/UserForm.php:128
+msgid "Moderator"
+msgstr "Moderator"
+
+#: ../src/User/Form/UserForm.php:129
+msgid "Administrator"
+msgstr "Administrator"
+
+#: ../src/User/Form/UserForm.php:139
+msgid "Herr"
+msgstr "Herr"
+
+#: ../src/User/Form/UserForm.php:140
+msgid "Frau"
+msgstr "Frau"
+
+#: ../src/User/Form/DefaultForm.php:51
 msgid "Submit"
 msgstr "Abschicken"
 
-#: ../src/User/Form/DefaultForm.php:60
+#: ../src/User/Form/DefaultForm.php:63
 msgid "Cancel"
 msgstr "Abbruch"
 
-#: ../src/User/Form/Fields/Birthday.php:18
+#: ../src/User/Form/Fields/Birthday.php:19
 msgid "Birthday:"
 msgstr "Geburtstag:"
+
+#: ../src/User/Form/Fields/ForgotPassword.php:20
+msgid "email:"
+msgstr "Email:"
 
 #: ../src/User/Form/Validator/PasswordComplexity.php:68
 #: ../src/User/Form/Validator/CommonPassword.php:39
@@ -256,6 +288,14 @@ msgstr "Keine Buchstabenwiederholung."
 #: ../src/User/Form/Validator/PasswordComplexity.php:84
 msgid "Do not repeat words."
 msgstr "Wiederhole keine Wörter"
+
+#: ../src/User/Form/Validator/DBNoRecordExist.php:95
+msgid "No record matching the input was found."
+msgstr "Es wurde kein Eintrag gefunden."
+
+#: ../src/User/Form/Validator/DBNoRecordExist.php:97
+msgid "A record matching the input was found."
+msgstr "Dieser Eintrag ist schon vergeben."
 
 #: ../src/User/Form/Validator/CommonPassword.php:41
 msgid "Do not use common password: %value%."
@@ -349,27 +389,27 @@ msgstr "Vergiss bitte nicht deinen Zugang zu aktivieren."
 msgid "Profile"
 msgstr "Profil"
 
-#: ../view/user/profile/index.phtml:11
+#: ../view/user/profile/index.phtml:12
 msgid "Name:"
 msgstr "Name:"
 
-#: ../view/user/profile/index.phtml:19
+#: ../view/user/profile/index.phtml:24
 msgid "Nick:"
 msgstr "Spitzname:"
 
-#: ../view/user/profile/index.phtml:27
+#: ../view/user/profile/index.phtml:43
 msgid "KGS:"
 msgstr "KGS:"
 
-#: ../view/user/profile/index.phtml:31
+#: ../view/user/profile/index.phtml:50
 msgid "Username:"
 msgstr "Benutzername:"
 
-#: ../view/user/profile/index.phtml:35
+#: ../view/user/profile/index.phtml:55
 msgid "Password"
 msgstr "Passwort"
 
-#: ../view/user/profile/index.phtml:39
+#: ../view/user/profile/index.phtml:62
 msgid "Language"
 msgstr "Sprache:"
 
@@ -380,8 +420,6 @@ msgstr "Sprache einstellen"
 #: ../view/user/profile/email.phtml:4
 #: ../view/user/profile/kgs.phtml:4
 #: ../view/user/profile/password.phtml:4
-#: ../view/user/profile/birthday.phtml:4
-#: ../view/user/profile/nick.phtml:4
 msgid "Edit Profile"
 msgstr "Profil ändern"
 
@@ -389,39 +427,35 @@ msgstr "Profil ändern"
 msgid "Registered Users"
 msgstr "Registrierte Benutzer"
 
-#: ../view/user/user/index.phtml:9
+#: ../view/user/user/index.phtml:10
 msgid "add user"
 msgstr "Benutzer hinzufügen"
 
-#: ../view/user/user/index.phtml:12
+#: ../view/user/user/index.phtml:13
 msgid "Sex"
 msgstr "Anrede"
 
-#: ../view/user/user/index.phtml:13
+#: ../view/user/user/index.phtml:14
 msgid "Name"
 msgstr "Name"
 
-#: ../view/user/user/index.phtml:14
+#: ../view/user/user/index.phtml:15
 msgid "Nick"
 msgstr "Spitzname"
 
-#: ../view/user/user/index.phtml:15
+#: ../view/user/user/index.phtml:16
 msgid "Username"
 msgstr "Benutzername"
 
-#: ../view/user/user/index.phtml:16
+#: ../view/user/user/index.phtml:17
 msgid "KGS"
 msgstr "KGS"
 
-#: ../view/user/user/index.phtml:17
-msgid "email"
-msgstr "Email"
-
-#: ../view/user/user/index.phtml:21
+#: ../view/user/user/index.phtml:22
 msgid "access"
 msgstr "Zugang"
 
-#: ../view/user/user/index.phtml:22
+#: ../view/user/user/index.phtml:23
 msgid "pwd"
 msgstr "Pwd"
 
@@ -433,23 +467,8 @@ msgstr "Benutzer bearbeiten"
 msgid "Add User"
 msgstr "Benutzer hinzufügen"
 
-#~ msgid "Nick (opt.):"
-#~ msgstr "Spitzname (opt.):"
-
-#~ msgid "Title (opt.):"
-#~ msgstr "Titel (opt.):"
-
-#~ msgid "First Name:"
-#~ msgstr "Vorname:"
-
-#~ msgid "Family Name:"
-#~ msgstr "Nachname:"
-
 #~ msgid "Birthday (opt.):"
 #~ msgstr "Geburtsdatum (opt.):"
-
-#~ msgid "User Name:"
-#~ msgstr "Benutzername:"
 
 #~ msgid "Options"
 #~ msgstr "Optionen"

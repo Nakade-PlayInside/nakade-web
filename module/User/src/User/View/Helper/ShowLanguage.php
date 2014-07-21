@@ -1,29 +1,20 @@
 <?php
 namespace User\View\Helper;
-use User\Entity\User;
 
+use Zend\View\Helper\AbstractHelper;
 /**
- * Class EditLanguage
+ * Class showLanguage
  *
  * @package User\View\Helper
  */
-class EditLanguage extends AbstractProfileEditHelper
+class showLanguage extends AbstractHelper
 {
     /**
-     * @param User $profile
+     * @param string $type
      *
      * @return string
      */
-    public function __invoke(User $profile)
-    {
-        $this->_url = "profile/language";
-        $type = $profile->getLanguage();
-        $value = $this->getLanguage($type);
-
-        return $this->getLink($value);
-    }
-
-    private function getLanguage($type)
+    public function __invoke($type)
     {
         $language = 'unknown';
         switch ($type) {
@@ -39,5 +30,16 @@ class EditLanguage extends AbstractProfileEditHelper
         }
 
         return $language;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return string
+     */
+    private function translate($message)
+    {
+        $translate = $this->getView()->plugin('translate');
+        return $translate($message);
     }
 }

@@ -163,4 +163,67 @@ abstract class BaseForm extends AbstractForm
         );
     }
 
+    const FILTER_BIRTHDAY = 'birthday';
+    const FILTER_PASSWORD = 'password';
+
+    protected function getUserFilter($name)
+    {
+        $filter = array();
+        switch ($name) {
+
+            case self::FILTER_BIRTHDAY :
+                $filter = array(
+                    'name' => self::FILTER_BIRTHDAY,
+                    'required' => false,
+                    'validators' => array(
+                        array('name'    => 'Date',
+                            'options' => array (
+                                'format' => 'Y-m-d',
+                            )
+                        ),
+                    ),
+                );
+                break;
+
+            case self::FILTER_PASSWORD :
+                $filter = array(
+                    'name' => self::FILTER_PASSWORD,
+                    'required' => true,
+                    'filters'  => array(
+                        array('name' => 'StripTags'),
+                        array('name' => 'StringTrim'),
+                        array('name' => 'StripNewLines'),
+                    ),
+                    'validators' => array(
+                        array(
+                            'name' => 'StringLength',
+                            'options' => array (
+                                'encoding' => 'UTF-8',
+                                'min' => 6,
+                                'max' => 50
+                            )
+                        ),
+                        array('name' => 'Identical',
+                            'break_chain_on_failure' => true,
+                            'options' => array (
+                                'token' => 'repeat',
+                            )
+                        ),
+                        array('name' => 'User\Form\Validator\PasswordComplexity',
+                            'break_chain_on_failure' => true,
+                        ),
+                        array('name' => 'User\Form\Validator\CommonPassword',
+                            'break_chain_on_failure' => true,
+                        ),
+
+                    )
+                );
+                break;
+
+        }
+
+        return $filter;
+
+    }
+
 }

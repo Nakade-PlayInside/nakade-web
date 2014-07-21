@@ -45,21 +45,7 @@ class BirthdayForm extends BaseForm
     public function getFilter()
     {
         $filter = new InputFilter();
-
-        $filter->add(
-            array(
-                'name' => 'birthday',
-                'required' => false,
-                'validators' => array(
-                    array('name'    => 'Date',
-                        'options' => array (
-                            'format' => 'Y-m-d',
-                        )
-                    ),
-                ),
-            )
-        );
-
+        $filter->add($this->getUserFilter(self::FILTER_BIRTHDAY));
         return $filter;
     }
 }

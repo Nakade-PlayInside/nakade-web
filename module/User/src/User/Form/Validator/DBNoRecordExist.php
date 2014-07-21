@@ -1,21 +1,76 @@
 <?php
 namespace User\Form\Validator;
 
-use Nakade\Abstracts\AbstractDoctrineValidator;
+use Zend\Validator\Exception;
+use Zend\Stdlib\ArrayUtils;
+use Doctrine\ORM\EntityManager;
+use Zend\Validator\AbstractValidator;
+use Zend\Validator\Exception\InvalidArgumentException;
+
 /**
- * Validating a value against an existing database record using
- * doctrine. Doctrine has to be installed and configured.
- * Use a factory for providing the entity manager.
+ * Class DBNoRecordExist
  *
- * The following additional option keys are supported:
- * 'entity'    => 'doctrine entity',
- * 'property'  => 'field or better property of the entity to look for',
- * 'adapter'   => 'entity manager'
- *
- * @author Dr.Holger Maerz <holger@nakade.de>
+ * @package User\Form\Validator
  */
-class DBNoRecordExist extends AbstractDoctrineValidator
+class DBNoRecordExist extends AbstractValidator
 {
+
+    /**
+     * Error constants
+     */
+    const ERROR_NO_RECORD_FOUND = 'noRecordFound';
+    const ERROR_RECORD_FOUND    = 'recordFound';
+
+    /**
+     * @var array Message templates
+     */
+    protected $messageTemplates = array(
+        self::ERROR_NO_RECORD_FOUND => "No record matching the input was found.",
+        self::ERROR_RECORD_FOUND    => "A record matching the input was found.",
+    );
+
+    private $entity = '';
+    private $property = '';
+    private $entityManager = null;
+    private $excludeId  = -1;
+
+    /**
+     * @param null $options
+     *
+     * @throws InvalidArgumentException
+     */
+    public function __construct($options = null)
+    {
+        //@todo: translate messages
+        parent::__construct($options);
+
+        if ($options instanceof \Traversable) {
+            $options = ArrayUtils::iteratorToArray($options);
+        } elseif (!is_array($options)) {
+            throw new InvalidArgumentException(
+                'The options parameter must be an array or a Traversable'
+            );
+        }
+
+        if (!array_key_exists('entity', $options)) {
+            throw new InvalidArgumentException('Entity option missing!');
+        }
+        $this->entity =$options['entity'];
+
+        if (!array_key_exists('property', $options)) {
+            throw new InvalidArgumentException('Property option (field to search for) missing!');
+        }
+        $this->property = $options['property'];
+
+        if (!array_key_exists('entityManager', $options)) {
+            throw new InvalidArgumentException('No entity manager provided');
+        }
+        $this->entityManager = $options['entityManager'];
+
+        if (array_key_exists('excludeId', $options)) {
+            $this->excludeId = $options['excludeId'];
+        }
+    }
 
     /**
      * @param mixed $value
@@ -26,24 +81,58 @@ class DBNoRecordExist extends AbstractDoctrineValidator
      */
     public function isValid($value)
     {
-        /*
-         * Check for an adapter being defined. If not, throw an exception.
-         */
-        if (null === $this->adapter) {
-            throw new \RuntimeException('No database adapter present');
-        }
-
-        $valid = true;
         $this->setValue($value);
-
-        $result = $this->query($value);
+        $result = $this->isExisting($value);
         if ($result) {
-            $valid = false;
             $this->error(self::ERROR_RECORD_FOUND);
         }
 
-        return $valid;
+        return !$result;
     }
 
+    /**
+     * @param mixed $value
+     *
+     * @return bool
+     */
+    private function isExisting($value)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('query');
+        $qb->select('object')
+            ->from($this->getEntity(), 'object')
+            ->where('object.' . $this->property . ' = :value')
+            ->andWhere('object.' . $this->getIdentifier() . ' != :exclude')
+            ->setParameter('value', $value)
+            ->setParameter('exclude', $this->excludeId);
+
+        $result = $qb->getQuery()->getResult();
+        return !empty($result);
+    }
+
+    /**
+     * @return string
+     */
+    private function getIdentifier()
+    {
+        return $this->getEntityManager()
+            ->getClassMetaData($this->getEntity())
+            ->getSingleIdentifierFieldName();
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager()
+    {
+        return $this->entityManager;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
 
 }
