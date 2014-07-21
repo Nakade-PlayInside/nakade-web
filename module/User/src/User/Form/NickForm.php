@@ -1,8 +1,6 @@
 <?php
 namespace User\Form;
 
-use Season\Services\SeasonFieldsetService;
-use User\Form\Hydrator\NickHydrator;
 use \Zend\InputFilter\InputFilter;
 
 /**
@@ -14,31 +12,14 @@ class NickForm extends BaseForm
 {
 
     /**
-     * @param SeasonFieldsetService $service
-     */
-    public function __construct(SeasonFieldsetService $service)
-    {
-        parent::__construct('NickForm');
-
-        $this->setFieldSetService($service);
-
-        $hydrator = new NickHydrator();
-        $this->setHydrator($hydrator);
-        $this->setInputFilter($this->getFilter());
-    }
-
-    /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
     public function init()
     {
-        $this->addNick();
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_NICK));
         $this->add($this->getButtonFieldSet());
     }
-
-
-
 
     /**
      * get the InputFilter
@@ -48,33 +29,16 @@ class NickForm extends BaseForm
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add(array(
-            'name' => 'nickname',
-            'filters' => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim'),
-                array('name' => 'StripNewLines'),
-            ),
-            'validators'=> array(
-                array(
-                    'name' => 'StringLength',
-                    'options' => array (
-                        'encoding' => 'UTF-8',
-                        'max' => 20
-                    )
-                ),
-                /*  array(
-                      'name'     => 'User\Form\Validator\DBNoRecordExist',
-                      'options' => array(
-                          'entity'   => 'User\Entity\User',
-                          'property' => 'email',
-                          'exclude'  => $this->getIdentifierValue(),
-                          'adapter'  => $this->getEntityManager(),
-                      )
-                  )*/
-            )
-        ));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_NICK));
 
         return $filter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'NickForm';
     }
 }

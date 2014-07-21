@@ -1,7 +1,6 @@
 <?php
 namespace User\Form;
 
-use Season\Services\SeasonFieldsetService;
 use Zend\InputFilter\InputFilter;
 
 /**
@@ -13,23 +12,13 @@ class ForgotPasswordForm extends BaseForm
 {
 
     /**
-     * @param SeasonFieldsetService $service
-     */
-    public function __construct(SeasonFieldsetService $service)
-    {
-        parent::__construct('PasswordForgotForm');
-        $this->setFieldSetService($service);
-        $this->setInputFilter($this->getFilter());
-    }
-
-    /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
     public function init()
     {
         //email
-        $this->addEmail();
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_EMAIL));
         $this->add($this->getButtonFieldSet());
     }
 
@@ -41,9 +30,16 @@ class ForgotPasswordForm extends BaseForm
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add($this->getField()->getFilter());
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_EMAIL));
+        return $filter;
+    }
 
-         return $filter;
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'PasswordForgotForm';
     }
 }
 

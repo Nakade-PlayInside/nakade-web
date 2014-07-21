@@ -1,8 +1,6 @@
 <?php
 namespace User\Form;
 
-use Season\Services\SeasonFieldsetService;
-use User\Form\Hydrator\PasswordHydrator;
 use \Zend\InputFilter\InputFilter;
 
 /**
@@ -12,51 +10,15 @@ use \Zend\InputFilter\InputFilter;
  */
 class PasswordForm extends BaseForm
 {
-    /**
-     * @param SeasonFieldsetService $service
-     */
-    public function __construct(SeasonFieldsetService $service)
-    {
-        parent::__construct('PasswordForm');
-
-        $this->setFieldSetService($service);
-
-        $hydrator = new PasswordHydrator();
-        $this->setHydrator($hydrator);
-        $this->setInputFilter($this->getFilter());
-    }
 
     /**
-     * init the form. It is neccessary to call this function
-     * before using the form.
+     * init the form.
      */
     public function init()
     {
 
-         //password
-        $this->add(
-            array(
-                'name' => 'password',
-                'type' => 'Zend\Form\Element\Password',
-                'options' => array(
-                    'label' =>  $this->translate('enter new password:'),
-
-                ),
-
-            )
-        );
-
-        $this->add(
-            array(
-                'name' => 'repeat',
-                'type' => 'Zend\Form\Element\Password',
-                'options' => array(
-                    'label' =>  $this->translate('repeat new password:'),
-
-                ),
-
-            )
-        );
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_PWD));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_PWD_REPEAT));
 
         $this->add($this->getButtonFieldSet());
 
@@ -70,8 +32,16 @@ class PasswordForm extends BaseForm
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add($this->getUserFilter(self::FILTER_PASSWORD));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_PWD));
         return $filter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'PasswordForm';
     }
 }
 

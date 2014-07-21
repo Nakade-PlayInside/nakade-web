@@ -3,17 +3,40 @@ namespace User\Form;
 
 use Nakade\Abstracts\AbstractForm;
 use Season\Services\SeasonFieldsetService;
-use User\Services\RepositoryService;
+use User\Form\Factory\UserFieldInterface;
+use User\Form\Factory\UserFilterFactory;
+use User\Form\Factory\UserFieldFactory;
+use User\Form\Hydrator\UserHydrator;
 
 /**
  * Class BaseLeagueForm
  *
  * @package Season\Form
  */
-abstract class BaseForm extends AbstractForm
+abstract class BaseForm extends AbstractForm implements UserFieldInterface
 {
     protected $fieldSetService;
-    protected $entityManager;
+    protected $userFieldFactory;
+    protected $userFilterFactory;
+
+    /**
+     * @param SeasonFieldsetService $fieldsetService
+     * @param UserFieldFactory      $fieldFactory
+     * @param UserFilterFactory     $filterFactory
+     */
+    public function __construct(SeasonFieldsetService $fieldsetService,
+                                UserFieldFactory $fieldFactory,
+                                UserFilterFactory $filterFactory)
+    {
+        parent::__construct($this->getFormName());
+
+        $this->fieldSetService = $fieldsetService;
+        $this->userFieldFactory = $fieldFactory;
+        $this->userFilterFactory = $filterFactory;
+
+        $hydrator = new UserHydrator();
+        $this->setHydrator($hydrator);
+    }
 
     /**
      * @return SeasonFieldsetService
@@ -44,186 +67,31 @@ abstract class BaseForm extends AbstractForm
      */
     public function bindEntity($object)
     {
+        $this->getUserFilterFactory()->setUser($object);
         $this->init();
         $this->setInputFilter($this->getFilter());
         $this->bind($object);
     }
 
     /**
-     * add EmailFields
+     * @return UserFieldFactory
      */
-    protected function addEmail()
+    public function getUserFieldFactory()
     {
-        //email
-        $this->add(
-            array(
-                'name' => 'email',
-                'type' => 'Zend\Form\Element\Email',
-                'options' => array(
-                    'label' =>  $this->translate('email') . ':',
-                ),
-                'attributes' => array(
-                    'multiple' => false,
-                    'required' => 'required',
-                )
-            )
-        );
+        return $this->userFieldFactory;
     }
 
     /**
-     * add KgsFields
+     * @return UserFilterFactory
      */
-    protected function addKgs()
+    public function getUserFilterFactory()
     {
-        //kgs name
-        $this->add(
-            array(
-                'name' => 'kgs',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('KGS (opt.)') . ':',
-                ),
-            )
-        );
+        return $this->userFilterFactory;
     }
 
     /**
-     * add birthday
+     * @return string
      */
-    protected function addBirthday()
-    {
-        //birthday
-        $this->add(
-            array(
-                'name' => 'birthday',
-                'type' => 'Zend\Form\Element\Date',
-                'options' => array(
-                    'label' =>  $this->translate('Birthday') . ':',
-                    'format' => 'Y-m-d',
-                ),
-                'attributes' => array(
-                    'min' => '1900-01-01',
-                    'max' => date('Y-m-d'),
-                    'step' => '1',
-                )
-            )
-        );
-    }
-
-    /**
-     * add Nick
-     */
-    protected function addNick()
-    {
-        //nick name
-        $this->add(
-            array(
-                'name' => 'nickname',
-                'type' => 'Zend\Form\Element\Text',
-                'options' => array(
-                    'label' =>  $this->translate('Nick (opt.)') . ':',
-                ),
-            )
-        );
-
-        //anonym
-        $this->add(
-            array(
-                'name' => 'anonymous',
-                'type' => 'Zend\Form\Element\Checkbox',
-                'options' => array(
-                    'label' =>  $this->translate('use nick always (anonymous)'),
-                    'checked_value' => true,
-                ),
-                'attributes' => array(
-                    'class' => 'checkbox',
-                ),
-            )
-        );
-    }
-
-    /**
-     * add language
-     */
-    protected function addLanguage()
-    {
-        $this->add(
-            array(
-                'name' => 'language',
-                'type' => 'Zend\Form\Element\Select',
-                'options' => array(
-                    'label' =>  $this->translate('language:'),
-                    'value_options' => array(
-                        'no_NO' => $this->translate('No language'),
-                        'de_DE' => $this->translate('German'),
-                        'en_US' => $this->translate('English'),
-                    )
-                ),
-            )
-        );
-    }
-
-    const FILTER_BIRTHDAY = 'birthday';
-    const FILTER_PASSWORD = 'password';
-
-    protected function getUserFilter($name)
-    {
-        $filter = array();
-        switch ($name) {
-
-            case self::FILTER_BIRTHDAY :
-                $filter = array(
-                    'name' => self::FILTER_BIRTHDAY,
-                    'required' => false,
-                    'validators' => array(
-                        array('name'    => 'Date',
-                            'options' => array (
-                                'format' => 'Y-m-d',
-                            )
-                        ),
-                    ),
-                );
-                break;
-
-            case self::FILTER_PASSWORD :
-                $filter = array(
-                    'name' => self::FILTER_PASSWORD,
-                    'required' => true,
-                    'filters'  => array(
-                        array('name' => 'StripTags'),
-                        array('name' => 'StringTrim'),
-                        array('name' => 'StripNewLines'),
-                    ),
-                    'validators' => array(
-                        array(
-                            'name' => 'StringLength',
-                            'options' => array (
-                                'encoding' => 'UTF-8',
-                                'min' => 6,
-                                'max' => 50
-                            )
-                        ),
-                        array('name' => 'Identical',
-                            'break_chain_on_failure' => true,
-                            'options' => array (
-                                'token' => 'repeat',
-                            )
-                        ),
-                        array('name' => 'User\Form\Validator\PasswordComplexity',
-                            'break_chain_on_failure' => true,
-                        ),
-                        array('name' => 'User\Form\Validator\CommonPassword',
-                            'break_chain_on_failure' => true,
-                        ),
-
-                    )
-                );
-                break;
-
-        }
-
-        return $filter;
-
-    }
+    abstract public function getFormName();
 
 }

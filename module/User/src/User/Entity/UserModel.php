@@ -15,47 +15,31 @@ class UserModel
    * @ORM\Id
    * @ORM\Column(name="uid", type="integer")
    * @ORM\GeneratedValue(strategy="AUTO")
-   * @var integer
    */
   protected $id;
 
   /**
-   * Title
-   *
    * @ORM\Column(name="titel", type="string")
-   * @var string
    */
   protected $title;
 
   /**
-   * First Name
-   *
    * @ORM\Column(name="vorname", type="string")
-   * @var string
-   */
-  protected $firstname;
+    */
+  protected $firstName;
 
   /**
-   * Family Name
-   *
    * @ORM\Column(name="nachname", type="string")
-   * @var string
    */
-  protected $lastname;
+  protected $lastName;
 
  /**
-   * Nick Name
-   *
    * @ORM\Column(name="nick", type="string")
-   * @var string
    */
   protected $nickname;
 
   /**
-   * Sex
-   *
    * @ORM\Column(name="sex", type="string")
-   * @var char
    */
   protected $sex;
 
@@ -116,82 +100,52 @@ class UserModel
   protected $verifyString;
 
   /**
-   * verified
-   *
    * @ORM\Column(name="verified", type="boolean")
-   * @var bool
    */
   protected $verified;
 
   /**
-   * active
-   *
    * @ORM\Column(name="active", type="boolean")
-   * @var bool
    */
   protected $active;
 
   /**
-   * pwdChange
-   *
    * @ORM\Column(name="pwdChange", type="datetime")
-   * @var \DateTime
    */
   protected $pwdChange;
 
   /**
-   * edit
-   *
    * @ORM\Column(name="edit", type="datetime")
-   * @var \DateTime
    */
   protected $edit;
 
   /**
-   * lastLogin
-   *
    * @ORM\Column(name="lastLogin", type="datetime")
-   * @var \DateTime
    */
   protected $lastLogin;
 
   /**
-   * firstLogin
-   *
    * @ORM\Column(name="firstLogin", type="datetime")
-   * @var \DateTime
    */
   protected $firstLogin;
 
   /**
-   * created
-   *
    * @ORM\Column(name="created", type="datetime")
-   * @var \DateTime
    */
   protected $created;
 
   /**
-   * due date
-   *
    * @ORM\Column(name="due", type="datetime")
-   * @var \DateTime
-   */
+    */
   protected $due;
 
   /**
-   * user's role
    * @ORM\Column(name="role", type="string")
-   *
-   * @var string
    */
   protected $role;
 
  /**
- * user's role
  * @ORM\Column(name="language", type="string")
- *
- * @var string
  */
  protected $language;
 
@@ -243,8 +197,6 @@ class UserModel
   }
 
   /**
-   * Returns the Title
-   *
    * @return string
    */
   public function getTitle()
@@ -253,59 +205,44 @@ class UserModel
   }
 
   /**
-   * Sets the First Name
-   *
-   * @param string $firstname
+   * @param string $firstName
    *
    * @return User
    */
-  public function setFirstname($firstname)
+  public function setFirstname($firstName)
   {
-    $this->firstname = $firstname;
+    $this->firstName = $firstName;
     return $this;
   }
 
   /**
-   * Returns the First Name
-   *
-   * @access public
-   *
    * @return string
    */
   public function getFirstname()
   {
-    return $this->firstname;
+    return $this->firstName;
   }
 
   /**
-   * Sets the Family Name
-   *
-   * @param string $lastname
+   * @param string $lastName
    *
    * @return User
    */
-  public function setLastname($lastname)
+  public function setLastname($lastName)
   {
-    $this->lastname = $lastname;
+    $this->lastName = $lastName;
     return $this;
   }
 
   /**
-   * Returns the Last Name
-   *
-   * @access public
-   *
    * @return string
    */
   public function getLastname()
   {
-    return $this->lastname;
+    return $this->lastName;
   }
 
   /**
-   * Sets the Nick Name.
-   * if empty string, null is set
-   *
    * @param string $nickname
    *
    * @return User
@@ -317,10 +254,6 @@ class UserModel
   }
 
   /**
-   * Returns the Nick Name
-   *
-   * @access public
-   *
    * @return string
    */
   public function getNickname()
@@ -329,8 +262,6 @@ class UserModel
   }
 
   /**
-   * Sets the User Name
-   *
    * @param string $name
    *
    * @return User
@@ -342,10 +273,6 @@ class UserModel
   }
 
   /**
-   * Returns the userName
-   *
-   * @access public
-   *
    * @return string
    */
   public function getUsername()
@@ -354,22 +281,17 @@ class UserModel
   }
 
   /**
-   * Sets the password
-   *
-   * @param string $lastname
+   * @param string $password
    *
    * @return user
    */
-  public function setPassword($lastname)
+  public function setPassword($password)
   {
-    $this->password = $lastname;
+    $this->password = $password;
     return $this;
   }
 
   /**
-   * Returns the password
-   *
-   *
    * @return string
    */
   public function getPassword()
@@ -378,8 +300,6 @@ class UserModel
   }
 
     /**
-    * Sets the Kgs Name
-    *
     * @param string $name
      *
     * @return User
@@ -391,9 +311,6 @@ class UserModel
     }
 
     /**
-    * Returns the Kgs Name
-    *
-    *
     * @return string
     */
     public function getKgs()
@@ -402,8 +319,6 @@ class UserModel
     }
 
   /**
-   * Sets the generated password
-   *
    * @param string $password
    *
    * @return user
@@ -471,9 +386,6 @@ class UserModel
   }
 
   /**
-   * Sets the birthday.
-   * Converts to DateTime if string is provided
-   *
    * @param \DateTime $datetime
    *
    * @return User
@@ -485,8 +397,6 @@ class UserModel
   }
 
   /**
-   * Returns the birthday
-   *
    * @return \DateTime
    */
   public function getBirthday()
@@ -495,15 +405,13 @@ class UserModel
   }
 
   /**
-   * Sets anonymimizer
-   *
-   * @param bool $anonym
+   * @param bool $isAnonymous
    *
    * @return User
    */
-  public function setAnonym($anonym)
+  public function setAnonym($isAnonymous)
   {
-    $this->anonym = $anonym;
+    $this->anonym = $isAnonymous;
     return $this;
   }
 
@@ -520,8 +428,6 @@ class UserModel
   }
 
   /**
-   * Sets the verify string
-   *
    * @param string $verify
    *
    * @return user
@@ -533,8 +439,6 @@ class UserModel
   }
 
   /**
-   * Returns the verify string
-   *
    * @return string
    */
   public function getVerifyString()
@@ -543,8 +447,6 @@ class UserModel
   }
 
   /**
-   * Sets the Date of creation
-   *
    * @param \DateTime $datetime
    *
    * @return user
@@ -556,8 +458,6 @@ class UserModel
   }
 
   /**
-   * Returns the Date  of creation
-   *
    * @return \DateTime
    */
   public function getCreated()
@@ -566,8 +466,6 @@ class UserModel
   }
 
   /**
-   * Sets the Date of last time editing
-   *
    * @param \DateTime $datetime
    *
    * @return user
@@ -612,8 +510,6 @@ class UserModel
   }
 
   /**
-   * Set user's role.
-   *
    * @param string $role
    *
    * @return user
@@ -626,8 +522,6 @@ class UserModel
   }
 
   /**
-   * get user's role
-   *
    * @return string
    */
   public function getRole()
@@ -636,8 +530,6 @@ class UserModel
   }
 
   /**
-   * Sets the due date.
-   *
    * @param \DateTime $datetime
    *
    * @return user
@@ -650,8 +542,6 @@ class UserModel
   }
 
   /**
-   * Returns the due date
-   *
    * @return \DateTime
    */
   public function getDue()
@@ -661,8 +551,6 @@ class UserModel
 
 
   /**
-   * Sets the Date of the last Login.
-   *
    * @param \DateTime $datetime
    *
    * @return user
@@ -675,8 +563,6 @@ class UserModel
   }
 
   /**
-   * Returns the Date of the last Login
-   *
    * @return \DateTime
    */
   public function getLastLogin()
@@ -685,8 +571,6 @@ class UserModel
   }
 
   /**
-   * Sets the Date of the first Login.
-   *
    * @param \DateTime $datetime
    *
    * @return user
@@ -698,8 +582,6 @@ class UserModel
   }
 
   /**
-   * Returns the Date of the first Login
-   *
    * @return \DateTime
    */
   public function getFirstLogin()
@@ -708,8 +590,6 @@ class UserModel
   }
 
   /**
-   * Sets active flag
-   *
    * @param bool $active
    *
    * @return user
@@ -721,8 +601,6 @@ class UserModel
   }
 
   /**
-   * Returns the flag active
-   *
    * @return bool
    */
   public function isActive()
@@ -732,8 +610,6 @@ class UserModel
   }
 
   /**
-   * Sets verified flag
-   *
    * @param bool $verified
    *
    * @return user
@@ -745,8 +621,6 @@ class UserModel
   }
 
   /**
-   * Returns the flag verified
-   *
    * @return bool
    */
   public function isVerified()

@@ -23,6 +23,7 @@ return array(
             'showPwdReset'  => 'User\View\Helper\ShowPwdReset',
             'showLanguage'  => 'User\View\Helper\ShowLanguage',
             'showPwdInfo'  => 'User\View\Helper\ShowPwdChangeInfo',
+            'showDate'  => 'User\View\Helper\ShowDate',
             // more helpers here ...
         )
     ),
@@ -138,6 +139,10 @@ return array(
                 'User\Services\UserFormService',
             'User\Services\RepositoryService'=>
                 'User\Services\RepositoryService',
+            'User\Services\UserFieldService'=>
+                'User\Services\UserFieldService',
+            'User\Services\UserFilterService'=>
+                'User\Services\UserFilterService',
             'translator'  => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

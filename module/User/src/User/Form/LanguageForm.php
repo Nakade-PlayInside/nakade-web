@@ -1,8 +1,6 @@
 <?php
 namespace User\Form;
 
-use Season\Services\SeasonFieldsetService;
-use User\Form\Hydrator\LanguageHydrator;
 use \Zend\InputFilter\InputFilter;
 
 /**
@@ -13,26 +11,12 @@ use \Zend\InputFilter\InputFilter;
 class LanguageForm extends BaseForm
 {
     /**
-     * @param SeasonFieldsetService $service
-     */
-    public function __construct(SeasonFieldsetService $service)
-    {
-        parent::__construct('EmailForm');
-
-        $this->setFieldSetService($service);
-
-        $hydrator = new LanguageHydrator();
-        $this->setHydrator($hydrator);
-        $this->setInputFilter($this->getFilter());
-    }
-
-    /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
     public function init()
     {
-        $this->addLanguage();
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_LANGUAGE));
         $this->add($this->getButtonFieldSet());
     }
 
@@ -45,6 +29,14 @@ class LanguageForm extends BaseForm
     {
         $filter = new InputFilter();
         return $filter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'LanguageForm';
     }
 }
 

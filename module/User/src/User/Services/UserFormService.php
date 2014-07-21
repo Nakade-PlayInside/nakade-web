@@ -21,6 +21,9 @@ class UserFormService extends AbstractFormFactory
     const USER_FORM = 'user';
     const LANGUAGE_FORM = 'language';
 
+    private $fieldService;
+    private $filterService;
+
     /**
      * @param ServiceLocatorInterface $services
      *
@@ -48,6 +51,9 @@ class UserFormService extends AbstractFormFactory
 
         $translator = $services->get('translator');
         $fieldSetService = $services->get('Season\Services\SeasonFieldsetService');
+        $this->fieldService = $services->get('User\Services\UserFieldService');
+        $this->filterService = $services->get('User\Services\UserFilterService');
+
         $this->setFieldSetService($fieldSetService);
         $this->setTranslator($translator, $textDomain);
 
@@ -64,40 +70,39 @@ class UserFormService extends AbstractFormFactory
     public function getForm($typ)
     {
         $service = $this->getFieldSetService();
-        $entityManager = $this->getEntityManager();
 
         switch (strtolower($typ)) {
 
            case self::BIRTHDAY_FORM:
-               $form = new Form\BirthdayForm($service);
+               $form = new Form\BirthdayForm($service, $this->fieldService, $this->filterService);
                break;
 
            case self::EMAIL_FORM:
-               $form = new Form\EmailForm($service, $entityManager);
+               $form = new Form\EmailForm($service, $this->fieldService, $this->filterService);
                break;
 
            case self::FORGOT_PASSWORD_FORM:
-               $form = new Form\ForgotPasswordForm($service);
+               $form = new Form\ForgotPasswordForm($service, $this->fieldService, $this->filterService);
                break;
 
            case self::KGS_FORM:
-               $form = new Form\KgsForm($service);
+               $form = new Form\KgsForm($service, $this->fieldService, $this->filterService);
                break;
 
            case self::NICK_FORM:
-               $form = new Form\NickForm($service);
+               $form = new Form\NickForm($service, $this->fieldService, $this->filterService);
                break;
 
            case self::PASSWORD_FORM:
-               $form = new Form\PasswordForm($service);
+               $form = new Form\PasswordForm($service, $this->fieldService, $this->filterService);
                break;
 
            case self::USER_FORM:
-               $form = new Form\UserForm($service);
+               $form = new Form\UserForm($service, $this->fieldService, $this->filterService);
                break;
 
             case self::LANGUAGE_FORM:
-                $form = new Form\LanguageForm($service);
+                $form = new Form\LanguageForm($service, $this->fieldService, $this->filterService);
                 break;
 
            default:

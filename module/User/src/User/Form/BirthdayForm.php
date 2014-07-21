@@ -1,8 +1,6 @@
 <?php
 namespace User\Form;
 
-use Season\Services\SeasonFieldsetService;
-use User\Form\Hydrator\BirthdayHydrator;
 use Zend\InputFilter\InputFilter;
 
 /**
@@ -14,26 +12,12 @@ class BirthdayForm extends BaseForm
 {
 
     /**
-     * @param SeasonFieldsetService $service
-     */
-    public function __construct(SeasonFieldsetService $service)
-    {
-        parent::__construct('BirthdayForm');
-
-        $this->setFieldSetService($service);
-        $hydrator = new BirthdayHydrator();
-        $this->setHydrator($hydrator);
-        $this->setInputFilter($this->getFilter());
-    }
-
-
-    /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
     public function init()
     {
-        $this->addBirthday();
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_BIRTHDAY));
         $this->add($this->getButtonFieldSet());
     }
 
@@ -45,7 +29,15 @@ class BirthdayForm extends BaseForm
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add($this->getUserFilter(self::FILTER_BIRTHDAY));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_BIRTHDAY));
         return $filter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'BirthdayForm';
     }
 }

@@ -15,7 +15,7 @@ $this->headTitle($title);
 </tr>
 <tr>
     <td><?php echo $this->translate("Birthday:");?></td>
-    <td><?php echo $profile->getBirthday()->format('d.m.Y'); ?></td>
+    <td><?php echo $this->showDate($profile->getBirthday()); ?></td>
     <td>
         <a href="<?php echo $this->url('profile', array('action' => 'birthday'));?>"><?php echo $this->translate("edit");?></a>
     </td>

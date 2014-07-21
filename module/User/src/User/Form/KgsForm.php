@@ -1,8 +1,6 @@
 <?php
 namespace User\Form;
 
-use Season\Services\SeasonFieldsetService;
-use User\Form\Hydrator\KgsHydrator;
 use \Zend\InputFilter\InputFilter;
 
 /**
@@ -12,28 +10,13 @@ use \Zend\InputFilter\InputFilter;
  */
 class KgsForm extends BaseForm
 {
-
-    /**
-     * @param SeasonFieldsetService $service
-     */
-    public function __construct(SeasonFieldsetService $service)
-    {
-        parent::__construct('KgsForm');
-
-        $this->setFieldSetService($service);
-
-        $hydrator = new KgsHydrator();
-        $this->setHydrator($hydrator);
-        $this->setInputFilter($this->getFilter());
-    }
-
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
     public function init()
     {
-        $this->addKgs();
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_KGS));
         $this->add($this->getButtonFieldSet());
     }
 
@@ -45,34 +28,15 @@ class KgsForm extends BaseForm
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add(array(
-            'name' => 'kgs',
-            'required' => true,
-            'filters' => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim'),
-                array('name' => 'StripNewLines'),
-            ),
-            'validators'=> array(
-                array(
-                    'name' => 'StringLength',
-                    'options' => array (
-                        'encoding' => 'UTF-8',
-                        'max' => 50
-                    )
-                ),
-                /*  array(
-                      'name'     => 'User\Form\Validator\DBNoRecordExist',
-                      'options' => array(
-                          'entity'   => 'User\Entity\User',
-                          'property' => 'email',
-                          'exclude'  => $this->getIdentifierValue(),
-                          'adapter'  => $this->getEntityManager(),
-                      )
-                  )*/
-            )
-        ));
-
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_KGS));
         return $filter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'KgsForm';
     }
 }
