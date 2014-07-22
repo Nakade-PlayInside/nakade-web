@@ -1,0 +1,14 @@
+td.salutation {
+    width:1em;
+    text-align:center;
+}
+
+.male {
+    background: url(../images/small_male.png) no-repeat center center;
+
+}
+
+.female {
+    background: url(../images/small_female.png) no-repeat center center;
+
+}

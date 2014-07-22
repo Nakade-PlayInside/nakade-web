@@ -10,6 +10,7 @@ $this->headTitle($title);
 <a href="<?php echo $this->url('user', array('action' => 'add')); ?>"><?php echo $this->translate("add user"); ?></a>
 <table class="table" style="width:auto">
 <tr>
+    <th><?php echo $this->translate("ID"); ?></th>
     <th><?php echo $this->translate("Sex"); ?></th>
     <th><?php echo $this->translate("Name"); ?></th>
     <th><?php echo $this->translate("Nick"); ?></th>
@@ -23,11 +24,12 @@ $this->headTitle($title);
     <th><?php echo $this->translate("pwd"); ?></th>
 </tr>
 <?php
-
+/* @var $user \User\Entity\User */
 foreach ($this->users as $user) : ?>
 <tr style="background-color:<?php
     echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-    <td style="width:1em;text-align:center"><?php echo $this->salutation($user->getSex()); ?></td>
+    <td style="text-align: right"><?php echo $user->getId(); ?></td>
+    <td class="<?php echo $this->showSex($user->getSex()); ?>"></td>
     <td><?php echo $this->escapeHtml($user->getName());?></td>
     <td><?php echo $this->escapeHtml($user->getNickname());?></td>
     <td><?php echo $this->escapeHtml($user->getUsername()); ?></td>
