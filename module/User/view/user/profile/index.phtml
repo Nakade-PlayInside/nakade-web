@@ -7,7 +7,7 @@ $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<table class="table" style="width:auto">
+<table class="table profile">
 <tr>
     <td><?php echo $this->translate("Name:");?></td>
     <td><?php echo $this->escapeHtml($this->name);?></td>
@@ -16,33 +16,37 @@ $this->headTitle($title);
 <tr>
     <td><?php echo $this->translate("Birthday:");?></td>
     <td><?php echo $this->showDate($profile->getBirthday()); ?></td>
-    <td>
-        <a href="<?php echo $this->url('profile', array('action' => 'birthday'));?>"><?php echo $this->translate("edit");?></a>
+    <td class="edit">
+        <a class="button edit" title="<?php echo $this->translate("edit");?>"
+           href="<?php echo $this->url('profile', array('action' => 'birthday'));?>"></a>
     </td>
 </tr>
 <tr>
     <td><?php echo $this->translate("Nick:");?></td>
-    <td><?php echo $profile->getNickname(); ?>
-        <?php if ($profile->isAnonym()) : ?>
-            <img style="padding-left: 5px;" src="/images/anonymous.png">
-        <?php endif ?>
-    </td>
     <td>
-        <a href="<?php echo $this->url('profile', array('action' => 'nick'));?>"><?php echo $this->translate("edit");?></a>
+        <span class="<?php echo $this->showAnonymous($profile->isAnonymous()); ?>">
+            <?php echo $profile->getNickname(); ?>
+        </span>
+    </td>
+    <td class="edit">
+        <a class="button edit" title="<?php echo $this->translate("edit");?>"
+           href="<?php echo $this->url('profile', array('action' => 'nick'));?>"></a>
     </td>
 </tr>
 <tr>
     <td><?php echo $this->translate("email:");?></td>
     <td><?php echo $profile->getEmail();  ?></td>
-    <td>
-        <a href="<?php echo $this->url('profile', array('action' => 'email'));?>"><?php echo $this->translate("edit");?></a>
+    <td class="edit">
+        <a class="button edit" title="<?php echo $this->translate("edit");?>"
+           href="<?php echo $this->url('profile', array('action' => 'email'));?>"></a>
     </td>
 </tr>
 <tr>
     <td><?php echo $this->translate("KGS:");?></td>
     <td><?php echo $profile->getKgs();  ?></td>
-    <td>
-        <a href="<?php echo $this->url('profile', array('action' => 'kgs'));?>"><?php echo $this->translate("edit");?></a>
+    <td class="edit">
+        <a class="button edit" title="<?php echo $this->translate("edit");?>"
+           href="<?php echo $this->url('profile', array('action' => 'kgs'));?>"></a>
     </td>
 </tr>
 <tr>
@@ -52,16 +56,18 @@ $this->headTitle($title);
 </tr>
 <tr>
     <td><?php echo $this->translate("Password");?></td>
-    <td><span style="color: hsl(240,10%,65%);"><?php echo $this->showPwdInfo($profile->getCreated()); ?></span></td>
-    <td>
-        <a href="<?php echo $this->url('profile', array('action' => 'password'));?>"><?php echo $this->translate("edit");?></a>
+    <td><span class="pwdInfo"><?php echo $this->showPwdInfo($profile->getCreated()); ?></span></td>
+    <td class="edit">
+        <a class="button edit" title="<?php echo $this->translate("edit");?>"
+           href="<?php echo $this->url('profile', array('action' => 'password'));?>"></a>
     </td>
 </tr>
 <tr>
     <td><?php echo $this->translate("Language");?></td>
     <td><?php echo $this->showLanguage($profile->getLanguage());  ?></td>
-    <td>
-        <a href="<?php echo $this->url('profile', array('action' => 'language'));?>"><?php echo $this->translate("edit");?></a>
+    <td class="edit">
+        <a class="button edit" title="<?php echo $this->translate("edit");?>"
+           href="<?php echo $this->url('profile', array('action' => 'language'));?>"></a>
     </td>
 </tr>
 

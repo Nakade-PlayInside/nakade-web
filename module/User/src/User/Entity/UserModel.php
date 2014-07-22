@@ -57,7 +57,7 @@ class UserModel
    * @ORM\Column(name="anonym", type="boolean")
    * @var bool
    */
-  protected $anonym;
+  protected $anonymous;
 
   /**
    * username
@@ -209,7 +209,7 @@ class UserModel
    *
    * @return User
    */
-  public function setFirstname($firstName)
+  public function setFirstName($firstName)
   {
     $this->firstName = $firstName;
     return $this;
@@ -218,7 +218,7 @@ class UserModel
   /**
    * @return string
    */
-  public function getFirstname()
+  public function getFirstName()
   {
     return $this->firstName;
   }
@@ -228,7 +228,7 @@ class UserModel
    *
    * @return User
    */
-  public function setLastname($lastName)
+  public function setLastName($lastName)
   {
     $this->lastName = $lastName;
     return $this;
@@ -237,7 +237,7 @@ class UserModel
   /**
    * @return string
    */
-  public function getLastname()
+  public function getLastName()
   {
     return $this->lastName;
   }
@@ -409,22 +409,21 @@ class UserModel
    *
    * @return User
    */
-  public function setAnonym($isAnonymous)
+  public function setAnonymous($isAnonymous)
   {
-    $this->anonym = $isAnonymous;
+    $this->anonymous = $isAnonymous;
     return $this;
   }
 
 
   /**
-   * Returns the flag anonym
+   * Returns the flag anonymous
    *
    * @return bool
    */
-  public function isAnonym()
+  public function isAnonymous()
   {
-
-      return $this->anonym;
+      return $this->anonymous;
   }
 
   /**

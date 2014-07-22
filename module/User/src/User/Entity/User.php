@@ -86,13 +86,13 @@ class User extends UserModel implements UserInterface, RoleInterface
      */
     public function getShortName()
     {
-        $shortName = $this->getFirstname();
+        $shortName = $this->getFirstName();
         $nick = $this->getNickname();
 
-        if ($this->isAnonym()  && !is_null($nick)) {
+        if ($this->isAnonymous()  && !is_null($nick)) {
             $shortName = $nick;
         } else {
-            $lastName = strtoupper($this->getLastname());
+            $lastName = strtoupper($this->getLastName());
             $shortName .= " " . $lastName[0] . ".";
         }
 
@@ -120,12 +120,12 @@ class User extends UserModel implements UserInterface, RoleInterface
     public function getCompleteName()
     {
         $nick = $this->getNickname();
-        if ($this->isAnonym()  && !empty($nick)) {
+        if ($this->isAnonymous()  && !empty($nick)) {
             return sprintf("%s %s '%s' %s",
                 $this->getTitle(),
-                $this->getFirstname(),
+                $this->getFirstName(),
                 $nick,
-                $this->getLastname()
+                $this->getLastName()
             );
 
         }
@@ -140,8 +140,8 @@ class User extends UserModel implements UserInterface, RoleInterface
     public function getName()
     {
         return $this->getTitle() . " " .
-        $this->getFirstname() . " " .
-        $this->getLastname();
+        $this->getFirstName() . " " .
+        $this->getLastName();
     }
 
     /**

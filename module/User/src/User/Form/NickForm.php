@@ -18,6 +18,7 @@ class NickForm extends BaseForm
     public function init()
     {
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_NICK));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_ANONYMOUS));
         $this->add($this->getButtonFieldSet());
     }
 

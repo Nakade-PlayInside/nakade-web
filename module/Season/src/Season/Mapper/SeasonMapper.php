@@ -412,8 +412,8 @@ class SeasonMapper extends AbstractMapper
             ->where($qb->expr()->notIn('u.id', $notIn))
             ->andWhere('u.active = true')
             ->andWhere('u.verified = true')
-            ->orderBy('u.firstname', 'ASC')
-            ->addOrderBy('u.lastname', 'ASC');
+            ->orderBy('u.firstName', 'ASC')
+            ->addOrderBy('u.lastName', 'ASC');
 
         return $qb->getQuery()->getResult();
     }

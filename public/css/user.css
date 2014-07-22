@@ -1,14 +1,86 @@
-td.salutation {
+td.info {
     width:1em;
-    text-align:center;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .male {
-    background: url(../images/small_male.png) no-repeat center center;
-
+    background-image: url(../images/small_male.png);
 }
 
 .female {
-    background: url(../images/small_female.png) no-repeat center center;
+    background-image: url(../images/small_female.png);
+}
 
+.verified {
+    background-image: url(../images/active.png);
+}
+
+.unverified {
+    background-image: url(../images/inactive.png);
+}
+
+.isDue {
+    background-image: url(../images/mail.png);
+}
+
+.button {
+    -webkit-box-shadow:rgba(87, 169, 0, 0.3) 1px 1px 0.2em;
+    -moz-box-shadow:rgba(87, 169, 0, 0.3) 1px 1px 0.2em;
+    box-shadow:rgba(87, 169, 0, 0.3) 1px 1px 0.2em;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border:none;
+}
+
+/* button for edit */
+td.edit, td.info {
+    text-align:center;
+}
+
+a.edit {
+    background-image: url(../images/edit.png);
+}
+
+a.resetPwd {
+    background-image: url(../images/key_add.png);
+    background-size: contain;
+}
+
+a.button {
+    background-color: rgba(250, 250, 250, 0.2);
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width:40px;
+    height: 18px;
+    vertical-align: middle;
+}
+
+a.button:hover {
+    background-color: rgba(170, 170, 170, 0.4);
+}
+
+.anonymous {
+    padding: 0 20px 0 0;
+    background: url(../images/anonymous.png) no-repeat right center;
+    background-size: contain;
+}
+
+table.profile {
+    width: auto;
+    margin-top: 0.5em;
+}
+
+table.profile td {
+    vertical-align:middle;
+}
+
+.pwdInfo {
+    color: hsl(240,10%,65%);
+}
+
+.add {
+    margin: 10px;
 }

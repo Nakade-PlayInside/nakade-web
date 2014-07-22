@@ -43,7 +43,7 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
         }
 
         return array(
-            'anonymous'=> $object->isAnonym(),
+            'anonymous'=> $object->isAnonymous(),
             'nickname' => $object->getNickname(),
             'email'    => $object->getEmail(),
             'kgs'      => $object->getKgs(),
@@ -52,8 +52,8 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
             'role'     => $role,
             'sex'      => $sex,
             'title'    => $object->getTitle(),
-            'firstName'=> $object->getFirstname(),
-            'lastName' => $object->getLastname(),
+            'firstName'=> $object->getFirstName(),
+            'lastName' => $object->getLastName(),
             'username' => $object->getUsername(),
         );
 
@@ -87,9 +87,9 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
         if (isset($data['anonymous'])) {
                 $nick = $object->getNickname();
                 if (empty($nick)) {
-                    $object->setAnonym(false);
+                    $object->setAnonymous(false);
                 } else {
-                    $object->setAnonym($data['anonymous']);
+                    $object->setAnonymous($data['anonymous']);
                 }
         }
         if (isset($data['birthday'])) {

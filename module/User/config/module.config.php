@@ -15,15 +15,13 @@ return array(
 
      'view_helpers' => array(
         'invokables' => array(
-            'showActive'    => 'User\View\Helper\ShowActive',
-            'showTrigger'   => 'User\View\Helper\ShowTrigger',
-            'showVerified'  => 'User\View\Helper\ShowVerified',
-            'showEdit'      => 'User\View\Helper\ShowEdit',
-            'showPwdReset'  => 'User\View\Helper\ShowPwdReset',
+            'showAnonymous'     => 'User\View\Helper\ShowAnonymous',
             'showLanguage'  => 'User\View\Helper\ShowLanguage',
             'showPwdInfo'   => 'User\View\Helper\ShowPwdChangeInfo',
             'showSex'       => 'User\View\Helper\ShowSex',
             'showDate'      => 'User\View\Helper\ShowDate',
+            'showStage'     => 'User\View\Helper\ShowStage',
+            'activateUrl'   => 'User\View\Helper\GetActivateUrl',
             // more helpers here ...
         )
     ),

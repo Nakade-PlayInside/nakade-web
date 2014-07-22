@@ -62,13 +62,13 @@ class DBNoRecordExist extends AbstractValidator
         }
         $this->property = $options['property'];
 
-        if (!array_key_exists('entityManager', $options)) {
+        if (!array_key_exists('adapter', $options)) {
             throw new InvalidArgumentException('No entity manager provided');
         }
-        $this->entityManager = $options['entityManager'];
+        $this->entityManager = $options['adapter'];
 
-        if (array_key_exists('excludeId', $options)) {
-            $this->excludeId = $options['excludeId'];
+        if (array_key_exists('exclude', $options)) {
+            $this->excludeId = $options['exclude'];
         }
     }
 

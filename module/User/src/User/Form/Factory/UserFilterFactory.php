@@ -192,6 +192,7 @@ class UserFilterFactory extends AbstractTranslation  implements UserFieldInterfa
                 sprintf('User is not set in validation service.')
             );
         }
+
         return array(
             'name'     => 'User\Form\Validator\DBNoRecordExist',
             'options' => array(
