@@ -111,6 +111,12 @@ return array(
         ),
     ),
 
+    'view_helper_config' => array(
+        'flashmessenger' => array(
+            'message_open_format'      => '<div%s>',
+            'message_close_string'     => '</div>',
+        )
+    ),
 
     'view_manager' => array(
         'doctype'                  => 'HTML5',

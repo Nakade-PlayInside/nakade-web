@@ -69,40 +69,42 @@ class UserFormService extends AbstractFormFactory
      */
     public function getForm($typ)
     {
-        $service = $this->getFieldSetService();
+        $buttonService = $this->getFieldSetService();
+        $fieldService = $this->getFieldService();
+        $filterService = $this->getFilterService();
 
         switch (strtolower($typ)) {
 
            case self::BIRTHDAY_FORM:
-               $form = new Form\BirthdayForm($service, $this->fieldService, $this->filterService);
+               $form = new Form\BirthdayForm($buttonService, $fieldService, $filterService);
                break;
 
            case self::EMAIL_FORM:
-               $form = new Form\EmailForm($service, $this->fieldService, $this->filterService);
+               $form = new Form\EmailForm($buttonService, $fieldService, $filterService);
                break;
 
            case self::FORGOT_PASSWORD_FORM:
-               $form = new Form\ForgotPasswordForm($service, $this->fieldService, $this->filterService);
+               $form = new Form\ForgotPasswordForm($buttonService, $fieldService, $filterService);
                break;
 
            case self::KGS_FORM:
-               $form = new Form\KgsForm($service, $this->fieldService, $this->filterService);
+               $form = new Form\KgsForm($buttonService, $fieldService, $filterService);
                break;
 
            case self::NICK_FORM:
-               $form = new Form\NickForm($service, $this->fieldService, $this->filterService);
+               $form = new Form\NickForm($buttonService, $fieldService, $filterService);
                break;
 
            case self::PASSWORD_FORM:
-               $form = new Form\PasswordForm($service, $this->fieldService, $this->filterService);
+               $form = new Form\PasswordForm($buttonService, $fieldService, $filterService);
                break;
 
            case self::USER_FORM:
-               $form = new Form\UserForm($service, $this->fieldService, $this->filterService);
+               $form = new Form\UserForm($buttonService, $fieldService, $filterService);
                break;
 
             case self::LANGUAGE_FORM:
-                $form = new Form\LanguageForm($service, $this->fieldService, $this->filterService);
+                $form = new Form\LanguageForm($buttonService, $fieldService, $filterService);
                 break;
 
            default:
@@ -113,6 +115,22 @@ class UserFormService extends AbstractFormFactory
 
         $form->setTranslator($this->translator, $this->textDomain);
         return $form;
+    }
+
+    /**
+     * @return \User\Form\Factory\UserFieldFactory
+     */
+    public function getFieldService()
+    {
+        return $this->fieldService;
+    }
+
+    /**
+     * @return \User\Form\Factory\UserFilterFactory
+     */
+    public function getFilterService()
+    {
+        return $this->filterService;
     }
 
 }

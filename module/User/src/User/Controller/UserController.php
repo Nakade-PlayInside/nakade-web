@@ -124,7 +124,7 @@ class UserController extends AbstractController
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
             //cancel
-            if (isset($postData['cancel'])) {
+            if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute('user');
             }
 
@@ -132,8 +132,9 @@ class UserController extends AbstractController
 
             if ($form->isValid()) {
 
-                $data = $form->getData();
-                $this->getService()->editUser($data);
+                $user = $form->getData();
+                $this->getUserMapper()->save($user);
+                $this->flashMessenger()->addSuccessMessage('User updated');
 
                 return $this->redirect()->toRoute('user');
             }
@@ -166,7 +167,7 @@ class UserController extends AbstractController
      *
      * @return \Zend\Http\Response
      */
-    public function undeleteAction()
+    public function unDeleteAction()
     {
        //get param
        $uid  = $this->params()->fromRoute('id', null);

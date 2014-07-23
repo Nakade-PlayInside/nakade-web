@@ -137,6 +137,78 @@ class UserFilterFactory extends AbstractTranslation  implements UserFieldInterfa
                 );
                 break;
 
+            case self::FIELD_TITLE :
+                $filter = array(
+                    'name' => self::FIELD_TITLE,
+                    'required' => false,
+                    'allowEmpty' => true,
+                    'filters' => $this->getStripFilter(),
+                    'validators'=> array(
+                        array(
+                            'name' => 'StringLength',
+                            'options' => array (
+                                'encoding' => 'UTF-8',
+                                'max' => 20
+                            )
+                        ),
+                    )
+                );
+                break;
+
+            case self::FIELD_FIRST_NAME :
+                $filter = array(
+                    'name' => self::FIELD_FIRST_NAME,
+                    'required' => true,
+                    'filters' => $this->getStripFilter(),
+                    'validators'=> array(
+                        array(
+                            'name' => 'StringLength',
+                            'options' => array (
+                                'encoding' => 'UTF-8',
+                                'min' => 1,
+                                'max' => 20
+                            )
+                        )
+                    )
+                );
+                break;
+
+            case self::FIELD_LAST_NAME :
+                $filter = array(
+                    'name' => self::FIELD_LAST_NAME,
+                    'required' => true,
+                    'filters' => $this->getStripFilter(),
+                    'validators'=> array(
+                        array(
+                            'name' => 'StringLength',
+                            'options' => array (
+                                'encoding' => 'UTF-8',
+                                'min' => 1,
+                                'max' => 30
+                            )
+                        )
+                    )
+                );
+                break;
+
+            case self::FIELD_USERNAME :
+                $filter = array(
+                    'name' => self::FIELD_USERNAME,
+                    'required' => true,
+                    'allowEmpty' => false,
+                    'filters' => $this->getStripFilter(),
+                    'validators'=> array(
+                        array(
+                            'name' => 'StringLength',
+                            'options' => array (
+                                'encoding' => 'UTF-8',
+                                'max' => 20
+                            )
+                        ),
+                        $this->getDbNoRecordExist(self::FIELD_USERNAME),
+                    )
+                );
+                break;
 
         }
 

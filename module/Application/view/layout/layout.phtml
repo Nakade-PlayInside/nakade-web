@@ -155,6 +155,8 @@
                     </div><!--/.nav-collapse -->
                 </div>
             </div>
+            <?php echo $this->flashMessenger()->render('success'); ?>
+            <?php echo $this->flashMessenger()->render('error'); ?>
         </div>
         <div class="container">
             <?php echo $this->content; ?>

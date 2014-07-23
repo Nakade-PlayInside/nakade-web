@@ -42,22 +42,16 @@ class UserForm extends BaseForm implements RoleInterface
     {
         $filter = new InputFilter();
 
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_TITLE));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_FIRST_NAME));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_LAST_NAME));
 
         $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_NICK));
         $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_BIRTHDAY));
 
         $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_KGS));
         $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_EMAIL));
-
-     /*   $this->setPersonFilter('title', '10', false);
-        $this->setPersonFilter('firstname', '20');
-        $this->setPersonFilter('lastname', '30');
-
-        $this->filter->add($this->getUniqueDbFilter('kgs', null, '50', false));
-        $this->filter->add($this->getUniqueDbFilter('nickname', null, '20', false));
-        $this->filter->add($this->getUniqueDbFilter('username', null, '20'));
-        $this->filter->add($this->getUniqueDbFilter('email', '6', '120'));
-        $this->filter->add($this->getBirthday()->getFilter());*/
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_USERNAME));
 
         return $filter;
     }

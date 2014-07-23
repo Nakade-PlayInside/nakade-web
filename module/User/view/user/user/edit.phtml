@@ -1,5 +1,5 @@
 <?php
-$this->plugin('translate')->setTranslatorTextDomain('User'); 
+$this->plugin('translate')->setTranslatorTextDomain('User');
 
 $title = $this->translate('Edit User');
 $this->headTitle($title);
@@ -11,4 +11,3 @@ $this->form->prepare();
 echo $this->form()->openTag($this->form);
 echo $this->formCollection($this->form);
 echo $this->form()->closeTag();
-?>

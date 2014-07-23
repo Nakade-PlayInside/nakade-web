@@ -3,6 +3,8 @@ namespace User\Controller;
 
 use User\Services\RepositoryService;
 use User\Services\UserFormService;
+use Zend\Form\Form;
+use Zend\Http\Request;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
@@ -44,35 +46,11 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
         $form->bindEntity($user);
 
-        if ($this->getRequest()->isPost()) {
-
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-
-            //cancel
-            if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('profile');
-            }
-
-            $form->setData($postData);
-
-            if ($form->isValid()) {
-                $user = $form->getData();
-                $this->getUserMapper()->save($user);
-
-                return $this->redirect()->toRoute('profile');
-            }
-        }
-
-        return new ViewModel(
-            array (
-               'form'    => $form
-            )
-        );
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
 
     }
-
-
 
     /**
      * edit the nickname
@@ -85,31 +63,10 @@ class ProfileController extends AbstractController
         $form = $this->getForm(UserFormService::NICK_FORM);
         $user = $this->getUser();
         $form->bindEntity($user);
-        if ($this->getRequest()->isPost()) {
 
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-
-            //cancel
-            if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('profile');
-            }
-            $form->setData($postData);
-
-            if ($form->isValid()) {
-
-                $user = $form->getData();
-                $this->getUserMapper()->save($user);
-
-                return $this->redirect()->toRoute('profile');
-            }
-        }
-
-        return new ViewModel(
-            array (
-              'form'    => $form
-            )
-        );
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
     }
 
     /**
@@ -124,32 +81,9 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
         $form->bindEntity($user);
 
-        if ($this->getRequest()->isPost()) {
-
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-
-            //cancel
-            if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('profile');
-            }
-
-            $form->setData($postData);
-
-            if ($form->isValid()) {
-
-                $user = $form->getData();
-                $this->getUserMapper()->save($user);
-
-                return $this->redirect()->toRoute('profile');
-            }
-        }
-
-        return new ViewModel(
-            array(
-                'form'    => $form
-            )
-        );
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
     }
 
     /**
@@ -164,33 +98,9 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
         $form->bindEntity($user);
 
-
-        if ($this->getRequest()->isPost()) {
-
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-
-            //cancel
-            if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('profile');
-            }
-
-            $form->setData($postData);
-
-            if ($form->isValid()) {
-
-                $user = $form->getData();
-                $this->getUserMapper()->save($user);
-
-                return $this->redirect()->toRoute('profile');
-            }
-        }
-
-        return new ViewModel(
-            array(
-              'form'    => $form
-            )
-        );
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
     }
 
     /**
@@ -206,32 +116,9 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
         $form->bindEntity($user);
 
-        if ($this->getRequest()->isPost()) {
-
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-
-            //cancel
-            if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('profile');
-            }
-
-            $form->setData($postData);
-
-            if ($form->isValid()) {
-
-                $user = $form->getData();
-                $this->getUserMapper()->save($user);
-
-                return $this->redirect()->toRoute('profile');
-            }
-        }
-
-        return new ViewModel(
-            array(
-              'form'    => $form
-            )
-        );
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
     }
 
     /**
@@ -247,13 +134,25 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
         $form->bindEntity($user);
 
-        if ($this->getRequest()->isPost()) {
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
+    }
 
+    /**
+     * @param Request $request
+     * @param Form    $form
+     *
+     * @return \Zend\Http\Response
+     */
+    private function updateProfile(Request $request, Form $form)
+    {
+        if ($request->isPost()) {
             //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
+            $postData =  $request->getPost();
 
             //cancel
-            if (isset($postData['cancel'])) {
+            if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute('profile');
             }
 
@@ -264,17 +163,19 @@ class ProfileController extends AbstractController
                 $user = $form->getData();
                 $this->getUserMapper()->save($user);
 
-                $identity = $this->getService()->getIdentity();
-                $identity->setLanguage($user->getLanguage());
+                //updating actual language
+                $profile = $this->identity();
+                $profile->setLanguage($user->getLanguage());
 
+                $this->flashMessenger()->addSuccessMessage('Profile updated');
                 return $this->redirect()->toRoute('profile');
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
         }
 
         return new ViewModel(
-            array(
-                'form'    => $form
-            )
+            array('form' => $form)
         );
     }
 

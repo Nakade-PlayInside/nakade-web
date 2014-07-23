@@ -117,6 +117,34 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
             }
         }
 
+        if (isset($data['sex'])) {
+            $object->setSex($data['sex']);
+        }
+
+        if (isset($data['title'])) {
+            if (empty($data['title'])) {
+                $object->setTitle(null);
+            } else {
+                $object->setTitle($data['title']);
+            }
+        }
+
+        if (isset($data['firstName'])) {
+                $object->setFirstName($data['firstName']);
+        }
+
+        if (isset($data['lastName'])) {
+            $object->setLastName($data['lastName']);
+        }
+
+        if (isset($data['username'])) {
+            $object->setUsername($data['username']);
+        }
+
+        if (isset($data['role'])) {
+            $object->setRole($data['role']);
+        }
+
 
         return $object;
     }
