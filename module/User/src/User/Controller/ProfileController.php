@@ -160,7 +160,12 @@ class ProfileController extends AbstractController
 
             if ($form->isValid()) {
 
+                /* @var $user \User\Entity\User */
                 $user = $form->getData();
+
+                $date = new \DateTime();
+                $user->setEdit($date);
+
                 $this->getUserMapper()->save($user);
 
                 //updating actual language

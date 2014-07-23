@@ -67,6 +67,7 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
      */
     public function hydrate(array $data, $object)
     {
+
         if (isset($data['email'])) {
                 $object->setEmail($data['email']);
         }
@@ -110,9 +111,9 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
 
         if (isset($data['password'])) {
             if (!empty($data['password'])) {
+                $date = new \DateTime();
                 $pwd = md5($data['password']);
                 $object->setPassword($pwd);
-                $date = new \DateTime();
                 $object->setPwdChange($date);
             }
         }
@@ -144,7 +145,6 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
         if (isset($data['role'])) {
             $object->setRole($data['role']);
         }
-
 
         return $object;
     }

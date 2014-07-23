@@ -172,11 +172,6 @@ class User extends UserModel implements UserInterface, RoleInterface
     {
         $this->populate($data);
 
-        //defaults
-        $this->verified  = 0;
-        $this->active    = 1;
-        $this->created   = new \DateTime();
-
     }
 
     /**

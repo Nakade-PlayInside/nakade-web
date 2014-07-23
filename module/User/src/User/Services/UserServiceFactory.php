@@ -17,12 +17,6 @@ use User\Entity\User;
  */
 class UserServiceFactory extends AbstractService
 {
-    /**
-     * time in hours before expiring the verification
-     *
-     * @var int
-     */
-    protected $expire=72;
 
     /**
      * Creating service for the controller.
@@ -81,57 +75,6 @@ class UserServiceFactory extends AbstractService
 
          return $mail->send();
 
-    }
-
-    /**
-     * prepraring data before filling the entity.
-     * Params is given by reference..
-     *
-     * @param array &$data
-     *
-     * @throws RuntimeException
-     */
-    private  function prepareData(array &$data)
-    {
-         $key = 'request';
-         if (!array_key_exists($key, $data)) {
-             throw new RuntimeException(
-                 __METHOD__ . ' expects an array key: ' . $key
-             );
-         }
-
-         $request = $data[$key];
-         $uri       = $request->getUri();
-         $verifyUrl = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
-
-         $data['verifyString'] = VerifyStringGenerator::generateVerifyString();
-         $data['verifyUrl']    = $verifyUrl;
-
-         $password             = PasswordGenerator::generatePassword(12);
-         $data['generated']    = $password;
-         $data['password']     = md5($password);
-
-         //expire verification
-         $now  = new \DateTime();
-         $dueTime  = sprintf('+ %s hour', $this->expire);
-         $data['due'] = $now->modify($dueTime);
-
-         $data['verified'] = 0;
-    }
-
-    /**
-     * edit user entity and saving.
-     *
-     * @param User $user
-     */
-    public function editUser($user)
-    {
-        // to fulfill the created value @deprecated
-        $created = $user->getCreated();
-        $data['created'] = empty($created)? new \DateTime():$created;
-
-        $user->populate($data);
-        $this->getMapper('user')->save($user);
     }
 
     /**
@@ -224,48 +167,6 @@ class UserServiceFactory extends AbstractService
          $mail->send();
          return true;
 
-    }
-
-    /**
-     * Deactivate a user but not deleting. This is for database consistancy
-     *
-     * @param int $uid
-     *
-     * @return boolean
-     */
-    public function deleteUser($uid)
-    {
-        /* @var $user User */
-        $user = $this->getMapper('user')->getUserById($uid);
-
-        if (null === $user) {
-            return false;
-        }
-
-        $user->setActive(false);
-        $this->getMapper('user')->save($user);
-        return true;
-    }
-
-    /**
-     * Activate a deactivated user.
-     *
-     * @param int $uid
-     *
-     * @return boolean
-     */
-    public function undeleteUser($uid)
-    {
-        /* @var $user User */
-        $user = $this->getMapper('user')->getUserById($uid);
-
-        if (null === $user) {
-            return false;
-        }
-
-        $user->setActive(true);
-        $this->getMapper('user')->save($user);
-        return true;
     }
 
 

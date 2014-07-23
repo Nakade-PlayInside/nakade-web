@@ -44,70 +44,49 @@ class UserModel
   protected $sex;
 
   /**
-   * Birthday
-   *
    * @ORM\Column(name="geburtsdatum", type="date")
-   * @var \DateTime
    */
   protected $birthday;
 
   /**
-   * if flag is set the nickname is shown
-   *
    * @ORM\Column(name="anonym", type="boolean")
-   * @var bool
    */
-  protected $anonymous;
+  protected $anonymous=0;
 
   /**
-   * username
-   *
    * @ORM\Column(name="username", type="string")
-   * @var string
    */
   protected $username;
 
   /**
-   * password
-   *
    * @ORM\Column(name="password", type="string")
-   * @var string
    */
   protected $password;
 
    /**
-    * kgs username
-    *
     * @ORM\Column(name="kgs", type="string")
-    * @var string
     */
   protected $kgs;
 
   /**
-   * email
-   *
    * @ORM\Column(name="email", type="string")
-   * @var string
    */
   protected $email;
 
   /**
-   * verifyString
-   *
    * @ORM\Column(name="verifyString", type="string")
-   * @var string
    */
   protected $verifyString;
 
   /**
    * @ORM\Column(name="verified", type="boolean")
    */
-  protected $verified;
+  protected $verified=0;
 
   /**
    * @ORM\Column(name="active", type="boolean")
    */
-  protected $active;
+  protected $active=1;
 
   /**
    * @ORM\Column(name="pwdChange", type="datetime")
@@ -158,8 +137,6 @@ class UserModel
   protected $generated;
 
   /**
-   * Sets the Identifier
-   *
    * @param int $uid
    *
    * @return User
@@ -171,10 +148,6 @@ class UserModel
   }
 
   /**
-   * Returns the Identifier
-   *
-   * @access public
-   *
    * @return int
    */
   public function getId()
@@ -183,9 +156,6 @@ class UserModel
   }
 
   /**
-   * Sets the Title.
-   * If empty string, null is set
-   *
    * @param string $title
    *
    * @return User
@@ -330,8 +300,6 @@ class UserModel
   }
 
   /**
-   * Returns the generated password
-   *
    * @return string
    */
   public function getGenerated()
@@ -340,8 +308,6 @@ class UserModel
   }
 
   /**
-   * Sets the email
-   *
    * @param string $email
    *
    * @return user
@@ -353,8 +319,6 @@ class UserModel
   }
 
   /**
-   * Returns the email
-   *
    * @return string
    */
   public function getEmail()
@@ -363,8 +327,6 @@ class UserModel
   }
 
   /**
-   * Sets the sex
-   *
    * @param string $sex
    *
    * @return User
@@ -376,8 +338,6 @@ class UserModel
   }
 
   /**
-   * Returns the sex
-   *
    * @return string
    */
   public function getSex()
@@ -417,8 +377,6 @@ class UserModel
 
 
   /**
-   * Returns the flag anonymous
-   *
    * @return bool
    */
   public function isAnonymous()
@@ -476,8 +434,6 @@ class UserModel
   }
 
   /**
-   * Returns the Date  of last time editing
-   *
    * @return \DateTime
    */
   public function getEdit()
@@ -486,8 +442,6 @@ class UserModel
   }
 
   /**
-   * Sets the Date of last time pwd change
-   *
    * @param \DateTime $datetime
    *
    * @return user
@@ -499,8 +453,6 @@ class UserModel
   }
 
   /**
-   * Returns the Date  of last time pwd change
-   *
    * @return \DateTime
    */
   public function getPwdChange()

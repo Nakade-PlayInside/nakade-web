@@ -8,6 +8,7 @@ class UserFieldFactory extends AbstractTranslation
     implements UserFieldInterface, RoleInterface, LanguageInterface, SexInterface
 {
 
+    //todo: refactor for field sets using hydrators and filter
 
     /**
      * @param string $field

@@ -11,9 +11,10 @@
 
 namespace User\Controller;
 
-use Season\Services\RepositoryService;
+use Authentication\Password\PasswordGenerator;
+use User\Business\VerifyStringGenerator;
+use User\Entity\User;
 use User\Services\UserFormService;
-use Zend\Form\FormInterface;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
@@ -45,8 +46,10 @@ class UserController extends AbstractController
      */
     public function addAction()
     {
-
-        $form = $this->getForm('user');
+        /* @var $form \User\Form\UserForm */
+        $form = $this->getForm(UserFormService::USER_FORM);
+        $user = new User();
+        $form->bindEntity($user);
 
         if ($this->getRequest()->isPost()) {
 
@@ -54,7 +57,7 @@ class UserController extends AbstractController
             $postData =  $this->getRequest()->getPost();
 
             //cancel
-            if (isset($postData['cancel'])) {
+            if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute('user');
             }
 
@@ -62,15 +65,36 @@ class UserController extends AbstractController
 
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['request'] = $this->getRequest();
+                //todo: proof isActive, isVerified, isAnonymous
+                //todo: refactor mailService
+               // $user = $form->getData();
+                $verifyString = VerifyStringGenerator::generateVerifyString();
+                $password = PasswordGenerator::generatePassword(12);
+                $encryptPwd = PasswordGenerator::encryptPassword($password);
 
-                if ($this->getService()->addUser($data)) {
-                    $this->flashMessenger()->addMessage('new user added successfully');
-                } else {
-                    $this->flashMessenger()->addMessage('unable to send verify email');
-                }
+                $uri       = $this->getRequest()->getUri();
+                $verifyUrl = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
 
+                $now  = new \DateTime();
+                $user->setCreated($now);
+
+                $dueTime  = sprintf('+ %s hour', 72);
+                $dueDate = clone $now;
+                $dueDate = $dueDate->modify($dueTime);
+
+                $user->setVerifyString($verifyString);
+                $user->setPassword($encryptPwd);
+                $user->setDue($dueDate);
+
+                $this->getUserMapper()->save($user);
+                $this->flashMessenger()->addMessage('New user added');
+
+                /* @var $mail \User\Mail\UserMail */
+                $mail = $this->getMailFactory()->getMail('verify');
+                $mail->setData($user);
+                $mail->setRecipient($user->getEmail(), $user->getName());
+
+                $mail->send();
 
                 return $this->redirect()->toRoute('user');
             }
@@ -112,14 +136,14 @@ class UserController extends AbstractController
     {
 
         //get param
-       $uid  = $this->params()->fromRoute('id', null);
+        $uid  = $this->params()->fromRoute('id', null);
 
-       /* @var $form \User\Form\UserForm */
-       $form = $this->getForm(UserFormService::USER_FORM);
-       $user=$this->getUserMapper()->getUserById($uid);
-       $form->bindEntity($user);
+        /* @var $form \User\Form\UserForm */
+        $form = $this->getForm(UserFormService::USER_FORM);
+        $user=$this->getUserMapper()->getUserById($uid);
+        $form->bindEntity($user);
 
-       if ($this->getRequest()->isPost()) {
+        if ($this->getRequest()->isPost()) {
 
             //get post data, set data to from, prepare for validation
             $postData =  $this->getRequest()->getPost();
@@ -133,16 +157,22 @@ class UserController extends AbstractController
             if ($form->isValid()) {
 
                 $user = $form->getData();
+
+                $date = new \DateTime();
+                $user->setEdit($date);
+
                 $this->getUserMapper()->save($user);
                 $this->flashMessenger()->addSuccessMessage('User updated');
 
                 return $this->redirect()->toRoute('user');
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
-       }
+        }
 
         return new ViewModel(
             array(
-              'form'    => $form
+                'form'    => $form
             )
         );
 
@@ -155,11 +185,20 @@ class UserController extends AbstractController
      */
     public function deleteAction()
     {
-       //get param
-       $uid  = $this->params()->fromRoute('id', null);
-       $this->getService()->deleteUser($uid);
+        //get param
+        $uid  = $this->params()->fromRoute('id', null);
 
-       return $this->redirect()->toRoute('user');
+        /* @var $user User */
+        $user = $this->getUserMapper()->getUserById($uid);
+        if (!is_null($user)) {
+            $user->setActive(false);
+            $this->getUserMapper()->save($user);
+            $this->flashMessenger()->addSuccessMessage('User updated');
+        } else {
+            $this->flashMessenger()->addSuccessMessage('Input Error');
+        }
+
+        return $this->redirect()->toRoute('user');
     }
 
     /**
@@ -169,11 +208,20 @@ class UserController extends AbstractController
      */
     public function unDeleteAction()
     {
-       //get param
-       $uid  = $this->params()->fromRoute('id', null);
-       $this->getService()->undeleteUser($uid);
+        //get param
+        $uid  = $this->params()->fromRoute('id', null);
 
-       return $this->redirect()->toRoute('user');
+        /* @var $user User */
+        $user = $this->getUserMapper()->getUserById($uid);
+        if (!is_null($user)) {
+            $user->setActive(true);
+            $this->getUserMapper()->save($user);
+            $this->flashMessenger()->addSuccessMessage('User updated');
+        } else {
+            $this->flashMessenger()->addSuccessMessage('Input Error');
+        }
+
+        return $this->redirect()->toRoute('user');
     }
 
     /**

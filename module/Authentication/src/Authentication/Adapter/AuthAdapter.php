@@ -1,6 +1,7 @@
 <?php
 namespace Authentication\Adapter;
 
+use Authentication\Password\PasswordGenerator;
 use DoctrineModule\Authentication\Adapter\ObjectRepository;
 use Zend\Authentication\Adapter\Exception;
 use Zend\Authentication\Result as AuthenticationResult;
@@ -36,7 +37,7 @@ class AuthAdapter extends ObjectRepository
      */
     public function setCredentialValue($credentialValue)
     {
-        $this->credentialValue = md5($credentialValue);
+        $this->credentialValue = PasswordGenerator::encryptPassword($credentialValue);
         return $this;
     }
 
