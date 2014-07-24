@@ -108,6 +108,21 @@ class UserController extends AbstractController
     }
 
     /**
+     * @return \Zend\Http\Response
+     */
+    public function detailsAction()
+    {
+        //get param
+        $uid  = $this->params()->fromRoute('id', null);
+
+        return new ViewModel(
+            array(
+                'user' => $this->getUserMapper()->getUserById($uid)
+            )
+        );
+    }
+
+    /**
      * reset the user's password (send mail)
      *
      * @return \Zend\Http\Response

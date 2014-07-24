@@ -20,6 +20,7 @@ return array(
             'showPwdInfo'   => 'User\View\Helper\ShowPwdChangeInfo',
             'showSex'       => 'User\View\Helper\ShowSex',
             'showDate'      => 'User\View\Helper\ShowDate',
+            'showDateTime'  => 'User\View\Helper\ShowDateTime',
             'showStage'     => 'User\View\Helper\ShowStage',
             'activateUrl'   => 'User\View\Helper\GetActivateUrl',
             // more helpers here ...

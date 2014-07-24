@@ -4,11 +4,11 @@ namespace User\View\Helper;
 use Zend\Form\View\Helper\AbstractHelper;
 
 /**
- * Shows date in format if a date isset
+ * Class ShowDateTime
  *
  * @package User\View\Helper
  */
-class ShowDate extends AbstractHelper
+class ShowDateTime extends AbstractHelper
 {
     /**
      * @param \DateTime $date
@@ -19,7 +19,7 @@ class ShowDate extends AbstractHelper
     {
         $info = '';
         if (!empty($date)) {
-            $info = $date->format('d.m.Y');
+            $info = $date->format('d.m.y H:i');
         }
         return $info;
 

@@ -42,6 +42,7 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
             $sex = $object->getSex();
         }
 
+
         return array(
             'anonymous'=> $object->isAnonymous(),
             'nickname' => $object->getNickname(),

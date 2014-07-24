@@ -10,7 +10,7 @@ $this->headTitle($title);
 <a class="btn btn-success add" href="<?php echo $this->url('user', array('action' => 'add')); ?>">
     <?php echo $this->translate("add user"); ?>
 </a>
-<table class="table" style="width:auto">
+<table class="table profile">
 <tr>
     <th><?php echo $this->translate("ID"); ?></th>
     <th><?php echo $this->translate("Sex"); ?></th>
@@ -19,6 +19,8 @@ $this->headTitle($title);
     <th><?php echo $this->translate("Username"); ?></th>
     <th><?php echo $this->translate("KGS"); ?></th>
     <th><?php echo $this->translate("email"); ?></th>
+    <th><?php echo $this->translate("last Login"); ?></th>
+    <th><?php echo $this->translate("Details"); ?></th>
     <th><?php echo $this->translate("verified"); ?></th>
     <th><?php echo $this->translate("active"); ?></th>
     <th><?php echo $this->translate("Pwd"); ?></th>
@@ -37,6 +39,11 @@ foreach ($this->users as $user) : ?>
     <td><?php echo $this->escapeHtml($user->getUsername()); ?></td>
     <td><?php echo $this->escapeHtml($user->getKgs()); ?></td>
     <td><?php echo $this->escapeHtml($user->getEmail()); ?></td>
+    <td><?php echo $this->showDate($user->getLastLogin()); ?></td>
+    <td class="edit">
+        <a class="button details" title="<?php echo $this->translate('show Details'); ?>"
+           href="<?php echo $this->url('user', array('action' => 'details', 'id' => $user->getId())); ?>"></a>
+    </td>
     <td class="info <?php echo $this->showStage($user->isVerified(), $user->isDue()); ?>"></td>
     <td class="edit">
         <a class='button <?php echo $this->showStage($user->isActive()); ?>' title="<?php echo $this->translate('shift'); ?>"

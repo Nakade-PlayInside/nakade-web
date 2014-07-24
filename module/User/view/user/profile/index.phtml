@@ -63,7 +63,7 @@ $this->headTitle($title);
 </tr>
 <tr>
     <td><?php echo $this->translate("Language");?></td>
-    <td><?php echo $this->showLanguage($profile->getLanguage());  ?></td>
+    <td><div class="<?php echo $this->showLanguage($profile->getLanguage());?>"></div></td>
     <td class="edit">
         <a class="button edit" title="<?php echo $this->translate("edit");?>"
            href="<?php echo $this->url('profile', array('action' => 'language'));?>"></a>

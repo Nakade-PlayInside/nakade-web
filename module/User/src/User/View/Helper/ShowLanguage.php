@@ -7,39 +7,21 @@ use Zend\View\Helper\AbstractHelper;
  *
  * @package User\View\Helper
  */
-class showLanguage extends AbstractHelper
+class ShowLanguage extends AbstractHelper
 {
     /**
      * @param string $type
+     * @param int    $size
      *
      * @return string
      */
-    public function __invoke($type)
+    public function __invoke($type, $size=16)
     {
-        $language = 'unknown';
-        switch ($type) {
-            case 'de_DE':
-                $language = $this->translate('German');
-                break;
-            case 'en_US':
-                $language = $this->translate('English');
-                break;
-
-            default:
-                $language = $this->translate('auto detect');
+        $class = "pwdInfo automatic";
+        if (!is_null($type)) {
+            $class = sprintf("lang-%s %s-%s", $size, $type, $size);
         }
-
-        return $language;
+        return $class;
     }
 
-    /**
-     * @param string $message
-     *
-     * @return string
-     */
-    private function translate($message)
-    {
-        $translate = $this->getView()->plugin('translate');
-        return $translate($message);
-    }
 }

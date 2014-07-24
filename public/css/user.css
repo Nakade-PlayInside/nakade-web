@@ -4,6 +4,11 @@ td.info {
     background-position: center;
 }
 
+.small {
+    width:16px;
+    height: 16px;
+}
+
 .male {
     background-image: url(../images/small_male.png);
 }
@@ -75,6 +80,8 @@ table.profile {
 
 table.profile td {
     vertical-align:middle;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .pwdInfo {
@@ -85,3 +92,16 @@ table.profile td {
     margin: 10px;
 }
 
+/* double ul.createSeason li a */
+.details {
+    background: url(../images/info.png) no-repeat center center;
+}
+
+/* double ul.createSeason li a */
+.english {
+    background: url(../images/en-32.png) no-repeat center center;
+}
+
+.automatic:before {
+    content: "auto";
+}
