@@ -12,8 +12,12 @@
 namespace User\Controller;
 
 use Authentication\Password\PasswordGenerator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use Zend\Paginator\Paginator;
 use User\Business\VerifyStringGenerator;
 use User\Entity\User;
+use User\Pagination\UserPagination;
 use User\Services\UserFormService;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
@@ -32,9 +36,25 @@ class UserController extends AbstractController
      */
     public function indexAction()
     {
+        $page = (int) $this->params()->fromRoute('id', 1);
+        //$pagination = new UserPagination($mapper);
+
+        /* @var $entityManager \Doctrine\ORM\EntityManager */
+        $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+
+        $repository = $entityManager->getRepository('User\Entity\User');
+
+        $adapter = new DoctrineAdapter(new ORMPaginator($repository->createQueryBuilder('user')));
+        $paginator = new Paginator($adapter);
+        $paginator->setDefaultItemCountPerPage(10);
+
+        if($page) $paginator->setCurrentPageNumber($page);
+
+        $offset = (10 * ($page-1));
         return new ViewModel(
             array(
-              'users' => $this->getUserMapper()->getAllUser()
+              'users' => $this->getUserMapper()->getUserByPages($offset),
+              'paginator' =>   $paginator,
             )
         );
     }

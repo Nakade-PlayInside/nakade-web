@@ -24,6 +24,23 @@ class UserMapper extends AbstractMapper
     }
 
     /**
+     * Get all registered User
+     *
+     * @return array User\Entity\User
+     */
+    public function getUserByPages($offset, $max=10)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('User')
+            ->select('u')
+            ->from('User\Entity\User', 'u')
+            ->setFirstResult($offset)
+            ->setMaxResults($max);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Get User by its email and verifystring if due date
      * is not expired
      *
