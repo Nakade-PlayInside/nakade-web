@@ -118,7 +118,7 @@
 .ua_UA-16{ background-position: 0 -414px; width: 16px; height: 16px; }
 
 .arrows-16 {
-    background: url(../images/arrows-16.png) no-repeat top left;
+    background: url(../images/arrows-16a.png) no-repeat top left;
 }
 .active-16{ background-position: 0 0; width: 16px; height: 16px; }
 .arrow-down-16{ background-position: 0 -18px; width: 16px; height: 16px; }
@@ -132,6 +132,7 @@
 
 .arrows-32 {
     background: url(../images/arrows-32.png) no-repeat top left;
+    width: 32px; height: 32px;
 }
 .active-32{ background-position: 0 0; width: 32px; height: 32px; }
 .arrow-down-32{ background-position: 0 -34px; width: 32px; height: 32px; }
@@ -147,8 +148,8 @@
     background: url(../images/buttons-32.png) no-repeat top left;
 }
 
-.Info-32{ background-position: 0 0; width: 32px; height: 32px; }
-.Stop-32{ background-position: 0 -34px; width: 32px; height: 32px; }
+.info-32{ background-position: 0 0; width: 32px; height: 32px; }
+.stop-32{ background-position: 0 -34px; width: 32px; height: 32px; }
 .accept-32{ background-position: 0 -68px; width: 32px; height: 32px; }
 .add-32{ background-position: 0 -102px; width: 32px; height: 32px; }
 .change-password-32{ background-position: 0 -136px; width: 32px; height: 32px; }
@@ -170,8 +171,8 @@
     background: url(../images/buttons-16.png) no-repeat top left;
 }
 
-.Info-16{ background-position: 0 0; width: 16px; height: 16px; }
-.Stop-16{ background-position: 0 -18px; width: 16px; height: 16px; }
+.info-16{ background-position: 0 0; width: 16px; height: 16px; }
+.stop-16{ background-position: 0 -18px; width: 16px; height: 16px; }
 .accept-16{ background-position: 0 -36px; width: 16px; height: 16px; }
 .add-16{ background-position: 0 -54px; width: 16px; height: 16px; }
 .change-password-16{ background-position: 0 -72px; width: 16px; height: 16px; }
@@ -233,13 +234,13 @@
 .user-16{ background-position: 0 -162px; width: 16px; height: 16px; }
 
 .status-32 {
-    background: url(../images/status-16.png) no-repeat top left;
+    background: url(../images/status-32.png) no-repeat top left;
 }
 .admin-32{ background-position: 0 0; width: 32px; height: 32px; }
 .anonymous-32{ background-position: 0 -34px; width: 32px; height: 32px; }
 .captain-32{ background-position: 0 -68px; width: 32px; height: 32px; }
 .female-32{ background-position: 0 -102px; width: 32px; height: 32px; }
-.iCal-32-32{ background-position: 0 -136px; width: 32px; height: 32px; }
+.iCal-32{ background-position: 0 -136px; width: 32px; height: 32px; }
 .male-32{ background-position: 0 -170px; width: 32px; height: 32px; }
 .security-32{ background-position: 0 -204px; width: 32px; height: 32px; }
 .status-offline-32{ background-position: 0 -238px; width: 32px; height: 32px; }

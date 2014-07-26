@@ -53,6 +53,21 @@ a.resetPwd {
     background-size: contain;
 }
 
+.userBtn {
+    -webkit-box-shadow:rgba(87, 169, 0, 0.3) 1px 1px 0.2em;
+    -moz-box-shadow:rgba(87, 169, 0, 0.3) 1px 1px 0.2em;
+    box-shadow:rgba(87, 169, 0, 0.3) 1px 1px 0.2em;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border:none;
+    width: 44px !important;
+    height: 16px;
+    line-height: 16px;
+    display: inline-block;
+    background-position: center!important;
+}
+
 a.button {
     background-color: rgba(250, 250, 250, 0.2);
     background-repeat: no-repeat;
@@ -97,11 +112,17 @@ table.profile td {
     background: url(../images/info.png) no-repeat center center;
 }
 
-/* double ul.createSeason li a */
-.english {
-    background: url(../images/en-32.png) no-repeat center center;
-}
-
 .automatic:before {
     content: "auto";
+}
+
+.addUser {
+    display:inline-block;
+    vertical-align: middle;
+    width:32px;
+    height:32px;
+}
+
+.myButton {
+
 }

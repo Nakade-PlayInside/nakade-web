@@ -41,19 +41,19 @@ class UserController extends AbstractController
 
         /* @var $entityManager \Doctrine\ORM\EntityManager */
         $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-
         $repository = $entityManager->getRepository('User\Entity\User');
 
         $adapter = new DoctrineAdapter(new ORMPaginator($repository->createQueryBuilder('user')));
         $paginator = new Paginator($adapter);
-        $paginator->setDefaultItemCountPerPage(10);
+        $itemsPerPage = 10;
+        $paginator->setDefaultItemCountPerPage($itemsPerPage);
+        $paginator->setCurrentPageNumber($page);
 
-        if($page) $paginator->setCurrentPageNumber($page);
+        $offset = ($itemsPerPage * ($page -1));
 
-        $offset = (10 * ($page-1));
         return new ViewModel(
             array(
-              'users' => $this->getUserMapper()->getUserByPages($offset),
+              'users' => $this->getUserMapper()->getUserByPages($offset, $itemsPerPage),
               'paginator' =>   $paginator,
             )
         );
