@@ -12,7 +12,7 @@
     font-size: larger;
 }
 
-#myPagination .small {
+#myPagination .smaller {
     height: 16px;
     line-height: 16px;
     font-size: inherit;
@@ -42,7 +42,6 @@
     font-size: inherit;
     display: inherit;
     background-color: transparent;
-
 }
 
 #myPagination ul li a:hover {
