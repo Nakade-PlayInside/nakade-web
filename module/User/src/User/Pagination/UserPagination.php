@@ -1,72 +1,43 @@
 <?php
 namespace User\Pagination;
 
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use Zend\Paginator\Paginator;
-use Zend\Paginator\Adapter\ArrayAdapter;
-use League\Mapper\ResultMapper;
+use Doctrine\ORM\EntityManager;
 
-
+/**
+ * Class UserPagination
+ *
+ * @package User\Pagination
+ */
 class UserPagination
 {
     const ITEMS_PER_PAGE    = 10;
-    const PAGE_RANGE = 10;
-    private $repository;
+    private $paginator;
 
     /**
-     * @param ResultMapper $repository
+     * @param EntityManager $entityManager
      */
-    public function __construct(ResultMapper $repository)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->repository = $repository;
+        $repository = $entityManager->getRepository('User\Entity\User');
+
+        $ormPagination = new ORMPaginator($repository->createQueryBuilder('user'));
+        $adapter = new DoctrineAdapter($ormPagination);
+
+        $this->paginator = new Paginator($adapter);
+        $this->paginator->setDefaultItemCountPerPage(self::ITEMS_PER_PAGE);
     }
 
     /**
-     * @param int $id
-     * @param int $current
+     * @param int $page
      *
      * @return Paginator
      */
-    public function getPagination($id, $current)
+    public function getPagination($page)
     {
-        $pages = $this->getPages($id);
-        $adapter = $this->getArrayAdapter($pages);
-
-        $pagination = new Paginator($adapter);
-        $pagination
-            ->setCurrentPageNumber($current)
-            ->setItemCountPerPage(self::ITEMS_PER_PAGE)
-            ->setPageRange(self::PAGE_RANGE);
-
-        return $pagination;
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return array
-     */
-    private function getPages($id)
-    {
-        $noMatchDays = $this->getRepository()->getNoOfMatchDaysByLeague($id);
-        return range(1, $noMatchDays);
-    }
-
-    /**
-     * @param array $pages
-     *
-     * @return ArrayAdapter
-     */
-    private function getArrayAdapter(array $pages)
-    {
-        return new ArrayAdapter($pages);
-    }
-
-    /**
-     * @return ResultMapper
-     */
-    public function getRepository()
-    {
-        return $this->repository;
+        return $this->paginator->setCurrentPageNumber($page);
     }
 
 }

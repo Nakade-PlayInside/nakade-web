@@ -20,6 +20,7 @@ class UserFormService extends AbstractFormFactory
     const PASSWORD_FORM = 'password';
     const USER_FORM = 'user';
     const LANGUAGE_FORM = 'language';
+    const CONFIRM_FORM = 'confirm';
 
     private $fieldService;
     private $filterService;
@@ -103,9 +104,13 @@ class UserFormService extends AbstractFormFactory
                $form = new Form\UserForm($buttonService, $fieldService, $filterService);
                break;
 
-            case self::LANGUAGE_FORM:
-                $form = new Form\LanguageForm($buttonService, $fieldService, $filterService);
-                break;
+           case self::LANGUAGE_FORM:
+               $form = new Form\LanguageForm($buttonService, $fieldService, $filterService);
+               break;
+
+           case self::CONFIRM_FORM:
+               $form = new Form\ConfirmForm();
+               break;
 
            default:
                throw new \RuntimeException(
