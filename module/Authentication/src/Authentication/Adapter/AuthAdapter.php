@@ -1,7 +1,7 @@
 <?php
 namespace Authentication\Adapter;
 
-use Authentication\Password\PasswordGenerator;
+use Nakade\Generators\PasswordGenerator as PasswordService;
 use DoctrineModule\Authentication\Adapter\ObjectRepository;
 use Zend\Authentication\Adapter\Exception;
 use Zend\Authentication\Result as AuthenticationResult;
@@ -18,13 +18,16 @@ class AuthAdapter extends ObjectRepository
 
     private  $translator;
     private  $textDomain="Application";
+    private  $pwdService;
 
     /**
+     * @param PasswordService $pwdService
      * @param array $options
      */
-    public function __construct($options = array())
+    public function __construct(PasswordService $pwdService, $options = array())
     {
         parent::__construct($options);
+        $this->pwdService = $pwdService;
     }
 
     /**
@@ -37,7 +40,7 @@ class AuthAdapter extends ObjectRepository
      */
     public function setCredentialValue($credentialValue)
     {
-        $this->credentialValue = PasswordGenerator::encryptPassword($credentialValue);
+        $this->credentialValue = $this->getPasswordService()->encryptPassword($credentialValue);
         return $this;
     }
 
@@ -137,6 +140,24 @@ class AuthAdapter extends ObjectRepository
 
         return $this->createAuthenticationResult();
     }
+
+    /**
+     * @param PasswordService $pwdService
+     */
+    public function setPwdService($pwdService)
+    {
+        $this->pwdService = $pwdService;
+    }
+
+    /**
+     * @return PasswordService
+     */
+    public function getPasswordService()
+    {
+        return $this->pwdService;
+    }
+
+
 
     /**
      * @param \Zend\I18n\Translator\Translator $translator

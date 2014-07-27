@@ -1,5 +1,5 @@
 <?php
-namespace Authentication\Password;
+namespace Nakade\Generators;
 
 /**
  * Generator for randomized passwords. This passwords are not intended
@@ -12,15 +12,21 @@ namespace Authentication\Password;
  */
 class PasswordGenerator
 {
+    private $plainPassword;
+    private $length;
+
+    public function __construct($pwdLength=8)
+    {
+        $this->length = intval($pwdLength);
+    }
+
 
     /**
-     * generates a randomized password with 8 chars in length by default.
+     * generates a randomized and encrypted password
      *
-     * @param int $length optional password length
-     *
-     * @return string random password
+     * @return string
      */
-    public static function generatePassword($length=8)
+    public function generatePassword()
     {
 
         $letters = "abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+_!%&()=[]@" ;
@@ -28,13 +34,13 @@ class PasswordGenerator
         $base = str_shuffle($letters);
         srand((double) microtime()*1000000);
 
-        for ($i=0; $i<$length; $i++) {
+        for ($i=0; $i < $this->getLength(); $i++) {
 
             $index = rand(0, strlen($base)-1);
             $password .= $base[$index];
         }
 
-        return $password;
+        return $this->encryptPassword($password);
     }
 
     /**
@@ -42,10 +48,29 @@ class PasswordGenerator
      *
      * @return string
      */
-    public static function encryptPassword($password)
+    public function encryptPassword($password)
     {
+        $this->plainPassword = $password;
+
         //todo: password hashing and using crypt
         return md5($password);
     }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLength()
+    {
+        return $this->length;
+    }
+
 }
 

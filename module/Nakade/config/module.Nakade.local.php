@@ -14,5 +14,7 @@ return array(
                 ),
             ),
         ),
+
+        'pwdLength' => 12,
     )
 );

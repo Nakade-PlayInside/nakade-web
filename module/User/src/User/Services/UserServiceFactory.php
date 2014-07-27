@@ -123,51 +123,7 @@ class UserServiceFactory extends AbstractService
 
     }
 
-    /**
-     * Reset the password of a user. The new generated password
-     * is send to the user by email and needs to be verified.
-     *
-     * @param array $data
-     *
-     * @throws RuntimeException
-     *
-     * @return true;
-     */
-    public function resetPassword(array $data)
-    {
-         $key = 'uid';
-         if (!array_key_exists($key, $data)) {
-             throw new RuntimeException(
-                 __METHOD__ . ' expects an array key: ' . $key
-             );
-         }
 
-        /* @var $user User */
-         $user = $this->getMapper('user')->getUserById($data[$key]);
-
-         if (null === $user) {
-             throw new RuntimeException(
-                 sprintf("User with id:%s not found", $data[$key])
-             );
-         }
-
-         $data['pwdChange'] = new \DateTime();
-
-         $this->prepareData($data);
-         $user->populate($data);
-         $this->getMapper('user')->save($user);
-
-         $mailData = array_merge($data, $user->getArrayCopy());
-
-        //send verify mail to user
-        /* @var $mail \User\Mail\UserMail */
-         $mail = $this->getMailFactory()->getMail('password');
-         $mail->setData($mailData);
-         $mail->setRecipient($user->getEmail(), $user->getName());
-         $mail->send();
-         return true;
-
-    }
 
 
 }

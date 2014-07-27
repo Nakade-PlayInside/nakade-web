@@ -12,7 +12,7 @@
 namespace User\Controller;
 
 use Authentication\Password\PasswordGenerator;
-use User\Business\VerifyStringGenerator;
+use User\Verification\VerifyStringGenerator;
 use User\Entity\User;
 use User\Pagination\UserPagination;
 use User\Services\UserFormService;
@@ -26,6 +26,7 @@ use User\Services\RepositoryService;
  */
 class UserController extends AbstractController
 {
+    private $passwordService;
 
     /**
      * shows all users for adding and editing
@@ -97,8 +98,8 @@ class UserController extends AbstractController
                 //todo: refactor mailService
                 $user = $form->getData();
                 $verifyString = VerifyStringGenerator::generateVerifyString();
-                $password = PasswordGenerator::generatePassword(12);
-                $encryptPwd = PasswordGenerator::encryptPassword($password);
+                $password = $this->getPasswordService()->generatePassword();
+                $pwdPlain = $this->getPasswordService()->getPlainPassword();
 
                 $uri       = $request->getUri();
                 $verifyUrl = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
@@ -111,7 +112,7 @@ class UserController extends AbstractController
                 $dueDate = $dueDate->modify($dueTime);
 
                 $user->setVerifyString($verifyString);
-                $user->setPassword($encryptPwd);
+                $user->setPassword($password);
                 $user->setDue($dueDate);
 
                 var_dump($user);die;
@@ -291,5 +292,20 @@ class UserController extends AbstractController
         return $repo->getMapper(RepositoryService::USER_MAPPER);
     }
 
+    /**
+     * @param mixed $passwordService
+     */
+    public function setPasswordService($passwordService)
+    {
+        $this->passwordService = $passwordService;
+    }
+
+    /**
+     * @return \Nakade\Generators\PasswordGenerator
+     */
+    public function getPasswordService()
+    {
+        return $this->passwordService;
+    }
 
 }

@@ -21,7 +21,7 @@ class AuthController extends AbstractController
 
         //if already login, redirect to success page
        if ($this->getService()->hasIdentity()) {
-           return $this->redirect()->toRoute('success');
+           return $this->redirect()->toRoute('dashboard');
        }
 
        /* @var $form \Authentication\Form\AuthForm */
@@ -116,7 +116,7 @@ class AuthController extends AbstractController
         //clears session and destroys cookie
         $this->getService()->clearIdentity();
 
-        $this->flashmessenger()->addMessage("You've been logged out");
+        $this->flashmessenger()->addSuccessMessage("You have been logged out");
         return $this->redirect()->toRoute('login');
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace User\Verification;
+namespace Nakade\Generators;
 
 /**
  * Generator for randomized verification strings used for email validation.
@@ -11,27 +11,41 @@ namespace User\Verification;
  */
 class VerifyStringGenerator
 {
+    private $length;
+
+    public function __construct($strLength=16)
+    {
+        $this->length = intval($strLength);
+    }
 
     /**
      * generates a randomized verify String.
      *
-     * @param int $length optional string length
-     *
-     * @return string random verify string
+     * @return string
      */
-    public static function generateVerifyString($length=16)
+    public function generateVerifyString()
     {
 
         $letters = "abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@";
         $verifyString = "";
         $base = str_shuffle($letters);
 
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $this->getLength(); $i++) {
             $index = mt_rand(0, strlen($base)-1);
             $verifyString .= $base[$index];
         }
 
         return $verifyString;
     }
+
+    /**
+     * @return int
+     */
+    public function getLength()
+    {
+        return $this->length;
+    }
+
+
 
 }

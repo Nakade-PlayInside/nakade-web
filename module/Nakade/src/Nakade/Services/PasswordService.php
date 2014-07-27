@@ -2,17 +2,16 @@
 
 namespace Nakade\Services;
 
-use Zend\Captcha\Factory as CaptchaFactory;
+use Nakade\Generators\PasswordGenerator;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\ArrayUtils;
 
 /**
- * Class NakadeCaptchaFactory
+ * Class PasswordService
  *
  * @package Nakade\Services
  */
-class NakadeCaptchaFactory implements FactoryInterface
+class PasswordService implements FactoryInterface
 {
 
     /**
@@ -22,11 +21,13 @@ class NakadeCaptchaFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $services)
     {
-        $spec = array('class'   => 'dumb');
+
         $config  = $services->get('config');
-        if ($config['Nakade']['captcha']) {
-            $spec    = $config['Nakade']['captcha'];
-        }
-        return CaptchaFactory::factory($spec);
+
+        //text domain
+        $length = isset($config['Nakade']['pwdLength']) ?
+            $config['Nakade']['pwdLength'] : 8;
+
+        return new PasswordGenerator($length);
     }
 }

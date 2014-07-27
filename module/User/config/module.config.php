@@ -152,6 +152,8 @@ return array(
                 'User\Services\UserFieldService',
             'User\Services\UserFilterService'=>
                 'User\Services\UserFilterService',
+            'User\Services\MailService'=>
+                'User\Services\MailService',
             'translator'  => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

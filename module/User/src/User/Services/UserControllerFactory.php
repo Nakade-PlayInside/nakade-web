@@ -27,11 +27,15 @@ class UserControllerFactory implements FactoryInterface
         $factory    = $serviceManager->get('User\Services\UserFormService');
         $service    = $serviceManager->get('User\Services\UserService');
         $repository  = $serviceManager->get('User\Services\RepositoryService');
+        $mail  = $serviceManager->get('User\Services\MailService');
+        $pwdService  = $serviceManager->get('Nakade\Services\PasswordService');
 
         $controller = new UserController();
         $controller->setService($service);
         $controller->setFormFactory($factory);
         $controller->setRepository($repository);
+        $controller->setMailService($mail);
+        $controller->setPasswordService($pwdService);
 
         return $controller;
     }

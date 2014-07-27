@@ -11,5 +11,7 @@ return array(
                     'privkey' => '6Lcc-9kSAAAAAHQ3sXqzQGLQ1ujIsWj5u_rrdr5B',
             ),
         ),
+
+        'pwdLength' => 12,
     )
 );
