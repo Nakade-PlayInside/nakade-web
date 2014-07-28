@@ -26,6 +26,9 @@ abstract class UserMail extends NakadeMail
     {
         $this->mailService = $mailService;
         $this->transport = $transport;
+
+        //todo: url in all mail eby extending nakade mail
+        $this->url = 'http://'. $_SERVER['HTTP_HOST'];
     }
 
     /**
@@ -34,17 +37,6 @@ abstract class UserMail extends NakadeMail
     public function getUrl()
     {
         return $this->url;
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-        return $this;
     }
 
     /**
@@ -79,36 +71,13 @@ abstract class UserMail extends NakadeMail
         return $this->plainPwd;
     }
 
-    /**
-     * @param mixed $verifyUrl
-     */
-    public function setVerifyUrl($verifyUrl)
-    {
-        $this->verifyUrl = $verifyUrl;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVerifyUrl()
-    {
-        return $this->verifyUrl;
-    }
-
-    //todo verify link; no logic in this service!!!
-//$email          = $this->params()->fromQuery('email', null);
-//$verifyString   = $this->params()->fromQuery('verify', null);
-
-
-
-
     protected function makeReplacements(&$message)
     {
         $message = str_replace('%URL%', $this->getUrl(), $message);
 
         if (!is_null($this->getUser())) {
 
-            $link = sprintf('%s/verify?email=%s&verify=%s',
+            $link = sprintf('%s/register/verify?email=%s&verify=%s',
                 $this->getUrl(),
                 $this->getUser()->getEmail(),
                 $this->getUser()->getVerifyString()

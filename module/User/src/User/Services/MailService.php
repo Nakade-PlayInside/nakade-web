@@ -2,6 +2,7 @@
 
 namespace User\Services;
 
+use Nakade\MailServiceInterface;
 use User\Mail;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -11,7 +12,7 @@ use Nakade\Abstracts\AbstractTranslation;
  *
  * @package User\Services
  */
-class MailService extends AbstractTranslation implements FactoryInterface
+class MailService extends AbstractTranslation implements FactoryInterface, MailServiceInterface
 {
 
     const CREDENTIALS_MAIL = 'credentials';
@@ -21,7 +22,6 @@ class MailService extends AbstractTranslation implements FactoryInterface
     private $transport;
     private $message;
     private $signature;
-    private $url='http://www.nakade.de';
 
     /**
      * @param ServiceLocatorInterface $services
@@ -56,13 +56,8 @@ class MailService extends AbstractTranslation implements FactoryInterface
         $config  = $services->get('config');
 
         //text domain
-        $textDomain = isset($config['League']['text_domain']) ?
-            $config['League']['text_domain'] : null;
-
-        //url
-        if (isset($config['League']['url'])) {
-            $this->url =  $config['League']['url'];
-        }
+        $textDomain = isset($config['User']['text_domain']) ?
+            $config['User']['text_domain'] : null;
 
 
         $translator = $services->get('translator');
@@ -106,7 +101,6 @@ class MailService extends AbstractTranslation implements FactoryInterface
         $mail->setTranslator($this->getTranslator());
         $mail->setTranslatorTextDomain($this->getTranslatorTextDomain());
         $mail->setSignature($this->getSignature());
-        $mail->setUrl($this->getUrl());
         return $mail;
     }
 
@@ -134,14 +128,5 @@ class MailService extends AbstractTranslation implements FactoryInterface
     {
         return $this->transport;
     }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
 
 }

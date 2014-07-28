@@ -1,6 +1,7 @@
 <?php
 namespace User\Services;
 
+use Nakade\RepositoryServiceInterface;
 use User\Mapper\UserMapper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -11,7 +12,7 @@ use \Doctrine\ORM\EntityManager;
  *
  * @package User\Services
  */
-class RepositoryService implements FactoryInterface
+class RepositoryService implements FactoryInterface, RepositoryServiceInterface
 {
 
     const USER_MAPPER = 'user';

@@ -1,0 +1,11 @@
+<?php
+// module/user/view/user/user/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('User');
+$title = $this->translate('Data Transmission Error');
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p class="userMsg">
+    <?php echo $this->translate("Expected data not found.") ; ?><br/>
+    <?php echo $this->translate("Hint: Use the link provided in your email.") ; ?>
+</p>

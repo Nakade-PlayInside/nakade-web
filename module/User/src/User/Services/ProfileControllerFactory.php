@@ -27,12 +27,14 @@ class ProfileControllerFactory implements FactoryInterface
         $factory  = $serviceManager->get('User\Services\UserFormService');
         $repository  = $serviceManager->get('User\Services\RepositoryService');
         $service = $serviceManager->get('Zend\Authentication\AuthenticationService');
+        $mail  = $serviceManager->get('User\Services\MailService');
 
         $controller  = new ProfileController();
 
         $controller->setRepository($repository);
         $controller->setService($service);
         $controller->setFormFactory($factory);
+        $controller->setMailService($mail);
 
 
         return $controller;

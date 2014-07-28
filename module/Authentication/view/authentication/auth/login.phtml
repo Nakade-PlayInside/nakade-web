@@ -14,7 +14,10 @@ $form->prepare();
 echo $this->form()->openTag($form);
 echo $this->formCollection($form);
 echo $this->form()->closeTag();
-
+?>
+<a href="<?php echo $this->url('register',
+    array('action' => 'forgot'));?>"><?php echo $this->translate("Zugangsdaten vergessen?");?></a>
+<?php
 if ($this->messages) {
     echo '<ul>';
     foreach ($this->messages as $message) {

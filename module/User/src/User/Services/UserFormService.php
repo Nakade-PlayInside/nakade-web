@@ -21,6 +21,7 @@ class UserFormService extends AbstractFormFactory
     const USER_FORM = 'user';
     const LANGUAGE_FORM = 'language';
     const CONFIRM_FORM = 'confirm';
+    const REGISTER_CLOSED_BETA_FORM = 'register_closed_beta';
 
     private $fieldService;
     private $filterService;
@@ -86,6 +87,7 @@ class UserFormService extends AbstractFormFactory
 
            case self::FORGOT_PASSWORD_FORM:
                $form = new Form\ForgotPasswordForm($buttonService, $fieldService, $filterService);
+               $form->init();
                break;
 
            case self::KGS_FORM:
@@ -111,6 +113,10 @@ class UserFormService extends AbstractFormFactory
            case self::CONFIRM_FORM:
                $form = new Form\ConfirmForm();
                break;
+
+           case self::REGISTER_CLOSED_BETA_FORM:
+                $form = new Form\RegisterClosedBetaForm($buttonService, $fieldService, $filterService);
+                break;
 
            default:
                throw new \RuntimeException(

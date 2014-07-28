@@ -1,0 +1,11 @@
+<?php
+// module/user/view/user/user/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('User');
+$title = $this->translate('Account Updated');
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p class="userMsg">
+    <?php echo $this->translate("You can now sign in using your credentials."); ?>
+</p>
+

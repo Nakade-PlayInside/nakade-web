@@ -2,6 +2,7 @@
 namespace User\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
+use \User\Entity\User;
 
 /**
  * Requesting database using doctrine
@@ -11,22 +12,23 @@ use Nakade\Abstracts\AbstractMapper;
 class UserMapper extends AbstractMapper
 {
 
-   /**
+    /**
      * Get all registered User
      *
      * @return array User\Entity\User
      */
     public function getAllUser()
     {
-       return $this->getEntityManager()
-                   ->getRepository('User\Entity\User')
-                   ->findAll();
+        return $this->getEntityManager()
+            ->getRepository('User\Entity\User')
+            ->findAll();
     }
 
     /**
-     * Get all registered User
+     * @param int $offset
+     * @param int $max
      *
-     * @return array User\Entity\User
+     * @return array
      */
     public function getUserByPages($offset, $max=10)
     {
@@ -41,71 +43,50 @@ class UserMapper extends AbstractMapper
     }
 
     /**
-     * Get User by its email and verifystring if due date
-     * is not expired
+     * get User by its email and verify string
      *
      * @param string $email
      * @param string $verifyString
      *
-     * @return \User\Entity\User
+     * @return User
      */
-    public function getActivateUser($email, $verifyString)
+    public function getUserByEmailAndVerifyString($email, $verifyString)
     {
 
-      $dql = "SELECT u as user FROM User\Entity\User u
-              WHERE u.email=:email AND u.verifyString=:code
-              AND u.due > :today";
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('User')
+            ->select('u')
+            ->from('User\Entity\User', 'u')
+            ->where('u.email = :email')
+            ->andWhere('u.verifyString = :verifyString')
+            ->setParameter('email', $email)
+            ->setParameter('verifyString', $verifyString);
 
-      $result = $this->getEntityManager()
-                     ->createQuery($dql)
-                     ->setParameter('email', $email)
-                     ->setParameter('code', $verifyString)
-                     ->setParameter('today', new \DateTime())
-                     ->getOneOrNullResult();
-
-      return $result['user'];
-
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
      * @param int $uid
      *
-     * @return \User\Entity\User
+     * @return User
      */
     public function getUserById($uid)
     {
-       $dql = "SELECT u as user
-               FROM User\Entity\User u
-               WHERE u.id=:uid";
-
-      $result = $this->getEntityManager()
-                     ->createQuery($dql)
-                     ->setParameter('uid', $uid)
-                     ->getOneOrNullResult();
-
-      return $result['user'];
-
+        return $this->getEntityManager()
+            ->getRepository('User\Entity\User')
+            ->find($uid);
     }
 
     /**
-     * Get User by its email
-     *
      * @param string $email
      *
-     * @return \User\Entity\User $user|null
+     * @return User
      */
     public function getUserByEmail($email)
     {
-       $dql = "SELECT u as user
-               FROM User\Entity\User u
-               WHERE u.email=:email";
 
-      $result = $this->getEntityManager()
-                     ->createQuery($dql)
-                     ->setParameter('email', $email)
-                     ->getOneOrNullResult();
-
-      return $result['user'];
-
+        return $this->getEntityManager()
+            ->getRepository('User\Entity\User')
+            ->findOneBy(array('email' => $email));
     }
 }

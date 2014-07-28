@@ -36,8 +36,8 @@ return array(
                      'User\Services\ProfileControllerFactory',
             'User\Controller\Forgot' =>
                      'User\Services\ForgotControllerFactory',
-            'User\Controller\Verify' =>
-                     'User\Services\VerifyControllerFactory',
+            'User\Controller\Registration' =>
+                     'User\Services\RegistrationControllerFactory',
 
         ),
     ),
@@ -93,16 +93,16 @@ return array(
                 ),
             ),
             //VERFIFY EMAIL
-            'verify' => array(
+            'register' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/verify[/:action][/:id]',
+                    'route'    => '/register[/:action][/:id]',
                     'constraints' => array(
                         'action' =>  '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'User\Controller\Verify',
+                        'controller' => 'User\Controller\Registration',
                         'action'     => 'index',
                     ),
                 ),
@@ -132,18 +132,6 @@ return array(
 
     'service_manager' => array(
         'factories' => array(
-            'MailMessage'   =>
-                    'Mail\Service\MailMessageFactory',
-            'MailTransport' =>
-                    'Mail\Service\MailTransportFactory',
-            'User\Factory\UserMailFactory'    =>
-                    'User\Factory\UserMailFactory',
-            'User\Factory\MapperFactory'  =>
-                    'User\Factory\MapperFactory',
-            'User\Factory\FormFactory'  =>
-                    'User\Factory\FormFactory',
-            'User\Services\UserService'    =>
-                    'User\Services\UserServiceFactory',
             'User\Services\UserFormService'    =>
                 'User\Services\UserFormService',
             'User\Services\RepositoryService'=>

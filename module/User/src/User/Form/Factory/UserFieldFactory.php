@@ -119,9 +119,9 @@ class UserFieldFactory extends AbstractTranslation
 
             case self::FIELD_FIRST_NAME :
                 $field = array(
-                        'name' => self::FIELD_FIRST_NAME,
-                        'type' => 'Zend\Form\Element\Text',
-                        'options' => array('label' =>  $this->translate('First Name') . ':')
+                    'name' => self::FIELD_FIRST_NAME,
+                    'type' => 'Zend\Form\Element\Text',
+                    'options' => array('label' =>  $this->translate('First Name') . ':')
                 );
                 break;
 
@@ -154,6 +154,14 @@ class UserFieldFactory extends AbstractTranslation
                     'name' => self::FIELD_PWD_REPEAT,
                     'type' => 'Zend\Form\Element\Password',
                     'options' => array('label' =>  $this->translate('repeat new password') . ':')
+                );
+                break;
+
+            case self::FIELD_CODE :
+                $field = array(
+                    'name' => self::FIELD_CODE,
+                    'type' => 'Zend\Form\Element\Text',
+                    'options' => array('label' =>  $this->translate('Coupon Code') . ':'),
                 );
                 break;
         }

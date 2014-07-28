@@ -1,6 +1,7 @@
 <?php
 namespace User\Controller;
 
+use User\Services\MailService;
 use User\Services\RepositoryService;
 use User\Services\UserFormService;
 use Zend\Form\Form;
@@ -162,15 +163,20 @@ class ProfileController extends AbstractController
 
                 /* @var $user \User\Entity\User */
                 $user = $form->getData();
-
-                $date = new \DateTime();
-                $user->setEdit($date);
-
                 $this->getUserMapper()->save($user);
 
                 //updating actual language
                 $profile = $this->identity();
                 $profile->setLanguage($user->getLanguage());
+
+                //email form contains hidden field used for hydration
+                if (isset($postData['isNewEmail'])) {
+
+                    /* @var $mail \User\Mail\VerifyMail */
+                    $mail = $this->getMailService()->getMail(MailService::VERIFY_MAIL);
+                    $mail->setUser($user);
+                    $mail->sendMail($user);
+                }
 
                 $this->flashMessenger()->addSuccessMessage('Profile updated');
                 return $this->redirect()->toRoute('profile');

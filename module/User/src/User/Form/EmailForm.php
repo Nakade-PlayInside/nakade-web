@@ -18,6 +18,17 @@ class EmailForm extends BaseForm
     public function init()
     {
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_EMAIL));
+
+        $this->add(
+            array(
+                'name' => 'isNewEmail',
+                'type'  => 'Zend\Form\Element\Hidden',
+                'attributes' => array(
+                    'value' => true
+                )
+            )
+        );
+
         $this->add($this->getButtonFieldSet());
     }
 

@@ -18,6 +18,7 @@ interface UserFieldInterface
     const FIELD_TITLE = 'title';
     const FIELD_PWD = 'password';
     const FIELD_PWD_REPEAT = 'repeat';
+    const FIELD_CODE = 'code';
 
 
 }

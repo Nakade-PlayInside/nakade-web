@@ -15,67 +15,16 @@ class User extends UserModel implements UserInterface, RoleInterface
 {
 
     /**
-     * Sets the Title.
-     * If empty string, null is set
-     *
-     * @param string $title
-     *
-     * @return User
-     */
-    public function setTitle($title)
-    {
-        $temp = empty($title)? null:$title;
-        $this->title = $temp;
-        return $this;
-    }
-
-    /**
-     * Sets the Nick Name.
-     * if empty string, null is set
-     *
-     * @param string $nickname
-     *
-     * @return User
-     */
-    public function setNickname($nickname)
-    {
-        $temp = empty($nickname)? null:$nickname;
-        $this->nickname = $temp;
-        return $this;
-    }
-
-
-    /**
-     * Sets the birthday.
-     * Converts to DateTime if string is provided
-     *
-     * @param \DateTime|string $datetime
-     *
-     * @return User
-     */
-    public function setBirthday($datetime)
-    {
-        $temp = empty($datetime)? null : $datetime;
-        if (is_string($temp)) {
-            $temp = new \DateTime($temp);
-        }
-        $this->birthday = $temp;
-        return $this;
-    }
-
-    /**
      * returns true if dueDate is not expired
      *
      * @return boolean
      */
     public function isDue()
     {
-        $expired = $this->getDue();
-        if ($expired===null) {
+        if (is_null($this->getDue())) {
             return false;
         }
-
-        return $expired > new \DateTime();
+        return $this->getDue() > new \DateTime();
     }
 
     /**
@@ -153,6 +102,7 @@ class User extends UserModel implements UserInterface, RoleInterface
 
     public function populate($data)
     {
+        //todo: needed anymore?
         foreach ($data as $key => $value) {
             $method = 'set'.ucfirst($key);
             if (method_exists($this, $method)) {
@@ -162,10 +112,6 @@ class User extends UserModel implements UserInterface, RoleInterface
     }
 
     /**
-     * usage for creating a NEW user. Provide all neccessary values
-     * in an array. Verified, active flag and created date are
-     * generated automatically.
-     *
      * @param array $data
      */
     public function exchangeArray($data)

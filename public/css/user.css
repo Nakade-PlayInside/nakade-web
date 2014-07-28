@@ -123,6 +123,7 @@ table.profile td {
     height:32px;
 }
 
-.myButton {
-
+.userMsg {
+    font-size:larger;
+    margin: 10px 0;
 }

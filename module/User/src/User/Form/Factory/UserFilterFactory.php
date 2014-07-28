@@ -210,6 +210,25 @@ class UserFilterFactory extends AbstractTranslation  implements UserFieldInterfa
                 );
                 break;
 
+            case self::FIELD_CODE :
+                $filter = array(
+                    'name' => self::FIELD_CODE,
+                    'required' => true,
+                    'allowEmpty' => false,
+                    'filters' => $this->getStripFilter(),
+                    'validators'=> array(
+                        array(
+                            'name' => 'StringLength',
+                            'options' => array (
+                                'encoding' => 'UTF-8',
+                                'max' => 50
+                            )
+                        ),
+                        //todo: validate code against database
+                    )
+                );
+                break;
+
         }
 
         return $filter;

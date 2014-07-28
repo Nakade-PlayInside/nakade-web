@@ -1,0 +1,60 @@
+<?php
+namespace User\Form;
+
+use Permission\Entity\RoleInterface;
+use \Zend\InputFilter\InputFilter;
+
+/**
+ * Class RegisterClosedBetaForm
+ *
+ * @package User\Form
+ */
+class RegisterClosedBetaForm extends BaseForm implements RoleInterface
+{
+
+    /**
+     * Init the form. It is neccessary to call this function
+     * before using the form.
+     */
+    public function init()
+    {
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_SEX));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_FIRST_NAME));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_LAST_NAME));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_USERNAME));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_EMAIL));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_CODE));
+
+        $this->add($this->getButtonFieldSet());
+    }
+
+    /**
+     * get the InputFilter
+     *
+     * @return \Zend\InputFilter\InputFilter
+     */
+    public function getFilter()
+    {
+        $filter = new InputFilter();
+
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_FIRST_NAME));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_LAST_NAME));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_EMAIL));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_USERNAME));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_CODE));
+
+        return $filter;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'UserForm';
+    }
+
+
+}
+

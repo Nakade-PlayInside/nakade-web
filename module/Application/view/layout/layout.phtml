@@ -155,7 +155,9 @@
                     </div><!--/.nav-collapse -->
                 </div>
             </div>
-            <?php echo $this->flashMessenger()->render('success'); ?>
+
+            <?php //todo: flashMessenger renders not after redirecting
+                echo $this->flashMessenger()->render('success'); ?>
             <?php echo $this->flashMessenger()->render('error'); ?>
         </div>
         <div class="container">

@@ -1,6 +1,7 @@
 <?php
 namespace Nakade\Abstracts;
 
+use Nakade\MailServiceInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\I18n\Translator\Translator;
@@ -86,7 +87,7 @@ class AbstractController extends AbstractActionController
     }
 
     /**
-     * @return FactoryInterface
+     * @return \Nakade\RepositoryServiceInterface
      */
     public function getRepository()
     {
@@ -124,7 +125,7 @@ class AbstractController extends AbstractActionController
     }
 
     /**
-     * @return FactoryInterface
+     * @return MailServiceInterface
      */
     public function getMailService()
     {

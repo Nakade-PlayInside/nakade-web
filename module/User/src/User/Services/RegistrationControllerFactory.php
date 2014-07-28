@@ -2,37 +2,36 @@
 
 namespace User\Services;
 
-use User\Controller\UserController;
+use User\Controller\RegistrationController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class UserControllerFactory
+ * Class RegistrationControllerFactory
  *
  * @package User\Services
  */
-class UserControllerFactory implements FactoryInterface
+class RegistrationControllerFactory implements FactoryInterface
 {
 
     /**
      * @param ServiceLocatorInterface $services
      *
-     * @return mixed|UserController
+     * @return mixed|RegistrationController
      */
     public function createService(ServiceLocatorInterface $services)
     {
 
         $serviceManager = $services->getServiceLocator();
-
-        $factory    = $serviceManager->get('User\Services\UserFormService');
         $repository  = $serviceManager->get('User\Services\RepositoryService');
         $mail  = $serviceManager->get('User\Services\MailService');
+        $form  = $serviceManager->get('User\Services\UserFormService');
         $pwdService  = $serviceManager->get('Nakade\Services\PasswordService');
 
-        $controller = new UserController();
-        $controller->setFormFactory($factory);
+        $controller  = new RegistrationController();
         $controller->setRepository($repository);
         $controller->setMailService($mail);
+        $controller->setFormFactory($form);
         $controller->setPasswordService($pwdService);
 
         return $controller;

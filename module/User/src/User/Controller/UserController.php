@@ -1,18 +1,7 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for
- * the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc.
- * (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 namespace User\Controller;
 
-use Authentication\Password\PasswordGenerator;
-use User\Verification\VerifyStringGenerator;
+use User\Services\MailService;
 use User\Entity\User;
 use User\Pagination\UserPagination;
 use User\Services\UserFormService;
@@ -21,8 +10,9 @@ use Nakade\Abstracts\AbstractController;
 use User\Services\RepositoryService;
 
 /**
- * Adminstrative user action for adding a new user, edit and resetting pwd.
+ * Class UserController
  *
+ * @package User\Controller
  */
 class UserController extends AbstractController
 {
@@ -94,38 +84,19 @@ class UserController extends AbstractController
 
             if ($form->isValid()) {
 
-                //todo: proof isActive, isVerified, isAnonymous
-                //todo: refactor mailService
                 $user = $form->getData();
-                $verifyString = VerifyStringGenerator::generateVerifyString();
                 $password = $this->getPasswordService()->generatePassword();
+                $user->setPassword($password);
                 $pwdPlain = $this->getPasswordService()->getPlainPassword();
 
-                $uri       = $request->getUri();
-                $verifyUrl = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
-
-                $now  = new \DateTime();
-                $user->setCreated($now);
-
-                $dueTime  = sprintf('+ %s hour', 72);
-                $dueDate = clone $now;
-                $dueDate = $dueDate->modify($dueTime);
-
-                $user->setVerifyString($verifyString);
-                $user->setPassword($password);
-                $user->setDue($dueDate);
-
-                var_dump($user);die;
+                /* @var $mail \User\Mail\RegistrationMail */
+                $mail = $this->getMailService()->getMail(MailService::REGISTRATION_MAIL);
+                $mail->setUser($user);
+                $mail->setPlainPwd($pwdPlain);
+                $mail->sendMail($user);
 
                 $this->getUserMapper()->save($user);
-                $this->flashMessenger()->addMessage('New user added');
-
-                /* @var $mail \User\Mail\UserMail */
-                $mail = $this->getMailFactory()->getMail('verify');
-                $mail->setData($user);
-                $mail->setRecipient($user->getEmail(), $user->getName());
-
-                $mail->send();
+                $this->flashMessenger()->addSuccessMessage('New user added');
 
                 return $this->redirect()->toRoute('user');
             }
@@ -170,10 +141,7 @@ class UserController extends AbstractController
             if ($form->isValid()) {
 
                 $user = $form->getData();
-                $date = new \DateTime();
-                $user->setEdit($date);
                 $this->getUserMapper()->save($user);
-
                 $this->flashMessenger()->addSuccessMessage('User updated');
 
                 return $this->redirect()->toRoute('user');
@@ -260,16 +228,20 @@ class UserController extends AbstractController
             }
             if (isset($postData['submit'])) {
 
+                $password = $this->getPasswordService()->generatePassword();
+                $user->setPassword($password);
+                $pwdPlain = $this->getPasswordService()->getPlainPassword();
                 $date = new \DateTime();
                 $user->setPwdChange($date);
-                $password = PasswordGenerator::generatePassword(12);
-                $encryptPwd = PasswordGenerator::encryptPassword($password);
-                $user->setPassword($encryptPwd);
-
                 $this->getUserMapper()->save($user);
-                $this->flashMessenger()->addSuccessMessage('User updated');
 
-                //todo: mail with new pwd
+                /* @var $mail \User\Mail\CredentialsMail */
+                $mail = $this->getMailService()->getMail(MailService::CREDENTIALS_MAIL);
+                $mail->setUser($user);
+                $mail->setPlainPwd($pwdPlain);
+                $mail->sendMail($user);
+                $this->flashMessenger()->addSuccessMessage('Password Reset');
+
                 return $this->redirect()->toRoute('user');
             }
         }

@@ -2,6 +2,7 @@
 namespace User\Form\Hydrator;
 
 use Permission\Entity\RoleInterface;
+use User\Entity\User;
 use User\Form\Factory\LanguageInterface;
 use User\Form\Factory\SexInterface;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
@@ -42,6 +43,8 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
             $sex = $object->getSex();
         }
 
+        //todo: if new user-> id=null
+        //todo: due date, verifyString, created
 
         return array(
             'anonymous'=> $object->isAnonymous(),
@@ -147,7 +150,35 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
             $object->setRole($data['role']);
         }
 
+        $now  = new \DateTime();
+
+        // add new user: created, due Date, verifyString
+        if (is_null($object->getId())) {
+            $object->setCreated($now);
+            $this->setVerification($object);
+        } else {
+            $object->setEdit($now);
+        }
+
+        //new email by profile editing
+        if (isset($data['isNewEmail'])) {
+            $this->setVerification($object);
+        }
+
         return $object;
+    }
+
+    private function setVerification(User &$user)
+    {
+        $dueDate  = new \DateTime();
+        $dueDate = $dueDate->modify('+ 72 hour');
+        $user->setDue($dueDate);
+
+        //random string
+        $verifyString = md5(uniqid(rand(), true));
+        $user->setVerifyString($verifyString);
+
+        $user->setVerified(false);
     }
 
 }
