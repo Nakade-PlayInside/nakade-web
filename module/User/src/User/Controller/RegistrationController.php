@@ -198,6 +198,20 @@ class RegistrationController extends AbstractController
         );
     }
 
+    /**
+     * widget for user registration
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function showAction()
+    {
+
+        return new ViewModel(
+            array()
+        );
+    }
+
+
 
     /**
      * @return \Zend\View\Model\ViewModel

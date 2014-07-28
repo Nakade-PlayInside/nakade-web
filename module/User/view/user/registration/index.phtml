@@ -1,11 +1,14 @@
 <?php
-// module/user/view/user/user/index.phtml:
 $this->plugin('translate')->setTranslatorTextDomain('User');
 $title = $this->translate('Closed Beta Registration');
 $this->headTitle($title);
 ?>
-    <h1><?php echo $this->escapeHtml($title); ?></h1>
-
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+<?php echo $this->translate("You need a coupon code to register."); ?><br/>
+<?php echo $this->translate("For league matches, a KGS account is mandatory."); ?>
+</p>
+<hr/>
 <?php
 $this->form->prepare();
 echo $this->form()->openTag($this->form);

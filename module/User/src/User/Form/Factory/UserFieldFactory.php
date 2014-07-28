@@ -25,7 +25,7 @@ class UserFieldFactory extends AbstractTranslation
                 $field = array(
                     'name' => self::FIELD_KGS,
                     'type' => 'Zend\Form\Element\Text',
-                    'options' => array('label' =>  $this->translate('KGS (opt.)') . ':',)
+                    'options' => array('label' =>  $this->translate('KGS Name (opt.)') . ':',)
                 );
                 break;
 

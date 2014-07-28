@@ -224,7 +224,6 @@ class UserFilterFactory extends AbstractTranslation  implements UserFieldInterfa
                                 'max' => 50
                             )
                         ),
-                        //todo: validate code against database
                     )
                 );
                 break;
