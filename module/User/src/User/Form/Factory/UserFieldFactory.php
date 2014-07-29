@@ -164,6 +164,20 @@ class UserFieldFactory extends AbstractTranslation
                     'options' => array('label' =>  $this->translate('Coupon Code') . ':'),
                 );
                 break;
+
+            case self::FIELD_AGREEMENT :
+                $field = array(
+                    'name' => self::FIELD_AGREEMENT,
+                    'type' => 'Zend\Form\Element\Checkbox',
+                    'options' => array(
+                        'label' => 'I agree to all terms and conditions',
+                        'use_hidden_element' => true,
+                        'checked_value' => 1,
+                        'unchecked_value' => 'no'
+                    ),
+                    'attributes' => array('class' => 'checkbox'),
+                );
+                break;
         }
 
         return $field;

@@ -4,6 +4,7 @@ namespace User\Form\Factory;
 use Nakade\Abstracts\AbstractTranslation;
 use \Doctrine\ORM\EntityManager;
 use User\Entity\User;
+use Zend\Validator\Digits;
 
 class UserFilterFactory extends AbstractTranslation  implements UserFieldInterface
 {
@@ -225,6 +226,24 @@ class UserFilterFactory extends AbstractTranslation  implements UserFieldInterfa
                             )
                         ),
                     )
+                );
+                break;
+
+            case self::FIELD_AGREEMENT :
+                $filter = array(
+                    'name' => self::FIELD_AGREEMENT,
+                    'required' => true,
+                    'validators' => array(
+                        array(
+                            'name' => 'Digits',
+                            'break_chain_on_failure' => true,
+                            'options' => array(
+                                'messages' => array(
+                                    Digits::NOT_DIGITS => 'You must agree to the terms of use.',
+                                ),
+                            ),
+                        ),
+                    ),
                 );
                 break;
 

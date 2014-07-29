@@ -12,6 +12,7 @@
 namespace Application\Controller;
 
 use Message\Mapper\MessageMapper;
+use Zend\Form\Element\DateTime;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -45,12 +46,21 @@ class IndexController extends AbstractActionController
             array('action' => 'showRules')
         );
 
+        $registerWidget = $this->forward()->dispatch('/User/Controller/Registration',
+            array('action' => 'show')
+        );
+
         $page = new ViewModel(array( 'No' => "5"));
 
         $page->addChild($blogWidget, 'blogWidget');
         $page->addChild($tableWidget, 'tableWidget');
         $page->addChild($resultWidget, 'resultWidget');
         $page->addChild($rulesWidget, 'rulesWidget');
+
+        //open beta until end of year
+        if (date('c') < date('c', strtotime('12/31/2014'))) {
+            $page->addChild($registerWidget, 'registerWidget');
+        }
 
 
         return $page;

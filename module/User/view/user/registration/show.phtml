@@ -4,14 +4,15 @@ $title = $this->translate('Registration');
 $this->headTitle($title);
 ?>
 <div class="widget">
-<h1><?php echo $this->translate('Closed Beta Registration'); ?></h1>
-<p>
-<?php echo $this->translate("We are happy to announce having achieved closed beta."); ?><br/>
-<?php echo $this->translate("This Adult Go players from the EC We are happy to announce having achieved closed beta."); ?><br/>
-<?php echo $this->translate("For invited Go players only."); ?><br/>
-<?php echo $this->translate("You need a coupon code to register."); ?><br/>
-<?php echo $this->translate("For league matches, a KGS account is mandatory."); ?>
+<h1><?php echo $this->translate('Go Players Wanted'); ?></h1>
+<p style="text-align:justify">
+<?php echo $this->translate("For our closed beta, we are looking for passionate adult players.") . ' ' .
+ $this->translate("You have a rank from 1d-15k, love the game and challenges on equal terms.") . ' ' .
+ $this->translate("Despite your restricted time, you can make it on Tuesday every 2-3 weeks frequently.") . ' ' .
+ $this->translate("Due to our match time at 6:30 pm (CET), you should resident in the EC."). ' ' ; ?>
 </p>
-    <a class='btn' href="<?php
-    $this->url('register', array('action' => 'show'));?>"><?php echo $this->translate('Register NOW!');?></a>
+<p style="letter-spacing:1px; text-transform: uppercase"><?php echo $this->translate("You received a coupon code!"); ?></p>
+    <a style="margin-top:10px" class='btn' href="<?php echo $this->url('register');?>">
+        <?php echo $this->translate('Register NOW!');?>
+    </a>
 </div>
