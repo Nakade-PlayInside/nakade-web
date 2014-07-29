@@ -60,16 +60,10 @@ class RegistrationController extends AbstractController
                 }
 
                 if (!is_null($user)) {
-                    $password = $this->getPasswordService()->generatePassword();
-                    $user->setPassword($password);
-                    $pwdPlain = $this->getPasswordService()->getPlainPassword();
-                    $date = new \DateTime();
-                    $user->setPwdChange($date);
 
                     /* @var $mail \User\Mail\CredentialsMail */
                     $mail = $this->getMailService()->getMail(MailService::CREDENTIALS_MAIL);
                     $mail->setUser($user);
-                    $mail->setPlainPwd($pwdPlain);
                     $mail->sendMail($user);
                     $this->flashMessenger()->addSuccessMessage('Password Reset');
 
@@ -169,13 +163,13 @@ class RegistrationController extends AbstractController
                     $password = $this->getPasswordService()->generatePassword();
                     $user->setPassword($password);
                     $pwdPlain = $this->getPasswordService()->getPlainPassword();
+                    $user->setPasswordPlain($pwdPlain);
                     $date = new \DateTime();
                     $user->setPwdChange($date);
 
                     /* @var $mail \User\Mail\CredentialsMail */
                     $mail = $this->getMailService()->getMail(MailService::CREDENTIALS_MAIL);
                     $mail->setUser($user);
-                    $mail->setPlainPwd($pwdPlain);
                     $mail->sendMail($user);
                     $this->flashMessenger()->addSuccessMessage('Password Reset');
 

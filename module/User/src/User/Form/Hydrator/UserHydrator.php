@@ -1,6 +1,7 @@
 <?php
 namespace User\Form\Hydrator;
 
+use Nakade\Generators\PasswordGenerator;
 use Permission\Entity\RoleInterface;
 use User\Entity\User;
 use User\Form\Factory\LanguageInterface;
@@ -15,6 +16,12 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
  */
 class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterface, SexInterface
 {
+    private $passwordGenerator;
+
+    public function __construct(PasswordGenerator $passwordGenerator)
+    {
+        $this->passwordGenerator = $passwordGenerator;
+    }
 
     /**
      * @param \User\Entity\User $object
@@ -42,9 +49,6 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
         if (null!==$object->getSex()) {
             $sex = $object->getSex();
         }
-
-        //todo: if new user-> id=null
-        //todo: due date, verifyString, created
 
         return array(
             'anonymous'=> $object->isAnonymous(),
@@ -116,10 +120,7 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
         if (isset($data['password'])) {
             if (!empty($data['password'])) {
                 $date = new \DateTime();
-                //todo: pwd service for encryption
-                //todo: pwd service for plain pwd
-                //todo: extend entity for plain pwd
-                $pwd = md5($data['password']);
+                $pwd = $this->getPasswordGenerator()->generatePassword();
                 $object->setPassword($pwd);
                 $object->setPwdChange($date);
             }
@@ -159,8 +160,11 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
         if (is_null($object->getId())) {
             $object->setCreated($now);
             $this->setVerification($object);
-            //todo: pwd service for encryption
-            //todo: pwd service for plain pwd
+            $pwd = $this->getPasswordGenerator()->generatePassword();
+            $pwdPlain = $this->getPasswordGenerator()->getPlainPassword();
+            $object->setPasswordPlain($pwdPlain);
+            $object->setPassword($pwd);
+
         } else {
             $object->setEdit($now);
         }
@@ -185,5 +189,15 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
 
         $user->setVerified(false);
     }
+
+    /**
+     * @return \Nakade\Generators\PasswordGenerator
+     */
+    public function getPasswordGenerator()
+    {
+        return $this->passwordGenerator;
+    }
+
+
 
 }

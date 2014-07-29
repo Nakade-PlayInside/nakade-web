@@ -24,8 +24,8 @@ class UserFormService extends AbstractFormFactory
     const REGISTER_CLOSED_BETA_FORM = 'register_closed_beta';
     const INVITE_FRIEND_FORM = 'invite_friend';
 
-    private $fieldService;
-    private $filterService;
+    private $services;
+    private $userHydrator;
 
     /**
      * @param ServiceLocatorInterface $services
@@ -37,15 +37,7 @@ class UserFormService extends AbstractFormFactory
     public function createService(ServiceLocatorInterface $services)
     {
 
-        //EntityManager for database access by doctrine
-        $this->entityManager = $services->get('Doctrine\ORM\EntityManager');
-
-        if (is_null($this->entityManager)) {
-            throw new \RuntimeException(
-                sprintf('Entity manager could not be found in service.')
-            );
-        }
-
+        $this->services = $services;
         $config  = $services->get('config');
 
         //text domain
@@ -53,12 +45,10 @@ class UserFormService extends AbstractFormFactory
             $config['User']['text_domain'] : null;
 
         $translator = $services->get('translator');
-        $fieldSetService = $services->get('Season\Services\SeasonFieldsetService');
-        $this->fieldService = $services->get('User\Services\UserFieldService');
-        $this->filterService = $services->get('User\Services\UserFilterService');
-
-        $this->setFieldSetService($fieldSetService);
         $this->setTranslator($translator, $textDomain);
+
+        $pwdService  = $services->get('Nakade\Services\PasswordService');
+        $this->userHydrator = new Form\Hydrator\UserHydrator($pwdService);
 
         return $this;
     }
@@ -72,43 +62,40 @@ class UserFormService extends AbstractFormFactory
      */
     public function getForm($typ)
     {
-        $buttonService = $this->getFieldSetService();
-        $fieldService = $this->getFieldService();
-        $filterService = $this->getFilterService();
 
         switch (strtolower($typ)) {
 
             case self::BIRTHDAY_FORM:
-                $form = new Form\BirthdayForm($buttonService, $fieldService, $filterService);
+                $form = new Form\BirthdayForm($this->services, $this->userHydrator);
                 break;
 
             case self::EMAIL_FORM:
-                $form = new Form\EmailForm($buttonService, $fieldService, $filterService);
+                $form = new Form\EmailForm($this->services, $this->userHydrator);
                 break;
 
             case self::FORGOT_PASSWORD_FORM:
-                $form = new Form\ForgotPasswordForm($buttonService, $fieldService, $filterService);
+                $form = new Form\ForgotPasswordForm($this->services, $this->userHydrator);
                 $form->init();
                 break;
 
             case self::KGS_FORM:
-                $form = new Form\KgsForm($buttonService, $fieldService, $filterService);
+                $form = new Form\KgsForm($this->services, $this->userHydrator);
                 break;
 
             case self::NICK_FORM:
-                $form = new Form\NickForm($buttonService, $fieldService, $filterService);
+                $form = new Form\NickForm($this->services, $this->userHydrator);
                 break;
 
             case self::PASSWORD_FORM:
-                $form = new Form\PasswordForm($buttonService, $fieldService, $filterService);
+                $form = new Form\PasswordForm($this->services, $this->userHydrator);
                 break;
 
             case self::USER_FORM:
-                $form = new Form\UserForm($buttonService, $fieldService, $filterService);
+                $form = new Form\UserForm($this->services, $this->userHydrator);
                 break;
 
             case self::LANGUAGE_FORM:
-                $form = new Form\LanguageForm($buttonService, $fieldService, $filterService);
+                $form = new Form\LanguageForm($this->services, $this->userHydrator);
                 break;
 
             case self::CONFIRM_FORM:
@@ -116,11 +103,11 @@ class UserFormService extends AbstractFormFactory
                 break;
 
             case self::REGISTER_CLOSED_BETA_FORM:
-                $form = new Form\RegisterClosedBetaForm($buttonService, $fieldService, $filterService);
+                $form = new Form\RegisterClosedBetaForm($this->services, $this->userHydrator);
                 break;
 
             case self::INVITE_FRIEND_FORM:
-                $form = new Form\InviteFriendForm($buttonService, $fieldService, $filterService);
+                $form = new Form\InviteFriendForm($this->services, $this->userHydrator);
                 break;
 
             default:

@@ -13,6 +13,7 @@ use Permission\Entity\RoleInterface;
  */
 class User extends UserModel implements UserInterface, RoleInterface
 {
+    private $passwordPlain;
 
     /**
      * returns true if dueDate is not expired
@@ -92,6 +93,24 @@ class User extends UserModel implements UserInterface, RoleInterface
         $this->getFirstName() . " " .
         $this->getLastName();
     }
+
+    /**
+     * @param string $passwordPlain
+     */
+    public function setPasswordPlain($passwordPlain)
+    {
+        $this->passwordPlain = $passwordPlain;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPasswordPlain()
+    {
+        return $this->passwordPlain;
+    }
+
+
 
     /**
      * populating data as an array.

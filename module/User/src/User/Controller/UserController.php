@@ -85,14 +85,10 @@ class UserController extends AbstractController
             if ($form->isValid()) {
 
                 $user = $form->getData();
-                $password = $this->getPasswordService()->generatePassword();
-                $user->setPassword($password);
-                $pwdPlain = $this->getPasswordService()->getPlainPassword();
 
                 /* @var $mail \User\Mail\RegistrationMail */
                 $mail = $this->getMailService()->getMail(MailService::REGISTRATION_MAIL);
                 $mail->setUser($user);
-                $mail->setPlainPwd($pwdPlain);
                 $mail->sendMail($user);
 
                 $this->getUserMapper()->save($user);

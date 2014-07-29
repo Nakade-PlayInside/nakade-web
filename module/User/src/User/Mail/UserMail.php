@@ -55,22 +55,6 @@ abstract class UserMail extends NakadeMail
         return $this->user;
     }
 
-    /**
-     * @param string $plainPwd
-     */
-    public function setPlainPwd($plainPwd)
-    {
-        $this->plainPwd = $plainPwd;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPlainPwd()
-    {
-        return $this->plainPwd;
-    }
-
     protected function makeReplacements(&$message)
     {
         $message = str_replace('%URL%', $this->getUrl(), $message);
@@ -85,7 +69,7 @@ abstract class UserMail extends NakadeMail
 
             $message = str_replace('%FIRST_NAME%', $this->getUser()->getFirstName(), $message);
             $message = str_replace('%USERNAME%', $this->getUser()->getUsername(), $message);
-            $message = str_replace('%PASSWORD%', $this->getPlainPwd(), $message);
+            $message = str_replace('%PASSWORD%', $this->getUser()->getPasswordPlain(), $message);
             $message = str_replace('%VERIFY_LINK%', $link, $message);
             $message = str_replace('%DUE_DATE%', $this->getUser()->getDue()->format('d.m.y H:i'), $message);
         }

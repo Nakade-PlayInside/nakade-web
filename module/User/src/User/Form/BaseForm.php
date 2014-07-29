@@ -7,6 +7,7 @@ use User\Form\Factory\UserFieldInterface;
 use User\Form\Factory\UserFilterFactory;
 use User\Form\Factory\UserFieldFactory;
 use User\Form\Hydrator\UserHydrator;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class BaseLeagueForm
@@ -20,21 +21,17 @@ abstract class BaseForm extends AbstractForm implements UserFieldInterface
     protected $userFilterFactory;
 
     /**
-     * @param SeasonFieldsetService $fieldsetService
-     * @param UserFieldFactory      $fieldFactory
-     * @param UserFilterFactory     $filterFactory
+     * @param ServiceLocatorInterface $services
+     * @param UserHydrator $hydrator
      */
-    public function __construct(SeasonFieldsetService $fieldsetService,
-                                UserFieldFactory $fieldFactory,
-                                UserFilterFactory $filterFactory)
+    public function __construct(ServiceLocatorInterface $services, UserHydrator $hydrator)
     {
         parent::__construct($this->getFormName());
 
-        $this->fieldSetService = $fieldsetService;
-        $this->userFieldFactory = $fieldFactory;
-        $this->userFilterFactory = $filterFactory;
+        $this->fieldSetService = $services->get('Season\Services\SeasonFieldsetService');
+        $this->userFieldFactory = $services->get('User\Services\UserFieldService');
+        $this->userFilterFactory = $services->get('User\Services\UserFilterService');
 
-        $hydrator = new UserHydrator();
         $this->setHydrator($hydrator);
     }
 
