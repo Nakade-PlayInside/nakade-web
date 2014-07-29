@@ -127,3 +127,7 @@ table.profile td {
     font-size:larger;
     margin: 10px 0;
 }
+
+.invite {
+    width: 240px !important;
+}

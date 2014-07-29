@@ -19,6 +19,12 @@ echo $this->appointmentWidget;
 <hr>
 
 <?php
+
 echo $this->participationWidget;
+
+if (isset($this->inviteWidget)) {
+    echo $this->inviteWidget;
+}
+
 echo $this->scheduleWidget;
 

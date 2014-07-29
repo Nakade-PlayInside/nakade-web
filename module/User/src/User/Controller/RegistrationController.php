@@ -29,6 +29,8 @@ class RegistrationController extends AbstractController
     private $passwordService;
 
     /**
+     * user registration
+     *
      * @return \Zend\View\Model\ViewModel
      */
     public function indexAction()
@@ -50,7 +52,6 @@ class RegistrationController extends AbstractController
             $form->setData($postData);
             if ($form->isValid()) {
 
-                die;
                 $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
 
                 /* @var $user \User\Entity\User */

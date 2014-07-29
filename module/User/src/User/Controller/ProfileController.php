@@ -40,6 +40,25 @@ class ProfileController extends AbstractController
      *
      * @return \Zend\View\Model\ViewModel
      */
+    public function inviteAction()
+    {
+        /* @var $form \User\Form\BirthdayForm */
+        $form = $this->getForm(UserFormService::INVITE_FRIEND_FORM);
+        $form->init();
+       // $user = $this->getUser();
+       // $form->bindEntity($user);
+
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
+
+    }
+
+    /**
+     * edit the birthday
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
     public function birthdayAction()
     {
         /* @var $form \User\Form\BirthdayForm */

@@ -1,0 +1,23 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('User');
+$title = $this->translate('Invite a Friend');
+$this->headTitle($title);
+?>
+<div class="widget invite">
+<h3><?php echo $this->escapeHtml($title); ?></h3>
+<p style="text-align: justify">
+<?php echo $this->translate("Your friend will receive an email with a coupon code which enables to register for closed beta!") . ' ' .
+$this->translate("Make sure, your friend fulfills the requirements, i.e. legal age, KGS account and quick availability by email.") ;
+?>
+</p>
+<hr/>
+<?php
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();
+?>
+<a style="margin-top:10px" class='btn' href="<?php echo $this->url('register');?>">
+    <?php echo $this->translate('Invite NOW!');?>
+</a>
+</div>

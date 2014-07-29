@@ -22,6 +22,7 @@ class UserFormService extends AbstractFormFactory
     const LANGUAGE_FORM = 'language';
     const CONFIRM_FORM = 'confirm';
     const REGISTER_CLOSED_BETA_FORM = 'register_closed_beta';
+    const INVITE_FRIEND_FORM = 'invite_friend';
 
     private $fieldService;
     private $filterService;
@@ -59,7 +60,7 @@ class UserFormService extends AbstractFormFactory
         $this->setFieldSetService($fieldSetService);
         $this->setTranslator($translator, $textDomain);
 
-       return $this;
+        return $this;
     }
 
     /**
@@ -77,51 +78,55 @@ class UserFormService extends AbstractFormFactory
 
         switch (strtolower($typ)) {
 
-           case self::BIRTHDAY_FORM:
-               $form = new Form\BirthdayForm($buttonService, $fieldService, $filterService);
-               break;
+            case self::BIRTHDAY_FORM:
+                $form = new Form\BirthdayForm($buttonService, $fieldService, $filterService);
+                break;
 
-           case self::EMAIL_FORM:
-               $form = new Form\EmailForm($buttonService, $fieldService, $filterService);
-               break;
+            case self::EMAIL_FORM:
+                $form = new Form\EmailForm($buttonService, $fieldService, $filterService);
+                break;
 
-           case self::FORGOT_PASSWORD_FORM:
-               $form = new Form\ForgotPasswordForm($buttonService, $fieldService, $filterService);
-               $form->init();
-               break;
+            case self::FORGOT_PASSWORD_FORM:
+                $form = new Form\ForgotPasswordForm($buttonService, $fieldService, $filterService);
+                $form->init();
+                break;
 
-           case self::KGS_FORM:
-               $form = new Form\KgsForm($buttonService, $fieldService, $filterService);
-               break;
+            case self::KGS_FORM:
+                $form = new Form\KgsForm($buttonService, $fieldService, $filterService);
+                break;
 
-           case self::NICK_FORM:
-               $form = new Form\NickForm($buttonService, $fieldService, $filterService);
-               break;
+            case self::NICK_FORM:
+                $form = new Form\NickForm($buttonService, $fieldService, $filterService);
+                break;
 
-           case self::PASSWORD_FORM:
-               $form = new Form\PasswordForm($buttonService, $fieldService, $filterService);
-               break;
+            case self::PASSWORD_FORM:
+                $form = new Form\PasswordForm($buttonService, $fieldService, $filterService);
+                break;
 
-           case self::USER_FORM:
-               $form = new Form\UserForm($buttonService, $fieldService, $filterService);
-               break;
+            case self::USER_FORM:
+                $form = new Form\UserForm($buttonService, $fieldService, $filterService);
+                break;
 
-           case self::LANGUAGE_FORM:
-               $form = new Form\LanguageForm($buttonService, $fieldService, $filterService);
-               break;
+            case self::LANGUAGE_FORM:
+                $form = new Form\LanguageForm($buttonService, $fieldService, $filterService);
+                break;
 
-           case self::CONFIRM_FORM:
-               $form = new Form\ConfirmForm();
-               break;
+            case self::CONFIRM_FORM:
+                $form = new Form\ConfirmForm();
+                break;
 
-           case self::REGISTER_CLOSED_BETA_FORM:
+            case self::REGISTER_CLOSED_BETA_FORM:
                 $form = new Form\RegisterClosedBetaForm($buttonService, $fieldService, $filterService);
                 break;
 
-           default:
-               throw new \RuntimeException(
-                   sprintf('An unknown form type was provided.')
-               );
+            case self::INVITE_FRIEND_FORM:
+                $form = new Form\InviteFriendForm($buttonService, $fieldService, $filterService);
+                break;
+
+            default:
+                throw new \RuntimeException(
+                    sprintf('An unknown form type was provided.')
+                );
         }
 
         $form->setTranslator($this->translator, $this->textDomain);

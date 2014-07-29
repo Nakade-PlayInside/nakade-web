@@ -57,7 +57,7 @@ class RegisterClosedBetaForm extends BaseForm implements RoleInterface
      */
     public function getFormName()
     {
-        return 'UserForm';
+        return 'RegistrationForm';
     }
 
 
