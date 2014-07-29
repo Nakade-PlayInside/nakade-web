@@ -52,13 +52,12 @@ class RegistrationController extends AbstractController
             $form->setData($postData);
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-
-                /* @var $user \User\Entity\User */
-                $user = $this->getRepository()
-                    ->getMapper(RepositoryService::USER_MAPPER)
-                    ->getUserByEmail($data['email']);
-
+                $user = $form->getData();
+                if (isset($postData['code'])) {
+                    //todo: coupon code used?
+                    //todo: coupon code expired?
+                    //todo: coupon code validation
+                }
 
                 if (!is_null($user)) {
                     $password = $this->getPasswordService()->generatePassword();

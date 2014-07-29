@@ -116,6 +116,9 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
         if (isset($data['password'])) {
             if (!empty($data['password'])) {
                 $date = new \DateTime();
+                //todo: pwd service for encryption
+                //todo: pwd service for plain pwd
+                //todo: extend entity for plain pwd
                 $pwd = md5($data['password']);
                 $object->setPassword($pwd);
                 $object->setPwdChange($date);
@@ -156,6 +159,8 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
         if (is_null($object->getId())) {
             $object->setCreated($now);
             $this->setVerification($object);
+            //todo: pwd service for encryption
+            //todo: pwd service for plain pwd
         } else {
             $object->setEdit($now);
         }

@@ -21,22 +21,22 @@ class UserModel implements RoleInterface
     protected $id;
 
     /**
-     * @ORM\Column(name="titel", type="string")
+     * @ORM\Column(name="titel", length=10, type="string")
      */
     protected $title;
 
     /**
-     * @ORM\Column(name="vorname", type="string")
+     * @ORM\Column(name="vorname", length=20, type="string", nullable=false)
      */
     protected $firstName;
 
     /**
-     * @ORM\Column(name="nachname", type="string")
+     * @ORM\Column(name="nachname", length=30, type="string", nullable=false)
      */
     protected $lastName;
 
     /**
-     * @ORM\Column(name="nick", type="string")
+     * @ORM\Column(name="nick", length=20, unique=true, type="string")
      */
     protected $nickname;
 
@@ -56,27 +56,27 @@ class UserModel implements RoleInterface
     protected $anonymous=0;
 
     /**
-     * @ORM\Column(name="username", type="string")
+     * @ORM\Column(name="username", length=50, unique=true, type="string", nullable=false)
      */
     protected $username;
 
     /**
-     * @ORM\Column(name="password", type="string")
+     * @ORM\Column(name="password", length=80, type="string", nullable=false)
      */
     protected $password;
 
     /**
-     * @ORM\Column(name="kgs", type="string")
+     * @ORM\Column(name="kgs", length=50, unique=true, type="string")
      */
     protected $kgs;
 
     /**
-     * @ORM\Column(name="email", type="string")
+     * @ORM\Column(name="email", length=120, unique=true, type="string", nullable=false)
      */
     protected $email;
 
     /**
-     * @ORM\Column(name="verifyString", type="string")
+     * @ORM\Column(name="verifyString", length=32, type="string")
      */
     protected $verifyString;
 
@@ -121,7 +121,7 @@ class UserModel implements RoleInterface
     protected $due;
 
     /**
-     * @ORM\Column(name="role", type="string")
+     * @ORM\Column(name="role", length=15, type="string")
      */
     protected $role=RoleInterface::ROLE_GUEST;
 
