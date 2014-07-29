@@ -53,6 +53,8 @@ class Coupon
      */
     private $usedBy;
 
+    private $message;
+
     /**
      * @param string $code
      */
@@ -163,6 +165,22 @@ class Coupon
     public function getUsedBy()
     {
         return $this->usedBy;
+    }
+
+    /**
+     * @param string $message
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
     }
 
 

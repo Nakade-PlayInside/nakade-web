@@ -26,6 +26,7 @@ class UserFormService extends AbstractFormFactory
 
     private $services;
     private $userHydrator;
+    private $couponHydrator;
 
     /**
      * @param ServiceLocatorInterface $services
@@ -47,9 +48,6 @@ class UserFormService extends AbstractFormFactory
         $translator = $services->get('translator');
         $this->setTranslator($translator, $textDomain);
 
-        $pwdService  = $services->get('Nakade\Services\PasswordService');
-        $this->userHydrator = new Form\Hydrator\UserHydrator($pwdService);
-
         return $this;
     }
 
@@ -66,36 +64,36 @@ class UserFormService extends AbstractFormFactory
         switch (strtolower($typ)) {
 
             case self::BIRTHDAY_FORM:
-                $form = new Form\BirthdayForm($this->services, $this->userHydrator);
+                $form = new Form\BirthdayForm($this->getServices(), $this->getUserHydrator());
                 break;
 
             case self::EMAIL_FORM:
-                $form = new Form\EmailForm($this->services, $this->userHydrator);
+                $form = new Form\EmailForm($this->getServices(), $this->getUserHydrator());
                 break;
 
             case self::FORGOT_PASSWORD_FORM:
-                $form = new Form\ForgotPasswordForm($this->services, $this->userHydrator);
+                $form = new Form\ForgotPasswordForm($this->getServices(), $this->getUserHydrator());
                 $form->init();
                 break;
 
             case self::KGS_FORM:
-                $form = new Form\KgsForm($this->services, $this->userHydrator);
+                $form = new Form\KgsForm($this->getServices(), $this->getUserHydrator());
                 break;
 
             case self::NICK_FORM:
-                $form = new Form\NickForm($this->services, $this->userHydrator);
+                $form = new Form\NickForm($this->getServices(), $this->getUserHydrator());
                 break;
 
             case self::PASSWORD_FORM:
-                $form = new Form\PasswordForm($this->services, $this->userHydrator);
+                $form = new Form\PasswordForm($this->getServices(), $this->getUserHydrator());
                 break;
 
             case self::USER_FORM:
-                $form = new Form\UserForm($this->services, $this->userHydrator);
+                $form = new Form\UserForm($this->getServices(), $this->getUserHydrator());
                 break;
 
             case self::LANGUAGE_FORM:
-                $form = new Form\LanguageForm($this->services, $this->userHydrator);
+                $form = new Form\LanguageForm($this->getServices(), $this->getUserHydrator());
                 break;
 
             case self::CONFIRM_FORM:
@@ -103,11 +101,11 @@ class UserFormService extends AbstractFormFactory
                 break;
 
             case self::REGISTER_CLOSED_BETA_FORM:
-                $form = new Form\RegisterClosedBetaForm($this->services, $this->userHydrator);
+                $form = new Form\RegisterClosedBetaForm($this->getServices(), $this->getUserHydrator());
                 break;
 
             case self::INVITE_FRIEND_FORM:
-                $form = new Form\InviteFriendForm($this->services, $this->userHydrator);
+                $form = new Form\InviteFriendForm($this->getCouponHydrator());
                 break;
 
             default:
@@ -120,20 +118,43 @@ class UserFormService extends AbstractFormFactory
         return $form;
     }
 
+
     /**
-     * @return \User\Form\Factory\UserFieldFactory
+     * @return ServiceLocatorInterface
      */
-    public function getFieldService()
+    public function getServices()
     {
-        return $this->fieldService;
+        return $this->services;
     }
 
     /**
-     * @return \User\Form\Factory\UserFilterFactory
+     * @return Form\Hydrator\UserHydrator
      */
-    public function getFilterService()
+    private function getUserHydrator()
     {
-        return $this->filterService;
+        if (is_null($this->userHydrator)) {
+            $pwdService  = $this->getServices()->get('Nakade\Services\PasswordService');
+            $this->userHydrator = new Form\Hydrator\UserHydrator($pwdService);
+        }
+        return $this->userHydrator;
+
     }
+
+    /**
+     * @return Form\Hydrator\CouponHydrator
+     */
+    private function getCouponHydrator()
+    {
+        if (is_null($this->couponHydrator)) {
+
+            $entityManager = $this->getServices()->get('Doctrine\ORM\EntityManager');
+            $authenticationService = $this->getServices()->get('Zend\Authentication\AuthenticationService');
+            $this->couponHydrator = new Form\Hydrator\CouponHydrator($entityManager, $authenticationService);
+        }
+
+        return $this->couponHydrator;
+
+    }
+
 
 }

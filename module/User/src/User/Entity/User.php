@@ -110,8 +110,6 @@ class User extends UserModel implements UserInterface, RoleInterface
         return $this->passwordPlain;
     }
 
-
-
     /**
      * populating data as an array.
      * key of the array is getter methods name.

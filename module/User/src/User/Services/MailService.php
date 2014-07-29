@@ -18,6 +18,7 @@ class MailService extends AbstractTranslation implements FactoryInterface, MailS
     const CREDENTIALS_MAIL = 'credentials';
     const REGISTRATION_MAIL = 'registration';
     const VERIFY_MAIL = 'verify';
+    const COUPON_MAIL = 'coupon';
 
     private $transport;
     private $message;
@@ -80,22 +81,26 @@ class MailService extends AbstractTranslation implements FactoryInterface, MailS
     {
         switch (strtolower($typ)) {
 
-           case self::CREDENTIALS_MAIL:
-               $mail = new Mail\CredentialsMail($this->message, $this->transport);
-               break;
+            case self::CREDENTIALS_MAIL:
+                $mail = new Mail\CredentialsMail($this->message, $this->transport);
+                break;
 
-           case self::REGISTRATION_MAIL:
-               $mail = new Mail\RegistrationMail($this->message, $this->transport);
-               break;
+            case self::REGISTRATION_MAIL:
+                $mail = new Mail\RegistrationMail($this->message, $this->transport);
+                break;
 
-           case self::VERIFY_MAIL:
-               $mail = new Mail\VerifyMail($this->message, $this->transport);
-               break;
+            case self::VERIFY_MAIL:
+                $mail = new Mail\VerifyMail($this->message, $this->transport);
+                break;
 
-           default:
-               throw new \RuntimeException(
-                   sprintf('An unknown mail type was provided.')
-               );
+            case self::COUPON_MAIL:
+                $mail = new Mail\CouponMail($this->message, $this->transport);
+                break;
+
+            default:
+                throw new \RuntimeException(
+                    sprintf('An unknown mail type was provided.')
+                );
         }
 
         $mail->setTranslator($this->getTranslator());
