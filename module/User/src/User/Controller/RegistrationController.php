@@ -1,14 +1,4 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for
- * the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc.
- * (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 namespace User\Controller;
 
 use User\Entity\User;
@@ -35,15 +25,21 @@ class RegistrationController extends AbstractController
      */
     public function indexAction()
     {
+        $email  = $this->params()->fromQuery('email', null);
+        $code   = $this->params()->fromQuery('code', null);
+
         /* @var $form \User\Form\BaseForm */
         $form = $this->getForm(UserFormService::REGISTER_CLOSED_BETA_FORM);
         $user = new User();
+        $user->setEmail($email);
+        $user->setCouponCode($code);
         $form->bindEntity($user);
 
-        if ($this->getRequest()->isPost()) {
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
 
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
+            $postData =  $request->getPost();
 
             //cancel
             if (isset($postData['button']['cancel'])) {
@@ -53,30 +49,25 @@ class RegistrationController extends AbstractController
             if ($form->isValid()) {
 
                 $user = $form->getData();
-                if (isset($postData['code'])) {
-                    //todo: coupon code used?
-                    //todo: coupon code expired?
-                    //todo: coupon code validation
-                }
+                $code = $user->getCouponCode();
 
-                if (!is_null($user)) {
+                /* @var $mail \User\Mail\CredentialsMail */
+                $mail = $this->getMailService()->getMail(MailService::REGISTRATION_MAIL);
+                $mail->setUser($user);
+                $mail->sendMail($user);
 
-                    /* @var $mail \User\Mail\CredentialsMail */
-                    $mail = $this->getMailService()->getMail(MailService::CREDENTIALS_MAIL);
-                    $mail->setUser($user);
-                    $mail->sendMail($user);
-                    $this->flashMessenger()->addSuccessMessage('Password Reset');
+                /* @var $mapper \User\Mapper\UserMapper */
+                $mapper = $this->getRepository()->getMapper(RepositoryService::USER_MAPPER);
+                $mapper->save($user);
 
-                    /*  $this->getRepository()
-                          ->getMapper(RepositoryService::USER_MAPPER)
-                          ->save($user);*/
-                    $this->redirect()->toRoute('register', array('action' => 'success'));
-                }
+                $coupon = $mapper->getCouponByCode($code);
+                $coupon->setUsedBy($user);
+                $mapper->save($coupon);
 
-
-                return $this->redirect()->toRoute('forgot/failure');
-
-
+                $this->flashMessenger()->addSuccessMessage('Sign In Successful');
+                $this->redirect()->toRoute('register', array('action' => 'success'));
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
         }
 
@@ -139,10 +130,12 @@ class RegistrationController extends AbstractController
     {
 
         $form = $this->getForm(UserFormService::FORGOT_PASSWORD_FORM);
-        if ($this->getRequest()->isPost()) {
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
 
             //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
+            $postData =  $request->getPost();
 
             //cancel
             if (isset($postData['button']['cancel'])) {
@@ -173,14 +166,13 @@ class RegistrationController extends AbstractController
                     $mail->sendMail($user);
                     $this->flashMessenger()->addSuccessMessage('Password Reset');
 
-                    /*  $this->getRepository()
+                    $this->getRepository()
                           ->getMapper(RepositoryService::USER_MAPPER)
-                          ->save($user);*/
+                          ->save($user);
                     $this->redirect()->toRoute('register', array('action' => 'success'));
                 }
-
-
-                return $this->redirect()->toRoute('forgot/failure');
+                $this->flashMessenger()->addErrorMessage('Input Error');
+                return $this->redirect()->toRoute('login');
 
 
             }
@@ -205,8 +197,6 @@ class RegistrationController extends AbstractController
             array()
         );
     }
-
-
 
     /**
      * @return \Zend\View\Model\ViewModel

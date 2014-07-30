@@ -77,22 +77,7 @@ return array(
                     ),
                 ),
             ),
-            //FORGOT PWD
-            'forgot' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/forgot[/:action][/:id]',
-                    'constraints' => array(
-                        'action' =>  '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'User\Controller\Forgot',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),
-            //VERFIFY EMAIL
+            //registration, verify, pwd reset
             'register' => array(
                 'type'    => 'segment',
                 'options' => array(

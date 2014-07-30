@@ -225,6 +225,12 @@ class UserFilterFactory extends AbstractTranslation  implements UserFieldInterfa
                                 'max' => 50
                             )
                         ),
+                        array (
+                            'name' => 'User\Form\Validator\CouponCode',
+                            'options' => array(
+                                'adapter'  => $this->getEntityManager(),
+                            )
+                        )
                     )
                 );
                 break;
@@ -312,6 +318,7 @@ class UserFilterFactory extends AbstractTranslation  implements UserFieldInterfa
             )
         );
     }
+
 
     /**
      * @return array

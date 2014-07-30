@@ -14,6 +14,7 @@ use Permission\Entity\RoleInterface;
 class User extends UserModel implements UserInterface, RoleInterface
 {
     private $passwordPlain;
+    private $couponCode;
 
     /**
      * returns true if dueDate is not expired
@@ -109,6 +110,24 @@ class User extends UserModel implements UserInterface, RoleInterface
     {
         return $this->passwordPlain;
     }
+
+    /**
+     * @param mixed $couponCode
+     */
+    public function setCouponCode($couponCode)
+    {
+        $this->couponCode = $couponCode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCouponCode()
+    {
+        return $this->couponCode;
+    }
+
+
 
     /**
      * populating data as an array.

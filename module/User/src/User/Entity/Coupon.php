@@ -191,6 +191,23 @@ class Coupon implements UserInterface
         return "Go Friend";
     }
 
+    /**
+     * @return bool
+     */
+    public function isUsed()
+    {
+        return !is_null($this->usedBy);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExpired()
+    {
+        return new \DateTime() > $this->getExpiryDate();
+    }
+
+
 
 
 }

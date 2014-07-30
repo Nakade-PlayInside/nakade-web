@@ -17,7 +17,6 @@ use Nakade\Abstracts\AbstractController;
  */
 class ProfileController extends AbstractController
 {
-
     /**
      * Showing the user's profile
      *

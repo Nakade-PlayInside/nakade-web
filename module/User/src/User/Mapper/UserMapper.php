@@ -89,4 +89,17 @@ class UserMapper extends AbstractMapper
             ->getRepository('User\Entity\User')
             ->findOneBy(array('email' => $email));
     }
+
+    /**
+     * @param string $code
+     *
+     * @return \User\Entity\Coupon
+     */
+    public function getCouponByCode($code)
+    {
+
+        return $this->getEntityManager()
+            ->getRepository('User\Entity\Coupon')
+            ->findOneBy(array('code' => $code));
+    }
 }

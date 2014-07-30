@@ -63,6 +63,7 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
             'firstName'=> $object->getFirstName(),
             'lastName' => $object->getLastName(),
             'username' => $object->getUsername(),
+            'code' => $object->getCouponCode(),
         );
 
     }
@@ -152,6 +153,11 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
 
         if (isset($data['role'])) {
             $object->setRole($data['role']);
+        }
+
+        //for coupon stuff
+        if (isset($data['code'])) {
+            $object->setCouponCode($data['code']);
         }
 
         $now  = new \DateTime();
