@@ -59,7 +59,7 @@ class ProfileController extends AbstractController
 
                 /* @var $coupon \User\Entity\Coupon */
                 $coupon = $form->getData();
-                //$this->getUserMapper()->save($coupon);
+                $this->getUserMapper()->save($coupon);
 
                 /* @var $mail \User\Mail\CouponMail */
                 $mail = $this->getMailService()->getMail(MailService::COUPON_MAIL);
@@ -69,14 +69,11 @@ class ProfileController extends AbstractController
                 $this->flashMessenger()->addSuccessMessage('Your Invitation Is Send');
                 $coupon = new Coupon();
                 $form->bind($coupon);
-                // var_dump("WHAT");
 
-              //  return $this->redirect()->toRoute('profile');
             } else {
                 $this->flashMessenger()->addErrorMessage('Input Error');
             }
         }
-
 
         return new ViewModel(
             array('form' => $form)

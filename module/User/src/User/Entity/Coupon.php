@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="coupon")
  *
  */
-class Coupon
+class Coupon implements UserInterface
 {
     /**
      * Primary Identifier
@@ -181,6 +181,14 @@ class Coupon
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return "Go Friend";
     }
 
 

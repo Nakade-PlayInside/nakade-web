@@ -44,16 +44,24 @@ class CouponMail extends NakadeMail
         $message =
             $this->translate("Dear Go Friend") . ', ' .
             PHP_EOL . PHP_EOL .
-            $this->translate('You are invited to sign up for closed beta at %URL%.') . ' ' .
+            $this->translate('You are invited to sign up at %URL%.') . ' ' .
             PHP_EOL . PHP_EOL .
-            $this->translate("Your Credentials") . ': ' . PHP_EOL . PHP_EOL .
-            $this->translate("username") . ': ' . '%USERNAME%' . PHP_EOL .
-            $this->translate("password") . ': ' . '%PASSWORD%' . PHP_EOL .
+            $this->translate('Nakade is a platform for organizing leagues for the game of Go.') . PHP_EOL .
+            $this->translate('For our closed beta, we are looking for players who love to compete on even terms.') .
+            ' ' .
+            $this->translate('Matches are frequently every 3 weeks, so this is best suited for the busy ones.') .
             PHP_EOL . PHP_EOL .
-            $this->translate("For security reasons, change the generated password as soon as possible.") . ' ' .
-            $this->translate("Therefore, logIn and go to your profile.") . ' ' .
+            $this->translate('If you love the game, you will love us!') . ' ' .
             PHP_EOL . PHP_EOL .
-            $this->translate('In case of a problem, please contact us.') . PHP_EOL . PHP_EOL .
+            "%NOTICE%" .
+            $this->translate("To sign up to our closed beta a coupon code is needed.") . ': ' . PHP_EOL . PHP_EOL .
+            $this->translate("The coupon will expire on %EXPIRE_DATE%.") . PHP_EOL .
+            $this->translate("To start sign up you can click the link below") . ': ' .
+            PHP_EOL . PHP_EOL . '%REGISTER_LINK%' . PHP_EOL . PHP_EOL .
+            $this->translate("or you go to %URL% and enter the coupon code") . ': ' .
+            PHP_EOL . PHP_EOL . '%CODE%' . PHP_EOL . PHP_EOL .
+            $this->translate("For more information just visit our website.") .
+            PHP_EOL . PHP_EOL .
             $this->getSignature()->getSignatureText();
 
         $this->makeReplacements($message);
@@ -88,7 +96,7 @@ class CouponMail extends NakadeMail
         return $this->coupon;
     }
 
-    private function makeReplacements(&$message)
+    protected function makeReplacements(&$message)
     {
         $message = str_replace('%URL%', $this->getUrl(), $message);
 
@@ -101,11 +109,30 @@ class CouponMail extends NakadeMail
             );
 
             $message = str_replace('%NAME%', $this->getCoupon()->getCreatedBy()->getName(), $message);
-            $message = str_replace('%USERNAME%', $this->getUser()->getUsername(), $message);
-            $message = str_replace('%PASSWORD%', $this->getUser()->getPasswordPlain(), $message);
-            $message = str_replace('%VERIFY_LINK%', $link, $message);
-            $message = str_replace('%DUE_DATE%', $this->getUser()->getDue()->format('d.m.y H:i'), $message);
+            $message = str_replace('%EXPIRE_DATE%', $this->getCoupon()->getExpiryDate()->format('m.d.y H:i'), $message);
+            $message = str_replace('%REGISTER_LINK%', $link, $message);
+            $message = str_replace('%CODE%', $this->getCoupon()->getCode(), $message);
+            $message = str_replace('%NOTICE%', $this->getNotice(), $message);
+
         }
+    }
+
+    private function getNotice()
+    {
+        $userMessage = $this->getCoupon()->getMessage();
+        $notice ='';
+        if(!empty($userMessage)) {
+            $notice =
+                $this->translate("%FIRST_NAME% wrote") . ': ' . PHP_EOL . PHP_EOL .
+                '"' . $userMessage . '"' .
+                PHP_EOL . PHP_EOL . PHP_EOL;
+
+            $notice = str_replace('%FIRST_NAME%', $this->getCoupon()->getCreatedBy()->getFirstName(), $notice);
+        }
+
+
+        return $notice;
+
     }
 
 

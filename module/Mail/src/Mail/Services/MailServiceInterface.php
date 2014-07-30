@@ -1,16 +1,14 @@
 <?php
-namespace Nakade;
+namespace Mail\Services;
 
 /**
- * Interface FormServiceInterface
+ * Interface MailServiceInterface
  *
- * @deprecated remove after refactoring -> abstractMailService
- *
- * @package Nakade
+ * @package Mail\Services
  */
 interface MailServiceInterface
 {
-//todo: remove after refactoring -> abstractMailService
+
     /**
      * @param string $typ
      *

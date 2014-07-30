@@ -5,15 +5,6 @@ interface UserInterface
 {
 
     /**
-     * Sets the email
-     *
-     * @param string $email
-     *
-     * @return $this
-     */
-    public function setEmail($email);
-
-    /**
      * Returns the email
      *
      * @return string
