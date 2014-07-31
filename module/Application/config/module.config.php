@@ -66,9 +66,12 @@ return array(
                     ),
                 ),
                 'privacy' => array(
-                    'type' => 'Literal',
+                    'type' => 'segment',
                     'options' => array(
-                        'route'    => '/privacy',
+                        'route'    => '/privacy[/:action]',
+                        'constraints' => array(
+                            'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        ),
                         'defaults' => array(
                             '__NAMESPACE__' => 'Application\Controller',
                             'controller' => 'Application\Controller\Privacy',

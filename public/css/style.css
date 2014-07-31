@@ -5,6 +5,7 @@
 @import "user.css";
 @import "images.css";
 @import "pagination.css";
+@import "privacy.css";
 
 
 body {
@@ -218,4 +219,14 @@ div.error {
     color: white;
     padding: 2px 10px;
     font-weight: bold;
+}
+
+#termsOfUse ul {
+    list-style: decimal;
+}
+
+#termsOfUse ul li {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 10px;
 }
