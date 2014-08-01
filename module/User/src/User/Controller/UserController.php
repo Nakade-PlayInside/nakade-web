@@ -1,26 +1,22 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for
- * the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc.
- * (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 namespace User\Controller;
 
-use Zend\Form\FormInterface;
+use User\Services\MailService;
+use User\Entity\User;
+use User\Pagination\UserPagination;
+use User\Services\UserFormService;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
+use User\Services\RepositoryService;
 
 /**
- * Adminstrative user action for adding a new user, edit and resetting pwd.
+ * Class UserController
  *
+ * @package User\Controller
  */
 class UserController extends AbstractController
 {
+    private $passwordService;
 
     /**
      * shows all users for adding and editing
@@ -29,11 +25,33 @@ class UserController extends AbstractController
      */
     public function indexAction()
     {
+        $page = (int) $this->params()->fromRoute('id', 1);
+
+        /* @var $entityManager \Doctrine\ORM\EntityManager */
+        $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+
+        $userPagination = new UserPagination($entityManager);
+        $offset = (UserPagination::ITEMS_PER_PAGE * ($page -1));
+
         return new ViewModel(
             array(
-              'users' => $this->getService()
-                              ->getMapper('user')
-                              ->getAllUser(),
+              'users' => $this->getUserMapper()->getUserByPages($offset, UserPagination::ITEMS_PER_PAGE),
+              'paginator' =>   $userPagination->getPagination($page),
+            )
+        );
+    }
+
+    /**
+     * @return \Zend\Http\Response
+     */
+    public function detailsAction()
+    {
+        //get param
+        $uid  = $this->params()->fromRoute('id', null);
+
+        return new ViewModel(
+            array(
+                'user' => $this->getUserMapper()->getUserById($uid)
             )
         );
     }
@@ -45,16 +63,20 @@ class UserController extends AbstractController
      */
     public function addAction()
     {
+        /* @var $form \User\Form\UserForm */
+        $form = $this->getForm(UserFormService::USER_FORM);
+        $user = new User();
+        $form->bindEntity($user);
 
-        $form = $this->getForm('user');
-
-        if ($this->getRequest()->isPost()) {
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
 
             //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
+            $postData =  $request->getPost();
 
             //cancel
-            if (isset($postData['cancel'])) {
+            if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute('user');
             }
 
@@ -62,15 +84,15 @@ class UserController extends AbstractController
 
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['request'] = $this->getRequest();
+                $user = $form->getData();
 
-                if ($this->getService()->addUser($data)) {
-                    $this->flashMessenger()->addMessage('new user added successfully');
-                } else {
-                    $this->flashMessenger()->addMessage('unable to send verify email');
-                }
+                /* @var $mail \User\Mail\RegistrationMail */
+                $mail = $this->getMailService()->getMail(MailService::REGISTRATION_MAIL);
+                $mail->setUser($user);
+                $mail->sendMail($user);
 
+                $this->getUserMapper()->save($user);
+                $this->flashMessenger()->addSuccessMessage('New user added');
 
                 return $this->redirect()->toRoute('user');
             }
@@ -84,26 +106,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * reset the user's password (send mail)
-     *
-     * @return \Zend\Http\Response
-     */
-    public function resetPasswordAction()
-    {
-
-       //@todo: nachfrage double_opt passwort zurücksetzen?YN
-
-       //get param
-       $uid  = $this->params()->fromRoute('id', null);
-
-       $data['uid'] = $uid;
-       $data['request'] = $this->getRequest();
-       $this->getService()->resetPassword($data);
-
-       return $this->redirect()->toRoute('user');
-    }
-
-    /**
      * edit a user
      *
      * @return \Zend\View\Model\ViewModel
@@ -112,19 +114,21 @@ class UserController extends AbstractController
     {
 
         //get param
-       $uid  = $this->params()->fromRoute('id', null);
+        $uid  = $this->params()->fromRoute('id', null);
 
-       $user=$this->getService()->getMapper('user')->getUserById($uid);
+        /* @var $form \User\Form\UserForm */
+        $form = $this->getForm(UserFormService::USER_FORM);
+        $user=$this->getUserMapper()->getUserById($uid);
+        $form->bindEntity($user);
 
-       $form = $this->getForm('user');
-       $form->bindEntity($user);
-
-       if ($this->getRequest()->isPost()) {
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
 
             //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
+            $postData =  $request->getPost();
             //cancel
-            if (isset($postData['cancel'])) {
+            if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute('user');
             }
 
@@ -132,16 +136,19 @@ class UserController extends AbstractController
 
             if ($form->isValid()) {
 
-                $data = $form->getData();
-                $this->getService()->editUser($data);
+                $user = $form->getData();
+                $this->getUserMapper()->save($user);
+                $this->flashMessenger()->addSuccessMessage('User updated');
 
                 return $this->redirect()->toRoute('user');
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
-       }
+        }
 
         return new ViewModel(
             array(
-              'form'    => $form
+                'form'    => $form
             )
         );
 
@@ -154,11 +161,21 @@ class UserController extends AbstractController
      */
     public function deleteAction()
     {
-       //get param
-       $uid  = $this->params()->fromRoute('id', null);
-       $this->getService()->deleteUser($uid);
+        //get param
+        $uid  = $this->params()->fromRoute('id', null);
 
-       return $this->redirect()->toRoute('user');
+        /* @var $user User */
+        $user = $this->getUserMapper()->getUserById($uid);
+        if (!is_null($user)) {
+            $user->setActive(false);
+
+            $this->getUserMapper()->save($user);
+            $this->flashMessenger()->addSuccessMessage('User updated');
+        } else {
+            $this->flashMessenger()->addSuccessMessage('Input Error');
+        }
+
+        return $this->redirect()->toRoute('user');
     }
 
     /**
@@ -166,13 +183,97 @@ class UserController extends AbstractController
      *
      * @return \Zend\Http\Response
      */
-    public function undeleteAction()
+    public function unDeleteAction()
     {
-       //get param
-       $uid  = $this->params()->fromRoute('id', null);
-       $this->getService()->undeleteUser($uid);
+        //get param
+        $uid  = $this->params()->fromRoute('id', null);
 
-       return $this->redirect()->toRoute('user');
+        /* @var $user User */
+        $user = $this->getUserMapper()->getUserById($uid);
+        if (!is_null($user)) {
+            $user->setActive(true);
+
+            $this->getUserMapper()->save($user);
+            $this->flashMessenger()->addSuccessMessage('User updated');
+        } else {
+            $this->flashMessenger()->addSuccessMessage('Input Error');
+        }
+
+        return $this->redirect()->toRoute('user');
+    }
+
+    /**
+     * reset the user's password (send mail)
+     *
+     * @return \Zend\Http\Response
+     */
+    public function resetPasswordAction()
+    {
+        $uid  = $this->params()->fromRoute('id', null);
+        $user=$this->getUserMapper()->getUserById($uid);
+        $form = $this->getForm(UserFormService::CONFIRM_FORM);
+
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+            $postData =  $request->getPost();
+            //cancel
+            if (isset($postData['cancel'])) {
+                return $this->redirect()->toRoute('user');
+            }
+            if (isset($postData['submit'])) {
+
+                $password = $this->getPasswordService()->generatePassword();
+                $user->setPassword($password);
+                $pwdPlain = $this->getPasswordService()->getPlainPassword();
+                $user->setPasswordPlain($pwdPlain);
+                $date = new \DateTime();
+                $user->setPwdChange($date);
+                $this->getUserMapper()->save($user);
+
+                /* @var $mail \User\Mail\CredentialsMail */
+                $mail = $this->getMailService()->getMail(MailService::CREDENTIALS_MAIL);
+                $mail->setUser($user);
+                $mail->sendMail($user);
+                $this->flashMessenger()->addSuccessMessage('Password Reset');
+
+                return $this->redirect()->toRoute('user');
+            }
+        }
+
+        return new ViewModel(
+            array(
+                'user' => $user,
+                'form'=> $form,
+            )
+        );
+    }
+
+    /**
+     * @return \User\Mapper\UserMapper
+     */
+    private function getUserMapper()
+    {
+        /* @var $repo \User\Services\RepositoryService */
+        $repo = $this->getRepository();
+        return $repo->getMapper(RepositoryService::USER_MAPPER);
+    }
+
+    /**
+     * @param mixed $passwordService
+     */
+    public function setPasswordService($passwordService)
+    {
+        $this->passwordService = $passwordService;
+    }
+
+    /**
+     * @return \Nakade\Generators\PasswordGenerator
+     */
+    public function getPasswordService()
+    {
+        return $this->passwordService;
     }
 
 }

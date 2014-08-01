@@ -1,15 +1,8 @@
 <?php
 namespace User\Mail;
 
-use Zend\Mail\Transport\TransportInterface;
-use Mail\Services\MailMessageFactory;
-
 /**
- * Class VerifyMail
- *
- * Used for sending a verification mail to the registered user.
- * Mail has an expiration date and contents credentials and an
- * activation link. Mail is translated.
+ * Mail to verify a new email
  *
  * @package User\Mail
  */
@@ -17,68 +10,38 @@ class VerifyMail extends UserMail
 {
 
     /**
-     * properties
-     * @var mixed
+     * @return string
      */
+    public function getMailBody()
+    {
+        $message =
+            $this->translate("Hi %FIRST_NAME%") . ', ' .
+            PHP_EOL . PHP_EOL .
+            $this->translate('You have provided a new email address at %URL%.') . ' ' .
+            PHP_EOL . PHP_EOL .
+            $this->translate('Before activating your new address, you have to confirm your email first.') . ' ' . PHP_EOL .
+            $this->translate('Therefore, please click on the link below for confirmation.') . ' ' .
+            $this->translate('This is necessary to activate your account, too.') .
+            PHP_EOL . PHP_EOL . '%VERIFY_LINK%' . PHP_EOL . PHP_EOL .
+            $this->translate("For security reasons, the validity of the link will expire after %DUE_DATE%.") . ' ' .
+            $this->translate("If you failed to confirm in time, your account is deactivated.") . ' ' .
+            PHP_EOL . PHP_EOL .
+            $this->translate('In case of a problem, please contact us.') . PHP_EOL . PHP_EOL .
+            $this->getSignature()->getSignatureText();
 
-    protected $expire='72';
-    protected $prefix = 'Nakade';
-    protected $signature='Nakade Team';
-    protected $club='Berliner Baduk Club e.V.';
-    protected $register_court='Berlin-Charlottenburg';
-    protected $register_no='VR31852';
+        $this->makeReplacements($message);
 
+        return $message;
+    }
 
     /**
-     * Translated mail template. Needed for Poedit usage.
-     *
-     * @return array
+     * @return string
      */
-    public function getTranslatedMailTemplate()
+    public function getSubject()
     {
-        //just for translation using PoE
-        $salutation = sprintf("%s,\n\n%s\n\n",
-            $this->translate("Welcome %firstname%"),
-            $this->translate("Thank you for your registration at nakade.de")
-        );
-
-        $account = sprintf("%s:\n\n%s: %%username%%\n%s: %%password%%\n\n",
-            $this->translate("Your Credentials"),
-            $this->translate("username"),
-            $this->translate("password")
-        );
-
-        $verify = sprintf("\n%s %s %s\n",
-            $this->translate("Your account requires activation during the next %expire% hours."),
-            $this->translate("Please click on the link for activation."),
-            $this->translate("If you fail to activate your account in time, you have to reset your password using the 'forgot password' option.")
-        );
-
-        $greeting = sprintf("\n%s\n\n%s\n",
-            $this->translate("May the stones be with you."),
-            $this->translate("Your %signature%.")
-        );
-
-        $contact = sprintf("\n\n%%club%%\n%s: %%register_court%%\n%s: %%register_no%%",
-            $this->translate("Court of Registration"),
-            $this->translate("Register No.")
-        );
-
-        $subject = $this->translate("%prefix% - Your Credentials");
-        $this->mailTemplates[self::SUBJECT] = $subject;
-
-        $template = array(
-            self::SALUTATION => $salutation,
-            self::ACCOUNT    => $account,
-            self::VERIFY     => $verify,
-            self::GREETING   => $greeting,
-            self::CONTACT    => $contact,
-            self::LINK       => "\n\n%activationLink%\n\n",
-            self::SUBJECT    => $subject,
-        );
-
-        return $template;
-
+        $subject = $this->translate('Confirm Your Mail Address');
+        return $subject;
     }
-}
 
+
+}

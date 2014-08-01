@@ -27,8 +27,9 @@ foreach ($this->leagues as $league) : ?>
       <td><?php echo $league->getId(); ?></td>
       <td><?php echo $league->getNumber();?></td>
       <td><?php echo $league->getNoPlayers();?></td>
-      <td title="<?php echo $this->translate("edit");?>">
-         <a href="<?php echo $this->url('createLeague', array('action' => 'edit', 'id' => $league->getId()));  ?>"></a>
+      <td class="edit" >
+         <a class="button edit" title="<?php echo $this->translate("edit");?>"
+            href="<?php echo $this->url('createLeague', array('action' => 'edit', 'id' => $league->getId()));  ?>"></a>
       </td>
     </tr>
 <?php

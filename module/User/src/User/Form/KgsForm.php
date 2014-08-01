@@ -4,32 +4,21 @@ namespace User\Form;
 use \Zend\InputFilter\InputFilter;
 
 /**
- * Form for changing email adress.
- * Use a factory for needed settings after constructing.
- * Successive settings: setEntityManager(), setInputFilter(), init().
- * Use bindingEntity for setting values.
+ * Class KgsForm
+ *
+ * @package User\Form
  */
-class KgsForm extends DefaultForm
+class KgsForm extends BaseForm
 {
-
     /**
      * init the form. It is neccessary to call this function
      * before using the form.
      */
     public function init()
     {
-
-        //email
-        $this->add(
-            $this->getTextField('kgs', 'KGS (opt.):')
-        );
-
-        $this->setDefaultFields();
-
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_KGS));
+        $this->add($this->getButtonFieldSet());
     }
-
-
-
 
     /**
      * get the InputFilter
@@ -39,9 +28,15 @@ class KgsForm extends DefaultForm
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add($this->getUniqueDbFilter('kgs', null, '50'));
-
-
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_KGS));
         return $filter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'KgsForm';
     }
 }

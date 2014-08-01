@@ -1,0 +1,227 @@
+<?php
+// module/Privacy/view/Privacy/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('Application');
+$title = $this->translate("Rules");
+$this->headTitle($title);
+?>
+<div id="termsOfUse">
+<h1><?php echo $this->translate("Tournament and League Rules"); ?></h1>
+<h2>(Gültig seit 15.02.2014)</h2><br>
+<dl class="list">
+
+<dt>Allgemeine Regeln</dt>
+<dd>
+<ol>
+    <li>Gespielt wird nach den japanischen Regeln von 1989 (s.
+    <a href="https://www.cs.cmu.edu/~wjh/go/rules/Japanese.html" target="_blank">
+        https://www.cs.cmu.edu/~wjh/go/rules/Japanese.html</a>)
+    </li>
+    <li>Zusätzliche Regeln sind durch die Ausschreibung festgelegt. Diese beinhaltet neben der Komi Regelung, Spielzeit
+    und Byoyomi, u.a. auch Auf- bzw. Abstieg, Siegpunkte und Tiebreakerwertung.
+    </li>
+</ol>
+</dd>
+
+<dt>Festlegung der Spielfarbe</dt>
+<dd>
+    <ol>
+        <li>Die Spielfarbe ist durch die Auslosung vorgegeben.</li>
+        <li>Wurden bei einer Partie die Spielfarben versehentlich vertauscht, wird das Ergebnis dennoch gewertet.</li>
+    </ol>
+</dd>
+
+
+<dt>Spielort</dt>
+<dd>
+    <ol>
+        <li>Der Spielort ist durch die Auslosung vorgegeben.</li>
+        <li>Kann ein Spieler nicht persönlich vor Ort erscheinen, ist der
+            <a href="http://www.gokgs.com/" target="_blank">Kiseido Go Server (KGS)</a> als Alternative verbindlich.
+            Dazu muss der jeweilige Spieler unter Einhaltung der Fristen sich selbstständig um Ersatztermine kümmern.
+        </li>
+        <li>Wird kein Spielort durch die Auslosung benannt, finden die Partien auf dem
+            <a href="http://www.gokgs.com/" target="_blank">Kiseido Go Server (KGS)</a> statt. Dafür muss eine Software
+            eines Drittanbieters installiert werden. Zudem ist eine zusätzliche Registrierung für die Nutzung von KGS
+            fällig. Nakade hat keinen Einfluß auf das Dienstangebot von KGS.<br>
+            Falls nicht anders vermerkt, finden die Partien in der "Deutschen Ecke" statt. Über die Suchfunktion des
+            KGS Clients kann man ggf. seinen Gegner finden. Der KGS Name wird durch den Turnierplan bekanntgegeben.<br>
+        </li>
+        <li>Die Spieler haben die Möglichkeit sich selbstständig und kurzfristig auf einen anderen Spielort zu einigen.<br>
+            Ein Recht auf die Verlegung des Spielortes besteht aber nicht, falls sich die Spieler nicht einigen können.<br>
+            Damit besteht auch die Möglichkeit, eine Partie privat auf einem relaen Brett zu spielen.
+        </li>
+    </ol>
+</dd>
+
+<dt>Spieltermine, Terminverschiebung und Nicht-Erscheinen</dt>
+<dd>
+<p>Die Spieltermine sind durch die Auslosung vorgegeben. Bei gegenseitiger Übereinkunft oder unter besonderen Umständen
+    kann ein Spieltermin einmalig verschoben werden:</p>
+
+    <ol>
+        <li>Für eine Terminverschiebung muss eine Frist von 72h vorher eingehalten werden.</li>
+        <li>Wird die Frist nicht eingehalten, ist der vorgegebene Termin verbindlich. Ein Nicht-Erscheinen wird als verloren
+            bewertet.
+        </li>
+        <li>Beide Spieler verpflichten sich konstruktiv an einer alternativen Terminfindung mitzuwirken. Dies beinhaltet
+            eine angemessen zügige Rückmeldung über jegliche Kommunikationsmittel auf Mitteilungsversuche des Gegners.
+        </li>
+        <li>Zulässige Ersatztermine sind alle Termine bis zu 4 Wochen nach dem vorgebenen Termin.<br>
+            Ausgenommen von der 4-Wochen-Frist ist die letzte Partie des Turniers. Diese Partie kann nur vorverlegt werden,
+            um Ergebnismanipulation zu vermeiden.
+        </li>
+        <li>Der Ersatztermin muss binnen 5 Tagen nach Bekanntgabe einer Terminverschiebung gefunden und verbindlich
+            festgelegt werden.<br>
+            <span>Anmerkung: Die Einhaltung der Frist wird durch die technischen Möglichkeiten auf nakade.de realisiert.</span>
+        </li>
+        <li>Jeder Termin kann nur einmalig durch die Spieler selbst verschoben werden. Sollte es
+            darüberhinaus zu eine weitere Verschiebung notwendig werden, muss ein Liga-Manager hinzugezogen werden.
+            Es obliegt dem Liga-Manager, ob er einer weiteren Terminverschiebung zustimmt.
+        </li>
+        <li>Können sich die Spieler, bei Einhaltung der Fristen, nicht auf einen Ersatztermin einigen, ist dieses einem
+            Liga-Manager mitzuteilen. Die Partie wird dann nicht gewertet.
+        </li>
+        <li>Eine Partie gilt verloren, falls ein Spieler zu dem angesetzten Termin nicht erscheint.</li>
+    </ol>
+</dd>
+
+<dt>Partieabsage</dt>
+<dd><p>Es wird erwartet, dass nicht haltbare Termine auch im Falle der Fristüberschreitung abgesagt werden.<br>
+    Die Nichtachtung dieser voraussetzbaren Höflichkeit, kann disziplinarische Konsequenzen nach sich ziehen.</p>
+</dd>
+
+<dt>Verspätung</dt>
+<dd>
+    <ol>
+        <li>Erscheint ein Spieler mit einer Verspätung von mehr als 30min, wird die Partie als Verlust gewertet.<br>
+            Zudem wird die Verspätung wie ein Nicht-Erscheinen behandelt.
+        </li>
+        <li>Wiederholter Partieverlust durch Verspätung kann disziplinarische Konsequenzen nach sich ziehen.</li>
+        <li>Verspätungen beziehen sich immer auf den Spieltermin.</li>
+    </ol>
+</dd>
+
+<dt>Ergebnis</dt>
+<dd>
+    <ol>
+        <li>Das Liga-Ergebnis ist binnen 72h auf der Plattform einzutragen.</li>
+        <li>Bei Fristversäumnis wird die Partie automatisch als ausgesetzt (ohne Wertung) bewertet.</li>
+        <li>Bei Verdacht der Manipulation ist das Schiedsgericht heranzuziehen.</li>
+    </ol>
+</dd>
+
+<dt>Internet und KGS</dt>
+<dd>
+    <ol>
+        <li>Eine gute Erreichbarkeit über Email ist für den Ablauf notwendig und wird vorausgesetzt.</li>
+        <li>Vorraussetzung für die Teilnahme an online Turnieren ist ein KGS Zugang.</li>
+        <li>Jeder Spieler verpflichtet sich seinen KGS Zugang zu pflegen und über die Liga-Plattform bekannt zu machen.</li>
+        <li>Versäumt ein Spieler seinen KGS Zugang in sein Profil einzutragen, kann er bei der Liga-Anmeldung nicht
+            berücksichtigt werden.
+        </li>
+        <li>Jeder Spieler verpflichtet sich, für eine gute Internetkonnektivität insbesondere bei Spielen über KGS zu sorgen.</li>
+        <li>Ist ein Spieler nur unregelmäßig erreichbar oder kann keine akzeptable Internetkonnektivität gewährleisten,
+            kann er von online-Turnieren oder vom Service ausgeschlossen werden.<br>
+            Das beinhaltet auch die zeitweise oder dauerhafte Deaktivierung des Zugangs.
+        </li>
+    </ol>
+</dd>
+
+<dt>Byoyomi</dt>
+<dd>
+    <ol>
+        <li>Die Option einer Verlängerung nach Ablauf der regulären Spielzeit, wird durch die Ausschreibung festgelegt.<br>
+            Üblicherweise wird nach dem Kanadischen Byoyomi gespielt.
+        </li>
+        <li>Sollte bei online Partien der Go-Client das ausgeschrieben Byoyomi nicht unterstützen, wird nach einem
+            den technischen Möglichkeiten entsprechenden Byoyomi gespielt.</li>
+        <li>Das Byoyomi ist keine unendliche Verlängerung einer Partie. Bei Überschreitung der Byoyimi-Regeln gilt eine
+            Partie als verloren und wird wie Aufgabe gewertet.</li>
+        <li>Wir unterstützen bei privaten Partien auf reale Brettern das Berliner Byoyomi. Sind sich beide Spieler einig,
+            kann die Partie, sofern die Ausschreibung Byoyomi vorsieht, nach dem
+            <a href="#bln_byoyomi">Berliner Byoyomi</a> gespielt werden.
+        </li>
+    </ol>
+</dd>
+
+<dt><a name="bln_byoyomi"></a>Berliner Byoyomi</dt>
+<dd>
+    <ol>
+        <li>Beim Berliner Byoyomi ist der Partieverlust durch Zeitüberschreitung nicht möglich.</li>
+        <li>Wie beim kanadischen Byoyomi muss der Spieler in Zeitnot, eine bestimmte Anzahl an Steinen binnen der
+            vorgelegten Zeitperiode setzen.
+        </li>
+        <li>Wird die Zeitperiode überschritten, werden alle nicht gespielten Byoyomi-Steine dem Gegner als Punkte gut
+            geschrieben (gefangene Steine).
+        </li>
+    </ol>
+</dd>
+
+<dt>Schiedsgericht</dt>
+<dd>
+<ol>
+    <li>Das Schiedsgericht wird von Nakade bestimmt und ist für alle Go-Spiel Bereiche auf nakade.de zuständig.</li>
+    <li>Das Schiedsgericht trifft alle Entscheidungen unabhängig gemäß dem Regelwerk und gesundem Menschenverstand.</li>
+    <li>Das Schiedsgericht kann bei Unstimmigkeiten herangezogen werden. Dies kann sowohl über den Turnierleiter oder
+        betroffene Spielern erfolgen.<br>
+        Darüber hinaus kann das Schiedsgericht auch bei Verdacht von Unregelmäßigkeiten in einer Liga oder einem Turnier
+        vor einem Moderator hinzugezogen werden.
+    </li>
+    <li>Eine Schiedsentscheidung ist verbindlich und wird umgehend umgesetzt.</li>
+    <li>Für disziplinarische Maßnahmen ist das Schiedsgericht zuständig.</li>
+    <li>Die Frist für eine Schiedsentscheidung sollte einen Zeitrahmen von 6 Wochen nicht überschreiten.</li>
+    <li>Auf Nachfrage muss das Schiedsgericht eine getroffende Entscheidung schriftlich begründen.</li>
+</ol>
+</dd>
+</dl>
+</div>
+<div id="attachment">
+<h3>Anhang</h3>
+
+<dl>
+<dt>Anmerkung zur befristeten Ersatzterminfindung:</dt>
+<dd><p>Die Frist zur Ersatzterminfindung wird durch technische Möglichkeiten realisiert. Ziel ist
+zeitnah eine Lösung zu finden und damit Verzögerungen zu vermeiden. Vornehmlicher
+Bezugszeitpunkt für die Fristsetzung ist die erste Kontaktaufnahme zur Terminverschiebung.
+</p></dd>
+
+<dt>Anmerkung zur Ergebniseintragung:</dt>
+<dd><p>Schon um mögliche Manipulation aus zu schließen, sollte der Sieger einer Partie das Ergebnis
+möglichst zeitnah, bestenfalls direkt im Anschluss an die Partie, eintragen.<br>
+Wird von dieser Möglichkeit kein Gebrauch gemacht, kann auch der Verlierer das Ergebnis
+eintragen. Versäumen beide Spieler das Ergebnis in gegebener Frist einzutragen, wird das Spiel automatisch als
+ergebnislos eingetragen.</p>
+<p>Dies hat folgende Konsequenzen:</p>
+    <ol>
+        <li>bei Punktegleichstand haben die Anzahl gespielter Partien (mit Ergebnis) direkte Auswirkung auf die Rangliste</li>
+        <li>ergebnislose Partien sind von Zusatzleitungen wie Spielkommentare ausgeschlossen</li>
+        <li>wiederholte Versäumnisse können disziplinarische Konsequenzen nach sich ziehen</li>
+    </ol>
+</dd>
+
+<dt>Anmerkung zum Berliner Byoyomi:</dt>
+<dd><p>Byoyomi hat oft einen negativen Einfluss auf die Spielqualität beider Spieler. Zudem hat ein
+        vorzeitiges Partieende durch Zeitüberschreitung einen unangenehmen Beigeschmack.
+        Mit dem Berliner Byoyomi erhoffen wir eine positive Einflussnahme auf das Zeitmanagement
+        der Spieler bei gleichzeitiger Erhaltung der Zeitlimitation.</p>
+</dd>
+
+<dt>Anmerkung zu disziplinarischen Maßnahmen:</dt>
+<dd><p>Disziplinarische Maßnahmen können von einer persönlichen Abmahnung über Punktabzug bis
+        zum Ausschluß vom Ligabetrieb reichen. Ziel jeder Maßnahme ist immer die Wahrung der
+        Spielkultur sowie dem inneren Frieden der Go-spielenden Gemeinschaft.<br>
+        Das Schiedsgericht ist angehalten, betroffende Spieler zu informieren, und Gelegenheit zu
+        geben, Stellung zu den Vorwürfen zu beziehen. Grundlage jeder Entscheidung ist immer das
+        Regelwerk.</p>
+</dd>
+
+<dt>Anmerkung zur Spielkultur und Öffentlichkeitsarbeit:</dt>
+<dd><p>Das Go-Spiel hat für uns einen hohen kulturellen Wert.<br>
+        Es wird erwartet, dass alle Spieler dazu beitragen, dass das Go-Spiel in der Öffentlichkeit positiv wahrgenommen wird.<br>
+        Wir legen viel Wert auf angemessene Umgangsformen. Dazu gehören auch Respekt und Wahrung konventioneller Höflichkeit,
+        wie Grußformeln zu Partiebeginn und -ende.<br>
+        Fehlverhalten kann disziplinarische Konsequenzen nach sich ziehen, u.a. auch der Ausschluss von allen Veranstaltungen.</p>
+</dd>
+
+</dl>
+</div>

@@ -62,13 +62,18 @@ class AuthServiceFactory implements FactoryInterface
         $entityManager = $services->get('Doctrine\ORM\EntityManager');
         $translator = $services->get('translator');
 
+        //PasswordService
+        if (!$services->has('Nakade\Services\PasswordService')) {
+            throw new \RuntimeException('PasswordService not found.');
+        }
+        $pwdService = $services->get('Nakade\Services\PasswordService');
 
         //auth Options instance and setting the entityManager
         $authOptions = new AuthOptions($options);
         $authOptions->setObjectManager($entityManager);
 
         //creating authentication and storage adapter
-        $adapter = new AuthAdapter($authOptions);
+        $adapter = new AuthAdapter($pwdService, $authOptions);
         $storage = new AuthStorage($authOptions);
         $storage->setCookieLifeTime($lifeTime);
 

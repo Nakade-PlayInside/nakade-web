@@ -13,55 +13,8 @@ use Permission\Entity\RoleInterface;
  */
 class User extends UserModel implements UserInterface, RoleInterface
 {
-
-    /**
-     * Sets the Title.
-     * If empty string, null is set
-     *
-     * @param string $title
-     *
-     * @return User
-     */
-    public function setTitle($title)
-    {
-        $temp = empty($title)? null:$title;
-        $this->title = $temp;
-        return $this;
-    }
-
-    /**
-     * Sets the Nick Name.
-     * if empty string, null is set
-     *
-     * @param string $nickname
-     *
-     * @return User
-     */
-    public function setNickname($nickname)
-    {
-        $temp = empty($nickname)? null:$nickname;
-        $this->nickname = $temp;
-        return $this;
-    }
-
-
-    /**
-     * Sets the birthday.
-     * Converts to DateTime if string is provided
-     *
-     * @param \DateTime|string $datetime
-     *
-     * @return User
-     */
-    public function setBirthday($datetime)
-    {
-        $temp = empty($datetime)? null : $datetime;
-        if (is_string($temp)) {
-            $temp = new \DateTime($temp);
-        }
-        $this->birthday = $temp;
-        return $this;
-    }
+    private $passwordPlain;
+    private $couponCode;
 
     /**
      * returns true if dueDate is not expired
@@ -70,12 +23,10 @@ class User extends UserModel implements UserInterface, RoleInterface
      */
     public function isDue()
     {
-        $expired = $this->getDue();
-        if ($expired===null) {
+        if (is_null($this->getDue())) {
             return false;
         }
-
-        return $expired > new \DateTime();
+        return $this->getDue() > new \DateTime();
     }
 
     /**
@@ -86,13 +37,13 @@ class User extends UserModel implements UserInterface, RoleInterface
      */
     public function getShortName()
     {
-        $shortName = $this->getFirstname();
+        $shortName = $this->getFirstName();
         $nick = $this->getNickname();
 
-        if ($this->isAnonym()  && !is_null($nick)) {
+        if ($this->isAnonymous()  && !is_null($nick)) {
             $shortName = $nick;
         } else {
-            $lastName = strtoupper($this->getLastname());
+            $lastName = strtoupper($this->getLastName());
             $shortName .= " " . $lastName[0] . ".";
         }
 
@@ -120,12 +71,12 @@ class User extends UserModel implements UserInterface, RoleInterface
     public function getCompleteName()
     {
         $nick = $this->getNickname();
-        if ($this->isAnonym()  && !empty($nick)) {
+        if ($this->isAnonymous()  && !empty($nick)) {
             return sprintf("%s %s '%s' %s",
                 $this->getTitle(),
-                $this->getFirstname(),
+                $this->getFirstName(),
                 $nick,
-                $this->getLastname()
+                $this->getLastName()
             );
 
         }
@@ -140,9 +91,43 @@ class User extends UserModel implements UserInterface, RoleInterface
     public function getName()
     {
         return $this->getTitle() . " " .
-        $this->getFirstname() . " " .
-        $this->getLastname();
+        $this->getFirstName() . " " .
+        $this->getLastName();
     }
+
+    /**
+     * @param string $passwordPlain
+     */
+    public function setPasswordPlain($passwordPlain)
+    {
+        $this->passwordPlain = $passwordPlain;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPasswordPlain()
+    {
+        return $this->passwordPlain;
+    }
+
+    /**
+     * @param mixed $couponCode
+     */
+    public function setCouponCode($couponCode)
+    {
+        $this->couponCode = $couponCode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCouponCode()
+    {
+        return $this->couponCode;
+    }
+
+
 
     /**
      * populating data as an array.
@@ -153,6 +138,7 @@ class User extends UserModel implements UserInterface, RoleInterface
 
     public function populate($data)
     {
+        //todo: needed anymore?
         foreach ($data as $key => $value) {
             $method = 'set'.ucfirst($key);
             if (method_exists($this, $method)) {
@@ -162,20 +148,11 @@ class User extends UserModel implements UserInterface, RoleInterface
     }
 
     /**
-     * usage for creating a NEW user. Provide all neccessary values
-     * in an array. Verified, active flag and created date are
-     * generated automatically.
-     *
      * @param array $data
      */
     public function exchangeArray($data)
     {
         $this->populate($data);
-
-        //defaults
-        $this->verified  = 0;
-        $this->active    = 1;
-        $this->created   = new \DateTime();
 
     }
 

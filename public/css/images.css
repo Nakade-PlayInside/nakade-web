@@ -1,0 +1,250 @@
+.lang-16 {
+    background: url(../images/lang-16.png) no-repeat top left;
+}
+
+.lang-24 {
+    background: url(../images/lang-24.png) no-repeat top left;
+}
+
+.lang-32 {
+    background: url(../images/lang-32.png) no-repeat top left;
+}
+
+.lang-48 {
+    background: url(../images/lang-48.png) no-repeat top left;
+}
+
+.bg_BG-48{ background-position: 0 0; width: 48px; height: 48px; }
+.cn_CN-48{ background-position: 0 -50px; width: 48px; height: 48px; }
+.cz_CZ-48{ background-position: 0 -100px; width: 48px; height: 48px; }
+.de_DE-48{ background-position: 0 -150px; width: 48px; height: 48px; }
+.dk_DK-48{ background-position: 0 -200px; width: 48px; height: 48px; }
+.en_US-48{ background-position: 0 -250px; width: 48px; height: 48px; }
+.es_ES-48{ background-position: 0 -300px; width: 48px; height: 48px; }
+.fi_FI-48{ background-position: 0 -350px; width: 48px; height: 48px; }
+.fr_FR-48{ background-position: 0 -400px; width: 48px; height: 48px; }
+.gr_GR-48{ background-position: 0 -450px; width: 48px; height: 48px; }
+.hr_HR-48{ background-position: 0 -500px; width: 48px; height: 48px; }
+.hu_HU-48{ background-position: 0 -550px; width: 48px; height: 48px; }
+.it_IT-48{ background-position: 0 -600px; width: 48px; height: 48px; }
+.jp_JP-48{ background-position: 0 -650px; width: 48px; height: 48px; }
+.kr_KR-48{ background-position: 0 -700px; width: 48px; height: 48px; }
+.nl_NL-48{ background-position: 0 -750px; width: 48px; height: 48px; }
+.no_NO-48{ background-position: 0 -800px; width: 48px; height: 48px; }
+.pl_PL-48{ background-position: 0 -850px; width: 48px; height: 48px; }
+.pt_PT-48{ background-position: 0 -900px; width: 48px; height: 48px; }
+.ro_RO-48{ background-position: 0 -950px; width: 48px; height: 48px; }
+.ru_RU-48{ background-position: 0 -1000px; width: 48px; height: 48px; }
+.se_SE-48{ background-position: 0 -1050px; width: 48px; height: 48px; }
+.tr_TR-48{ background-position: 0 -1100px; width: 48px; height: 48px; }
+.ua_UA-48{ background-position: 0 -1150px; width: 48px; height: 48px; }
+
+
+.bg_BG-32{ background-position: 0 0; width: 32px; height: 32px; }
+.cn_CN-32{ background-position: 0 -34px; width: 32px; height: 32px; }
+.cz_CZ-32{ background-position: 0 -68px; width: 32px; height: 32px; }
+.de_DE-32{ background-position: 0 -102px; width: 32px; height: 32px; }
+.dk_DK-32{ background-position: 0 -136px; width: 32px; height: 32px; }
+.en_US-32{ background-position: 0 -170px; width: 32px; height: 32px; }
+.es_ES-32{ background-position: 0 -204px; width: 32px; height: 32px; }
+.fi_FI-32{ background-position: 0 -238px; width: 32px; height: 32px; }
+.fr_FR-32{ background-position: 0 -272px; width: 32px; height: 32px; }
+.gr_GR-32{ background-position: 0 -306px; width: 32px; height: 32px; }
+.hr_HR-32{ background-position: 0 -340px; width: 32px; height: 32px; }
+.hu_HU-32{ background-position: 0 -374px; width: 32px; height: 32px; }
+.it_IT-32{ background-position: 0 -408px; width: 32px; height: 32px; }
+.jp_JP-32{ background-position: 0 -442px; width: 32px; height: 32px; }
+.kr_KR-32{ background-position: 0 -476px; width: 32px; height: 32px; }
+.nl_NL-32{ background-position: 0 -510px; width: 32px; height: 32px; }
+.no_NO-32{ background-position: 0 -544px; width: 32px; height: 32px; }
+.pl_PL-32{ background-position: 0 -578px; width: 32px; height: 32px; }
+.pt_PT-32{ background-position: 0 -612px; width: 32px; height: 32px; }
+.ro_RO-32{ background-position: 0 -646px; width: 32px; height: 32px; }
+.ru_RU-32{ background-position: 0 -680px; width: 32px; height: 32px; }
+.se_SE-32{ background-position: 0 -714px; width: 32px; height: 32px; }
+.tr_TR-32{ background-position: 0 -748px; width: 32px; height: 32px; }
+.ua_UA-32{ background-position: 0 -782px; width: 32px; height: 32px; }
+
+
+.bg_BG-24{ background-position: 0 0; width: 24px; height: 24px; }
+.cn_CN-24{ background-position: 0 -26px; width: 24px; height: 24px; }
+.cz_CZ-24{ background-position: 0 -52px; width: 24px; height: 24px; }
+.de_DE-24{ background-position: 0 -78px; width: 24px; height: 24px; }
+.dk_DK-24{ background-position: 0 -104px; width: 24px; height: 24px; }
+.en_US-24{ background-position: 0 -130px; width: 24px; height: 24px; }
+.es_ES-24{ background-position: 0 -156px; width: 24px; height: 24px; }
+.fi_FI-24{ background-position: 0 -182px; width: 24px; height: 24px; }
+.fr_FR-24{ background-position: 0 -208px; width: 24px; height: 24px; }
+.gr_GR-24{ background-position: 0 -234px; width: 24px; height: 24px; }
+.hr_HR-24{ background-position: 0 -260px; width: 24px; height: 24px; }
+.hu_HU-24{ background-position: 0 -286px; width: 24px; height: 24px; }
+.it_IT-24{ background-position: 0 -312px; width: 24px; height: 24px; }
+.jp_JP-24{ background-position: 0 -338px; width: 24px; height: 24px; }
+.kr_KR-24{ background-position: 0 -364px; width: 24px; height: 24px; }
+.nl_NL-24{ background-position: 0 -390px; width: 24px; height: 24px; }
+.no_NO-24{ background-position: 0 -416px; width: 24px; height: 24px; }
+.pl_PL-24{ background-position: 0 -442px; width: 24px; height: 24px; }
+.pt_PT-24{ background-position: 0 -468px; width: 24px; height: 24px; }
+.ro_RO-24{ background-position: 0 -494px; width: 24px; height: 24px; }
+.ru_RU-24{ background-position: 0 -520px; width: 24px; height: 24px; }
+.se_SE-24{ background-position: 0 -546px; width: 24px; height: 24px; }
+.tr_TR-24{ background-position: 0 -572px; width: 24px; height: 24px; }
+.ua_UA-24{ background-position: 0 -598px; width: 24px; height: 24px; }
+
+
+.bg_BG-16{ background-position: 0 0; width: 16px; height: 16px; }
+.cn_CN-16{ background-position: 0 -18px; width: 16px; height: 16px; }
+.cz_CZ-16{ background-position: 0 -36px; width: 16px; height: 16px; }
+.de_DE-16{ background-position: 0 -54px; width: 16px; height: 16px; }
+.dk_DK-16{ background-position: 0 -72px; width: 16px; height: 16px; }
+.en_US-16{ background-position: 0 -90px; width: 16px; height: 16px; }
+.es_ES-16{ background-position: 0 -108px; width: 16px; height: 16px; }
+.fi_FI-16{ background-position: 0 -126px; width: 16px; height: 16px; }
+.fr_FR-16{ background-position: 0 -144px; width: 16px; height: 16px; }
+.gr_GR-16{ background-position: 0 -162px; width: 16px; height: 16px; }
+.hr_HR-16{ background-position: 0 -180px; width: 16px; height: 16px; }
+.hu_HU-16{ background-position: 0 -198px; width: 16px; height: 16px; }
+.it_IT-16{ background-position: 0 -216px; width: 16px; height: 16px; }
+.jp_JP-16{ background-position: 0 -234px; width: 16px; height: 16px; }
+.kr_KR-16{ background-position: 0 -252px; width: 16px; height: 16px; }
+.nl_NL-16{ background-position: 0 -270px; width: 16px; height: 16px; }
+.no_NO-16{ background-position: 0 -288px; width: 16px; height: 16px; }
+.pl_PL-16{ background-position: 0 -306px; width: 16px; height: 16px; }
+.pt_PT-16{ background-position: 0 -324px; width: 16px; height: 16px; }
+.ro_RO-16{ background-position: 0 -342px; width: 16px; height: 16px; }
+.ru_RU-16{ background-position: 0 -360px; width: 16px; height: 16px; }
+.se_SE-16{ background-position: 0 -378px; width: 16px; height: 16px; }
+.tr_TR-16{ background-position: 0 -396px; width: 16px; height: 16px; }
+.ua_UA-16{ background-position: 0 -414px; width: 16px; height: 16px; }
+
+.arrows-16 {
+    background: url(../images/arrows-16a.png) no-repeat top left;
+}
+.active-16{ background-position: 0 0; width: 16px; height: 16px; }
+.arrow-down-16{ background-position: 0 -18px; width: 16px; height: 16px; }
+.arrow-left-16{ background-position: 0 -36px; width: 16px; height: 16px; }
+.arrow-right-16{ background-position: 0 -54px; width: 16px; height: 16px; }
+.control-double-left-16{ background-position: 0 -72px; width: 16px; height: 16px; }
+.control-double-right-16{ background-position: 0 -90px; width: 16px; height: 16px; }
+.control-left-16{ background-position: 0 -108px; width: 16px; height: 16px; }
+.control-right-16{ background-position: 0 -126px; width: 16px; height: 16px; }
+.cross-16{ background-position: 0 -144px; width: 16px; height: 16px; }
+
+.arrows-32 {
+    background: url(../images/arrows-32.png) no-repeat top left;
+    width: 32px; height: 32px;
+}
+.active-32{ background-position: 0 0; width: 32px; height: 32px; }
+.arrow-down-32{ background-position: 0 -34px; width: 32px; height: 32px; }
+.arrow-left-32{ background-position: 0 -68px; width: 32px; height: 32px; }
+.arrow-right-32{ background-position: 0 -102px; width: 32px; height: 32px; }
+.control-double-left-32{ background-position: 0 -136px; width: 32px; height: 32px; }
+.control-double-right-32{ background-position: 0 -170px; width: 32px; height: 32px; }
+.control-left-32{ background-position: 0 -204px; width: 32px; height: 32px; }
+.control-right-32{ background-position: 0 -238px; width: 32px; height: 32px; }
+.cross-32{ background-position: 0 -272px; width: 32px; height: 32px; }
+
+.buttons-32 {
+    background: url(../images/buttons-32.png) no-repeat top left;
+}
+
+.info-32{ background-position: 0 0; width: 32px; height: 32px; }
+.stop-32{ background-position: 0 -34px; width: 32px; height: 32px; }
+.accept-32{ background-position: 0 -68px; width: 32px; height: 32px; }
+.add-32{ background-position: 0 -102px; width: 32px; height: 32px; }
+.change-password-32{ background-position: 0 -136px; width: 32px; height: 32px; }
+.config-edit-32{ background-position: 0 -170px; width: 32px; height: 32px; }
+.config-32{ background-position: 0 -204px; width: 32px; height: 32px; }
+.date-add-32{ background-position: 0 -238px; width: 32px; height: 32px; }
+.date-delete-32{ background-position: 0 -272px; width: 32px; height: 32px; }
+.date-edit-32{ background-position: 0 -306px; width: 32px; height: 32px; }
+.date-32{ background-position: 0 -340px; width: 32px; height: 32px; }
+.delete-32{ background-position: 0 -374px; width: 32px; height: 32px; }
+.edit-32{ background-position: 0 -408px; width: 32px; height: 32px; }
+.exclamation-32{ background-position: 0 -442px; width: 32px; height: 32px; }
+.key-add-32{ background-position: 0 -476px; width: 32px; height: 32px; }
+.key-delete-32{ background-position: 0 -510px; width: 32px; height: 32px; }
+.user-add-32{ background-position: 0 -544px; width: 32px; height: 32px; }
+.user-delete-32{ background-position: 0 -578px; width: 32px; height: 32px; }
+
+.buttons-16 {
+    background: url(../images/buttons-16.png) no-repeat top left;
+}
+
+.info-16{ background-position: 0 0; width: 16px; height: 16px; }
+.stop-16{ background-position: 0 -18px; width: 16px; height: 16px; }
+.accept-16{ background-position: 0 -36px; width: 16px; height: 16px; }
+.add-16{ background-position: 0 -54px; width: 16px; height: 16px; }
+.change-password-16{ background-position: 0 -72px; width: 16px; height: 16px; }
+.config-edit-16{ background-position: 0 -90px; width: 16px; height: 16px; }
+.config-16{ background-position: 0 -108px; width: 16px; height: 16px; }
+.date-add-16{ background-position: 0 -126px; width: 16px; height: 16px; }
+.date-delete-16{ background-position: 0 -144px; width: 16px; height: 16px; }
+.date-edit-16{ background-position: 0 -162px; width: 16px; height: 16px; }
+.date-16{ background-position: 0 -180px; width: 16px; height: 16px; }
+.delete-16{ background-position: 0 -198px; width: 16px; height: 16px; }
+.edit-16{ background-position: 0 -216px; width: 16px; height: 16px; }
+.exclamation-16{ background-position: 0 -234px; width: 16px; height: 16px; }
+.key-add-16{ background-position: 0 -252px; width: 16px; height: 16px; }
+.key-delete-16{ background-position: 0 -270px; width: 16px; height: 16px; }
+.user-add-16{ background-position: 0 -288px; width: 16px; height: 16px; }
+.user-delete-16{ background-position: 0 -306px; width: 16px; height: 16px; }
+
+
+
+.mail-16 {
+    background: url(../images/mail-16.png) no-repeat top left;
+}
+
+.green-ball-16{ background-position: 0 0; width: 16px; height: 16px; }
+.grey-ball-16{ background-position: 0 -18px; width: 16px; height: 16px; }
+.mail-green-16{ background-position: 0 -36px; width: 16px; height: 16px; }
+.mail-red-16{ background-position: 0 -54px; width: 16px; height: 16px; }
+.mail-yellow-16{ background-position: 0 -72px; width: 16px; height: 16px; }
+.red-ball-16{ background-position: 0 -90px; width: 16px; height: 16px; }
+.time-16{ background-position: 0 -108px; width: 16px; height: 16px; }
+.trash-16{ background-position: 0 -126px; width: 16px; height: 16px; }
+.yellow-ball-16{ background-position: 0 -144px; width: 16px; height: 16px; }
+
+.mail-32 {
+    background: url(../images/mail-32.png) no-repeat top left;
+}
+.green-ball-32{ background-position: 0 0; width: 32px; height: 32px; }
+.grey-ball-32{ background-position: 0 -34px; width: 32px; height: 32px; }
+.mail-green-32{ background-position: 0 -68px; width: 32px; height: 32px; }
+.mail-red-32{ background-position: 0 -102px; width: 32px; height: 32px; }
+.mail-yellow-32{ background-position: 0 -136px; width: 32px; height: 32px; }
+.red-ball-32{ background-position: 0 -170px; width: 32px; height: 32px; }
+.time-32{ background-position: 0 -204px; width: 32px; height: 32px; }
+.trash-32{ background-position: 0 -238px; width: 32px; height: 32px; }
+.yellow-ball-32{ background-position: 0 -272px; width: 32px; height: 32px; }
+
+.status-16 {
+    background: url(../images/status-16.png) no-repeat top left;
+}
+.admin-16{ background-position: 0 0; width: 16px; height: 16px; }
+.anonymous-16{ background-position: 0 -18px; width: 16px; height: 16px; }
+.female-16{ background-position: 0 -36px; width: 16px; height: 16px; }
+.iCal-16{ background-position: 0 -54px; width: 16px; height: 16px; }
+.male-16{ background-position: 0 -72px; width: 16px; height: 16px; }
+.security-16{ background-position: 0 -90px; width: 16px; height: 16px; }
+.status-offline-16{ background-position: 0 -108px; width: 16px; height: 16px; }
+.status-online-16{ background-position: 0 -126px; width: 16px; height: 16px; }
+.support-16{ background-position: 0 -144px; width: 16px; height: 16px; }
+.user-16{ background-position: 0 -162px; width: 16px; height: 16px; }
+
+.status-32 {
+    background: url(../images/status-32.png) no-repeat top left;
+}
+.admin-32{ background-position: 0 0; width: 32px; height: 32px; }
+.anonymous-32{ background-position: 0 -34px; width: 32px; height: 32px; }
+.captain-32{ background-position: 0 -68px; width: 32px; height: 32px; }
+.female-32{ background-position: 0 -102px; width: 32px; height: 32px; }
+.iCal-32{ background-position: 0 -136px; width: 32px; height: 32px; }
+.male-32{ background-position: 0 -170px; width: 32px; height: 32px; }
+.security-32{ background-position: 0 -204px; width: 32px; height: 32px; }
+.status-offline-32{ background-position: 0 -238px; width: 32px; height: 32px; }
+.status-online-32{ background-position: 0 -272px; width: 32px; height: 32px; }
+.support-32{ background-position: 0 -306px; width: 32px; height: 32px; }
+.user-32{ background-position: 0 -340px; width: 32px; height: 32px; }
+

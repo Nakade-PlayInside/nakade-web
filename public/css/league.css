@@ -41,3 +41,8 @@ div.matchDayPagination {margin-top: 12px;}
 .nakadePagination li:last-child a{-webkit-border-radius:0 3px 3px 0;-moz-border-radius:0 3px 3px 0;border-radius:0 3px 3px 0;}
 .nakadePagination-centered {text-align:center;}
 .nakadePagination-right {text-align:right;}
+
+.center {
+    text-align: center;
+}
+

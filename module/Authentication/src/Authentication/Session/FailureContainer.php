@@ -36,6 +36,16 @@ class FailureContainer extends Container
     }
 
     /**
+     * Sets the amount of failed authentication, adding one
+     * each time the method is called.
+     *
+     */
+    public function getFailedAttempt()
+    {
+        return $this->attempts;
+    }
+
+    /**
      * Resets the session to 0.
      */
     public function clear()

@@ -1,0 +1,133 @@
+td.info {
+    width:1em;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.small {
+    width:16px;
+    height: 16px;
+}
+
+.male {
+    background-image: url(../images/small_male.png);
+}
+
+.female {
+    background-image: url(../images/small_female.png);
+}
+
+.verified {
+    background-image: url(../images/active.png);
+}
+
+.unverified {
+    background-image: url(../images/inactive.png);
+}
+
+.isDue {
+    background-image: url(../images/mail.png);
+}
+
+.button {
+    -webkit-box-shadow:rgba(87, 169, 0, 0.3) 1px 1px 0.2em;
+    -moz-box-shadow:rgba(87, 169, 0, 0.3) 1px 1px 0.2em;
+    box-shadow:rgba(87, 169, 0, 0.3) 1px 1px 0.2em;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border:none;
+}
+
+/* button for edit */
+td.edit, td.info {
+    text-align:center;
+}
+
+a.edit {
+    background-image: url(../images/edit.png);
+}
+
+a.resetPwd {
+    background-image: url(../images/key_add.png);
+    background-size: contain;
+}
+
+.userBtn {
+    -webkit-box-shadow:rgba(87, 169, 0, 0.3) 1px 1px 0.2em;
+    -moz-box-shadow:rgba(87, 169, 0, 0.3) 1px 1px 0.2em;
+    box-shadow:rgba(87, 169, 0, 0.3) 1px 1px 0.2em;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border:none;
+    width: 44px !important;
+    height: 16px;
+    line-height: 16px;
+    display: inline-block;
+    background-position: center!important;
+}
+
+a.button {
+    background-color: rgba(250, 250, 250, 0.2);
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
+    width:40px;
+    height: 18px;
+    vertical-align: middle;
+}
+
+a.button:hover {
+    background-color: rgba(170, 170, 170, 0.4);
+}
+
+.anonymous {
+    padding: 0 20px 0 0;
+    background: url(../images/anonymous.png) no-repeat right center;
+    background-size: contain;
+}
+
+table.profile {
+    width: auto;
+    margin-top: 0.5em;
+}
+
+table.profile td {
+    vertical-align:middle;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.pwdInfo {
+    color: hsl(240,10%,65%);
+}
+
+.add {
+    margin: 10px;
+}
+
+/* double ul.createSeason li a */
+.details {
+    background: url(../images/info.png) no-repeat center center;
+}
+
+.automatic:before {
+    content: "auto";
+}
+
+.addUser {
+    display:inline-block;
+    vertical-align: middle;
+    width:32px;
+    height:32px;
+}
+
+.userMsg {
+    font-size:larger;
+    margin: 10px 0;
+}
+
+.invite {
+    width: 240px !important;
+}

@@ -1,26 +1,22 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for
- * the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc.
- * (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-
 namespace User\Controller;
 
-use Zend\Form\FormInterface;
+use User\Entity\Coupon;
+use User\Services\MailService;
+use User\Services\RepositoryService;
+use User\Services\UserFormService;
+use Zend\Form\Form;
+use Zend\Http\Request;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
 /**
- * Editing the user's own profile
+ * Class ProfileController
+ *
+ * @package User\Controller
  */
 class ProfileController extends AbstractController
 {
-
     /**
      * Showing the user's profile
      *
@@ -28,19 +24,13 @@ class ProfileController extends AbstractController
      */
     public function indexAction()
     {
-        //redirection does not work here if the
-        //protected method is provided!
-        $profile = $this->identity();
-
-        if ($profile === null) {
-            return $this->redirect()->toRoute('login');
-        }
+        $user = $this->getUser();
 
         return new ViewModel(
             array(
-               'profile'    => $profile,
-               'name'       => $profile->getName(),
-               'username'   => $profile->getUsername(),
+               'profile'    => $user,
+               'name'       => $user->getName(),
+               'username'   => $user->getUsername(),
            )
         );
     }
@@ -50,40 +40,61 @@ class ProfileController extends AbstractController
      *
      * @return \Zend\View\Model\ViewModel
      */
-    public function birthdayAction()
+    public function inviteAction()
     {
-        $profile = $this->getProfile();
+        /* @var $form \User\Form\BirthdayForm */
+        $form = $this->getForm(UserFormService::INVITE_FRIEND_FORM);
+        $coupon = new Coupon();
+        $form->bindEntity($coupon);
 
-        $form = $this->getForm('birthday');
-        $form->bindEntity($profile);
-
-        if ($this->getRequest()->isPost()) {
-
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
             //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-
-            //cancel
-            if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('profile');
-            }
-
+            $postData =  $request->getPost();
             $form->setData($postData);
 
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['uid']=$this->getProfile()->getId();
-                $this->getService()->editProfile($data);
+                /* @var $coupon \User\Entity\Coupon */
+                $coupon = $form->getData();
+                $this->getUserMapper()->save($coupon);
 
-                return $this->redirect()->toRoute('profile');
+                /* @var $mail \User\Mail\CouponMail */
+                $mail = $this->getMailService()->getMail(MailService::COUPON_MAIL);
+                $mail->setCoupon($coupon);
+                $mail->sendMail($coupon);
+
+                $this->flashMessenger()->addSuccessMessage('Your Invitation Is Send');
+                $coupon = new Coupon();
+                $form->bind($coupon);
+
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
         }
 
         return new ViewModel(
-            array (
-               'form'    => $form
-            )
+            array('form' => $form)
         );
+
+    }
+
+    /**
+     * edit the birthday
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function birthdayAction()
+    {
+        /* @var $form \User\Form\BirthdayForm */
+        $form = $this->getForm(UserFormService::BIRTHDAY_FORM);
+        $user = $this->getUser();
+        $form->bindEntity($user);
+
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
 
     }
 
@@ -94,38 +105,14 @@ class ProfileController extends AbstractController
      */
     public function nickAction()
     {
-        $profile = $this->getProfile();
+        /* @var $form \User\Form\NickForm */
+        $form = $this->getForm(UserFormService::NICK_FORM);
+        $user = $this->getUser();
+        $form->bindEntity($user);
 
-        $form = $this->getForm('nick');
-        $form->bindEntity($profile);
-
-        if ($this->getRequest()->isPost()) {
-
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-
-            //cancel
-            if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('profile');
-            }
-
-            $form->setData($postData);
-
-            if ($form->isValid()) {
-
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['uid']=$this->getProfile()->getId();
-                $this->getService()->editProfile($data);
-
-                return $this->redirect()->toRoute('profile');
-            }
-        }
-
-        return new ViewModel(
-            array (
-              'form'    => $form
-            )
-        );
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
     }
 
     /**
@@ -135,38 +122,14 @@ class ProfileController extends AbstractController
      */
     public function kgsAction()
     {
-        $profile = $this->getProfile();
+        /* @var $form \User\Form\KgsForm */
+        $form = $this->getForm(UserFormService::KGS_FORM);
+        $user = $this->getUser();
+        $form->bindEntity($user);
 
-        $form = $this->getForm('kgs');
-        $form->bindEntity($profile);
-
-        if ($this->getRequest()->isPost()) {
-
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-
-            //cancel
-            if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('profile');
-            }
-
-            $form->setData($postData);
-
-            if ($form->isValid()) {
-
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['uid']=$this->getProfile()->getId();
-                $this->getService()->editProfile($data);
-
-                return $this->redirect()->toRoute('profile');
-            }
-        }
-
-        return new ViewModel(
-            array(
-                'form'    => $form
-            )
-        );
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
     }
 
     /**
@@ -176,37 +139,14 @@ class ProfileController extends AbstractController
      */
     public function emailAction()
     {
-        $profile = $this->getProfile();
-        $form = $this->getForm('email');
-        $form->bindEntity($profile);
+        /* @var $form \User\Form\EmailForm */
+        $form = $this->getForm(UserFormService::EMAIL_FORM);
+        $user = $this->getUser();
+        $form->bindEntity($user);
 
-        if ($this->getRequest()->isPost()) {
-
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-
-            //cancel
-            if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('profile');
-            }
-
-            $form->setData($postData);
-
-            if ($form->isValid()) {
-
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['uid']=$this->getProfile()->getId();
-                $this->getService()->editProfile($data);
-
-                return $this->redirect()->toRoute('profile');
-            }
-        }
-
-        return new ViewModel(
-            array(
-              'form'    => $form
-            )
-        );
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
     }
 
     /**
@@ -217,38 +157,14 @@ class ProfileController extends AbstractController
     public function passwordAction()
     {
 
-        if ($this->identity() === null) {
-            return $this->redirect()->toRoute('login');
-        }
+        /* @var $form \User\Form\PasswordForm */
+        $form = $this->getForm(UserFormService::PASSWORD_FORM);
+        $user = $this->getUser();
+        $form->bindEntity($user);
 
-        $form = $this->getForm('password');
-        if ($this->getRequest()->isPost()) {
-
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-
-            //cancel
-            if (isset($postData['cancel'])) {
-                return $this->redirect()->toRoute('profile');
-            }
-
-            $form->setData($postData);
-
-            if ($form->isValid()) {
-
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['uid']=$this->getProfile()->getId();
-                $this->getService()->editPassword($data);
-
-                return $this->redirect()->toRoute('profile');
-            }
-        }
-
-        return new ViewModel(
-            array(
-              'form'    => $form
-            )
-        );
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
     }
 
     /**
@@ -259,20 +175,30 @@ class ProfileController extends AbstractController
     public function languageAction()
     {
 
-        if ($this->identity() === null) {
-            return $this->redirect()->toRoute('login');
-        }
-        $user = $this->identity();
-        $lang = $user->getLanguage();
+        /* @var $form \User\Form\LanguageForm */
+        $form = $this->getForm(UserFormService::LANGUAGE_FORM);
+        $user = $this->getUser();
+        $form->bindEntity($user);
 
-        $form = $this->getForm('language', $lang);
-        if ($this->getRequest()->isPost()) {
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        return $this->updateProfile($request, $form);
+    }
 
+    /**
+     * @param Request $request
+     * @param Form    $form
+     *
+     * @return \Zend\Http\Response
+     */
+    private function updateProfile(Request $request, Form $form)
+    {
+        if ($request->isPost()) {
             //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
+            $postData =  $request->getPost();
 
             //cancel
-            if (isset($postData['cancel'])) {
+            if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute('profile');
             }
 
@@ -280,45 +206,52 @@ class ProfileController extends AbstractController
 
             if ($form->isValid()) {
 
-                $data = $form->getData(FormInterface::VALUES_AS_ARRAY);
-                $data['uid']=$this->getProfile()->getId();
+                /* @var $user \User\Entity\User */
+                $user = $form->getData();
+                $this->getUserMapper()->save($user);
 
-                //no language selected
-                if ($data['language'] == 'no_NO') {
-                    $data['language']=null;
+                //updating actual language
+                $profile = $this->identity();
+                $profile->setLanguage($user->getLanguage());
+
+                //email form contains hidden field used for hydration
+                if (isset($postData['isNewEmail'])) {
+
+                    /* @var $mail \User\Mail\VerifyMail */
+                    $mail = $this->getMailService()->getMail(MailService::VERIFY_MAIL);
+                    $mail->setUser($user);
+                    $mail->sendMail($user);
                 }
-                $this->getService()->editProfile($data);
 
-                //todo: refactoring
-                $auth = $this->getService()->getAuthService();
-                $user = $auth->getIdentity();
-                $user->setLanguage($data['language']);
-
+                $this->flashMessenger()->addSuccessMessage('Profile updated');
                 return $this->redirect()->toRoute('profile');
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
         }
 
         return new ViewModel(
-            array(
-                'form'    => $form
-            )
+            array('form' => $form)
         );
     }
 
     /**
-     * get the user's profile. Redirect to the login if not logged in.
-     *
-     * @return mixed
+     * @return \User\Mapper\UserMapper
      */
-    protected function getProfile()
+    private function getUserMapper()
+    {
+        /* @var $repo \User\Services\RepositoryService */
+        $repo = $this->getRepository();
+        return $repo->getMapper(RepositoryService::USER_MAPPER);
+    }
+
+    /**
+     * @return \User\Entity\User
+     */
+    private function getUser()
     {
         $profile = $this->identity();
-
-        if ($profile === null) {
-            return $this->redirect()->toRoute('login');
-        }
-
-        return $profile;
+        return $this->getUserMapper()->getUserById($profile->getId());
     }
 
 }

@@ -1,28 +1,16 @@
 <?php
 namespace User\Form;
 
-use User\Form\Fields\Birthday;
+use Permission\Entity\RoleInterface;
 use \Zend\InputFilter\InputFilter;
-/**
- * Form for adding or editing a new User.
- * Use a factory for needed settings after constructing.
- * Successive settings: setEntityManager(), setInputFilter(), init().
- * Use bindingEntity for setting values.
- */
-class UserForm extends DefaultForm
-{
-    private $birthday;
 
-    /**
-     * @return Birthday
-     */
-    public function getBirthday()
-    {
-        if (is_null($this->birthday)) {
-            $this->birthday=new Birthday($this->getTranslator(), $this->getTranslatorTextDomain());
-        }
-        return $this->birthday;
-    }
+/**
+ * Class UserForm
+ *
+ * @package User\Form
+ */
+class UserForm extends BaseForm implements RoleInterface
+{
 
     /**
      * Init the form. It is neccessary to call this function
@@ -30,120 +18,20 @@ class UserForm extends DefaultForm
      */
     public function init()
     {
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_SEX));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_TITLE));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_FIRST_NAME));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_LAST_NAME));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_NICK));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_BIRTHDAY));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_USERNAME));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_KGS));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_EMAIL));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_ROLE));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_LANGUAGE));
 
-
-        $this->add(
-            array(
-                'name' => 'sex',
-                'type' => 'Zend\Form\Element\Select',
-                'options' => array(
-                    'label' =>  $this->translate('Salutation:'),
-                    'value_options' => array(
-                        'm' => $this->translate('Herr'),
-                        'f' => $this->translate('Frau'),
-                    )
-                ),
-            )
-        );
-
-        //Title
-        $this->add(
-            $this->getTextField('title', 'Title (opt.):')
-        );
-
-        //first name
-        $this->add(
-            $this->getTextField('firstname', 'First Name:')
-
-        );
-
-        //family name
-        $this->add(
-            $this->getTextField('lastname', 'Family Name:')
-        );
-
-        //nick name
-        $this->add(
-            $this->getTextField('nickname', 'Nick (opt.):')
-
-        );
-
-        //anonym
-        $this->add(
-            array(
-                'name' => 'anonym',
-                'type' => 'Zend\Form\Element\Checkbox',
-                'options' => array(
-                    'label' =>  $this->translate('use nick always (anonymizer):'),
-                    'checked_value' => true,
-                ),
-            )
-        );
-
-
-         //birthday
-        $this->add($this->getBirthday()->getField());
-
-        //User name
-        $this->add(
-            $this->getTextField('username', 'User Name:')
-
-        );
-
-        //kgs name
-        $this->add(
-            $this->getTextField('kgs', 'KGS (opt.):')
-        );
-
-        //email
-        $this->add(
-            array(
-                'name' => 'email',
-                'type' => 'Zend\Form\Element\Email',
-                'options' => array(
-                    'label' =>  $this->translate('email:'),
-
-                ),
-                'attributes' => array(
-                    'multiple' => false,
-                )
-            )
-        );
-
-        $this->setRoleFields();
-        $this->setDefaultFields();
-
+        $this->add($this->getButtonFieldSet());
     }
-
-
-    private function setRoleFields()
-    {
-        //roles
-        $this->add(
-            array(
-                'name' => 'role',
-                'type' => 'Zend\Form\Element\Select',
-                'options' => array(
-                    'label' => $this->translate('Role'),
-                    'value_options' => array(
-                        'guest'     => $this->translate('Guest'),
-                        'user'      => $this->translate('User'),
-                        'member'    => $this->translate('Member'),
-                        'moderator' => $this->translate('Moderator'),
-                        'admin'     => $this->translate('Administrator'),
-
-                    )
-                ),
-                'attributes' => array(
-                    'value' => 'user'
-                )
-
-            )
-
-
-        );
-    }
-
 
     /**
      * get the InputFilter
@@ -152,34 +40,29 @@ class UserForm extends DefaultForm
      */
     public function getFilter()
     {
-        $this->filter = new InputFilter();
-        $this->setPersonFilter('title', '10', false);
-        $this->setPersonFilter('firstname', '20');
-        $this->setPersonFilter('lastname', '30');
+        $filter = new InputFilter();
 
-        $this->filter->add($this->getUniqueDbFilter('kgs', null, '50', false));
-        $this->filter->add($this->getUniqueDbFilter('nickname', null, '20', false));
-        $this->filter->add($this->getUniqueDbFilter('username', null, '20'));
-        $this->filter->add($this->getUniqueDbFilter('email', '6', '120'));
-        $this->filter->add($this->getBirthday()->getFilter());
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_TITLE));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_FIRST_NAME));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_LAST_NAME));
 
-        return $this->filter;
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_NICK));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_BIRTHDAY));
+
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_KGS));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_EMAIL));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_USERNAME));
+
+        return $filter;
     }
 
 
-
-    private function setPersonFilter($name,$max,$required=true)
+    /**
+     * @return string
+     */
+    public function getFormName()
     {
-        $this->filter->add(
-            array(
-                'name' => $name,
-                'required' => $required,
-                'filters'  => $this->getStripFilter(),
-                'validators' => array(
-                    $this->getStringLengthConfig(null, $max),
-                )
-            )
-        );
+        return 'UserForm';
     }
 
 

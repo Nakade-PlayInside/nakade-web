@@ -20,4 +20,21 @@ class PrivacyController extends AbstractActionController
         return new ViewModel();
     }
 
+    /**
+     * @return array|ViewModel
+     */
+    public function useTermsAction()
+    {
+        return new ViewModel();
+    }
+
+    /**
+     * @return array|ViewModel
+     */
+    public function rulesAction()
+    {
+        return new ViewModel();
+    }
+
+
 }

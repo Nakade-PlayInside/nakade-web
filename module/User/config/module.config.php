@@ -1,33 +1,20 @@
 <?php
-/**
- * The config information is passed to the relevant components by the
- * ServiceManager. The controllers section provides a list of all the
- * controllers provided by the module.
- *
- * Within the view_manager section, we add our view directory to the
- * TemplatePathStack configuration.
- *
- * @return array
- */
 namespace User;
 
+//todo: cmdController for cronJobs: removing unanswered registrations, inactivation of edited emails w/no confirm
+//todo: removing invalid expired coupons
 return array(
 
      'view_helpers' => array(
         'invokables' => array(
-            'salutation' => 'User\View\Helper\Salutation',
-            'birthday'   => 'User\View\Helper\Birthday',
-            'showActive'    => 'User\View\Helper\ShowActive',
-            'showTrigger'   => 'User\View\Helper\ShowTrigger',
-            'showVerified'  => 'User\View\Helper\ShowVerified',
-            'showEdit'      => 'User\View\Helper\ShowEdit',
-            'showPwdReset'  => 'User\View\Helper\ShowPwdReset',
-            'editBirthday'  => 'User\View\Helper\EditBirthday',
-            'editNick'      => 'User\View\Helper\EditNick',
-            'editEmail'     => 'User\View\Helper\EditEmail',
-            'editPassword'  => 'User\View\Helper\EditPassword',
-            'editKgs'  => 'User\View\Helper\EditKgs',
-            'editLanguage'  => 'User\View\Helper\EditLanguage',
+            'showAnonymous'     => 'User\View\Helper\ShowAnonymous',
+            'showLanguage'  => 'User\View\Helper\ShowLanguage',
+            'showPwdInfo'   => 'User\View\Helper\ShowPwdChangeInfo',
+            'showSex'       => 'User\View\Helper\ShowSex',
+            'showDate'      => 'User\View\Helper\ShowDate',
+            'showDateTime'  => 'User\View\Helper\ShowDateTime',
+            'showStage'     => 'User\View\Helper\ShowStage',
+            'activateUrl'   => 'User\View\Helper\GetActivateUrl',
             // more helpers here ...
         )
     ),
@@ -41,8 +28,8 @@ return array(
                      'User\Services\ProfileControllerFactory',
             'User\Controller\Forgot' =>
                      'User\Services\ForgotControllerFactory',
-            'User\Controller\Verify' =>
-                     'User\Services\VerifyControllerFactory',
+            'User\Controller\Registration' =>
+                     'User\Services\RegistrationControllerFactory',
 
         ),
     ),
@@ -63,7 +50,6 @@ return array(
                     'defaults' => array(
                         'controller' => 'User\Controller\User',
                         'action'     => 'index',
-                        'id'     => '0',
                     ),
                 ),
 
@@ -83,32 +69,17 @@ return array(
                     ),
                 ),
             ),
-            //FORGOT PWD
-            'forgot' => array(
+            //registration, verify, pwd reset
+            'register' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/forgot[/:action][/:id]',
+                    'route'    => '/register[/:action][/:id]',
                     'constraints' => array(
                         'action' =>  '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'User\Controller\Forgot',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),
-            //VERFIFY EMAIL
-            'verify' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/verify[/:action][/:id]',
-                    'constraints' => array(
-                        'action' =>  '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'User\Controller\Verify',
+                        'controller' => 'User\Controller\Registration',
                         'action'     => 'index',
                     ),
                 ),
@@ -117,9 +88,20 @@ return array(
         ),
     ),
 
+    'view_helper_config' => array(
+        'flashmessenger' => array(
+            'message_open_format'      => '<div%s>',
+            'message_close_string'     => '</div>',
+        )
+    ),
 
     'view_manager' => array(
+        'display_not_found_reason' => true,
+        'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
+        'template_map' => array(
+            'users' => __DIR__ . '/../view/partial/pagination.phtml', // Note: the key is optional
+        ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
@@ -127,20 +109,16 @@ return array(
 
     'service_manager' => array(
         'factories' => array(
-            'MailMessage'   =>
-                    'Mail\Service\MailMessageFactory',
-            'MailTransport' =>
-                    'Mail\Service\MailTransportFactory',
-            'User\Factory\UserMailFactory'    =>
-                    'User\Factory\UserMailFactory',
-            'User\Factory\MapperFactory'  =>
-                    'User\Factory\MapperFactory',
-            'User\Factory\FormFactory'  =>
-                    'User\Factory\FormFactory',
-            'User\Services\ProfileService' =>
-                    'User\Services\ProfileServiceFactory',
-            'User\Services\UserService'    =>
-                    'User\Services\UserServiceFactory',
+            'User\Services\UserFormService'    =>
+                'User\Services\UserFormService',
+            'User\Services\RepositoryService'=>
+                'User\Services\RepositoryService',
+            'User\Services\UserFieldService'=>
+                'User\Services\UserFieldService',
+            'User\Services\UserFilterService'=>
+                'User\Services\UserFilterService',
+            'User\Services\MailService'=>
+                'User\Services\MailService',
             'translator'  => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

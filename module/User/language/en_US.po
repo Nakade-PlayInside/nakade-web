@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-21 00:45+0100\n"
-"PO-Revision-Date: 2014-05-21 00:45+0100\n"
+"POT-Creation-Date: 2014-08-01 10:08+0100\n"
+"PO-Revision-Date: 2014-08-01 10:08+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -15,336 +15,374 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/User/Mail/PasswordMail.php:29
-#: ../src/User/Mail/VerifyMail.php:41
-msgid "Welcome %firstname%"
+#: ../src/User/Mail/RegistrationMail.php:18
+msgid "Welcome %FIRST_NAME%"
 msgstr ""
 
-#: ../src/User/Mail/PasswordMail.php:30
-msgid "Your password at nakade.de was reset."
+#: ../src/User/Mail/RegistrationMail.php:20
+msgid "Thank you for your registration at %URL%."
 msgstr ""
 
-#: ../src/User/Mail/PasswordMail.php:34
-#: ../src/User/Mail/VerifyMail.php:46
+#: ../src/User/Mail/RegistrationMail.php:21
+msgid "We are happy to welcome you in our community and hope you enjoy your time with us."
+msgstr ""
+
+#: ../src/User/Mail/RegistrationMail.php:23
+#: ../src/User/Mail/CredentialsMail.php:21
 msgid "Your Credentials"
 msgstr ""
 
-#: ../src/User/Mail/PasswordMail.php:35
-#: ../src/User/Mail/VerifyMail.php:47
+#: ../src/User/Mail/RegistrationMail.php:24
+#: ../src/User/Mail/CredentialsMail.php:22
 msgid "username"
 msgstr ""
 
-#: ../src/User/Mail/PasswordMail.php:36
-#: ../src/User/Mail/VerifyMail.php:48
+#: ../src/User/Mail/RegistrationMail.php:25
+#: ../src/User/Mail/CredentialsMail.php:23
 msgid "password"
 msgstr ""
 
-#: ../src/User/Mail/PasswordMail.php:40
-#: ../src/User/Mail/VerifyMail.php:52
-msgid "Your account requires activation during the next %expire% hours."
+#: ../src/User/Mail/RegistrationMail.php:27
+msgid "Before you can start, you have to confirm your email first."
 msgstr ""
 
-#: ../src/User/Mail/PasswordMail.php:41
-#: ../src/User/Mail/VerifyMail.php:53
-msgid "Please click on the link for activation."
+#: ../src/User/Mail/RegistrationMail.php:28
+#: ../src/User/Mail/VerifyMail.php:23
+msgid "Therefore, please click on the link below for confirmation."
 msgstr ""
 
-#: ../src/User/Mail/PasswordMail.php:42
-#: ../src/User/Mail/VerifyMail.php:54
-msgid "If you fail to activate your account in time, you have to reset your password using the 'forgot password' option."
+#: ../src/User/Mail/RegistrationMail.php:29
+#: ../src/User/Mail/VerifyMail.php:24
+msgid "This is necessary to activate your account, too."
 msgstr ""
 
-#: ../src/User/Mail/PasswordMail.php:46
-#: ../src/User/Mail/VerifyMail.php:58
-msgid "May the stones be with you."
+#: ../src/User/Mail/RegistrationMail.php:31
+#: ../src/User/Mail/VerifyMail.php:26
+msgid "For security reasons, the validity of the link will expire after %DUE_DATE%."
 msgstr ""
 
-#: ../src/User/Mail/PasswordMail.php:47
-#: ../src/User/Mail/VerifyMail.php:59
-msgid "Your %signature%."
+#: ../src/User/Mail/RegistrationMail.php:32
+msgid "If you failed to confirm in time, your account is deleted."
 msgstr ""
 
-#: ../src/User/Mail/PasswordMail.php:51
-#: ../src/User/Mail/VerifyMail.php:63
-msgid "Court of Registration"
+#: ../src/User/Mail/RegistrationMail.php:34
+#: ../src/User/Mail/CredentialsMail.php:28
+#: ../src/User/Mail/VerifyMail.php:29
+msgid "In case of a problem, please contact us."
 msgstr ""
 
-#: ../src/User/Mail/PasswordMail.php:52
-#: ../src/User/Mail/VerifyMail.php:64
-msgid "Register No."
+#: ../src/User/Mail/RegistrationMail.php:47
+msgid "Your Registration at  %URL%"
 msgstr ""
 
-#: ../src/User/Mail/PasswordMail.php:55
-msgid "%prefix% - Your New Credentials"
+#: ../src/User/Mail/CouponMail.php:45
+msgid "Dear Go Friend"
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:47
+msgid "You are invited to sign up at %URL%."
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:49
+msgid "Nakade is a platform for organizing leagues for the game of Go."
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:50
+msgid "For our closed beta, we are looking for players who love to compete on even terms."
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:52
+msgid "Matches are frequently every 3 weeks, so this is best suited for the busy ones."
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:54
+msgid "If you love the game, you will love us!"
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:57
+msgid "To sign up to our closed beta a coupon code is needed."
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:58
+msgid "The coupon will expire on %EXPIRE_DATE%."
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:59
+msgid "To start sign up you can click the link below"
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:61
+msgid "or you go to %URL% and enter the coupon code"
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:63
+msgid "For more information just visit our website."
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:77
+msgid "Invitation By %NAME%"
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:126
+msgid "%FIRST_NAME% wrote"
+msgstr ""
+
+#: ../src/User/Mail/CredentialsMail.php:17
+#: ../src/User/Mail/VerifyMail.php:18
+msgid "Hi %FIRST_NAME%"
+msgstr ""
+
+#: ../src/User/Mail/CredentialsMail.php:19
+msgid "Your password was reset at %URL%."
+msgstr ""
+
+#: ../src/User/Mail/CredentialsMail.php:25
+msgid "For security reasons, change the generated password as soon as possible."
+msgstr ""
+
+#: ../src/User/Mail/CredentialsMail.php:26
+msgid "Therefore, logIn and go to your profile."
+msgstr ""
+
+#: ../src/User/Mail/CredentialsMail.php:41
+msgid "Your New Password at  %URL%"
+msgstr ""
+
+#: ../src/User/Mail/VerifyMail.php:20
+msgid "You have provided a new email address at %URL%."
+msgstr ""
+
+#: ../src/User/Mail/VerifyMail.php:22
+msgid "Before activating your new address, you have to confirm your email first."
+msgstr ""
+
+#: ../src/User/Mail/VerifyMail.php:27
+msgid "If you failed to confirm in time, your account is deactivated."
 msgstr ""
 
 #: ../src/User/Mail/VerifyMail.php:42
-msgid "Thank you for your registration at nakade.de"
+msgid "Confirm Your Mail Address"
 msgstr ""
 
-#: ../src/User/Mail/VerifyMail.php:67
-msgid "%prefix% - Your Credentials"
-msgstr ""
-
-#: ../src/User/View/Helper/ShowActive.php:20
-msgid "inactive"
-msgstr ""
-
-#: ../src/User/View/Helper/ShowActive.php:25
-msgid "active"
-msgstr ""
-
-#: ../src/User/View/Helper/ShowEdit.php:21
-msgid "edit"
-msgstr ""
-
-#: ../src/User/View/Helper/ShowTrigger.php:26
-msgid "activate"
-msgstr ""
-
-#: ../src/User/View/Helper/ShowTrigger.php:32
-msgid "deactivate"
-msgstr ""
-
-#: ../src/User/View/Helper/EditLanguage.php:31
-#: ../src/User/Form/LanguageForm.php:39
-msgid "German"
-msgstr ""
-
-#: ../src/User/View/Helper/EditLanguage.php:34
-#: ../src/User/Form/LanguageForm.php:40
-msgid "English"
-msgstr ""
-
-#: ../src/User/View/Helper/EditLanguage.php:38
-msgid "auto detect"
-msgstr ""
-
-#: ../src/User/View/Helper/ShowVerified.php:27
-msgid "not verified"
-msgstr ""
-
-#: ../src/User/View/Helper/ShowVerified.php:32
-msgid "verified"
-msgstr ""
-
-#: ../src/User/View/Helper/ShowVerified.php:36
-msgid "waiting for verification"
-msgstr ""
-
-#: ../src/User/View/Helper/AbstractProfileEditHelper.php:79
-msgid "Incognito"
-msgstr ""
-
-#: ../src/User/View/Helper/AbstractProfileEditHelper.php:80
+#: ../src/User/View/Helper/ShowPwdChangeInfo.php:20
 msgid "password was never changed"
 msgstr ""
 
-#: ../src/User/View/Helper/AbstractProfileEditHelper.php:82
+#: ../src/User/View/Helper/ShowPwdChangeInfo.php:23
 msgid "last time edited on %pwdChangeDate%"
 msgstr ""
 
-#: ../src/User/View/Helper/ShowPwdReset.php:21
-msgid "reset password"
-msgstr ""
-
-#: ../src/User/Form/PasswordForm.php:28
-msgid "enter new password:"
-msgstr ""
-
-#: ../src/User/Form/PasswordForm.php:40
-msgid "repeat new password:"
-msgstr ""
-
-#: ../src/User/Form/EmailForm.php:29
-#: ../src/User/Form/UserForm.php:104
-msgid "email:"
-msgstr ""
-
-#: ../src/User/Form/NickForm.php:35
-#: ../src/User/Form/UserForm.php:77
-msgid "use nick always (anonymizer):"
-msgstr ""
-
-#: ../src/User/Form/UserForm.php:40
-msgid "Salutation:"
-msgstr ""
-
-#: ../src/User/Form/UserForm.php:42
-msgid "Herr"
-msgstr ""
-
-#: ../src/User/Form/UserForm.php:43
-msgid "Frau"
-msgstr ""
-
-#: ../src/User/Form/UserForm.php:127
-msgid "Role"
-msgstr ""
-
-#: ../src/User/Form/UserForm.php:129
-msgid "Guest"
-msgstr ""
-
-#: ../src/User/Form/UserForm.php:130
-msgid "User"
-msgstr ""
-
-#: ../src/User/Form/UserForm.php:131
-msgid "Member"
-msgstr ""
-
-#: ../src/User/Form/UserForm.php:132
-msgid "Moderator"
-msgstr ""
-
-#: ../src/User/Form/UserForm.php:133
-msgid "Administrator"
-msgstr ""
-
-#: ../src/User/Form/LanguageForm.php:36
-msgid "language:"
-msgstr ""
-
-#: ../src/User/Form/LanguageForm.php:38
-msgid "No language"
-msgstr ""
-
-#: ../src/User/Form/DefaultForm.php:51
-msgid "Submit"
-msgstr ""
-
-#: ../src/User/Form/DefaultForm.php:63
+#: ../src/User/Form/ConfirmForm.php:41
 msgid "Cancel"
 msgstr ""
 
-#: ../src/User/Form/Fields/Birthday.php:19
-msgid "Birthday:"
+#: ../src/User/Form/ConfirmForm.php:50
+msgid "YES"
 msgstr ""
 
-#: ../src/User/Form/Validator/PasswordComplexity.php:68
-#: ../src/User/Form/Validator/CommonPassword.php:39
-msgid "Invalid type given. String expected."
+#: ../src/User/Form/InviteFriendForm.php:47
+#: ../src/User/Form/Factory/UserFieldFactory.php:36
+msgid "email"
 msgstr ""
 
-#: ../src/User/Form/Validator/PasswordComplexity.php:70
-msgid "Optimal password length: '%length%'."
+#: ../src/User/Form/InviteFriendForm.php:58
+msgid "Message (opt.)"
 msgstr ""
 
-#: ../src/User/Form/Validator/PasswordComplexity.php:72
-msgid "No digits found."
+#: ../src/User/Form/InviteFriendForm.php:79
+msgid "Invite NOW!"
 msgstr ""
 
-#: ../src/User/Form/Validator/PasswordComplexity.php:74
-msgid "No uppercase letters found."
+#: ../src/User/Form/Factory/UserFieldFactory.php:28
+msgid "KGS Name (opt.)"
 msgstr ""
 
-#: ../src/User/Form/Validator/PasswordComplexity.php:76
-msgid "No lowercase letters found."
+#: ../src/User/Form/Factory/UserFieldFactory.php:45
+msgid "Nick (opt.)"
 msgstr ""
 
-#: ../src/User/Form/Validator/PasswordComplexity.php:78
-msgid "No special chars found."
+#: ../src/User/Form/Factory/UserFieldFactory.php:54
+msgid "use nick always (anonymous)"
 msgstr ""
 
-#: ../src/User/Form/Validator/PasswordComplexity.php:80
-msgid "No umlauts found."
+#: ../src/User/Form/Factory/UserFieldFactory.php:66
+msgid "Birthday"
 msgstr ""
 
-#: ../src/User/Form/Validator/PasswordComplexity.php:82
-msgid "Do not repeat letters."
+#: ../src/User/Form/Factory/UserFieldFactory.php:82
+msgid "language:"
 msgstr ""
 
-#: ../src/User/Form/Validator/PasswordComplexity.php:84
-msgid "Do not repeat words."
+#: ../src/User/Form/Factory/UserFieldFactory.php:93
+msgid "Role"
 msgstr ""
 
-#: ../src/User/Form/Validator/CommonPassword.php:41
-msgid "Do not use common password: %value%."
+#: ../src/User/Form/Factory/UserFieldFactory.php:104
+msgid "User Name"
 msgstr ""
 
-#: ../view/user/verify/index.phtml:4
-msgid "Account Verified"
+#: ../src/User/Form/Factory/UserFieldFactory.php:113
+msgid "Salutation"
 msgstr ""
 
-#: ../view/user/verify/index.phtml:9
-msgid "Thank you for your activation."
+#: ../src/User/Form/Factory/UserFieldFactory.php:124
+msgid "First Name"
 msgstr ""
 
-#: ../view/user/verify/index.phtml:11
-msgid "You can now sign in using your credentials."
+#: ../src/User/Form/Factory/UserFieldFactory.php:132
+msgid "Family Name"
 msgstr ""
 
-#: ../view/user/verify/failure.phtml:4
-msgid "Verification Failed"
+#: ../src/User/Form/Factory/UserFieldFactory.php:140
+msgid "Title"
 msgstr ""
 
-#: ../view/user/verify/failure.phtml:9
-msgid "Activation of your account failed."
+#: ../src/User/Form/Factory/UserFieldFactory.php:148
+msgid "enter new password"
 msgstr ""
 
-#: ../view/user/verify/failure.phtml:11
-msgid "Probably your credentials are expired."
+#: ../src/User/Form/Factory/UserFieldFactory.php:156
+msgid "repeat new password"
 msgstr ""
 
-#: ../view/user/verify/failure.phtml:13
-msgid "Read your activation mail for more information."
+#: ../src/User/Form/Factory/UserFieldFactory.php:164
+msgid "Coupon Code"
 msgstr ""
 
-#: ../view/user/verify/failure.phtml:16
-msgid "YOU DO NOT HAVE TO REGISTER."
+#: ../src/User/Form/Factory/UserFieldFactory.php:193
+msgid "No language"
 msgstr ""
 
-#: ../view/user/verify/failure.phtml:18
-msgid "Just request a new password by using the 'forgot password' option."
+#: ../src/User/Form/Factory/UserFieldFactory.php:194
+msgid "German"
 msgstr ""
 
-#: ../view/user/verify/error.phtml:4
+#: ../src/User/Form/Factory/UserFieldFactory.php:195
+msgid "English"
+msgstr ""
+
+#: ../src/User/Form/Factory/UserFieldFactory.php:205
+msgid "Guest"
+msgstr ""
+
+#: ../src/User/Form/Factory/UserFieldFactory.php:206
+msgid "User"
+msgstr ""
+
+#: ../src/User/Form/Factory/UserFieldFactory.php:207
+msgid "Member"
+msgstr ""
+
+#: ../src/User/Form/Factory/UserFieldFactory.php:208
+msgid "Moderator"
+msgstr ""
+
+#: ../src/User/Form/Factory/UserFieldFactory.php:209
+msgid "Administrator"
+msgstr ""
+
+#: ../src/User/Form/Factory/UserFieldFactory.php:219
+msgid "Herr"
+msgstr ""
+
+#: ../src/User/Form/Factory/UserFieldFactory.php:220
+msgid "Frau"
+msgstr ""
+
+#: ../view/partial/pagination.phtml:6
+msgid "previous"
+msgstr ""
+
+#: ../view/partial/pagination.phtml:17
+msgid "Actual Page"
+msgstr ""
+
+#: ../view/user/registration/index.phtml:3
+msgid "Closed Beta Registration"
+msgstr ""
+
+#: ../view/user/registration/index.phtml:8
+msgid "You need a coupon code to register."
+msgstr ""
+
+#: ../view/user/registration/index.phtml:9
+msgid "For league matches, a KGS account is mandatory."
+msgstr ""
+
+#: ../view/user/registration/error.phtml:4
 msgid "Data Transmission Error"
 msgstr ""
 
-#: ../view/user/verify/error.phtml:9
+#: ../view/user/registration/error.phtml:9
 msgid "Expected data not found."
 msgstr ""
 
-#: ../view/user/verify/error.phtml:11
-msgid "Hint: click the link provided in your email."
+#: ../view/user/registration/error.phtml:10
+msgid "Hint: Use the link provided in your email."
 msgstr ""
 
-#: ../view/user/forgot/index.phtml:3
-msgid "Forgot Password"
+#: ../view/user/registration/success.phtml:4
+msgid "Account Updated"
 msgstr ""
 
-#: ../view/user/forgot/index.phtml:7
-msgid "Please enter your registered mail adress."
+#: ../view/user/registration/success.phtml:9
+msgid "You can now sign in using your credentials."
 msgstr ""
 
-#: ../view/user/forgot/index.phtml:8
-msgid "We will send your new credentials immediatley to that adress."
+#: ../view/user/registration/show.phtml:3
+msgid "Registration"
 msgstr ""
 
-#: ../view/user/forgot/failure.phtml:4
-msgid "Failure"
+#: ../view/user/registration/show.phtml:7
+msgid "Go Players Wanted"
 msgstr ""
 
-#: ../view/user/forgot/failure.phtml:9
-msgid "The given email adress was not found."
+#: ../view/user/registration/show.phtml:9
+msgid "For our closed beta, we are looking for passionate adult players."
 msgstr ""
 
-#: ../view/user/forgot/failure.phtml:11
-msgid "Please try again with the registered mail."
+#: ../view/user/registration/show.phtml:10
+msgid "You have a rank from 1d-15k, love the game and challenges on equal terms."
 msgstr ""
 
-#: ../view/user/forgot/success.phtml:4
-msgid "Success"
+#: ../view/user/registration/show.phtml:11
+msgid "Despite your restricted time, you can make it on Tuesday every 2-3 weeks frequently."
 msgstr ""
 
-#: ../view/user/forgot/success.phtml:8
-msgid "Your new credentials were send to you."
+#: ../view/user/registration/show.phtml:12
+msgid "Due to our match time at 6:30 pm (CET), you should resident in the EC."
 msgstr ""
 
-#: ../view/user/forgot/success.phtml:9
-msgid "Please do not forget to activate your account."
+#: ../view/user/registration/show.phtml:14
+msgid "Got a coupon code?!"
+msgstr ""
+
+#: ../view/user/registration/show.phtml:16
+msgid "Register NOW!"
+msgstr ""
+
+#: ../view/user/registration/forgot.phtml:3
+msgid "Reset Password"
+msgstr ""
+
+#: ../view/user/registration/forgot.phtml:7
+msgid "Please enter your registered email."
+msgstr ""
+
+#: ../view/user/registration/forgot.phtml:8
+msgid "Your new credentials will be sent to you."
+msgstr ""
+
+#: ../view/user/registration/verify.phtml:4
+msgid "Confirming Failed"
+msgstr ""
+
+#: ../view/user/registration/verify.phtml:9
+msgid "The validity of the used link is expired."
+msgstr ""
+
+#: ../view/user/registration/verify.phtml:10
+msgid "Find more details in your mail."
 msgstr ""
 
 #: ../view/user/profile/index.phtml:4
@@ -355,36 +393,67 @@ msgstr ""
 msgid "Name:"
 msgstr ""
 
+#: ../view/user/profile/index.phtml:16
+msgid "Birthday:"
+msgstr ""
+
 #: ../view/user/profile/index.phtml:19
+#: ../view/user/profile/index.phtml:31
+#: ../view/user/profile/index.phtml:39
+#: ../view/user/profile/index.phtml:47
+#: ../view/user/profile/index.phtml:60
+#: ../view/user/profile/index.phtml:68
+#: ../view/user/user/index.phtml:27
+#: ../view/user/user/index.phtml:57
+msgid "edit"
+msgstr ""
+
+#: ../view/user/profile/index.phtml:24
 msgid "Nick:"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:27
+#: ../view/user/profile/index.phtml:36
+msgid "email:"
+msgstr ""
+
+#: ../view/user/profile/index.phtml:44
 msgid "KGS:"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:31
+#: ../view/user/profile/index.phtml:52
 msgid "Username:"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:35
+#: ../view/user/profile/index.phtml:57
 msgid "Password"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:39
+#: ../view/user/profile/index.phtml:65
 msgid "Language"
 msgstr ""
 
-#: ../view/user/profile/language.phtml:4
+#: ../view/user/profile/language.phtml:3
 msgid "Edit Language"
 msgstr ""
 
-#: ../view/user/profile/email.phtml:4
-#: ../view/user/profile/kgs.phtml:4
-#: ../view/user/profile/password.phtml:4
-#: ../view/user/profile/birthday.phtml:4
-#: ../view/user/profile/nick.phtml:4
+#: ../view/user/profile/email.phtml:3
+#: ../view/user/profile/kgs.phtml:3
+#: ../view/user/profile/password.phtml:3
+#: ../view/user/profile/birthday.phtml:3
+#: ../view/user/profile/nick.phtml:3
 msgid "Edit Profile"
+msgstr ""
+
+#: ../view/user/profile/invite.phtml:3
+msgid "Invite a Friend"
+msgstr ""
+
+#: ../view/user/profile/invite.phtml:9
+msgid "Your friend will receive an email with a coupon code which enables to register for closed beta!"
+msgstr ""
+
+#: ../view/user/profile/invite.phtml:10
+msgid "Make sure, your friend fulfills the requirements, i.e. legal age, KGS account and quick availability by email."
 msgstr ""
 
 #: ../view/user/user/index.phtml:4
@@ -395,36 +464,112 @@ msgstr ""
 msgid "add user"
 msgstr ""
 
-#: ../view/user/user/index.phtml:13
-msgid "Sex"
-msgstr ""
-
-#: ../view/user/user/index.phtml:14
-msgid "Name"
-msgstr ""
-
 #: ../view/user/user/index.phtml:15
-msgid "Nick"
+#: ../view/user/user/details.phtml:15
+msgid "ID"
 msgstr ""
 
 #: ../view/user/user/index.phtml:16
-msgid "Username"
+#: ../view/user/user/details.phtml:19
+msgid "Sex"
 msgstr ""
 
 #: ../view/user/user/index.phtml:17
-msgid "KGS"
+#: ../view/user/user/details.phtml:23
+msgid "Name"
 msgstr ""
 
 #: ../view/user/user/index.phtml:18
-msgid "email"
+#: ../view/user/user/details.phtml:27
+msgid "Nick"
+msgstr ""
+
+#: ../view/user/user/index.phtml:19
+msgid "Username"
+msgstr ""
+
+#: ../view/user/user/index.phtml:20
+#: ../view/user/user/details.phtml:31
+msgid "KGS"
 msgstr ""
 
 #: ../view/user/user/index.phtml:22
-msgid "access"
+#: ../view/user/user/details.phtml:51
+msgid "last Login"
 msgstr ""
 
 #: ../view/user/user/index.phtml:23
-msgid "pwd"
+msgid "Details"
+msgstr ""
+
+#: ../view/user/user/index.phtml:24
+msgid "verified"
+msgstr ""
+
+#: ../view/user/user/index.phtml:25
+msgid "active"
+msgstr ""
+
+#: ../view/user/user/index.phtml:26
+msgid "Pwd"
+msgstr ""
+
+#: ../view/user/user/index.phtml:44
+msgid "show Details"
+msgstr ""
+
+#: ../view/user/user/index.phtml:49
+msgid "shift"
+msgstr ""
+
+#: ../view/user/user/index.phtml:53
+msgid "reset password"
+msgstr ""
+
+#: ../view/user/user/index.phtml:64
+msgid "Total"
+msgstr ""
+
+#: ../view/user/user/details.phtml:3
+msgid "User Details"
+msgstr ""
+
+#: ../view/user/user/details.phtml:9
+#: ../view/user/user/reset-password.phtml:10
+msgid "User not found."
+msgstr ""
+
+#: ../view/user/user/details.phtml:39
+msgid "language"
+msgstr ""
+
+#: ../view/user/user/details.phtml:43
+msgid "created"
+msgstr ""
+
+#: ../view/user/user/details.phtml:47
+msgid "first Login"
+msgstr ""
+
+#: ../view/user/user/details.phtml:65
+#: ../view/user/user/reset-password.phtml:11
+msgid "Return"
+msgstr ""
+
+#: ../view/user/user/reset-password.phtml:4
+msgid "Password Reset"
+msgstr ""
+
+#: ../view/user/user/reset-password.phtml:7
+msgid "Reset Password?"
+msgstr ""
+
+#: ../view/user/user/reset-password.phtml:18
+msgid "This will generate a new password for %NAME%."
+msgstr ""
+
+#: ../view/user/user/reset-password.phtml:21
+msgid "The new password is sent to %EMAIL%."
 msgstr ""
 
 #: ../view/user/user/edit.phtml:4

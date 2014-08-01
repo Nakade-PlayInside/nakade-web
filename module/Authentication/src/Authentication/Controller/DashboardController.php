@@ -1,13 +1,13 @@
 <?php
-//module/SanAuth/src/SanAuth/Controller/SuccessController.php
 namespace Authentication\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Message\Mapper\MessageMapper;
 
 /**
- * Success controller for successful authentication of registered users.
+ * Class DashboardController
+ *
+ * @package Authentication\Controller
  */
 class DashboardController extends AbstractActionController
 {
@@ -29,15 +29,21 @@ class DashboardController extends AbstractActionController
         $participationWidget  = $this->forward()
             ->dispatch('/Season/Controller/Season', array('action' => 'show'));
 
+        $inviteWidget  = $this->forward()
+            ->dispatch('/User/Controller/Profile', array('action' => 'invite'));
+
         $page = new ViewModel(array());
         $page->addChild($participationWidget, 'participationWidget');
         $page->addChild($messageWidget, 'messageWidget');
         $page->addChild($appointmentWidget, 'appointmentWidget');
         $page->addChild($scheduleWidget, 'scheduleWidget');
 
+        //open beta until end of year
+        if (date('c') < date('c', strtotime('12/31/2014'))) {
+            $page->addChild($inviteWidget, 'inviteWidget');
+        }
+
         return $page;
     }
-
-
 
 }

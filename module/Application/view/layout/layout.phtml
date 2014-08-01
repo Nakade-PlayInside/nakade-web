@@ -37,7 +37,7 @@
                     <div class="nav-collapse">
                         <ul class="nav">
                             <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home', 'Application') ?></a></li>
-                            <li><a href="<?php echo $this->url('training') ?>"><?php echo $this->translate("Location", 'Application'); ?></a></li>
+
 
 
 
@@ -56,9 +56,6 @@
 
             $this->translate('User overview', 'Application')   =>
                 $this->url('user'),
-
-            $this->translate('add user', 'Application')  =>
-                $this->url('user', array('action' => 'add')),
 
             $this->translate('open results', 'Application')    =>
                 $this->url('result'),
@@ -155,6 +152,10 @@
                     </div><!--/.nav-collapse -->
                 </div>
             </div>
+
+            <?php //todo: flashMessenger renders not after redirecting
+                echo $this->flashMessenger()->render('success'); ?>
+            <?php echo $this->flashMessenger()->render('error'); ?>
         </div>
         <div class="container">
             <?php echo $this->content; ?>
@@ -162,8 +163,17 @@
             <footer>
                 <div class="copyright">
                     <ul>
+                        <li><a href="<?php echo $this->url('privacy', array('action' => 'rules')) ?>">
+                                <?php echo $this->translate("Rules", 'Application'); ?>
+                            </a>
+                        </li>
+                        <li><a href="<?php echo $this->url('privacy', array('action' => 'useTerms')) ?>">
+                                <?php echo $this->translate("Terms of Use", 'Application'); ?>
+                            </a>
+                        </li>
                         <li><a href="<?php echo $this->url('imprint') ?>"><?php echo $this->translate("Imprint", 'Application'); ?></a></li>
                         <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate("Contact", 'Application'); ?></a></li>
+                        <li><a href="<?php echo $this->url('training') ?>"><?php echo $this->translate("Location", 'Application'); ?></a></li>
                         <li class="version">v0.3.1</li>
                         <li><?php echo $this->translate('All rights reserved.', 'Application') ?></li>
                         <li>&copy; Copyright 2013-2014 Dr. Holger Maerz</li>

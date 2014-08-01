@@ -47,19 +47,10 @@ ul.createSeason li a {
 }
 
 table.edit {
-    width:auto;
+    width: auto;
+    margin-top: 0.5em;
 }
 
 table.edit td {
     text-align:center;
-}
-
-table.edit td a {
-    background: url(../images/edit.png) no-repeat center center;
-    padding-left: 10px;
-    height: 16px;
-    width:16px;
-    display: inline-block;
-    font-weight: bold;
-    vertical-align: top;
 }

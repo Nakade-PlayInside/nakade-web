@@ -4,14 +4,12 @@ namespace User\Form;
 use \Zend\InputFilter\InputFilter;
 
 /**
- * Form for changing email adress.
- * Use a factory for needed settings after constructing.
- * Successive settings: setEntityManager(), setInputFilter(), init().
- * Use bindingEntity for setting values.
+ * Class EmailForm
+ *
+ * @package User\Form
  */
-class EmailForm extends DefaultForm
+class EmailForm extends BaseForm
 {
-
 
     /**
      * init the form. It is neccessary to call this function
@@ -19,29 +17,20 @@ class EmailForm extends DefaultForm
      */
     public function init()
     {
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_EMAIL));
 
-        //email
         $this->add(
             array(
-                'name' => 'email',
-                'type' => 'Zend\Form\Element\Email',
-                'options' => array(
-                    'label' =>  $this->translate('email:'),
-
-                ),
+                'name' => 'isNewEmail',
+                'type'  => 'Zend\Form\Element\Hidden',
                 'attributes' => array(
-                    'multiple' => false,
-                    'required' => 'required',
+                    'value' => true
                 )
             )
         );
 
-        $this->setDefaultFields();
-
+        $this->add($this->getButtonFieldSet());
     }
-
-
-
 
     /**
      * get the InputFilter
@@ -52,8 +41,16 @@ class EmailForm extends DefaultForm
     {
 
         $filter = new InputFilter();
-        $filter->add($this->getUniqueDbFilter('email', '6', '120'));
-
-         return $filter;
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_EMAIL));
+        return $filter;
     }
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'EmailForm';
+    }
+
 }

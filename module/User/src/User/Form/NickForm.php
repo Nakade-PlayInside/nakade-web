@@ -4,14 +4,12 @@ namespace User\Form;
 use \Zend\InputFilter\InputFilter;
 
 /**
- * Form for nick name changing.
- * Use a factory for needed settings after constructing.
- * Successive settings: setEntityManager(), setInputFilter(), init().
- * Use bindingEntity for setting values.
+ * Class NickForm
+ *
+ * @package User\Form
  */
-class NickForm extends DefaultForm
+class NickForm extends BaseForm
 {
-
 
     /**
      * init the form. It is neccessary to call this function
@@ -19,34 +17,10 @@ class NickForm extends DefaultForm
      */
     public function init()
     {
-
-        //nick name
-        $this->add(
-            $this->getTextField('nickname', 'Nick (opt.):')
-
-        );
-
-        //anonym
-        $this->add(
-            array(
-                'name' => 'anonym',
-                'type' => 'Zend\Form\Element\Checkbox',
-                'options' => array(
-                    'label' =>  $this->translate('use nick always (anonymizer):'),
-                    'checked_value' => true,
-                ),
-                'attributes' => array(
-                    'class' => 'checkbox',
-                ),
-            )
-        );
-
-        $this->setDefaultFields();
-
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_NICK));
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_ANONYMOUS));
+        $this->add($this->getButtonFieldSet());
     }
-
-
-
 
     /**
      * get the InputFilter
@@ -56,8 +30,16 @@ class NickForm extends DefaultForm
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add($this->getUniqueDbFilter('nickname', null, '20', false));
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_NICK));
 
         return $filter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'NickForm';
     }
 }

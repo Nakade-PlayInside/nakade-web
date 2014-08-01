@@ -6,11 +6,12 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'Nakade\Services\NakadeCaptchaFactory'
-            => 'Nakade\Services\NakadeCaptchaFactory',
+                => 'Nakade\Services\NakadeCaptchaFactory',
+
+            'Nakade\Services\PasswordService'
+                => 'Nakade\Services\PasswordService',
 
         ),
     ),
-
-
 
 );

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-06 11:40+0100\n"
-"PO-Revision-Date: 2014-07-06 11:40+0100\n"
+"POT-Creation-Date: 2014-07-31 15:55+0100\n"
+"PO-Revision-Date: 2014-07-31 15:55+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -57,15 +57,11 @@ msgid "Submit"
 msgstr ""
 
 #: ../view/layout/layout.phtml:36
-msgid "Berliner Baduk Club e.V."
+msgid "BBC Nakade"
 msgstr ""
 
 #: ../view/layout/layout.phtml:39
 msgid "Home"
-msgstr ""
-
-#: ../view/layout/layout.phtml:40
-msgid "Location"
 msgstr ""
 
 #: ../view/layout/layout.phtml:49
@@ -156,15 +152,27 @@ msgstr ""
 msgid "LogIn"
 msgstr ""
 
-#: ../view/layout/layout.phtml:165
+#: ../view/layout/layout.phtml:169
+msgid "Location"
+msgstr ""
+
+#: ../view/layout/layout.phtml:171
+msgid "Rules"
+msgstr ""
+
+#: ../view/layout/layout.phtml:175
+msgid "Terms of Use"
+msgstr ""
+
+#: ../view/layout/layout.phtml:178
 msgid "Imprint"
 msgstr ""
 
-#: ../view/layout/layout.phtml:166
+#: ../view/layout/layout.phtml:179
 msgid "Contact"
 msgstr ""
 
-#: ../view/layout/layout.phtml:168
+#: ../view/layout/layout.phtml:181
 msgid "All rights reserved."
 msgstr ""
 
@@ -308,6 +316,10 @@ msgstr ""
 
 #: ../view/application/privacy/index.phtml:4
 msgid "Privacy"
+msgstr ""
+
+#: ../view/application/privacy/rules.phtml:8
+msgid "Tournament and League Rules"
 msgstr ""
 
 #~ msgid "Skeleton Application"

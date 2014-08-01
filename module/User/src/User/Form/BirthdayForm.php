@@ -2,29 +2,14 @@
 namespace User\Form;
 
 use Zend\InputFilter\InputFilter;
-use User\Form\Fields\Birthday;
 
 /**
- * Form for editing the user's birthday.
- * Use a factory for needed settings after constructing.
- * Successive settings: setEntityManager(), setInputFilter(), init().
- * Use bindingEntity for setting values.
+ * Class BirthdayForm
+ *
+ * @package User\Form
  */
-class BirthdayForm extends DefaultForm
+class BirthdayForm extends BaseForm
 {
-    private $field;
-
-    /**
-     * @return Birthday
-     */
-    public function getField()
-    {
-        if (is_null($this->field)) {
-            $this->field=new Birthday($this->getTranslator(), $this->getTranslatorTextDomain());
-        }
-        return $this->field;
-    }
-
 
     /**
      * init the form. It is neccessary to call this function
@@ -32,11 +17,8 @@ class BirthdayForm extends DefaultForm
      */
     public function init()
     {
-
-        //birthday
-        $this->add($this->getField()->getField());
-
-        $this->setDefaultFields();
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_BIRTHDAY));
+        $this->add($this->getButtonFieldSet());
     }
 
     /**
@@ -47,9 +29,15 @@ class BirthdayForm extends DefaultForm
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add($this->getField()->getFilter());
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_BIRTHDAY));
+        return $filter;
+    }
 
-
-         return $filter;
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'BirthdayForm';
     }
 }

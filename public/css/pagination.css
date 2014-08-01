@@ -1,0 +1,65 @@
+#myPagination {
+    display: inline-block;
+    color:#57a900;
+    font-weight:bold;
+    margin: 0 30px;
+    border: 0;
+}
+
+#myPagination .large {
+    height: 32px;
+    line-height: 32px;
+    font-size: larger;
+}
+
+#myPagination .smaller {
+    height: 16px;
+    line-height: 16px;
+    font-size: inherit;
+}
+
+#myPagination ul {
+    display: inline-block;
+    list-style: none;
+    height: inherit;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+#myPagination ul li {
+    display: inherit;
+    line-height: inherit;
+    height: inherit;
+    padding: inherit;
+    margin: inherit;
+    vertical-align: middle;
+    border: 0;
+}
+
+#myPagination ul li a {
+    color: inherit;
+    font-size: inherit;
+    display: inherit;
+    background-color: transparent;
+}
+
+#myPagination ul li a:hover {
+    text-decoration: underline;
+}
+
+#myPagination ul li.page {
+    padding: 0 4px;
+}
+
+#myPagination .actual {
+    color:#999999;
+    cursor:default;
+}
+
+#myPagination .actual:hover {
+    text-decoration: none;
+}
+
+
+

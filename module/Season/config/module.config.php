@@ -122,7 +122,7 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Season\Controller\Schedule',
-                        'action'     => 'index',
+                        'action'     => 'create',
                     ),
                 ),
             ),

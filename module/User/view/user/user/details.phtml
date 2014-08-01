@@ -1,0 +1,69 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('User');
+$title = $this->translate('User Details');
+$this->headTitle($title);
+/* @var $user \User\Entity\User */
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php $this->placeholder('nothing')->captureStart();?>
+<p><?php echo $this->translate("User not found."); ?></p>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+<?php $this->placeholder('actual')->captureStart();?>
+<table class="table profile">
+<tr>
+    <td><?php echo $this->translate("ID"); ?></td>
+    <td><?php echo $user->getId(); ?></td>
+<tr>
+<tr>
+    <td><?php echo $this->translate("Sex"); ?></td>
+    <td><div class="small <?php echo $this->showSex($user->getSex()); ?>"></div></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Name"); ?></td>
+    <td><?php echo $this->escapeHtml($user->getName()); ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Nick"); ?></td>
+    <td><?php echo $this->escapeHtml($user->getNickname()); ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("KGS"); ?></td>
+    <td><?php echo $this->escapeHtml($user->getKgs()); ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("email"); ?></td>
+    <td><?php echo $this->escapeHtml($user->getEmail()); ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("language"); ?></td>
+    <td><div class="<?php echo $this->showLanguage($user->getLanguage());?>"></div></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("Role"); ?></td>
+    <td><?php echo $user->getRole();?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("created"); ?></td>
+    <td><?php echo $this->showDateTime($user->getCreated()); ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("first Login"); ?></td>
+    <td><?php echo $this->showDateTime($user->getFirstLogin()); ?></td>
+</tr>
+<tr>
+    <td><?php echo $this->translate("last Login"); ?></td>
+    <td><?php echo $this->showDateTime($user->getLastLogin()); ?></td>
+</tr>
+</table>
+<?php $this->placeholder('actual')->captureEnd(); ?>
+<?php
+
+if (!empty($this->user)) {
+echo $this->placeholder('actual');
+} else {
+echo $this->placeholder('nothing');
+}
+?>
+
+<a class="btn btn-success" href="<?php echo $this->url('user')?>"><?php echo $this->translate("Return"); ?></a>

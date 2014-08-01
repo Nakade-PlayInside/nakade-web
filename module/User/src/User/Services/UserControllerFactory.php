@@ -7,34 +7,33 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Creates the controller
+ * Class UserControllerFactory
  *
- * @author Dr.Holger Maerz <grrompf@gmail.com>
+ * @package User\Services
  */
 class UserControllerFactory implements FactoryInterface
 {
 
     /**
-     * creates the controller and sets a service.
-     * Logic eg database action is found in the service.
-     * In addition, a form factory is set to receive all the many different
-     * forms.
+     * @param ServiceLocatorInterface $services
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
-     *
-     * @return UserController
+     * @return mixed|UserController
      */
     public function createService(ServiceLocatorInterface $services)
     {
 
         $serviceManager = $services->getServiceLocator();
 
-        $factory    = $serviceManager->get('User\Factory\FormFactory');
-        $service    = $serviceManager->get('User\Services\UserService');
+        $factory    = $serviceManager->get('User\Services\UserFormService');
+        $repository  = $serviceManager->get('User\Services\RepositoryService');
+        $mail  = $serviceManager->get('User\Services\MailService');
+        $pwdService  = $serviceManager->get('Nakade\Services\PasswordService');
 
         $controller = new UserController();
-        $controller->setService($service);
         $controller->setFormFactory($factory);
+        $controller->setRepository($repository);
+        $controller->setMailService($mail);
+        $controller->setPasswordService($pwdService);
 
         return $controller;
     }

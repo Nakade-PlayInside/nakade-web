@@ -1,0 +1,74 @@
+#termsOfUse h1 {
+    font-size: x-large;
+    color: #57a900;;
+}
+
+#termsOfUse h2 {
+    font-size: large;
+    line-height: 18px;
+}
+
+#termsOfUse .list {
+    counter-reset: upperCounter;
+}
+
+#termsOfUse .list dt {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#termsOfUse .list dt:before {
+    content: counter(upperCounter, decimal) ". " ;
+    counter-increment: upperCounter;
+}
+
+#termsOfUse .sublist {
+    counter-reset: my-counter;
+}
+
+#termsOfUse .sublist dt {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#termsOfUse .sublist dt:before {
+    content: counter(my-counter, lower-alpha) ". " ;
+    counter-increment: my-counter;
+}
+
+#termsOfUse ol {
+    list-style: disc;
+    margin-bottom: 10px;
+}
+
+#termsOfUse ol li {
+    font-weight: normal;
+    text-decoration: none;
+    margin: 0;
+
+}
+
+#termsOfUse span {
+    color: #57a900;
+    font-style: italic;
+}
+
+#attachment h3 {
+    text-decoration: underline;
+    color: #57a900;
+    font-size: large;
+    margin-top: 30px;
+}
+
+#attachment dl {
+    font-style: italic;
+}
+
+#attachment dt {
+    font-style: normal;
+    text-decoration: underline;
+}
+
+#attachment ol {
+    list-style: disc;
+}

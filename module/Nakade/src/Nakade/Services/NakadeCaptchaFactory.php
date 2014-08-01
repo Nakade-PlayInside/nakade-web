@@ -8,9 +8,9 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
 
 /**
- * Class ContactCaptchaFactory
+ * Class NakadeCaptchaFactory
  *
- * @package Application\Services
+ * @package Nakade\Services
  */
 class NakadeCaptchaFactory implements FactoryInterface
 {

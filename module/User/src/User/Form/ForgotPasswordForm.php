@@ -1,30 +1,15 @@
 <?php
 namespace User\Form;
 
-use User\Form\Fields\ForgotPassword;
 use Zend\InputFilter\InputFilter;
 
 /**
- * Form for changing email adress.
- * Use a factory for needed settings after constructing.
- * Successive settings: setEntityManager(), setInputFilter(), init().
- * Use bindingEntity for setting values.
+ * Class ForgotPasswordForm
+ *
+ * @package User\Form
  */
-class ForgotPasswordForm extends DefaultForm
+class ForgotPasswordForm extends BaseForm
 {
-
-    private $field;
-
-    /**
-     * @return ForgotPassword
-     */
-    public function getField()
-    {
-        if (is_null($this->field)) {
-            $this->field=new ForgotPassword($this->getTranslator(), $this->getTranslatorTextDomain());
-        }
-        return $this->field;
-    }
 
     /**
      * init the form. It is neccessary to call this function
@@ -32,15 +17,10 @@ class ForgotPasswordForm extends DefaultForm
      */
     public function init()
     {
-
         //email
-        $this->add($this->getField()->getField());
-        $this->setDefaultFields();
-
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_EMAIL));
+        $this->add($this->getButtonFieldSet());
     }
-
-
-
 
     /**
      * get the InputFilter
@@ -50,9 +30,16 @@ class ForgotPasswordForm extends DefaultForm
     public function getFilter()
     {
         $filter = new InputFilter();
-        $filter->add($this->getField()->getFilter());
+        $filter->add($this->getUserFilterFactory()->getFilter(self::FIELD_EMAIL));
+        return $filter;
+    }
 
-         return $filter;
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'PasswordForgotForm';
     }
 }
 

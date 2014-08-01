@@ -4,7 +4,8 @@
 
     <!-- There should not be any code in the bundle Resources directory. -->
     <exclude-pattern>*/Resources/*</exclude-pattern>
-    <exclude-pattern>*/*config.php</exclude-pattern>
+    <exclude-pattern>*/Resources/*</exclude-pattern>
+    <exclude-pattern>*\.(?!phtml$)</exclude-pattern>
     <exclude-pattern>*/*autoload.php</exclude-pattern>
     <!--
 
@@ -50,7 +51,7 @@
 
         <!-- covered by Squiz ControlSignature, which enforces try/catch as well -->
         <exclude name="PEAR.ControlStructures.ControlSignature"/>
-        <exclude name="Generic.Files.LineLength"/>  
+        <exclude name="Generic.Files.LineLength"/>
         <exclude name="PEAR.Commenting.FunctionComment.SpacingBeforeTags"/>
 
     </rule>

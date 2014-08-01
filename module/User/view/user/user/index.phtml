@@ -5,39 +5,60 @@ $title = $this->translate('Registered Users');
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
+<hr/>
 
-
-<a href="<?php echo $this->url('user', array('action' => 'add')); ?>"><?php echo $this->translate("add user"); ?></a>
-<table class="table" style="width:auto">
+<a class="addUser buttons-32 user-add-32" title="<?php echo $this->translate("add user"); ?>" href="
+    <?php echo $this->url('user', array('action' => 'add')); ?>"></a>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'users'); ?>
+<table class="table profile">
 <tr>
+    <th><?php echo $this->translate("ID"); ?></th>
     <th><?php echo $this->translate("Sex"); ?></th>
     <th><?php echo $this->translate("Name"); ?></th>
     <th><?php echo $this->translate("Nick"); ?></th>
     <th><?php echo $this->translate("Username"); ?></th>
     <th><?php echo $this->translate("KGS"); ?></th>
     <th><?php echo $this->translate("email"); ?></th>
+    <th><?php echo $this->translate("last Login"); ?></th>
+    <th><?php echo $this->translate("Details"); ?></th>
     <th><?php echo $this->translate("verified"); ?></th>
     <th><?php echo $this->translate("active"); ?></th>
+    <th><?php echo $this->translate("Pwd"); ?></th>
     <th><?php echo $this->translate("edit"); ?></th>
-    <th><?php echo $this->translate("access"); ?></th>
-    <th><?php echo $this->translate("pwd"); ?></th>
+
 </tr>
 <?php
-
+/* @var $user \User\Entity\User */
 foreach ($this->users as $user) : ?>
 <tr style="background-color:<?php
     echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-    <td style="width:1em;text-align:center"><?php echo $this->salutation($user->getSex()); ?></td>
+    <td style="text-align: right"><?php echo $user->getId(); ?></td>
+    <td class="info <?php echo $this->showSex($user->getSex()); ?>"></td>
     <td><?php echo $this->escapeHtml($user->getName());?></td>
     <td><?php echo $this->escapeHtml($user->getNickname());?></td>
     <td><?php echo $this->escapeHtml($user->getUsername()); ?></td>
     <td><?php echo $this->escapeHtml($user->getKgs()); ?></td>
     <td><?php echo $this->escapeHtml($user->getEmail()); ?></td>
-    <td style="width:1em;text-align:center"><?php echo $this->showVerified($user); ?></td>
-    <td style="width:1em;text-align:center"><?php echo $this->showActive($user->isActive()); ?></td>
-    <td style="text-align:center"><?php echo $this->showEdit($user->getId()); ?></td>
-    <td style="text-align:center"><?php echo $this->showTrigger($user);?></td>
-    <td style="text-align:center"><?php echo $this->showPwdReset($user->getId()); ?></td>
+    <td><?php echo $this->showDate($user->getLastLogin()); ?></td>
+    <td class="edit">
+        <a class="button details" title="<?php echo $this->translate('show Details'); ?>"
+           href="<?php echo $this->url('user', array('action' => 'details', 'id' => $user->getId())); ?>"></a>
+    </td>
+    <td class="info <?php echo $this->showStage($user->isVerified(), $user->isDue()); ?>"></td>
+    <td class="edit">
+        <a class='button <?php echo $this->showStage($user->isActive()); ?>' title="<?php echo $this->translate('shift'); ?>"
+           href="<?php echo $this->activateUrl($user); ?>"></a>
+    </td>
+    <td class="edit">
+        <a class='button resetPwd' title="<?php echo $this->translate('reset password'); ?>"
+           href="<?php echo $this->url('user', array('action' => 'resetPassword', 'id' => $user->getId())); ?>"></a>
+    </td>
+    <td class="edit">
+        <a class='button edit' title="<?php echo $this->translate('edit'); ?>"
+           href="<?php echo $this->url('user', array('action' => 'edit', 'id' => $user->getId())); ?>"></a>
+    </td>
+
 </tr>
 <?php endforeach; ?>
 </table>
+<p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("User"); ?></p>

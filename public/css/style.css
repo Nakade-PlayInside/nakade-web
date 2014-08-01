@@ -2,6 +2,10 @@
 @import "appointment.css";
 @import "season.css";
 @import "league.css";
+@import "user.css";
+@import "images.css";
+@import "pagination.css";
+@import "privacy.css";
 
 
 body {
@@ -83,7 +87,8 @@ form input.checkbox {
 }
 
 div.widget {
-    display: table;
+    display: inline-block;
+    vertical-align: top;
     width: auto;
     border:1px solid #ccc;
     border-bottom-color:#bbb;
@@ -94,7 +99,7 @@ div.widget {
     -moz-box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.2),0 1px 2px rgba(0, 0, 0, 0.05);
     box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.2),0 1px 2px rgba(0, 0, 0, 0.05);
     padding: 10px;
-    margin: 1em 0 1em 0;
+    margin: 10px 10px 10px 0;
 }
 
 .widget h3, .widget h4, .widget h5 {
@@ -107,6 +112,17 @@ div.widget {
 .widget h5 {
     margin: 0;
     color: #0088cc;
+}
+
+.widget p {
+    text-align: justify;
+}
+
+.widget p.important {
+    font-weight:bolder;
+    color: #68b604;
+    font-size: larger;
+    text-transform: uppercase
 }
 
 .widget .btn {
@@ -189,3 +205,28 @@ div.widget {
 }
 
 
+div.success {
+    width: 100%;
+    background-color: #57a900;
+    color: white;
+    padding: 2px 10px;
+    font-weight: bold;
+}
+
+div.error {
+    width: 100%;
+    background-color: red;
+    color: white;
+    padding: 2px 10px;
+    font-weight: bold;
+}
+
+#termsOfUse ul {
+    list-style: decimal;
+}
+
+#termsOfUse ul li {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 10px;
+}

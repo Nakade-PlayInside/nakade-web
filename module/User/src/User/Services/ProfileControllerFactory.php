@@ -7,35 +7,34 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Creates the controller
+ * Class ProfileControllerFactory
  *
- * @author Dr.Holger Maerz <grrompf@gmail.com>
+ * @package User\Services
  */
 class ProfileControllerFactory implements FactoryInterface
 {
 
     /**
-     * creates the controller and sets a service.
-     * Logic eg database action is found in the service.
-     * In addition, a form factory is set to receive all the many different
-     * forms.
+     * @param ServiceLocatorInterface $services
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $services
-     *
-     * @return ProfileController
+     * @return mixed|ProfileController
      */
     public function createService(ServiceLocatorInterface $services)
     {
 
         $serviceManager = $services->getServiceLocator();
 
-        $factory  = $serviceManager->get('User\Factory\FormFactory');
-        $service  = $serviceManager->get('User\Services\ProfileService');
+        $factory  = $serviceManager->get('User\Services\UserFormService');
+        $repository  = $serviceManager->get('User\Services\RepositoryService');
+        $service = $serviceManager->get('Zend\Authentication\AuthenticationService');
+        $mail  = $serviceManager->get('User\Services\MailService');
 
         $controller  = new ProfileController();
 
+        $controller->setRepository($repository);
         $controller->setService($service);
         $controller->setFormFactory($factory);
+        $controller->setMailService($mail);
 
 
         return $controller;
