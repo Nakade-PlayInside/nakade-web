@@ -76,7 +76,6 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
      */
     public function hydrate(array $data, $object)
     {
-
         if (isset($data['email'])) {
                 $object->setEmail($data['email']);
         }
@@ -117,14 +116,8 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
                 $object->setLanguage($data['language']);
             }
         }
-
         if (isset($data['password'])) {
-            if (!empty($data['password'])) {
-                $date = new \DateTime();
-                $pwd = $this->getPasswordGenerator()->generatePassword();
-                $object->setPassword($pwd);
-                $object->setPwdChange($date);
-            }
+            $this->setNewPassword($object, $data['password']);
         }
 
         if (isset($data['sex'])) {
@@ -160,18 +153,12 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
             $object->setCouponCode($data['code']);
         }
 
-        $now  = new \DateTime();
-
         // add new user: created, due Date, verifyString
         if (is_null($object->getId())) {
-            $object->setCreated($now);
-            $this->setVerification($object);
-            $pwd = $this->getPasswordGenerator()->generatePassword();
-            $pwdPlain = $this->getPasswordGenerator()->getPlainPassword();
-            $object->setPasswordPlain($pwdPlain);
-            $object->setPassword($pwd);
+           $this->setNewUserData($object);
 
         } else {
+            $now  = new \DateTime();
             $object->setEdit($now);
         }
 
@@ -183,6 +170,35 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
         return $object;
     }
 
+    /**
+     * @param User $user
+     * @param string $pwdPlain
+     */
+    private function setNewPassword(User &$user, $pwdPlain)
+    {
+        $now = new \DateTime();
+        $encryptedPwd = $this->getPasswordGenerator()->encryptPassword($pwdPlain);
+        $user->setPassword($encryptedPwd);
+        $user->setPwdChange($now);
+    }
+
+    /**
+     * @param User &$user
+     */
+    private function setNewUserData(User &$user)
+    {
+        $now  = new \DateTime();
+        $user->setCreated($now);
+        $this->setVerification($user);
+        $pwd = $this->getPasswordGenerator()->generatePassword();
+        $pwdPlain = $this->getPasswordGenerator()->getPlainPassword();
+        $user->setPasswordPlain($pwdPlain);
+        $user->setPassword($pwd);
+    }
+
+    /**
+     * @param User &$user
+     */
     private function setVerification(User &$user)
     {
         $dueDate  = new \DateTime();
