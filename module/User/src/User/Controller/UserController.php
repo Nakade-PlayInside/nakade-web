@@ -227,6 +227,7 @@ class UserController extends AbstractController
                 $password = $this->getPasswordService()->generatePassword();
                 $user->setPassword($password);
                 $pwdPlain = $this->getPasswordService()->getPlainPassword();
+                $user->setPasswordPlain($pwdPlain);
                 $date = new \DateTime();
                 $user->setPwdChange($date);
                 $this->getUserMapper()->save($user);
@@ -234,7 +235,6 @@ class UserController extends AbstractController
                 /* @var $mail \User\Mail\CredentialsMail */
                 $mail = $this->getMailService()->getMail(MailService::CREDENTIALS_MAIL);
                 $mail->setUser($user);
-                $mail->setPlainPwd($pwdPlain);
                 $mail->sendMail($user);
                 $this->flashMessenger()->addSuccessMessage('Password Reset');
 

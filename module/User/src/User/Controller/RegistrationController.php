@@ -117,9 +117,10 @@ class RegistrationController extends AbstractController
             $this->getRepository()->getMapper(RepositoryService::USER_MAPPER)->save($user);
             $this->flashMessenger()->addSuccessMessage('Email Verified!');
             $this->redirect()->toRoute('register', array('action' => 'success'));
+        } else {
+            $this->flashMessenger()->addErrorMessage('Verification is overdue!');
         }
 
-        $this->flashMessenger()->addErrorMessage('Verification is overdue!');
         return new ViewModel();
     }
 
@@ -171,10 +172,9 @@ class RegistrationController extends AbstractController
                           ->save($user);
                     $this->redirect()->toRoute('register', array('action' => 'success'));
                 }
-                $this->flashMessenger()->addErrorMessage('Input Error');
                 return $this->redirect()->toRoute('login');
-
-
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
         }
 

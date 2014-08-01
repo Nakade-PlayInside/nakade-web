@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-30 16:30+0100\n"
-"PO-Revision-Date: 2014-07-30 17:05+0100\n"
+"POT-Creation-Date: 2014-08-01 10:09+0100\n"
+"PO-Revision-Date: 2014-08-01 10:38+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -25,7 +25,7 @@ msgstr "Vielen Dank, dass du dich für %URL% entschieden hast."
 
 #: ../src/User/Mail/RegistrationMail.php:21
 msgid "We are happy to welcome you in our community and hope you enjoy your time with us."
-msgstr "Wir freuen uns, dich bei uns aufzunehmen und hoffen, du hast viel Spaß bei uns."
+msgstr "Wir freuen uns, dich bei uns aufzunehmen und wünschen dir hast viel Spaß in unserer Community."
 
 #: ../src/User/Mail/RegistrationMail.php:23
 #: ../src/User/Mail/CredentialsMail.php:21
@@ -44,7 +44,7 @@ msgstr "Passwort"
 
 #: ../src/User/Mail/RegistrationMail.php:27
 msgid "Before you can start, you have to confirm your email first."
-msgstr "Bevor du loslegen kannst, musst du zuerst deine email Adresse bestätigen."
+msgstr "Bevor du loslegen kannst, musst du deine email Adresse bestätigen."
 
 #: ../src/User/Mail/RegistrationMail.php:28
 #: ../src/User/Mail/VerifyMail.php:23
@@ -54,7 +54,7 @@ msgstr "Bitte klicke auf den  Link für die Aktivierung."
 #: ../src/User/Mail/RegistrationMail.php:29
 #: ../src/User/Mail/VerifyMail.php:24
 msgid "This is necessary to activate your account, too."
-msgstr "Vergiss bitte nicht deinen Zugang zu aktivieren."
+msgstr "Dieser Schritt ist notwendig, um dein Anmeldung abzuschließen."
 
 #: ../src/User/Mail/RegistrationMail.php:31
 #: ../src/User/Mail/VerifyMail.php:26
@@ -85,7 +85,7 @@ msgstr "Du wurdest eingeladen, dich unter %URL% zu registrieren."
 
 #: ../src/User/Mail/CouponMail.php:49
 msgid "Nakade is a platform for organizing leagues for the game of Go."
-msgstr "Nakade ist eine Platform, auf der online-Ligen für das Go-Spiel organisiert werden. "
+msgstr "Nakade ist eine Plattform, auf der online-Ligen für das Go-Spiel organisiert werden. "
 
 #: ../src/User/Mail/CouponMail.php:50
 msgid "For our closed beta, we are looking for players who love to compete on even terms."
@@ -343,11 +343,11 @@ msgstr "Für unsere Closed Beta suchen wir nach volljährigen, passionierten Go-
 
 #: ../view/user/registration/show.phtml:10
 msgid "You have a rank from 1d-15k, love the game and challenges on equal terms."
-msgstr "Du hast einen Spielgrad von 1d-15k und suchst die Herausforderung mit Spieler deiner Spielstärke. "
+msgstr "Du hast eine Spielstärke von 1d-15k und möchtest dich mit Gleichstarken messen."
 
 #: ../view/user/registration/show.phtml:11
 msgid "Despite your restricted time, you can make it on Tuesday every 2-3 weeks frequently."
-msgstr "Trotz deiner vielen Termine schaffst du es, dir alle 2-3 Wochen den Dienstag frei zu halten."
+msgstr "Für deine Partien musst du dir alle 2-3 Wochen den Dienstag frei halten."
 
 #: ../view/user/registration/show.phtml:12
 msgid "Due to our match time at 6:30 pm (CET), you should resident in the EC."
@@ -367,11 +367,11 @@ msgstr "Password zurücksetzen"
 
 #: ../view/user/registration/forgot.phtml:7
 msgid "Please enter your registered email."
-msgstr "Bitte gib deine registrierte email-Adresse ein."
+msgstr "Bitte gib deine bei uns registrierte email-Adresse ein."
 
 #: ../view/user/registration/forgot.phtml:8
 msgid "Your new credentials will be sent to you."
-msgstr "Deine neuen Zugangsdaten wurden dir zugeschickt."
+msgstr "Deine neuen Zugangsdaten werden dir zugeschickt."
 
 #: ../view/user/registration/verify.phtml:4
 msgid "Confirming Failed"

@@ -4,8 +4,7 @@ namespace User\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Permission\Entity\RoleInterface;
 
-//todo: nick, email, username, kgs unique
-//todo: anpassung datenbank
+//todo: anpassung datenbank unique
 /**
  * @ORM\MappedSuperclass
  */

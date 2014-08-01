@@ -40,6 +40,10 @@ $this->headTitle($title);
     <td><div class="<?php echo $this->showLanguage($user->getLanguage());?>"></div></td>
 </tr>
 <tr>
+    <td><?php echo $this->translate("Role"); ?></td>
+    <td><?php echo $user->getRole();?></td>
+</tr>
+<tr>
     <td><?php echo $this->translate("created"); ?></td>
     <td><?php echo $this->showDateTime($user->getCreated()); ?></td>
 </tr>

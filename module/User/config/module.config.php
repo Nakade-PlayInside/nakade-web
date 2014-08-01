@@ -1,16 +1,8 @@
 <?php
-/**
- * The config information is passed to the relevant components by the
- * ServiceManager. The controllers section provides a list of all the
- * controllers provided by the module.
- *
- * Within the view_manager section, we add our view directory to the
- * TemplatePathStack configuration.
- *
- * @return array
- */
 namespace User;
 
+//todo: cmdController for cronJobs: removing unanswered registrations, inactivation of edited emails w/no confirm
+//todo: removing invalid expired coupons
 return array(
 
      'view_helpers' => array(

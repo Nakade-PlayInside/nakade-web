@@ -13,9 +13,6 @@ if (!is_null($this->league)) {
     $title = str_replace("%NUMBER%", $this->league->getSeason()->getNumber(), $title);
 }
 ?>
-<?php $this->placeholder('noSchedule')->captureStart();?>
-<h3><?php echo $this->translate('No schedule found')?></h3>
-<?php $this->placeholder('noSchedule')->captureEnd(); ?>
 
 <?php $this->placeholder('schedule')->captureStart();?>
 <div class="widget">
@@ -37,8 +34,6 @@ endforeach;
 </div>
 <?php $this->placeholder('schedule')->captureEnd();
 
-  if (is_null($this->league)) {
-      echo $this->placeholder('noSchedule');
-  } else {
+  if (!is_null($this->league)) {
       echo $this->placeholder('schedule');
   }
