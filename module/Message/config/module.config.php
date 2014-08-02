@@ -59,6 +59,8 @@ return array(
                 'Message\Services\RepositoryService',
             'Message\Services\MailService'      =>
                 'Message\Services\MailService',
+            'Message\Services\MessageFormService'      =>
+                'Message\Services\MessageFormService',
             'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),

@@ -6,7 +6,6 @@ use Message\Controller\MessageController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-
 /**
  * Class MessageControllerFactory
  *
@@ -16,9 +15,6 @@ class MessageControllerFactory implements FactoryInterface
 {
 
     /**
-     * creates the authController. Binds the authentication service and
-     * the authentication form.
-     *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
      *
      * @return \Authentication\Controller\AuthController
@@ -34,11 +30,14 @@ class MessageControllerFactory implements FactoryInterface
         /* @var $mailService \Message\Services\MailService */
         $mailService = $serviceManager->get('Message\Services\MailService');
 
+        /* @var $formService \Message\Services\MessageFormService */
+        $formService = $serviceManager->get('Message\Services\MessageFormService');
         $translator = $serviceManager->get('translator');
 
         $controller = new MessageController();
         $controller->setRepository($repository);
         $controller->setTranslator($translator);
+        $controller->setFormFactory($formService);
         $controller->setMailService($mailService);
 
         return $controller;

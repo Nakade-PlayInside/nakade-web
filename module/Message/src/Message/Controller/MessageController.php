@@ -2,6 +2,8 @@
 namespace Message\Controller;
 
 use Message\Entity\Message;
+use Message\Services\MessageFormService;
+use Message\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
 use Message\Form\MessageForm;
 use Message\Form\ReplyForm;
@@ -20,11 +22,8 @@ class MessageController extends AbstractController
      */
     public function indexAction()
     {
-
         $uid = $this->identity()->getId();
-        $messages =  $this->getRepository()
-            ->getMapper('message')
-            ->getInboxMessages($uid);
+        $messages =  $this->getMessageMapper()->getInboxMessages($uid);
 
         return new ViewModel(
             array('messages' => $messages)
@@ -37,10 +36,7 @@ class MessageController extends AbstractController
     public function sentAction()
     {
         $uid = $this->identity()->getId();
-
-        /* @var $repo \Message\Mapper\MessageMapper */
-        $repo = $this->getRepository()->getMapper('message');
-        $messages =  $repo->getSentBoxMessages($uid);
+        $messages = $this->getMessageMapper()->getSentBoxMessages($uid);
 
         return new ViewModel(
             array('messages' => $messages)
@@ -57,23 +53,18 @@ class MessageController extends AbstractController
         $messageId  = (int) $this->params()->fromRoute('id', -1);
         $uid = $this->identity()->getId();
 
-
-        /* @var $repo \Message\Mapper\MessageMapper */
-        $repo = $this->getRepository()->getMapper('message');
-
-        $messages = $repo->getAllMessagesById($messageId);
-        $lastMessage =  $repo->getMessageById($messageId);
+        $messages = $this->getMessageMapper()->getAllMessagesById($messageId);
+        $lastMessage =  $this->getMessageMapper()->getMessageById($messageId);
 
         if ($lastMessage->getReceiver()->getId()==$uid && $lastMessage->isNew()) {
             $lastMessage->setNew(false);
             $lastMessage->setReadDate(new \DateTime());
-            $repo->update($lastMessage);
+            $this->getMessageMapper()->update($lastMessage);
         }
-
 
         return new ViewModel(
             array (
-                 'returnPath' => $returnPath,
+                'returnPath' => $returnPath,
                 'messages'  => $messages,
                 'replyId'   => $messageId,
             )
@@ -86,55 +77,36 @@ class MessageController extends AbstractController
     public function newAction()
     {
 
-       $id = $this->identity()->getId();
+        /* @var $form \Message\Form\MessageForm */
+        $form = $this->getForm(MessageFormService::MESSAGE_FORM);
+        $message = new Message();
+        $form->bindEntity($message);
 
-        /* @var $repo \Message\Mapper\MessageMapper */
-       $repo = $this->getRepository()->getMapper('message');
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
 
-       $recipients = $repo->getAllRecipients($id);
-
-       $message = new Message();
-       $message->setSender($id);
-
-
-       $form = new MessageForm($recipients, $this->getTranslator());
-       $form->bindEntity($message);
-
-       if ($this->getRequest()->isPost()) {
-
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
-
-            //cancel
-            if (isset($postData['cancel'])) {
+            $postData =  $request->getPost();
+            if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute('message');
             }
 
             $form->setData($postData);
-
             if ($form->isValid()) {
 
                 $message = $form->getData();
-
-                //date
-                $message->setSendDate(new \DateTime());
-
-                $sender = $repo->getUserById($message->getSender());
-                $message->setSender($sender);
-
-                $recipient =  $repo->getUserById($message->getReceiver());
-                $message->setReceiver($recipient);
-
-                $repo->save($message);
+                $this->getMessageMapper()->save($message);
 
                 /* @var $mail \Message\Mail\NotifyMail */
                 $mail = $this->getMailService()->getMail('notify');
-                $mail->sendMail($recipient);
+                $mail->sendMail($message->getReceiver());
 
+                $this->flashMessenger()->addSuccessMessage('Message send');
                 return $this->redirect()->toRoute('message');
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
-       }
-
+        }
 
         return new ViewModel(
             array('form' => $form)
@@ -147,15 +119,15 @@ class MessageController extends AbstractController
     public function replyAction()
     {
 
-       $uid = $this->identity()->getId();
-       $messageId  = (int) $this->params()->fromRoute('id', -1);
+        $uid = $this->identity()->getId();
+        $messageId  = (int) $this->params()->fromRoute('id', -1);
 
 
         /* @var $repo \Message\Mapper\MessageMapper */
         $repo = $this->getRepository()->getMapper('message');
-        $sender=$repo->getUserById($uid);
 
-        $message=$repo->getMessageById($messageId);
+        $sender=$this->getMessageMapper()->getUserById($uid);
+        $message=$this->getMessageMapper()->getMessageById($messageId);
 
         $subject = 'Re:' . $message->getSubject();
         $receiver = $message->getReceiver();
@@ -175,14 +147,15 @@ class MessageController extends AbstractController
         $reply->setReceiver($receiver);
 
 
-       $form = new ReplyForm($receiver->getShortName(), $this->getTranslator());
-       $form->bindEntity($reply);
+        $form = new ReplyForm($receiver->getShortName(), $this->getTranslator());
+        $form->bindEntity($reply);
 
-
-       if ($this->getRequest()->isPost()) {
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
 
             //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
+            $postData = $request->getPost();
 
             //cancel
             if (isset($postData['cancel'])) {
@@ -203,7 +176,7 @@ class MessageController extends AbstractController
 
                 return $this->redirect()->toRoute('message');
             }
-       }
+        }
 
         return new ViewModel(
             array('form' => $form)
@@ -217,7 +190,7 @@ class MessageController extends AbstractController
     {
         $uid = $this->identity()->getId();
         $messageId  = (int) $this->params()->fromRoute('id', -1);
-        $this->getRepository()->getMapper('message')->hideMessageByUser($uid, $messageId);
+        $this->getMessageMapper()->hideMessageByUser($uid, $messageId);
 
         return $this->redirect()->toRoute('message');
     }
@@ -228,15 +201,20 @@ class MessageController extends AbstractController
     public function infoAction()
     {
         $user = $this->identity();
-
-        /* @var $mapper \Message\Mapper\MessageMapper */
-        $mapper = $this->getRepository()->getMapper('message');
-        $noNewMails = $mapper->getNumberOfNewMessages($user);
+        $noNewMails = $this->getMessageMapper()->getNumberOfNewMessages($user);
 
         return new ViewModel(
             array('noNewMails' => $noNewMails)
         );
 
+    }
+
+    /**
+     * @return \Message\Mapper\MessageMapper
+     */
+    public function getMessageMapper()
+    {
+        return $this->getRepository()->getMapper(RepositoryService::MESSAGE_MAPPER);
     }
 
 }

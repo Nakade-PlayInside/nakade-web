@@ -1,40 +1,13 @@
 <?php
 namespace Message\Form;
 
-use Nakade\Abstracts\AbstractForm;
-use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-use Message\Entity\Message;
 use \Zend\InputFilter\InputFilter;
-use \Zend\I18n\Translator\Translator;
 
 /**
  * Form for making a new league
  */
-class MessageForm extends AbstractForm
+class MessageForm extends BaseForm
 {
-    private $recipients = array();
-
-    /**
-     * @param array      $recipients
-     * @param Translator $translator
-     */
-    public function __construct(array $recipients, Translator $translator = null)
-    {
-        foreach ($recipients as $object) {
-            $this->recipients[$object->getId()] = $object->getShortName();
-        }
-        asort($this->recipients);
-
-        //form name
-        parent::__construct('MessageForm');
-
-        $this->setTranslator($translator);
-        $this->setTranslatorTextDomain('Message');
-        $this->setObject(new Message());
-        $this->setHydrator(new Hydrator());
-        $this->init();
-    }
-
 
     /**
      * init the form. It is neccessary to call this function
@@ -42,8 +15,6 @@ class MessageForm extends AbstractForm
      */
     public function init()
     {
-
-
         //recipient
         $this->add(
             array(
@@ -52,9 +23,8 @@ class MessageForm extends AbstractForm
                 'options' => array(
                     'label' =>  $this->translate('recipient').":",
                     'empty_option' => $this->translate('Please choose'),
-                    'value_options' => $this->recipients,
+                    'value_options' => $this->getValueOptions(),
                 ),
-
             )
         );
 
@@ -66,10 +36,6 @@ class MessageForm extends AbstractForm
                 'options' => array(
                     'label' =>  $this->translate('subject').':',
                 ),
-                'attributes' => array(
-                    'value' => "titel", //$this->_title,
-
-                )
             )
         );
 
@@ -84,46 +50,62 @@ class MessageForm extends AbstractForm
             )
         );
 
-        //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side
-        //validation
-        $this->add(
-            array(
-                'name' => 'csrf',
-                'type'  => 'Zend\Form\Element\Csrf',
-                'options' => array(
-                    'csrf_options' => array(
-                        'timeout' => 600
-                    )
-                )
-            )
-        );
+        $this->add($this->getButtonFieldSet());
 
-        //submit button
-        $this->add(
-            array(
-                'name' => 'Send',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Submit'),
-
-                ),
-            )
-        );
-
-        //cancel button
-        $this->add(
-            array(
-                'name' => 'cancel',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Cancel'),
-
-                ),
-            )
-        );
 
     }
+
+    private function getValueOptions()
+    {
+        $valueOptions = array();
+
+        if ($this->hasRecipients()) {
+            $valueOptions['opponents'] = array(
+                'label' => $this->translate('My Opponents'),
+                'options' =>  $this->getOpponents()
+            );
+        }
+        $valueOptions['moderators'] = array(
+            'label' => $this->translate('Moderators'),
+            'options' => $this->getModerators(),
+        );
+
+        return $valueOptions;
+    }
+
+    /**
+     * @return array
+     */
+    private function getOpponents()
+    {
+        $opponents = array();
+        /* @var $user \User\Entity\User */
+        foreach ($this->getRecipients() as $user) {
+            $opponents[$user->getId()] = $user->getShortName();
+        }
+        asort($opponents);
+
+        return $opponents;
+    }
+
+    /**
+     * @return array
+     */
+    private function getModerators()
+    {
+        $moderators = array(
+            'isAdmin' => $this->translate('Admin'),
+            'isRef' => $this->translate('Referee'),
+        );
+
+        if($this->hasRecipients()) {
+            $moderators['isLM'] = $this->translate('League Manager');
+        }
+
+        return $moderators;
+    }
+
+
 
     /**
      * @return InputFilter
@@ -134,28 +116,30 @@ class MessageForm extends AbstractForm
 
         $filter->add(
             array(
-                 'name' => 'subject',
-                 'required' => false,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
-                 'validators' => array(
-                     array('name'    => 'StringLength',
-                           'options' => array (
-                                  'encoding' => 'UTF-8',
-                                  'max'  => '120',
-                           )
-                     ),
-                  )
-             )
+                'name' => 'subject',
+                'required' => true,
+                'allowEmpty' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripNewLines'),
+                ),
+                'validators' => array(
+                    array('name'    => 'StringLength',
+                        'options' => array (
+                            'encoding' => 'UTF-8',
+                            'max'  => '120',
+                        )
+                    ),
+                )
+            )
         );
 
         $filter->add(
             array(
                 'name' => 'message',
-                'required' => false,
+                'required' => true,
+                'allowEmpty' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                 ),
@@ -164,6 +148,14 @@ class MessageForm extends AbstractForm
         );
 
         return $filter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return "messageForm";
     }
 
 }

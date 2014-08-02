@@ -14,9 +14,9 @@ use RuntimeException;
  */
 class RepositoryService implements FactoryInterface
 {
+    const MESSAGE_MAPPER = 'message';
 
-    protected $_entityManager;
-
+    private $entityManager;
 
     /**
      * @param ServiceLocatorInterface $services
@@ -28,9 +28,9 @@ class RepositoryService implements FactoryInterface
     public function createService(ServiceLocatorInterface $services)
     {
         //EntityManager for database access by doctrine
-        $this->_entityManager = $services->get('Doctrine\ORM\EntityManager');
+        $this->entityManager = $services->get('Doctrine\ORM\EntityManager');
 
-        if (null === $this->_entityManager) {
+        if (null === $this->entityManager) {
             throw new RuntimeException(
                 sprintf('Entity manager could not be found in service.')
             );
@@ -41,10 +41,6 @@ class RepositoryService implements FactoryInterface
 
 
     /**
-     * fabric method for getting the mail needed. expecting the mail name as
-     * string. Throws an exception if provided typ is unknown.
-     * Typ: - 'user'    => users and profile
-     *
      * @param string $typ
      *
      * @return \Nakade\Abstracts\AbstractMapper
@@ -56,7 +52,7 @@ class RepositoryService implements FactoryInterface
 
         switch (strtolower($typ)) {
 
-           case "message":
+           case self::MESSAGE_MAPPER:
                $mapper = new MessageMapper();
                break;
 
@@ -67,7 +63,7 @@ class RepositoryService implements FactoryInterface
                );
         }
 
-        $mapper->setEntityManager($this->_entityManager);
+        $mapper->setEntityManager($this->entityManager);
 
         return $mapper;
     }
