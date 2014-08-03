@@ -10,7 +10,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  *
  * @package Nakade\Services
  */
-class NakadeTranslationService extends NakadeBaseService
+abstract class NakadeTranslationService extends NakadeBaseService
 {
     protected $translator;
     protected $config;
@@ -38,16 +38,7 @@ class NakadeTranslationService extends NakadeBaseService
     /**
      * @return mixed
      */
-    public function getTextDomain()
-    {
-        if (is_null($this->textDomain)) {
-            $config  = $this->getConfig();
-            if (isset($config['User']['text_domain'])) {
-                $this->textDomain = $config['User']['text_domain'];
-            }
-        }
-        return $this->textDomain;
-    }
+    abstract public function getTextDomain();
 
     /**
      * @return \Zend\I18n\Translator\Translator

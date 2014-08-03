@@ -4,7 +4,9 @@ namespace Message\Form;
 use \Zend\InputFilter\InputFilter;
 
 /**
- * Form for making a new league
+ * Class MessageForm
+ *
+ * @package Message\Form
  */
 class MessageForm extends BaseForm
 {

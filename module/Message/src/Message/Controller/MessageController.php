@@ -2,6 +2,7 @@
 namespace Message\Controller;
 
 use Message\Entity\Message;
+use Message\Services\MailService;
 use Message\Services\MessageFormService;
 use Message\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
@@ -48,6 +49,7 @@ class MessageController extends AbstractController
      */
     public function showAction()
     {
+        //todo: paging messages; new message as icon btn; post ausgang als btn
         $returnPath = $this->getRequest()->getHeader('referer')->uri()->getPath();
 
         $messageId  = (int) $this->params()->fromRoute('id', -1);
@@ -98,7 +100,8 @@ class MessageController extends AbstractController
                 $this->getMessageMapper()->save($message);
 
                 /* @var $mail \Message\Mail\NotifyMail */
-                $mail = $this->getMailService()->getMail('notify');
+                $mail = $this->getMailService()->getMail(MailService::NOTIFY_MAIL);
+                $mail->setMessage($message);
                 $mail->sendMail($message->getReceiver());
 
                 $this->flashMessenger()->addSuccessMessage('Message send');
@@ -118,37 +121,12 @@ class MessageController extends AbstractController
      */
     public function replyAction()
     {
-
-        $uid = $this->identity()->getId();
         $messageId  = (int) $this->params()->fromRoute('id', -1);
+        $message = $this->getMessageMapper()->getMessageById($messageId);
 
-
-        /* @var $repo \Message\Mapper\MessageMapper */
-        $repo = $this->getRepository()->getMapper('message');
-
-        $sender=$this->getMessageMapper()->getUserById($uid);
-        $message=$this->getMessageMapper()->getMessageById($messageId);
-
-        $subject = 'Re:' . $message->getSubject();
-        $receiver = $message->getReceiver();
-        if ($message->getReceiver()->getId() == $uid) {
-            $receiver = $message->getSender();
-        }
-
-        $threadId = $message->getId();
-        if (!is_null($message->getThreadId())) {
-            $threadId = $message->getThreadId();
-        }
-
-        $reply = new Message();
-        $reply->setSubject($subject);
-        $reply->setThreadId($threadId);
-        $reply->setSender($sender);
-        $reply->setReceiver($receiver);
-
-
-        $form = new ReplyForm($receiver->getShortName(), $this->getTranslator());
-        $form->bindEntity($reply);
+        /* @var $form \Message\Form\ReplyForm */
+        $form = $this->getForm(MessageFormService::REPLY_FORM);
+        $form->bindEntity($message);
 
         /* @var $request \Zend\Http\Request */
         $request = $this->getRequest();
@@ -158,7 +136,7 @@ class MessageController extends AbstractController
             $postData = $request->getPost();
 
             //cancel
-            if (isset($postData['cancel'])) {
+            if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute('message');
             }
 
@@ -166,15 +144,18 @@ class MessageController extends AbstractController
 
             if ($form->isValid()) {
 
-                $reply = $form->getData();
-                $reply->setSendDate(new \DateTime());
-                $repo->save($reply);
+                $message = $form->getData();
+                $this->getMessageMapper()->save($message);
 
                 /* @var $mail \Message\Mail\NotifyMail */
-                $mail = $this->getMailService()->getMail('notify');
-                $mail->sendMail($receiver);
+                $mail = $this->getMailService()->getMail(MailService::NOTIFY_MAIL);
+                $mail->setMessage($message);
+                $mail->sendMail($message->getReceiver());
 
+                $this->flashMessenger()->addSuccessMessage('Message send');
                 return $this->redirect()->toRoute('message');
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
         }
 

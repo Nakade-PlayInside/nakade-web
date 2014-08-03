@@ -24,15 +24,19 @@ class MessageHydrator implements HydratorInterface
      */
     public function extract($object)
     {
-        $receiverId = null;
+        $receiver = null;
         if (null!==$object->getReceiver()) {
-            $receiverId = $object->getReceiver()->getId();
+            $receiver = $object->getSender()->getShortName();
+        }
+
+        $subject = null;
+        if (null!==$object->getSubject()) {
+            $subject .= 'Re:' . $object->getSubject();
         }
 
         return array(
-            'receiver'=>  $receiverId,
-            'subject' =>  $object->getSubject(),
-            'message' =>  $object->getMessage(),
+            'sendTo'=>  $receiver,
+            'subject' =>  $subject,
         );
 
     }
@@ -45,9 +49,14 @@ class MessageHydrator implements HydratorInterface
      */
     public function hydrate(array $data, $object)
     {
+        $object->setSendDate(new \DateTime());
+        $object->setNew(true);
+
         if (isset($data['receiver'])) {
-            $receiver = $this->getUserById($data['receiver']);
-            $object->setReceiver($receiver);
+            if (is_numeric($data['receiver'])) {
+                $receiver = $this->getUserById($data['receiver']);
+                $object->setReceiver($receiver);
+            }//todo: isAdmin etc
         }
 
         if (isset($data['subject'])) {
@@ -57,13 +66,21 @@ class MessageHydrator implements HydratorInterface
             $object->setMessage($data['message']);
         }
 
-        // add new user: created, due Date, verifyString
+        // new message
         if (is_null($object->getId())) {
             $sender = $this->getCreator();
             $object->setSender($sender);
-            $object->setSendDate(new \DateTime());
-            $object->setNew(true);
-        }
+        } else {
+            $sender = $object->getReceiver();
+            $receiver  = $object->getSender();
+            $object->setSender($sender);
+            $object->setReceiver($receiver);
+            if (is_null($object->getThreadId())) {
+                $threadId = $object->getId();
+                $object->setThreadId($threadId);
+            }
+            $object->setId(null);
+         }
 
         return $object;
     }

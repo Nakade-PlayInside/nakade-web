@@ -8,6 +8,7 @@ class Contact implements UserInterface
     private $name;
     private $message;
     private $email;
+    private $language;
 
     /**
      * @param string $message
@@ -65,6 +66,23 @@ class Contact implements UserInterface
     {
         return $this->email;
     }
+
+    /**
+     * @param mixed $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
 
     /**
      * for form data

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-21 00:42+0100\n"
-"PO-Revision-Date: 2014-05-21 00:43+0100\n"
+"POT-Creation-Date: 2014-08-03 15:49+0100\n"
+"PO-Revision-Date: 2014-08-03 15:50+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -16,47 +16,65 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Message/Mail/NotifyMail.php:34
-msgid "You have got a new message in your mailbox at %URL%."
-msgstr "Du hast eine neue Nachricht in deinem Postfach bei %URL%."
+#: ../src/Message/Mail/NotifyMail.php:38
+msgid "Dear %NAME%"
+msgstr "Hallo %NAME%"
 
-#: ../src/Message/Mail/NotifyMail.php:36
+#: ../src/Message/Mail/NotifyMail.php:39
+msgid "You have got a new message by %SENDER% in your mailbox at %URL%."
+msgstr "Du hast eine neue Nachricht von %SENDER% in deinem Postfach bei %URL%."
+
+#: ../src/Message/Mail/NotifyMail.php:41
 msgid "Please logIn at %URL% for reading."
 msgstr "Um diese zu lesen, musst du dich bei %URL% einloggen."
 
-#: ../src/Message/Mail/NotifyMail.php:58
-msgid "New Message at nakade.de"
-msgstr "Neue Nachricht auf nakade.de"
+#: ../src/Message/Mail/NotifyMail.php:43
+msgid "For messages in your preferred language, just edit your profile."
+msgstr "Für Nachrichten in deiner bevorzugten Sprache, nutze die Einstellungsmöglichkeit in deinem Profil. "
 
-#: ../src/Message/Form/MessageForm.php:53
+#: ../src/Message/Mail/NotifyMail.php:71
+msgid "New Message at %URL%"
+msgstr "Neue Nachricht auf %URL%"
+
+#: ../src/Message/Form/MessageForm.php:26
 msgid "recipient"
 msgstr "Empfänger"
 
-#: ../src/Message/Form/MessageForm.php:54
+#: ../src/Message/Form/MessageForm.php:27
 msgid "Please choose"
 msgstr "Bitte wählen"
 
-#: ../src/Message/Form/MessageForm.php:67
-#: ../src/Message/Form/ReplyForm.php:67
+#: ../src/Message/Form/MessageForm.php:39
+#: ../src/Message/Form/ReplyForm.php:46
 msgid "subject"
 msgstr "Betreff"
 
-#: ../src/Message/Form/MessageForm.php:82
-#: ../src/Message/Form/ReplyForm.php:79
+#: ../src/Message/Form/MessageForm.php:50
+#: ../src/Message/Form/ReplyForm.php:57
 msgid "message"
 msgstr "Nachricht"
 
-#: ../src/Message/Form/MessageForm.php:108
-#: ../src/Message/Form/ReplyForm.php:105
-msgid "Submit"
-msgstr "Abschicken"
+#: ../src/Message/Form/MessageForm.php:66
+msgid "My Opponents"
+msgstr "Mein Gegner"
 
-#: ../src/Message/Form/MessageForm.php:120
-#: ../src/Message/Form/ReplyForm.php:117
-msgid "Cancel"
-msgstr "Abbruch"
+#: ../src/Message/Form/MessageForm.php:71
+msgid "Moderators"
+msgstr "Moderatoren"
 
-#: ../src/Message/Form/ReplyForm.php:51
+#: ../src/Message/Form/MessageForm.php:99
+msgid "Admin"
+msgstr "Admin"
+
+#: ../src/Message/Form/MessageForm.php:100
+msgid "Referee"
+msgstr "Schiedsrichter"
+
+#: ../src/Message/Form/MessageForm.php:104
+msgid "League Manager"
+msgstr "Liga Manager"
+
+#: ../src/Message/Form/ReplyForm.php:32
 msgid "receiver"
 msgstr "Empfänger"
 
@@ -66,6 +84,7 @@ msgstr "Posteingang"
 
 #: ../view/message/message/index.phtml:9
 #: ../view/message/message/sent.phtml:10
+#: ../view/message/message/show.phtml:22
 msgid "No messages found"
 msgstr "Keine Nachrichten gefunden."
 
@@ -80,6 +99,7 @@ msgid "Subject"
 msgstr "Betreff"
 
 #: ../view/message/message/index.phtml:20
+#: ../view/message/message/show.phtml:34
 msgid "from"
 msgstr "von"
 
@@ -117,6 +137,7 @@ msgid "unread"
 msgstr "ungelesen"
 
 #: ../view/message/message/sent.phtml:38
+#: ../view/message/message/show.phtml:46
 msgid "read"
 msgstr "gelesen"
 
@@ -147,6 +168,15 @@ msgstr "gesendet"
 #: ../view/message/message/new.phtml:5
 msgid "Send Message"
 msgstr "Nachricht schicken"
+
+#~ msgid "The message was sent by %SENDER%."
+#~ msgstr "Die Nachricht ist von %SENDER%."
+
+#~ msgid "Submit"
+#~ msgstr "Abschicken"
+
+#~ msgid "Cancel"
+#~ msgstr "Abbruch"
 
 #~ msgid "Your Nakade Team"
 #~ msgstr "Dein Nakade Team"
@@ -258,9 +288,6 @@ msgstr "Nachricht schicken"
 
 #~ msgid "Matchplan"
 #~ msgstr "Spielplan"
-
-#~ msgid "League"
-#~ msgstr "Liga"
 
 #~ msgid "Season"
 #~ msgstr "Saison"

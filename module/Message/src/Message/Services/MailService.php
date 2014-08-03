@@ -26,7 +26,7 @@ class MailService extends AbstractMailService
         switch (strtolower($typ)) {
 
             case self::NOTIFY_MAIL:
-                $mail = new NotifyMail($this->message, $this->transport);
+                $mail = new NotifyMail($this->getMessage(), $this->getTransport());
                 break;
 
             default:
@@ -39,6 +39,20 @@ class MailService extends AbstractMailService
         $mail->setTranslatorTextDomain($this->getTextDomain());
         $mail->setSignature($this->getSignature());
         return $mail;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTextDomain()
+    {
+        if (is_null($this->textDomain)) {
+            $config  = $this->getConfig();
+            if (isset($config['Message']['text_domain'])) {
+                $this->textDomain = $config['Message']['text_domain'];
+            }
+        }
+        return $this->textDomain;
     }
 
 }

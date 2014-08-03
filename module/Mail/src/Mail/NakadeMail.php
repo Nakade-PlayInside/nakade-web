@@ -1,9 +1,4 @@
 <?php
-/**
- * User: Holger Maerz
- * Date: 16.04.14
- * Time: 11:47
- */
 
 namespace Mail;
 
@@ -43,6 +38,13 @@ abstract class NakadeMail extends AbstractTranslation implements NakadeMailInter
      */
     public function sendMail(UserInterface $user)
     {
+        //set the language for the recipient
+        $language = $user->getLanguage();
+        if(!empty($language)) {
+            $this->getTranslator()->setLocale($language);
+        }
+
+
         $subject = $this->getSubject();
         $this->getMailService()->setSubject($subject);
         $this->getMailService()->setBody($this->getMailBody());

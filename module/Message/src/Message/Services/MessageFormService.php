@@ -1,6 +1,7 @@
 <?php
 namespace Message\Services;
 
+use Message\Form\ReplyForm;
 use Nakade\Abstracts\AbstractFormFactory;
 use Message\Form\MessageForm;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -13,6 +14,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class MessageFormService extends AbstractFormFactory
 {
     const MESSAGE_FORM = 'message';
+    const REPLY_FORM = 'reply';
 
     private $services;
 
@@ -52,6 +54,10 @@ class MessageFormService extends AbstractFormFactory
 
             case self::MESSAGE_FORM:
                 $form = new MessageForm($this->getServices());
+                break;
+
+            case self::REPLY_FORM:
+                $form = new ReplyForm($this->getServices());
                 break;
 
             default:

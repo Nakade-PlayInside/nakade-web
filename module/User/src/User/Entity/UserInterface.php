@@ -12,6 +12,11 @@ interface UserInterface
     public function getEmail();
 
     /**
+     * @return string
+     */
+    public function getLanguage();
+
+    /**
      * get name
      *
      * @return string

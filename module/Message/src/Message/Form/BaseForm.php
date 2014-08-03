@@ -7,6 +7,11 @@ use Season\Services\SeasonFieldsetService;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Message\Services\RepositoryService;
 
+/**
+ * Class BaseForm
+ *
+ * @package Message\Form
+ */
 abstract class BaseForm extends AbstractForm
 {
     protected $fieldSetService;
@@ -59,7 +64,7 @@ abstract class BaseForm extends AbstractForm
     }
 
     /**
-     * @param \User\Entity\User $object
+     * @param \Message\Entity\Message $object
      */
     public function bindEntity($object)
     {

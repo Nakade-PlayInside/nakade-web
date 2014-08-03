@@ -54,6 +54,7 @@ class Coupon implements UserInterface
     private $usedBy;
 
     private $message;
+    private $language;
 
     /**
      * @param string $code
@@ -205,6 +206,22 @@ class Coupon implements UserInterface
     public function isExpired()
     {
         return new \DateTime() > $this->getExpiryDate();
+    }
+
+    /**
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 
 
