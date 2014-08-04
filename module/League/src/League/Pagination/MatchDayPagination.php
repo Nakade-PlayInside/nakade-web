@@ -15,7 +15,7 @@ class MatchDayPagination
     const ITEMS_PER_PAGE    = 1;
     const PAGE_RANGE = 7;
     private $repository;
-
+//todo: refactor similiar to message pagination, making service
     /**
      * @param ResultMapper $repository
      */

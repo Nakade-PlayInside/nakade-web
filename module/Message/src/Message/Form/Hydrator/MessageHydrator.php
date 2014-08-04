@@ -56,7 +56,13 @@ class MessageHydrator implements HydratorInterface
             if (is_numeric($data['receiver'])) {
                 $receiver = $this->getUserById($data['receiver']);
                 $object->setReceiver($receiver);
-            }//todo: isAdmin etc
+            } else {
+                //todo: make real messages for moderators
+                $object->setModerator($data['receiver']);
+                $receiver = $this->getUserById(1);
+                $object->setReceiver($receiver);
+            }
+
         }
 
         if (isset($data['subject'])) {

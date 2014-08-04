@@ -8,7 +8,7 @@ use \Zend\InputFilter\InputFilter;
  *
  * @package Message\Form
  */
-class MessageForm extends BaseForm
+class MessageForm extends BaseForm implements ModeratorInterface
 {
 
     /**
@@ -96,12 +96,12 @@ class MessageForm extends BaseForm
     private function getModerators()
     {
         $moderators = array(
-            'isAdmin' => $this->translate('Admin'),
-            'isRef' => $this->translate('Referee'),
+            self::ADMIN_MESSAGE => $this->translate('Admin'),
+            self::REFEREE_MESSAGE => $this->translate('Referee'),
         );
 
         if($this->hasRecipients()) {
-            $moderators['isLM'] = $this->translate('League Manager');
+            $moderators[self::LM_MESSAGE] = $this->translate('League Manager');
         }
 
         return $moderators;

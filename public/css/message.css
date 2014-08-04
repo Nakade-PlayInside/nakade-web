@@ -146,3 +146,15 @@ div.loginMessage a {
     font-weight: bold ;
     padding-left: 15px;
 }
+
+a.delete {
+    background-image: url(../images/trash.png);
+    background-size: contain;
+}
+
+a.msgButton {
+    vertical-align:middle;
+    display:inline-block;
+    cursor: pointer;
+    margin-right:10px;
+}

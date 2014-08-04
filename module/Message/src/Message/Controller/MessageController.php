@@ -2,13 +2,14 @@
 namespace Message\Controller;
 
 use Message\Entity\Message;
+use Message\Pagination\MessagePagination;
 use Message\Services\MailService;
 use Message\Services\MessageFormService;
 use Message\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
-use Message\Form\MessageForm;
-use Message\Form\ReplyForm;
 use Zend\View\Model\ViewModel;
+use \Zend\Http\Request;
+use \Zend\Form\Form;
 
 /**
  * Class MessageController
@@ -23,11 +24,18 @@ class MessageController extends AbstractController
      */
     public function indexAction()
     {
+        $page = (int) $this->params()->fromRoute('id', 1);
+
         $uid = $this->identity()->getId();
         $messages =  $this->getMessageMapper()->getInboxMessages($uid);
+        //todo: refactor pagination service
+        $myPagination = new MessagePagination(count($messages));
+        $offset = (MessagePagination::ITEMS_PER_PAGE * ($page -1));//value for mapper request
 
-        return new ViewModel(
-            array('messages' => $messages)
+        return new ViewModel(array(
+            'messages' => $this->getMessageMapper()->getUserMessagesByPages($uid, $offset),
+            'paginator' =>   $myPagination->getPagination($page),
+            )
         );
     }
 
@@ -83,37 +91,8 @@ class MessageController extends AbstractController
         $form = $this->getForm(MessageFormService::MESSAGE_FORM);
         $message = new Message();
         $form->bindEntity($message);
-
-        /* @var $request \Zend\Http\Request */
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-
-            $postData =  $request->getPost();
-            if (isset($postData['button']['cancel'])) {
-                return $this->redirect()->toRoute('message');
-            }
-
-            $form->setData($postData);
-            if ($form->isValid()) {
-
-                $message = $form->getData();
-                $this->getMessageMapper()->save($message);
-
-                /* @var $mail \Message\Mail\NotifyMail */
-                $mail = $this->getMailService()->getMail(MailService::NOTIFY_MAIL);
-                $mail->setMessage($message);
-                $mail->sendMail($message->getReceiver());
-
-                $this->flashMessenger()->addSuccessMessage('Message send');
-                return $this->redirect()->toRoute('message');
-            } else {
-                $this->flashMessenger()->addErrorMessage('Input Error');
-            }
-        }
-
-        return new ViewModel(
-            array('form' => $form)
-        );
+        //todo: moderator message
+        return $this->makeMessage($this->getRequest(), $form);
     }
 
     /**
@@ -128,41 +107,9 @@ class MessageController extends AbstractController
         $form = $this->getForm(MessageFormService::REPLY_FORM);
         $form->bindEntity($message);
 
-        /* @var $request \Zend\Http\Request */
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-
-            //get post data, set data to from, prepare for validation
-            $postData = $request->getPost();
-
-            //cancel
-            if (isset($postData['button']['cancel'])) {
-                return $this->redirect()->toRoute('message');
-            }
-
-            $form->setData($postData);
-
-            if ($form->isValid()) {
-
-                $message = $form->getData();
-                $this->getMessageMapper()->save($message);
-
-                /* @var $mail \Message\Mail\NotifyMail */
-                $mail = $this->getMailService()->getMail(MailService::NOTIFY_MAIL);
-                $mail->setMessage($message);
-                $mail->sendMail($message->getReceiver());
-
-                $this->flashMessenger()->addSuccessMessage('Message send');
-                return $this->redirect()->toRoute('message');
-            } else {
-                $this->flashMessenger()->addErrorMessage('Input Error');
-            }
-        }
-
-        return new ViewModel(
-            array('form' => $form)
-        );
+        return $this->makeMessage($this->getRequest(), $form);
     }
+
 
     /**
      * @return \Zend\Http\Response|ViewModel
@@ -197,5 +144,49 @@ class MessageController extends AbstractController
     {
         return $this->getRepository()->getMapper(RepositoryService::MESSAGE_MAPPER);
     }
+
+    /**
+     * @param Request $request
+     * @param Form $form
+     *
+     * @return \Zend\Http\Response
+     */
+    private function makeMessage(Request $request, Form $form)
+    {
+        if ($request->isPost()) {
+
+            //get post data, set data to from, prepare for validation
+            $postData = $request->getPost();
+
+            //cancel
+            if (isset($postData['button']['cancel'])) {
+                return $this->redirect()->toRoute('message');
+            }
+
+            $form->setData($postData);
+
+            if ($form->isValid()) {
+
+                /* @var $message \Message\Entity\Message */
+                $message = $form->getData();
+                $this->getMessageMapper()->save($message);
+
+                /* @var $mail \Message\Mail\NotifyMail */
+                $mail = $this->getMailService()->getMail(MailService::NOTIFY_MAIL);
+                $mail->setMessage($message);
+                $mail->sendMail($message->getReceiver());
+
+                $this->flashMessenger()->addSuccessMessage('Message send');
+                return $this->redirect()->toRoute('message');
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
+            }
+        }
+
+        return new ViewModel(
+            array('form' => $form)
+        );
+    }
+
 
 }

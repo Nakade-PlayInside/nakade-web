@@ -43,11 +43,20 @@ return array(
         ),
     ),
 
+    'view_helper_config' => array(
+        'flashmessenger' => array(
+            'message_open_format'      => '<div%s>',
+            'message_close_string'     => '</div>',
+        )
+    ),
+
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
-
+        'template_map' => array(
+            'messages' => __DIR__ . '/../view/partial/pagination.phtml', // Note: the key is optional
+        ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),

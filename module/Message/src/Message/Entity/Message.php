@@ -10,65 +10,68 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Message
 {
-   /**
-   * @ORM\Id
-   * @ORM\Column(name="id", type="integer")
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  private $id;
-
-   /**
-    * @ORM\Column(name="threadId", type="integer", nullable=true)
-    */
-  private $threadId;
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     /**
-   * @ORM\Column(name="subject", type="string", nullable=false)
-   */
-  private $subject;
+     * @ORM\Column(name="threadId", type="integer", nullable=true)
+     */
+    private $threadId;
 
-  /**
-   * @ORM\Column(name="message", type="text", nullable=false)
-   */
-  private $message;
+    /**
+     * @ORM\Column(name="subject", type="string", nullable=false)
+     */
+    private $subject;
 
-  /**
-   * @var \User\Entity\User
-   *
-   * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
-   * @ORM\JoinColumn(name="sender", referencedColumnName="uid", nullable=false)
-   *
-   */
-  private $sender;
+    /**
+     * @ORM\Column(name="message", type="text", nullable=false)
+     */
+    private $message;
 
-  /**
-   * @var \User\Entity\User
-   *
-   * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
-   * @ORM\JoinColumn(name="receiver", referencedColumnName="uid", nullable=false)
-   *
-   */
-  private $receiver;
+    /**
+     * @var \User\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="sender", referencedColumnName="uid", nullable=false)
+     *
+     */
+    private $sender;
 
-  /**
-   * @ORM\Column(name="sendDate", type="datetime", nullable=false)
-   */
-  private $sendDate;
+    /**
+     * @var \User\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="User\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="receiver", referencedColumnName="uid", nullable=false)
+     *
+     */
+    private $receiver;
 
-  /**
-   * @ORM\Column(name="readDate", type="datetime", nullable=true)
-   */
-  private $readDate;
+    /**
+     * @ORM\Column(name="sendDate", type="datetime", nullable=false)
+     */
+    private $sendDate;
 
-  /**
-  * @ORM\Column(name="isHidden", type="boolean")
-  */
-  private $hidden=0;
+    /**
+     * @ORM\Column(name="readDate", type="datetime", nullable=true)
+     */
+    private $readDate;
 
-  /**
-  * @ORM\Column(name="isNew", type="boolean")
-  */
-  private $new=1;
+    /**
+     * @ORM\Column(name="isHidden", type="boolean")
+     */
+    private $hidden=0;
+
+    /**
+     * @ORM\Column(name="isNew", type="boolean")
+     */
+    private $new=1;
+
+
+    private $moderator;
 
     /**
      * @param boolean $isNew
@@ -252,6 +255,30 @@ class Message
     public function isHidden()
     {
         return $this->hidden;
+    }
+
+    /**
+     * @param mixed $moderator
+     */
+    public function setModerator($moderator)
+    {
+        $this->moderator = $moderator;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModerator()
+    {
+        return $this->moderator;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function isModerator()
+    {
+        return !empty($this->moderator);
     }
 
 

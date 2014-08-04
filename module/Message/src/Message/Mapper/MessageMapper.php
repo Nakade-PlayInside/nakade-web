@@ -2,6 +2,7 @@
 namespace Message\Mapper;
 
 use Doctrine\ORM\Query\Expr\Join;
+use Message\Pagination\MessagePagination;
 use Nakade\Abstracts\AbstractMapper;
 use \Doctrine\ORM\Query;
 use User\Entity\Message;
@@ -33,6 +34,29 @@ class MessageMapper extends AbstractMapper
         $result = $qb->getQuery()->getResult();
 
         return $result;
+    }
+
+    /**
+     * @param int $uid
+     * @param int $offset
+     *
+     * @return array
+     */
+    public function getUserMessagesByPages($uid, $offset)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Message')
+            ->select('m')
+            ->from('Message\Entity\Message', 'm')
+            ->join('m.receiver', 'Receiver')
+            ->andWhere('Receiver.id = :uid')
+            ->andWhere('m.hidden = 0')
+            ->setParameter('uid', $uid)
+            ->setFirstResult($offset)
+            ->setMaxResults(MessagePagination::ITEMS_PER_PAGE)
+            ->orderBy('m.sendDate', 'DESC');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
