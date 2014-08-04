@@ -33,8 +33,8 @@ class MessageController extends AbstractController
         $offset = (MessagePagination::ITEMS_PER_PAGE * ($page -1));//value for mapper request
 
         return new ViewModel(array(
-            'messages' => $this->getMessageMapper()->getUserMessagesByPages($uid, $offset),
-            'paginator' =>   $myPagination->getPagination($page),
+                'messages' => $this->getMessageMapper()->getInboxMessagesByPages($uid, $offset),
+                'paginator' =>   $myPagination->getPagination($page),
             )
         );
     }
@@ -42,13 +42,20 @@ class MessageController extends AbstractController
     /**
      * @return \Zend\Http\Response|ViewModel
      */
-    public function sentAction()
+    public function outboxAction()
     {
-        $uid = $this->identity()->getId();
-        $messages = $this->getMessageMapper()->getSentBoxMessages($uid);
+        $page = (int) $this->params()->fromRoute('id', 1);
 
-        return new ViewModel(
-            array('messages' => $messages)
+        $uid = $this->identity()->getId();
+        $messages = $this->getMessageMapper()->getOutboxMessages($uid);
+
+        $myPagination = new MessagePagination(count($messages));
+        $offset = (MessagePagination::ITEMS_PER_PAGE * ($page -1));//value for mapper request
+
+        return new ViewModel(array(
+                'messages' => $this->getMessageMapper()->getOutboxMessagesByPages($uid, $offset),
+                'paginator' =>   $myPagination->getPagination($page),
+            )
         );
     }
 

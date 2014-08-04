@@ -42,7 +42,7 @@ class MessageMapper extends AbstractMapper
      *
      * @return array
      */
-    public function getUserMessagesByPages($uid, $offset)
+    public function getInboxMessagesByPages($uid, $offset)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder('Message')
@@ -61,10 +61,33 @@ class MessageMapper extends AbstractMapper
 
     /**
      * @param int $uid
+     * @param int $offset
      *
      * @return array
      */
-    public function getSentBoxMessages($uid)
+    public function getOutboxMessagesByPages($uid, $offset)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Message')
+            ->select('m')
+            ->from('Message\Entity\Message', 'm')
+            ->join('m.sender', 'Sender')
+            ->andWhere('Sender.id = :uid')
+            ->setParameter('uid', $uid)
+            ->setFirstResult($offset)
+            ->setMaxResults(MessagePagination::ITEMS_PER_PAGE)
+            ->orderBy('m.sendDate', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+    /**
+     * @param int $uid
+     *
+     * @return array
+     */
+    public function getOutboxMessages($uid)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder('Message')

@@ -147,14 +147,21 @@ div.loginMessage a {
     padding-left: 15px;
 }
 
-a.delete {
-    background-image: url(../images/trash.png);
-    background-size: contain;
-}
-
 a.msgButton {
     vertical-align:middle;
     display:inline-block;
     cursor: pointer;
     margin-right:10px;
+}
+
+.readState {
+    text-align:center;
+    width: 16px;
+    height: 16px;
+    background: url(../images/glasses.png) no-repeat right center;
+    background-size: contain;
+}
+
+.btnCenter {
+    margin: 0 auto;
 }
