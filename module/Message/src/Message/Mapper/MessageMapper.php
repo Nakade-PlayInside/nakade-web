@@ -1,7 +1,10 @@
 <?php
 namespace Message\Mapper;
 
+use Doctrine\ORM\Query\Expr\Join;
+use Message\Pagination\MessagePagination;
 use Nakade\Abstracts\AbstractMapper;
+use \Doctrine\ORM\Query;
 use User\Entity\Message;
 /**
  * Description of LeagueMapper
@@ -35,10 +38,56 @@ class MessageMapper extends AbstractMapper
 
     /**
      * @param int $uid
+     * @param int $offset
      *
      * @return array
      */
-    public function getSentBoxMessages($uid)
+    public function getInboxMessagesByPages($uid, $offset)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Message')
+            ->select('m')
+            ->from('Message\Entity\Message', 'm')
+            ->join('m.receiver', 'Receiver')
+            ->andWhere('Receiver.id = :uid')
+            ->andWhere('m.hidden = 0')
+            ->setParameter('uid', $uid)
+            ->setFirstResult($offset)
+            ->setMaxResults(MessagePagination::ITEMS_PER_PAGE)
+            ->orderBy('m.sendDate', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $uid
+     * @param int $offset
+     *
+     * @return array
+     */
+    public function getOutboxMessagesByPages($uid, $offset)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Message')
+            ->select('m')
+            ->from('Message\Entity\Message', 'm')
+            ->join('m.sender', 'Sender')
+            ->andWhere('Sender.id = :uid')
+            ->setParameter('uid', $uid)
+            ->setFirstResult($offset)
+            ->setMaxResults(MessagePagination::ITEMS_PER_PAGE)
+            ->orderBy('m.sendDate', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+    /**
+     * @param int $uid
+     *
+     * @return array
+     */
+    public function getOutboxMessages($uid)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder('Message')
@@ -139,16 +188,44 @@ class MessageMapper extends AbstractMapper
      */
     public function getAllRecipients($uid)
     {
-      $qb = $this->getEntityManager()
-              ->createQueryBuilder()
-              ->select('u')
-              ->from('User\Entity\User', 'u')
-              ->where('u.active = 1')
-              ->andWhere('u.verified = 1')
-              ->andWhere('u.id != :myself')
-              ->setParameter('myself', $uid);
 
-       return $qb->getQuery()->getResult();
+        //get my leagues
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('l.id')
+            ->from('Season\Entity\League', 'l')
+            ->leftJoin('Season\Entity\Match',  'm', Join::WITH, 'm.league = l')
+            ->innerJoin('m.white', 'White')
+            ->innerJoin('m.black', 'Black')
+            ->innerJoin('l.season', 's')
+            ->where('(White.id = :uid OR Black.id = :uid)')
+            ->andWhere('s.isReady = 1')
+            ->andWhere('m.date > :now')
+            ->addGroupBy('l')
+            ->setParameter('uid', $uid)
+            ->setParameter('now', new \DateTime);
+
+        $myLeagues = $qb->getQuery()->getResult();
+
+        //quicker than array_map
+        $leagueIds = array();
+        foreach ($myLeagues as $item) {
+            $leagueIds[] = $item['id'];
+        }
+
+        //get my opponents
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('u')
+            ->from('User\Entity\User', 'u')
+            ->leftJoin('Season\Entity\Participant',  'p', Join::WITH, 'p.user = u')
+            ->innerJoin('p.league', 'league')
+            ->where($qb->expr()->in('league.id', $leagueIds))
+            ->andWhere('u.id != :mySelf')
+            ->setParameter('mySelf', $uid)
+            ->addGroupBy('u');
+
+        return $qb->getQuery()->getResult();
 
     }
 
@@ -160,11 +237,11 @@ class MessageMapper extends AbstractMapper
      */
     public function getUserById($uid)
     {
-      $result = $this->getEntityManager()
-              ->getRepository('\User\Entity\User')
-              ->find($uid);
+        $result = $this->getEntityManager()
+            ->getRepository('\User\Entity\User')
+            ->find($uid);
 
-       return $result;
+        return $result;
 
     }
 

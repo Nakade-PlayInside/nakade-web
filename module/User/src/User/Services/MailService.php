@@ -56,5 +56,21 @@ class MailService extends AbstractMailService
         return $mail;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTextDomain()
+    {
+        if (is_null($this->textDomain)) {
+            $config  = $this->getConfig();
+            if (isset($config['User']['text_domain'])) {
+                $this->textDomain = $config['User']['text_domain'];
+            }
+        }
+        return $this->textDomain;
+    }
+
+
+
 
 }

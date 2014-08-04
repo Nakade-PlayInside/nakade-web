@@ -2,66 +2,16 @@
 
 namespace Message\Services;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Nakade\Abstracts\AbstractTranslation;
+use Mail\Services\AbstractMailService;
 use Message\Mail\NotifyMail;
 /**
  * Class MailService
  *
- * @package Appointment\Services
+ * @package Message\Services
  */
-class MailService extends AbstractTranslation implements FactoryInterface
+class MailService extends AbstractMailService
 {
     const NOTIFY_MAIL = 'notify';
-
-    private $transport;
-    private $message;
-    private $signature;
-
-    /**
-     * @param ServiceLocatorInterface $services
-     *
-     * @return \Zend\ServiceManager\FactoryInterface
-     *
-     * @throws \RuntimeException
-     */
-    public function createService(ServiceLocatorInterface $services)
-    {
-        $this->transport = $services->get('Mail\Services\MailTransportFactory');
-        if (is_null($this->transport)) {
-            throw new \RuntimeException(
-                sprintf('Mail Transport Service is not found.')
-            );
-        }
-
-        $this->message =   $services->get('Mail\Services\MailMessageFactory');
-        if (is_null($this->message)) {
-            throw new \RuntimeException(
-                sprintf('Mail Message Service is not found.')
-            );
-        }
-
-        $this->signature = $services->get('Mail\Services\MailSignatureService');
-        if (is_null($this->signature)) {
-            throw new \RuntimeException(
-                sprintf('Mail Signature Service is not found.')
-            );
-        }
-
-        $config  = $services->get('config');
-
-        //configuration
-        $textDomain = isset($config['Message']['text_domain']) ?
-            $config['Message']['text_domain'] : null;
-
-
-        $translator = $services->get('translator');
-        $this->setTranslator($translator, $textDomain);
-
-        return $this;
-    }
-
 
     /**
      * @param string $typ
@@ -76,7 +26,7 @@ class MailService extends AbstractTranslation implements FactoryInterface
         switch (strtolower($typ)) {
 
             case self::NOTIFY_MAIL:
-                $mail = new NotifyMail($this->message, $this->transport);
+                $mail = new NotifyMail($this->getMessage(), $this->getTransport());
                 break;
 
             default:
@@ -86,32 +36,23 @@ class MailService extends AbstractTranslation implements FactoryInterface
         }
 
         $mail->setTranslator($this->getTranslator());
+        $mail->setTranslatorTextDomain($this->getTextDomain());
         $mail->setSignature($this->getSignature());
         return $mail;
     }
 
     /**
-     * @return \Mail\Services\MailMessageFactory
+     * @return mixed
      */
-    public function getMessage()
+    public function getTextDomain()
     {
-        return $this->message;
-    }
-
-    /**
-     * @return \Mail\Services\MailSignatureService
-     */
-    public function getSignature()
-    {
-        return $this->signature;
-    }
-
-    /**
-     * @return \Zend\Mail\Transport\TransportInterface
-     */
-    public function getTransport()
-    {
-        return $this->transport;
+        if (is_null($this->textDomain)) {
+            $config  = $this->getConfig();
+            if (isset($config['Message']['text_domain'])) {
+                $this->textDomain = $config['Message']['text_domain'];
+            }
+        }
+        return $this->textDomain;
     }
 
 }

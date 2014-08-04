@@ -1,36 +1,20 @@
 <?php
 namespace Message\Form;
 
-use Nakade\Abstracts\AbstractForm;
+use Message\Form\Hydrator\ReplyHydrator;
+use Message\Services\RepositoryService;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
-use Message\Entity\Message;
 use \Zend\InputFilter\InputFilter;
-use \Zend\I18n\Translator\Translator;
+use Zend\ServiceManager\ServiceLocatorInterface;
+
 
 /**
- * Form for making a new league
+ * Class ReplyForm
+ *
+ * @package Message\Form
  */
-class ReplyForm extends AbstractForm
+class ReplyForm extends BaseForm
 {
-    private $name;
-
-    /**
-     * @param int|null|string $name
-     * @param Translator      $translator
-     */
-    public function __construct($name, Translator $translator = null)
-    {
-        $this->name= $name;
-
-        //form name
-        parent::__construct('ReplyForm');
-
-        $this->setTranslator($translator);
-        $this->setTranslatorTextDomain('Message');
-        $this->setObject(new Message());
-        $this->setHydrator(new Hydrator());
-        $this->init();
-    }
 
 
     /**
@@ -40,20 +24,15 @@ class ReplyForm extends AbstractForm
     public function init()
     {
 
-
-        //recipient JUST FOR INFORMATION
-        //users are taken from entity
         $this->add(
             array(
-                'name' => 'name',
+                'name' => 'sendTo',
                 'type' => 'Zend\Form\Element\Text',
                 'options' => array(
                     'label' =>  $this->translate('receiver').':',
-
                 ),
                 'attributes' => array(
                     'readonly' =>   true,
-                    'value' => $this->name
                 ),
             )
         );
@@ -66,7 +45,6 @@ class ReplyForm extends AbstractForm
                 'options' => array(
                     'label' =>  $this->translate('subject').':',
                 ),
-
             )
         );
 
@@ -81,49 +59,12 @@ class ReplyForm extends AbstractForm
             )
         );
 
-        //cross-site scripting hash protection
-        //this is handled by ZF2 in the background - no need for server-side
-        //validation
-        $this->add(
-            array(
-                'name' => 'csrf',
-                'type'  => 'Zend\Form\Element\Csrf',
-                'options' => array(
-                    'csrf_options' => array(
-                        'timeout' => 600
-                    )
-                )
-            )
-        );
-
-        //submit button
-        $this->add(
-            array(
-                'name' => 'Send',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Submit'),
-
-                ),
-            )
-        );
-
-        //cancel button
-        $this->add(
-            array(
-                'name' => 'cancel',
-                'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' =>   $this->translate('Cancel'),
-
-                ),
-            )
-        );
+        $this->add($this->getButtonFieldSet());
 
     }
 
     /**
-     * @return \Zend\InputFilter\InputFilter
+     * @return InputFilter
      */
     public function getFilter()
     {
@@ -131,28 +72,30 @@ class ReplyForm extends AbstractForm
 
         $filter->add(
             array(
-                 'name' => 'subject',
-                 'required' => false,
-                 'filters'  => array(
-                     array('name' => 'StripTags'),
-                     array('name' => 'StringTrim'),
-                     array('name' => 'StripNewLines'),
-                  ),
-                 'validators' => array(
-                     array('name'    => 'StringLength',
-                           'options' => array (
-                                  'encoding' => 'UTF-8',
-                                  'max'  => '120',
-                           )
-                     ),
-                  )
+                'name' => 'subject',
+                'required' => true,
+                'allowEmpty' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripNewLines'),
+                ),
+                'validators' => array(
+                    array('name'    => 'StringLength',
+                        'options' => array (
+                            'encoding' => 'UTF-8',
+                            'max'  => '120',
+                        )
+                    ),
+                )
             )
         );
 
         $filter->add(
             array(
                 'name' => 'message',
-                'required' => false,
+                'required' => true,
+                'allowEmpty' => false,
                 'filters'  => array(
                     array('name' => 'StripTags'),
                 ),
@@ -161,6 +104,15 @@ class ReplyForm extends AbstractForm
         );
 
         return $filter;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return "replyForm";
     }
 
 }
