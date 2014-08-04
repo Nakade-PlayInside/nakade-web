@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-03 15:49+0100\n"
-"PO-Revision-Date: 2014-08-03 15:50+0100\n"
+"POT-Creation-Date: 2014-08-04 16:17+0100\n"
+"PO-Revision-Date: 2014-08-04 16:21+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -78,39 +78,67 @@ msgstr "Liga Manager"
 msgid "receiver"
 msgstr "Empfänger"
 
-#: ../view/message/message/index.phtml:6
+#: ../view/message/message/index.phtml:7
 msgid "Messages - Inbox"
 msgstr "Posteingang"
 
-#: ../view/message/message/index.phtml:9
-#: ../view/message/message/sent.phtml:10
-#: ../view/message/message/show.phtml:22
+#: ../view/message/message/index.phtml:10
+#: ../view/message/message/show-inbox.phtml:20
+#: ../view/message/message/show-outbox.phtml:14
+#: ../view/message/message/outbox.phtml:11
 msgid "No messages found"
 msgstr "Keine Nachrichten gefunden."
 
-#: ../view/message/message/index.phtml:18
-#: ../view/message/message/sent.phtml:18
-msgid "ID"
-msgstr "Id"
+#: ../view/message/message/index.phtml:17
+msgid "New Message"
+msgstr "Neue Nachricht"
 
 #: ../view/message/message/index.phtml:19
-#: ../view/message/message/sent.phtml:19
+#: ../view/message/message/index.phtml:22
+#: ../view/message/message/show-outbox.phtml:8
+#: ../view/message/message/show-outbox.phtml:11
+msgid "Outbox"
+msgstr "Gesendet"
+
+#: ../view/message/message/index.phtml:27
+#: ../view/message/message/outbox.phtml:23
+msgid "ID"
+msgstr "ID"
+
+#: ../view/message/message/index.phtml:28
+#: ../view/message/message/outbox.phtml:24
 msgid "Subject"
 msgstr "Betreff"
 
-#: ../view/message/message/index.phtml:20
-#: ../view/message/message/show.phtml:34
+#: ../view/message/message/index.phtml:30
+#: ../view/message/message/show-inbox.phtml:31
+#: ../view/message/message/show-outbox.phtml:25
 msgid "from"
 msgstr "von"
 
-#: ../view/message/message/index.phtml:21
-#: ../view/message/message/sent.phtml:24
+#: ../view/message/message/index.phtml:31
+#: ../view/message/message/outbox.phtml:30
 msgid "Date"
 msgstr "Datum"
 
 #: ../view/message/message/index.phtml:38
+#: ../view/message/message/outbox.phtml:42
+msgid "unread"
+msgstr "ungelesen"
+
+#: ../view/message/message/index.phtml:53
 msgid "delete"
 msgstr "löschen"
+
+#: ../view/message/message/index.phtml:61
+#: ../view/message/message/outbox.phtml:52
+msgid "Total"
+msgstr "Insgesamt"
+
+#: ../view/message/message/index.phtml:61
+#: ../view/message/message/outbox.phtml:52
+msgid "Messages"
+msgstr "Nachrichten"
 
 #: ../view/message/message/info.phtml:5
 msgid "You have got %number% new messages"
@@ -120,54 +148,69 @@ msgstr "Du hast %number% neue Nachrichten"
 msgid "go to mailbox"
 msgstr "zum Posteingang"
 
-#: ../view/message/message/sent.phtml:6
-msgid "Messages - Sent"
-msgstr "Postausgang"
+#: ../view/message/message/show-inbox.phtml:6
+msgid "Message Thread"
+msgstr "Nachricht"
 
-#: ../view/message/message/sent.phtml:21
-msgid "reading state"
-msgstr "Lese Status"
+#: ../view/message/message/show-inbox.phtml:8
+#: ../view/message/message/show-inbox.phtml:11
+#: ../view/message/message/outbox.phtml:18
+msgid "Inbox"
+msgstr "Posteingang"
 
-#: ../view/message/message/sent.phtml:23
-msgid "to"
-msgstr "an"
+#: ../view/message/message/show-inbox.phtml:13
+msgid "Reply Message"
+msgstr "Antwort"
 
-#: ../view/message/message/sent.phtml:36
-msgid "unread"
-msgstr "ungelesen"
+#: ../view/message/message/show-inbox.phtml:16
+msgid "Reply"
+msgstr "Antworten"
 
-#: ../view/message/message/sent.phtml:38
-#: ../view/message/message/show.phtml:46
+#: ../view/message/message/show-inbox.phtml:41
+#: ../view/message/message/show-outbox.phtml:35
+msgid "sent"
+msgstr "gesendet"
+
+#: ../view/message/message/show-inbox.phtml:43
+#: ../view/message/message/show-outbox.phtml:37
+#: ../view/message/message/outbox.phtml:44
 msgid "read"
 msgstr "gelesen"
+
+#: ../view/message/message/show-outbox.phtml:6
+msgid "Outbox Message"
+msgstr "Gesendete Nachricht"
 
 #: ../view/message/message/reply.phtml:6
 msgid "Message reply"
 msgstr "Nachricht beantworten"
 
-#: ../view/message/message/show.phtml:5
-msgid "Message Thread"
-msgstr "Nachricht"
+#: ../view/message/message/outbox.phtml:7
+msgid "Messages - Sent"
+msgstr "Postausgang"
 
-#: ../view/message/message/show.phtml:9
-msgid "back"
-msgstr "zurück"
+#: ../view/message/message/outbox.phtml:26
+msgid "reading state"
+msgstr "Lese Status"
 
-#: ../view/message/message/show.phtml:13
-msgid "reply to message"
-msgstr "auf Nachricht antworten"
-
-#: ../view/message/message/show.phtml:14
-msgid "reply"
-msgstr "Antwort schreiben"
-
-#: ../view/message/message/show.phtml:44
-msgid "sent"
-msgstr "gesendet"
+#: ../view/message/message/outbox.phtml:29
+msgid "to"
+msgstr "an"
 
 #: ../view/message/message/new.phtml:5
 msgid "Send Message"
 msgstr "Nachricht schicken"
+
+#: ../view/partial/pagination.phtml:6
+msgid "previous"
+msgstr "zurück"
+
+#: ../view/partial/pagination.phtml:17
+msgid "Actual Page"
+msgstr "Aktuelle Seite"
+
+#~ msgid "back"
+#~ msgstr "zurück"
 
 #~ msgid "The message was sent by %SENDER%."
 #~ msgstr "Die Nachricht ist von %SENDER%."
@@ -192,9 +235,6 @@ msgstr "Nachricht schicken"
 
 #~ msgid "Sent Box"
 #~ msgstr "Postausgang"
-
-#~ msgid "Inbox"
-#~ msgstr "Posteingang"
 
 #~ msgid "send"
 #~ msgstr "Abschicken"
@@ -555,9 +595,6 @@ msgstr "Nachricht schicken"
 
 #~ msgid "Champion:"
 #~ msgstr "Meister"
-
-#~ msgid "Actual Season"
-#~ msgstr "Aktuelle Saison"
 
 #~ msgid "Open Matches:"
 #~ msgstr "Offene Partien:"

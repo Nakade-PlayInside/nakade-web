@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-31 15:54+0100\n"
-"PO-Revision-Date: 2014-07-31 15:55+0100\n"
+"POT-Creation-Date: 2014-08-04 16:21+0100\n"
+"PO-Revision-Date: 2014-08-04 16:21+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -73,106 +73,102 @@ msgid "User overview"
 msgstr "Benutzer Übersicht"
 
 #: ../view/layout/layout.phtml:60
-msgid "add user"
-msgstr "Benutzer hinzufügen"
-
-#: ../view/layout/layout.phtml:63
 msgid "open results"
 msgstr "offene Ergebnisse"
 
-#: ../view/layout/layout.phtml:66
+#: ../view/layout/layout.phtml:63
 msgid "edit match day"
 msgstr "Spieltag ändern"
 
-#: ../view/layout/layout.phtml:69
+#: ../view/layout/layout.phtml:66
 msgid "new season"
 msgstr "Neue Saison"
 
-#: ../view/layout/layout.phtml:72
+#: ../view/layout/layout.phtml:69
 msgid "rejected appointments"
 msgstr "abgewiesene Termine"
 
-#: ../view/layout/layout.phtml:84
+#: ../view/layout/layout.phtml:81
 msgid "Profile"
 msgstr "Profil"
 
-#: ../view/layout/layout.phtml:89
+#: ../view/layout/layout.phtml:86
 msgid "Inbox"
 msgstr "Posteingang"
 
-#: ../view/layout/layout.phtml:92
+#: ../view/layout/layout.phtml:89
 msgid "New Message"
 msgstr "Neue Nachricht"
 
-#: ../view/layout/layout.phtml:95
-msgid "Sent"
+#: ../view/layout/layout.phtml:92
+msgid "Outbox"
 msgstr "Gesendet"
 
-#: ../view/layout/layout.phtml:102
+#: ../view/layout/layout.phtml:99
 msgid "Messages"
 msgstr "Nachrichten"
 
-#: ../view/layout/layout.phtml:108
+#: ../view/layout/layout.phtml:105
 msgid "Schedule"
 msgstr "Spielplan"
 
-#: ../view/layout/layout.phtml:111
+#: ../view/layout/layout.phtml:108
 msgid "Standings"
 msgstr "Tabelle"
 
-#: ../view/layout/layout.phtml:114
+#: ../view/layout/layout.phtml:111
 msgid "results"
 msgstr "Ergebnisse"
 
-#: ../view/layout/layout.phtml:120
+#: ../view/layout/layout.phtml:117
 msgid "League"
 msgstr "Liga"
 
-#: ../view/layout/layout.phtml:125
+#: ../view/layout/layout.phtml:122
 msgid "Appointments"
 msgstr "Termine"
 
-#: ../view/layout/layout.phtml:127
+#: ../view/layout/layout.phtml:124
 msgid "Shift Date"
 msgstr "Verlegen"
 
-#: ../view/layout/layout.phtml:129
+#: ../view/layout/layout.phtml:126
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#: ../view/layout/layout.phtml:136
+#: ../view/layout/layout.phtml:133
 msgid "Logged in as "
 msgstr "angemeldet als"
 
-#: ../view/layout/layout.phtml:142
+#: ../view/layout/layout.phtml:139
 msgid "Logout"
 msgstr "Abmelden"
 
-#: ../view/layout/layout.phtml:149
+#: ../view/layout/layout.phtml:146
 msgid "LogIn"
 msgstr "Login"
 
-#: ../view/layout/layout.phtml:169
-msgid "Location"
-msgstr "Spielort"
-
-#: ../view/layout/layout.phtml:171
+#: ../view/layout/layout.phtml:167
 msgid "Rules"
 msgstr "Regelwerk"
 
-#: ../view/layout/layout.phtml:175
+#: ../view/layout/layout.phtml:171
 msgid "Terms of Use"
 msgstr "AGB"
 
-#: ../view/layout/layout.phtml:178
+#: ../view/layout/layout.phtml:174
 msgid "Imprint"
 msgstr "Impressum"
 
-#: ../view/layout/layout.phtml:179
+#: ../view/layout/layout.phtml:175
 msgid "Contact"
 msgstr "Kontakt"
 
-#: ../view/layout/layout.phtml:181
+#: ../view/layout/layout.phtml:176
+msgid "Location"
+msgstr "Spielort"
+
+#: ../view/layout/layout.phtml:178
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
 
@@ -321,6 +317,12 @@ msgstr "Datenschutz"
 #: ../view/application/privacy/rules.phtml:8
 msgid "Tournament and League Rules"
 msgstr "Turnier und Liga Regelwerk"
+
+#~ msgid "add user"
+#~ msgstr "Benutzer hinzufügen"
+
+#~ msgid "Sent"
+#~ msgstr "Gesendet"
 
 #~ msgid "Berliner Baduk Club e.V."
 #~ msgstr "Berliner Baduk Club e.V."
