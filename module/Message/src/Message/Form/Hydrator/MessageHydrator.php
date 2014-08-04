@@ -86,7 +86,7 @@ class MessageHydrator implements HydratorInterface
                 $object->setThreadId($threadId);
             }
             $object->setId(null);
-         }
+        }
 
         return $object;
     }

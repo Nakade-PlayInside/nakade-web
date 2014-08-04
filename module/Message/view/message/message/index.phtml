@@ -4,65 +4,70 @@ $this->headTitle("Messages");
 /* @var $message \Message\Entity\Message */
 ?>
 
-<h3><?php echo $this->translate("Messages - Inbox"); ?></h3>
+    <h3><?php echo $this->translate("Messages - Inbox"); ?></h3>
 
 <?php $this->placeholder('nothing')->captureStart();?>
-<h3><?php echo $this->translate('No messages found')?></h3>
+    <h3><?php echo $this->translate('No messages found')?></h3>
 <?php $this->placeholder('nothing')->captureEnd(); ?>
 
 
 <?php $this->placeholder('messages')->captureStart();?>
-<a title="<?php echo $this->translate("New Message"); ?>" class="msgButton mail-32 mail-green-32"
-   href="<?php echo $this->url('message', array('action' => 'new')); ?>" ></a>
-<a title="<?php echo $this->translate("Outbox"); ?>" class="msgButton mail-32 mail-red-32"
-   href="<?php echo $this->url('message', array('action' => 'outbox')); ?>" ></a>
+    <a class="btn msgButton" href="<?php echo $this->url('message', array('action' => 'new')); ?>" >
+        <div class="msgIcon mail-16 mail-green-16"></div>
+        <?php echo $this->translate("New Message"); ?>
+    </a>
+    <a class="btn msgButton" title="<?php echo $this->translate("Outbox"); ?>"
+       href="<?php echo $this->url('message', array('action' => 'outbox')); ?>" >
+        <div class="msgIcon mail-16 outbox-16"></div>
+        <?php echo $this->translate('Outbox');?>
+    </a>
 <?php echo $this->paginationControl($this->paginator, 'Sliding', 'messages'); ?>
-<table id="messages" class="table">
-    <tr>
-        <th><?php echo $this->translate('ID');?></th>
-        <th><?php echo $this->translate('Subject');?></th>
-        <th></th>
-        <th><?php echo $this->translate('from')?></th>
-        <th><?php echo $this->translate('Date')?></th>
-        <th></th>
-    </tr>
- <?php foreach ($this->messages as $message) : ?>
-    <tr class="message" style="background-color:<?php echo $this->cycle(array("#F0F0F0","transparent"))->next()?>;
-        <?php if ($message->isNew()) { echo "font-weight:bold;"; } ?>"
-        title = "<?php if ($message->isNew()) :
-            echo $this->translate('unread');
-        endif; ?>">
-        <td style="text-align:right;"><?php echo $message->getId(); ?></td>
-        <td class="subject">
-            <a href="<?php echo $this->url('message', array('action' => 'show', 'id' => $message->getId() )); ?>">
-            <?php echo $message->getSubject() ?>
-            </a>
-        </td>
-        <td>
-         <?php if ($message->isNew()) :?>
-            <div class="mail-16 mail-yellow-16"></div>
-         <?php endif; ?>
-        </td>
-        <td><?php echo $message->getSender()->getShortName();?></td>
-        <td><?php echo $message->getSendDate()->format('d.m.y H:i');?></td>
-        <td><a class='button' title="<?php echo $this->translate('delete'); ?>" href="<?php
-            echo $this->url('message', array('action' => 'delete')). '/' . $message->getId(); ?>">
-            <div class="mail-16 trash-16 btnCenter"></div>
-            </a>
-        </td>
-    </tr>
-<?php endforeach; ?>
-</table>
-<p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Messages"); ?></p>
+    <table id="messages" class="table">
+        <tr>
+            <th><?php echo $this->translate('ID');?></th>
+            <th><?php echo $this->translate('Subject');?></th>
+            <th></th>
+            <th><?php echo $this->translate('from')?></th>
+            <th><?php echo $this->translate('Date')?></th>
+            <th></th>
+        </tr>
+        <?php foreach ($this->messages as $message) : ?>
+            <tr class="message" style="background-color:<?php echo $this->cycle(array("#F0F0F0","transparent"))->next()?>;
+            <?php if ($message->isNew()) { echo "font-weight:bold;"; } ?>"
+                title = "<?php if ($message->isNew()) :
+                    echo $this->translate('unread');
+                endif; ?>">
+                <td style="text-align:right;"><?php echo $message->getId(); ?></td>
+                <td class="subject">
+                    <a href="<?php echo $this->url('message', array('action' => 'showInbox', 'id' => $message->getId() )); ?>">
+                        <?php echo $message->getSubject() ?>
+                    </a>
+                </td>
+                <td>
+                    <?php if ($message->isNew()) :?>
+                        <div class="mail-16 mail-yellow-16"></div>
+                    <?php endif; ?>
+                </td>
+                <td><?php echo $message->getSender()->getShortName();?></td>
+                <td><?php echo $message->getSendDate()->format('d.m.y H:i');?></td>
+                <td><a class='button' title="<?php echo $this->translate('delete'); ?>" href="<?php
+                    echo $this->url('message', array('action' => 'delete')). '/' . $message->getId(); ?>">
+                        <div class="mail-16 trash-16 btnCenter"></div>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Messages"); ?></p>
 
 <?php $this->placeholder('messages')->captureEnd();
 
-  if (0==count($this->messages)) {
-      echo $this->placeholder('nothing');
+if (0==count($this->messages)) {
+    echo $this->placeholder('nothing');
 
-  } else {
-      echo $this->placeholder('messages');
-  }
+} else {
+    echo $this->placeholder('messages');
+}
 
 
 

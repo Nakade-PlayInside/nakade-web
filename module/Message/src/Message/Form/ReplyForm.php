@@ -24,7 +24,7 @@ class ReplyForm extends BaseForm
     public function init()
     {
 
-       $this->add(
+        $this->add(
             array(
                 'name' => 'sendTo',
                 'type' => 'Zend\Form\Element\Text',

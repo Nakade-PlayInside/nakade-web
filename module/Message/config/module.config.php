@@ -39,7 +39,7 @@ return array(
 
 
             ),
-           //next route
+            //next route
         ),
     ),
 
@@ -93,12 +93,12 @@ return array(
                 'cache' => 'array',
                 'paths' => array(
                     __DIR__ . '/../src/' . __NAMESPACE__ . '/Entity')
-           ),
-           'orm_default' => array(
-               'drivers' => array(
-                __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
-               )
-           )
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
+                )
+            )
         )
     ),
 

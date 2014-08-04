@@ -4,7 +4,7 @@ $this->headTitle("Messages");
 /* @var $message \Message\Entity\Message */
 ?>
 
-<h3><?php echo $this->translate("Messages - Sent"); ?></h3>
+    <h3><?php echo $this->translate("Messages - Sent"); ?></h3>
 
 
 <?php $this->placeholder('nothing')->captureStart();?>
@@ -13,16 +13,17 @@ $this->headTitle("Messages");
 
 
 <?php $this->placeholder('messages')->captureStart();?>
-<a title="<?php echo $this->translate("Inbox"); ?>" class="msgButton mail-32 inbox-32"
-   href="<?php echo $this->url('message'); ?>" ></a>
-
+    <a class="btn msgButton" href="<?php echo $this->url('message'); ?>" >
+        <div class="msgIcon mail-16 inbox-16"></div>
+        <?php echo $this->translate("Inbox"); ?>
+    </a>
 <?php echo $this->paginationControl($this->paginator, 'Sliding', 'messages'); ?>
     <table id="messages" class="table">
         <tr>
             <th><?php echo $this->translate('ID');?></th>
             <th><?php echo $this->translate('Subject');?></th>
             <th class="read" title="<?php
-                echo $this->translate('reading state');?>">
+            echo $this->translate('reading state');?>">
                 <div class="readState"></div>
             </th>
             <th><?php echo $this->translate('to')?></th>
@@ -30,25 +31,25 @@ $this->headTitle("Messages");
         </tr>
         <?php foreach ($this->messages as $message) : ?>
             <tr class="message" style="background-color:<?php
-                echo $this->cycle(array("#F0F0F0","transparent"))->next()?>; ">
+            echo $this->cycle(array("#F0F0F0","transparent"))->next()?>; ">
                 <td style="text-align:right;"><?php echo $message->getId(); ?></td>
                 <td class="subject"><a href="<?php
-                    echo $this->url('message',array('action' => 'show', 'id' => $message->getId())); ?>">
-                    <?php echo $message->getSubject() ?>
+                    echo $this->url('message',array('action' => 'showOutbox', 'id' => $message->getId())); ?>">
+                        <?php echo $message->getSubject() ?>
                     </a>
                 </td>
                 <td class="read"><?php if ($message->isNew()) :?>
                         <div title="<?php echo $this->translate("unread"); ?>" class="mail-16 red-ball-16"></div>
-                        <?php else: ?>
+                    <?php else: ?>
                         <div title="<?php echo $this->translate("read"); ?>" class="mail-16 green-ball-16"></div>
-                        <?php endif; ?>
+                    <?php endif; ?>
                 </td>
                 <td><?php echo $message->getReceiver()->getShortName();?></td>
                 <td><?php echo $message->getSendDate()->format('d.m.y H:i');?></td>
             </tr>
         <?php endforeach; ?>
     </table>
-<p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Messages"); ?></p>
+    <p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Messages"); ?></p>
 
 <?php $this->placeholder('messages')->captureEnd();
 

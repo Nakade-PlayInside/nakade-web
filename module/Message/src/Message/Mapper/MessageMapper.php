@@ -200,7 +200,7 @@ class MessageMapper extends AbstractMapper
             ->innerJoin('l.season', 's')
             ->where('(White.id = :uid OR Black.id = :uid)')
             ->andWhere('s.isReady = 1')
-             ->andWhere('m.date > :now')
+            ->andWhere('m.date > :now')
             ->addGroupBy('l')
             ->setParameter('uid', $uid)
             ->setParameter('now', new \DateTime);
@@ -237,11 +237,11 @@ class MessageMapper extends AbstractMapper
      */
     public function getUserById($uid)
     {
-      $result = $this->getEntityManager()
-              ->getRepository('\User\Entity\User')
-              ->find($uid);
+        $result = $this->getEntityManager()
+            ->getRepository('\User\Entity\User')
+            ->find($uid);
 
-       return $result;
+        return $result;
 
     }
 

@@ -63,7 +63,7 @@
 
 #message {
     width: 80%;
-    margin-top: 0.1em;
+    margin-top: 10px;
     border:1px lightgrey solid
 }
 
@@ -152,6 +152,13 @@ a.msgButton {
     display:inline-block;
     cursor: pointer;
     margin-right:10px;
+    font-weight: bolder;
+}
+
+.msgIcon {
+    vertical-align:middle;
+    display: inline-block;
+    margin: 0 5px;
 }
 
 .readState {

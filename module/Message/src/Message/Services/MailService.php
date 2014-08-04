@@ -7,7 +7,7 @@ use Message\Mail\NotifyMail;
 /**
  * Class MailService
  *
- * @package Appointment\Services
+ * @package Message\Services
  */
 class MailService extends AbstractMailService
 {

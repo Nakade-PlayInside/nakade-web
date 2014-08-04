@@ -62,17 +62,14 @@ class MessageController extends AbstractController
     /**
      * @return \Zend\Http\Response|ViewModel
      */
-    public function showAction()
+    public function showInboxAction()
     {
-        //todo: paging messages; new message as icon btn; post ausgang als btn
-        $returnPath = $this->getRequest()->getHeader('referer')->uri()->getPath();
-
         $messageId  = (int) $this->params()->fromRoute('id', -1);
         $uid = $this->identity()->getId();
 
         $messages = $this->getMessageMapper()->getAllMessagesById($messageId);
         $lastMessage =  $this->getMessageMapper()->getMessageById($messageId);
-
+        //todo: refactor this mapper logic
         if ($lastMessage->getReceiver()->getId()==$uid && $lastMessage->isNew()) {
             $lastMessage->setNew(false);
             $lastMessage->setReadDate(new \DateTime());
@@ -81,9 +78,22 @@ class MessageController extends AbstractController
 
         return new ViewModel(
             array (
-                'returnPath' => $returnPath,
                 'messages'  => $messages,
                 'replyId'   => $messageId,
+            )
+        );
+    }
+
+    /**
+     * @return \Zend\Http\Response|ViewModel
+     */
+    public function showOutboxAction()
+    {
+        $messageId  = (int) $this->params()->fromRoute('id', -1);
+        $messages = $this->getMessageMapper()->getAllMessagesById($messageId);
+
+        return new ViewModel(array (
+                'messages'  => $messages,
             )
         );
     }
@@ -131,6 +141,8 @@ class MessageController extends AbstractController
     }
 
     /**
+     * widget for dashboard
+     *
      * @return \Zend\Http\Response|ViewModel
      */
     public function infoAction()

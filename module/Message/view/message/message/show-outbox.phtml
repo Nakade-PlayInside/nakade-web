@@ -1,0 +1,57 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Message');
+$this->headTitle("Messages");
+/* @var $message \Message\Entity\Message */
+?>
+    <h3><?php echo $this->translate("Outbox Message"); ?></h3>
+
+    <a title="<?php echo $this->translate("Outbox"); ?>" class="btn msgButton"
+       href="<?php echo $this->url('message', array('action' => 'outbox')); ?>" >
+        <div class="msgIcon mail-16 outbox-16"></div>
+        <?php echo $this->translate('Outbox');?>
+    </a>
+<?php $this->placeholder('nothing')->captureStart();?>
+    <h3><?php echo $this->translate('No messages found')?></h3>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+<?php $this->placeholder('messages')->captureStart();?>
+<?php foreach ($this->messages as $message) : ?>
+    <table id="message">
+        <tr>
+            <th>
+                <div class="msghead">
+                    <div class="container">
+                        <div><label><?php
+                                echo $this->translate('from');?>:
+                            </label><?php
+                            echo $message->getSender()->getShortName(); ?>
+                        </div>
+                        <div><label><?php
+                                echo $this->translate('subject');?>:
+                            </label><?php echo $message->getSubject();?>
+                        </div>
+                    </div>
+                    <div class="container right">
+                        <div><label><?php echo $this->translate('sent');?>:</label><?php echo $message->getSendDate()->format('d.m.Y H:i');?></div>
+                        <?php if (!is_null($message->getReadDate())): ?>
+                            <div><label><?php echo $this->translate('read');?>:</label><?php echo $message->getReadDate()->format('d.m.Y H:i'); ?></div>
+                        <?php
+                        endif;
+                        ?>
+                    </div>
+                    <div>
+            </th>
+        </tr>
+        <tr class="message">
+            <td><?php echo $message->getMessage(); ?></td>
+        </tr>
+    </table>
+<?php endforeach; ?>
+<?php $this->placeholder('messages')->captureEnd();
+
+if (0==count($this->messages)) {
+    echo $this->placeholder('nothing');
+}
+else {
+    echo $this->placeholder('messages');
+}

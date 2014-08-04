@@ -7,10 +7,10 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use RuntimeException;
 
-
 /**
- * Creates a mapper factory for doctrine database access.
- * Use the fabric method for getting the mapper required.
+ * Class RepositoryService
+ *
+ * @package Message\Services
  */
 class RepositoryService implements FactoryInterface
 {
@@ -52,15 +52,15 @@ class RepositoryService implements FactoryInterface
 
         switch (strtolower($typ)) {
 
-           case self::MESSAGE_MAPPER:
-               $mapper = new MessageMapper();
-               break;
+            case self::MESSAGE_MAPPER:
+                $mapper = new MessageMapper();
+                break;
 
 
-           default:
-               throw new RuntimeException(
-                   sprintf('An unknown mapper type was provided.')
-               );
+            default:
+                throw new RuntimeException(
+                    sprintf('An unknown mapper type was provided.')
+                );
         }
 
         $mapper->setEntityManager($this->entityManager);

@@ -2,13 +2,14 @@
 
 namespace Message;
 
+/**
+ * Class Module
+ *
+ * @package Message
+ */
 class Module
 {
     /**
-     * Adds a class map to the ClassmapAutoloader and the namespace to the
-     * StandardAutoloader. If no files provided in the ClassmapAutoloader, fall
-     * back to the StandardAutoloader.
-     *
      * @return array
      */
     public function getAutoloaderConfig()
