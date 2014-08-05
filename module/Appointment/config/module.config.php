@@ -6,6 +6,7 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'userInfo'   => 'Appointment\View\Helper\UserInfo',
+            'confirmed'   => 'Appointment\View\Helper\Confirmed',
             // more helpers here ...
         )
     ),
@@ -21,7 +22,9 @@ return array(
             'Appointment\Controller\Confirm' =>
                 'Appointment\Services\ConfirmControllerFactory',
             'Appointment\Controller\Show' =>
-                'Appointment\Services\ShowControllerFactory'
+                'Appointment\Services\ShowControllerFactory',
+            'Appointment\Controller\Moderator' =>
+                'Appointment\Services\ModeratorControllerFactory'
         ),
     ),
 
@@ -93,6 +96,21 @@ return array(
                     ),
                 ),
             ),
+            'appointmentModerator' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/appointmentModerator[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Appointment\Controller',
+                        'controller'    => 'Appointment\Controller\Moderator',
+                        'action'        => 'index',
+                    ),
+                ),
+            ),
 
         ),
     ),
@@ -130,10 +148,19 @@ return array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
-
+        'template_map' => array(
+            'appointments' => __DIR__ . '/../view/partial/pagination.phtml', // Note: the key is optional
+        ),
         'template_path_stack'   => array(
             __DIR__ . '/../view',
         ),
+    ),
+
+    'view_helper_config' => array(
+        'flashmessenger' => array(
+            'message_open_format'      => '<div%s>',
+            'message_close_string'     => '</div>',
+        )
     ),
 
     //Doctrine2

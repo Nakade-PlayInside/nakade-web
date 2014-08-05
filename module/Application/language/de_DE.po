@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-04 16:21+0100\n"
-"PO-Revision-Date: 2014-08-04 16:21+0100\n"
+"POT-Creation-Date: 2014-08-05 18:52+0100\n"
+"PO-Revision-Date: 2014-08-05 18:53+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -73,20 +73,21 @@ msgid "User overview"
 msgstr "Benutzer Übersicht"
 
 #: ../view/layout/layout.phtml:60
-msgid "open results"
-msgstr "offene Ergebnisse"
+msgid "Open Results"
+msgstr "Offene Ergebnisse"
 
 #: ../view/layout/layout.phtml:63
-msgid "edit match day"
-msgstr "Spieltag ändern"
+msgid "Edit Match Day"
+msgstr "Spieltag Ändern"
 
 #: ../view/layout/layout.phtml:66
-msgid "new season"
+msgid "New Season"
 msgstr "Neue Saison"
 
 #: ../view/layout/layout.phtml:69
-msgid "rejected appointments"
-msgstr "abgewiesene Termine"
+#: ../view/layout/layout.phtml:122
+msgid "Appointments"
+msgstr "Terminverlegung"
 
 #: ../view/layout/layout.phtml:81
 msgid "Profile"
@@ -123,10 +124,6 @@ msgstr "Ergebnisse"
 #: ../view/layout/layout.phtml:117
 msgid "League"
 msgstr "Liga"
-
-#: ../view/layout/layout.phtml:122
-msgid "Appointments"
-msgstr "Termine"
 
 #: ../view/layout/layout.phtml:124
 msgid "Shift Date"
@@ -317,6 +314,9 @@ msgstr "Datenschutz"
 #: ../view/application/privacy/rules.phtml:8
 msgid "Tournament and League Rules"
 msgstr "Turnier und Liga Regelwerk"
+
+#~ msgid "rejected appointments"
+#~ msgstr "abgewiesene Termine"
 
 #~ msgid "add user"
 #~ msgstr "Benutzer hinzufügen"

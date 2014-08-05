@@ -16,6 +16,7 @@ abstract class AbstractFormFactory extends AbstractTranslation implements Factor
     protected $fieldSetService;
     protected $repository;
     protected $entityManager;
+    protected $serviceManager;
 
     /**
      * @param mixed $em
@@ -110,6 +111,22 @@ abstract class AbstractFormFactory extends AbstractTranslation implements Factor
     public function getRepository()
     {
         return $this->repository;
+    }
+
+    /**
+     * @return ServiceLocatorInterface
+     */
+    public function getServiceManager()
+    {
+        return $this->serviceManager;
+    }
+
+    /**
+     * @param ServiceLocatorInterface $serviceLocatorInterface
+     */
+    public function setServiceManager(ServiceLocatorInterface $serviceLocatorInterface)
+    {
+        $this->serviceManager = $serviceLocatorInterface;
     }
 
 }

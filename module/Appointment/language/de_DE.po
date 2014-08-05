@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-06 11:39+0100\n"
-"PO-Revision-Date: 2014-07-08 19:36+0100\n"
+"POT-Creation-Date: 2014-08-05 19:00+0100\n"
+"PO-Revision-Date: 2014-08-05 19:01+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -146,40 +146,35 @@ msgstr "Name"
 msgid "Email"
 msgstr "Email"
 
-#: ../src/Appointment/Form/RejectForm.php:49
+#: ../src/Appointment/Form/RejectForm.php:26
 msgid "Reject Reason"
 msgstr "Begründung"
 
-#: ../src/Appointment/Form/RejectForm.php:76
-#: ../src/Appointment/Form/ConfirmForm.php:76
-msgid "Reject"
-msgstr "Abweisen"
-
-#: ../src/Appointment/Form/RejectForm.php:88
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: ../src/Appointment/Form/ConfirmForm.php:64
+#: ../src/Appointment/Form/ConfirmForm.php:40
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#: ../src/Appointment/Form/AppointmentForm.php:55
+#: ../src/Appointment/Form/ConfirmForm.php:52
+msgid "Reject"
+msgstr "Abweisen"
+
+#: ../src/Appointment/Form/AppointmentForm.php:26
 msgid "Old date"
 msgstr "Altes Datum"
 
-#: ../src/Appointment/Form/AppointmentForm.php:78
+#: ../src/Appointment/Form/AppointmentForm.php:37
 msgid "New Match Date"
 msgstr "Neuer Termin"
 
-#: ../src/Appointment/Form/AppointmentForm.php:93
+#: ../src/Appointment/Form/AppointmentForm.php:52
 msgid "Time"
 msgstr "Zeit"
 
-#: ../src/Appointment/Form/AppointmentForm.php:109
+#: ../src/Appointment/Form/AppointmentForm.php:68
 msgid "I do confirm my opponent has agreed to this schedule"
 msgstr "Hiermit bestätige ich, dass mein Gegner der Terminvereinbarung zugestimmt hat."
 
-#: ../src/Appointment/Form/AppointmentForm.php:145
+#: ../src/Appointment/Form/AppointmentForm.php:99
 msgid "You must confirm your opponent agreed to the new schedule."
 msgstr "Du musst bestätigen, dass dein Gegner dem neuen Termin zugestimmt hat."
 
@@ -212,19 +207,98 @@ msgid "Did you really use the correct link provided by email?"
 msgstr "Hast du den korrekten Link der Email benutzt?"
 
 #: ../view/appointment/confirm/success.phtml:3
-#: ../view/appointment/appointment/success.phtml:3
 msgid "New match appointment confirmed"
 msgstr "Neuer Termin bestätigt"
 
 #: ../view/appointment/confirm/success.phtml:10
-#: ../view/appointment/appointment/success.phtml:10
 msgid "Your match appointment is confirmed."
 msgstr "Deine Terminverlegung wurde bestätigt."
 
 #: ../view/appointment/confirm/success.phtml:11
-#: ../view/appointment/appointment/success.phtml:11
 msgid "Further detailed information will be sent to your email address."
 msgstr "Weitere Informationen dazu findest du in deiner email."
+
+#: ../view/appointment/moderator/index.phtml:3
+msgid "Match Appointments"
+msgstr "Terminverlegungen"
+
+#: ../view/appointment/moderator/index.phtml:12
+#: ../view/appointment/moderator/info.phtml:13
+msgid "ID"
+msgstr "ID"
+
+#: ../view/appointment/moderator/index.phtml:13
+#: ../view/appointment/moderator/info.phtml:17
+#: ../view/appointment/appointment/confirm.phtml:16
+msgid "Match"
+msgstr "Partie"
+
+#: ../view/appointment/moderator/index.phtml:14
+#: ../view/appointment/moderator/info.phtml:21
+msgid "Date"
+msgstr "Datum"
+
+#: ../view/appointment/moderator/index.phtml:15
+#: ../view/appointment/moderator/info.phtml:25
+msgid "Appointment"
+msgstr "Termin"
+
+#: ../view/appointment/moderator/index.phtml:16
+msgid "Submitter"
+msgstr "Antragsteller"
+
+#: ../view/appointment/moderator/index.phtml:17
+msgid "submitted"
+msgstr "eingereicht"
+
+#: ../view/appointment/moderator/index.phtml:18
+#: ../view/appointment/moderator/info.phtml:35
+msgid "Stage"
+msgstr "Status"
+
+#: ../view/appointment/moderator/index.phtml:19
+msgid "Info"
+msgstr "Info"
+
+#: ../view/appointment/moderator/index.phtml:41
+msgid "Total"
+msgstr "Insgesamt"
+
+#: ../view/appointment/moderator/index.phtml:41
+msgid "Appointments"
+msgstr "Terminverlegungen"
+
+#: ../view/appointment/moderator/info.phtml:3
+msgid "Appointment Info"
+msgstr "Termin Info"
+
+#: ../view/appointment/moderator/info.phtml:29
+msgid "Submitted"
+msgstr "Eingereicht"
+
+#: ../view/appointment/moderator/info.phtml:31
+msgid "by"
+msgstr "durch"
+
+#: ../view/appointment/moderator/info.phtml:37
+msgid "Confirmed"
+msgstr "bestätigt"
+
+#: ../view/appointment/moderator/info.phtml:39
+msgid "Rejected"
+msgstr "Abgewiesen"
+
+#: ../view/appointment/moderator/info.phtml:41
+msgid "Ongoing"
+msgstr "laufend"
+
+#: ../view/appointment/moderator/info.phtml:57
+msgid "No appointment found."
+msgstr "Keine Termine gefunden."
+
+#: ../view/appointment/moderator/info.phtml:59
+msgid "Return"
+msgstr "Zurück"
 
 #: ../view/appointment/appointment/confirm.phtml:3
 msgid "Confirm new match appointment"
@@ -238,19 +312,11 @@ msgstr "Eine Terminverlegung wurde von deinem Gegner eingereicht. "
 msgid "Your binding confirmation is needed."
 msgstr "Deine verbindliche Zusage wird benötigt. "
 
-#: ../view/appointment/appointment/confirm.phtml:16
-#: ../view/appointment/appointment/reject.phtml:16
-#: ../view/appointment/show/available.phtml:16
-msgid "Match"
-msgstr "Partie"
-
 #: ../view/appointment/appointment/confirm.phtml:20
-#: ../view/appointment/appointment/reject.phtml:20
 msgid "Old Date"
 msgstr "Alter Termin"
 
 #: ../view/appointment/appointment/confirm.phtml:24
-#: ../view/appointment/appointment/reject.phtml:24
 msgid "New Date"
 msgstr "Neuer Termin"
 
@@ -322,14 +388,6 @@ msgstr "Du bekommst in kürze ein Mail zu diesem Vorgang."
 msgid "Matches available for shifting appointments"
 msgstr "Verschiebbare Partietermine"
 
-#: ../view/appointment/show/available.phtml:14
-msgid "ID"
-msgstr "ID"
-
-#: ../view/appointment/show/available.phtml:15
-msgid "Date"
-msgstr "Datum"
-
 #: ../view/appointment/show/available.phtml:22
 msgid "click for making an appointment"
 msgstr "hier klicken, um einen Termin zu verschieben"
@@ -362,17 +420,9 @@ msgstr "Keine zu bestätigenden Termine."
 msgid "Rejected Appointments"
 msgstr "Abgewiesene Termine"
 
-#: ../view/appointment/show/reject.phtml:19
-msgid "Submitter"
-msgstr "Antragsteller"
-
 #: ../view/appointment/show/reject.phtml:20
 msgid "Responder"
 msgstr "Empfänger"
-
-#: ../view/appointment/show/reject.phtml:21
-msgid "submitted"
-msgstr "eingereicht"
 
 #: ../view/appointment/show/reject.phtml:22
 msgid "old"
@@ -397,6 +447,17 @@ msgstr "Du hast %x% unbestätigte Termine."
 #: ../view/appointment/show/message.phtml:11
 msgid "go to confirmation"
 msgstr "zur Bestätigung"
+
+#: ../view/partial/pagination.phtml:6
+msgid "previous"
+msgstr "zurück"
+
+#: ../view/partial/pagination.phtml:17
+msgid "Actual Page"
+msgstr "Aktuelle Seite"
+
+#~ msgid "Cancel"
+#~ msgstr "Abbrechen"
 
 #~ msgid "Submit"
 #~ msgstr "Abschicken"

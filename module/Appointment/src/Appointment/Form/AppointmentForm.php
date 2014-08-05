@@ -1,44 +1,15 @@
 <?php
 namespace Appointment\Form;
 
-use Appointment\Entity\Appointment;
-use Nakade\Abstracts\AbstractForm;
 use \Zend\InputFilter\InputFilter;
-use \Zend\Validator\Identical;
-use Season\Services\SeasonFieldsetService;
-
+use Zend\Validator\Digits;
 /**
  * Class AppointmentForm
  *
  * @package Appointment\Form
  */
-class AppointmentForm extends AbstractForm
+class AppointmentForm extends BaseForm
 {
-
-    const USER_CONFIRM = "1";
-
-    /**
-     * @param SeasonFieldsetService $service
-     */
-    public function __construct(SeasonFieldsetService $service)
-    {
-
-        //form name
-        parent::__construct('AppointmentForm');
-        $this->service = $service;
-    }
-
-    /**
-     * @param Appointment $object
-     */
-    public function bindEntity($object)
-    {
-        $this->init();
-        $this->setInputFilter($this->getFilter());
-        $this->bind($object);
-
-    }
-
 
     /**
      * init the form. It is necessary to call this function
@@ -51,28 +22,16 @@ class AppointmentForm extends AbstractForm
         $this->add(
             array(
                 'type' => 'Zend\Form\Element\Text',
-                'name' => 'oldDate',
+                'name' => self::FIELD_OLD_DATE,
                 'options' => array('label' => $this->translate('Old date') . ':'),
                 'attributes' => array('readonly' => 'readonly')
             )
         );
 
-        $this->add(
-            array(
-                'name' => 'submitterId',
-                'type' => 'Zend\Form\Element\Hidden',
-        ));
-
-        $this->add(
-            array(
-                'name' => 'responderId',
-                'type' => 'Zend\Form\Element\Hidden',
-        ));
-
         //date
         $this->add(
             array(
-                'name' => 'date',
+                'name' => self::FIELD_DATE,
                 'type' => 'Zend\Form\Element\Date',
                 'options' => array(
                     'label' =>  $this->translate('New Match Date').":",
@@ -88,7 +47,7 @@ class AppointmentForm extends AbstractForm
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Time',
-            'name' => 'time',
+            'name' => self::FIELD_TIME,
             'options'=> array(
                 'label' => $this->translate('Time').":"
             ),
@@ -104,20 +63,18 @@ class AppointmentForm extends AbstractForm
         $this->add(
             array(
                 'type' => 'Zend\Form\Element\Checkbox',
-                'name' => 'confirming',
+                'name' => self::FIELD_CONFIRM_USER,
                 'options' => array(
                     'label' => $this->translate('I do confirm my opponent has agreed to this schedule'),
                     'use_hidden_element' => true,
-                    'checked_value' => self::USER_CONFIRM,
+                    'checked_value' => 1,
                     'unchecked_value' => 'no',
                 ),
-                'attributes' => array(
-                    'class' => 'checkbox',
-                )
+                'attributes' => array('class' => 'checkbox'),
             )
         );
 
-        $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
+        $this->add($this->getButtonFieldSet());
 
     }
 
@@ -129,21 +86,17 @@ class AppointmentForm extends AbstractForm
         $filter = new InputFilter();
 
         $filter->add(
-
             array(
-                'name' => 'confirming',
+                'name' => self::FIELD_CONFIRM_USER,
                 'required' => true,
-                'filters'  => array(),
                 'validators' => array(
                     array(
-                        'name'    => 'Zend\Validator\Identical',
+                        'name' => 'Digits',
                         'break_chain_on_failure' => true,
                         'options' => array(
-                            'token' => self::USER_CONFIRM,
                             'messages' => array(
-                                Identical::NOT_SAME => $this->translate(
-                                    'You must confirm your opponent agreed to the new schedule.'
-                                ),
+                                Digits::NOT_DIGITS =>
+                                    $this->translate('You must confirm your opponent agreed to the new schedule.'),
                             ),
                         ),
                     ),
@@ -151,15 +104,16 @@ class AppointmentForm extends AbstractForm
             )
         );
 
+
         return $filter;
     }
 
     /**
-     * @return SeasonFieldsetService
+     * @return string
      */
-    public function getService()
+    public function getFormName()
     {
-        return $this->service;
+        return "appointmentForm";
     }
 
 }

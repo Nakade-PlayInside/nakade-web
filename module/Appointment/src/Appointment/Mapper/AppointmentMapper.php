@@ -1,26 +1,36 @@
 <?php
 namespace Appointment\Mapper;
 
+use Appointment\Pagination\AppointmentPagination;
 use Doctrine\ORM\Query;
 use \User\Entity\User;
 use Nakade\Abstracts\AbstractMapper;
-use Doctrine\ORM\EntityManager;
 use Season\Entity\Match;
 
 /**
- * Requesting database using doctrine
+ * Class AppointmentMapper
  *
- * @author Dr.Holger Maerz <holger@nakade.de>
+ * @package Appointment\Mapper
  */
 class AppointmentMapper extends AbstractMapper
 {
 
     /**
-     * @param EntityManager $entityManager
+     * @param int $offset
+     *
+     * @return array
      */
-    public function __construct(EntityManager $entityManager)
+    public function getAppointmentsByPages($offset)
     {
-            $this->entityManager = $entityManager;
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Appointment')
+            ->select('a')
+            ->from('Appointment\Entity\Appointment', 'a')
+            ->setFirstResult($offset)
+            ->setMaxResults(AppointmentPagination::ITEMS_PER_PAGE)
+            ->addOrderBy('a.submitDate', 'DESC');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -48,13 +58,13 @@ class AppointmentMapper extends AbstractMapper
     }
 
     /**
-     * @param \DateTime $time
+     * @param int $hour
      *
      * @return array
      */
-    public function getOverdueAppointments($time)
+    public function getOverdueAppointments($hour)
     {
-        $modifyStr = sprintf('-%d hour', $time);
+        $modifyStr = sprintf('-%d hour', $hour);
         $now = new \DateTime();
         $overdue = $now->modify($modifyStr);
 

@@ -22,6 +22,7 @@ return array(
             'Appointment\Controller\Appointment' => 'guest',
             'Appointment\Controller\Show' => 'guest',
             'Appointment\Controller\Show\reject' => 'moderator',
+            'Appointment\Controller\Moderator' => 'moderator',
 
             'Message\Controller\Message' => 'guest',
 

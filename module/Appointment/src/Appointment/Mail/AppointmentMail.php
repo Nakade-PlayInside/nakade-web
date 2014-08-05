@@ -1,10 +1,4 @@
 <?php
-/**
- * User: Holger Maerz
- * Date: 16.04.14
- * Time: 11:47
- */
-
 namespace Appointment\Mail;
 
 use Appointment\Entity\Appointment;
@@ -31,6 +25,8 @@ abstract class AppointmentMail extends NakadeMail
     {
         $this->mailService = $mailService;
         $this->transport = $transport;
+
+        $this->url = 'http://'. $_SERVER['HTTP_HOST'];
     }
 
     /**
@@ -39,17 +35,6 @@ abstract class AppointmentMail extends NakadeMail
     public function getUrl()
     {
         return $this->url;
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-        return $this;
     }
 
     /**

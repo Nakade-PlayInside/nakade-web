@@ -1,6 +1,7 @@
 <?php
 namespace Appointment\Controller;
 
+use Appointment\Services\MailService;
 use Appointment\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
@@ -49,7 +50,7 @@ class ConfirmController extends AbstractController
        $repo->save($appointment);
 
        /* @var $mail \Appointment\Mail\ConfirmMail */
-       $mail = $this->getMailService()->getMail('confirm');
+       $mail = $this->getMailService()->getMail(MailService::CONFIRM_MAIL);
        $mail->setAppointment($appointment);
        $mail->sendMail($appointment->getResponder());
        $mail->sendMail($appointment->getSubmitter());

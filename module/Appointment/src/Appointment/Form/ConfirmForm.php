@@ -1,38 +1,14 @@
 <?php
 namespace Appointment\Form;
 
-use Nakade\Abstracts\AbstractForm;
 use \Zend\InputFilter\InputFilter;
-use Appointment\Entity\Appointment;
 /**
  * Class ConfirmForm
  *
  * @package Appointment\Form
  */
-class ConfirmForm extends AbstractForm
+class ConfirmForm extends BaseForm
 {
-
-    /**
-     * constructor
-     * for using this form you have to init and setFilter OR you bind entity
-     */
-    public function __construct()
-    {
-        //form name
-        parent::__construct('ConfirmForm');
-        $this->setInputFilter($this->getFilter());
-
-    }
-
-    /**
-     * @param Appointment $object
-     */
-    public function bindEntity($object)
-    {
-        $this->init();
-        $this->bind($object);
-
-    }
 
     /**
      * init the form. It is neccessary to call this function
@@ -58,7 +34,7 @@ class ConfirmForm extends AbstractForm
         //submit button
         $this->add(
             array(
-                'name' => 'confirm',
+                'name' => self::FIELD_CONFIRM_APPOINTMENT,
                 'type'  => 'Zend\Form\Element\Submit',
                 'attributes' => array(
                     'value' =>   $this->translate('Confirm'),
@@ -70,7 +46,7 @@ class ConfirmForm extends AbstractForm
         //cancel button
         $this->add(
             array(
-                'name' => 'reject',
+                'name' => self::FIELD_REJECT_APPOINTMENT,
                 'type'  => 'Zend\Form\Element\Submit',
                 'attributes' => array(
                     'value' =>   $this->translate('Reject'),
@@ -88,6 +64,14 @@ class ConfirmForm extends AbstractForm
     {
         $filter = new InputFilter();
         return $filter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return "confirmForm";
     }
 
 }
