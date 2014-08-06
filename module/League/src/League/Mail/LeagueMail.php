@@ -33,17 +33,6 @@ abstract class LeagueMail extends NakadeMail implements ResultInterface
     }
 
     /**
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setUrl($url)
-    {//todo: needed?
-        $this->url = $url;
-        return $this;
-    }
-
-    /**
      * @param Match $match
      *
      * @return $this

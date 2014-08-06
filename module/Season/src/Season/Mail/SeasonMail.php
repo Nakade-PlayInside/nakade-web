@@ -32,17 +32,6 @@ abstract class SeasonMail extends NakadeMail
     }
 
     /**
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setUrl($url)
-    {//todo: proof if this is needed
-        $this->url = $url;
-        return $this;
-    }
-
-    /**
      * @param Participant $participant
      */
     public function setParticipant(Participant $participant)
