@@ -14,7 +14,8 @@ return array(
     //controller
     'controllers' => array(
         'invokables' => array(
-            'Appointment\Command\Command' => 'Appointment\Command\CommandController',
+            'Appointment\Command\AutoConfirm' => 'Appointment\Command\AutoConfirmController',
+            'Appointment\Command\RemoveAppointment' => 'Appointment\Command\RemoveAppointmentController'
         ),
         'factories' => array(
             'Appointment\Controller\Appointment' =>
@@ -38,7 +39,18 @@ return array(
                         'route' => 'autoConfirm',
                         'defaults' => array(
                             '__NAMESPACE__' => 'Appointment\Command',
-                            'controller' => 'Appointment\Command\Command',
+                            'controller' => 'Appointment\Command\AutoConfirm',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+                'remove' => array(
+                    'options' => array(
+                        // add [ and ] if optional ( ex : [<doname>] )
+                        'route' => 'removeAppointment',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'Appointment\Command',
+                            'controller' => 'Appointment\Command\RemoveAppointment',
                             'action' => 'do'
                         ),
                     ),

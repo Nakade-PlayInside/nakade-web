@@ -3,6 +3,7 @@ namespace Appointment\Form\Hydrator;
 
 use Appointment\Entity\Appointment;
 use Appointment\Form\AppointmentInterface;
+use Season\Entity\Match;
 use User\Entity\User;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use Zend\Stdlib\Hydrator\HydratorInterface;
@@ -100,17 +101,11 @@ class AppointmentHydrator implements HydratorInterface, AppointmentInterface
             $appointment->setSubmitter($submitter);
             $appointment->setSubmitDate(new \DateTime());
 
-            $match = $appointment->getMatch();
-            $date = $appointment->getNewDate();
-            $sequence = $match->getSequence() + 1;
+            $this->updateMatch($appointment->getMatch(), $appointment->getNewDate());
 
             $appointment->setIsConfirmed(true);
             $appointment->setIsRejected(false);
             $appointment->setRejectReason(null);
-
-            $match->setDate($date);
-            $match->setSequence($sequence);
-            $appointment->setMatch($match);
 
             $object = $appointment;
         }
@@ -123,18 +118,22 @@ class AppointmentHydrator implements HydratorInterface, AppointmentInterface
         //confirming appointment
         if (isset($data[self::FIELD_CONFIRM_APPOINTMENT])) {
 
-            $match = $object->getMatch();
-            $date = $object->getNewDate();
-            $sequence = $match->getSequence() + 1;
-
+            $this->updateMatch($object->getMatch(), $object->getNewDate());
             $object->setIsConfirmed(true);
 
-            $match->setDate($date);
-            $match->setSequence($sequence);
-            $object->setMatch($match);
         }
 
         return $object;
+    }
+
+    private function updateMatch(Match $match, \DateTime $date)
+    {
+        $sequence = $match->getSequence() + 1;
+        $match->setDate($date);
+        $match->setSequence($sequence);
+
+        $this->getEntityManager()->persist($match);
+        $this->getEntityManager()->flush($match);
     }
 
     /**

@@ -16,7 +16,7 @@ use Nakade\Abstracts\AbstractController;
  */
 class AppointmentController extends AbstractController implements AppointmentInterface
 {
-//todo: cleanup method for played matches
+
     /**
      * @return array|ViewModel
      */

@@ -23,17 +23,17 @@ class Byoyomi
    private $id;
 
     /**
-     * @ORM\Column(name="name", type="string", nullable=false)
+     * @ORM\Column(name="name", type="string", length=45, unique=true, nullable=false)
      */
    private $name;
 
   /**
-   * @ORM\Column(name="penalty", type="string", nullable=false)
+   * @ORM\Column(name="penalty", type="string", length=45, nullable=false)
    */
    private $penalty;
 
    /**
-    * @ORM\Column(name="description", type="string")
+    * @ORM\Column(name="description", type="text")
     */
    private $description;
 

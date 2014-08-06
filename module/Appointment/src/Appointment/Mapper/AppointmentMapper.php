@@ -203,4 +203,20 @@ class AppointmentMapper extends AbstractMapper
 
     }
 
+    /**
+     * @return array
+     */
+    public function getExpiredAppointments()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Appointment')
+            ->select('a')
+            ->from('Appointment\Entity\Appointment', 'a')
+            ->innerJoin('a.match', 'Match')
+            ->Where('Match.date < :today')
+            ->andWhere('Match.result IS NOT NULL')
+            ->setParameter('today', new \DateTime());
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

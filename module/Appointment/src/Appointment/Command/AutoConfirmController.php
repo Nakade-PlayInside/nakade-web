@@ -17,7 +17,7 @@ use Zend\Console\Request as ConsoleRequest;
  *
  * @package Appointment\Command
  */
-class CommandController extends AbstractActionController
+class AutoConfirmController extends AbstractActionController
 {
 
     /**
