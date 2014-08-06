@@ -90,9 +90,29 @@ class AppointmentHydrator implements HydratorInterface, AppointmentInterface
                 $object->setResponder($responder);
             }
 
+        }
 
+        //new appointment by moderator
+        if (isset($data[self::FIELD_MODERATOR_APPOINTMENT])) {
 
+            $appointment = clone $object;
+            $submitter = $this->getUser();
+            $appointment->setSubmitter($submitter);
+            $appointment->setSubmitDate(new \DateTime());
 
+            $match = $appointment->getMatch();
+            $date = $appointment->getNewDate();
+            $sequence = $match->getSequence() + 1;
+
+            $appointment->setIsConfirmed(true);
+            $appointment->setIsRejected(false);
+            $appointment->setRejectReason(null);
+
+            $match->setDate($date);
+            $match->setSequence($sequence);
+            $appointment->setMatch($match);
+
+            $object = $appointment;
         }
 
         if (isset($data[self::FIELD_REJECT_REASON])) {
@@ -127,6 +147,15 @@ class AppointmentHydrator implements HydratorInterface, AppointmentInterface
         $userId = $this->getIdentity()->getId();
         return $userId == $user->getId();
 
+    }
+
+    /**
+     * @return \User\Entity\User
+     */
+    private function getUser()
+    {
+        $userId = $this->getIdentity()->getId();
+        return $this->getEntityManager()->getReference('User\Entity\User', intval($userId));
     }
 
     /**

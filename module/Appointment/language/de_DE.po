@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-05 19:00+0100\n"
-"PO-Revision-Date: 2014-08-05 19:01+0100\n"
+"POT-Creation-Date: 2014-08-06 08:38+0100\n"
+"PO-Revision-Date: 2014-08-06 08:41+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -22,12 +22,14 @@ msgstr "Du hast eine Terminverlegung für eine Partie auf %URL% beantragt."
 #: ../src/Appointment/Mail/SubmitterMail.php:26
 #: ../src/Appointment/Mail/ResponderMail.php:27
 #: ../src/Appointment/Mail/ConfirmMail.php:27
+#: ../src/Appointment/Mail/InfoMail.php:20
 #: ../src/Appointment/Mail/RejectMail.php:26
 msgid "Your match: %MATCH_INFO%"
 msgstr "Deine Partie: %MATCH_INFO%"
 
 #: ../src/Appointment/Mail/SubmitterMail.php:28
 #: ../src/Appointment/Mail/ResponderMail.php:29
+#: ../src/Appointment/Mail/InfoMail.php:22
 #: ../src/Appointment/Mail/RejectMail.php:28
 msgid "Actual match date: %OLD_DATE%"
 msgstr "Aktueller Termin: %OLD_DATE%"
@@ -35,11 +37,12 @@ msgstr "Aktueller Termin: %OLD_DATE%"
 #: ../src/Appointment/Mail/SubmitterMail.php:30
 #: ../src/Appointment/Mail/ResponderMail.php:31
 #: ../src/Appointment/Mail/ConfirmMail.php:29
+#: ../src/Appointment/Mail/InfoMail.php:24
 msgid "New match date: %NEW_DATE%"
 msgstr "Neuer Termin: %NEW_DATE%"
 
 #: ../src/Appointment/Mail/SubmitterMail.php:32
-msgid "Before updating, your opponent has to confirm the appointment ."
+msgid "Before updating, your opponent has to confirm the appointment."
 msgstr "Für eine endgültige Übernahme des neuen Termin, muss dein Gegner diesen bestätigen."
 
 #: ../src/Appointment/Mail/SubmitterMail.php:34
@@ -106,6 +109,22 @@ msgstr "Den aktuellen iCal  findest du auf der Begrüßungsseite nach Anmeldung 
 msgid "Your League Appointment is confirmed"
 msgstr "Deine Terminverlegung wurde bestätigt"
 
+#: ../src/Appointment/Mail/InfoMail.php:18
+msgid "On request a moderator set an appointment for a new match date at %URL%."
+msgstr "Auf Anfrage hat ein Moderator einen Partietermin auf %URL% verschoben."
+
+#: ../src/Appointment/Mail/InfoMail.php:26
+msgid "The new date is binding even without confirming."
+msgstr "Der neue Termin ist auch ohne Bestätigung verbindlich. "
+
+#: ../src/Appointment/Mail/InfoMail.php:28
+msgid "Make sure to update your iCal."
+msgstr "Falls du iCal benutzt, denke daran deine Termine auf den neuesten Stand zu bringen. "
+
+#: ../src/Appointment/Mail/InfoMail.php:42
+msgid "Appointment Reminder"
+msgstr "Memo zur Terminverlegung"
+
 #: ../src/Appointment/Mail/RejectMail.php:24
 msgid "The new appointment for your match date at %URL% is rejected."
 msgstr "Eine Terminverlegung deiner Partie auf  %URL% wurde abgewiesen."
@@ -159,14 +178,17 @@ msgid "Reject"
 msgstr "Abweisen"
 
 #: ../src/Appointment/Form/AppointmentForm.php:26
+#: ../src/Appointment/Form/MatchDateForm.php:32
 msgid "Old date"
 msgstr "Altes Datum"
 
 #: ../src/Appointment/Form/AppointmentForm.php:37
+#: ../src/Appointment/Form/MatchDateForm.php:43
 msgid "New Match Date"
 msgstr "Neuer Termin"
 
 #: ../src/Appointment/Form/AppointmentForm.php:52
+#: ../src/Appointment/Form/MatchDateForm.php:58
 msgid "Time"
 msgstr "Zeit"
 
@@ -229,7 +251,6 @@ msgstr "ID"
 
 #: ../view/appointment/moderator/index.phtml:13
 #: ../view/appointment/moderator/info.phtml:17
-#: ../view/appointment/appointment/confirm.phtml:16
 msgid "Match"
 msgstr "Partie"
 
@@ -260,11 +281,11 @@ msgstr "Status"
 msgid "Info"
 msgstr "Info"
 
-#: ../view/appointment/moderator/index.phtml:41
+#: ../view/appointment/moderator/index.phtml:46
 msgid "Total"
 msgstr "Insgesamt"
 
-#: ../view/appointment/moderator/index.phtml:41
+#: ../view/appointment/moderator/index.phtml:46
 msgid "Appointments"
 msgstr "Terminverlegungen"
 
@@ -300,6 +321,11 @@ msgstr "Keine Termine gefunden."
 msgid "Return"
 msgstr "Zurück"
 
+#: ../view/appointment/moderator/edit.phtml:3
+#: ../view/appointment/appointment/index.phtml:3
+msgid "Edit match appointment"
+msgstr "Terminverlegung"
+
 #: ../view/appointment/appointment/confirm.phtml:3
 msgid "Confirm new match appointment"
 msgstr "Bestätigung des neuen Termins"
@@ -313,20 +339,18 @@ msgid "Your binding confirmation is needed."
 msgstr "Deine verbindliche Zusage wird benötigt. "
 
 #: ../view/appointment/appointment/confirm.phtml:20
+#: ../view/appointment/appointment/reject.phtml:20
 msgid "Old Date"
 msgstr "Alter Termin"
 
 #: ../view/appointment/appointment/confirm.phtml:24
+#: ../view/appointment/appointment/reject.phtml:24
 msgid "New Date"
 msgstr "Neuer Termin"
 
 #: ../view/appointment/appointment/confirm.phtml:29
 msgid "If you do not agree, you may reject the appointment."
 msgstr "Falls du nicht einverstanden bist, kannst du dem neuen Termin widersprechen. "
-
-#: ../view/appointment/appointment/index.phtml:3
-msgid "Edit match appointment"
-msgstr "Terminverlegung"
 
 #: ../view/appointment/appointment/index.phtml:9
 msgid "Before edit your match date, contact your opponent."

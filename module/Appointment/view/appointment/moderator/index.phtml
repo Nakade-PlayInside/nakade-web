@@ -35,6 +35,11 @@ $this->headTitle($title);
                     <div class="buttons-16 info-16 btnCenter"></div>
                 </a>
             </td>
+            <td>
+                <a class="button" href="<?php echo $this->url('appointmentModerator', array('action' => 'edit', 'id' => $appointment->getId()))?>">
+                    <div class="buttons-16 edit-16 btnCenter"></div>
+                </a>
+            </td>
         </tr>
     <?php endforeach; ?>
 </table>

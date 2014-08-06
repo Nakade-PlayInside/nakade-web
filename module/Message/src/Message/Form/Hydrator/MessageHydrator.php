@@ -77,15 +77,16 @@ class MessageHydrator implements HydratorInterface
             $sender = $this->getCreator();
             $object->setSender($sender);
         } else {
-            $sender = $object->getReceiver();
-            $receiver  = $object->getSender();
-            $object->setSender($sender);
-            $object->setReceiver($receiver);
-            if (is_null($object->getThreadId())) {
-                $threadId = $object->getId();
-                $object->setThreadId($threadId);
+            $message = clone $object;
+            $sender = $message->getReceiver();
+            $receiver  = $message->getSender();
+            $message->setSender($sender);
+            $message->setReceiver($receiver);
+            if (is_null($message->getThreadId())) {
+                $threadId = $message->getId();
+                $message->setThreadId($threadId);
             }
-            $object->setId(null);
+            $object = $message;
         }
 
         return $object;

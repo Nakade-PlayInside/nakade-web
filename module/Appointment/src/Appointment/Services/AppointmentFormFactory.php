@@ -17,6 +17,7 @@ class AppointmentFormFactory extends AbstractFormFactory
     const APPOINTMENT_FORM = 'appointment';
     const CONFIRM_FORM = 'confirm';
     const REJECT_FORM = 'reject';
+    const MATCH_DATE_FORM = 'match_date';
 
     /**
      * @param ServiceLocatorInterface $services
@@ -50,25 +51,29 @@ class AppointmentFormFactory extends AbstractFormFactory
      */
     public function getForm($typ)
     {
-
         switch (strtolower($typ)) {
 
-           case self::APPOINTMENT_FORM:
-               $form = new Form\AppointmentForm($this->getServiceManager());
-               break;
+            case self::APPOINTMENT_FORM:
+                $form = new Form\AppointmentForm($this->getServiceManager());
+                break;
 
-           case self::CONFIRM_FORM:
-               $form = new Form\ConfirmForm($this->getServiceManager());
-               break;
+            case self::CONFIRM_FORM:
+                $form = new Form\ConfirmForm($this->getServiceManager());
+                break;
 
-           case self::REJECT_FORM:
-               $form = new Form\RejectForm($this->getServiceManager());
-               break;
+            case self::REJECT_FORM:
+                $form = new Form\RejectForm($this->getServiceManager());
+                break;
 
-           default:
-               throw new \RuntimeException(
-                   sprintf('An unknown form type was provided.')
-               );
+            case self::MATCH_DATE_FORM:
+                $form = new Form\MatchDateForm($this->getServiceManager());
+                break;
+
+
+            default:
+                throw new \RuntimeException(
+                    sprintf('An unknown form type was provided.')
+                );
         }
 
         $form->setTranslator($this->translator, $this->textDomain);

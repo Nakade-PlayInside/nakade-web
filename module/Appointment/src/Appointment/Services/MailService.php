@@ -16,6 +16,7 @@ class MailService extends AbstractMailService
     const RESPONDER_MAIL = 'responder';
     const CONFIRM_MAIL = 'confirm';
     const REJECT_MAIL = 'reject';
+    const INFO_MAIL = 'info';
 
     private $confirmTime;
 
@@ -30,26 +31,30 @@ class MailService extends AbstractMailService
     {
         switch (strtolower($typ)) {
 
-           case self::CONFIRM_MAIL:
-               $mail = new Mail\ConfirmMail($this->getMessage(), $this->getTransport());
-               break;
+            case self::CONFIRM_MAIL:
+                $mail = new Mail\ConfirmMail($this->getMessage(), $this->getTransport());
+                break;
 
-           case self::SUBMITTER_MAIL:
-               $mail = new Mail\SubmitterMail($this->getMessage(), $this->getTransport());
-               break;
+            case self::SUBMITTER_MAIL:
+                $mail = new Mail\SubmitterMail($this->getMessage(), $this->getTransport());
+                break;
 
-           case self::REJECT_MAIL:
-               $mail = new Mail\RejectMail($this->getMessage(), $this->getTransport());
-               break;
+            case self::REJECT_MAIL:
+                $mail = new Mail\RejectMail($this->getMessage(), $this->getTransport());
+                break;
 
-           case self::RESPONDER_MAIL:
-               $mail = new Mail\ResponderMail($this->getMessage(), $this->getTransport());
-               break;
+            case self::RESPONDER_MAIL:
+                $mail = new Mail\ResponderMail($this->getMessage(), $this->getTransport());
+                break;
 
-           default:
-               throw new \RuntimeException(
-                   sprintf('An unknown mail type was provided.')
-               );
+            case self::INFO_MAIL:
+                $mail = new Mail\InfoMail($this->getMessage(), $this->getTransport());
+                break;
+
+            default:
+                throw new \RuntimeException(
+                    sprintf('An unknown mail type was provided.')
+                );
         }
 
 

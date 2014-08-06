@@ -11,4 +11,5 @@ interface AppointmentInterface
     const FIELD_REJECT_REASON = 'rejectReason';
     const FIELD_CONFIRM_APPOINTMENT = "confirmAppointment";
     const FIELD_REJECT_APPOINTMENT = "rejectAppointment";
+    const FIELD_MODERATOR_APPOINTMENT = "moderatorAppointment";
 }

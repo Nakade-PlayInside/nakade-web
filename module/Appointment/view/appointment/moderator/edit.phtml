@@ -1,0 +1,19 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Appointment');
+$title = $this->translate("Edit match appointment");
+$this->headTitle($title);
+
+?>
+
+<h3><?php echo $title;?></h3>
+
+<p class="matchInfo">
+    <?php echo $this->match->getDate()->format('d.M  H:i'); ?>: <?php echo $this->match->getMatchInfo(); ?>
+</p>
+<?php
+
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();
+
