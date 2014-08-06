@@ -13,7 +13,6 @@ use \Zend\Mail\Transport\TransportInterface;
  */
 class NotifyMail extends NakadeMail
 {
-    private $url='http://www.nakade.de';
     private $message;
 
     /**
@@ -24,8 +23,6 @@ class NotifyMail extends NakadeMail
     {
         $this->mailService = $mailService;
         $this->transport = $transport;
-
-        $this->url = 'http://'. $_SERVER['HTTP_HOST'];
     }
 
     /**
@@ -88,16 +85,6 @@ class NotifyMail extends NakadeMail
     public function getMessage()
     {
         return $this->message;
-    }
-
-
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
     }
 
 }

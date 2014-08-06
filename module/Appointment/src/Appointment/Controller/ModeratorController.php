@@ -104,7 +104,6 @@ class ModeratorController extends AbstractController implements AppointmentInter
 
     }
 
-
     /**
      * @return \Appointment\Mapper\AppointmentMapper
      */

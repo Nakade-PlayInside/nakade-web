@@ -7,6 +7,7 @@
 
 namespace Appointment\Command;
 
+use Appointment\Services\MailService;
 use Appointment\Services\RepositoryService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Console\Request as ConsoleRequest;
@@ -45,7 +46,7 @@ class AutoConfirmController extends AbstractActionController
        }
 
        /* @var $mail \Appointment\Mail\ConfirmMail */
-       $mail = $mailService->getMail('confirm');
+       $mail = $mailService->getMail(MailService::CONFIRM_MAIL);
 
        /* @var $repo \Appointment\Mapper\AppointmentMapper */
        $repo = $repoService->getMapper(RepositoryService::APPOINTMENT_MAPPER);

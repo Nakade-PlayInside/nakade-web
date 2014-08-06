@@ -6,6 +6,12 @@ $this->headTitle($title);
 ?>
 
 <h3><?php echo $title;?></h3>
+<?php $this->placeholder('nothing')->captureStart();?>
+<h3><?php echo $this->translate('No Appointment found')?></h3>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+
+<?php $this->placeholder('appointment')->captureStart();?>
 <?php echo $this->paginationControl($this->paginator, 'Sliding', 'appointments'); ?>
 <table class="table profile">
     <tr>
@@ -44,5 +50,12 @@ $this->headTitle($title);
     <?php endforeach; ?>
 </table>
 <p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Appointments"); ?></p>
+<?php $this->placeholder('appointment')->captureEnd();?>
 
+<?php
+if (0==count($this->appointments)) {
+echo $this->placeholder('nothing');
 
+} else {
+echo $this->placeholder('appointment');
+}

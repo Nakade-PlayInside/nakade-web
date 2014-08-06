@@ -20,7 +20,6 @@ use \Zend\Mail\Transport\TransportInterface;
  */
 abstract class LeagueMail extends NakadeMail implements ResultInterface
 {
-    protected $url = 'http://www.nakade.de';
     protected $match;
 
      /**
@@ -34,20 +33,12 @@ abstract class LeagueMail extends NakadeMail implements ResultInterface
     }
 
     /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
      * @param string $url
      *
      * @return $this
      */
     public function setUrl($url)
-    {
+    {//todo: needed?
         $this->url = $url;
         return $this;
     }

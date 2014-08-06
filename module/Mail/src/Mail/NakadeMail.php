@@ -19,6 +19,7 @@ abstract class NakadeMail extends AbstractTranslation implements NakadeMailInter
     protected $transport;
     protected $signatureService;
     protected $bbc;
+    protected $url;
 
     /**
      * @return string
@@ -148,5 +149,19 @@ abstract class NakadeMail extends AbstractTranslation implements NakadeMailInter
     {
         return !empty($this->bbc);
     }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        if (is_null($this->url)) {
+            $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null;
+            $host = isset($host) ? $host : 'nakade.de';
+            $this->url = 'http://' . $host;
+        }
+        return $this->url;
+    }
+
 
 }

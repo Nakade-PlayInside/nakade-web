@@ -1,10 +1,4 @@
 <?php
-/**
- * User: Holger Maerz
- * Date: 16.04.14
- * Time: 11:47
- */
-
 namespace Appointment\Mail;
 
 /**

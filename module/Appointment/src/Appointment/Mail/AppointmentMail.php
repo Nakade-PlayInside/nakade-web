@@ -13,7 +13,6 @@ use \Zend\Mail\Transport\TransportInterface;
  */
 abstract class AppointmentMail extends NakadeMail
 {
-    protected $url = 'http://www.nakade.de';
     protected $time = '72';
     protected $appointment;
 
@@ -25,16 +24,6 @@ abstract class AppointmentMail extends NakadeMail
     {
         $this->mailService = $mailService;
         $this->transport = $transport;
-
-        $this->url = 'http://'. $_SERVER['HTTP_HOST'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
     }
 
     /**
