@@ -3,73 +3,17 @@
 namespace Application\Services;
 
 use Application\Mail;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Nakade\Abstracts\AbstractTranslation;
+use Mail\Services\AbstractMailService;
 
 /**
  * Class MailService
  *
  * @package Application\Services
  */
-class MailService extends AbstractTranslation implements FactoryInterface
+class MailService extends AbstractMailService
 {
     const CONTACT_MAIL = 'contact';
-
-    private $transport;
-    private $message;
-    private $signature;
     private $bbc;
-
-    /**
-     * @param ServiceLocatorInterface $services
-     *
-     * @return \Zend\ServiceManager\FactoryInterface
-     *
-     * @throws \RuntimeException
-     */
-    public function createService(ServiceLocatorInterface $services)
-    {
-        $this->transport = $services->get('Mail\Services\MailTransportFactory');
-        if (is_null($this->transport)) {
-            throw new \RuntimeException(
-                sprintf('Mail Transport Service is not found.')
-            );
-        }
-
-        $this->message =   $services->get('Mail\Services\MailMessageFactory');
-        if (is_null($this->message)) {
-            throw new \RuntimeException(
-                sprintf('Mail Message Service is not found.')
-            );
-        }
-
-        $this->signature = $services->get('Mail\Services\MailSignatureService');
-        if (is_null($this->signature)) {
-            throw new \RuntimeException(
-                sprintf('Mail Signature Service is not found.')
-            );
-        }
-
-        $config  = $services->get('config');
-
-        //configuration
-        $bbc = isset($config['Application']['contact']['bbc']) ?
-            $config['Application']['contact']['bbc'] : array();
-
-        //configuration
-        $textDomain = isset($config['Application']['text_domain']) ?
-            $config['Application']['text_domain'] : null;
-
-
-        $translator = $services->get('translator');
-        $this->setTranslatorTextDomain($textDomain);
-        $this->setTranslator($translator);
-        $this->setBbc($bbc);
-
-        return $this;
-    }
-
 
     /**
      * @param string $typ
@@ -84,7 +28,7 @@ class MailService extends AbstractTranslation implements FactoryInterface
         switch (strtolower($typ)) {
 
             case self::CONTACT_MAIL:
-                $mail = new Mail\ContactMail($this->message, $this->transport);
+                $mail = new Mail\ContactMail($this->getMessage(), $this->getTransport());
                 break;
 
             default:
@@ -99,33 +43,23 @@ class MailService extends AbstractTranslation implements FactoryInterface
         }
 
         $mail->setTranslator($this->getTranslator());
-        $mail->setTranslatorTextDomain($this->getTranslatorTextDomain());
+        $mail->setTranslatorTextDomain($this->getTextDomain());
         $mail->setSignature($this->getSignature());
         return $mail;
     }
 
     /**
-     * @return \Mail\Services\MailMessageFactory
+     * @return mixed
      */
-    public function getMessage()
+    public function getTextDomain()
     {
-        return $this->message;
-    }
-
-    /**
-     * @return \Mail\Services\MailSignatureService
-     */
-    public function getSignature()
-    {
-        return $this->signature;
-    }
-
-    /**
-     * @return \Zend\Mail\Transport\TransportInterface
-     */
-    public function getTransport()
-    {
-        return $this->transport;
+        if (is_null($this->textDomain)) {
+            $config  = $this->getConfig();
+            if (isset($config['Application']['text_domain'])) {
+                $this->textDomain = $config['Application']['text_domain'];
+            }
+        }
+        return $this->textDomain;
     }
 
     /**
@@ -144,6 +78,13 @@ class MailService extends AbstractTranslation implements FactoryInterface
      */
     public function getBbc()
     {
+        if (is_null($this->bbc)) {
+            $config  = $this->getConfig();
+            if (isset($config['Application']['contact']['bbc'])) {
+                $this->bbc = $config['Application']['contact']['bbc'];
+            }
+        }
+
         return $this->bbc;
     }
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-01 10:08+0100\n"
-"PO-Revision-Date: 2014-08-01 10:08+0100\n"
+"POT-Creation-Date: 2014-08-05 11:08+0100\n"
+"PO-Revision-Date: 2014-08-05 11:08+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -247,6 +247,10 @@ msgstr ""
 
 #: ../src/User/Form/Factory/UserFieldFactory.php:164
 msgid "Coupon Code"
+msgstr ""
+
+#: ../src/User/Form/Factory/UserFieldFactory.php:173
+msgid "I agree to all terms and conditions"
 msgstr ""
 
 #: ../src/User/Form/Factory/UserFieldFactory.php:193
@@ -494,7 +498,7 @@ msgid "KGS"
 msgstr ""
 
 #: ../view/user/user/index.phtml:22
-#: ../view/user/user/details.phtml:51
+#: ../view/user/user/details.phtml:55
 msgid "last Login"
 msgstr ""
 
@@ -543,15 +547,15 @@ msgstr ""
 msgid "language"
 msgstr ""
 
-#: ../view/user/user/details.phtml:43
+#: ../view/user/user/details.phtml:47
 msgid "created"
 msgstr ""
 
-#: ../view/user/user/details.phtml:47
+#: ../view/user/user/details.phtml:51
 msgid "first Login"
 msgstr ""
 
-#: ../view/user/user/details.phtml:65
+#: ../view/user/user/details.phtml:69
 #: ../view/user/user/reset-password.phtml:11
 msgid "Return"
 msgstr ""

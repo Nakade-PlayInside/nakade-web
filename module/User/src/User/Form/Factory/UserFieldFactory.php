@@ -170,7 +170,7 @@ class UserFieldFactory extends AbstractTranslation
                     'name' => self::FIELD_AGREEMENT,
                     'type' => 'Zend\Form\Element\Checkbox',
                     'options' => array(
-                        'label' => 'I agree to all terms and conditions',
+                        'label' => $this->translate('I agree to all terms and conditions'),
                         'use_hidden_element' => true,
                         'checked_value' => 1,
                         'unchecked_value' => 'no'

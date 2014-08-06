@@ -2,6 +2,8 @@
 namespace Appointment\Form\Hydrator;
 
 use Appointment\Entity\Appointment;
+use Appointment\Form\AppointmentInterface;
+use Season\Entity\Match;
 use User\Entity\User;
 use Zend\Stdlib\Hydrator\ClassMethods as Hydrator;
 use Zend\Stdlib\Hydrator\HydratorInterface;
@@ -13,7 +15,7 @@ use Zend\Authentication\AuthenticationService;
  *
  * @package Appointment\Form\Hydrator
  */
-class AppointmentHydrator implements HydratorInterface
+class AppointmentHydrator implements HydratorInterface, AppointmentInterface
 {
 
     private $entityManager;
@@ -31,67 +33,107 @@ class AppointmentHydrator implements HydratorInterface
     }
 
     /**
-     * @param Appointment $appointment
-     *
+     * @param Appointment $object
      * @return array
+     * @throws \RuntimeException
      */
-    public function extract($appointment)
+    public function extract($object)
     {
         $data = array();
 
-        /* @var $match /Match/Entity/Match */
-        $match = $appointment->getMatch();
-        if (!is_null($match)) {
-            $data['oldDate'] = $match->getDate()->format('d.m.Y H:i:s');
-
-            if ($this->isActiveUser($match->getBlack())) {
-                $data['submitterId'] = $match->getBlack()->getId();
-                $data['responderId'] = $match->getWhite()->getId();
-            } else {
-                $data['submitterId'] = $match->getWhite()->getId();
-                $data['responderId'] = $match->getBlack()->getId();
-            }
+        $match = $object->getMatch();
+        if (is_null($match)) {
+            throw new \RuntimeException(
+                sprintf('Match data missing. You have to provide a match.')
+            );
         }
+
+        $data[self::FIELD_OLD_DATE] = $match->getDate()->format('d.m.Y H:i:s');
 
         return $data;
     }
 
     /**
      * @param array       $data
-     * @param Appointment $appointment
+     * @param Appointment $object
      *
      * @return object
      */
-    public function hydrate(array $data, $appointment)
+    public function hydrate(array $data, $object)
     {
-        /* @var $season \Season\Entity\Season */
-        $appointment->setSubmitDate(new \DateTime());
-
-        $confirmString = md5(uniqid(rand(), true));
-        $appointment->setConfirmString($confirmString);
-
-        if (isset($data['oldDate'])) {
-            $oldDate = \DateTime::createFromFormat('d.m.Y H:i:s', $data['oldDate']);
-            $appointment->setOldDate($oldDate);
+        if (isset($data[self::FIELD_OLD_DATE])) {
+            $oldDate = \DateTime::createFromFormat('d.m.Y H:i:s', $data[self::FIELD_OLD_DATE]);
+            $object->setOldDate($oldDate);
         }
 
-        if (isset($data['submitterId'])) {
-            $submitter = $this->getUser($data['submitterId']);
-            $appointment->setSubmitter($submitter);
-        }
-
-        if (isset($data['responderId'])) {
-            $responder = $this->getUser($data['responderId']);
-            $appointment->setResponder($responder);
-        }
-
-        if (isset($data['date']) &&  isset($data['time'])) {
-            $strDateTime = sprintf('%s %s', $data['date'], $data['time']);
+        if (isset($data[self::FIELD_DATE]) &&  isset($data[self::FIELD_TIME])) {
+            $strDateTime = sprintf('%s %s', $data[self::FIELD_DATE], $data[self::FIELD_TIME]);
             $newDate = \DateTime::createFromFormat('Y-m-d H:i:s', $strDateTime);
-            $appointment->setNewDate($newDate);
+            $object->setNewDate($newDate);
         }
 
-        return $appointment;
+        //new appointment
+        if (is_null($object->getId())) {
+            $confirmString = md5(uniqid(rand(), true));
+            $object->setConfirmString($confirmString);
+            $object->setSubmitDate(new \DateTime());
+
+            if (!is_null($object->getMatch())) {
+                if ($this->isActiveUser($object->getMatch()->getBlack())) {
+                    $submitter = $object->getMatch()->getBlack();
+                    $responder = $object->getMatch()->getWhite();
+                } else {
+                    $responder = $object->getMatch()->getBlack();
+                    $submitter = $object->getMatch()->getWhite();
+                }
+
+                $object->setSubmitter($submitter);
+                $object->setResponder($responder);
+            }
+
+        }
+
+        //new appointment by moderator
+        if (isset($data[self::FIELD_MODERATOR_APPOINTMENT])) {
+
+            $appointment = clone $object;
+            $submitter = $this->getUser();
+            $appointment->setSubmitter($submitter);
+            $appointment->setSubmitDate(new \DateTime());
+
+            $this->updateMatch($appointment->getMatch(), $appointment->getNewDate());
+
+            $appointment->setIsConfirmed(true);
+            $appointment->setIsRejected(false);
+            $appointment->setRejectReason(null);
+
+            $object = $appointment;
+        }
+
+        if (isset($data[self::FIELD_REJECT_REASON])) {
+            $object->setRejectReason($data[self::FIELD_REJECT_REASON]);
+            $object->setIsRejected(true);
+        }
+
+        //confirming appointment
+        if (isset($data[self::FIELD_CONFIRM_APPOINTMENT])) {
+
+            $this->updateMatch($object->getMatch(), $object->getNewDate());
+            $object->setIsConfirmed(true);
+
+        }
+
+        return $object;
+    }
+
+    private function updateMatch(Match $match, \DateTime $date)
+    {
+        $sequence = $match->getSequence() + 1;
+        $match->setDate($date);
+        $match->setSequence($sequence);
+
+        $this->getEntityManager()->persist($match);
+        $this->getEntityManager()->flush($match);
     }
 
     /**
@@ -107,14 +149,12 @@ class AppointmentHydrator implements HydratorInterface
     }
 
     /**
-     * @param int $userId
-     *
      * @return \User\Entity\User
      */
-
-    private function getUser($userId)
+    private function getUser()
     {
-        return $this->getEntityManager()->getReference('User\Entity\User', $userId);
+        $userId = $this->getIdentity()->getId();
+        return $this->getEntityManager()->getReference('User\Entity\User', intval($userId));
     }
 
     /**

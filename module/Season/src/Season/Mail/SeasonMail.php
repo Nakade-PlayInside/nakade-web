@@ -15,7 +15,6 @@ use \Zend\Mail\Transport\TransportInterface;
  */
 abstract class SeasonMail extends NakadeMail
 {
-    protected $url = 'http://www.nakade.de';
     protected $dateHelper;
     protected $season;
     protected $participant;
@@ -30,26 +29,6 @@ abstract class SeasonMail extends NakadeMail
         $this->mailService = $mailService;
         $this->transport = $transport;
         $this->dateHelper = $dateHelper;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        //todo: detect url see ViewHelper getServerUrl
-        return $this->url;
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-        return $this;
     }
 
     /**

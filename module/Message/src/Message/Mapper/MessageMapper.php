@@ -267,9 +267,4 @@ class MessageMapper extends AbstractMapper
         return count($result);
     }
 
-
-
-
 }
-
-?>

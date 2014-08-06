@@ -14,7 +14,6 @@ use \Zend\Mail\Transport\TransportInterface;
  */
 class ContactMail extends NakadeMail
 {
-    private $url='http://www.nakade.de';
     private $contact;
 
     /**
@@ -32,7 +31,6 @@ class ContactMail extends NakadeMail
      */
     public function getMailBody()
     {
-
         $message =
             $this->translate('Dear %NAME%') . ', ' . PHP_EOL . PHP_EOL .
             $this->translate('Thank you for contacting us at %URL%.') . ' ' .
@@ -51,7 +49,6 @@ class ContactMail extends NakadeMail
         }
 
         $this->makeReplacements($message);
-
         return $message;
     }
 
@@ -72,14 +69,6 @@ class ContactMail extends NakadeMail
     }
 
     /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
      * @param Contact $contact
      *
      * @return $this
@@ -97,5 +86,4 @@ class ContactMail extends NakadeMail
     {
         return $this->contact;
     }
-
 }

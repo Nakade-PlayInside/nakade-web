@@ -7,6 +7,7 @@
 
 namespace Appointment\Command;
 
+use Appointment\Services\MailService;
 use Appointment\Services\RepositoryService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Console\Request as ConsoleRequest;
@@ -17,7 +18,7 @@ use Zend\Console\Request as ConsoleRequest;
  *
  * @package Appointment\Command
  */
-class CommandController extends AbstractActionController
+class AutoConfirmController extends AbstractActionController
 {
 
     /**
@@ -41,11 +42,11 @@ class CommandController extends AbstractActionController
        $time = 48;
        $config  = $sm->get('config');
        if (isset($config['Appointment']['auto_confirm_time'])) {
-           $time =  strval($config['Appointment']['auto_confirm_time']);
+           $time =  intval($config['Appointment']['auto_confirm_time']);
        }
 
        /* @var $mail \Appointment\Mail\ConfirmMail */
-       $mail = $mailService->getMail('confirm');
+       $mail = $mailService->getMail(MailService::CONFIRM_MAIL);
 
        /* @var $repo \Appointment\Mapper\AppointmentMapper */
        $repo = $repoService->getMapper(RepositoryService::APPOINTMENT_MAPPER);

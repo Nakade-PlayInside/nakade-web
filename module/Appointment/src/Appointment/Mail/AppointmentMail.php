@@ -1,10 +1,4 @@
 <?php
-/**
- * User: Holger Maerz
- * Date: 16.04.14
- * Time: 11:47
- */
-
 namespace Appointment\Mail;
 
 use Appointment\Entity\Appointment;
@@ -19,7 +13,6 @@ use \Zend\Mail\Transport\TransportInterface;
  */
 abstract class AppointmentMail extends NakadeMail
 {
-    protected $url = 'http://www.nakade.de';
     protected $time = '72';
     protected $appointment;
 
@@ -31,25 +24,6 @@ abstract class AppointmentMail extends NakadeMail
     {
         $this->mailService = $mailService;
         $this->transport = $transport;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-        return $this;
     }
 
     /**

@@ -13,8 +13,6 @@ use Zend\Mail\Transport\TransportInterface;
  */
 class CouponMail extends NakadeMail
 {
-
-    private $url = 'http://www.nakade.de';
     private $coupon;
 
     /**
@@ -25,15 +23,6 @@ class CouponMail extends NakadeMail
     {
         $this->mailService = $mailService;
         $this->transport = $transport;
-        $this->url = 'http://'. $_SERVER['HTTP_HOST'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
     }
 
     /**

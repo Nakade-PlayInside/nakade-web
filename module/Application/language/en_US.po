@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-04 16:22+0100\n"
-"PO-Revision-Date: 2014-08-04 16:22+0100\n"
+"POT-Creation-Date: 2014-08-05 18:52+0100\n"
+"PO-Revision-Date: 2014-08-05 18:52+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -73,19 +73,20 @@ msgid "User overview"
 msgstr ""
 
 #: ../view/layout/layout.phtml:60
-msgid "open results"
+msgid "Open Results"
 msgstr ""
 
 #: ../view/layout/layout.phtml:63
-msgid "edit match day"
+msgid "Edit Match Day"
 msgstr ""
 
 #: ../view/layout/layout.phtml:66
-msgid "new season"
+msgid "New Season"
 msgstr ""
 
 #: ../view/layout/layout.phtml:69
-msgid "rejected appointments"
+#: ../view/layout/layout.phtml:122
+msgid "Appointments"
 msgstr ""
 
 #: ../view/layout/layout.phtml:81
@@ -122,10 +123,6 @@ msgstr ""
 
 #: ../view/layout/layout.phtml:117
 msgid "League"
-msgstr ""
-
-#: ../view/layout/layout.phtml:122
-msgid "Appointments"
 msgstr ""
 
 #: ../view/layout/layout.phtml:124

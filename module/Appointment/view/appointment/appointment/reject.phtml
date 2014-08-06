@@ -14,15 +14,15 @@ $this->headTitle($title);
 <table class="reject">
 <tr>
     <td><?php echo $this->translate("Match"); ?>:</td>
-    <td><span><?php echo $this->matchInfo; ?></span></td>
+    <td><span><?php echo $this->appointment->getMatch()->getMatchInfo(); ?></span></td>
 </tr>
 <tr>
     <td><?php echo $this->translate("Old Date"); ?>:</td>
-    <td><span><?php echo $this->oldDate; ?></span></td>
+    <td><span><?php echo $this->appointment->getOldDate()->format('d.m.Y H:i'); ?></span></td>
 </tr>
 <tr>
     <td><?php echo $this->translate("New Date"); ?>:</td>
-    <td><span><?php echo $this->newDate; ?></span></td>
+    <td><span><?php echo $this->appointment->getNewDate()->format('d.m.Y H:i'); ?></span></td>
 </tr>
 </table>
 

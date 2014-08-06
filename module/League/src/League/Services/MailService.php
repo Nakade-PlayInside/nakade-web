@@ -3,17 +3,14 @@
 namespace League\Services;
 
 use League\Mail;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Nakade\Abstracts\AbstractTranslation;
-use \Mail\Services\MailMessageFactory;
-use \Mail\Services\MailTransportFactory;
+use Mail\Services\AbstractMailService;
+
 /**
  * Class MailService
  *
  * @package League\Services
  */
-class MailService extends AbstractTranslation implements FactoryInterface
+class MailService extends AbstractMailService
 {
 
     const RESULT_MAIL = 'result';
@@ -21,62 +18,6 @@ class MailService extends AbstractTranslation implements FactoryInterface
     const MATCH_REMINDER_MAIL = 'match_reminder';
     const RESULT_REMINDER_MAIL = 'result_reminder';
     const AUTO_RESULT_MAIL = 'auto_result';
-
-    private $transport;
-    private $message;
-    private $signature;
-    private $url='http://www.nakade.de';
-
-    /**
-     * @param ServiceLocatorInterface $services
-     *
-     * @return \Zend\ServiceManager\FactoryInterface
-     *
-     * @throws \RuntimeException
-     */
-    public function createService(ServiceLocatorInterface $services)
-    {
-        $this->transport = $services->get('Mail\Services\MailTransportFactory');
-        if (is_null($this->transport)) {
-            throw new \RuntimeException(
-                sprintf('Mail Transport Service is not found.')
-            );
-        }
-
-        $this->message =   $services->get('Mail\Services\MailMessageFactory');
-        if (is_null($this->message)) {
-            throw new \RuntimeException(
-                sprintf('Mail Message Service is not found.')
-            );
-        }
-
-        $this->signature = $services->get('Mail\Services\MailSignatureService');
-        if (is_null($this->signature)) {
-            throw new \RuntimeException(
-                sprintf('Mail Signature Service is not found.')
-            );
-        }
-
-        $config  = $services->get('config');
-
-        //text domain
-        $textDomain = isset($config['League']['text_domain']) ?
-            $config['League']['text_domain'] : null;
-
-        //url
-        if (isset($config['League']['url'])) {
-            $this->url =  $config['League']['url'];
-        }
-
-
-        $translator = $services->get('translator');
-
-        $this->setTranslatorTextDomain($textDomain);
-        $this->setTranslator($translator, $textDomain);
-
-        return $this;
-    }
-
 
     /**
      * @param string $typ
@@ -116,43 +57,24 @@ class MailService extends AbstractTranslation implements FactoryInterface
         }
 
         $mail->setTranslator($this->getTranslator());
-        $mail->setTranslatorTextDomain($this->getTranslatorTextDomain());
+        $mail->setTranslatorTextDomain($this->getTextDomain());
         $mail->setSignature($this->getSignature());
-        $mail->setUrl($this->getUrl());
+
         return $mail;
     }
 
-
     /**
-     * @return \Mail\Services\MailMessageFactory
+     * @return mixed
      */
-    public function getMessage()
+    public function getTextDomain()
     {
-        return $this->message;
-    }
-
-    /**
-     * @return \Mail\Services\MailSignatureService
-     */
-    public function getSignature()
-    {
-        return $this->signature;
-    }
-
-    /**
-     * @return \Zend\Mail\Transport\TransportInterface
-     */
-    public function getTransport()
-    {
-        return $this->transport;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
+        if (is_null($this->textDomain)) {
+            $config  = $this->getConfig();
+            if (isset($config['League']['text_domain'])) {
+                $this->textDomain = $config['League']['text_domain'];
+            }
+        }
+        return $this->textDomain;
     }
 
 

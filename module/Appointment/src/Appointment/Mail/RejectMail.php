@@ -39,7 +39,6 @@ class RejectMail extends AppointmentMail
             $this->getSignature()->getSignatureText();
 
         $this->makeReplacements($message);
-
         return $message;
     }
 

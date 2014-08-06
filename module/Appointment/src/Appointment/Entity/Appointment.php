@@ -76,7 +76,7 @@ class Appointment
   private $rejectReason;
 
   /**
-   * @ORM\Column(name="confirmString", type="string", nullable=true)
+   * @ORM\Column(name="confirmString", type="string", length=32 ,nullable=true)
    */
   private $confirmString;
 

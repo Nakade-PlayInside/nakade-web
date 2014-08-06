@@ -1,15 +1,11 @@
 <?php
-/**
- * Controller Appointment
- *
- * @author Dr. Holger Maerz <holger@spandaugo.de>
- */
-
 namespace Appointment\Controller;
 
 use Appointment\Entity\Appointment;
+use Appointment\Form\AppointmentInterface;
+use Appointment\Services\AppointmentFormFactory;
+use Appointment\Services\MailService;
 use Appointment\Services\RepositoryService;
-use Season\Entity\Match;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
@@ -18,7 +14,7 @@ use Nakade\Abstracts\AbstractController;
  *
  * @package Appointment\Controller
  */
-class AppointmentController extends AbstractController
+class AppointmentController extends AbstractController implements AppointmentInterface
 {
 
     /**
@@ -44,7 +40,7 @@ class AppointmentController extends AbstractController
        $appointment->setMatch($match);
 
        /* @var $form \Appointment\Form\AppointmentForm */
-       $form = $this->getFormFactory()->getForm('appointment');
+       $form = $this->getFormFactory()->getForm(AppointmentFormFactory::APPOINTMENT_FORM);
        $form->bindEntity($appointment);
 
        /* @var $request \Zend\Http\Request */
@@ -64,22 +60,24 @@ class AppointmentController extends AbstractController
 
                /* @var $appointment \Appointment\Entity\Appointment */
                $appointment = $form->getData();
-              // var_dump($appointment->getMatch()->getId());die;
                $repo->save($appointment);
 
                /* @var $submit \Appointment\Mail\SubmitterMail */
-               $submit = $this->getMailService()->getMail('submitter');
+               $submit = $this->getMailService()->getMail(MailService::SUBMITTER_MAIL);
                $submit->setAppointment($appointment);
                $submit->sendMail($appointment->getSubmitter());
 
                /* @var $responder \Appointment\Mail\ResponderMail */
-               $responder = $this->getMailService()->getMail('responder');
+               $responder = $this->getMailService()->getMail(MailService::RESPONDER_MAIL);
                $responder->setAppointment($appointment);
                $responder->sendMail($appointment->getResponder());
 
+               $this->flashMessenger()->addSuccessMessage('Appointment Made');
                return $this->redirect()->toRoute('appointment', array(
                    'action' => 'submitted'
                ));
+           } else {
+               $this->flashMessenger()->addErrorMessage('Input Error');
            }
        }
 
@@ -112,16 +110,16 @@ class AppointmentController extends AbstractController
         }
 
         /* @var $form \Appointment\Form\ConfirmForm */
-        $form = $this->getFormFactory()->getForm('confirm');
+        $form = $this->getFormFactory()->getForm(AppointmentFormFactory::CONFIRM_FORM);
         $form->bindEntity($appointment);
 
-        if ($this->getRequest()->isPost()) {
-
-            //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $postData =  $request->getPost();
 
             //reject
-            if (isset($postData['reject'])) {
+            if (isset($postData[self::FIELD_REJECT_APPOINTMENT])) {
                 return $this->redirect()->toRoute('appointment', array(
                         'action' => 'reject',
                         'id' => $appointmentId,
@@ -129,43 +127,32 @@ class AppointmentController extends AbstractController
             }
 
             $form->setData($postData);
-
-            if ($form->isValid() && $postData['confirm']) {
+            if ($form->isValid()) {
 
                 /* @var $appointment \Appointment\Entity\Appointment */
                 $appointment = $form->getData();
-
-                $match = $appointment->getMatch();
-                $date = $appointment->getNewDate();
-                $sequence = $match->getSequence() + 1;
-
-                $appointment->setIsConfirmed(true);
-                $match->setDate($date);
-                $match->setSequence($sequence);
-
                 $repo->save($appointment);
-                $repo->save($match);
 
                 /* @var $mail \Appointment\Mail\ConfirmMail */
-                $mail = $this->getMailService()->getMail('confirm');
+                $mail = $this->getMailService()->getMail(MailService::CONFIRM_MAIL);
                 $mail->setAppointment($appointment);
                 $mail->sendMail($appointment->getResponder());
                 $mail->sendMail($appointment->getSubmitter());
 
-
+                $this->flashMessenger()->addSuccessMessage('Appointment Confirmed');
                 return $this->redirect()->toRoute('appointment', array(
                     'action' => 'success'
                 ));
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
         }
 
 
         return new ViewModel(
             array(
-                'oldDate' => $appointment->getOldDate()->format('d.m.Y H:i'),
-                'newDate' => $appointment->getNewDate()->format('d.m.Y H:i'),
                 'form' => $form,
-                'matchInfo' => $appointment->getMatch()->getMatchInfo()
+                'appointment' => $appointment
             )
         );
     }
@@ -190,16 +177,18 @@ class AppointmentController extends AbstractController
         }
 
         /* @var $form \Appointment\Form\RejectForm */
-        $form = $this->getFormFactory()->getForm('reject');
+        $form = $this->getFormFactory()->getForm(AppointmentFormFactory::REJECT_FORM);
         $form->bindEntity($appointment);
 
-        if ($this->getRequest()->isPost()) {
+        /* @var $request \Zend\Http\Request */
+        $request = $this->getRequest();
+        if ($request->isPost()) {
 
             //get post data, set data to from, prepare for validation
-            $postData =  $this->getRequest()->getPost();
+            $postData =  $request->getPost();
 
             //cancel
-            if (isset($postData['cancel'])) {
+            if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute('appointment', array(
                     'action' => 'confirm',
                     'id' => $appointmentId
@@ -208,32 +197,30 @@ class AppointmentController extends AbstractController
 
             $form->setData($postData);
 
-            if ($form->isValid() && $postData['reject']) {
+            if ($form->isValid()) {
 
                 /* @var $appointment \Appointment\Entity\Appointment */
                 $appointment = $form->getData();
-                $appointment->setIsRejected(true);
                 $repo->save($appointment);
 
                 /* @var $mail \Appointment\Mail\RejectMail */
-                $mail = $this->getMailService()->getMail('reject');
+                $mail = $this->getMailService()->getMail(MailService::REJECT_MAIL);
                 $mail->setAppointment($appointment);
                 $mail->sendMail($appointment->getResponder());
                 $mail->sendMail($appointment->getSubmitter());
 
-                return $this->redirect()->toRoute('appointment', array(
-                    'action' => 'info'
-                ));
+                $this->flashMessenger()->addSuccessMessage('Appointment Rejected');
+                return $this->redirect()->toRoute('appointment', array('action' => 'info'));
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
         }
 
 
         return new ViewModel(
             array(
-                'oldDate' => $appointment->getOldDate()->format('d.m.Y H:i'),
-                'newDate' => $appointment->getNewDate()->format('d.m.Y H:i'),
                 'form' => $form,
-                'matchInfo' => $appointment->getMatch()->getMatchInfo()
+                'appointment' => $appointment
             )
         );
     }

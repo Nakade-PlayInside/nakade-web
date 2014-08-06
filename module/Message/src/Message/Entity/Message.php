@@ -23,7 +23,7 @@ class Message
     private $threadId;
 
     /**
-     * @ORM\Column(name="subject", type="string", nullable=false)
+     * @ORM\Column(name="subject", type="string", length=120, nullable=false)
      */
     private $subject;
 

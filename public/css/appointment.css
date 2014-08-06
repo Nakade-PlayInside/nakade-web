@@ -48,3 +48,15 @@ table.rejectAdmin td:last-child {
 .matchInfo {
     color:#0088cc;;
 }
+
+span.state {
+    font-weight: bolder;
+}
+
+span.confirmed {
+    color: #57a900;
+}
+
+span.rejected {
+    color: red;
+}

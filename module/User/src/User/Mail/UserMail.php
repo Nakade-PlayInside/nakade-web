@@ -13,7 +13,6 @@ use \Zend\Mail\Transport\TransportInterface;
  */
 abstract class UserMail extends NakadeMail
 {
-    protected $url = 'http://www.nakade.de';
     protected $user;
 
      /**
@@ -24,17 +23,6 @@ abstract class UserMail extends NakadeMail
     {
         $this->mailService = $mailService;
         $this->transport = $transport;
-
-        //todo: url in all mail by extending nakade mail
-        $this->url = 'http://'. $_SERVER['HTTP_HOST'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
     }
 
     /**

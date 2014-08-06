@@ -1,0 +1,61 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Appointment');
+$title = $this->translate("Match Appointments");
+$this->headTitle($title);
+
+?>
+
+<h3><?php echo $title;?></h3>
+<?php $this->placeholder('nothing')->captureStart();?>
+<h3><?php echo $this->translate('No Appointment found')?></h3>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+
+<?php $this->placeholder('appointment')->captureStart();?>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'appointments'); ?>
+<table class="table profile">
+    <tr>
+        <th><?php echo $this->translate("ID"); ?></th>
+        <th><?php echo $this->translate("Match"); ?></th>
+        <th><?php echo $this->translate("Date"); ?></th>
+        <th><?php echo $this->translate("Appointment"); ?></th>
+        <th><?php echo $this->translate("Submitter"); ?></th>
+        <th><?php echo $this->translate("submitted");?></th>
+        <th style="text-align:center"><?php echo $this->translate("Stage");?></th>
+        <th style="text-align:center"><?php echo $this->translate("Info");?></th>
+    </tr>
+    <?php
+    /* @var $appointment \Appointment\Entity\Appointment */
+    foreach ($this->appointments as $appointment) : ?>
+        <tr style="background-color:<?php
+        echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+            <td style="text-align: right"><?php echo $appointment->getId(); ?></td>
+            <td><?php echo $appointment->getMatch()->getMatchInfo();?></td>
+            <td><?php echo $appointment->getOldDate()->format('d.m.y H:i'); ?></td>
+            <td><?php echo $appointment->getNewDate()->format('d.m.y H:i'); ?></td>
+            <td><?php echo $appointment->getSubmitter()->getShortName();?></td>
+            <td><?php echo $appointment->getSubmitDate()->format('d.m.y H:i'); ?></td>
+            <td><div class="<?php echo $this->confirmed($appointment); ?> btnCenter"></div></td>
+            <td>
+                <a class="button" href="<?php echo $this->url('appointmentModerator', array('action' => 'info', 'id' => $appointment->getId()))?>">
+                    <div class="buttons-16 info-16 btnCenter"></div>
+                </a>
+            </td>
+            <td>
+                <a class="button" href="<?php echo $this->url('appointmentModerator', array('action' => 'edit', 'id' => $appointment->getId()))?>">
+                    <div class="buttons-16 edit-16 btnCenter"></div>
+                </a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+<p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Appointments"); ?></p>
+<?php $this->placeholder('appointment')->captureEnd();?>
+
+<?php
+if (0==count($this->appointments)) {
+echo $this->placeholder('nothing');
+
+} else {
+echo $this->placeholder('appointment');
+}

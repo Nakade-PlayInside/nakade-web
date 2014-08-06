@@ -2,23 +2,23 @@
 
 namespace Appointment\Services;
 
-use Appointment\Controller\AppointmentController;
+use Appointment\Controller\ModeratorController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
 
 /**
- * Class AppointmentControllerFactory
+ * Class ModeratorControllerFactory
  *
  * @package Appointment\Services
  */
-class AppointmentControllerFactory implements FactoryInterface
+class ModeratorControllerFactory implements FactoryInterface
 {
 
     /**
      * @param ServiceLocatorInterface $services
      *
-     * @return AppointmentController
+     * @return ModeratorController
      */
     public function createService(ServiceLocatorInterface $services)
     {
@@ -40,16 +40,11 @@ class AppointmentControllerFactory implements FactoryInterface
             'Appointment\Services\MailService'
         );
 
-        /* @var $validService \Appointment\Services\AppointmentValidService */
-        $validService = $serviceManager->get(
-            'Appointment\Services\AppointmentValidService'
-        );
 
-        $controller = new AppointmentController();
+        $controller = new ModeratorController();
         $controller->setRepository($repository);
         $controller->setFormFactory($formFactory);
         $controller->setMailService($mailService);
-        $controller->setService($validService);
 
         return $controller;
 

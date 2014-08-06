@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-06 11:39+0100\n"
-"PO-Revision-Date: 2014-07-06 11:39+0100\n"
+"POT-Creation-Date: 2014-08-06 08:38+0100\n"
+"PO-Revision-Date: 2014-08-06 08:38+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -22,12 +22,14 @@ msgstr ""
 #: ../src/Appointment/Mail/SubmitterMail.php:26
 #: ../src/Appointment/Mail/ResponderMail.php:27
 #: ../src/Appointment/Mail/ConfirmMail.php:27
+#: ../src/Appointment/Mail/InfoMail.php:20
 #: ../src/Appointment/Mail/RejectMail.php:26
 msgid "Your match: %MATCH_INFO%"
 msgstr ""
 
 #: ../src/Appointment/Mail/SubmitterMail.php:28
 #: ../src/Appointment/Mail/ResponderMail.php:29
+#: ../src/Appointment/Mail/InfoMail.php:22
 #: ../src/Appointment/Mail/RejectMail.php:28
 msgid "Actual match date: %OLD_DATE%"
 msgstr ""
@@ -35,11 +37,12 @@ msgstr ""
 #: ../src/Appointment/Mail/SubmitterMail.php:30
 #: ../src/Appointment/Mail/ResponderMail.php:31
 #: ../src/Appointment/Mail/ConfirmMail.php:29
+#: ../src/Appointment/Mail/InfoMail.php:24
 msgid "New match date: %NEW_DATE%"
 msgstr ""
 
 #: ../src/Appointment/Mail/SubmitterMail.php:32
-msgid "Before updating, your opponent has to confirm the appointment ."
+msgid "Before updating, your opponent has to confirm the appointment."
 msgstr ""
 
 #: ../src/Appointment/Mail/SubmitterMail.php:34
@@ -106,6 +109,22 @@ msgstr ""
 msgid "Your League Appointment is confirmed"
 msgstr ""
 
+#: ../src/Appointment/Mail/InfoMail.php:18
+msgid "On request a moderator set an appointment for a new match date at %URL%."
+msgstr ""
+
+#: ../src/Appointment/Mail/InfoMail.php:26
+msgid "The new date is binding even without confirming."
+msgstr ""
+
+#: ../src/Appointment/Mail/InfoMail.php:28
+msgid "Make sure to update your iCal."
+msgstr ""
+
+#: ../src/Appointment/Mail/InfoMail.php:42
+msgid "Appointment Reminder"
+msgstr ""
+
 #: ../src/Appointment/Mail/RejectMail.php:24
 msgid "The new appointment for your match date at %URL% is rejected."
 msgstr ""
@@ -146,40 +165,38 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: ../src/Appointment/Form/RejectForm.php:49
+#: ../src/Appointment/Form/RejectForm.php:26
 msgid "Reject Reason"
 msgstr ""
 
-#: ../src/Appointment/Form/RejectForm.php:76
-#: ../src/Appointment/Form/ConfirmForm.php:76
-msgid "Reject"
-msgstr ""
-
-#: ../src/Appointment/Form/RejectForm.php:88
-msgid "Cancel"
-msgstr ""
-
-#: ../src/Appointment/Form/ConfirmForm.php:64
+#: ../src/Appointment/Form/ConfirmForm.php:40
 msgid "Confirm"
 msgstr ""
 
-#: ../src/Appointment/Form/AppointmentForm.php:55
+#: ../src/Appointment/Form/ConfirmForm.php:52
+msgid "Reject"
+msgstr ""
+
+#: ../src/Appointment/Form/AppointmentForm.php:26
+#: ../src/Appointment/Form/MatchDateForm.php:32
 msgid "Old date"
 msgstr ""
 
-#: ../src/Appointment/Form/AppointmentForm.php:78
+#: ../src/Appointment/Form/AppointmentForm.php:37
+#: ../src/Appointment/Form/MatchDateForm.php:43
 msgid "New Match Date"
 msgstr ""
 
-#: ../src/Appointment/Form/AppointmentForm.php:93
+#: ../src/Appointment/Form/AppointmentForm.php:52
+#: ../src/Appointment/Form/MatchDateForm.php:58
 msgid "Time"
 msgstr ""
 
-#: ../src/Appointment/Form/AppointmentForm.php:109
+#: ../src/Appointment/Form/AppointmentForm.php:68
 msgid "I do confirm my opponent has agreed to this schedule"
 msgstr ""
 
-#: ../src/Appointment/Form/AppointmentForm.php:145
+#: ../src/Appointment/Form/AppointmentForm.php:99
 msgid "You must confirm your opponent agreed to the new schedule."
 msgstr ""
 
@@ -212,18 +229,101 @@ msgid "Did you really use the correct link provided by email?"
 msgstr ""
 
 #: ../view/appointment/confirm/success.phtml:3
-#: ../view/appointment/appointment/success.phtml:3
 msgid "New match appointment confirmed"
 msgstr ""
 
 #: ../view/appointment/confirm/success.phtml:10
-#: ../view/appointment/appointment/success.phtml:10
 msgid "Your match appointment is confirmed."
 msgstr ""
 
 #: ../view/appointment/confirm/success.phtml:11
-#: ../view/appointment/appointment/success.phtml:11
 msgid "Further detailed information will be sent to your email address."
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:3
+msgid "Match Appointments"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:12
+#: ../view/appointment/moderator/info.phtml:13
+msgid "ID"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:13
+#: ../view/appointment/moderator/info.phtml:17
+msgid "Match"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:14
+#: ../view/appointment/moderator/info.phtml:21
+msgid "Date"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:15
+#: ../view/appointment/moderator/info.phtml:25
+msgid "Appointment"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:16
+msgid "Submitter"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:17
+msgid "submitted"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:18
+#: ../view/appointment/moderator/info.phtml:35
+msgid "Stage"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:19
+msgid "Info"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:46
+msgid "Total"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:46
+msgid "Appointments"
+msgstr ""
+
+#: ../view/appointment/moderator/info.phtml:3
+msgid "Appointment Info"
+msgstr ""
+
+#: ../view/appointment/moderator/info.phtml:29
+msgid "Submitted"
+msgstr ""
+
+#: ../view/appointment/moderator/info.phtml:31
+msgid "by"
+msgstr ""
+
+#: ../view/appointment/moderator/info.phtml:37
+msgid "Confirmed"
+msgstr ""
+
+#: ../view/appointment/moderator/info.phtml:39
+msgid "Rejected"
+msgstr ""
+
+#: ../view/appointment/moderator/info.phtml:41
+msgid "Ongoing"
+msgstr ""
+
+#: ../view/appointment/moderator/info.phtml:57
+msgid "No appointment found."
+msgstr ""
+
+#: ../view/appointment/moderator/info.phtml:59
+msgid "Return"
+msgstr ""
+
+#: ../view/appointment/moderator/edit.phtml:3
+#: ../view/appointment/appointment/index.phtml:3
+msgid "Edit match appointment"
 msgstr ""
 
 #: ../view/appointment/appointment/confirm.phtml:3
@@ -238,12 +338,6 @@ msgstr ""
 msgid "Your binding confirmation is needed."
 msgstr ""
 
-#: ../view/appointment/appointment/confirm.phtml:16
-#: ../view/appointment/appointment/reject.phtml:16
-#: ../view/appointment/show/available.phtml:16
-msgid "Match"
-msgstr ""
-
 #: ../view/appointment/appointment/confirm.phtml:20
 #: ../view/appointment/appointment/reject.phtml:20
 msgid "Old Date"
@@ -256,10 +350,6 @@ msgstr ""
 
 #: ../view/appointment/appointment/confirm.phtml:29
 msgid "If you do not agree, you may reject the appointment."
-msgstr ""
-
-#: ../view/appointment/appointment/index.phtml:3
-msgid "Edit match appointment"
 msgstr ""
 
 #: ../view/appointment/appointment/index.phtml:9
@@ -322,14 +412,6 @@ msgstr ""
 msgid "Matches available for shifting appointments"
 msgstr ""
 
-#: ../view/appointment/show/available.phtml:14
-msgid "ID"
-msgstr ""
-
-#: ../view/appointment/show/available.phtml:15
-msgid "Date"
-msgstr ""
-
 #: ../view/appointment/show/available.phtml:22
 msgid "click for making an appointment"
 msgstr ""
@@ -362,16 +444,8 @@ msgstr ""
 msgid "Rejected Appointments"
 msgstr ""
 
-#: ../view/appointment/show/reject.phtml:19
-msgid "Submitter"
-msgstr ""
-
 #: ../view/appointment/show/reject.phtml:20
 msgid "Responder"
-msgstr ""
-
-#: ../view/appointment/show/reject.phtml:21
-msgid "submitted"
 msgstr ""
 
 #: ../view/appointment/show/reject.phtml:22
@@ -396,6 +470,14 @@ msgstr ""
 
 #: ../view/appointment/show/message.phtml:11
 msgid "go to confirmation"
+msgstr ""
+
+#: ../view/partial/pagination.phtml:6
+msgid "previous"
+msgstr ""
+
+#: ../view/partial/pagination.phtml:17
+msgid "Actual Page"
 msgstr ""
 
 #~ msgid "Skeleton Application"

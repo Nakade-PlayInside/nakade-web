@@ -23,7 +23,7 @@ class Association
   private $id;
 
   /**
-   * @ORM\Column(name="name", type="string")
+   * @ORM\Column(name="name", type="string", length=45, unique=true, nullable=false)
    */
    private $name;
 

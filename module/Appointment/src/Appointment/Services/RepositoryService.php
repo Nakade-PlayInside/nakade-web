@@ -8,8 +8,9 @@ use \League\Mapper\MatchMapper;
 use \Appointment\Mapper\AppointmentMapper;
 
 /**
- * Creates a mapper factory for doctrine database access.
- * Use the fabric method for getting the mapper required.
+ * Class RepositoryService
+ *
+ * @package Appointment\Services
  */
 class RepositoryService implements FactoryInterface
 {
@@ -57,7 +58,7 @@ class RepositoryService implements FactoryInterface
         switch (strtolower($typ)) {
 
            case self::APPOINTMENT_MAPPER:
-               $repository = new AppointmentMapper($this->entityManager);
+               $repository = new AppointmentMapper();
                break;
 
            default:
@@ -66,6 +67,7 @@ class RepositoryService implements FactoryInterface
                );
         }
 
+        $repository->setEntityManager($this->entityManager);
         return $repository;
     }
 

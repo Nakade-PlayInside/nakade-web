@@ -1,0 +1,59 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Appointment');
+$title = $this->translate("Appointment Info");
+$this->headTitle($title);
+/* @var $appointment \Appointment\Entity\Appointment */
+?>
+
+<h3><?php echo $title;?></h3>
+<?php $this->placeholder('Info')->captureStart();?>
+
+<table class="table profile">
+    <tr>
+        <td><?php echo $this->translate("ID") . ':';?></td>
+        <td><?php echo $appointment->getId();?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate("Match") . ':';?></td>
+        <td><?php echo $appointment->getMatch()->getMatchInfo(); ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate("Date") . ':';?></td>
+        <td><?php echo $appointment->getOldDate()->format('d.m.y H:i'); ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate("Appointment") . ':';?></td>
+        <td><?php echo $appointment->getNewDate()->format('d.m.y H:i'); ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate("Submitted") . ':';?></td>
+        <td><?php echo $appointment->getSubmitDate()->format('d.m.y') . ' ' .
+                $this->translate('by') . ' ' . $appointment->getSubmitter()->getShortName(); ?>
+        </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate("Stage") . ':';?></td>
+        <td><?php if ($appointment->isConfirmed()) : ?>
+                <span class="state confirmed"><?php echo $this->translate("Confirmed"); ?></span>
+            <?php elseif ($appointment->isRejected()) : ?>
+                <span class="state rejected"><?php echo $this->translate("Rejected"); ?></span>
+            <?php else : ?>
+                <span class="state"><?php echo $this->translate("Ongoing"); ?></span>
+            <?php endif ; ?>
+        </td>
+    </tr>
+    <?php if ($appointment->isRejected()) :?>
+    <tr>
+        <td style="vertical-align: top;"><?php echo $this->translate("Reject Reason") . ':';?></td>
+        <td style="max-width: 250px;"><?php $appointment->getRejectReason(); ?></td>
+    </tr>
+    <?php endif; ?>
+</table>
+<?php $this->placeholder('Info')->captureEnd();
+
+if (!empty($this->appointment)) {
+    echo $this->placeholder('Info');
+} else {
+    echo $this->translate("No appointment found.");
+} ?>
+<a class="btn btn-success" href="<?php echo $this->url('appointmentModerator')?>"><?php echo $this->translate("Return"); ?></a>

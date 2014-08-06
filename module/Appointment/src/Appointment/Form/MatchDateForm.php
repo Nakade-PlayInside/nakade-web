@@ -2,13 +2,12 @@
 namespace Appointment\Form;
 
 use \Zend\InputFilter\InputFilter;
-use Zend\Validator\Digits;
 /**
- * Class AppointmentForm
+ * Class MatchDateForm
  *
  * @package Appointment\Form
  */
-class AppointmentForm extends BaseForm
+class MatchDateForm extends BaseForm
 {
 
     /**
@@ -17,6 +16,13 @@ class AppointmentForm extends BaseForm
      */
     public function init()
     {
+
+        $this->add(
+            array(
+                'type' => 'Zend\Form\Element\Hidden',
+                'name' => self::FIELD_MODERATOR_APPOINTMENT
+            )
+        );
 
         //info
         $this->add(
@@ -59,21 +65,6 @@ class AppointmentForm extends BaseForm
             )
         ));
 
-        //check
-        $this->add(
-            array(
-                'type' => 'Zend\Form\Element\Checkbox',
-                'name' => self::FIELD_CONFIRM_USER,
-                'options' => array(
-                    'label' => $this->translate('I do confirm my opponent has agreed to this schedule'),
-                    'use_hidden_element' => true,
-                    'checked_value' => 1,
-                    'unchecked_value' => 'no',
-                ),
-                'attributes' => array('class' => 'checkbox'),
-            )
-        );
-
         $this->add($this->getButtonFieldSet());
 
     }
@@ -84,27 +75,6 @@ class AppointmentForm extends BaseForm
     public function getFilter()
     {
         $filter = new InputFilter();
-
-        $filter->add(
-            array(
-                'name' => self::FIELD_CONFIRM_USER,
-                'required' => true,
-                'validators' => array(
-                    array(
-                        'name' => 'Digits',
-                        'break_chain_on_failure' => true,
-                        'options' => array(
-                            'messages' => array(
-                                Digits::NOT_DIGITS =>
-                                    $this->translate('You must confirm your opponent agreed to the new schedule.'),
-                            ),
-                        ),
-                    ),
-                ),
-            )
-        );
-
-
         return $filter;
     }
 
@@ -113,7 +83,7 @@ class AppointmentForm extends BaseForm
      */
     public function getFormName()
     {
-        return "appointmentForm";
+        return "matchDateForm";
     }
 
 }

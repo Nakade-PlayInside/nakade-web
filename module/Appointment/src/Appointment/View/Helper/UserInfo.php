@@ -20,9 +20,20 @@ class UserInfo extends AbstractHelper
     public function __invoke(User $user)
     {
         $info = "Id: " . $user->getId() . PHP_EOL .
-            $this->getView()->translate('Name') . ": " . $user->getName() . PHP_EOL .
-            $this->getView()->translate('Email') . ": " . $user->getEmail();
+            $this->translate('Name') . ": " . $user->getName() . PHP_EOL .
+            $this->translate('Email') . ": " . $user->getEmail();
 
         return $info;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return string
+     */
+    private function translate($message)
+    {
+        $translate = $this->getView()->plugin('translate');
+        return $translate($message);
     }
 }
