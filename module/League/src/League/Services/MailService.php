@@ -31,23 +31,23 @@ class MailService extends AbstractMailService
         switch (strtolower($typ)) {
 
            case self::RESULT_MAIL:
-               $mail = new Mail\ResultMail($this->message, $this->transport);
+               $mail = new Mail\ResultMail($this->getMessage(), $this->getTransport());
                break;
 
            case self::SCHEDULE_MAIL:
-               $mail = new Mail\ScheduleMail($this->message, $this->transport);
+               $mail = new Mail\ScheduleMail($this->getMessage(), $this->getTransport());
                break;
 
            case self::MATCH_REMINDER_MAIL:
-               $mail = new Mail\MatchReminderMail($this->message, $this->transport);
+               $mail = new Mail\MatchReminderMail($this->getMessage(), $this->getTransport());
                break;
 
            case self::RESULT_REMINDER_MAIL:
-               $mail = new Mail\ResultReminderMail($this->message, $this->transport);
+               $mail = new Mail\ResultReminderMail($this->getMessage(), $this->getTransport());
                break;
 
            case self::AUTO_RESULT_MAIL:
-               $mail = new Mail\AutoResultMail($this->message, $this->transport);
+               $mail = new Mail\AutoResultMail($this->getMessage(), $this->getTransport());
                break;
 
            default:

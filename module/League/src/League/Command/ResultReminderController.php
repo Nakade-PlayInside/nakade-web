@@ -1,15 +1,8 @@
 <?php
-/**
- * Controller Appointment
- *
- * @author Dr. Holger Maerz <holger@spandaugo.de>
- */
-
 namespace League\Command;
 
 use League\Services\RepositoryService;
 use League\Services\MailService;
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Console\Request as ConsoleRequest;
 
 /**
@@ -18,7 +11,7 @@ use Zend\Console\Request as ConsoleRequest;
  *
  * @package League\Command
  */
-class ResultReminderController extends AbstractActionController
+class ResultReminderController extends AbstractCommandController
 {
 
     /**
@@ -34,33 +27,27 @@ class ResultReminderController extends AbstractActionController
            throw new \RuntimeException('You can only use this action from a console!');
        }
 
-       $sm = $this->getServiceLocator();
-       $repoService = $sm->get('League\Services\RepositoryService');
-       $mailService = $sm->get('League\Services\MailService');
-
-       //time
-       $time = 12;
-       $config  = $sm->get('config');
-       if (isset($config['League']['result_reminder_time'])) {
-           $time =  strval($config['League']['result_reminder_time']);
-       }
-
-       /* @var $mail \League\Mail\MatchReminderMail */
-       $mail = $mailService->getMail(MailService::RESULT_REMINDER_MAIL);
-
-       /* @var $repo \League\Mapper\ResultMapper */
-       $repo = $repoService->getMapper(RepositoryService::RESULT_MAPPER);
-       $result = $repo->getActualOpenResults($time);
+       /* @var $mapper \League\Mapper\ResultMapper */
+       $mapper = $this->getMapper(RepositoryService::RESULT_MAPPER);
+       $result = $mapper->getResultReminder();
+       $mail = $this->getMail(MailService::RESULT_REMINDER_MAIL);
 
        echo "Found " . count($result) . " open matches" .PHP_EOL;
+       echo "Sending " . 2*count($result) . " reminder mails" .PHP_EOL;
 
-       /* @var $match \Season\Entity\Match */
-       foreach ($result as $match) {
+       /* @var $reminder \League\Entity\ResultReminder */
+       foreach ($result as $reminder) {
 
-           $mail->setMatch($match);
-           $mail->sendMail($match->getBlack());
-           $mail->sendMail($match->getWhite());
-           echo "Send result reminder (id=" . $match->getId() . ")" . PHP_EOL;
+           $mail->setMatch($reminder->getMatch());
+           $mail->sendMail($reminder->getMatch()->getBlack());
+           $mail->sendMail($reminder->getMatch()->getWhite());
+
+           $date = $reminder->getNextDate();
+           $next = clone $date;
+           $next->modify('+8 hour');
+           $reminder->setNextDate($next);
+           $this->getEntityManager()->persist($reminder);
+           $this->getEntityManager()->flush();
        }
 
        echo "done." . PHP_EOL;

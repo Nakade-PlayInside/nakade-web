@@ -21,9 +21,6 @@ return array(
         //time before making an automatic result
         'auto_result_time' => 96,
 
-        //url for mail
-        'url' => 'http://www.nakade.de',
-
         //your text domain for translation
         'text_domain' => 'League',
     ),

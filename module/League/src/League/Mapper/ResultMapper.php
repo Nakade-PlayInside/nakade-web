@@ -230,6 +230,7 @@ class ResultMapper  extends AbstractMapper
     }
 
     /**
+     * //todo: unused yet
      * @return array
      */
     public function getOverdueResults()
@@ -285,6 +286,22 @@ class ResultMapper  extends AbstractMapper
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @return array
+     */
+    public function getResultReminder()
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('reminder')
+            ->select('r')
+            ->from('League\Entity\ResultReminder', 'r')
+            ->where('r.nextDate < :now')
+            ->setParameter('now', new \DateTime())
+            ->getQuery()
+            ->getResult();
+    }
+
 
 
 
