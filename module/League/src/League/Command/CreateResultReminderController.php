@@ -18,41 +18,41 @@ class CreateResultReminderController extends AbstractCommandController
     /**
      * @throws \RuntimeException
      */
-   public function doAction()
-   {
-       $request = $this->getRequest();
+    public function doAction()
+    {
+        $request = $this->getRequest();
 
-       // Make sure that we are running in a console and the user has not tricked our
-       // application into running this action from a public web server.
-       if (!$request instanceof ConsoleRequest) {
-           throw new \RuntimeException('You can only use this action from a console!');
-       }
+        // Make sure that we are running in a console and the user has not tricked our
+        // application into running this action from a public web server.
+        if (!$request instanceof ConsoleRequest) {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
 
-       /* @var $mapper \League\Mapper\ResultMapper */
-       $mapper = $this->getMapper(RepositoryService::RESULT_MAPPER);
-       $result = $mapper->getNewOverdueMatches();
+        /* @var $mapper \League\Mapper\ResultMapper */
+        $mapper = $this->getMapper(RepositoryService::RESULT_MAPPER);
+        $result = $mapper->getNewOverdueMatches();
 
-       echo "Found " . count($result) . " new overdue matches with no result." .PHP_EOL;
-       echo "Making " . count($result) . " new result reminder." .PHP_EOL;
+        echo "Found " . count($result) . " new overdue matches with no result." .PHP_EOL;
+        echo "Making " . count($result) . " new result reminder." .PHP_EOL;
 
-       /* @var $match \Season\Entity\Match */
-       foreach ($result as $match) {
+        /* @var $match \Season\Entity\Match */
+        foreach ($result as $match) {
 
-           $date = $match->getDate();
-           $reminderDate = clone $date;
-           $reminderDate->modify('+ 8 hour');
+            $date = $match->getDate();
+            $reminderDate = clone $date;
+            $reminderDate->modify('+ 8 hour');
 
-           $reminder = new ResultReminder();
-           $reminder->setMatch($match);
-           $reminder->setNextDate($reminderDate);
-           $this->getEntityManager()->persist($reminder);
-       }
+            $reminder = new ResultReminder();
+            $reminder->setMatch($match);
+            $reminder->setNextDate($reminderDate);
+            $this->getEntityManager()->persist($reminder);
+        }
 
-       $this->getEntityManager()->flush();
+        $this->getEntityManager()->flush();
 
-       echo "done." . PHP_EOL;
+        echo "done." . PHP_EOL;
 
-   }
+    }
 
 
 }
