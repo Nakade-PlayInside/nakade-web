@@ -7,7 +7,7 @@ use Zend\Console\Request as ConsoleRequest;
 
 /**
  * console command for cron job to make new match reminder
- * crontab for www-data: php /var/www/nakade/public/index.php resultReminder > /dev/null
+ * crontab for www-data: php /var/www/nakade/public/index.php createResultReminder > /dev/null
  *
  * @package League\Command
  */
@@ -47,6 +47,7 @@ class CreateResultReminderController extends AbstractCommandController
            $reminder->setNextDate($reminderDate);
            $this->getEntityManager()->persist($reminder);
        }
+
        $this->getEntityManager()->flush();
 
        echo "done." . PHP_EOL;

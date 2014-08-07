@@ -25,7 +25,7 @@ class ResultReminder
 
     /**
      * @ORM\ManyToOne(targetEntity="\Season\Entity\Match", cascade={"persist"})
-     * @ORM\JoinColumn(name="match", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="myMatch", referencedColumnName="id", unique=true, nullable=false)
      */
     private $match;
 

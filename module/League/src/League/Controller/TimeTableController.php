@@ -39,7 +39,6 @@ class TimeTableController extends AbstractController
 
         /* @var $resultMapper \League\Mapper\ResultMapper */
         $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
-
         $matches = $resultMapper->getAllOpenResultsBySeason($season->getId());
 
         return new ViewModel(

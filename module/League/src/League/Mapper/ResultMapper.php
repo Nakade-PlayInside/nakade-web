@@ -248,14 +248,24 @@ class ResultMapper  extends AbstractMapper
     /**
      * @return array
      */
-    private function getResultReminderMatchId()
+    public function getResultReminderMatchId()
     {
-        return $this->getEntityManager()
+        $result = $this->getEntityManager()
             ->createQueryBuilder('Match')
             ->select('m.id')
-            ->from('League\Entity\ResultReminder', 'm')
+            ->from('Season\Entity\Match', 'm')
+            ->leftJoin('League\Entity\ResultReminder', 'r', JOIN::WITH, 'r.match=m' )
+            ->innerJoin('r.match', 'Match')
             ->getQuery()
             ->getResult();
+
+        //mandatory array is never empty
+        $idArray = array(0 => 0);
+        foreach ($result as $item) {
+            $idArray[] = $item['id'];
+        }
+
+        return $idArray;
     }
 
     /**
@@ -264,16 +274,12 @@ class ResultMapper  extends AbstractMapper
     public function getNewOverdueMatches()
     {
         $notIn = $this->getResultReminderMatchId();
-        //mandatory array is never empty
-        if (empty($notIn)) {
-            $notIn[]=0;
-        }
 
         $qb = $this->getEntityManager()->createQueryBuilder('newMatches');
-        $qb->select('r')
+        $qb->select('m')
             ->from('Season\Entity\Match', 'm')
-            ->where($qb->expr()->notIn('m.id', $notIn))
-            ->andWhere('m.result IS NULL')
+            ->where('m.result IS NULL')
+            ->andWhere($qb->expr()->notIn('m.id', $notIn))
             ->andWhere('m.date < :now')
             ->setParameter('now', new \DateTime());
 
