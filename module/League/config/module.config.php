@@ -36,6 +36,7 @@ return array(
             'League\Command\MatchReminder' => 'League\Command\MatchReminderController',
             'League\Command\ResultReminder' => 'League\Command\ResultReminderController',
             'League\Command\AutoResult' => 'League\Command\AutoResultController',
+            'League\Command\CreateResultReminder' => 'League\Command\CreateResultReminderController',
         ),
         'factories' => array(
             'League\Controller\Table' =>
@@ -78,6 +79,16 @@ return array(
                         'defaults' => array(
                             '__NAMESPACE__' => 'League\Command',
                             'controller' => 'League\Command\AutoResult',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+                'createResultReminder' => array(
+                    'options' => array(
+                        'route' => 'createResultReminder',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'League\Command',
+                            'controller' => 'League\Command\CreateResultReminder',
                             'action' => 'do'
                         ),
                     ),

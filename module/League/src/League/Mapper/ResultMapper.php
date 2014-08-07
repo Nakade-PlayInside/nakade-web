@@ -229,5 +229,58 @@ class ResultMapper  extends AbstractMapper
 
     }
 
+    /**
+     * @return array
+     */
+    public function getOverdueResults()
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->where('m.result IS NULL')
+            ->andWhere('m.date < :now')
+            ->setParameter('now', new \DateTime());
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    private function getResultReminderMatchId()
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('Match')
+            ->select('m.id')
+            ->from('League\Entity\ResultReminder', 'm')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function getNewOverdueMatches()
+    {
+        $notIn = $this->getResultReminderMatchId();
+        //mandatory array is never empty
+        if (empty($notIn)) {
+            $notIn[]=0;
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder('newMatches');
+        $qb->select('r')
+            ->from('Season\Entity\Match', 'm')
+            ->where($qb->expr()->notIn('m.id', $notIn))
+            ->andWhere('m.result IS NULL')
+            ->andWhere('m.date < :now')
+            ->setParameter('now', new \DateTime());
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+
 }
 
