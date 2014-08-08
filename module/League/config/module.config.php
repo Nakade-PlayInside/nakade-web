@@ -37,6 +37,10 @@ return array(
             'League\Command\ResultReminder' => 'League\Command\ResultReminderController',
             'League\Command\AutoResult' => 'League\Command\AutoResultController',
             'League\Command\CreateResultReminder' => 'League\Command\CreateResultReminderController',
+            'League\Command\CleanResultReminder' => 'League\Command\CleanResultReminderController',
+            'League\Command\CleanMatchReminder' => 'League\Command\CleanMatchReminderController',
+            'League\Command\AppointmentReminder' => 'League\Command\AppointmentReminderController',
+            'League\Command\CleanAppointmentReminder' => 'League\Command\CleanAppointmentReminderController',
         ),
         'factories' => array(
             'League\Controller\Table' =>
@@ -89,6 +93,46 @@ return array(
                         'defaults' => array(
                             '__NAMESPACE__' => 'League\Command',
                             'controller' => 'League\Command\CreateResultReminder',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+                'cleanResultReminder' => array(
+                    'options' => array(
+                        'route' => 'cleanResultReminder',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'League\Command',
+                            'controller' => 'League\Command\CleanResultReminder',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+                'cleanMatchReminder' => array(
+                    'options' => array(
+                        'route' => 'cleanMatchReminder',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'League\Command',
+                            'controller' => 'League\Command\CleanMatchReminder',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+                'appointmentReminder' => array(
+                    'options' => array(
+                        'route' => 'appointmentReminder',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'League\Command',
+                            'controller' => 'League\Command\AppointmentReminder',
+                            'action' => 'do'
+                        ),
+                    ),
+                ),
+                'cleanAppointmentReminder' => array(
+                    'options' => array(
+                        'route' => 'cleanAppointmentReminder',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'League\Command',
+                            'controller' => 'League\Command\CleanAppointmentReminder',
                             'action' => 'do'
                         ),
                     ),

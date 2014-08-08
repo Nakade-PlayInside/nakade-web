@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-11 11:49+0100\n"
-"PO-Revision-Date: 2014-07-11 11:49+0100\n"
+"POT-Creation-Date: 2014-08-08 11:40+0100\n"
+"PO-Revision-Date: 2014-08-08 11:40+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -16,6 +16,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../src/League/Mail/MatchReminderMail.php:18
+#: ../src/League/Mail/AppointmentReminderMail.php:18
 msgid "This is a reminder of your next match at %NEW_DATE% ."
 msgstr ""
 
@@ -24,14 +25,17 @@ msgstr ""
 #: ../src/League/Mail/ResultMail.php:21
 #: ../src/League/Mail/ScheduleMail.php:21
 #: ../src/League/Mail/ResultReminderMail.php:21
+#: ../src/League/Mail/AppointmentReminderMail.php:23
 msgid "Your match: %MATCH_INFO%"
 msgstr ""
 
 #: ../src/League/Mail/MatchReminderMail.php:22
+#: ../src/League/Mail/AppointmentReminderMail.php:25
 msgid "For any more details visit us at %URL%"
 msgstr ""
 
 #: ../src/League/Mail/MatchReminderMail.php:36
+#: ../src/League/Mail/AppointmentReminderMail.php:39
 msgid "Your Match Reminder"
 msgstr ""
 
@@ -66,43 +70,43 @@ msgstr ""
 msgid "Result: %RESULT%"
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:90
+#: ../src/League/Mail/LeagueMail.php:70
 msgid "No result was found."
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:96
+#: ../src/League/Mail/LeagueMail.php:76
 msgid "Result is a draw."
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:100
+#: ../src/League/Mail/LeagueMail.php:80
 msgid "Your match was suspended."
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:104
+#: ../src/League/Mail/LeagueMail.php:84
 msgid "%COLOR% win by resignation."
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:108
+#: ../src/League/Mail/LeagueMail.php:88
 msgid "%COLOR% win by forfeit."
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:112
+#: ../src/League/Mail/LeagueMail.php:92
 msgid "%COLOR% win on time."
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:116
+#: ../src/League/Mail/LeagueMail.php:96
 msgid "%COLOR% win by %POINTS% points."
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:135
+#: ../src/League/Mail/LeagueMail.php:115
 msgid "Nobody"
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:138
+#: ../src/League/Mail/LeagueMail.php:118
 msgid "White"
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:140
+#: ../src/League/Mail/LeagueMail.php:120
 msgid "Black"
 msgstr ""
 
@@ -160,6 +164,14 @@ msgstr ""
 
 #: ../src/League/Mail/ResultReminderMail.php:41
 msgid "Your Match Result is Missing"
+msgstr ""
+
+#: ../src/League/Mail/AppointmentReminderMail.php:20
+msgid "Just in case, making an appointment is limited to 3 days before a match."
+msgstr ""
+
+#: ../src/League/Mail/AppointmentReminderMail.php:21
+msgid "If you cannot make it on %NEW_DATE%, use the option of making an appointment on %URL%."
 msgstr ""
 
 #: ../src/League/View/Helper/OpenResult.php:27
@@ -315,6 +327,7 @@ msgstr ""
 
 #: ../view/league/table/index.phtml:14
 #: ../view/league/table/table.phtml:20
+#: ../view/league/time-table/schedule.phtml:14
 msgid "No season found"
 msgstr ""
 
@@ -354,6 +367,7 @@ msgid "TB"
 msgstr ""
 
 #: ../view/league/table/table.phtml:10
+#: ../view/league/time-table/schedule.phtml:8
 msgid "%name% %no%. League"
 msgstr ""
 
@@ -402,6 +416,7 @@ msgid "League"
 msgstr ""
 
 #: ../view/league/time-table/index.phtml:16
+#: ../view/league/time-table/index.phtml:30
 msgid "edit"
 msgstr ""
 
@@ -409,19 +424,15 @@ msgstr ""
 msgid "download your schedule calendar (iCal)"
 msgstr ""
 
-#: ../view/league/time-table/my-schedule.phtml:10
+#: ../view/league/time-table/my-schedule.phtml:9
 msgid "%NAME% League No. %NUMBER%"
 msgstr ""
 
-#: ../view/league/time-table/my-schedule.phtml:15
-msgid "No schedule found"
-msgstr ""
-
-#: ../view/league/time-table/my-schedule.phtml:22
+#: ../view/league/time-table/my-schedule.phtml:20
 msgid "Download your calendar"
 msgstr ""
 
-#: ../view/league/time-table/my-schedule.phtml:28
+#: ../view/league/time-table/my-schedule.phtml:26
 msgid "my color"
 msgstr ""
 
@@ -442,7 +453,6 @@ msgid "%name% League - My Results"
 msgstr ""
 
 #: ../view/league/result/my-result.phtml:14
-#: ../view/league/result/actual-results.phtml:10
 msgid "No results found"
 msgstr ""
 

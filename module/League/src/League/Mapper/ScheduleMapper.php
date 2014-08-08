@@ -89,29 +89,125 @@ class ScheduleMapper  extends AbstractMapper
      *
      * @return array
      */
-    public function getNextMatchesByTimeSlot($time=24)
+    public function getNextMatchesInTime($time=24)
     {
-        $now = new \DateTime();
-        $before = clone $now;
+        $before = new \DateTime();
         $before->modify('+' . $time . ' hour');
+        $notIn = $this->getMatchReminderMatchId();
 
-        $timeSlot = clone $before;
-        $timeSlot->modify('+24 hour');
-
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder('Match')
-            ->select('m')
+        $qb = $this->getEntityManager()->createQueryBuilder('matchReminder');
+        $qb->select('m')
             ->from('Season\Entity\Match', 'm')
             ->where('m.result IS NULL')
-            ->andWhere('m.date BETWEEN :before AND :slot')
-            ->setParameter('before', $before)
-            ->setParameter('slot', $timeSlot)
-            ->orderBy('m.date', 'ASC')
-            ->addOrderBy('m.id', 'ASC');
+            ->andWhere($qb->expr()->notIn('m.id', $notIn))
+            ->andWhere('m.date < :before')
+            ->setParameter('before', $before);
 
         return $qb->getQuery()->getResult();
 
     }
+
+    /**
+     * @return array
+     */
+    public function getMatchReminderMatchId()
+    {
+        $result = $this->getEntityManager()
+            ->createQueryBuilder('Match')
+            ->select('m.id')
+            ->from('Season\Entity\Match', 'm')
+            ->leftJoin('League\Entity\MatchReminder', 'r', JOIN::WITH, 'r.match=m' )
+            ->innerJoin('r.match', 'Match')
+            ->getQuery()
+            ->getResult();
+
+        //mandatory array is never empty
+        $idArray = array(0 => 0);
+        foreach ($result as $item) {
+            $idArray[] = $item['id'];
+        }
+
+        return $idArray;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExpiredMatchReminder()
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('reminder')
+            ->select('r')
+            ->from('League\Entity\MatchReminder', 'r')
+            ->innerJoin('r.match', 'Match')
+            ->where('Match.result IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    /**
+     * @param int $days
+     *
+     * @return array
+     */
+    public function getMatchesForAppointmentReminder($days=24)
+    {
+        $before = new \DateTime();
+        $before->modify('+' . $days . ' day');
+        $notIn = $this->getAppointmentReminderMatchId();
+
+        $qb = $this->getEntityManager()->createQueryBuilder('appointmentReminder');
+        $qb->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->where('m.result IS NULL')
+            ->andWhere($qb->expr()->notIn('m.id', $notIn))
+            ->andWhere('m.date < :before')
+            ->setParameter('before', $before);
+
+        return $qb->getQuery()->getResult();
+
+    }
+
+    /**
+     * @return array
+     */
+    public function getAppointmentReminderMatchId()
+    {
+        $result = $this->getEntityManager()
+            ->createQueryBuilder('Match')
+            ->select('m.id')
+            ->from('Season\Entity\Match', 'm')
+            ->leftJoin('League\Entity\AppointmentReminder', 'r', JOIN::WITH, 'r.match=m' )
+            ->innerJoin('r.match', 'Match')
+            ->getQuery()
+            ->getResult();
+
+        //mandatory array is never empty
+        $idArray = array(0 => 0);
+        foreach ($result as $item) {
+            $idArray[] = $item['id'];
+        }
+
+        return $idArray;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExpiredAppointmentReminder()
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('reminder')
+            ->select('r')
+            ->from('League\Entity\AppointmentReminder', 'r')
+            ->innerJoin('r.match', 'Match')
+            ->where('Match.result IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
     /**
      * @param int $leagueId

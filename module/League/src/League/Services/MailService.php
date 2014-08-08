@@ -18,6 +18,7 @@ class MailService extends AbstractMailService
     const MATCH_REMINDER_MAIL = 'match_reminder';
     const RESULT_REMINDER_MAIL = 'result_reminder';
     const AUTO_RESULT_MAIL = 'auto_result';
+    const APPOINTMENT_REMINDER_MAIL = 'appointment_reminder';
 
     /**
      * @param string $typ
@@ -30,30 +31,34 @@ class MailService extends AbstractMailService
     {
         switch (strtolower($typ)) {
 
-           case self::RESULT_MAIL:
-               $mail = new Mail\ResultMail($this->getMessage(), $this->getTransport());
-               break;
+            case self::RESULT_MAIL:
+                $mail = new Mail\ResultMail($this->getMessage(), $this->getTransport());
+                break;
 
-           case self::SCHEDULE_MAIL:
-               $mail = new Mail\ScheduleMail($this->getMessage(), $this->getTransport());
-               break;
+            case self::SCHEDULE_MAIL:
+                $mail = new Mail\ScheduleMail($this->getMessage(), $this->getTransport());
+                break;
 
-           case self::MATCH_REMINDER_MAIL:
-               $mail = new Mail\MatchReminderMail($this->getMessage(), $this->getTransport());
-               break;
+            case self::MATCH_REMINDER_MAIL:
+                $mail = new Mail\MatchReminderMail($this->getMessage(), $this->getTransport());
+                break;
 
-           case self::RESULT_REMINDER_MAIL:
-               $mail = new Mail\ResultReminderMail($this->getMessage(), $this->getTransport());
-               break;
+            case self::RESULT_REMINDER_MAIL:
+                $mail = new Mail\ResultReminderMail($this->getMessage(), $this->getTransport());
+                break;
 
-           case self::AUTO_RESULT_MAIL:
-               $mail = new Mail\AutoResultMail($this->getMessage(), $this->getTransport());
-               break;
+            case self::AUTO_RESULT_MAIL:
+                $mail = new Mail\AutoResultMail($this->getMessage(), $this->getTransport());
+                break;
 
-           default:
-               throw new \RuntimeException(
-                   sprintf('An unknown mail type was provided.')
-               );
+            case self::APPOINTMENT_REMINDER_MAIL:
+                $mail = new Mail\AppointmentReminderMail($this->getMessage(), $this->getTransport());
+                break;
+
+            default:
+                throw new \RuntimeException(
+                    sprintf('An unknown mail type was provided.')
+                );
         }
 
         $mail->setTranslator($this->getTranslator());

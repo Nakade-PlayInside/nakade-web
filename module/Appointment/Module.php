@@ -46,7 +46,8 @@ class Module implements AutoloaderProviderInterface,
     {
         return array(
             // Describe available commands
-            'autoConfirm'    => 'automatic confirm of overdue appointments',
+            'autoConfirm' => 'automatic confirm of overdue appointments',
+            'removeAppointment' => 'remove expired appointments',
         );
     }
 

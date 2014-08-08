@@ -7,6 +7,7 @@
 
 namespace League\Command;
 
+use League\Entity\AppointmentReminder;
 use League\Entity\MatchReminder;
 use League\Services\RepositoryService;
 use League\Services\MailService;
@@ -15,11 +16,11 @@ use Zend\Console\Request as ConsoleRequest;
 
 /**
  * console command for cron job
- * crontab for www-data: php /var/www/nakade/public/index.php matchReminder > /dev/null
+ * crontab for www-data: php /var/www/nakade/public/index.php appointmentReminder > /dev/null
  *
  * @package League\Command
  */
-class MatchReminderController extends AbstractCommandController
+class AppointmentReminderController extends AbstractCommandController
 {
 
     /**
@@ -36,15 +37,15 @@ class MatchReminderController extends AbstractCommandController
        }
 
 
-       /* @var $mail \League\Mail\MatchReminderMail */
-       $mail = $this->getMail(MailService::MATCH_REMINDER_MAIL);
+       /* @var $mail \League\Mail\AppointmentReminderMail */
+       $mail = $this->getMail(MailService::APPOINTMENT_REMINDER_MAIL);
 
        /* @var $mapper \League\Mapper\ScheduleMapper */
        $mapper = $this->getMapper(RepositoryService::SCHEDULE_MAPPER);
-       $result = $mapper->getNextMatchesInTime($this->getTime());
+       $result = $mapper->getNextMatchesInTime($this->getDays());
 
-       echo "Found " . count($result) . " matches being played in the next ". $this->getTime() ." hours." .PHP_EOL;
-       echo "Sending " . 2*count($result) . " match reminder mails." .PHP_EOL;
+       echo "Found " . count($result) . " matches being played in the next ". $this->getDays() ." days." .PHP_EOL;
+       echo "Sending " . 2*count($result) . " appointment reminder mails." .PHP_EOL;
 
        /* @var $match \Season\Entity\Match */
        foreach ($result as $match) {
@@ -52,7 +53,7 @@ class MatchReminderController extends AbstractCommandController
            $mail->sendMail($match->getBlack());
            $mail->sendMail($match->getWhite());
 
-           $reminder = new MatchReminder();
+           $reminder = new AppointmentReminder();
            $reminder->setMatch($match);
            $this->getEntityManager()->persist($reminder);
        }
@@ -65,14 +66,14 @@ class MatchReminderController extends AbstractCommandController
     /**
      * @return int
      */
-    private function getTime()
+    private function getDays()
     {
-        $time = 48;
+        $days = 5;
         $config  = $this->getServiceLocator()->get('config');
-        if (isset($config['League']['match_reminder_time'])) {
-            $time =  intval($config['League']['match_reminder_time']);
+        if (isset($config['League']['appointment_reminder'])) {
+            $days =  intval($config['League']['appointment_reminder']);
         }
-        return $time;
+        return $days;
     }
 
 }

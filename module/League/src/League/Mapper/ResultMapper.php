@@ -302,8 +302,20 @@ class ResultMapper  extends AbstractMapper
             ->getResult();
     }
 
-
-
+    /**
+     * @return array
+     */
+    public function getExpiredResultReminder()
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('reminder')
+            ->select('r')
+            ->from('League\Entity\ResultReminder', 'r')
+            ->innerJoin('r.match', 'Match')
+            ->where('Match.result IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
 
 }
 

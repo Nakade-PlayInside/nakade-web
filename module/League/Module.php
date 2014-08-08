@@ -50,9 +50,14 @@ class Module implements AutoloaderProviderInterface,
     {
         return array(
             // Describe available commands
-            'matchReminder'    => 'send reminder before a match',
-            'resultReminder'    => 'send reminder for open matches',
-            'autoResult'    => 'automatic result of overdue open matches',
+            'appointmentReminder' => 'send appointment reminder before a match',
+            'autoResult' => 'automatic result of overdue open matches',
+            'cleanAppointmentReminder' => 'remove appointment reminder after a match',
+            'cleanResultReminder' => 'remove result reminder after a match',
+            'cleanMatchReminder' => 'remove match reminder after a match',
+            'createResultReminder' => 'creating next reminder until result is provided',
+            'matchReminder' => 'send reminder before a match',
+            'resultReminder' => 'send reminder for open matches',
 
         );
     }
