@@ -253,20 +253,13 @@ class ResultMapper  extends AbstractMapper
     {
         $result = $this->getEntityManager()
             ->createQueryBuilder('Match')
-            ->select('m.id')
-            ->from('Season\Entity\Match', 'm')
-            ->leftJoin('League\Entity\ResultReminder', 'r', JOIN::WITH, 'r.match=m' )
+            ->select('Match.id')
+            ->from('League\Entity\ResultReminder', 'r')
             ->innerJoin('r.match', 'Match')
             ->getQuery()
             ->getResult();
 
-        //mandatory array is never empty
-        $idArray = array(0 => 0);
-        foreach ($result as $item) {
-            $idArray[] = $item['id'];
-        }
-
-        return $idArray;
+        return $this->getIdArray($result);
     }
 
     /**
@@ -315,6 +308,24 @@ class ResultMapper  extends AbstractMapper
             ->where('Match.result IS NOT NULL')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param array $result
+     *
+     * @return array
+     */
+    private function getIdArray(array $result) {
+
+        $idArray = array();
+        foreach ($result as $item) {
+            $idArray[] = $item['id'];
+        }
+        if (empty($idArray)) {
+            $idArray[]=0;
+        }
+
+        return array_unique($idArray);
     }
 
 }

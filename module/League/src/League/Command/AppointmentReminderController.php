@@ -42,7 +42,7 @@ class AppointmentReminderController extends AbstractCommandController
 
        /* @var $mapper \League\Mapper\ScheduleMapper */
        $mapper = $this->getMapper(RepositoryService::SCHEDULE_MAPPER);
-       $result = $mapper->getNextMatchesInTime($this->getDays());
+       $result = $mapper->getMatchesForAppointmentReminder($this->getDays());
 
        echo "Found " . count($result) . " matches being played in the next ". $this->getDays() ." days." .PHP_EOL;
        echo "Sending " . 2*count($result) . " appointment reminder mails." .PHP_EOL;

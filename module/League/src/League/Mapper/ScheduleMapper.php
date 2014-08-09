@@ -93,7 +93,7 @@ class ScheduleMapper  extends AbstractMapper
     {
         $before = new \DateTime();
         $before->modify('+' . $time . ' hour');
-        $notIn = $this->getMatchReminderMatchId();
+        $notIn = $this->getMatchIdByMatchReminder();
 
         $qb = $this->getEntityManager()->createQueryBuilder('matchReminder');
         $qb->select('m')
@@ -110,24 +110,17 @@ class ScheduleMapper  extends AbstractMapper
     /**
      * @return array
      */
-    public function getMatchReminderMatchId()
+    public function getMatchIdByMatchReminder()
     {
         $result = $this->getEntityManager()
             ->createQueryBuilder('Match')
-            ->select('m.id')
-            ->from('Season\Entity\Match', 'm')
-            ->leftJoin('League\Entity\MatchReminder', 'r', JOIN::WITH, 'r.match=m' )
+            ->select('Match.id')
+            ->from('League\Entity\MatchReminder', 'r')
             ->innerJoin('r.match', 'Match')
             ->getQuery()
             ->getResult();
 
-        //mandatory array is never empty
-        $idArray = array(0 => 0);
-        foreach ($result as $item) {
-            $idArray[] = $item['id'];
-        }
-
-        return $idArray;
+        return $this->getIdArray($result);
     }
 
     /**
@@ -155,7 +148,12 @@ class ScheduleMapper  extends AbstractMapper
     {
         $before = new \DateTime();
         $before->modify('+' . $days . ' day');
-        $notIn = $this->getAppointmentReminderMatchId();
+
+        //matches with no appointment and no reminder
+        $mid_1 = $this->getMatchIdByAppointmentReminder();
+        $mid_2 = $this->getMatchIdByAppointment();
+        $merge = array_merge($mid_1, $mid_2);
+        $notIn = array_unique($merge);
 
         $qb = $this->getEntityManager()->createQueryBuilder('appointmentReminder');
         $qb->select('m')
@@ -169,27 +167,37 @@ class ScheduleMapper  extends AbstractMapper
 
     }
 
+
     /**
      * @return array
      */
-    public function getAppointmentReminderMatchId()
+    public function getMatchIdByAppointment()
     {
         $result = $this->getEntityManager()
             ->createQueryBuilder('Match')
-            ->select('m.id')
-            ->from('Season\Entity\Match', 'm')
-            ->leftJoin('League\Entity\AppointmentReminder', 'r', JOIN::WITH, 'r.match=m' )
-            ->innerJoin('r.match', 'Match')
+            ->select('Match.id')
+            ->from('Appointment\Entity\Appointment', 'a')
+            ->innerJoin('a.match', 'Match')
             ->getQuery()
             ->getResult();
 
-        //mandatory array is never empty
-        $idArray = array(0 => 0);
-        foreach ($result as $item) {
-            $idArray[] = $item['id'];
-        }
+        return $this->getIdArray($result);
+    }
 
-        return $idArray;
+    /**
+     * @return array
+     */
+    public function getMatchIdByAppointmentReminder()
+    {
+        $result = $this->getEntityManager()
+            ->createQueryBuilder('Match')
+            ->select('Match.id')
+            ->from('League\Entity\AppointmentReminder', 'a')
+            ->innerJoin('a.match', 'Match')
+            ->getQuery()
+            ->getResult();
+
+        return $this->getIdArray($result);
     }
 
     /**
@@ -227,6 +235,24 @@ class ScheduleMapper  extends AbstractMapper
 
         return $qb->getQuery()->getOneOrNullResult();
 
+    }
+
+    /**
+     * @param array $result
+     *
+     * @return array
+     */
+    private function getIdArray(array $result) {
+
+        $idArray = array();
+        foreach ($result as $item) {
+            $idArray[] = $item['id'];
+        }
+        if (empty($idArray)) {
+           $idArray[]=0;
+        }
+
+        return array_unique($idArray);
     }
 
 }

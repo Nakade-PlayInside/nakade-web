@@ -383,13 +383,7 @@ class SeasonMapper extends AbstractMapper
 
         $result = $qb->getQuery()->getResult();
 
-        //quicker than array_map
-        $ids = array();
-        foreach ($result as $item) {
-            $ids[] = $item['id'];
-        }
-
-        return $ids;
+        return $this->getIdArray($result);
     }
 
 
@@ -401,10 +395,6 @@ class SeasonMapper extends AbstractMapper
     public function getAvailablePlayersBySeason($seasonId)
     {
         $notIn = $this->getInvitedPlayerIdsBySeason($seasonId);
-        //mandatory array is never empty
-        if (empty($notIn)) {
-            $notIn[]=0;
-        }
 
         $qb = $this->getEntityManager()->createQueryBuilder('Participants');
         $qb->select('u')
@@ -530,5 +520,22 @@ class SeasonMapper extends AbstractMapper
         return !empty($result);
     }
 
+    /**
+     * @param array $result
+     *
+     * @return array
+     */
+    private function getIdArray(array $result) {
+
+        $idArray = array();
+        foreach ($result as $item) {
+            $idArray[] = $item['id'];
+        }
+        if (empty($idArray)) {
+            $idArray[]=0;
+        }
+
+        return array_unique($idArray);
+    }
 
 }
