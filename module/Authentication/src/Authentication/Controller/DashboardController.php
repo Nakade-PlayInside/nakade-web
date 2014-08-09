@@ -30,7 +30,7 @@ class DashboardController extends AbstractActionController
             ->dispatch('/Season/Controller/Season', array('action' => 'show'));
 
         $inviteWidget  = $this->forward()
-            ->dispatch('/User/Controller/Profile', array('action' => 'invite'));
+            ->dispatch('/User/Controller/Coupon', array('action' => 'invite'));
 
         $page = new ViewModel(array());
         $page->addChild($participationWidget, 'participationWidget');
