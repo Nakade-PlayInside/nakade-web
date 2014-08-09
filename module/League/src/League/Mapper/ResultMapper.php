@@ -229,5 +229,104 @@ class ResultMapper  extends AbstractMapper
 
     }
 
+    /**
+     * //todo: unused yet
+     * @return array
+     */
+    public function getOverdueResults()
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->where('m.result IS NULL')
+            ->andWhere('m.date < :now')
+            ->setParameter('now', new \DateTime());
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function getResultReminderMatchId()
+    {
+        $result = $this->getEntityManager()
+            ->createQueryBuilder('Match')
+            ->select('Match.id')
+            ->from('League\Entity\ResultReminder', 'r')
+            ->innerJoin('r.match', 'Match')
+            ->getQuery()
+            ->getResult();
+
+        return $this->getIdArray($result);
+    }
+
+    /**
+     * @return array
+     */
+    public function getNewOverdueMatches()
+    {
+        $notIn = $this->getResultReminderMatchId();
+
+        $qb = $this->getEntityManager()->createQueryBuilder('newMatches');
+        $qb->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->where('m.result IS NULL')
+            ->andWhere($qb->expr()->notIn('m.id', $notIn))
+            ->andWhere('m.date < :now')
+            ->setParameter('now', new \DateTime());
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function getResultReminder()
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('reminder')
+            ->select('r')
+            ->from('League\Entity\ResultReminder', 'r')
+            ->where('r.nextDate < :now')
+            ->setParameter('now', new \DateTime())
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function getExpiredResultReminder()
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('reminder')
+            ->select('r')
+            ->from('League\Entity\ResultReminder', 'r')
+            ->innerJoin('r.match', 'Match')
+            ->where('Match.result IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param array $result
+     *
+     * @return array
+     */
+    private function getIdArray(array $result) {
+
+        $idArray = array();
+        foreach ($result as $item) {
+            $idArray[] = $item['id'];
+        }
+        if (empty($idArray)) {
+            $idArray[]=0;
+        }
+
+        return array_unique($idArray);
+    }
+
 }
 

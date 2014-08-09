@@ -15,14 +15,14 @@ return array(
         //time to start reminding after a match
         'result_reminder_time' => 8,
 
+        //days to start reminding for an appointment before a match
+        'appointment_reminder' => 7,
+
         //time before a match to remind
         'match_reminder_time' => 48,
 
         //time before making an automatic result
         'auto_result_time' => 96,
-
-        //url for mail
-        'url' => 'http://www.nakade.de',
 
         //your text domain for translation
         'text_domain' => 'League',

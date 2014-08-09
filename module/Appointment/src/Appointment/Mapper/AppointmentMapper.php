@@ -142,13 +142,7 @@ class AppointmentMapper extends AbstractMapper
             ->getQuery()
             ->getResult();
 
-        //quicker than array_map
-        $ids = array();
-        foreach ($result as $item) {
-            $ids[] = $item['id'];
-        }
-
-        return $ids;
+        return $this->getIdArray($result);
     }
 
     /**
@@ -161,12 +155,6 @@ class AppointmentMapper extends AbstractMapper
     {
 
         $shiftedMatches = $this->getMatchIdsByUser($userId);
-
-        //mandatory array is never empty
-        if (empty($shiftedMatches)) {
-            $shiftedMatches[]=0;
-        }
-
         $now = new \DateTime();
         $now->modify('+'.$timeLimit.' hour');
 
@@ -217,6 +205,24 @@ class AppointmentMapper extends AbstractMapper
             ->setParameter('today', new \DateTime());
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param array $result
+     *
+     * @return array
+     */
+    private function getIdArray(array $result) {
+
+        $idArray = array();
+        foreach ($result as $item) {
+            $idArray[] = $item['id'];
+        }
+        if (empty($idArray)) {
+            $idArray[]=0;
+        }
+
+        return array_unique($idArray);
     }
 
 }

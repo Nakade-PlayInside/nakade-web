@@ -77,14 +77,7 @@ class LeagueMapper extends AbstractMapper
             ->setParameter('seasonId', $seasonId);
 
         $result = $qb->getQuery()->getResult();
-
-        //quicker than array_map
-        $ids = array();
-        foreach ($result as $item) {
-            $ids[] = $item['id'];
-        }
-
-        return $ids;
+        return $this->getIdArray($result);
     }
 
     /**
@@ -95,11 +88,6 @@ class LeagueMapper extends AbstractMapper
     public function getEmptyLeaguesBySeason($seasonId)
     {
         $notIn = $this->getAssignedLeaguesBySeason($seasonId);
-
-        //mandatory array is never empty
-        if (empty($notIn)) {
-            $notIn[]=0;
-        }
 
         $qb = $this->getEntityManager()->createQueryBuilder('League');
         $qb->select('l')
@@ -193,6 +181,21 @@ class LeagueMapper extends AbstractMapper
 
     }
 
+    /**
+     * @param array $result
+     *
+     * @return array
+     */
+    private function getIdArray(array $result) {
 
+        $idArray = array();
+        foreach ($result as $item) {
+            $idArray[] = $item['id'];
+        }
+        if (empty($idArray)) {
+            $idArray[]=0;
+        }
+
+        return array_unique($idArray);
+    }
 }
-

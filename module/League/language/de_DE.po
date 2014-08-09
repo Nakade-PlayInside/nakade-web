@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-11 11:48+0100\n"
-"PO-Revision-Date: 2014-07-11 11:49+0100\n"
+"POT-Creation-Date: 2014-08-08 11:40+0100\n"
+"PO-Revision-Date: 2014-08-08 11:45+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -17,6 +17,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../src/League/Mail/MatchReminderMail.php:18
+#: ../src/League/Mail/AppointmentReminderMail.php:18
 msgid "This is a reminder of your next match at %NEW_DATE% ."
 msgstr "Dies ist eine Erinnerung an deine nächste Partie am %NEW_DATE% ."
 
@@ -25,16 +26,19 @@ msgstr "Dies ist eine Erinnerung an deine nächste Partie am %NEW_DATE% ."
 #: ../src/League/Mail/ResultMail.php:21
 #: ../src/League/Mail/ScheduleMail.php:21
 #: ../src/League/Mail/ResultReminderMail.php:21
+#: ../src/League/Mail/AppointmentReminderMail.php:23
 msgid "Your match: %MATCH_INFO%"
 msgstr "Deine Partie: %MATCH_INFO%"
 
 #: ../src/League/Mail/MatchReminderMail.php:22
+#: ../src/League/Mail/AppointmentReminderMail.php:25
 msgid "For any more details visit us at %URL%"
 msgstr "Für weitere Details besuche uns auf %URL%"
 
 #: ../src/League/Mail/MatchReminderMail.php:36
+#: ../src/League/Mail/AppointmentReminderMail.php:39
 msgid "Your Match Reminder"
-msgstr "Memo an deine Partie"
+msgstr "Memo: Liga Partie"
 
 #: ../src/League/Mail/AutoResultMail.php:18
 msgid "Your match result was automatically set at %URL%."
@@ -67,43 +71,43 @@ msgstr "Das Ergebnis deiner Partie wurde eingereicht."
 msgid "Result: %RESULT%"
 msgstr "Ergebnis: %RESULT%"
 
-#: ../src/League/Mail/LeagueMail.php:90
+#: ../src/League/Mail/LeagueMail.php:70
 msgid "No result was found."
 msgstr "Keine Ergebnisse gefunden"
 
-#: ../src/League/Mail/LeagueMail.php:96
+#: ../src/League/Mail/LeagueMail.php:76
 msgid "Result is a draw."
 msgstr "Das Ergebnis ist unentschieden."
 
-#: ../src/League/Mail/LeagueMail.php:100
+#: ../src/League/Mail/LeagueMail.php:80
 msgid "Your match was suspended."
 msgstr "Deine Partie wurde ausgesetzt."
 
-#: ../src/League/Mail/LeagueMail.php:104
+#: ../src/League/Mail/LeagueMail.php:84
 msgid "%COLOR% win by resignation."
 msgstr "%COLOR% gewinnt durch Aufgabe."
 
-#: ../src/League/Mail/LeagueMail.php:108
+#: ../src/League/Mail/LeagueMail.php:88
 msgid "%COLOR% win by forfeit."
 msgstr "%COLOR% gewinnt durch Nichterscheinen."
 
-#: ../src/League/Mail/LeagueMail.php:112
+#: ../src/League/Mail/LeagueMail.php:92
 msgid "%COLOR% win on time."
 msgstr "%COLOR% gewinnt auf Zeit."
 
-#: ../src/League/Mail/LeagueMail.php:116
+#: ../src/League/Mail/LeagueMail.php:96
 msgid "%COLOR% win by %POINTS% points."
 msgstr "%COLOR% gewinnt mit %POINTS% Punkten."
 
-#: ../src/League/Mail/LeagueMail.php:135
+#: ../src/League/Mail/LeagueMail.php:115
 msgid "Nobody"
 msgstr "Niemand"
 
-#: ../src/League/Mail/LeagueMail.php:138
+#: ../src/League/Mail/LeagueMail.php:118
 msgid "White"
 msgstr "Weiß"
 
-#: ../src/League/Mail/LeagueMail.php:140
+#: ../src/League/Mail/LeagueMail.php:120
 msgid "Black"
 msgstr "Schwarz"
 
@@ -162,6 +166,14 @@ msgstr "Im Falle eines technischen Problems, wende dich bitte an einen Liga-Mana
 #: ../src/League/Mail/ResultReminderMail.php:41
 msgid "Your Match Result is Missing"
 msgstr "Dein Partieergebnis fehlt"
+
+#: ../src/League/Mail/AppointmentReminderMail.php:20
+msgid "Just in case, making an appointment is limited to 3 days before a match."
+msgstr "Nur für den Fall der Fälle - Terminverschiebungen sind maximal bis 3 Tage vor einer Partie möglich."
+
+#: ../src/League/Mail/AppointmentReminderMail.php:21
+msgid "If you cannot make it on %NEW_DATE%, use the option of making an appointment on %URL%."
+msgstr "Falls du deinen Termin am %NEW_DATE% nicht einhalten kannst, nutze die Möglichkeit auf %URL% den Termin zu verschieben. "
 
 #: ../src/League/View/Helper/OpenResult.php:27
 msgid "Enter Result"
@@ -316,6 +328,7 @@ msgstr "%name% 1. Liga"
 
 #: ../view/league/table/index.phtml:14
 #: ../view/league/table/table.phtml:20
+#: ../view/league/time-table/schedule.phtml:14
 msgid "No season found"
 msgstr "Keine Saison gefunden."
 
@@ -355,6 +368,7 @@ msgid "TB"
 msgstr "TB"
 
 #: ../view/league/table/table.phtml:10
+#: ../view/league/time-table/schedule.phtml:8
 msgid "%name% %no%. League"
 msgstr "%name% %no%. Liga"
 
@@ -403,6 +417,7 @@ msgid "League"
 msgstr "Liga"
 
 #: ../view/league/time-table/index.phtml:16
+#: ../view/league/time-table/index.phtml:30
 msgid "edit"
 msgstr "bearbeiten"
 
@@ -410,19 +425,15 @@ msgstr "bearbeiten"
 msgid "download your schedule calendar (iCal)"
 msgstr "lade deinen Spielplan runter (iCal)  "
 
-#: ../view/league/time-table/my-schedule.phtml:10
+#: ../view/league/time-table/my-schedule.phtml:9
 msgid "%NAME% League No. %NUMBER%"
 msgstr "%NAME% Liga Nr. %NUMBER%"
 
-#: ../view/league/time-table/my-schedule.phtml:15
-msgid "No schedule found"
-msgstr "Kein Spielplan gefunden"
-
-#: ../view/league/time-table/my-schedule.phtml:22
+#: ../view/league/time-table/my-schedule.phtml:20
 msgid "Download your calendar"
 msgstr "Lade dir deinen Spielplan runter"
 
-#: ../view/league/time-table/my-schedule.phtml:28
+#: ../view/league/time-table/my-schedule.phtml:26
 msgid "my color"
 msgstr "Meine Spielfarbe"
 
@@ -443,7 +454,6 @@ msgid "%name% League - My Results"
 msgstr "%name% Liga - Meine Ergenisse"
 
 #: ../view/league/result/my-result.phtml:14
-#: ../view/league/result/actual-results.phtml:10
 msgid "No results found"
 msgstr "Keine Ergebnisse gefunden"
 
@@ -470,6 +480,9 @@ msgstr "%no%.Spieltag"
 #: ../view/league/result/add.phtml:12
 msgid "New Result"
 msgstr "Neues Ergebnis"
+
+#~ msgid "No schedule found"
+#~ msgstr "Kein Spielplan gefunden"
 
 #~ msgid "%name% League Schedule"
 #~ msgstr "%name% Liga Spielplan"
