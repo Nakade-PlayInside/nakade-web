@@ -2,6 +2,7 @@
 namespace User\Controller;
 
 use User\Entity\Coupon;
+use User\Pagination\CouponPagination;
 use User\Services\MailService;
 use User\Services\RepositoryService;
 use User\Services\UserFormService;
@@ -43,6 +44,46 @@ class CouponController extends AbstractController
         );
     }
 
+    /**
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function moderateAction()
+    {
+        $page = (int) $this->params()->fromRoute('id', 1);
+
+        /* @var $entityManager \Doctrine\ORM\EntityManager */
+        $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+
+        $pagination = new CouponPagination($entityManager);
+        $offset = (CouponPagination::ITEMS_PER_PAGE * ($page -1));
+
+        return new ViewModel(
+            array(
+                'paginator' =>   $pagination->getPagination($page),
+                'coupons'    => $this->getUserMapper()->getCouponsByPages($offset),
+            )
+        );
+    }
+
+    /**
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function inactivateAction()
+    {
+        //get param
+        $couponId  = $this->params()->fromRoute('id', null);
+
+        $coupon = $this->getUserMapper()->getCouponById($couponId);
+        if (!is_null($coupon)) {
+            $coupon->setExpiryDate(new \DateTime());
+            $this->getUserMapper()->save($coupon);
+            $this->flashMessenger()->addSuccessMessage('Coupon invalidated');
+        } else {
+            $this->flashMessenger()->addSuccessMessage('Input Error');
+        }
+
+        return $this->redirect()->toRoute('coupon', array('action' => 'moderate'));
+    }
 
     /**
      * widget on dashboard
@@ -88,9 +129,6 @@ class CouponController extends AbstractController
         );
     }
 
-    // todo: info invited friends with link to deatils
-    // todo: admin overview with set expiry due to wrong emails
-    // todo: cmd for removing expired but unregistered coupons
   /**
      * @return \User\Mapper\UserMapper
      */

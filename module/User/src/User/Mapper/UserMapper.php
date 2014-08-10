@@ -3,6 +3,7 @@ namespace User\Mapper;
 
 use Nakade\Abstracts\AbstractMapper;
 use \User\Entity\User;
+use User\Pagination\CouponPagination;
 
 /**
  * Requesting database using doctrine
@@ -113,5 +114,43 @@ class UserMapper extends AbstractMapper
         return $this->getEntityManager()
             ->getRepository('User\Entity\Coupon')
             ->findBy(array('createdBy' => $user));
+    }
+
+    /**
+     * @return array
+     */
+    public function getCoupons()
+    {
+        return $this->getEntityManager()
+            ->getRepository('User\Entity\Coupon')
+            ->findAll();
+    }
+
+    /**
+     * @param $couponId
+     *
+     * @return \User\Entity\Coupon
+     */
+    public function getCouponById($couponId)
+    {
+        return $this->getEntityManager()
+            ->getRepository('User\Entity\Coupon')
+            ->find($couponId);
+    }
+
+    /**
+     * @param int $offset
+     * @return array
+     */
+    public function getCouponsByPages($offset)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Coupon')
+            ->select('c')
+            ->from('User\Entity\Coupon', 'c')
+            ->setFirstResult($offset)
+            ->setMaxResults(CouponPagination::ITEMS_PER_PAGE);
+
+        return $qb->getQuery()->getResult();
     }
 }

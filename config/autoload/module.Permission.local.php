@@ -19,6 +19,8 @@ return array(
             'User\Controller\User' => 'admin',
             'User\Controller\Profile' => 'guest',
             'User\Controller\Coupon' => 'guest',
+            'User\Controller\Coupon\moderate' => 'admin',
+            'User\Controller\Coupon\inactivate' => 'admin',
 
             'Appointment\Controller\Appointment' => 'guest',
             'Appointment\Controller\Show' => 'guest',
