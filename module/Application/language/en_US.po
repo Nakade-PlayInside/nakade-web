@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-05 18:52+0100\n"
-"PO-Revision-Date: 2014-08-05 18:52+0100\n"
+"POT-Creation-Date: 2014-08-10 12:32+0100\n"
+"PO-Revision-Date: 2014-08-10 12:32+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -15,28 +15,28 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Application/Mail/ContactMail.php:37
+#: ../src/Application/Mail/ContactMail.php:35
 msgid "Dear %NAME%"
 msgstr ""
 
-#: ../src/Application/Mail/ContactMail.php:38
+#: ../src/Application/Mail/ContactMail.php:36
 msgid "Thank you for contacting us at %URL%."
 msgstr ""
 
-#: ../src/Application/Mail/ContactMail.php:40
+#: ../src/Application/Mail/ContactMail.php:38
 msgid "Your request is processed as soon as possible."
 msgstr ""
 
-#: ../src/Application/Mail/ContactMail.php:42
+#: ../src/Application/Mail/ContactMail.php:40
 msgid "Your email"
 msgstr ""
 
-#: ../src/Application/Mail/ContactMail.php:43
+#: ../src/Application/Mail/ContactMail.php:41
 #: ../src/Application/Form/ContactForm.php:65
 msgid "Your message"
 msgstr ""
 
-#: ../src/Application/Mail/ContactMail.php:71
+#: ../src/Application/Mail/ContactMail.php:68
 msgid "Your Contact to nakade.de"
 msgstr ""
 
@@ -69,7 +69,7 @@ msgid "Dashboard"
 msgstr ""
 
 #: ../view/layout/layout.phtml:57
-msgid "User overview"
+msgid "User"
 msgstr ""
 
 #: ../view/layout/layout.phtml:60
@@ -85,87 +85,91 @@ msgid "New Season"
 msgstr ""
 
 #: ../view/layout/layout.phtml:69
-#: ../view/layout/layout.phtml:122
+#: ../view/layout/layout.phtml:125
 msgid "Appointments"
 msgstr ""
 
-#: ../view/layout/layout.phtml:81
+#: ../view/layout/layout.phtml:72
+msgid "Coupons"
+msgstr ""
+
+#: ../view/layout/layout.phtml:84
 msgid "Profile"
 msgstr ""
 
-#: ../view/layout/layout.phtml:86
+#: ../view/layout/layout.phtml:89
 msgid "Inbox"
 msgstr ""
 
-#: ../view/layout/layout.phtml:89
+#: ../view/layout/layout.phtml:92
 msgid "New Message"
 msgstr ""
 
-#: ../view/layout/layout.phtml:92
+#: ../view/layout/layout.phtml:95
 msgid "Outbox"
 msgstr ""
 
-#: ../view/layout/layout.phtml:99
+#: ../view/layout/layout.phtml:102
 msgid "Messages"
 msgstr ""
 
-#: ../view/layout/layout.phtml:105
+#: ../view/layout/layout.phtml:108
 msgid "Schedule"
 msgstr ""
 
-#: ../view/layout/layout.phtml:108
+#: ../view/layout/layout.phtml:111
 msgid "Standings"
 msgstr ""
 
-#: ../view/layout/layout.phtml:111
+#: ../view/layout/layout.phtml:114
 msgid "results"
 msgstr ""
 
-#: ../view/layout/layout.phtml:117
+#: ../view/layout/layout.phtml:120
 msgid "League"
 msgstr ""
 
-#: ../view/layout/layout.phtml:124
+#: ../view/layout/layout.phtml:127
 msgid "Shift Date"
 msgstr ""
 
-#: ../view/layout/layout.phtml:126
+#: ../view/layout/layout.phtml:129
 msgid "Confirm"
 msgstr ""
 
-#: ../view/layout/layout.phtml:133
+#: ../view/layout/layout.phtml:136
 msgid "Logged in as "
 msgstr ""
 
-#: ../view/layout/layout.phtml:139
+#: ../view/layout/layout.phtml:142
 msgid "Logout"
 msgstr ""
 
-#: ../view/layout/layout.phtml:146
+#: ../view/layout/layout.phtml:149
 msgid "LogIn"
 msgstr ""
 
-#: ../view/layout/layout.phtml:167
+#: ../view/layout/layout.phtml:170
 msgid "Rules"
 msgstr ""
 
-#: ../view/layout/layout.phtml:171
+#: ../view/layout/layout.phtml:174
 msgid "Terms of Use"
 msgstr ""
 
-#: ../view/layout/layout.phtml:174
+#: ../view/layout/layout.phtml:177
 msgid "Imprint"
 msgstr ""
 
-#: ../view/layout/layout.phtml:175
+#: ../view/layout/layout.phtml:178
 msgid "Contact"
 msgstr ""
 
-#: ../view/layout/layout.phtml:176
+#: ../view/layout/layout.phtml:179
 msgid "Location"
 msgstr ""
 
-#: ../view/layout/layout.phtml:178
+#: ../view/layout/layout.phtml:181
 msgid "All rights reserved."
 msgstr ""
 

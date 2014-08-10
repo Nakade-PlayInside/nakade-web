@@ -54,7 +54,7 @@
 
             $admin = array(
 
-            $this->translate('User overview', 'Application')   =>
+            $this->translate('User', 'Application')   =>
                 $this->url('user'),
 
             $this->translate('Open Results', 'Application')    =>
@@ -68,6 +68,9 @@
 
             $this->translate('Appointments', 'Application')    =>
                 $this->url('appointmentModerator'),
+
+            $this->translate('Coupons', 'Application')    =>
+                $this->url('coupon', array('action' => 'moderate')),
 
             );
 

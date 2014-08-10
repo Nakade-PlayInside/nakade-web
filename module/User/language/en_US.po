@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-10 08:44+0100\n"
-"PO-Revision-Date: 2014-08-10 08:44+0100\n"
+"POT-Creation-Date: 2014-08-10 12:21+0100\n"
+"PO-Revision-Date: 2014-08-10 12:21+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -181,7 +181,6 @@ msgid "YES"
 msgstr ""
 
 #: ../src/User/Form/InviteFriendForm.php:48
-#: ../src/User/Form/Factory/UserFieldFactory.php:36
 msgid "email"
 msgstr ""
 
@@ -190,17 +189,14 @@ msgid "Message (opt.)"
 msgstr ""
 
 #: ../src/User/Form/InviteFriendForm.php:69
-#: ../src/User/Form/Factory/UserFieldFactory.php:82
 msgid "Language"
 msgstr ""
 
 #: ../src/User/Form/InviteFriendForm.php:71
-#: ../src/User/Form/Factory/UserFieldFactory.php:194
 msgid "German"
 msgstr ""
 
 #: ../src/User/Form/InviteFriendForm.php:72
-#: ../src/User/Form/Factory/UserFieldFactory.php:195
 msgid "English"
 msgstr ""
 
@@ -305,27 +301,69 @@ msgid "Actual Page"
 msgstr ""
 
 #: ../view/user/coupon/index.phtml:4
+#: ../view/user/coupon/info.phtml:3
 msgid "My Invitations"
 msgstr ""
 
+#: ../view/user/coupon/index.phtml:11
+msgid "No Invitations yet ?!"
+msgstr ""
+
 #: ../view/user/coupon/index.phtml:12
+msgid "Tell your friends about the game of go!"
+msgstr ""
+
+#: ../view/user/coupon/index.phtml:20
+#: ../view/user/coupon/moderate.phtml:19
 msgid "ID"
 msgstr ""
 
-#: ../view/user/coupon/index.phtml:13
+#: ../view/user/coupon/index.phtml:21
+#: ../view/user/coupon/moderate.phtml:20
 msgid "Sent To"
 msgstr ""
 
-#: ../view/user/coupon/index.phtml:14
+#: ../view/user/coupon/index.phtml:22
+#: ../view/user/coupon/moderate.phtml:21
 msgid "Date"
 msgstr ""
 
-#: ../view/user/coupon/index.phtml:15
+#: ../view/user/coupon/index.phtml:23
+#: ../view/user/coupon/moderate.phtml:23
 msgid "Expiry Date"
 msgstr ""
 
-#: ../view/user/coupon/index.phtml:16
-msgid "Registered"
+#: ../view/user/coupon/index.phtml:24
+#: ../view/user/coupon/moderate.phtml:24
+msgid "Sign Up"
+msgstr ""
+
+#: ../view/user/coupon/index.phtml:49
+msgid "Return"
+msgstr ""
+
+#: ../view/user/coupon/moderate.phtml:4
+msgid "All Invitations"
+msgstr ""
+
+#: ../view/user/coupon/moderate.phtml:10
+msgid "No Invitations found."
+msgstr ""
+
+#: ../view/user/coupon/moderate.phtml:22
+msgid "Send By"
+msgstr ""
+
+#: ../view/user/coupon/moderate.phtml:45
+msgid "Total"
+msgstr ""
+
+#: ../view/user/coupon/moderate.phtml:45
+msgid "Invitations"
+msgstr ""
+
+#: ../view/user/coupon/info.phtml:7
+msgid "You have invited %NUMBER% friends"
 msgstr ""
 
 #: ../view/user/coupon/invite.phtml:3
@@ -477,6 +515,7 @@ msgstr ""
 #: ../view/user/profile/kgs.phtml:3
 #: ../view/user/profile/password.phtml:3
 #: ../view/user/profile/birthday.phtml:3
+#: ../view/user/profile/nick.phtml:3
 msgid "Edit Profile"
 msgstr ""
 
@@ -545,10 +584,6 @@ msgstr ""
 msgid "reset password"
 msgstr ""
 
-#: ../view/user/user/index.phtml:64
-msgid "Total"
-msgstr ""
-
 #: ../view/user/user/details.phtml:3
 msgid "User Details"
 msgstr ""
@@ -568,11 +603,6 @@ msgstr ""
 
 #: ../view/user/user/details.phtml:51
 msgid "first Login"
-msgstr ""
-
-#: ../view/user/user/details.phtml:69
-#: ../view/user/user/reset-password.phtml:11
-msgid "Return"
 msgstr ""
 
 #: ../view/user/user/reset-password.phtml:4

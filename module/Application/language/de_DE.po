@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-05 18:52+0100\n"
-"PO-Revision-Date: 2014-08-05 18:53+0100\n"
+"POT-Creation-Date: 2014-08-10 12:32+0100\n"
+"PO-Revision-Date: 2014-08-10 12:32+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -15,28 +15,28 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Application/Mail/ContactMail.php:37
+#: ../src/Application/Mail/ContactMail.php:35
 msgid "Dear %NAME%"
 msgstr "Hallo %NAME%"
 
-#: ../src/Application/Mail/ContactMail.php:38
+#: ../src/Application/Mail/ContactMail.php:36
 msgid "Thank you for contacting us at %URL%."
 msgstr "Vielen dank für deine Anfrage bei %URL%."
 
-#: ../src/Application/Mail/ContactMail.php:40
+#: ../src/Application/Mail/ContactMail.php:38
 msgid "Your request is processed as soon as possible."
 msgstr "Dein Anliegen wird so schnell wie möglich bearbeitet."
 
-#: ../src/Application/Mail/ContactMail.php:42
+#: ../src/Application/Mail/ContactMail.php:40
 msgid "Your email"
 msgstr "Deine Email"
 
-#: ../src/Application/Mail/ContactMail.php:43
+#: ../src/Application/Mail/ContactMail.php:41
 #: ../src/Application/Form/ContactForm.php:65
 msgid "Your message"
 msgstr "Deine Nachricht"
 
-#: ../src/Application/Mail/ContactMail.php:71
+#: ../src/Application/Mail/ContactMail.php:68
 msgid "Your Contact to nakade.de"
 msgstr "Dein Kontaktaufnahme unter nakade.de"
 
@@ -69,8 +69,8 @@ msgid "Dashboard"
 msgstr "Dashboard"
 
 #: ../view/layout/layout.phtml:57
-msgid "User overview"
-msgstr "Benutzer Übersicht"
+msgid "User"
+msgstr "Benutzer"
 
 #: ../view/layout/layout.phtml:60
 msgid "Open Results"
@@ -85,87 +85,91 @@ msgid "New Season"
 msgstr "Neue Saison"
 
 #: ../view/layout/layout.phtml:69
-#: ../view/layout/layout.phtml:122
+#: ../view/layout/layout.phtml:125
 msgid "Appointments"
 msgstr "Terminverlegung"
 
-#: ../view/layout/layout.phtml:81
+#: ../view/layout/layout.phtml:72
+msgid "Coupons"
+msgstr "Gutscheine"
+
+#: ../view/layout/layout.phtml:84
 msgid "Profile"
 msgstr "Profil"
 
-#: ../view/layout/layout.phtml:86
+#: ../view/layout/layout.phtml:89
 msgid "Inbox"
 msgstr "Posteingang"
 
-#: ../view/layout/layout.phtml:89
+#: ../view/layout/layout.phtml:92
 msgid "New Message"
 msgstr "Neue Nachricht"
 
-#: ../view/layout/layout.phtml:92
+#: ../view/layout/layout.phtml:95
 msgid "Outbox"
 msgstr "Gesendet"
 
-#: ../view/layout/layout.phtml:99
+#: ../view/layout/layout.phtml:102
 msgid "Messages"
 msgstr "Nachrichten"
 
-#: ../view/layout/layout.phtml:105
+#: ../view/layout/layout.phtml:108
 msgid "Schedule"
 msgstr "Spielplan"
 
-#: ../view/layout/layout.phtml:108
+#: ../view/layout/layout.phtml:111
 msgid "Standings"
 msgstr "Tabelle"
 
-#: ../view/layout/layout.phtml:111
+#: ../view/layout/layout.phtml:114
 msgid "results"
 msgstr "Ergebnisse"
 
-#: ../view/layout/layout.phtml:117
+#: ../view/layout/layout.phtml:120
 msgid "League"
 msgstr "Liga"
 
-#: ../view/layout/layout.phtml:124
+#: ../view/layout/layout.phtml:127
 msgid "Shift Date"
 msgstr "Verlegen"
 
-#: ../view/layout/layout.phtml:126
+#: ../view/layout/layout.phtml:129
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#: ../view/layout/layout.phtml:133
+#: ../view/layout/layout.phtml:136
 msgid "Logged in as "
 msgstr "angemeldet als"
 
-#: ../view/layout/layout.phtml:139
+#: ../view/layout/layout.phtml:142
 msgid "Logout"
 msgstr "Abmelden"
 
-#: ../view/layout/layout.phtml:146
+#: ../view/layout/layout.phtml:149
 msgid "LogIn"
 msgstr "Login"
 
-#: ../view/layout/layout.phtml:167
+#: ../view/layout/layout.phtml:170
 msgid "Rules"
 msgstr "Regelwerk"
 
-#: ../view/layout/layout.phtml:171
+#: ../view/layout/layout.phtml:174
 msgid "Terms of Use"
 msgstr "AGB"
 
-#: ../view/layout/layout.phtml:174
+#: ../view/layout/layout.phtml:177
 msgid "Imprint"
 msgstr "Impressum"
 
-#: ../view/layout/layout.phtml:175
+#: ../view/layout/layout.phtml:178
 msgid "Contact"
 msgstr "Kontakt"
 
-#: ../view/layout/layout.phtml:176
+#: ../view/layout/layout.phtml:179
 msgid "Location"
 msgstr "Spielort"
 
-#: ../view/layout/layout.phtml:178
+#: ../view/layout/layout.phtml:181
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
 
@@ -315,6 +319,9 @@ msgstr "Datenschutz"
 msgid "Tournament and League Rules"
 msgstr "Turnier und Liga Regelwerk"
 
+#~ msgid "User overview"
+#~ msgstr "Benutzer Übersicht"
+
 #~ msgid "rejected appointments"
 #~ msgstr "abgewiesene Termine"
 
@@ -332,9 +339,6 @@ msgstr "Turnier und Liga Regelwerk"
 
 #~ msgid "all open results"
 #~ msgstr "alle offenen Ergebnisse"
-
-#~ msgid "User"
-#~ msgstr "Benutzer"
 
 #~ msgid "Training"
 #~ msgstr "Training"
