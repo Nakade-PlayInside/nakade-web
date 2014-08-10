@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-05 11:08+0100\n"
-"PO-Revision-Date: 2014-08-05 11:08+0100\n"
+"POT-Creation-Date: 2014-08-10 08:44+0100\n"
+"PO-Revision-Date: 2014-08-10 08:44+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -75,55 +75,55 @@ msgstr ""
 msgid "Your Registration at  %URL%"
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:45
+#: ../src/User/Mail/CouponMail.php:34
 msgid "Dear Go Friend"
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:47
+#: ../src/User/Mail/CouponMail.php:36
 msgid "You are invited to sign up at %URL%."
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:49
+#: ../src/User/Mail/CouponMail.php:38
 msgid "Nakade is a platform for organizing leagues for the game of Go."
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:50
+#: ../src/User/Mail/CouponMail.php:39
 msgid "For our closed beta, we are looking for players who love to compete on even terms."
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:52
+#: ../src/User/Mail/CouponMail.php:41
 msgid "Matches are frequently every 3 weeks, so this is best suited for the busy ones."
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:54
+#: ../src/User/Mail/CouponMail.php:43
 msgid "If you love the game, you will love us!"
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:57
+#: ../src/User/Mail/CouponMail.php:46
 msgid "To sign up to our closed beta a coupon code is needed."
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:58
+#: ../src/User/Mail/CouponMail.php:47
 msgid "The coupon will expire on %EXPIRE_DATE%."
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:59
+#: ../src/User/Mail/CouponMail.php:48
 msgid "To start sign up you can click the link below"
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:61
+#: ../src/User/Mail/CouponMail.php:50
 msgid "or you go to %URL% and enter the coupon code"
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:63
+#: ../src/User/Mail/CouponMail.php:52
 msgid "For more information just visit our website."
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:77
+#: ../src/User/Mail/CouponMail.php:66
 msgid "Invitation By %NAME%"
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:126
+#: ../src/User/Mail/CouponMail.php:115
 msgid "%FIRST_NAME% wrote"
 msgstr ""
 
@@ -180,16 +180,31 @@ msgstr ""
 msgid "YES"
 msgstr ""
 
-#: ../src/User/Form/InviteFriendForm.php:47
+#: ../src/User/Form/InviteFriendForm.php:48
 #: ../src/User/Form/Factory/UserFieldFactory.php:36
 msgid "email"
 msgstr ""
 
-#: ../src/User/Form/InviteFriendForm.php:58
+#: ../src/User/Form/InviteFriendForm.php:59
 msgid "Message (opt.)"
 msgstr ""
 
-#: ../src/User/Form/InviteFriendForm.php:79
+#: ../src/User/Form/InviteFriendForm.php:69
+#: ../src/User/Form/Factory/UserFieldFactory.php:82
+msgid "Language"
+msgstr ""
+
+#: ../src/User/Form/InviteFriendForm.php:71
+#: ../src/User/Form/Factory/UserFieldFactory.php:194
+msgid "German"
+msgstr ""
+
+#: ../src/User/Form/InviteFriendForm.php:72
+#: ../src/User/Form/Factory/UserFieldFactory.php:195
+msgid "English"
+msgstr ""
+
+#: ../src/User/Form/InviteFriendForm.php:94
 msgid "Invite NOW!"
 msgstr ""
 
@@ -207,10 +222,6 @@ msgstr ""
 
 #: ../src/User/Form/Factory/UserFieldFactory.php:66
 msgid "Birthday"
-msgstr ""
-
-#: ../src/User/Form/Factory/UserFieldFactory.php:82
-msgid "language:"
 msgstr ""
 
 #: ../src/User/Form/Factory/UserFieldFactory.php:93
@@ -257,14 +268,6 @@ msgstr ""
 msgid "No language"
 msgstr ""
 
-#: ../src/User/Form/Factory/UserFieldFactory.php:194
-msgid "German"
-msgstr ""
-
-#: ../src/User/Form/Factory/UserFieldFactory.php:195
-msgid "English"
-msgstr ""
-
 #: ../src/User/Form/Factory/UserFieldFactory.php:205
 msgid "Guest"
 msgstr ""
@@ -299,6 +302,42 @@ msgstr ""
 
 #: ../view/partial/pagination.phtml:17
 msgid "Actual Page"
+msgstr ""
+
+#: ../view/user/coupon/index.phtml:4
+msgid "My Invitations"
+msgstr ""
+
+#: ../view/user/coupon/index.phtml:12
+msgid "ID"
+msgstr ""
+
+#: ../view/user/coupon/index.phtml:13
+msgid "Sent To"
+msgstr ""
+
+#: ../view/user/coupon/index.phtml:14
+msgid "Date"
+msgstr ""
+
+#: ../view/user/coupon/index.phtml:15
+msgid "Expiry Date"
+msgstr ""
+
+#: ../view/user/coupon/index.phtml:16
+msgid "Registered"
+msgstr ""
+
+#: ../view/user/coupon/invite.phtml:3
+msgid "Invite a Friend"
+msgstr ""
+
+#: ../view/user/coupon/invite.phtml:9
+msgid "Your friend will receive an email with a coupon code which enables to register for closed beta!"
+msgstr ""
+
+#: ../view/user/coupon/invite.phtml:10
+msgid "Make sure, your friend fulfills the requirements, i.e. legal age, KGS account and quick availability by email."
 msgstr ""
 
 #: ../view/user/registration/index.phtml:3
@@ -407,8 +446,6 @@ msgstr ""
 #: ../view/user/profile/index.phtml:47
 #: ../view/user/profile/index.phtml:60
 #: ../view/user/profile/index.phtml:68
-#: ../view/user/user/index.phtml:27
-#: ../view/user/user/index.phtml:57
 msgid "edit"
 msgstr ""
 
@@ -432,10 +469,6 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:65
-msgid "Language"
-msgstr ""
-
 #: ../view/user/profile/language.phtml:3
 msgid "Edit Language"
 msgstr ""
@@ -444,20 +477,7 @@ msgstr ""
 #: ../view/user/profile/kgs.phtml:3
 #: ../view/user/profile/password.phtml:3
 #: ../view/user/profile/birthday.phtml:3
-#: ../view/user/profile/nick.phtml:3
 msgid "Edit Profile"
-msgstr ""
-
-#: ../view/user/profile/invite.phtml:3
-msgid "Invite a Friend"
-msgstr ""
-
-#: ../view/user/profile/invite.phtml:9
-msgid "Your friend will receive an email with a coupon code which enables to register for closed beta!"
-msgstr ""
-
-#: ../view/user/profile/invite.phtml:10
-msgid "Make sure, your friend fulfills the requirements, i.e. legal age, KGS account and quick availability by email."
 msgstr ""
 
 #: ../view/user/user/index.phtml:4
@@ -466,11 +486,6 @@ msgstr ""
 
 #: ../view/user/user/index.phtml:10
 msgid "add user"
-msgstr ""
-
-#: ../view/user/user/index.phtml:15
-#: ../view/user/user/details.phtml:15
-msgid "ID"
 msgstr ""
 
 #: ../view/user/user/index.phtml:16

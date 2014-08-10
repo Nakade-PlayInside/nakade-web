@@ -56,6 +56,10 @@ class CouponHydrator implements HydratorInterface
             $object->setMessage($data['message']);
         }
 
+        if (isset($data['language'])) {
+            $object->setLanguage($data['language']);
+        }
+
         // add new coupon: created, expiry, code, user
         if (is_null($object->getId())) {
 
@@ -71,7 +75,6 @@ class CouponHydrator implements HydratorInterface
 
             $creator = $this->getCreator();
             $object->setCreatedBy($creator);
-
         }
 
         return $object;

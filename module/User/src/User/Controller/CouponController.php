@@ -5,8 +5,6 @@ use User\Entity\Coupon;
 use User\Services\MailService;
 use User\Services\RepositoryService;
 use User\Services\UserFormService;
-use Zend\Form\Form;
-use Zend\Http\Request;
 use Zend\View\Model\ViewModel;
 use Nakade\Abstracts\AbstractController;
 
@@ -30,6 +28,21 @@ class CouponController extends AbstractController
            )
         );
     }
+
+    /**
+     * Showing the user's profile
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function infoAction()
+    {
+        return new ViewModel(
+            array(
+                'coupons'    => $this->getUserMapper()->getCouponByUser($this->identity()),
+            )
+        );
+    }
+
 
     /**
      * widget on dashboard
@@ -75,6 +88,9 @@ class CouponController extends AbstractController
         );
     }
 
+    // todo: info invited friends with link to deatils
+    // todo: admin overview with set expiry due to wrong emails
+    // todo: cmd for removing expired but unregistered coupons
   /**
      * @return \User\Mapper\UserMapper
      */

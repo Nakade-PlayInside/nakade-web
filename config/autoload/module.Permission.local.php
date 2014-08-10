@@ -18,6 +18,7 @@ return array(
 
             'User\Controller\User' => 'admin',
             'User\Controller\Profile' => 'guest',
+            'User\Controller\Coupon' => 'guest',
 
             'Appointment\Controller\Appointment' => 'guest',
             'Appointment\Controller\Show' => 'guest',

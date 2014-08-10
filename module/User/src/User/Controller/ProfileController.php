@@ -1,7 +1,6 @@
 <?php
 namespace User\Controller;
 
-use User\Entity\Coupon;
 use User\Services\MailService;
 use User\Services\RepositoryService;
 use User\Services\UserFormService;

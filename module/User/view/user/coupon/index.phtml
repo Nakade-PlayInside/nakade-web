@@ -7,13 +7,21 @@ $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
+<?php $this->placeholder('nothing')->captureStart(); ?>
+<div class="message"><?php echo $this->translate("No Invitations yet ?!"); ?><br/>
+<?php echo $this->translate("Tell your friends about the game of go!"); ?>
+</div>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+
+<?php $this->placeholder('invitation')->captureStart(); ?>
 <table class="table profile">
     <tr>
         <th><?php echo $this->translate("ID"); ?></th>
         <th><?php echo $this->translate("Sent To"); ?></th>
         <th><?php echo $this->translate("Date"); ?></th>
         <th><?php echo $this->translate("Expiry Date"); ?></th>
-        <th><?php echo $this->translate("Registered"); ?></th>
+        <th><?php echo $this->translate("Sign Up"); ?></th>
     </tr>
     <tr>
         <?php
@@ -25,12 +33,17 @@ $this->headTitle($title);
         <td><?php echo $coupon->getEmail(); ?></td>
         <td><?php echo $coupon->getCreationDate()->format('d.m.y H:i');?></td>
         <td><?php echo $coupon->getExpiryDate()->format('d.m.y H:i');?></td>
-        <td><?php if ($coupon->isUsed()) : ?>
-                <div class="arrows-16 active-16 btnCenter"></div>
-                <?php else : ?>
-                <div class="mail-16 time-16 btnCenter"></div>
-            <?php endif; ?>
-        </td>
+        <td><div class="<?php echo $this->couponStage($coupon)?> btnCenter"></div></td>
     </tr>
     <?php endforeach; ?>
 </table>
+<?php $this->placeholder('invitation')->captureEnd(); ?>
+<?php
+
+if (!empty($this->coupons)) {
+    echo $this->placeholder('invitation');
+} else {
+    echo $this->placeholder('nothing');
+}
+?>
+<a class="btn btn-success" href="<?php echo $this->url('dashboard')?>"><?php echo $this->translate("Return"); ?></a>

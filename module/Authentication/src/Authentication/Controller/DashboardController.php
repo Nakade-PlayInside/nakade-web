@@ -32,6 +32,9 @@ class DashboardController extends AbstractActionController
         $inviteWidget  = $this->forward()
             ->dispatch('/User/Controller/Coupon', array('action' => 'invite'));
 
+        $inviteInfo  = $this->forward()
+            ->dispatch('/User/Controller/Coupon', array('action' => 'info'));
+
         $page = new ViewModel(array());
         $page->addChild($participationWidget, 'participationWidget');
         $page->addChild($messageWidget, 'messageWidget');
@@ -41,6 +44,7 @@ class DashboardController extends AbstractActionController
         //open beta until end of year
         if (date('c') < date('c', strtotime('12/31/2014'))) {
             $page->addChild($inviteWidget, 'inviteWidget');
+            $page->addChild($inviteInfo, 'inviteInfo');
         }
 
         return $page;

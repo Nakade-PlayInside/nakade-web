@@ -15,6 +15,7 @@ return array(
             'showDateTime'  => 'User\View\Helper\ShowDateTime',
             'showStage'     => 'User\View\Helper\ShowStage',
             'activateUrl'   => 'User\View\Helper\GetActivateUrl',
+            'couponStage'   => 'User\View\Helper\ShowCouponStage',
             // more helpers here ...
         )
     ),
