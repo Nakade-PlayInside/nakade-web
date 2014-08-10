@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-05 11:08+0100\n"
-"PO-Revision-Date: 2014-08-05 11:10+0100\n"
+"POT-Creation-Date: 2014-08-10 12:21+0100\n"
+"PO-Revision-Date: 2014-08-10 12:24+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -75,55 +75,55 @@ msgstr "Bitte kontaktiere uns, falls du Fragen hast."
 msgid "Your Registration at  %URL%"
 msgstr "Deine Anmeldung bei %URL%"
 
-#: ../src/User/Mail/CouponMail.php:45
+#: ../src/User/Mail/CouponMail.php:34
 msgid "Dear Go Friend"
 msgstr "Lieber Go Freund"
 
-#: ../src/User/Mail/CouponMail.php:47
+#: ../src/User/Mail/CouponMail.php:36
 msgid "You are invited to sign up at %URL%."
 msgstr "Du wurdest eingeladen, dich unter %URL% zu registrieren."
 
-#: ../src/User/Mail/CouponMail.php:49
+#: ../src/User/Mail/CouponMail.php:38
 msgid "Nakade is a platform for organizing leagues for the game of Go."
 msgstr "Nakade ist eine Plattform, auf der online-Ligen für das Go-Spiel organisiert werden. "
 
-#: ../src/User/Mail/CouponMail.php:50
+#: ../src/User/Mail/CouponMail.php:39
 msgid "For our closed beta, we are looking for players who love to compete on even terms."
 msgstr "Für unsere Closed beta suchen wir Spieler, die sich gerne mit gleichstarken Gegnern messen wollen."
 
-#: ../src/User/Mail/CouponMail.php:52
+#: ../src/User/Mail/CouponMail.php:41
 msgid "Matches are frequently every 3 weeks, so this is best suited for the busy ones."
 msgstr "Die Partien finden alle drei Wochen statt. Also bestens geeignet für Vielbeschäftigte."
 
-#: ../src/User/Mail/CouponMail.php:54
+#: ../src/User/Mail/CouponMail.php:43
 msgid "If you love the game, you will love us!"
 msgstr "Falls du unsere Leidenschaft für Go-Spiel teilst, wirst du dich bei uns wie zu Hause fühlen. "
 
-#: ../src/User/Mail/CouponMail.php:57
+#: ../src/User/Mail/CouponMail.php:46
 msgid "To sign up to our closed beta a coupon code is needed."
 msgstr "Für die Closed Beta Registrierung benötigst du einen Gutschein. "
 
-#: ../src/User/Mail/CouponMail.php:58
+#: ../src/User/Mail/CouponMail.php:47
 msgid "The coupon will expire on %EXPIRE_DATE%."
 msgstr "Der Gutschein verfällt am %EXPIRE_DATE%."
 
-#: ../src/User/Mail/CouponMail.php:59
+#: ../src/User/Mail/CouponMail.php:48
 msgid "To start sign up you can click the link below"
 msgstr "Für eine einfache Registrierung klicke auf den Link unten "
 
-#: ../src/User/Mail/CouponMail.php:61
+#: ../src/User/Mail/CouponMail.php:50
 msgid "or you go to %URL% and enter the coupon code"
 msgstr "oder du gehst auf %URL% und trägst den Gutscheincode manuell ein."
 
-#: ../src/User/Mail/CouponMail.php:63
+#: ../src/User/Mail/CouponMail.php:52
 msgid "For more information just visit our website."
 msgstr "Besuche unsere Website, falls du mehr wissen möchtest."
 
-#: ../src/User/Mail/CouponMail.php:77
+#: ../src/User/Mail/CouponMail.php:66
 msgid "Invitation By %NAME%"
 msgstr "Einladung von %NAME%"
 
-#: ../src/User/Mail/CouponMail.php:126
+#: ../src/User/Mail/CouponMail.php:115
 msgid "%FIRST_NAME% wrote"
 msgstr "%FIRST_NAME% hat geschrieben"
 
@@ -180,16 +180,27 @@ msgstr "Abbruch"
 msgid "YES"
 msgstr "JA"
 
-#: ../src/User/Form/InviteFriendForm.php:47
-#: ../src/User/Form/Factory/UserFieldFactory.php:36
+#: ../src/User/Form/InviteFriendForm.php:48
 msgid "email"
 msgstr "Email"
 
-#: ../src/User/Form/InviteFriendForm.php:58
+#: ../src/User/Form/InviteFriendForm.php:59
 msgid "Message (opt.)"
 msgstr "Nachricht (opt.)"
 
-#: ../src/User/Form/InviteFriendForm.php:79
+#: ../src/User/Form/InviteFriendForm.php:69
+msgid "Language"
+msgstr "Sprache"
+
+#: ../src/User/Form/InviteFriendForm.php:71
+msgid "German"
+msgstr "Deutsch"
+
+#: ../src/User/Form/InviteFriendForm.php:72
+msgid "English"
+msgstr "Englisch"
+
+#: ../src/User/Form/InviteFriendForm.php:94
 msgid "Invite NOW!"
 msgstr "JETZT einladen!"
 
@@ -208,10 +219,6 @@ msgstr "Immer Spitznamen verwenden"
 #: ../src/User/Form/Factory/UserFieldFactory.php:66
 msgid "Birthday"
 msgstr "Geburtstag"
-
-#: ../src/User/Form/Factory/UserFieldFactory.php:82
-msgid "language:"
-msgstr "Sprache:"
 
 #: ../src/User/Form/Factory/UserFieldFactory.php:93
 msgid "Role"
@@ -257,14 +264,6 @@ msgstr "Ich habe die AGB gelesen und akzeptiere diese"
 msgid "No language"
 msgstr "keine Sprache"
 
-#: ../src/User/Form/Factory/UserFieldFactory.php:194
-msgid "German"
-msgstr "Deutsch"
-
-#: ../src/User/Form/Factory/UserFieldFactory.php:195
-msgid "English"
-msgstr "Englisch"
-
 #: ../src/User/Form/Factory/UserFieldFactory.php:205
 msgid "Guest"
 msgstr "Gast"
@@ -300,6 +299,84 @@ msgstr "zurück"
 #: ../view/partial/pagination.phtml:17
 msgid "Actual Page"
 msgstr "Aktuelle Seite"
+
+#: ../view/user/coupon/index.phtml:4
+#: ../view/user/coupon/info.phtml:3
+msgid "My Invitations"
+msgstr "Meine Einladungen"
+
+#: ../view/user/coupon/index.phtml:11
+msgid "No Invitations yet ?!"
+msgstr "Noch keine Einladung verschickt ?!"
+
+#: ../view/user/coupon/index.phtml:12
+msgid "Tell your friends about the game of go!"
+msgstr "Erzähl deinen Freunden etwas über das Go-Spiel!"
+
+#: ../view/user/coupon/index.phtml:20
+#: ../view/user/coupon/moderate.phtml:19
+msgid "ID"
+msgstr "ID"
+
+#: ../view/user/coupon/index.phtml:21
+#: ../view/user/coupon/moderate.phtml:20
+msgid "Sent To"
+msgstr "Angeschrieben"
+
+#: ../view/user/coupon/index.phtml:22
+#: ../view/user/coupon/moderate.phtml:21
+msgid "Date"
+msgstr "Datum"
+
+#: ../view/user/coupon/index.phtml:23
+#: ../view/user/coupon/moderate.phtml:23
+msgid "Expiry Date"
+msgstr "Gültig bis"
+
+#: ../view/user/coupon/index.phtml:24
+#: ../view/user/coupon/moderate.phtml:24
+msgid "Sign Up"
+msgstr "Registriert"
+
+#: ../view/user/coupon/index.phtml:49
+msgid "Return"
+msgstr "Zurück"
+
+#: ../view/user/coupon/moderate.phtml:4
+msgid "All Invitations"
+msgstr "Übersicht der Einladungen"
+
+#: ../view/user/coupon/moderate.phtml:10
+msgid "No Invitations found."
+msgstr "Keine Einladungen gefunden."
+
+#: ../view/user/coupon/moderate.phtml:22
+msgid "Send By"
+msgstr "Verschickt durch"
+
+#: ../view/user/coupon/moderate.phtml:45
+msgid "Total"
+msgstr "Insgesamt"
+
+#: ../view/user/coupon/moderate.phtml:45
+msgid "Invitations"
+msgstr "Einladungen"
+
+#: ../view/user/coupon/info.phtml:7
+msgid "You have invited %NUMBER% friends"
+msgstr "Du hast %NUMBER% Freunde eingeladen"
+
+#: ../view/user/coupon/invite.phtml:3
+msgid "Invite a Friend"
+msgstr "Freund einladen"
+
+#: ../view/user/coupon/invite.phtml:9
+msgid "Your friend will receive an email with a coupon code which enables to register for closed beta!"
+msgstr "Dein Freund erhält einen Gutschein, der für die Anmeldung zur Closed Beta benötigt wird."
+
+#: ../view/user/coupon/invite.phtml:10
+msgid "Make sure, your friend fulfills the requirements, i.e. legal age, KGS account and quick availability by email."
+msgstr "Achte darauf, dass dein Freund die notwendigen Anforderungen, wie Volljährigkeit, einen KGS Zugang und gute Erreichbarkeit per Email erfüllt."
 
 #: ../view/user/registration/index.phtml:3
 msgid "Closed Beta Registration"
@@ -407,8 +484,6 @@ msgstr "Geburtstag:"
 #: ../view/user/profile/index.phtml:47
 #: ../view/user/profile/index.phtml:60
 #: ../view/user/profile/index.phtml:68
-#: ../view/user/user/index.phtml:27
-#: ../view/user/user/index.phtml:57
 msgid "edit"
 msgstr "bearbeiten"
 
@@ -432,10 +507,6 @@ msgstr "Benutzername:"
 msgid "Password"
 msgstr "Passwort"
 
-#: ../view/user/profile/index.phtml:65
-msgid "Language"
-msgstr "Sprache:"
-
 #: ../view/user/profile/language.phtml:3
 msgid "Edit Language"
 msgstr "Sprache einstellen"
@@ -448,18 +519,6 @@ msgstr "Sprache einstellen"
 msgid "Edit Profile"
 msgstr "Profil ändern"
 
-#: ../view/user/profile/invite.phtml:3
-msgid "Invite a Friend"
-msgstr "Freund einladen"
-
-#: ../view/user/profile/invite.phtml:9
-msgid "Your friend will receive an email with a coupon code which enables to register for closed beta!"
-msgstr "Dein Freund erhält einen Gutschein, der für die Anmeldung zur Closed Beta benötigt wird."
-
-#: ../view/user/profile/invite.phtml:10
-msgid "Make sure, your friend fulfills the requirements, i.e. legal age, KGS account and quick availability by email."
-msgstr "Achte darauf, dass dein Freund die notwendigen Anforderungen, wie Volljährigkeit, einen KGS Zugang und gute Erreichbarkeit per Email erfüllt."
-
 #: ../view/user/user/index.phtml:4
 msgid "Registered Users"
 msgstr "Registrierte Benutzer"
@@ -467,11 +526,6 @@ msgstr "Registrierte Benutzer"
 #: ../view/user/user/index.phtml:10
 msgid "add user"
 msgstr "Benutzer hinzufügen"
-
-#: ../view/user/user/index.phtml:15
-#: ../view/user/user/details.phtml:15
-msgid "ID"
-msgstr "ID"
 
 #: ../view/user/user/index.phtml:16
 #: ../view/user/user/details.phtml:19
@@ -530,10 +584,6 @@ msgstr "umschalten"
 msgid "reset password"
 msgstr "Password zurücksetzen"
 
-#: ../view/user/user/index.phtml:64
-msgid "Total"
-msgstr "Insgesamt"
-
 #: ../view/user/user/details.phtml:3
 msgid "User Details"
 msgstr "Benutzer Informationen"
@@ -554,11 +604,6 @@ msgstr "angelegt"
 #: ../view/user/user/details.phtml:51
 msgid "first Login"
 msgstr "erster LogIn"
-
-#: ../view/user/user/details.phtml:69
-#: ../view/user/user/reset-password.phtml:11
-msgid "Return"
-msgstr "Zurück"
 
 #: ../view/user/user/reset-password.phtml:4
 msgid "Password Reset"
@@ -583,6 +628,12 @@ msgstr "Benutzer bearbeiten"
 #: ../view/user/user/add.phtml:4
 msgid "Add User"
 msgstr "Benutzer hinzufügen"
+
+#~ msgid "Registered"
+#~ msgstr "Registriert"
+
+#~ msgid "language:"
+#~ msgstr "Sprache:"
 
 #~ msgid "Welcome %firstname%"
 #~ msgstr "Willkommen %firstname%"
@@ -642,9 +693,6 @@ msgstr "Benutzer hinzufügen"
 
 #~ msgid "Optimal password length: '%length%'."
 #~ msgstr "Optimale Passwortlänge: '%length%'."
-
-#~ msgid "No digits found."
-#~ msgstr "Keine Zahlen verwendet."
 
 #~ msgid "No uppercase letters found."
 #~ msgstr "Keine Großbuchstaben gefunden."

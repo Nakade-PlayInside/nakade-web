@@ -1,0 +1,15 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('User');
+$title = $this->translate('My Invitations');
+$this->headTitle($title);
+
+$number = sprintf("<span>%s</span>", count($this->coupons));
+$msg = $this->translate('You have invited %NUMBER% friends');
+$info = str_replace('%NUMBER%', $number, $msg);
+?>
+
+<div class="message"><?php echo $info; ?>
+    <a style="display: inline-block; vertical-align: text-bottom" href="<?php echo $this->url('coupon')?>">
+        <div class="buttons-16 info-16 btnCenter"></div>
+    </a>
+</div>

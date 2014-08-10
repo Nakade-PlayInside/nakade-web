@@ -2,6 +2,7 @@
 namespace User\Form;
 
 use User\Entity\Coupon;
+use User\Form\Factory\LanguageInterface;
 use User\Form\Hydrator\CouponHydrator;
 use \Zend\InputFilter\InputFilter;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -12,7 +13,7 @@ use Nakade\Abstracts\AbstractForm;
  *
  * @package User\Form
  */
-class InviteFriendForm extends AbstractForm
+class InviteFriendForm extends AbstractForm implements LanguageInterface
 {
 
     /**
@@ -57,6 +58,20 @@ class InviteFriendForm extends AbstractForm
                 'options' => array(
                     'label' =>  $this->translate('Message (opt.)') . ":",
                 ),
+            )
+        );
+
+        $this->add(
+            array(
+                'name' => 'language',
+                'type' => 'Zend\Form\Element\Select',
+                'options' => array(
+                    'label' =>  $this->translate('Language') . ':',
+                    'value_options' => array(
+                        self::LANG_DE => $this->translate('German'),
+                        self::LANG_US => $this->translate('English'),
+                    )
+                )
             )
         );
 

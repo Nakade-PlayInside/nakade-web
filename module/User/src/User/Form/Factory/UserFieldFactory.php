@@ -79,7 +79,7 @@ class UserFieldFactory extends AbstractTranslation
                     'name' => self::FIELD_LANGUAGE,
                     'type' => 'Zend\Form\Element\Select',
                     'options' => array(
-                        'label' =>  $this->translate('language:'),
+                        'label' =>  $this->translate('Language') . ':',
                         'value_options' => $this->getLanguages()
                     )
                 );

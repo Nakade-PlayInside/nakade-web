@@ -1,0 +1,53 @@
+<?php
+// module/user/view/user/user/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('User');
+$title = $this->translate('All Invitations');
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php $this->placeholder('nothing')->captureStart(); ?>
+<div class="message"><?php echo $this->translate("No Invitations found."); ?>
+</div>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+
+<?php $this->placeholder('invitation')->captureStart(); ?>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'users'); ?>
+<table class="table profile">
+    <tr>
+        <th><?php echo $this->translate("ID"); ?></th>
+        <th><?php echo $this->translate("Sent To"); ?></th>
+        <th><?php echo $this->translate("Date"); ?></th>
+        <th><?php echo $this->translate("Send By"); ?></th>
+        <th><?php echo $this->translate("Expiry Date"); ?></th>
+        <th><?php echo $this->translate("Sign Up"); ?></th>
+    </tr>
+    <tr>
+        <?php
+        /* @var $coupon \User\Entity\Coupon */
+        foreach ($this->coupons as $coupon) : ?>
+    <tr style="background-color:<?php
+    echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+        <td style="text-align: right"><?php echo $coupon->getId(); ?></td>
+        <td><?php echo $coupon->getEmail(); ?></td>
+        <td><?php echo $coupon->getCreationDate()->format('d.m.y H:i');?></td>
+        <td><?php echo $coupon->getCreatedBy()->getName();?></td>
+        <td><a href="<?php echo $this->url('coupon',
+                array('action' => 'inactivate', 'id' => $coupon->getId()));?>" class="button expire">
+                <div><?php echo $coupon->getExpiryDate()->format('d.m.y H:i');?></div>
+                </a>
+        </td>
+        <td><div class="<?php echo $this->couponStage($coupon)?> btnCenter"></div></td>
+      </tr>
+    <?php endforeach; ?>
+</table>
+<p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Invitations"); ?></p>
+<?php $this->placeholder('invitation')->captureEnd(); ?>
+<?php
+
+if (!empty($this->coupons)) {
+    echo $this->placeholder('invitation');
+} else {
+    echo $this->placeholder('nothing');
+}

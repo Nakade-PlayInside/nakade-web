@@ -1,7 +1,6 @@
 <?php
 namespace User\Controller;
 
-use User\Entity\Coupon;
 use User\Services\MailService;
 use User\Services\RepositoryService;
 use User\Services\UserFormService;
@@ -33,51 +32,6 @@ class ProfileController extends AbstractController
                'username'   => $user->getUsername(),
            )
         );
-    }
-
-    /**
-     * edit the birthday
-     *
-     * @return \Zend\View\Model\ViewModel
-     */
-    public function inviteAction()
-    {
-        /* @var $form \User\Form\BirthdayForm */
-        $form = $this->getForm(UserFormService::INVITE_FRIEND_FORM);
-        $coupon = new Coupon();
-        $form->bindEntity($coupon);
-
-        /* @var $request \Zend\Http\Request */
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            //get post data, set data to from, prepare for validation
-            $postData =  $request->getPost();
-            $form->setData($postData);
-
-            if ($form->isValid()) {
-
-                /* @var $coupon \User\Entity\Coupon */
-                $coupon = $form->getData();
-                $this->getUserMapper()->save($coupon);
-
-                /* @var $mail \User\Mail\CouponMail */
-                $mail = $this->getMailService()->getMail(MailService::COUPON_MAIL);
-                $mail->setCoupon($coupon);
-                $mail->sendMail($coupon);
-
-                $this->flashMessenger()->addSuccessMessage('Your Invitation Is Send');
-                $coupon = new Coupon();
-                $form->bind($coupon);
-
-            } else {
-                $this->flashMessenger()->addErrorMessage('Input Error');
-            }
-        }
-
-        return new ViewModel(
-            array('form' => $form)
-        );
-
     }
 
     /**
@@ -168,8 +122,6 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * change the password. No email is send.
-     *
      * @return \Zend\View\Model\ViewModel
      */
     public function languageAction()

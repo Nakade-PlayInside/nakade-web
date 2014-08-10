@@ -1,0 +1,49 @@
+<?php
+// module/user/view/user/user/index.phtml:
+$this->plugin('translate')->setTranslatorTextDomain('User');
+$title = $this->translate('My Invitations');
+$this->headTitle($title);
+/* @var $profile \User\Entity\User */
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php $this->placeholder('nothing')->captureStart(); ?>
+<div class="message"><?php echo $this->translate("No Invitations yet ?!"); ?><br/>
+<?php echo $this->translate("Tell your friends about the game of go!"); ?>
+</div>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+
+<?php $this->placeholder('invitation')->captureStart(); ?>
+<table class="table profile">
+    <tr>
+        <th><?php echo $this->translate("ID"); ?></th>
+        <th><?php echo $this->translate("Sent To"); ?></th>
+        <th><?php echo $this->translate("Date"); ?></th>
+        <th><?php echo $this->translate("Expiry Date"); ?></th>
+        <th><?php echo $this->translate("Sign Up"); ?></th>
+    </tr>
+    <tr>
+        <?php
+        /* @var $coupon \User\Entity\Coupon */
+        foreach ($this->coupons as $coupon) : ?>
+    <tr style="background-color:<?php
+    echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+        <td style="text-align: right"><?php echo $coupon->getId(); ?></td>
+        <td><?php echo $coupon->getEmail(); ?></td>
+        <td><?php echo $coupon->getCreationDate()->format('d.m.y H:i');?></td>
+        <td><?php echo $coupon->getExpiryDate()->format('d.m.y H:i');?></td>
+        <td><div class="<?php echo $this->couponStage($coupon)?> btnCenter"></div></td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+<?php $this->placeholder('invitation')->captureEnd(); ?>
+<?php
+
+if (!empty($this->coupons)) {
+    echo $this->placeholder('invitation');
+} else {
+    echo $this->placeholder('nothing');
+}
+?>
+<a class="btn btn-success" href="<?php echo $this->url('dashboard')?>"><?php echo $this->translate("Return"); ?></a>

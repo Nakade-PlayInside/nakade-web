@@ -131,3 +131,15 @@ table.profile td {
 .invite {
     width: 240px !important;
 }
+
+.expire {
+    overflow: visible;
+    white-space: nowrap;
+    text-decoration: none;
+    width: auto !important;
+    padding: 2px 10px
+}
+
+.expire:hover {
+    text-decoration: none;
+}

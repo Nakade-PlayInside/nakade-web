@@ -15,6 +15,7 @@ return array(
             'showDateTime'  => 'User\View\Helper\ShowDateTime',
             'showStage'     => 'User\View\Helper\ShowStage',
             'activateUrl'   => 'User\View\Helper\GetActivateUrl',
+            'couponStage'   => 'User\View\Helper\ShowCouponStage',
             // more helpers here ...
         )
     ),
@@ -30,6 +31,9 @@ return array(
                      'User\Services\ForgotControllerFactory',
             'User\Controller\Registration' =>
                      'User\Services\RegistrationControllerFactory',
+            'User\Controller\Coupon' =>
+                'User\Services\CouponControllerFactory',
+
 
         ),
     ),
@@ -80,6 +84,21 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'User\Controller\Registration',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            //registration, verify, pwd reset
+            'coupon' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/coupon[/:action][/:id]',
+                    'constraints' => array(
+                        'action' =>  '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'User\Controller\Coupon',
                         'action'     => 'index',
                     ),
                 ),

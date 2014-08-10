@@ -14,6 +14,9 @@ $login = str_replace("%name%", "<span>$userName</span>", $loginText); ?>
 <?php
 echo $this->messageWidget;
 echo $this->appointmentWidget;
+if (isset($this->inviteInfo)) {
+    echo $this->inviteInfo;
+}
 ?>
 
 <hr>
