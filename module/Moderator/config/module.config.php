@@ -39,6 +39,14 @@ return array(
         ),
     ),
 
+
+    'view_helper_config' => array(
+        'flashmessenger' => array(
+            'message_open_format'      => '<div%s>',
+            'message_close_string'     => '</div>',
+        )
+    ),
+
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
@@ -56,8 +64,8 @@ return array(
         'factories' => array(
             'Moderator\Services\RepositoryService' =>
                 'Moderator\Services\RepositoryService',
-            'Moderator\Services\ModeratorFormService' =>
-                'Moderator\Services\ModeratorFormService',
+            'Moderator\Services\FormService' =>
+                'Moderator\Services\FormService',
             'Moderator\Services\MailService' =>
                 'Moderator\Services\MailService',
             'Moderator\Services\PaginationService' =>

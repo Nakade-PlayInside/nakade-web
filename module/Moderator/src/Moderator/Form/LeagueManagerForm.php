@@ -1,130 +1,42 @@
 <?php
 namespace Moderator\Form;
 
-use Nakade\Abstracts\AbstractForm;
-use Season\Entity\Match;
-use Season\Services\SeasonFieldsetService;
 use Zend\InputFilter\InputFilter;
-
 /**
  * Class LeagueManagerForm
  *
  * @package Moderator\Form
  */
-class LeagueManagerForm extends AbstractForm
+class LeagueManagerForm extends BaseForm implements ManagerInterface
 {
 
-    private $date;
-
-    /**
-     * @param SeasonFieldsetService $service
-     */
-    public function __construct(SeasonFieldsetService $service)
-    {
-        parent::__construct('LeagueManagerForm');
-
-        $this->service = $service;
-       // $this->setInputFilter($this->getFilter());
-        $this->date = date('Y-m-d');
-    }
-
-    /**
-     * init the form. It is necessary to call this function
-     * before using the form.
-     */
     public function init()
     {
-     //   $this->setAttribute('method', 'post');
-
-        //info
         $this->add(
             array(
-                'type' => 'Zend\Form\Element\Text',
-                'name' => 'id',
-                'options' => array('label' => $this->translate('Match Id') . ':'),
-                'attributes' => array('readonly' => 'readonly')
+            'name' => self::MANAGER,
+            'type' => 'Zend\Form\Element\Select',
+            'options' => array(
+                'label' =>  $this->translate('Manager') . ':',
+                'value_options' => $this->getManagerValueOptions(),
+                'empty_option'  => '-- ' . $this->translate('choose') . ' --'
+                ),
             )
         );
 
-        //info
         $this->add(
             array(
-                'type' => 'Zend\Form\Element\Text',
-                'name' => 'matchDay',
-                'options' => array('label' => $this->translate('Match Day') . ':'),
-                'attributes' => array('readonly' => 'readonly')
-            )
-        );
-
-        //info
-        $this->add(
-            array(
-                'type' => 'Zend\Form\Element\Text',
-                'name' => 'blackPlayer',
-                'options' => array('label' => $this->translate('Black') . ':'),
-                'attributes' => array('readonly' => 'readonly')
-            )
-        );
-
-        //info
-        $this->add(
-            array(
-                'type' => 'Zend\Form\Element\Text',
-                'name' => 'whitePlayer',
-                'options' => array('label' => $this->translate('White') . ':'),
-                'attributes' => array('readonly' => 'readonly')
-            )
-        );
-
-        //date
-        $this->add(
-            array(
-                'type' => 'Zend\Form\Element\Date',
-                'name' => 'matchDate',
+                'name' => self::ASSOCIATION,
+                'type' => 'Zend\Form\Element\Select',
                 'options' => array(
-                    'label' => $this->translate('Date') . ':',
-                    'format' => 'Y-m-d',
-                ),
-                'attributes' => array(
-                     'step'  => '1',
-                     'value' => $this->date
+                    'label' =>  $this->translate('League') . ':',
+                    'value_options' => $this->getAssociationValueOptions(),
+                    'empty_option'  => '-- ' . $this->translate('choose') . ' --'
                 ),
             )
         );
 
-
-        //time
-        $this->add(
-            array(
-                'type' => 'Zend\Form\Element\Time',
-                'name' => 'matchTime',
-                'options' => array('label' => $this->translate('Time') . ':'),
-                'attributes' => array('step'  => '900')
-            )
-        );
-
-        //check
-        $this->add(
-            array(
-                'type' => 'Zend\Form\Element\Checkbox',
-                'name' => 'changeColors',
-                'options' => array('label' => $this->translate('Change Colors')),
-                'attributes' => array(
-                    'class' => 'checkbox',
-                ),
-            )
-        );
-
-        $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
-
-    }
-
-    /**
-     * @return SeasonFieldsetService
-     */
-    public function getService()
-    {
-        return $this->service;
+        $this->add($this->getButtonFieldSet());
     }
 
     /**
@@ -136,20 +48,61 @@ class LeagueManagerForm extends AbstractForm
 
         $filter->add(
             array(
-                'name' => 'changeColors',
-                'required' => false
+                'name' => self::MANAGER,
+                'required' => true,
+                'allowEmpty' => false,
+                'validators' => array(
+                    array(
+                      'name'     => 'Moderator\Form\Validator\ValidLeagueManager',
+                      'options' => array(
+                            'adapter'  => $this->getEntityManager(),
+                        )
+                    )
+                ),
             )
         );
-
-        $filter->add(
-            array(
-                'name' => 'matchTime',
-                'required' => false
-            )
-        );
-
-
         return $filter;
+    }
 
+    /**
+     * @return array
+     */
+    private function getAssociationValueOptions()
+    {
+        $valueOptions = array();
+        $associations = $this->getMapper()->getAssociations();
+
+        /* @var $association \Season\Entity\Association */
+        foreach($associations as $association) {
+            $valueOptions[$association->getId()] = $association->getName();
+        }
+
+        return $valueOptions;
+
+    }
+
+    /**
+     * @return array
+     */
+    private function getManagerValueOptions()
+    {
+        $valueOptions = array();
+        $available = $this->getMapper()->getAvailableManager();
+
+        /* @var $user \User\Entity\User */
+        foreach($available as $user) {
+            $valueOptions[$user->getId()] = $user->getName();
+        }
+
+        return $valueOptions;
+
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'LeagueManagerForm';
     }
 }
