@@ -1,0 +1,45 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Moderator');
+/* @var $manager \Moderator\Entity\LeagueManager */
+$this->headTitle('Moderator View');
+
+?>
+
+<?php $this->placeholder('nothing')->captureStart();?>
+    <h3><?php echo $this->translate('No League Manager found'); ?></h3>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+<?php $this->placeholder('manager')->captureStart();?>
+    <h3><?php echo $this->translate('League Manager Overview'); ?></h3>
+
+    <table class="table profile">
+        <tr>
+            <th><?php echo $this->translate("ID"); ?></th>
+            <th><?php echo $this->translate("Name"); ?></th>
+            <th><?php echo $this->translate("League"); ?></th>
+            <th><?php echo $this->translate("Nomination Date"); ?></th>
+            <th><?php echo $this->translate("Nominated By"); ?></th>
+            <th><?php echo $this->translate("active"); ?></th>
+        </tr>
+        <?php foreach ($this->managers as $manager) : ?>
+            <tr style="background-color:<?php
+            echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+                <td style="text-align: right"><?php echo $manager->getId(); ?></td>
+                <td><?php echo $manager->getManager()->getName();?></td>
+                <td><?php echo $manager->getAssociation()->getName();?></td>
+                <td><?php echo $manager->getNominationDate()->format('d.m.Y'); ?></td>
+                <td><?php echo $manager->getNominatedBy()->getName(); ?></td>
+                <td class="button">
+                    <a class='arrows-16 active-16 btnCenter' title="<?php echo $this->translate('shift'); ?>"
+                       href="<?php echo '#' ?>"></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php $this->placeholder('manager')->captureEnd();
+
+if (!empty($this->managers)) {
+    echo $this->placeholder('nothing');
+} else {
+    echo $this->placeholder('manager');
+}

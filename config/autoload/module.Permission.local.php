@@ -47,6 +47,8 @@ return array(
             'Season\Controller\Schedule' => 'admin',
             'Season\Controller\Confirm\register' => 'guest',
 
+            'Moderator\Controller\Manager' => 'moderator',
+
         )
     ),
 );

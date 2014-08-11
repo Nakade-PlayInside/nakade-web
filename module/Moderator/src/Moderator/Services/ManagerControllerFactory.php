@@ -1,0 +1,43 @@
+<?php
+
+namespace Moderator\Services;
+
+use Moderator\Controller\ManagerController;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+
+/**
+ * Class ManagerControllerFactory
+ *
+ * @package Moderator\Services
+ */
+class ManagerControllerFactory implements FactoryInterface
+{
+
+    /**
+     * @param ServiceLocatorInterface $services
+     *
+     * @return ManagerController
+     */
+    public function createService(ServiceLocatorInterface $services)
+    {
+        $serviceManager = $services->getServiceLocator();
+
+        $repository = $serviceManager->get('Moderator\Services\RepositoryService');
+   //     $factory = $serviceManager->get('League\Services\LeagueFormService');
+   //     $mail = $serviceManager->get('League\Services\MailService');
+   //     $pagination = $serviceManager->get('League\Services\PaginationService');
+
+
+        $controller = new ManagerController();
+
+    //    $controller->setFormFactory($factory);
+        $controller->setRepository($repository);
+     //   $controller->setMailService($mail);
+    //    $controller->setPaginationService($pagination);
+
+        return $controller;
+    }
+
+
+}
