@@ -15,21 +15,18 @@ use Zend\Validator\Exception\InvalidArgumentException;
  */
 class ValidLeagueManager extends AbstractValidator implements ManagerInterface
 {
-    const ERROR_NO_RECORD_FOUND = 'noRecordFound';
-    const ERROR_USED  = 'used';
-    const ERROR_EXPIRED  = 'expired';
+    const ERROR_NO_ASSOCIATION = 'noAssociationFound';
+    const ERROR_REGISTERED_LM  = 'registeredLM';
 
     private $associationId;
-    private $entity;
     private $entityManager;
 
     /**
      * @var array Message templates
      */
     protected $messageTemplates = array(
-        self::ERROR_NO_RECORD_FOUND => "Coupon code invalid.",
-        self::ERROR_USED    => "Coupon code already used.",
-        self::ERROR_EXPIRED    => "Coupon code is expired.",
+        self::ERROR_NO_ASSOCIATION => "Association not found.",
+        self::ERROR_REGISTERED_LM    => "User already LM in this Association.",
     );
 
     /**
@@ -42,47 +39,35 @@ class ValidLeagueManager extends AbstractValidator implements ManagerInterface
         //@todo: translate messages
         parent::__construct($options);
 
-    /*    if (!array_key_exists('adapter', $options)) {
+        if (!array_key_exists('adapter', $options)) {
             throw new InvalidArgumentException('No entity manager provided');
         }
-        $this->entityManager = $options['adapter'];*/
+        $this->entityManager = $options['adapter'];
     }
 
     /**
      * @param mixed $value
+     * @param null $context
      *
      * @return bool
      */
     public function isValid($value, $context=null)
-    {//todo
+    {
         $this->setValue($value);
 
         if (isset($context[self::ASSOCIATION])) {
             $this->associationId = $context[self::ASSOCIATION];
+        } else {
+            $this->error(self::ERROR_NO_ASSOCIATION);
+            return false;
         }
 
-        if ($this->isNotInDB()) {
-            $this->error(self::ERROR_NO_RECORD_FOUND);
-            return false;
-        }
-        if ($this->getEntity()->isUsed()) {
-            $this->error(self::ERROR_USED);
-            return false;
-        }
-        if ($this->getEntity()->isExpired()) {
-            $this->error(self::ERROR_EXPIRED);
+        if ($this->isAlreadyLeagueManager()) {
+            $this->error(self::ERROR_REGISTERED_LM);
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * @return bool
-     */
-    private function isNotInDB()
-    {
-        return is_null($this->getEntity());
     }
 
     /**
@@ -94,23 +79,34 @@ class ValidLeagueManager extends AbstractValidator implements ManagerInterface
     }
 
     /**
-     * @return \User\Entity\Coupon
+     * @return bool
      */
-    private function getEntity()
+    private function isAlreadyLeagueManager()
     {
-        if (is_null($this->entity)) {
-
-            $em = $this->getEntityManager();
-            $qb = $em->createQueryBuilder('Coupon')
-                ->select('c')
+            $result = $this->getEntityManager()->createQueryBuilder('LeagueManager')
+                ->select('m')
                 ->from('Moderator\Entity\LeagueManager', 'm')
-                ->where('m.association = :code')
-                ->setParameter('code', $this->getValue());
+                ->innerJoin('m.association', 'Association')
+                ->innerJoin('m.manager', 'Manager')
+                ->where('Association.id = :associationId')
+                ->andWhere('Manager.id = :managerId')
+                ->setParameter('managerId', $this->getValue())
+                ->setParameter('associationId', $this->getAssociationId())
+                ->getQuery()
+                ->getResult();
 
-            $this->entity = $qb->getQuery()->getOneOrNullResult();
-        }
+        return !empty($result);
 
-        return $this->entity;
     }
+
+    /**
+     * @return int
+     */
+    private function getAssociationId()
+    {
+        return $this->associationId;
+    }
+
+
 
 }

@@ -5,6 +5,8 @@ return array(
 
     'view_helpers' => array(
         'invokables' => array(
+            'isActive'   => 'Moderator\View\Helper\IsActive',
+            'activateAction'   => 'Moderator\View\Helper\GetActivateAction',
             // more helpers here ...
         )
     ),
@@ -23,10 +25,10 @@ return array(
             'manager' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/manager[/:action][/:sort]',
+                    'route'    => '/manager[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'sort'     => '[a-zA-Z][a-zA-Z0-9_-]+',
+                        'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Moderator\Controller\Manager',

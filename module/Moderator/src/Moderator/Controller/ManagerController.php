@@ -2,6 +2,7 @@
 namespace Moderator\Controller;
 
 use Moderator\Entity\LeagueManager;
+use Moderator\Pagination\ModeratorPagination;
 use Moderator\Services\FormService;
 use Moderator\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
@@ -15,18 +16,24 @@ use Zend\View\Model\ViewModel;
 class ManagerController extends AbstractController
 {
 
-   /**
-    * @return array|ViewModel
-    */
+    /**
+     * @return array|ViewModel
+     */
     public function indexAction()
     {
+        $page = (int) $this->params()->fromRoute('id', 1);
+
+        /* @var $entityManager \Doctrine\ORM\EntityManager */
+        $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $pagination = new ModeratorPagination($entityManager);
+        $offset = (ModeratorPagination::ITEMS_PER_PAGE * ($page -1));
+
         return new ViewModel(
             array(
-              //  'paginator' => $paginator,
-                'managers' =>  $this->getMapper()->getLeagueManager(),
+                'paginator' => $pagination->getPagination($page),
+                'managers' =>  $this->getMapper()->getLeagueManagerByPages($offset),
             )
         );
-
     }
 
     /**
@@ -34,7 +41,7 @@ class ManagerController extends AbstractController
      */
     public function addAction()
     {
-        /* @var $form \User\Form\UserForm */
+        /* @var $form \Moderator\Form\LeagueManagerForm */
         $form = $this->getForm(FormService::MANAGER_FORM);
         $manager = new LeagueManager();
         $form->bindEntity($manager);
@@ -58,9 +65,9 @@ class ManagerController extends AbstractController
                 $manager = $form->getData();
 
                 /* @var $mail \User\Mail\RegistrationMail */
-            //    $mail = $this->getMailService()->getMail(MailService::REGISTRATION_MAIL);
-            //    $mail->setUser($user);
-            //    $mail->sendMail($user);
+                //    $mail = $this->getMailService()->getMail(MailService::REGISTRATION_MAIL);
+                //    $mail->setUser($user);
+                //    $mail->sendMail($user);
 
                 $this->getMapper()->save($manager);
                 $this->flashMessenger()->addSuccessMessage('New League Manager added');
@@ -77,7 +84,49 @@ class ManagerController extends AbstractController
                 'form'    => $form
             )
         );
+    }
 
+    /**
+     * @return \Zend\Http\Response
+     */
+    public function deleteAction()
+    {
+        //get param
+        $uid  = $this->params()->fromRoute('id', null);
+
+        /* @var $leagueManager \Moderator\Entity\LeagueManager */
+        $leagueManager = $this->getMapper()->getLeagueManagerById($uid);
+        if (!is_null($leagueManager)) {
+            $leagueManager->setIsActive(false);
+            $this->getMapper()->save($leagueManager);
+            $this->flashMessenger()->addSuccessMessage('League Manager deactivated');
+        } else {
+            $this->flashMessenger()->addSuccessMessage('Input Error');
+        }
+
+        return $this->redirect()->toRoute('manager');
+    }
+
+    /**
+     * @return \Zend\Http\Response
+     */
+    public function unDeleteAction()
+    {
+        //get param
+        $uid  = $this->params()->fromRoute('id', null);
+
+
+        /* @var $leagueManager \Moderator\Entity\LeagueManager */
+        $leagueManager = $this->getMapper()->getLeagueManagerById($uid);
+        if (!is_null($leagueManager)) {
+            $leagueManager->setIsActive(true);
+            $this->getMapper()->save($leagueManager);
+            $this->flashMessenger()->addSuccessMessage('League Manager activated');
+        } else {
+            $this->flashMessenger()->addSuccessMessage('Input Error');
+        }
+
+        return $this->redirect()->toRoute('manager');
     }
 
     /**

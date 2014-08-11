@@ -1,44 +1,30 @@
-<?php if ($this->pageCount): ?>
-    <div class="matchDayPagination">
-        <ul class="nakadePagination nakadePagination-centered">
+<?php if ($this->pageCount > 1): ?>
+    <div id="myPagination">
+        <ul class="large">
             <!-- Previous page link -->
             <?php if (isset($this->previous)): ?>
                 <li title="<?php echo $this->translate('previous'); ?>">
-                    <a href="<?php echo $this->pagingUrl($this->previous); ?>">&laquo;</a>
+                    <a class="arrows-32 control-left-32" href="<?php echo $this->pagingUrl($this->previous); ?>"></a>
                 </li>
-            <?php else: ?>
-                <li class="disabled">
-                    <a href="#">&laquo;</a>
-                </li>
-            <?php
-endif; ?>
+            <?php endif; ?>
             <!-- Numbered page links -->
             <?php foreach ($this->pagesInRange as $page): ?>
                 <?php if ($page != $this->current): ?>
-                    <li title="<?php echo $this->translate('click'); ?>">
+                    <li class="page">
                         <a href="<?php echo $this->pagingUrl($page);?>"><?php echo $page; ?></a>
                     </li>
                 <?php else: ?>
-                    <li class="active">
-                        <a href="#"><?php echo $page; ?></a>
+                    <li class="page" title="<?php echo $this->translate("Actual Page") . $this->current; ?>">
+                        <a class="actual" href="#"><?php echo $page; ?></a>
                     </li>
-                <?php
-endif; ?>
-            <?php
-endforeach; ?>
-
+                <?php endif; ?>
+            <?php endforeach; ?>
             <!-- Next page link -->
             <?php if (isset($this->next)): ?>
-                <li title="<?php echo $this->translate('next'); ?>">
-                    <a href="<?php echo $this->pagingUrl($this->next); ?>">&raquo;</a>
+                <li>
+                    <a class="arrows-32 control-right-32" href="<?php echo $this->pagingUrl($this->next); ?>"></a>
                 </li>
-            <?php else: ?>
-                <li class="disabled">
-                    <a href="#">&raquo;</a>
-                </li>
-            <?php
-endif; ?>
+            <?php endif; ?>
         </ul>
     </div>
-<?php
-endif;
+<?php endif; ?>
