@@ -15,6 +15,8 @@ return array(
         'factories' => array(
             'Moderator\Controller\Manager' =>
                     'Moderator\Services\ManagerControllerFactory',
+            'Moderator\Controller\Support' =>
+                'Moderator\Services\SupportControllerFactory',
         ),
 
     ),
@@ -32,6 +34,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Moderator\Controller\Manager',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'support' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/support[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Moderator\Controller\Support',
                         'action'     => 'index',
                     ),
                 ),

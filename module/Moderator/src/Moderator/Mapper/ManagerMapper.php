@@ -81,5 +81,23 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param int $userId
+     *
+     * @return array
+     */
+    public function getSupportRequestByUser($userId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('User')
+            ->select('s')
+            ->from('Moderator\Entity\SupportRequest', 's')
+            ->innerJoin('s.requestedBy', 'User')
+            ->where('User.id = :userId')
+            ->setParameter('userId', $userId);
+
+        return $qb->getQuery()->getResult();
+    }
+
 }
 

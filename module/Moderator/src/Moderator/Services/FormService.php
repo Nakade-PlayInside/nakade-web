@@ -15,6 +15,7 @@ class FormService extends AbstractFormFactory
 {
 
     const MANAGER_FORM = 'manager';
+    const SUPPORT_FORM = 'support';
 
     private $services;
 
@@ -52,16 +53,21 @@ class FormService extends AbstractFormFactory
     {
         switch (strtolower($typ)) {
 
-           case self::MANAGER_FORM:
-               $form = new Form\LeagueManagerForm($this->getServices());
-               $form->setTranslator($this->getTranslator(), $this->getTranslatorTextDomain());
-               break;
+            case self::MANAGER_FORM:
+                $form = new Form\LeagueManagerForm($this->getServices());
+                $form->setTranslator($this->getTranslator(), $this->getTranslatorTextDomain());
+                break;
+
+            case self::SUPPORT_FORM:
+                $form = new Form\SupportForm($this->getServices());
+                $form->setTranslator($this->getTranslator(), $this->getTranslatorTextDomain());
+                break;
 
 
-           default:
-               throw new \RuntimeException(
-                   sprintf('An unknown form type was provided.')
-               );
+            default:
+                throw new \RuntimeException(
+                    sprintf('An unknown form type was provided.')
+                );
         }
         $form->setTranslator($this->translator, $this->textDomain);
         return $form;

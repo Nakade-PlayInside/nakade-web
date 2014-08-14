@@ -1,11 +1,12 @@
 <?php
 namespace Moderator\Form;
 
-use Moderator\Form\Hydrator\LeagueManagerHydrator;
+
 use Nakade\Abstracts\AbstractForm;
 use Season\Services\SeasonFieldsetService;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Moderator\Services\RepositoryService;
+use Zend\Stdlib\Hydrator\HydratorInterface;
 
 /**
  * Class BaseForm
@@ -35,9 +36,14 @@ abstract class BaseForm extends AbstractForm
         $this->entityManager = $serviceManager->get('Doctrine\ORM\EntityManager');
         $this->authenticationService = $serviceManager->get('Zend\Authentication\AuthenticationService');
 
-        $hydrator = new LeagueManagerHydrator($this->getEntityManager(), $this->getAuthenticationService());
+        $hydrator = $this->initHydrator();
         $this->setHydrator($hydrator);
     }
+
+    /**
+     * @return HydratorInterface
+     */
+    abstract protected function initHydrator();
 
     /**
      * @return SeasonFieldsetService

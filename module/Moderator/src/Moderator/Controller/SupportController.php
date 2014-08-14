@@ -2,6 +2,7 @@
 namespace Moderator\Controller;
 
 use Moderator\Entity\LeagueManager;
+use Moderator\Entity\SupportRequest;
 use Moderator\Pagination\ModeratorPagination;
 use Moderator\Services\FormService;
 use Moderator\Services\RepositoryService;
@@ -13,9 +14,10 @@ use Zend\View\Model\ViewModel;
  *
  * @package Moderator\Controller
  */
-class ManagerController extends AbstractController
+class SupportController extends AbstractController
 {
     /**
+     *
      * @return array|ViewModel
      */
     public function indexAction()
@@ -36,14 +38,42 @@ class ManagerController extends AbstractController
     }
 
     /**
-     * @return array|ViewModel
+     *
+     * @return ViewModel
+     */
+    public function overviewAction()
+    {
+        return new ViewModel(
+            array(
+            )
+        );
+    }
+
+    /**
+     *
+     * @return ViewModel
+     */
+    public function myInquiriesAction()
+    {
+        $userId = $this->identity()->getId();
+
+        return new ViewModel(
+            array(
+                'supportRequests' => $this->getMapper()->getSupportRequestByUser($userId),
+            )
+        );
+    }
+
+    /**
+     *
+     * @return ViewModel
      */
     public function addAction()
     {
-        /* @var $form \Moderator\Form\LeagueManagerForm */
-        $form = $this->getForm(FormService::MANAGER_FORM);
-        $manager = new LeagueManager();
-        $form->bindEntity($manager);
+        /* @var $form \Moderator\Form\SupportForm */
+        $form = $this->getForm(FormService::SUPPORT_FORM);
+        $support = new SupportRequest();
+        $form->bindEntity($support);
 
         /* @var $request \Zend\Http\Request */
         $request = $this->getRequest();
@@ -61,15 +91,15 @@ class ManagerController extends AbstractController
 
             if ($form->isValid()) {
 
-                $manager = $form->getData();
+                $support = $form->getData();
 //todo: mail for LM
                 /* @var $mail \User\Mail\RegistrationMail */
                 //    $mail = $this->getMailService()->getMail(MailService::REGISTRATION_MAIL);
                 //    $mail->setUser($user);
                 //    $mail->sendMail($user);
 
-                $this->getMapper()->save($manager);
-                $this->flashMessenger()->addSuccessMessage('New League Manager added');
+                $this->getMapper()->save($support);
+                $this->flashMessenger()->addSuccessMessage('New Support Request');
 
                 return $this->redirect()->toRoute('manager');
             } else {
@@ -86,47 +116,65 @@ class ManagerController extends AbstractController
     }
 
     /**
-     * @return \Zend\Http\Response
+     *
+     * @return ViewModel
      */
     public function deleteAction()
     {
-        //get param
-        $uid  = $this->params()->fromRoute('id', null);
-
-        /* @var $leagueManager \Moderator\Entity\LeagueManager */
-        $leagueManager = $this->getMapper()->getLeagueManagerById($uid);
-        if (!is_null($leagueManager)) {
-            $leagueManager->setIsActive(false);
-            $this->getMapper()->save($leagueManager);
-            $this->flashMessenger()->addSuccessMessage('League Manager deactivated');
-        } else {
-            $this->flashMessenger()->addSuccessMessage('Input Error');
-        }
-
-        return $this->redirect()->toRoute('manager');
+        return new ViewModel(
+            array(
+            )
+        );
     }
 
     /**
-     * @return \Zend\Http\Response
+     *
+     * @return ViewModel
      */
-    public function unDeleteAction()
+    public function cancelAction()
     {
-        //get param
-        $uid  = $this->params()->fromRoute('id', null);
-
-
-        /* @var $leagueManager \Moderator\Entity\LeagueManager */
-        $leagueManager = $this->getMapper()->getLeagueManagerById($uid);
-        if (!is_null($leagueManager)) {
-            $leagueManager->setIsActive(true);
-            $this->getMapper()->save($leagueManager);
-            $this->flashMessenger()->addSuccessMessage('League Manager activated');
-        } else {
-            $this->flashMessenger()->addSuccessMessage('Input Error');
-        }
-
-        return $this->redirect()->toRoute('manager');
+        return new ViewModel(
+            array(
+            )
+        );
     }
+
+    /**
+     *
+     * @return ViewModel
+     */
+    public function acceptAction()
+    {
+        return new ViewModel(
+            array(
+            )
+        );
+    }
+
+    /**
+     *
+     * @return ViewModel
+     */
+    public function assignAction()
+    {
+        return new ViewModel(
+            array(
+            )
+        );
+    }
+
+    /**
+     *
+     * @return ViewModel
+     */
+    public function doneAction()
+    {
+        return new ViewModel(
+            array(
+            )
+        );
+    }
+
 
     /**
      * @return \Moderator\Mapper\ManagerMapper

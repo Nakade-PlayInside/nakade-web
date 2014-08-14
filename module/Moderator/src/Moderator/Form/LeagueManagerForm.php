@@ -1,7 +1,9 @@
 <?php
 namespace Moderator\Form;
 
+use Moderator\Form\Hydrator\LeagueManagerHydrator;
 use Zend\InputFilter\InputFilter;
+
 /**
  * Class LeagueManagerForm
  *
@@ -96,6 +98,15 @@ class LeagueManagerForm extends BaseForm implements ManagerInterface
 
         return $valueOptions;
 
+    }
+
+    /**
+     * @return LeagueManagerHydrator
+     */
+    protected function initHydrator()
+    {
+        $hydrator = new LeagueManagerHydrator($this->getEntityManager(), $this->getAuthenticationService());
+        return $hydrator;
     }
 
     /**
