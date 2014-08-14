@@ -15,7 +15,8 @@ use Zend\View\Model\ViewModel;
  */
 class ManagerController extends AbstractController
 {
-
+//todo: fix link to var/nakade-test for cron
+//todo: fix pwd complexity
     /**
      * @return array|ViewModel
      */
@@ -63,7 +64,7 @@ class ManagerController extends AbstractController
             if ($form->isValid()) {
 
                 $manager = $form->getData();
-
+//todo: mail for LM
                 /* @var $mail \User\Mail\RegistrationMail */
                 //    $mail = $this->getMailService()->getMail(MailService::REGISTRATION_MAIL);
                 //    $mail->setUser($user);
