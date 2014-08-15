@@ -1,6 +1,7 @@
 <?php
 namespace Moderator\Form\Hydrator;
 
+use Moderator\Entity\SupportMessage;
 use Moderator\Form\SupportInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Doctrine\ORM\EntityManager;
@@ -53,10 +54,6 @@ class SupportHydrator implements HydratorInterface, SupportInterface
     {
         if (is_null($object->getId())) {
 
-            $object->setRequestDate(new \DateTime());
-            $requestedBy = $this->getCreator();
-            $object->setRequestedBy($requestedBy);
-
             if (isset($data[self::ASSOCIATION])) {
                 $association = $this->getAssociationById($data[self::ASSOCIATION]);
                 $object->setAssociation($association);
@@ -68,7 +65,16 @@ class SupportHydrator implements HydratorInterface, SupportInterface
         }
 
         if (isset($data[self::MESSAGE])) {
-            $object->setMessage($data[self::MESSAGE]);
+
+            $author = $this->getCreator();
+            $message = new SupportMessage();
+            $message->setAuthor($author);
+            $message->setDate(new \DateTime());
+            $message->setMessage($data[self::MESSAGE]);
+            $object->addMessage($message);
+            $this->getEntityManager()->persist($object);
+            $this->getEntityManager()->flush();
+
         }
 
 

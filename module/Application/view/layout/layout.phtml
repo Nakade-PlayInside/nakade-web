@@ -131,6 +131,18 @@
              )
          );
 
+         echo $this->Submenu(
+             $this->translate('Support', 'Application'),
+             array (
+                 $this->translate('Overview', 'Application')   =>
+                     $this->url('support', array('action' => 'myInquiries')),
+                 $this->translate('League Manager', 'Application')   =>
+                     $this->url('support', array('action' => 'add')),
+                 $this->translate('Referee', 'Application')   =>
+                     $this->url('support', array('action' => 'add')),
+             )
+         );
+
         echo sprintf('<li style="color:lightblue;line-height:19px;
                 padding:10px; padding-left:20px;">%s %s</li>',
             $this->translate('Logged in as ', 'Application'),

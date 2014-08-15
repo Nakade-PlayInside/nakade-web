@@ -1,6 +1,7 @@
 <?php
 namespace Moderator\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Season\Entity\Association;
 use User\Entity\User;
@@ -24,14 +25,14 @@ class SupportRequest
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\User\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="requestedBy", referencedColumnName="uid", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\Moderator\Entity\SupportType", cascade={"persist"})
+     * @ORM\JoinColumn(name="type", referencedColumnName="id", nullable=false)
      */
-    private $requestedBy;
+    private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Season\Entity\Association", cascade={"persist"})
-     * @ORM\JoinColumn(name="association", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="association", referencedColumnName="id", nullable=true)
      */
     private $association;
 
@@ -41,25 +42,20 @@ class SupportRequest
     private $subject;
 
     /**
-     * @ORM\Column(name="message", type="text", nullable=false)
+     * @ORM\OneToMany(targetEntity="\Moderator\Entity\SupportMessage", mappedBy="request", cascade={"persist", "remove"})
      */
-    private $message;
+    private $messages;
 
     /**
      * @ORM\ManyToOne(targetEntity="\User\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="processedBy", referencedColumnName="uid", nullable=false)
+     * @ORM\JoinColumn(name="processedBy", referencedColumnName="uid", nullable=true)
      */
     private $processedBy;
 
     /**
-     * @ORM\Column(name="requestDate", type="datetime", nullable=false)
+     * @ORM\Column(name="startDate", type="datetime", nullable=true)
      */
-    private $requestDate;
-
-    /**
-     * @ORM\Column(name="acceptingDate", type="datetime", nullable=true)
-     */
-    private $acceptingDate;
+    private $startDate;
 
     /**
      * @ORM\Column(name="doneDate", type="datetime", nullable=true)
@@ -67,24 +63,26 @@ class SupportRequest
     private $doneDate;
 
     /**
+     * @ORM\Column(name="isOngoing", type="boolean", nullable=false)
+     */
+    private $isOngoing=false;
+
+    /**
+     * @ORM\Column(name="isDone", type="boolean", nullable=false)
+     */
+    private $isDone=false;
+
+    /**
      * @ORM\Column(name="isCanceled", type="boolean", nullable=false)
      */
     private $isCanceled=false;
 
     /**
-     * @param \DateTime $acceptingDate
+     * construct
      */
-    public function setAcceptingDate($acceptingDate)
+    public function __construct()
     {
-        $this->acceptingDate = $acceptingDate;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getAcceptingDate()
-    {
-        return $this->acceptingDate;
+        $this->messages = new ArrayCollection();
     }
 
     /**
@@ -146,25 +144,41 @@ class SupportRequest
     /**
      * @return bool
      */
-    public function IsCanceled()
+    public function isCanceled()
     {
         return $this->isCanceled;
     }
 
     /**
-     * @param string $message
+     * @param bool $isDone
      */
-    public function setMessage($message)
+    public function setIsDone($isDone)
     {
-        $this->message = $message;
+        $this->isDone = $isDone;
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getMessage()
+    public function isDone()
     {
-        return $this->message;
+        return $this->isDone;
+    }
+
+    /**
+     * @param bool $isOngoing
+     */
+    public function setIsOngoing($isOngoing)
+    {
+        $this->isOngoing = $isOngoing;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOngoing()
+    {
+        return $this->isOngoing;
     }
 
     /**
@@ -184,35 +198,19 @@ class SupportRequest
     }
 
     /**
-     * @param \DateTime $requestDate
+     * @param \DateTime $startDate
      */
-    public function setRequestDate($requestDate)
+    public function setStartDate($startDate)
     {
-        $this->requestDate = $requestDate;
+        $this->startDate = $startDate;
     }
 
     /**
      * @return \DateTime
      */
-    public function getRequestDate()
+    public function getStartDate()
     {
-        return $this->requestDate;
-    }
-
-    /**
-     * @param User $requestedBy
-     */
-    public function setRequestedBy(User $requestedBy)
-    {
-        $this->requestedBy = $requestedBy;
-    }
-
-    /**
-     * @return User
-     */
-    public function getRequestedBy()
-    {
-        return $this->requestedBy;
+        return $this->startDate;
     }
 
     /**
@@ -231,6 +229,37 @@ class SupportRequest
         return $this->subject;
     }
 
+    /**
+     * @param SupportType $type
+     */
+    public function setType(SupportType $type)
+    {
+        $this->type = $type;
+    }
 
+    /**
+     * @return SupportType
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param SupportMessage $message
+     */
+    public function addMessage(SupportMessage $message)
+    {
+        $this->messages[] = $message;
+        $message->setRequest($this);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
 
 }

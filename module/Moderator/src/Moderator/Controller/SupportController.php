@@ -57,9 +57,13 @@ class SupportController extends AbstractController
     {
         $userId = $this->identity()->getId();
 
+        $test = $this->getMapper()->getSupportRequests();
+        $first = $test[0];
+        $allMsg = $first->getMessages();
+       // var_dump($allMsg->toArray());
         return new ViewModel(
             array(
-                'supportRequests' => $this->getMapper()->getSupportRequestByUser($userId),
+                'supportRequests' => $this->getMapper()->getSupportRequests(),
             )
         );
     }

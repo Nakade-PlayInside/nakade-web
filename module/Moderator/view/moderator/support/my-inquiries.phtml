@@ -20,9 +20,10 @@ $this->headTitle('Moderator View');
             <th><?php echo $this->translate("ID"); ?></th>
             <th><?php echo $this->translate("League"); ?></th>
             <th><?php echo $this->translate("Subject"); ?></th>
-            <th><?php echo $this->translate("Requested"); ?></th>
-            <th><?php echo $this->translate("Processed"); ?></th>
+            <th><?php echo $this->translate("Author"); ?></th>
+            <th><?php echo $this->translate("Date"); ?></th>
             <th><?php echo $this->translate("Stage"); ?></th>
+            <th><?php echo $this->translate("Details"); ?></th>
         </tr>
         <?php foreach ($this->supportRequests as $support) : ?>
             <tr style="background-color:<?php
@@ -30,9 +31,10 @@ $this->headTitle('Moderator View');
                 <td style="text-align: right"><?php echo $support->getId(); ?></td>
                 <td><?php echo $support->getAssociation()->getName();?></td>
                 <td><?php echo $support->getSubject(); ?></td>
-                <td><?php echo $support->getRequestDate()->format('d.m.y H:i');?></td>
-                <td><?php echo $support->getRequestDate()->format('d.m.y H:i'); ?></td>
-                <td>
+                <td><?php echo $support->getMessages()->first()->getAuthor()->getShortName();?></td>
+                <td><?php echo $support->getMessages()->first()->getDate()->format('d.m.y H:i'); ?></td>
+                <td><?php echo $support->isDone(); ?></td>
+                <td><a href="<?php echo $this->url('support', array('action' => 'myInquiries', 'id' => $support->getId()))?>" class="button"><div class="buttons-16 info-16 btnCenter"></div></a>
 
                 </td>
             </tr>
