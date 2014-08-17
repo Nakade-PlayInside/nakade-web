@@ -1,20 +1,17 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('Moderator');
 /* @var $support \Moderator\Entity\SupportRequest */
-$this->headTitle('Moderator View');
+$this->headTitle('Support');
 
 ?>
 
 <?php $this->placeholder('nothing')->captureStart();?>
-    <h3><?php echo $this->translate('No Support Requests found'); ?></h3>
+    <h3><?php echo $this->translate('No Tickets found'); ?></h3>
 <?php $this->placeholder('nothing')->captureEnd(); ?>
 
-<?php $this->placeholder('manager')->captureStart();?>
-    <h3><?php echo $this->translate('My Support Requests'); ?></h3>
-    <hr/>
-    <a class="addUser buttons-32 user-add-32" title="<?php echo $this->translate("add League Manager"); ?>" href="
-    <?php echo $this->url('manager', array('action' => 'add')); ?>"></a>
-<?php //echo $this->paginationControl($this->paginator, 'Sliding', 'moderator'); ?>
+<?php $this->placeholder('tickets')->captureStart();?>
+    <h3 style="margin-bottom: 10px;"><?php echo $this->translate('My Support Tickets'); ?></h3>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'moderator'); ?>
     <table class="table profile">
         <tr>
             <th><?php echo $this->translate("ID"); ?></th>
@@ -31,20 +28,25 @@ $this->headTitle('Moderator View');
                 <td style="text-align: right"><?php echo $support->getId(); ?></td>
                 <td><?php echo $support->getAssociation()->getName();?></td>
                 <td><?php echo $support->getSubject()->getName(); ?></td>
-                <td><?php echo $support->getMessages()->first()->getAuthor()->getShortName();?></td>
+                <td><?php echo $support->getRequester()->getShortName();?></td>
                 <td><?php echo $support->getMessages()->first()->getDate()->format('d.m.y H:i'); ?></td>
-                <td><?php echo $support->isDone(); ?></td>
-                <td><a href="<?php echo $this->url('support', array('action' => 'myInquiries', 'id' => $support->getId()))?>" class="button"><div class="buttons-16 info-16 btnCenter"></div></a>
-
+                <td>
+                    <div class="mail-16 <?php echo $this->ticketStage($support->getStage()->getId());?> btnCenter"></div>
+                </td>
+                <td>
+                    <a class="button" href="<?php echo $this->url('leagueManager',
+                        array('action' => 'detail', 'id' => $support->getId()))?>">
+                        <div class="buttons-16 info-16 btnCenter"></div>
+                    </a>
                 </td>
             </tr>
         <?php endforeach; ?>
     </table>
-    <p><?php //echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("League Manager"); ?></p>
-<?php $this->placeholder('manager')->captureEnd();
+    <p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Ticket(s)"); ?></p>
+<?php $this->placeholder('tickets')->captureEnd();
 
 if (empty($this->supportRequests)) {
     echo $this->placeholder('nothing');
 } else {
-    echo $this->placeholder('manager');
+    echo $this->placeholder('tickets');
 }

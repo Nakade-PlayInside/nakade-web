@@ -1,0 +1,45 @@
+#ticket {
+    width: 80%;
+    margin-bottom: 10px;
+    border: 1px solid grey;
+}
+
+
+#ticket label {
+    display: inline-block;
+    color: #57a900;
+}
+
+#ticket label:first-of-type {
+    margin-right: 10px;
+}
+
+#ticket td {
+    padding: 5px;
+}
+
+#ticket tr {
+    border: 1px solid #ddd;
+}
+
+table#info {
+    width: auto;
+    margin: 10px 0;
+}
+
+table#info td {
+    padding-right: 10px;
+}
+
+.return {
+    margin-right: 10px;
+}
+.actionBtn div {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right:5px;
+}
+
+.actionBtn span {
+    vertical-align: middle;
+}

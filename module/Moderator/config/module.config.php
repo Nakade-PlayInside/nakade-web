@@ -7,6 +7,8 @@ return array(
         'invokables' => array(
             'isActive'   => 'Moderator\View\Helper\IsActive',
             'activateAction'   => 'Moderator\View\Helper\GetActivateAction',
+            'ticketStage'   => 'Moderator\View\Helper\GetTicketStage',
+            'ticketStageInfo'   => 'Moderator\View\Helper\GetTicketStageInfo',
             // more helpers here ...
         )
     ),
@@ -17,6 +19,8 @@ return array(
                     'Moderator\Services\ManagerControllerFactory',
             'Moderator\Controller\Support' =>
                 'Moderator\Services\SupportControllerFactory',
+            'Moderator\Controller\LeagueManager' =>
+                'Moderator\Services\LeagueManagerControllerFactory',
         ),
 
     ),
@@ -48,6 +52,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Moderator\Controller\Support',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'leagueManager' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/leagueManager[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Moderator\Controller\LeagueManager',
                         'action'     => 'index',
                     ),
                 ),

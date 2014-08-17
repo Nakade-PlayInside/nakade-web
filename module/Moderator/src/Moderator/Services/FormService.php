@@ -16,6 +16,7 @@ class FormService extends AbstractFormFactory
 
     const MANAGER_FORM = 'manager';
     const SUPPORT_FORM = 'support';
+    const MAIL_FORM = 'mail';
 
     private $services;
 
@@ -63,6 +64,10 @@ class FormService extends AbstractFormFactory
                 $form->setTranslator($this->getTranslator(), $this->getTranslatorTextDomain());
                 break;
 
+            case self::MAIL_FORM:
+                $form = new Form\MailForm($this->getServices());
+                $form->setTranslator($this->getTranslator(), $this->getTranslatorTextDomain());
+                break;
 
             default:
                 throw new \RuntimeException(

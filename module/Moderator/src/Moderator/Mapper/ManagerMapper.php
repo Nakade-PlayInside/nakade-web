@@ -2,6 +2,7 @@
 namespace Moderator\Mapper;
 
 use Moderator\Pagination\ModeratorPagination;
+use Moderator\Pagination\TicketPagination;
 use Nakade\Abstracts\AbstractMapper;
 use \Doctrine\ORM\Query;
 use \Permission\Entity\RoleInterface;
@@ -82,8 +83,6 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
     }
 
     /**
-     * @param int $userId
-     *
      * @return array
      */
     public function getSupportRequests()
@@ -92,11 +91,39 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
         $qb = $em->createQueryBuilder('User')
             ->select('s')
             ->from('Moderator\Entity\SupportRequest', 's');
-            /*->innerJoin('s.requestedBy', 'User')
-            ->where('User.id = :userId')
-            ->setParameter('userId', $userId);*/
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $offset
+     *
+     * @return array
+     */
+    public function getSupportRequestsByPages($offset)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Tickets')
+            ->select('s')
+            ->from('Moderator\Entity\SupportRequest', 's')
+            ->setFirstResult($offset)
+            ->setMaxResults(TicketPagination::ITEMS_PER_PAGE)
+            ->orderBy('s.id', 'ASC')
+            ->addOrderBy('s.stage', 'ASC');
+//todo: validate correct order
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param $ticketId
+     *
+     * @return \Moderator\Entity\SupportRequest
+     */
+    public function getTicketById($ticketId)
+    {
+        return $this->getEntityManager()
+            ->getRepository('Moderator\Entity\SupportRequest')
+            ->find($ticketId);
     }
 
 }

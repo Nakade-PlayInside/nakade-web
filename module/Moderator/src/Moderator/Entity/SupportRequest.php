@@ -4,7 +4,6 @@ namespace Moderator\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Season\Entity\Association;
-use User\Entity\User;
 
 /**
  * Class SupportRequest
@@ -37,7 +36,8 @@ class SupportRequest
     private $association;
 
     /**
-     * @ORM\Column(name="subject", type="string", length=60, nullable=false)
+     * @ORM\ManyToOne(targetEntity="\Moderator\Entity\SupportSubject", cascade={"persist"})
+     * @ORM\JoinColumn(name="subject", referencedColumnName="id", nullable=false)
      */
     private $subject;
 
@@ -45,12 +45,6 @@ class SupportRequest
      * @ORM\OneToMany(targetEntity="\Moderator\Entity\SupportMessage", mappedBy="request", cascade={"persist", "remove"})
      */
     private $messages;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\User\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="processedBy", referencedColumnName="uid", nullable=true)
-     */
-    private $processedBy;
 
     /**
      * @ORM\Column(name="startDate", type="datetime", nullable=true)
@@ -63,19 +57,10 @@ class SupportRequest
     private $doneDate;
 
     /**
-     * @ORM\Column(name="isOngoing", type="boolean", nullable=false)
+     * @ORM\ManyToOne(targetEntity="\Moderator\Entity\SupportStage", cascade={"persist"})
+     * @ORM\JoinColumn(name="stage", referencedColumnName="id", nullable=false)
      */
-    private $isOngoing=false;
-
-    /**
-     * @ORM\Column(name="isDone", type="boolean", nullable=false)
-     */
-    private $isDone=false;
-
-    /**
-     * @ORM\Column(name="isCanceled", type="boolean", nullable=false)
-     */
-    private $isCanceled=false;
+    private $stage;
 
     /**
      * construct
@@ -133,69 +118,6 @@ class SupportRequest
         return $this->id;
     }
 
-    /**
-     * @param bool $isCanceled
-     */
-    public function setIsCanceled($isCanceled)
-    {
-        $this->isCanceled = $isCanceled;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isCanceled()
-    {
-        return $this->isCanceled;
-    }
-
-    /**
-     * @param bool $isDone
-     */
-    public function setIsDone($isDone)
-    {
-        $this->isDone = $isDone;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDone()
-    {
-        return $this->isDone;
-    }
-
-    /**
-     * @param bool $isOngoing
-     */
-    public function setIsOngoing($isOngoing)
-    {
-        $this->isOngoing = $isOngoing;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isOngoing()
-    {
-        return $this->isOngoing;
-    }
-
-    /**
-     * @param User $processedBy
-     */
-    public function setProcessedBy(User $processedBy)
-    {
-        $this->processedBy = $processedBy;
-    }
-
-    /**
-     * @return User
-     */
-    public function getProcessedBy()
-    {
-        return $this->processedBy;
-    }
 
     /**
      * @param \DateTime $startDate
@@ -214,15 +136,15 @@ class SupportRequest
     }
 
     /**
-     * @param string $subject
+     * @param SupportSubject $subject
      */
-    public function setSubject($subject)
+    public function setSubject(SupportSubject $subject)
     {
         $this->subject = $subject;
     }
 
     /**
-     * @return string
+     * @return SupportSubject
      */
     public function getSubject()
     {
@@ -244,6 +166,31 @@ class SupportRequest
     {
         return $this->type;
     }
+
+    /**
+     * @return \User\Entity\User
+     */
+    public function getRequester()
+    {
+        return $this->getMessages()->first()->getAuthor();
+    }
+
+    /**
+     * @param SupportStage $stage
+     */
+    public function setStage(SupportStage $stage)
+    {
+        $this->stage = $stage;
+    }
+
+    /**
+     * @return SupportStage
+     */
+    public function getStage()
+    {
+        return $this->stage;
+    }
+
 
     /**
      * @param SupportMessage $message

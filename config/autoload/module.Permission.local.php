@@ -48,6 +48,8 @@ return array(
             'Season\Controller\Confirm\register' => 'guest',
 
             'Moderator\Controller\Manager' => 'moderator',
+            'Moderator\Controller\Support' => 'guest',
+            'Moderator\Controller\LeagueManager' => 'user',
 
         )
     ),
