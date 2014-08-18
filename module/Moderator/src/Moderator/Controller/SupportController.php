@@ -16,9 +16,6 @@ class SupportController extends DefaultController
 {
     const HOME = 'support';
 
-    //todo: isActive In League Matches ?
-    //todo: hasAssociation
-
     /**
      *
      * @return array|ViewModel
@@ -199,7 +196,6 @@ class SupportController extends DefaultController
         foreach ($manager as $user) {
             $mail->sendMail($user);
         }
-
     }
 
 }

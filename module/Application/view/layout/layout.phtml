@@ -130,17 +130,21 @@
                      $this->url('appointmentShow'),
              )
          );
-
+        // todo: only active League Players can do request for a LM
          echo $this->Submenu(
              $this->translate('Support', 'Application'),
              array (
-                 $this->translate('LM Tickets', 'Application')   =>
-                     $this->url('leagueManager'),
+                 $this->translate('My Tickets', 'Application')   =>
+                     $this->url('support'),
                  $this->translate('League Manager', 'Application')   =>
                      $this->url('support', array('action' => 'add',
                          'id' => \Moderator\Controller\SupportTypeInterface::LEAGUE_MANAGER_TICKET)),
+                 $this->translate('Admin', 'Application')   =>
+                     $this->url('support', array('action' => 'add',
+                         'id' => \Moderator\Controller\SupportTypeInterface::ADMIN_TICKET)),
                  $this->translate('Referee', 'Application')   =>
-                     $this->url('support', array('action' => 'add')),
+                     $this->url('support', array('action' => 'add',
+                         'id' => \Moderator\Controller\SupportTypeInterface::REFEREE_TICKET)),
              )
          );
 
