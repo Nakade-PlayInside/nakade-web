@@ -4,6 +4,7 @@ namespace Moderator\Controller;
 use Moderator\Entity\SupportMessage;
 use Moderator\Entity\SupportRequest;
 use Moderator\Services\FormService;
+use Moderator\Services\MailService;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -14,6 +15,9 @@ use Zend\View\Model\ViewModel;
 class SupportController extends DefaultController
 {
     const HOME = 'support';
+
+    //todo: isActive In League Matches ?
+    //todo: hasAssociation
 
     /**
      *
@@ -76,16 +80,12 @@ class SupportController extends DefaultController
 
             if ($form->isValid()) {
 
+                /* @var $support \Moderator\Entity\SupportRequest */
                 $support = $form->getData();
-//todo: mail for LM
-                /* @var $mail \User\Mail\RegistrationMail */
-                //    $mail = $this->getMailService()->getMail(MailService::REGISTRATION_MAIL);
-                //    $mail->setUser($user);
-                //    $mail->sendMail($user);
-
                 $this->getMapper()->save($support);
-                $this->flashMessenger()->addSuccessMessage('New Support Request');
+                $this->sendTicketMail($support);
 
+                $this->flashMessenger()->addSuccessMessage('New Support Request');
                 return $this->redirect()->toRoute(self::HOME);
             } else {
                 $this->flashMessenger()->addErrorMessage('Input Error');
@@ -131,17 +131,12 @@ class SupportController extends DefaultController
             $form->setData($postData);
             if ($form->isValid()) {
 
+                /* @var $message \Moderator\Entity\SupportMessage */
                 $message = $form->getData();
-//todo: mail for LM
-                /* @var $mail \Moderator\Mail\ReplyInfoMail */
-             /*   $mail = $this->getMailService()->getMail(MailService::REPLY_INFO_MAIL);
-                $mail->setSupportRequest($message->getRequest());
-                $mail->sendMail($message->getRequest()->getRequester());
-             */
-
                 $this->getMapper()->save($message);
-                $this->flashMessenger()->addSuccessMessage('Replied To Request');
+                $this->sendTicketMail($message->getRequest());
 
+                $this->flashMessenger()->addSuccessMessage('Replied To Request');
                 return $this->redirect()->toRoute(self::HOME);
             } else {
                 $this->flashMessenger()->addErrorMessage('Input Error');
@@ -172,6 +167,39 @@ class SupportController extends DefaultController
         }
 
         return $this->redirect()->toRoute(self::HOME);
+    }
+
+    /**
+     * @param SupportRequest $ticket
+     */
+    private function sendTicketMail(SupportRequest $ticket)
+    {
+        $manager = array();
+
+        switch ($ticket->getType()->getId()) {
+            case self::LEAGUE_MANAGER_TICKET:
+                $associationId = $ticket->getAssociation()->getId();
+                $manager = $this->getMapper()->getLeagueManagerByAssociation($associationId);
+                break;
+
+            case self::ADMIN_TICKET:
+                $manager = $this->getMapper()->getAdministrators();
+                break;
+
+            case self::REFEREE_TICKET:
+                //todo: referee
+                break;
+        }
+
+        /* @var $mail \Moderator\Mail\TicketMail */
+        $mail = $this->getMailService()->getMail(MailService::TICKET_MAIL);
+        $mail->setSupportRequest($ticket);
+
+        /* @var $user \User\Entity\User */
+        foreach ($manager as $user) {
+            $mail->sendMail($user);
+        }
+
     }
 
 }

@@ -4,7 +4,7 @@ namespace Moderator\Mapper;
 use Moderator\Pagination\ModeratorPagination;
 use Moderator\Pagination\TicketPagination;
 use Nakade\Abstracts\AbstractMapper;
-use \Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr\Join;
 use \Permission\Entity\RoleInterface;
 
 /**
@@ -23,6 +23,45 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
         return $this->getEntityManager()
             ->getRepository('Moderator\Entity\LeagueManager')
             ->findAll();
+    }
+
+    /**
+     * @param int $associationId
+     *
+     * @return array
+     *
+     * //todo: deactivate if user role or activity is changed
+     */
+    public function getLeagueManagerByAssociation($associationId)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('User')
+            ->select('u')
+            ->from('User\Entity\User', 'u')
+            ->leftJoin('Moderator\Entity\LeagueManager', 'l', Join::WITH, 'l.manager = u')
+            ->innerJoin('l.association', 'Association')
+            ->where('Association.id = :associationId')
+            ->andWhere('l.isActive = true')
+            ->setParameter('associationId', $associationId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return array
+     */
+    public function getAdministrators()
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('User')
+            ->select('u')
+            ->from('User\Entity\User', 'u')
+            ->where('u.role = :moderator OR u.role = :admin')
+            ->andWhere('u.active = true')
+            ->setParameter('moderator', self::ROLE_MODERATOR)
+            ->setParameter('admin', self::ROLE_ADMIN);
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

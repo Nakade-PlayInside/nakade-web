@@ -2,7 +2,6 @@
 namespace Moderator\Controller;
 
 use Moderator\Entity\SupportMessage;
-use Moderator\Entity\SupportRequest;
 use Moderator\Pagination\TicketPagination;
 use Moderator\Services\FormService;
 use Moderator\Services\MailService;
@@ -17,6 +16,9 @@ class LeagueManagerController extends DefaultController
 {
     const HOME = 'leagueManager';
 
+    //todo: is LM
+    //todo: show Tickets for Association only
+    //todo: association owner is LM too
     /**
      *
      * @return array|ViewModel

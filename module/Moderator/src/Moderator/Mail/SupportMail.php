@@ -5,6 +5,7 @@ namespace Moderator\Mail;
 use League\Standings\ResultInterface;
 use Mail\NakadeMail;
 use Mail\Services\MailMessageFactory;
+use Moderator\Controller\SupportTypeInterface;
 use Moderator\Entity\StageInterface;
 use Moderator\Entity\SupportRequest;
 use Season\Entity\Match;
@@ -15,7 +16,7 @@ use \Zend\Mail\Transport\TransportInterface;
  *
  * @package Moderator\Mail
  */
-abstract class SupportMail extends NakadeMail implements StageInterface
+abstract class SupportMail extends NakadeMail implements StageInterface, SupportTypeInterface
 {
     protected $ticket;
 
@@ -56,12 +57,20 @@ abstract class SupportMail extends NakadeMail implements StageInterface
 
             $message = str_replace('%TICKET_NUMBER%', $this->getSupportRequest()->getId(), $message);
 
+            $moderator = $this->getSupportRequest()->getType()->getId();
+            $message = str_replace('%MODERATOR%', $this->getType($moderator), $message);
+
             $stage = $this->getStage($this->getSupportRequest()->getStage()->getId());
             $message = str_replace('%STAGE%', $stage, $message);
 
         }
     }
 
+    /**
+     * @param int $stage
+     *
+     * @return string
+     */
     protected function getStage($stage)
     {
         switch ($stage) {
@@ -88,6 +97,34 @@ abstract class SupportMail extends NakadeMail implements StageInterface
 
             default:
                 $text = $this->translate('New');
+        }
+
+        return $text;
+    }
+
+    /**
+     * @param int $type
+     *
+     * @return string
+     */
+    protected function getType($type)
+    {
+        switch ($type) {
+
+            case self::ADMIN_TICKET:
+                $text = $this->translate('Administrator');
+                break;
+
+            case self::LEAGUE_MANAGER_TICKET:
+                $text = $this->translate('League Manager');
+                break;
+
+            case self::REFEREE_TICKET:
+                $text = $this->translate('Referee');
+                break;
+
+            default:
+                $text = $this->translate('unknown');
         }
 
         return $text;

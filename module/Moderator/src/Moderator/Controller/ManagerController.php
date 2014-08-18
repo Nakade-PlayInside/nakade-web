@@ -15,6 +15,10 @@ use Zend\View\Model\ViewModel;
  */
 class ManagerController extends AbstractController
 {
+    //todo: association owner can do this too
+    //todo: association owner can do this to his owned association only
+    //todo: what association depends on role
+
     /**
      * @return array|ViewModel
      */

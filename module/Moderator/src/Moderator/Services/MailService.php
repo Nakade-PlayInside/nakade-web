@@ -15,6 +15,7 @@ class MailService extends AbstractMailService
 
     const REPLY_INFO_MAIL = 'reply_info';
     const STAGE_CHANGED_MAIL = 'stage';
+    const TICKET_MAIL = 'ticket';
 
     /**
      * @param string $typ
@@ -33,6 +34,10 @@ class MailService extends AbstractMailService
 
             case self::STAGE_CHANGED_MAIL:
                 $mail = new Mail\StageChangedMail($this->getMessage(), $this->getTransport());
+                break;
+
+            case self::TICKET_MAIL:
+                $mail = new Mail\TicketMail($this->getMessage(), $this->getTransport());
                 break;
 
             default:

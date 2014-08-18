@@ -25,7 +25,7 @@ class SupportControllerFactory implements FactoryInterface
 
         $repository = $serviceManager->get('Moderator\Services\RepositoryService');
         $form = $serviceManager->get('Moderator\Services\FormService');
-   //     $mail = $serviceManager->get('League\Services\MailService');
+        $mail = $serviceManager->get('Moderator\Services\MailService');
    //     $pagination = $serviceManager->get('League\Services\PaginationService');
 
 
@@ -33,7 +33,7 @@ class SupportControllerFactory implements FactoryInterface
 
         $controller->setFormFactory($form);
         $controller->setRepository($repository);
-     //   $controller->setMailService($mail);
+        $controller->setMailService($mail);
     //    $controller->setPaginationService($pagination);
 
         return $controller;
