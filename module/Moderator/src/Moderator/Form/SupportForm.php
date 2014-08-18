@@ -1,6 +1,7 @@
 <?php
 namespace Moderator\Form;
 
+use Moderator\Entity\SubjectInterface;
 use Moderator\Form\Hydrator\SupportHydrator;
 use Zend\InputFilter\InputFilter;
 /**
@@ -8,7 +9,7 @@ use Zend\InputFilter\InputFilter;
  *
  * @package Moderator\Form
  */
-class SupportForm extends BaseForm implements SupportInterface
+class SupportForm extends BaseForm implements SupportInterface, SubjectInterface
 {
 
     public function init()
@@ -20,15 +21,16 @@ class SupportForm extends BaseForm implements SupportInterface
             'options' => array(
                 'label' =>  $this->translate('Subject') . ':',
                 'value_options' => array (
-                    1 => $this->translate('Appointment'),
-                    2 => $this->translate('Result'),
-                    3 => $this->translate('Other'),
+                    self::SUBJECT_APPOINTMENT => $this->translate('Appointment'),
+                    self::SUBJECT_RESULT => $this->translate('Result'),
+                    self::SUBJECT_OTHER => $this->translate('Other'),
                 ),
                 'empty_option'  => '-- ' . $this->translate('choose') . ' --'
                 ),
             )
         );
 
+        //todo: association as select
         //association
         $this->add(
             array(
@@ -65,7 +67,7 @@ class SupportForm extends BaseForm implements SupportInterface
      */
     protected function initHydrator()
     {
-        $hydrator = new SupportHydrator($this->getEntityManager(), $this->getAuthenticationService());
+        $hydrator = new SupportHydrator($this->getEntityManager());
         return $hydrator;
     }
 

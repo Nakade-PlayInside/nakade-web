@@ -45,6 +45,17 @@ class SupportMessage
     private $date;
 
     /**
+     * @param SupportRequest $request
+     * @param User           $author
+     */
+    public function __construct(SupportRequest $request, User $author)
+    {
+        $this->author = $author;
+        $this->request = $request;
+        $this->date = new \DateTime();
+    }
+
+    /**
      * @param User $author
      */
     public function setAuthor(User $author)

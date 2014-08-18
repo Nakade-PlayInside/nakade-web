@@ -83,16 +83,22 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
     }
 
     /**
+     * @param int $userId
+     *
      * @return array
      */
-    public function getSupportRequests()
+    public function getSupportRequestsByUser($userId)
     {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder('User')
+        return $this->getEntityManager()
+            ->createQueryBuilder('User')
             ->select('s')
-            ->from('Moderator\Entity\SupportRequest', 's');
-
-        return $qb->getQuery()->getResult();
+            ->from('Moderator\Entity\SupportRequest', 's')
+            ->innerJoin('s.creator', 'User')
+            ->where('User.id = :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('s.createDate', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -111,6 +117,8 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
             ->orderBy('s.id', 'ASC')
             ->addOrderBy('s.stage', 'ASC');
 //todo: validate correct order
+        //todo: LM tickets only
+        //todo: edit paginator request
         return $qb->getQuery()->getResult();
     }
 
@@ -124,6 +132,17 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
         return $this->getEntityManager()
             ->getRepository('Moderator\Entity\SupportRequest')
             ->find($ticketId);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAssociationsByUser()
+    {
+        //todo: particicpant is user, season is onGoing -> all associations
+        return $this->getEntityManager()
+            ->getRepository('Season\Entity\Association')
+            ->findAll();
     }
 
 }

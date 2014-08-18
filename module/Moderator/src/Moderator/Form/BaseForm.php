@@ -20,7 +20,6 @@ abstract class BaseForm extends AbstractForm
     protected $mapper;
     protected $recipients;
 
-
     /**
      * @param ServiceLocatorInterface $serviceManager
      */

@@ -4,6 +4,7 @@ namespace Moderator\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Season\Entity\Association;
+use User\Entity\User;
 
 /**
  * Class SupportRequest
@@ -30,6 +31,12 @@ class SupportRequest
     private $type;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\User\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="creator", referencedColumnName="uid", nullable=false)
+     */
+    private $creator;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\Season\Entity\Association", cascade={"persist"})
      * @ORM\JoinColumn(name="association", referencedColumnName="id", nullable=true)
      */
@@ -45,6 +52,11 @@ class SupportRequest
      * @ORM\OneToMany(targetEntity="\Moderator\Entity\SupportMessage", mappedBy="request", cascade={"persist", "remove"})
      */
     private $messages;
+
+    /**
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    private $createDate;
 
     /**
      * @ORM\Column(name="startDate", type="datetime", nullable=true)
@@ -63,11 +75,15 @@ class SupportRequest
     private $stage;
 
     /**
-     * construct
+     * @param SupportType $type
+     * @param User        $creator
      */
-    public function __construct()
+    public function __construct(SupportType $type, User $creator)
     {
         $this->messages = new ArrayCollection();
+        $this->setType($type);
+        $this->setCreator($creator);
+        $this->setCreateDate(new \DateTime());
     }
 
     /**
@@ -85,6 +101,39 @@ class SupportRequest
     {
         return $this->association;
     }
+
+    /**
+     * @param User $creator
+     */
+    public function setCreator(User $creator)
+    {
+        $this->creator = $creator;
+    }
+
+    /**
+     * @return User
+     */
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @param \DateTime $createDate
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
 
     /**
      * @param \DateTime $doneDate
@@ -165,14 +214,6 @@ class SupportRequest
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * @return \User\Entity\User
-     */
-    public function getRequester()
-    {
-        return $this->getMessages()->first()->getAuthor();
     }
 
     /**

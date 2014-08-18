@@ -28,8 +28,8 @@ $this->headTitle('Support');
                 <td style="text-align: right"><?php echo $support->getId(); ?></td>
                 <td><?php echo $support->getAssociation()->getName();?></td>
                 <td><?php echo $support->getSubject()->getName(); ?></td>
-                <td><?php echo $support->getRequester()->getShortName();?></td>
-                <td><?php echo $support->getMessages()->first()->getDate()->format('d.m.y H:i'); ?></td>
+                <td><?php echo $support->getCreator()->getShortName();?></td>
+                <td><?php echo $support->getCreateDate()->format('d.m.y H:i'); ?></td>
                 <td>
                     <div class="mail-16 <?php echo $this->ticketStage($support->getStage()->getId());?> btnCenter"></div>
                 </td>

@@ -53,7 +53,6 @@ class MessageHydrator implements HydratorInterface, SupportInterface, StageInter
 
             $author = $this->getCreator();
             $object->setAuthor($author);
-            $object->setDate(new \DateTime());
             $object->setMessage($data[self::MESSAGE]);
         }
 

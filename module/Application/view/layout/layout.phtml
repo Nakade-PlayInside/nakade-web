@@ -134,10 +134,11 @@
          echo $this->Submenu(
              $this->translate('Support', 'Application'),
              array (
-                 $this->translate('Overview', 'Application')   =>
-                     $this->url('support', array('action' => 'myInquiries')),
+                 $this->translate('LM Tickets', 'Application')   =>
+                     $this->url('leagueManager'),
                  $this->translate('League Manager', 'Application')   =>
-                     $this->url('support', array('action' => 'add')),
+                     $this->url('support', array('action' => 'add',
+                         'id' => \Moderator\Controller\SupportTypeInterface::LEAGUE_MANAGER_TICKET)),
                  $this->translate('Referee', 'Application')   =>
                      $this->url('support', array('action' => 'add')),
              )

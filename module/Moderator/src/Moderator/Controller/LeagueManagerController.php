@@ -1,14 +1,11 @@
 <?php
 namespace Moderator\Controller;
 
-use Moderator\Entity\StageInterface;
 use Moderator\Entity\SupportMessage;
 use Moderator\Entity\SupportRequest;
 use Moderator\Pagination\TicketPagination;
 use Moderator\Services\FormService;
 use Moderator\Services\MailService;
-use Moderator\Services\RepositoryService;
-use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -16,8 +13,10 @@ use Zend\View\Model\ViewModel;
  *
  * @package Moderator\Controller
  */
-class LeagueManagerController extends AbstractController implements StageInterface
+class LeagueManagerController extends DefaultController
 {
+    const HOME = 'leagueManager';
+
     /**
      *
      * @return array|ViewModel
@@ -62,15 +61,13 @@ class LeagueManagerController extends AbstractController implements StageInterfa
     public function mailAction()
     {
         $ticketId = (int) $this->params()->fromRoute('id', 0);
-        $ticket = $this->getMapper()->getTicketById($ticketId);
+
+        $ticket = $this->setTicketState($ticketId, self::STAGE_WAITING);
+        $author = $this->getUserById($this->identity()->getId());
+        $message = new SupportMessage($ticket, $author);
 
         /* @var $form \Moderator\Form\MailForm */
         $form = $this->getForm(FormService::MAIL_FORM);
-        $message = new SupportMessage();
-        $stage = $this->getStageById(self::STAGE_WAITING);
-        $ticket->setStage($stage);
-        $message->setRequest($ticket);
-
         $form->bindEntity($message);
 
         /* @var $request \Zend\Http\Request */
@@ -82,23 +79,18 @@ class LeagueManagerController extends AbstractController implements StageInterfa
 
             //cancel
             if (isset($postData['button']['cancel'])) {
-                return $this->redirect()->toRoute('leagueManager', array('action' => 'detail', 'id' => $ticketId));
+                return $this->redirect()->toRoute(self::HOME, array('action' => 'detail', 'id' => $ticketId));
             }
 
             $form->setData($postData);
             if ($form->isValid()) {
 
-               $message = $form->getData();
-
-                /* @var $mail \Moderator\Mail\ReplyInfoMail */
-                $mail = $this->getMailService()->getMail(MailService::REPLY_INFO_MAIL);
-                $mail->setSupportRequest($message->getRequest());
-                $mail->sendMail($message->getRequest()->getRequester());
-
+                $message = $form->getData();
+                $this->sendMail($ticket, MailService::REPLY_INFO_MAIL);
                 $this->getMapper()->save($message);
-                $this->flashMessenger()->addSuccessMessage('New Support Reply Message');
 
-                return $this->redirect()->toRoute('leagueManager');
+                $this->flashMessenger()->addSuccessMessage('New Support Reply Message');
+                return $this->redirect()->toRoute(self::HOME);
             } else {
                 $this->flashMessenger()->addErrorMessage('Input Error');
             }
@@ -120,22 +112,16 @@ class LeagueManagerController extends AbstractController implements StageInterfa
     public function doneAction()
     {
         $ticketId = (int) $this->params()->fromRoute('id', 0);
-        $ticket = $this->getMapper()->getTicketById($ticketId);
-
+        $ticket = $this->setTicketState($ticketId, self::STAGE_DONE);
         if (!is_null($ticket)) {
-            $stage = $this->getStageById(self::STAGE_DONE);
-            $ticket->setStage($stage);
             $ticket->setDoneDate(new \DateTime());
-            $this->getMapper()->save($ticket);
-
-            $this->sendStageMail($ticket);
-
+            $this->sendMail($ticket, MailService::STAGE_CHANGED_MAIL);
             $this->flashMessenger()->addSuccessMessage('Ticket done.');
         } else {
             $this->flashMessenger()->addSuccessMessage('Input Error');
         }
 
-        return $this->redirect()->toRoute('leagueManager');
+        return $this->redirect()->toRoute(self::HOME);
     }
 
     /**
@@ -145,21 +131,16 @@ class LeagueManagerController extends AbstractController implements StageInterfa
     public function acceptAction()
     {
         $ticketId = (int) $this->params()->fromRoute('id', 0);
-        $ticket = $this->getMapper()->getTicketById($ticketId);
-
+        $ticket = $this->setTicketState($ticketId, self::STAGE_IN_PROCESS);
         if (!is_null($ticket)) {
-            $stage = $this->getStageById(self::STAGE_IN_PROCESS);
-            $ticket->setStage($stage);
             $ticket->setStartDate(new \DateTime());
-            $this->getMapper()->save($ticket);
-
-            $this->sendStageMail($ticket);
+            $this->sendMail($ticket, MailService::STAGE_CHANGED_MAIL);
             $this->flashMessenger()->addSuccessMessage('Ticket accepted.');
         } else {
             $this->flashMessenger()->addSuccessMessage('Input Error');
         }
 
-        return $this->redirect()->toRoute('leagueManager');
+        return $this->redirect()->toRoute(self::HOME);
     }
 
     /**
@@ -169,20 +150,15 @@ class LeagueManagerController extends AbstractController implements StageInterfa
     public function cancelAction()
     {
         $ticketId = (int) $this->params()->fromRoute('id', 0);
-        $ticket = $this->getMapper()->getTicketById($ticketId);
+        $ticket = $this->setTicketState($ticketId, self::STAGE_CANCELED);
 
         if (!is_null($ticket)) {
-            $stage = $this->getStageById(self::STAGE_CANCELED);
-            $ticket->setStage($stage);
-            $this->getMapper()->save($ticket);
-
-            $this->sendStageMail($ticket);
             $this->flashMessenger()->addSuccessMessage('Ticket canceled.');
         } else {
             $this->flashMessenger()->addSuccessMessage('Input Error');
         }
 
-        return $this->redirect()->toRoute('leagueManager');
+        return $this->redirect()->toRoute(self::HOME);
     }
 
     /**
@@ -192,51 +168,15 @@ class LeagueManagerController extends AbstractController implements StageInterfa
     public function reopenAction()
     {
         $ticketId = (int) $this->params()->fromRoute('id', 0);
-        $ticket = $this->getMapper()->getTicketById($ticketId);
-
+        $ticket = $this->setTicketState($ticketId, self::STAGE_REOPENED);
         if (!is_null($ticket)) {
-            $stage = $this->getStageById(self::STAGE_REOPENED);
-            $ticket->setStage($stage);
-            $this->getMapper()->save($ticket);
-
-            $this->sendStageMail($ticket);
+            $this->sendMail($ticket, MailService::STAGE_CHANGED_MAIL);
             $this->flashMessenger()->addSuccessMessage('Ticket reopened.');
         } else {
             $this->flashMessenger()->addSuccessMessage('Input Error');
         }
 
-        return $this->redirect()->toRoute('leagueManager');
-    }
-
-
-    /**
-     * @return \Moderator\Mapper\ManagerMapper
-     */
-    private function getMapper()
-    {
-        /* @var $repo \Moderator\Services\RepositoryService */
-        $repo = $this->getRepository();
-        return $repo->getMapper(RepositoryService::MANAGER_MAPPER);
-    }
-
-    /**
-     * @param int $stageId
-     *
-     * @return \Moderator\Entity\SupportStage
-     */
-    private function getStageById($stageId)
-    {
-        return $this->getMapper()->getEntityManager()->getReference('Moderator\Entity\SupportStage', intval($stageId));
-    }
-
-    /**
-     * @param SupportRequest $ticket
-     */
-    private function sendStageMail(SupportRequest $ticket)
-    {
-        $mail = $this->getMailService()->getMail(MailService::STAGE_CHANGED_MAIL);
-        $mail->setSupportRequest($ticket);
-        $mail->sendMail($ticket->getRequester());
+        return $this->redirect()->toRoute(self::HOME);
     }
 
 }

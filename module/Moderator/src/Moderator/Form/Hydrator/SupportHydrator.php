@@ -1,30 +1,27 @@
 <?php
 namespace Moderator\Form\Hydrator;
 
+use Moderator\Entity\StageInterface;
 use Moderator\Entity\SupportMessage;
 use Moderator\Form\SupportInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Doctrine\ORM\EntityManager;
-use Zend\Authentication\AuthenticationService;
 
 /**
  * Class SupportHydrator
  *
  * @package Moderator\Form\Hydrator
  */
-class SupportHydrator implements HydratorInterface, SupportInterface
+class SupportHydrator implements HydratorInterface, SupportInterface, StageInterface
 {
     private $entityManager;
-    private $authenticationService;
 
     /**
      * @param EntityManager $em
-     * @param AuthenticationService $auth
      */
-    public function __construct(EntityManager $em, AuthenticationService $auth)
+    public function __construct(EntityManager $em)
     {
         $this->entityManager = $em;
-        $this->authenticationService = $auth;
     }
 
     /**
@@ -61,17 +58,19 @@ class SupportHydrator implements HydratorInterface, SupportInterface
         }
 
         if (isset($data[self::SUBJECT])) {
-            $object->setSubject($data[self::ASSOCIATION]);
+            $subject = $this->getSubjectById($data[self::SUBJECT]);
+            $object->setSubject($subject);
         }
 
         if (isset($data[self::MESSAGE])) {
 
-            $author = $this->getCreator();
-            $message = new SupportMessage();
-            $message->setAuthor($author);
-            $message->setDate(new \DateTime());
+            $stage = $this->getStageById(self::STAGE_NEW);
+            $object->setStage($stage);
+
+            $message = new SupportMessage($object, $object->getCreator());
             $message->setMessage($data[self::MESSAGE]);
             $object->addMessage($message);
+
             $this->getEntityManager()->persist($object);
             $this->getEntityManager()->flush();
 
@@ -79,15 +78,6 @@ class SupportHydrator implements HydratorInterface, SupportInterface
 
 
         return $object;
-    }
-
-
-    /**
-     * @return AuthenticationService
-     */
-    private function getAuthenticationService()
-    {
-        return $this->authenticationService;
     }
 
     /**
@@ -101,27 +91,23 @@ class SupportHydrator implements HydratorInterface, SupportInterface
     }
 
     /**
-     * @param int $userId
+     * @param int $subjectId
      *
-     * @return \User\Entity\User
+     * @return \Moderator\Entity\SupportSubject
      */
-    private function getUserById($userId)
+    private function getSubjectById($subjectId)
     {
-        return $this->getEntityManager()->getReference('User\Entity\User', intval($userId));
+        return $this->getEntityManager()->getReference('Moderator\Entity\SupportSubject', intval($subjectId));
     }
 
     /**
-     * @return \User\Entity\User
+     * @param int $stageId
+     *
+     * @return \Moderator\Entity\SupportStage
      */
-    private function getCreator()
+    private function getStageById($stageId)
     {
-        $authService = $this->getAuthenticationService();
-        if (!$authService->hasIdentity()) {
-            return null;
-        }
-
-        $userId = $authService->getIdentity()->getId();
-        return $this->getUserById($userId);
+        return $this->getEntityManager()->getReference('Moderator\Entity\SupportStage', intval($stageId));
     }
 
     /**

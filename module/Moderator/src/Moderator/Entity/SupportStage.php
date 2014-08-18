@@ -84,4 +84,12 @@ class SupportStage implements StageInterface
         return $this->getId() == self::STAGE_NEW;
     }
 
+    /**
+     * @return bool
+     */
+    public function isWaiting()
+    {
+        return $this->getId() == self::STAGE_WAITING;
+    }
+
 }
