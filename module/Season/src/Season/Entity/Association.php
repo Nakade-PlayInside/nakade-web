@@ -2,6 +2,7 @@
 namespace Season\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use User\Entity\User;
 
 /**
  * Class Association
@@ -13,78 +14,102 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Association
 {
-  /**
-   * Primary Identifier
-   *
-   * @ORM\Id
-   * @ORM\Column(name="id", type="integer")
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  private $id;
+    /**
+     * Primary Identifier
+     *
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
-  /**
-   * @ORM\Column(name="name", type="string", length=45, unique=true, nullable=false)
-   */
-   private $name;
+    /**
+     * @ORM\Column(name="name", type="string", length=45, unique=true, nullable=false)
+     */
+    private $name;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="\Season\Entity\SeasonDates", cascade={"persist"})
-   * @ORM\JoinColumn(name="seasonDates", referencedColumnName="id", nullable=false)
-   */
-   private $seasonDates;
+    /**
+     * @ORM\ManyToOne(targetEntity="\Season\Entity\SeasonDates", cascade={"persist"})
+     * @ORM\JoinColumn(name="seasonDates", referencedColumnName="id", nullable=false)
+     */
+    private $seasonDates;
 
-  /**
-   * @param int $id
-   *
-   * @return $this
-   */
-  public function setId($id)
-  {
-    $this->id = $id;
-    return $this;
-  }
+    /**
+     * @ORM\ManyToOne(targetEntity="\User\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="owner", referencedColumnName="uid", nullable=false)
+     */
+    private $owner;
 
-  /**
-   * @return int
-   */
-  public function getId()
-  {
-    return $this->id;
-  }
 
-  /**
-   * @param SeasonDates $seasonDates
-   */
-  public function setSeasonDates(SeasonDates $seasonDates)
-  {
-      $this->seasonDates = $seasonDates;
-  }
+    /**
+     * @param int $id
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
 
-  /**
-   * @return SeasonDates
-   */
-  public function getSeasonDates()
-  {
-     return $this->seasonDates;
-  }
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  /**
-   * @param string $name
-   *
-   * @return $this
-   */
-  public function setName($name)
-  {
-    $this->name = $name;
-    return $this;
-  }
+    /**
+     * @param SeasonDates $seasonDates
+     */
+    public function setSeasonDates(SeasonDates $seasonDates)
+    {
+        $this->seasonDates = $seasonDates;
+    }
 
-  /**
-   * @return string
-   */
-  public function getName()
-  {
-    return $this->name;
-  }
+    /**
+     * @return SeasonDates
+     */
+    public function getSeasonDates()
+    {
+        return $this->seasonDates;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param User $owner
+     */
+    public function setOwner(User $owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
+     * @return User
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
 
 }

@@ -176,7 +176,7 @@ class SupportController extends DefaultController
         switch ($ticket->getType()->getId()) {
             case self::LEAGUE_MANAGER_TICKET:
                 $associationId = $ticket->getAssociation()->getId();
-                $manager = $this->getMapper()->getLeagueManagerByAssociation($associationId);
+                $manager = $this->getMapper()->getTicketManagerByAssociation($associationId);
                 break;
 
             case self::ADMIN_TICKET:

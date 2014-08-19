@@ -1,10 +1,11 @@
 <?php
 namespace Moderator\Mapper;
 
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Moderator\Pagination\ModeratorPagination;
 use Moderator\Pagination\TicketPagination;
 use Nakade\Abstracts\AbstractMapper;
-use Doctrine\ORM\Query\Expr\Join;
 use \Permission\Entity\RoleInterface;
 
 /**
@@ -16,36 +17,68 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
 {
 
     /**
-     * @return array
-     */
-    public function getLeagueManager()
-    {
-        return $this->getEntityManager()
-            ->getRepository('Moderator\Entity\LeagueManager')
-            ->findAll();
-    }
-
-    /**
+     * for ticket mails
+     *
      * @param int $associationId
      *
      * @return array
+     */
+    public function getTicketManagerByAssociation($associationId)
+    {
+        $leagueManagers = $this->getLeagueManagerByAssociation($associationId);
+        $owner = $this->getOwnerByAssociation($associationId);
+
+        return array_merge($leagueManagers, $owner);
+    }
+
+    /**
+     * get assigned LM
      *
-     * //todo: deactivate if user role or activity is changed
+     * @param $associationId
+     *
+     * @return array
      */
     public function getLeagueManagerByAssociation($associationId)
     {
-        return $this->getEntityManager()
+        $qb = $this->getEntityManager()
             ->createQueryBuilder('User')
             ->select('u')
             ->from('User\Entity\User', 'u')
             ->leftJoin('Moderator\Entity\LeagueManager', 'l', Join::WITH, 'l.manager = u')
-            ->innerJoin('l.association', 'Association')
-            ->where('Association.id = :associationId')
-            ->andWhere('l.isActive = true')
+            ->innerJoin('l.association', 'a')
+            ->Where('l.isActive = true')
+            ->andWhere('a.id =:associationId')
             ->setParameter('associationId', $associationId)
-            ->getQuery()
-            ->getResult();
+            ->andWhere('u.active = true');
+
+        $this->addManagerRoles($qb);
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
     }
+
+    /**
+     * @param $associationId
+     *
+     * @return array
+     */
+    public function getOwnerByAssociation($associationId)
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder('User')
+            ->select('u')
+            ->from('User\Entity\User', 'u')
+            ->leftJoin('Season\Entity\Association', 'a', Join::WITH, 'a.owner = u')
+            ->Where('a.id =:associationId')
+            ->setParameter('associationId', $associationId)
+            ->andWhere('u.active = true');
+
+        $this->addOwnerRoles($qb);
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
+
 
     /**
      * @return array
@@ -56,11 +89,9 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
         $qb = $em->createQueryBuilder('User')
             ->select('u')
             ->from('User\Entity\User', 'u')
-            ->where('u.role = :moderator OR u.role = :admin')
-            ->andWhere('u.active = true')
-            ->setParameter('moderator', self::ROLE_MODERATOR)
-            ->setParameter('admin', self::ROLE_ADMIN);
+            ->Where('u.active = true');
 
+        $this->addAdminRoles($qb);
         return $qb->getQuery()->getResult();
     }
 
@@ -109,15 +140,13 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
      */
     public function getAvailableManager()
     {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder('User')
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder('User')
             ->select('u')
             ->from('User\Entity\User', 'u')
-            ->where('u.role = :user OR u.role = :member')
-            ->andWhere('u.active = true')
-            ->setParameter('user', self::ROLE_USER)
-            ->setParameter('member', self::ROLE_MEMBER);
+            ->Where('u.active = true');
 
+        $this->addManagerRoles($qb);
         return $qb->getQuery()->getResult();
     }
 
@@ -162,6 +191,70 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
     }
 
     /**
+     * @param $userId
+     *
+     * @return bool
+     */
+    public function isAdmin($userId)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('Admin')
+            ->select('u')
+            ->from('User\Entity\User', 'u')
+            ->andWhere('u.active = true')
+            ->andWhere('u.id = :uid')
+            ->setParameter('uid', $userId);
+
+        $this->addAdminRoles($qb);
+        $result = $qb->getQuery()->getResult();
+
+        return !empty($result);
+    }
+
+    /**
+     * @param $userId
+     *
+     * @return bool
+     */
+    public function isLeagueManager($userId)
+    {
+
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder('User')
+            ->select('u')
+            ->from('User\Entity\User', 'u')
+            ->leftJoin('Moderator\Entity\LeagueManager', 'l', Join::WITH, 'l.manager = u')
+            ->andWhere('l.isActive = true')
+            ->andWhere('u.active = true');
+
+        $this->addManagerRoles($qb);
+        $result = $qb->getQuery()->getResult();
+
+        return !empty($result);
+    }
+
+    /**
+     * @param $userId
+     *
+     * @return bool
+     */
+    public function isOwner($userId)
+    {
+
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder('User')
+            ->select('u')
+            ->from('User\Entity\User', 'u')
+            ->leftJoin('Season\Entity\Association', 'a', Join::WITH, 'a.owner = u')
+            ->Where('u.active = true')
+            ->andWhere('u.id = :userId');
+
+        $this->addOwnerRoles($qb);
+        $result = $qb->getQuery()->getResult();
+
+        return !empty($result);
+    }
+
+    /**
      * @param $ticketId
      *
      * @return \Moderator\Entity\SupportRequest
@@ -184,5 +277,32 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
             ->findAll();
     }
 
+    private function addManagerRoles(QueryBuilder &$queryBuilder)
+    {
+        $alias = current($queryBuilder->getDQLPart('from'))->getAlias();
+        $queryBuilder
+            ->andWhere("$alias.role = :user OR $alias.role = :member")
+            ->setParameter('user', self::ROLE_USER)
+            ->setParameter('member', self::ROLE_MEMBER);
+    }
+
+    private function addAdminRoles(QueryBuilder &$queryBuilder)
+    {
+        $alias = current($queryBuilder->getDQLPart('from'))->getAlias();
+        $queryBuilder
+            ->andWhere("$alias.role = :moderator OR $alias.role = :admin")
+            ->setParameter('moderator', self::ROLE_MODERATOR)
+            ->setParameter('admin', self::ROLE_ADMIN);
+
+    }
+
+    private function addOwnerRoles(QueryBuilder &$queryBuilder)
+    {
+        $alias = current($queryBuilder->getDQLPart('from'))->getAlias();
+        $queryBuilder
+            ->andWhere("$alias.role != :guest")
+            ->setParameter('guest', self::ROLE_GUEST);
+
+    }
 }
 
