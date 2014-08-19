@@ -170,11 +170,13 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
     }
 
     /**
+     * manager ticket overview
+     *
      * @param int $offset
      *
      * @return array
      */
-    public function getSupportRequestsByPages($offset)
+    public function getTicketsByPages($offset)
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder('Tickets')

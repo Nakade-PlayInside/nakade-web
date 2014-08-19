@@ -35,7 +35,7 @@ class LeagueManagerController extends DefaultController
 
         return new ViewModel(
             array(
-                'supportRequests' => $this->getMapper()->getSupportRequestsByPages($offset),
+                'supportRequests' => $this->getMapper()->getTicketsByPages($offset),
                 'paginator' => $pagination->getPagination($page),
             )
         );

@@ -72,6 +72,9 @@
             $this->translate('Coupons', 'Application')    =>
                 $this->url('coupon', array('action' => 'moderate')),
 
+                $this->translate('Tickets', 'Application')    =>
+                    $this->url('leagueManager'),
+
             );
 
             echo $this->Submenu('Admin', $admin);
