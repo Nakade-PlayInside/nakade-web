@@ -1,0 +1,52 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Moderator');
+/* @var $manager \Moderator\Entity\LeagueManager */
+$this->headTitle('Moderator View');
+
+?>
+
+<?php $this->placeholder('nothing')->captureStart();?>
+    <h3><?php echo $this->translate('No League Manager found'); ?></h3>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+<?php $this->placeholder('manager')->captureStart();?>
+    <h3><?php echo $this->translate('My League Manager'); ?></h3>
+    <hr/>
+    <a class="addUser buttons-32 user-add-32" title="<?php echo $this->translate("add League Manager"); ?>" href="
+    <?php echo $this->url('manager', array('action' => 'add')); ?>"></a>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'moderator'); ?>
+    <table class="table profile">
+        <tr>
+            <th><?php echo $this->translate("ID"); ?></th>
+            <th><?php echo $this->translate("Name"); ?></th>
+            <th><?php echo $this->translate("League"); ?></th>
+            <th><?php echo $this->translate("Nominated"); ?></th>
+            <th><?php echo $this->translate("active"); ?></th>
+        </tr>
+        <?php foreach ($this->managers as $manager) : ?>
+            <tr style="background-color:<?php
+            echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+                <td style="text-align: right"><?php echo $manager->getId(); ?></td>
+                <td><?php echo $manager->getManager()->getName();?></td>
+                <td><?php echo $manager->getAssociation()->getName();?></td>
+                <td><?php echo $manager->getNominationDate()->format('d.m.Y'); ?></td>
+                <td>
+                    <a class="button" title="<?php echo $this->translate('shift'); ?>"
+                       href="<?php echo $this->url('manager', array(
+                           'action' => $this->activateAction($manager->IsActive()),
+                           'id' => $manager->getId()));
+                       ?>">
+                        <div class='<?php echo $this->isActive($manager->IsActive()); ?> btnCenter'></div>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("League Manager"); ?></p>
+<?php $this->placeholder('manager')->captureEnd();
+
+if (empty($this->managers)) {
+    echo $this->placeholder('nothing');
+} else {
+    echo $this->placeholder('manager');
+}

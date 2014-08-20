@@ -113,6 +113,29 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
     }
 
     /**
+     * @param int $userId
+     * @param int $offset
+     *
+     * @return array
+     */
+    public function getMyLeagueManagersByPages($userId, $offset)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('LeagueManager')
+            ->select('l')
+            ->from('Moderator\Entity\LeagueManager', 'l')
+            ->leftJoin('Season\Entity\Association', 'a', Join::WITH, 'a = l.association')
+            ->innerJoin('a.owner', 'user')
+            ->where('user.id = :userId')
+            ->setParameter('userId', $userId)
+            ->setFirstResult($offset)
+            ->setMaxResults(ModeratorPagination::ITEMS_PER_PAGE);
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+    /**
      * @return array
      */
     public function getReferees()

@@ -16,16 +16,17 @@ use Zend\View\Model\ViewModel;
  */
 class ManagerController extends AbstractController
 {
-    //todo: association owner can do this too
-    //todo: association owner can do this to his owned association only
-    //todo: what association depends on role
 
     /**
+     * for admin
+     *
      * @return array|ViewModel
      */
     public function indexAction()
     {
         $page = (int) $this->params()->fromRoute('id', 1);
+
+        //todo: MODERATOR should become OWNER or can change owner
 
         /* @var $entityManager \Doctrine\ORM\EntityManager */
         $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
@@ -36,6 +37,30 @@ class ManagerController extends AbstractController
             array(
                 'paginator' => $pagination->getPagination($page),
                 'managers' =>  $this->getMapper()->getLeagueManagerByPages($offset),
+            )
+        );
+    }
+
+    /**
+     * association owner
+     *
+     * @return array|ViewModel
+     */
+    public function myManagerAction()
+    {
+        $page = (int) $this->params()->fromRoute('id', 1);
+
+        //todo: isLeagueOwner as PERMISSION
+
+        /* @var $entityManager \Doctrine\ORM\EntityManager */
+        $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $pagination = new ModeratorPagination($entityManager);
+        $offset = (ModeratorPagination::ITEMS_PER_PAGE * ($page -1));
+
+        return new ViewModel(
+            array(
+                'paginator' => $pagination->getPagination($page),
+                'managers' =>  $this->getMapper()->getMyLeagueManagersByPages($this->identity()->getId(), $offset),
             )
         );
     }
