@@ -4,6 +4,7 @@ namespace Moderator\Controller;
 use Moderator\Entity\LeagueManager;
 use Moderator\Pagination\ModeratorPagination;
 use Moderator\Services\FormService;
+use Moderator\Services\MailService;
 use Moderator\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
@@ -66,11 +67,11 @@ class ManagerController extends AbstractController
             if ($form->isValid()) {
 
                 $manager = $form->getData();
-//todo: mail for LM
-                /* @var $mail \User\Mail\RegistrationMail */
-                //    $mail = $this->getMailService()->getMail(MailService::REGISTRATION_MAIL);
-                //    $mail->setUser($user);
-                //    $mail->sendMail($user);
+
+                /* @var $mail \Moderator\Mail\LeagueManagerNominationMail */
+                $mail = $this->getMailService()->getMail(MailService::LM_NOMINATION_MAIL);
+                $mail->setLeagueManager($manager);
+                $mail->sendMail($manager->getManager());
 
                 $this->getMapper()->save($manager);
                 $this->flashMessenger()->addSuccessMessage('New League Manager added');

@@ -2,13 +2,11 @@
 
 namespace Moderator\Mail;
 
-use League\Standings\ResultInterface;
 use Mail\NakadeMail;
 use Mail\Services\MailMessageFactory;
 use Moderator\Controller\SupportTypeInterface;
 use Moderator\Entity\StageInterface;
 use Moderator\Entity\SupportRequest;
-use Season\Entity\Match;
 use \Zend\Mail\Transport\TransportInterface;
 
 /**

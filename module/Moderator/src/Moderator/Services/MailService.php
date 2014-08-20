@@ -16,6 +16,8 @@ class MailService extends AbstractMailService
     const REPLY_INFO_MAIL = 'reply_info';
     const STAGE_CHANGED_MAIL = 'stage';
     const TICKET_MAIL = 'ticket';
+    const REFEREE_NOMINATION_MAIL = 'referee_nomination';
+    const LM_NOMINATION_MAIL = 'lm_nomination';
 
     /**
      * @param string $typ
@@ -38,6 +40,14 @@ class MailService extends AbstractMailService
 
             case self::TICKET_MAIL:
                 $mail = new Mail\TicketMail($this->getMessage(), $this->getTransport());
+                break;
+
+            case self::REFEREE_NOMINATION_MAIL:
+                $mail = new Mail\RefereeNominationMail($this->getMessage(), $this->getTransport());
+                break;
+
+            case self::LM_NOMINATION_MAIL:
+                $mail = new Mail\LeagueManagerNominationMail($this->getMessage(), $this->getTransport());
                 break;
 
             default:

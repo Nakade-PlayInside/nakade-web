@@ -2,22 +2,22 @@
 
 namespace Moderator\Services;
 
-use Moderator\Controller\SupportController;
+use Moderator\Controller\RefereeController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class SupportControllerFactory
+ * Class RefereeControllerFactory
  *
  * @package Moderator\Services
  */
-class SupportControllerFactory implements FactoryInterface
+class RefereeControllerFactory implements FactoryInterface
 {
 
     /**
      * @param ServiceLocatorInterface $services
      *
-     * @return SupportController
+     * @return ManagerController
      */
     public function createService(ServiceLocatorInterface $services)
     {
@@ -27,7 +27,7 @@ class SupportControllerFactory implements FactoryInterface
         $form = $serviceManager->get('Moderator\Services\FormService');
         $mail = $serviceManager->get('Moderator\Services\MailService');
 
-        $controller = new SupportController();
+        $controller = new RefereeController();
 
         $controller->setFormFactory($form);
         $controller->setRepository($repository);

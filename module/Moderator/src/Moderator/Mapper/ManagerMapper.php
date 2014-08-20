@@ -112,6 +112,16 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @return array
+     */
+    public function getReferees()
+    {
+        return $this->getEntityManager()
+            ->getRepository('Moderator\Entity\Referee')
+            ->findAll();
+    }
+
 
     /**
      * @param int $leagueManagerId
@@ -123,6 +133,18 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
         return $this->getEntityManager()
             ->getRepository('Moderator\Entity\LeagueManager')
             ->find($leagueManagerId);
+    }
+
+    /**
+     * @param int $refereeId
+     *
+     * @return \Moderator\Entity\Referee
+     */
+    public function getRefereeById($refereeId)
+    {
+        return $this->getEntityManager()
+            ->getRepository('Moderator\Entity\Referee')
+            ->find($refereeId);
     }
 
     /**
@@ -139,7 +161,7 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
      * @return array
      */
     public function getAvailableManager()
-    {
+    {//todo: not self => owner
         $qb = $this->getEntityManager()
             ->createQueryBuilder('User')
             ->select('u')
@@ -147,6 +169,42 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
             ->Where('u.active = true');
 
         $this->addManagerRoles($qb);
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * notIn method
+     *
+     * @return array
+     */
+    private function getIdsOfNominatedReferees()
+    {
+        $result = $this->getEntityManager()
+            ->createQueryBuilder('Referees')
+            ->select('u.id')
+            ->from('User\Entity\User', 'u')
+            ->leftJoin('Moderator\Entity\Referee', 'r', Join::WITH, 'r.user = u')
+            ->where('r.user = u')
+            ->getQuery()
+            ->getResult();
+
+        return $this->getIdArray($result);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAvailableReferee()
+    {
+        $notIn = $this->getIdsOfNominatedReferees();
+        $qb = $this->getEntityManager()->createQueryBuilder('Referees');
+
+        $qb->select('u')
+           ->from('User\Entity\User', 'u')
+           ->Where($qb->expr()->notIn('u.id', $notIn))
+           ->andWhere('u.active = true');
+
+        $this->addRefereeRoles($qb);
         return $qb->getQuery()->getResult();
     }
 
@@ -226,7 +284,8 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
             ->from('User\Entity\User', 'u')
             ->leftJoin('Moderator\Entity\LeagueManager', 'l', Join::WITH, 'l.manager = u')
             ->andWhere('l.isActive = true')
-            ->andWhere('u.active = true');
+            ->andWhere('u.active = true')
+            ->setParameter('uid', $userId);
 
         $this->addManagerRoles($qb);
         $result = $qb->getQuery()->getResult();
@@ -248,9 +307,33 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
             ->from('User\Entity\User', 'u')
             ->leftJoin('Season\Entity\Association', 'a', Join::WITH, 'a.owner = u')
             ->Where('u.active = true')
-            ->andWhere('u.id = :userId');
+            ->andWhere('u.id = :userId')
+            ->setParameter('uid', $userId);
 
         $this->addOwnerRoles($qb);
+        $result = $qb->getQuery()->getResult();
+
+        return !empty($result);
+    }
+
+    /**
+     * @param $userId
+     *
+     * @return bool
+     */
+    public function isReferee($userId)
+    {
+
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder('User')
+            ->select('u')
+            ->from('User\Entity\User', 'u')
+            ->leftJoin('Moderator\Entity\Referee', 'r', Join::WITH, 'r.user = u')
+            ->Where('u.active = true')
+            ->andWhere('u.id = :userId')
+            ->setParameter('uid', $userId);
+
+        $this->addRefereeRoles($qb);
         $result = $qb->getQuery()->getResult();
 
         return !empty($result);
@@ -279,6 +362,9 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
             ->findAll();
     }
 
+    /**
+     * @param QueryBuilder $queryBuilder
+     */
     private function addManagerRoles(QueryBuilder &$queryBuilder)
     {
         $alias = current($queryBuilder->getDQLPart('from'))->getAlias();
@@ -288,6 +374,9 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
             ->setParameter('member', self::ROLE_MEMBER);
     }
 
+    /**
+     * @param QueryBuilder $queryBuilder
+     */
     private function addAdminRoles(QueryBuilder &$queryBuilder)
     {
         $alias = current($queryBuilder->getDQLPart('from'))->getAlias();
@@ -298,6 +387,9 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
 
     }
 
+    /**
+     * @param QueryBuilder $queryBuilder
+     */
     private function addOwnerRoles(QueryBuilder &$queryBuilder)
     {
         $alias = current($queryBuilder->getDQLPart('from'))->getAlias();
@@ -305,6 +397,36 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
             ->andWhere("$alias.role != :guest")
             ->setParameter('guest', self::ROLE_GUEST);
 
+    }
+
+    /**
+     * @param QueryBuilder $queryBuilder
+     */
+    private function addRefereeRoles(QueryBuilder &$queryBuilder)
+    {
+        $alias = current($queryBuilder->getDQLPart('from'))->getAlias();
+        $queryBuilder
+            ->andWhere("$alias.role = :member")
+            ->setParameter('member', self::ROLE_MEMBER);
+
+    }
+
+    /**
+     * @param array $result
+     *
+     * @return array
+     */
+    private function getIdArray(array $result) {
+
+        $idArray = array();
+        foreach ($result as $item) {
+            $idArray[] = $item['id'];
+        }
+        if (empty($idArray)) {
+            $idArray[]=0;
+        }
+
+        return array_unique($idArray);
     }
 }
 

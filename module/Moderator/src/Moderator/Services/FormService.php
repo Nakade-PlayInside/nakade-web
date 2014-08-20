@@ -17,6 +17,7 @@ class FormService extends AbstractFormFactory
     const MANAGER_FORM = 'manager';
     const SUPPORT_FORM = 'support';
     const MAIL_FORM = 'mail';
+    const REFEREE_FORM = 'referee';
 
     private $services;
 
@@ -66,6 +67,11 @@ class FormService extends AbstractFormFactory
 
             case self::MAIL_FORM:
                 $form = new Form\MailForm($this->getServices());
+                $form->setTranslator($this->getTranslator(), $this->getTranslatorTextDomain());
+                break;
+
+            case self::REFEREE_FORM:
+                $form = new Form\RefereeForm($this->getServices());
                 $form->setTranslator($this->getTranslator(), $this->getTranslatorTextDomain());
                 break;
 

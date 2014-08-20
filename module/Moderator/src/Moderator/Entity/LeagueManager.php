@@ -52,6 +52,15 @@ class LeagueManager
     private $isActive=true;
 
     /**
+     * constructor
+     */
+    public function __construct()
+    {
+        $this->setNominationDate(new \DateTime());
+        $this->setIsActive(true);
+    }
+
+    /**
      * @param Association $association
      */
     public function setAssociation(Association $association)

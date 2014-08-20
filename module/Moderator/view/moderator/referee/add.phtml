@@ -1,0 +1,15 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Moderator');
+
+$title = $this->translate('Add Referee');
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p><?php echo $this->translate("Only members can become a referee.") . ' ' .
+        $this->translate("English is mandatory!"); ?>
+</p>
+<?php
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();

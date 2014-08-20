@@ -59,8 +59,6 @@ class LeagueManagerHydrator implements HydratorInterface, ManagerInterface
     public function hydrate(array $data, $object)
     {
         if (is_null($object->getId())) {
-            $object->IsActive(true);
-            $object->setNominationDate(new \DateTime());
             $nominator = $this->getCreator();
             $object->setNominatedBy($nominator);
         }

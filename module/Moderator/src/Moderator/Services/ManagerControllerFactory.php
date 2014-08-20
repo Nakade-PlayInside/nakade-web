@@ -25,16 +25,14 @@ class ManagerControllerFactory implements FactoryInterface
 
         $repository = $serviceManager->get('Moderator\Services\RepositoryService');
         $form = $serviceManager->get('Moderator\Services\FormService');
-   //     $mail = $serviceManager->get('League\Services\MailService');
-   //     $pagination = $serviceManager->get('League\Services\PaginationService');
-
+        $mail = $serviceManager->get('Moderator\Services\MailService');
 
         $controller = new ManagerController();
 
         $controller->setFormFactory($form);
         $controller->setRepository($repository);
-     //   $controller->setMailService($mail);
-    //    $controller->setPaginationService($pagination);
+        $controller->setMailService($mail);
+
 
         return $controller;
     }

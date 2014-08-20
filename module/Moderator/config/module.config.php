@@ -21,6 +21,8 @@ return array(
                 'Moderator\Services\SupportControllerFactory',
             'Moderator\Controller\LeagueManager' =>
                 'Moderator\Services\LeagueManagerControllerFactory',
+            'Moderator\Controller\Referee' =>
+                'Moderator\Services\RefereeControllerFactory',
         ),
 
     ),
@@ -66,6 +68,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Moderator\Controller\LeagueManager',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'referee' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/referee[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Moderator\Controller\Referee',
                         'action'     => 'index',
                     ),
                 ),

@@ -1,0 +1,50 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Moderator');
+/* @var $referee \Moderator\Entity\Referee */
+$this->headTitle('Moderator View');
+
+?>
+
+<?php $this->placeholder('nothing')->captureStart();?>
+    <h3><?php echo $this->translate('No Referee found'); ?></h3>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+<?php $this->placeholder('referee')->captureStart();?>
+    <h3><?php echo $this->translate('Referee Overview'); ?></h3>
+    <hr/>
+    <a class="addUser buttons-32 user-add-32" title="<?php echo $this->translate("add Referee"); ?>" href="
+    <?php echo $this->url('referee', array('action' => 'add')); ?>">
+    </a>
+    <table class="table profile">
+        <tr>
+            <th><?php echo $this->translate("ID"); ?></th>
+            <th><?php echo $this->translate("Name"); ?></th>
+            <th><?php echo $this->translate("Nominated"); ?></th>
+            <th><?php echo $this->translate("active"); ?></th>
+        </tr>
+        <?php foreach ($this->referees as $referee) : ?>
+            <tr style="background-color:<?php
+            echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+                <td style="text-align: right"><?php echo $referee->getId(); ?></td>
+                <td><?php echo $referee->getUser()->getName();?></td>
+                <td><?php echo $referee->getNominationDate()->format('d.m.Y'); ?></td>
+                <td>
+                    <a class="button" title="<?php echo $this->translate('shift'); ?>"
+                       href="<?php echo $this->url('referee', array(
+                           'action' => $this->activateAction($referee->IsActive()),
+                           'id' => $referee->getId()));
+                       ?>">
+                        <div class='<?php echo $this->isActive($referee->IsActive()); ?> btnCenter'></div>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <p><?php echo $this->translate("Total") . ' ' . count($this->referees) . ' ' . $this->translate("Referee(s)"); ?></p>
+<?php $this->placeholder('referee')->captureEnd();
+
+if (empty($this->referees)) {
+    echo $this->placeholder('nothing');
+} else {
+    echo $this->placeholder('referee');
+}
