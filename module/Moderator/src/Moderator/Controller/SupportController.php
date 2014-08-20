@@ -184,7 +184,7 @@ class SupportController extends DefaultController
                 break;
 
             case self::REFEREE_TICKET:
-                //todo: referee
+                $manager = $this->getMapper()->getActiveReferees();
                 break;
         }
 

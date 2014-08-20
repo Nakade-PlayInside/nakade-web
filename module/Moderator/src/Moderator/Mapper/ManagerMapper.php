@@ -122,6 +122,23 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
             ->findAll();
     }
 
+    /**
+     * @return array
+     */
+    public function getActiveReferees()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder('User')
+            ->select('u')
+            ->from('User\Entity\User', 'u')
+            ->leftJoin('Moderator\Entity\Referee', 'r', Join::WITH, 'r.user = u')
+            ->where('r.user = u')
+            ->andWhere('r.isActive = true')
+            ->andWhere('u.active = true');
+
+        $this->addRefereeRoles($qb);
+        return $qb->getQuery()->getResult();
+    }
+
 
     /**
      * @param int $leagueManagerId
