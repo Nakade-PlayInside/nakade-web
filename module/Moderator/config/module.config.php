@@ -19,8 +19,8 @@ return array(
                     'Moderator\Services\ManagerControllerFactory',
             'Moderator\Controller\Support' =>
                 'Moderator\Services\SupportControllerFactory',
-            'Moderator\Controller\LeagueManager' =>
-                'Moderator\Services\LeagueManagerControllerFactory',
+            'Moderator\Controller\Ticket' =>
+                'Moderator\Services\TicketControllerFactory',
             'Moderator\Controller\Referee' =>
                 'Moderator\Services\RefereeControllerFactory',
         ),
@@ -58,16 +58,16 @@ return array(
                     ),
                 ),
             ),
-            'leagueManager' => array(
+            'ticket' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/leagueManager[/:action][/:id]',
+                    'route'    => '/ticket[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'Moderator\Controller\LeagueManager',
+                        'controller' => 'Moderator\Controller\Ticket',
                         'action'     => 'index',
                     ),
                 ),

@@ -26,30 +26,6 @@ class ManagerController extends AbstractController
     {
         $page = (int) $this->params()->fromRoute('id', 1);
 
-        //todo: MODERATOR should become OWNER or can change owner
-
-        /* @var $entityManager \Doctrine\ORM\EntityManager */
-        $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        $pagination = new ModeratorPagination($entityManager);
-        $offset = (ModeratorPagination::ITEMS_PER_PAGE * ($page -1));
-
-        return new ViewModel(
-            array(
-                'paginator' => $pagination->getPagination($page),
-                'managers' =>  $this->getMapper()->getLeagueManagerByPages($offset),
-            )
-        );
-    }
-
-    /**
-     * association owner
-     *
-     * @return array|ViewModel
-     */
-    public function myManagerAction()
-    {
-        $page = (int) $this->params()->fromRoute('id', 1);
-
         //todo: isLeagueOwner as PERMISSION
 
         /* @var $entityManager \Doctrine\ORM\EntityManager */
@@ -64,6 +40,7 @@ class ManagerController extends AbstractController
             )
         );
     }
+
 
     /**
      * @return array|ViewModel

@@ -10,7 +10,7 @@ $this->headTitle('Moderator View');
 <?php $this->placeholder('nothing')->captureEnd(); ?>
 
 <?php $this->placeholder('manager')->captureStart();?>
-    <h3><?php echo $this->translate('League Manager Overview'); ?></h3>
+    <h3><?php echo $this->translate('My League Manager'); ?></h3>
     <hr/>
     <a class="addUser buttons-32 user-add-32" title="<?php echo $this->translate("add League Manager"); ?>" href="
     <?php echo $this->url('manager', array('action' => 'add')); ?>"></a>
@@ -21,7 +21,6 @@ $this->headTitle('Moderator View');
             <th><?php echo $this->translate("Name"); ?></th>
             <th><?php echo $this->translate("League"); ?></th>
             <th><?php echo $this->translate("Nominated"); ?></th>
-            <th><?php echo $this->translate("Nominated By"); ?></th>
             <th><?php echo $this->translate("active"); ?></th>
         </tr>
         <?php foreach ($this->managers as $manager) : ?>
@@ -31,7 +30,6 @@ $this->headTitle('Moderator View');
                 <td><?php echo $manager->getManager()->getName();?></td>
                 <td><?php echo $manager->getAssociation()->getName();?></td>
                 <td><?php echo $manager->getNominationDate()->format('d.m.Y'); ?></td>
-                <td><?php echo $manager->getNominatedBy()->getName(); ?></td>
                 <td>
                     <a class="button" title="<?php echo $this->translate('shift'); ?>"
                        href="<?php echo $this->url('manager', array(

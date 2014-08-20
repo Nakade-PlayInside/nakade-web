@@ -34,7 +34,7 @@ $this->headTitle('Support');
                     <div class="mail-16 <?php echo $this->ticketStage($support->getStage()->getId());?> btnCenter"></div>
                 </td>
                 <td>
-                    <a class="button" href="<?php echo $this->url('leagueManager',
+                    <a class="button" href="<?php echo $this->url('ticket',
                         array('action' => 'detail', 'id' => $support->getId()))?>">
                         <div class="buttons-16 info-16 btnCenter"></div>
                     </a>

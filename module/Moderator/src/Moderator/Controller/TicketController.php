@@ -8,15 +8,15 @@ use Moderator\Services\MailService;
 use Zend\View\Model\ViewModel;
 
 /**
- * Class LeagueManagerController
+ * Class TicketController
  *
  * @package Moderator\Controller
  */
-class LeagueManagerController extends DefaultController
+class TicketController extends DefaultController
 {
-    const HOME = 'leagueManager';
+    const HOME = 'ticket';
 
-    //todo: is LM
+    //todo: PERMISSION isLM OR isModerator OR isReferee
     //todo: show Tickets for Association only
     //todo: association owner is LM too
     /**

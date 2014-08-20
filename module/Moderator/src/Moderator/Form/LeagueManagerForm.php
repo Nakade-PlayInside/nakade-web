@@ -72,7 +72,7 @@ class LeagueManagerForm extends BaseForm implements ManagerInterface
     private function getAssociationValueOptions()
     {
         $valueOptions = array();
-        $associations = $this->getMapper()->getAssociations();
+        $associations = $this->getMapper()->getAssociationsByUser(1);
 
         /* @var $association \Season\Entity\Association */
         foreach($associations as $association) {
@@ -88,8 +88,10 @@ class LeagueManagerForm extends BaseForm implements ManagerInterface
      */
     private function getManagerValueOptions()
     {
+        $userId = $this->getUserId();
+
         $valueOptions = array();
-        $available = $this->getMapper()->getAvailableManager();
+        $available = $this->getMapper()->getAvailableManagerByUser($userId);
 
         /* @var $user \User\Entity\User */
         foreach($available as $user) {
@@ -99,6 +101,21 @@ class LeagueManagerForm extends BaseForm implements ManagerInterface
         return $valueOptions;
 
     }
+
+    /**
+     * @return int
+     */
+    protected function getUserId()
+    {
+        $authService = $this->getAuthenticationService();
+        if (!$authService->hasIdentity()) {
+            return -1;
+        }
+
+        return $authService->getIdentity()->getId();
+    }
+
+
 
     /**
      * @return LeagueManagerHydrator

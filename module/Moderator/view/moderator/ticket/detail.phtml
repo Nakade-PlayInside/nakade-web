@@ -41,34 +41,34 @@ $this->headTitle('Support');
         <?php endforeach; ?>
     </table>
 
-    <a class="btn btn-success return" href="<?php echo $this->url('leagueManager'); ?>"><?php echo $this->translate("Return"); ?></a>
+    <a class="btn btn-success return" href="<?php echo $this->url('ticket'); ?>"><?php echo $this->translate("Return"); ?></a>
 
 <?php if ($ticket->getStage()->isOngoing()) : ?>
-    <a class="btn btn-success" href="<?php echo $this->url('leagueManager',
+    <a class="btn btn-success" href="<?php echo $this->url('ticket',
         array('action' => 'done', 'id' => $ticket->getId())); ?>">
         <?php echo $this->translate("Done"); ?>
     </a>
 <?php endif; ?>
 
 <?php if ($ticket->getStage()->isNew()) : ?>
-    <a class="btn btn-success" href="<?php echo $this->url('leagueManager',
+    <a class="btn btn-success" href="<?php echo $this->url('ticket',
         array('action' => 'accept', 'id' => $ticket->getId())); ?>">
         <?php echo $this->translate("Accept"); ?>
     </a>
-    <a class="btn btn-success" href="<?php echo $this->url('leagueManager',
+    <a class="btn btn-success" href="<?php echo $this->url('ticket',
         array('action' => 'cancel', 'id' => $ticket->getId())); ?>">
         <?php echo $this->translate("Decline"); ?>
     </a>
 <?php endif; ?>
 
 <?php if ($ticket->getStage()->isSolved()) :?>
-    <a class="btn btn-success" href="<?php echo $this->url('leagueManager',
+    <a class="btn btn-success" href="<?php echo $this->url('ticket',
         array('action' => 'reopen', 'id' => $ticket->getId())); ?>">
         <?php echo $this->translate("Reopen"); ?>
     </a>
 <?php endif; ?>
 
-<a class="btn btn-success actionBtn" href="<?php echo $this->url('leagueManager',
+<a class="btn btn-success actionBtn" href="<?php echo $this->url('ticket',
     array('action' => 'mail', 'id' => $ticket->getId())); ?>">
     <div class="mail-16 mail-yellow-16"></div><span><?php echo $this->translate("Mail");?></span>
 </a>

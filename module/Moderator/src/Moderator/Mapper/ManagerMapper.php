@@ -96,23 +96,6 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
     }
 
     /**
-     * @param int $offset
-     *
-     * @return array
-     */
-    public function getLeagueManagerByPages($offset)
-    {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder('LeagueManager')
-            ->select('l')
-            ->from('Moderator\Entity\LeagueManager', 'l')
-            ->setFirstResult($offset)
-            ->setMaxResults(ModeratorPagination::ITEMS_PER_PAGE);
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
      * @param int $userId
      * @param int $offset
      *
@@ -188,25 +171,85 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
     }
 
     /**
-     * @return array
+     * @param int $userId
+     *
+     * @return QueryBuilder
      */
-    public function getAssociations()
+    public function getAssociationsByUser($userId)
     {
-        return $this->getEntityManager()
-            ->getRepository('Season\Entity\Association')
-            ->findAll();
+
+        $result = $this->getEntityManager()
+            ->createQueryBuilder('Associations')
+            ->select('a')
+            ->from('Season\Entity\Association', 'a')
+            ->innerJoin('a.owner', 'Owner')
+            ->Where('Owner.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+
+        return $result;
     }
 
     /**
+     * notIn method
+     *
+     * @param int $userId
+     *
      * @return array
      */
-    public function getAvailableManager()
-    {//todo: not self => owner
-        $qb = $this->getEntityManager()
-            ->createQueryBuilder('User')
-            ->select('u')
+    private function getIdsOfAssociationsByUser($userId)
+    {
+        $result = $this->getEntityManager()
+            ->createQueryBuilder('Association')
+            ->select('a.id')
+            ->from('Season\Entity\Association', 'a')
+            ->innerJoin('a.owner', 'Owner')
+            ->where('Owner.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+
+        return $this->getIdArray($result);
+    }
+
+    /**
+     * @param int $userId
+     *
+     * @return QueryBuilder
+     */
+    private function getLeagueManagerOnDutyByUser($userId)
+    {
+        $myAssociation = $this->getIdsOfAssociationsByUser($userId);
+        $qb = $this->getEntityManager()->createQueryBuilder('User');
+
+        $qb->select('u.id')
             ->from('User\Entity\User', 'u')
-            ->Where('u.active = true');
+            ->leftJoin('Moderator\Entity\LeagueManager', 'l', Join::WITH, 'l.manager = u')
+            ->innerJoin('l.association', 'a')
+            ->where($qb->expr()->In('a.id', $myAssociation))
+            ->andWhere('l.manager = u');
+
+        $result = $qb->getQuery()->getResult();
+        return $this->getIdArray($result);
+    }
+
+    /**
+     * @param int $userId
+     *
+     * @return array
+     */
+    public function getAvailableManagerByUser($userId)
+    {
+        $notIn = $this->getLeagueManagerOnDutyByUser($userId);
+        $notIn[] = $userId;
+
+        $qb = $this->getEntityManager()->createQueryBuilder('User');
+
+        $qb->select('u')
+            ->from('User\Entity\User', 'u')
+            ->Where($qb->expr()->notIn('u.id', $notIn))
+            ->andWhere('u.active = true');
 
         $this->addManagerRoles($qb);
         return $qb->getQuery()->getResult();
@@ -389,17 +432,6 @@ class ManagerMapper extends AbstractMapper implements RoleInterface
         return $this->getEntityManager()
             ->getRepository('Moderator\Entity\SupportRequest')
             ->find($ticketId);
-    }
-
-    /**
-     * @return array
-     */
-    public function getAssociationsByUser()
-    {
-        //todo: particicpant is user, season is onGoing -> all associations
-        return $this->getEntityManager()
-            ->getRepository('Season\Entity\Association')
-            ->findAll();
     }
 
     /**
