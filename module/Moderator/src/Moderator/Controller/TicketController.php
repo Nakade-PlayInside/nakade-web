@@ -2,9 +2,9 @@
 namespace Moderator\Controller;
 
 use Moderator\Entity\SupportMessage;
-use Moderator\Pagination\TicketPagination;
 use Moderator\Services\FormService;
 use Moderator\Services\MailService;
+use Nakade\Pagination\ItemPagination;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -17,8 +17,6 @@ class TicketController extends DefaultController
     const HOME = 'ticket';
 
     //todo: PERMISSION isLM OR isModerator OR isReferee
-    //todo: show Tickets for Association only
-    //todo: association owner is LM too
     /**
      *
      * @return array|ViewModel
@@ -27,15 +25,15 @@ class TicketController extends DefaultController
     {
         $page = (int) $this->params()->fromRoute('id', 1);
 
-        //todo: show only tickets for associations bound to the LM
-        /* @var $entityManager \Doctrine\ORM\EntityManager */
-        $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        $pagination = new TicketPagination($entityManager);
-        $offset = (TicketPagination::ITEMS_PER_PAGE * ($page -1));
+        $allTickets = $this->getTicketMapper()->getTicketsByPages($this->identity()->getId());
+        $pagination = new ItemPagination($allTickets);
 
         return new ViewModel(
             array(
-                'supportRequests' => $this->getMapper()->getTicketsByPages($offset),
+                'supportRequests' => $this->getTicketMapper()->getTicketsByPages(
+                        $this->identity()->getId(),
+                        $pagination->getOffset($page)
+                    ),
                 'paginator' => $pagination->getPagination($page),
             )
         );
@@ -51,7 +49,7 @@ class TicketController extends DefaultController
 
         return new ViewModel(
             array(
-                'ticket' => $this->getMapper()->getTicketById($ticketId),
+                'ticket' => $this->getTicketMapper()->getTicketById($ticketId),
             )
         );
     }

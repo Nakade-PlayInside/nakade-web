@@ -6,6 +6,7 @@ use Moderator\Services\FormService;
 use Moderator\Services\MailService;
 use Moderator\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
+use Nakade\Pagination\ItemPagination;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -24,9 +25,16 @@ class RefereeController extends AbstractController
      */
     public function indexAction()
     {
+
+        $page = (int) $this->params()->fromRoute('id', 1);
+
+        $total = $this->getMapper()->getRefereesByPages();
+        $pagination = new ItemPagination($total);
+
         return new ViewModel(
             array(
-                'referees' =>  $this->getMapper()->getReferees(),
+                'referees' =>  $this->getMapper()->getRefereesByPages($pagination->getOffset($page)),
+                'paginator' => $pagination->getPagination($page),
             )
         );
     }

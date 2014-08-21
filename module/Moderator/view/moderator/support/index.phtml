@@ -11,7 +11,7 @@ $this->headTitle('Support');
 
 <?php $this->placeholder('tickets')->captureStart();?>
     <h3 style="margin-bottom: 10px;"><?php echo $this->translate('My Support Tickets'); ?></h3>
-<?php //echo $this->paginationControl($this->paginator, 'Sliding', 'moderator'); ?>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'moderator'); ?>
     <table class="table profile">
         <tr>
             <th><?php echo $this->translate("ID"); ?></th>
@@ -40,7 +40,7 @@ $this->headTitle('Support');
             </tr>
         <?php endforeach; ?>
     </table>
-    <p><?php //echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Ticket(s)"); ?></p>
+    <p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Ticket(s)"); ?></p>
 <?php $this->placeholder('tickets')->captureEnd();
 
 if (empty($this->tickets)) {

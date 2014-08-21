@@ -26,6 +26,16 @@ class DefaultController extends AbstractController implements StageInterface, Su
     }
 
     /**
+     * @return \Moderator\Mapper\TicketMapper
+     */
+    protected function getTicketMapper()
+    {
+        /* @var $repo \Moderator\Services\RepositoryService */
+        $repo = $this->getRepository();
+        return $repo->getMapper(RepositoryService::TICKET_MAPPER);
+    }
+
+    /**
      * @param int $stageId
      *
      * @return \Moderator\Entity\SupportStage
@@ -63,7 +73,7 @@ class DefaultController extends AbstractController implements StageInterface, Su
      */
     protected function setTicketState($ticketId, $state)
     {
-        $ticket = $this->getMapper()->getTicketById($ticketId);
+        $ticket = $this->getTicketMapper()->getTicketById($ticketId);
 
         if (!is_null($ticket)) {
             $stage = $this->getStageById($state);

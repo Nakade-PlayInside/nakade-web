@@ -15,6 +15,7 @@ $this->headTitle('Moderator View');
     <a class="addUser buttons-32 user-add-32" title="<?php echo $this->translate("add Referee"); ?>" href="
     <?php echo $this->url('referee', array('action' => 'add')); ?>">
     </a>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'moderator'); ?>
     <table class="table profile">
         <tr>
             <th><?php echo $this->translate("ID"); ?></th>
@@ -40,7 +41,7 @@ $this->headTitle('Moderator View');
             </tr>
         <?php endforeach; ?>
     </table>
-    <p><?php echo $this->translate("Total") . ' ' . count($this->referees) . ' ' . $this->translate("Referee(s)"); ?></p>
+    <p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Referee(s)"); ?></p>
 <?php $this->placeholder('referee')->captureEnd();
 
 if (empty($this->referees)) {

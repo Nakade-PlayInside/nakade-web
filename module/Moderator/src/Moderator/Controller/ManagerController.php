@@ -2,11 +2,11 @@
 namespace Moderator\Controller;
 
 use Moderator\Entity\LeagueManager;
-use Moderator\Pagination\ModeratorPagination;
 use Moderator\Services\FormService;
 use Moderator\Services\MailService;
 use Moderator\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
+use Nakade\Pagination\ItemPagination;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -28,15 +28,16 @@ class ManagerController extends AbstractController
 
         //todo: isLeagueOwner as PERMISSION
 
-        /* @var $entityManager \Doctrine\ORM\EntityManager */
-        $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        $pagination = new ModeratorPagination($entityManager);
-        $offset = (ModeratorPagination::ITEMS_PER_PAGE * ($page -1));
+        $total = $this->getMapper()->getMyLeagueManagersByPages($this->identity()->getId());
+        $pagination = new ItemPagination($total);
 
         return new ViewModel(
             array(
                 'paginator' => $pagination->getPagination($page),
-                'managers' =>  $this->getMapper()->getMyLeagueManagersByPages($this->identity()->getId(), $offset),
+                'managers' =>  $this->getMapper()->getMyLeagueManagersByPages(
+                        $this->identity()->getId(),
+                        $pagination->getOffset($page)
+                ),
             )
         );
     }

@@ -5,10 +5,11 @@ use Moderator\Entity\SupportMessage;
 use Moderator\Entity\SupportRequest;
 use Moderator\Services\FormService;
 use Moderator\Services\MailService;
+use Nakade\Pagination\ItemPagination;
 use Zend\View\Model\ViewModel;
 
 /**
- * Class ManagerController
+ * Class SupportController
  *
  * @package Moderator\Controller
  */
@@ -22,11 +23,20 @@ class SupportController extends DefaultController
      */
     public function indexAction()
     {
-        $userId = $this->identity()->getId();
+        $page = (int) $this->params()->fromRoute('id', 1);
+
+        //todo: isLeagueOwner as PERMISSION
+
+        $total = $this->getTicketMapper()->getSupportRequestsByPages($this->identity()->getId());
+        $pagination = new ItemPagination($total);
 
         return new ViewModel(
             array(
-                'tickets' => $this->getMapper()->getSupportRequestsByUser($userId),
+                'tickets' => $this->getTicketMapper()->getSupportRequestsByPages(
+                        $this->identity()->getId(),
+                        $pagination->getOffset($page)
+                ),
+                'paginator' => $pagination->getPagination($page),
             )
         );
     }
@@ -41,7 +51,7 @@ class SupportController extends DefaultController
 
         return new ViewModel(
             array(
-                'ticket' => $this->getMapper()->getTicketById($ticketId),
+                'ticket' => $this->getTicketMapper()->getTicketById($ticketId),
             )
         );
     }
