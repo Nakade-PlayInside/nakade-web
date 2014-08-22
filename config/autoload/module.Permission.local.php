@@ -1,9 +1,6 @@
 <?php
-/**
- * This is a sample "local" configuration for your application. To use it, copy
- * it to your config/autoload/ directory of your application, and edit to suit
- * your application.
-  */
+use Permission\Entity\RoleInterface;
+
 return array(
 
     'Permission' => array(
@@ -47,9 +44,9 @@ return array(
             'Season\Controller\Schedule' => 'admin',
             'Season\Controller\Confirm\register' => 'guest',
 
-            'Moderator\Controller\Manager' => 'moderator',
-            'Moderator\Controller\Support' => 'guest',
-            'Moderator\Controller\LeagueManager' => 'user',
+            'Support\Controller\Manager' => RoleInterface::ROLE_LEAGUE_OWNER,
+            'Support\Controller\Support' => 'guest',
+            'Support\Controller\LeagueManager' => 'user',
 
         )
     ),

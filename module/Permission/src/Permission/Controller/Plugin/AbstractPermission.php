@@ -1,7 +1,7 @@
 <?php
 namespace Permission\Controller\Plugin;
 
-use Moderator\Services\RepositoryService;
+use Support\Services\RepositoryService;
 use Permission\Entity\RoleInterface;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\Mvc\MvcEvent;
@@ -258,7 +258,7 @@ abstract class AbstractPermission extends AbstractPlugin implements AuthorizeInt
     }
 
     /**
-     * @return \Moderator\Services\RepositoryService
+     * @return \Support\Services\RepositoryService
      */
     protected function getRepository()
     {
@@ -266,7 +266,7 @@ abstract class AbstractPermission extends AbstractPlugin implements AuthorizeInt
     }
 
     /**
-     * @return \Moderator\Mapper\ManagerMapper
+     * @return \Support\Mapper\ManagerMapper
      */
     protected function getMapper()
     {

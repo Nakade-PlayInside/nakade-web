@@ -14,14 +14,13 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'Submenu' => 'Application\View\Helper\Submenu',
+            'isAllowed' => 'Application\View\Helper\Voter',
             // more helpers here ...
         )
     ),
 
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' =>
-                'Application\Controller\IndexController',
             'Application\Controller\Training' =>
                 'Application\Controller\TrainingController',
             'Application\Controller\Privacy' =>
@@ -31,6 +30,8 @@ return array(
 
         ),
         'factories' => array(
+            'Application\Controller\Index' =>
+                'Application\Services\IndexControllerFactory',
             'Application\Controller\Contact' =>
                 'Application\Services\ContactControllerFactory',
         ),

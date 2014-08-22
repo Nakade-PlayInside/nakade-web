@@ -25,7 +25,7 @@ class Authorize extends AbstractPermission implements AuthorizeInterface
 
         $aclService = $this->getService('Permission\Services\AclService');
         $authService = $this->getService('Zend\Authentication\AuthenticationService');
-        $this->repository = $this->getServiceManager()->get('Moderator\Services\RepositoryService');
+        $this->repository = $this->getServiceManager()->get('Support\Services\RepositoryService');
         $routeMatch = $this->getEvent()->getRouteMatch();
 
         $this->resourceController = $routeMatch->getParam('controller');

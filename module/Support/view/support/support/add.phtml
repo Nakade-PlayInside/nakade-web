@@ -1,0 +1,15 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Support');
+
+$title = $this->translate('Support Inquiry');
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>If you have a problem concerning your league matches, please provide the necessary information.<br/>
+A league manager will deal with it as soon as possible.
+</p>
+<?php
+$this->form->prepare();
+echo $this->form()->openTag($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();
