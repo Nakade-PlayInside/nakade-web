@@ -13,8 +13,7 @@ use Zend\Console\Adapter\AdapterInterface as Console;
  * @package Moderator
  */
 class Module implements AutoloaderProviderInterface,
-    ConfigProviderInterface,
-    ConsoleUsageProviderInterface
+    ConfigProviderInterface
 {
     /**
      * @return array
@@ -41,14 +40,5 @@ class Module implements AutoloaderProviderInterface,
         return include __DIR__ . '/config/module.config.php';
     }
 
-    /**
-     * @param Console $console
-     *
-     * @return array
-     */
-    public function getConsoleUsage(Console $console)
-    {
-        return array();
-    }
 
 }

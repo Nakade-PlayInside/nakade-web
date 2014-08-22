@@ -52,7 +52,6 @@ return array(
         'factories' => array(
             'Permission\Services\AclService' =>
                 'Permission\Services\AclService',
-
             'translator'        =>
                 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
