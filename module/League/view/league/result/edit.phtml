@@ -2,20 +2,13 @@
 $this->plugin('translate')->setTranslatorTextDomain('League');
 /* @var $match \Season\Entity\Match */
 $match = $this->match;
-$info = sprintf('%s: %s - %s',
-    $this->translate('%no%.Match day'),
-    $match->getBlack()->getShortName(),
-    $match->getWhite()->getShortName()
-);
-$info = str_replace('%no%', $match->getMatchDay()->getMatchDay(), $info);
 
 $title = $this->translate('Edit Result');
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
-
-<p><?php echo $info; ?></p>
-
+<p><?php echo $this->matchInfo($match); ?></p>
+<hr>
 <?php
 
 $this->form->prepare();

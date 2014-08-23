@@ -4,6 +4,7 @@ namespace League\Controller;
 use League\Services\LeagueFormService;
 use League\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
+use Nakade\Pagination\ItemPagination;
 use Zend\View\Model\ViewModel;
 use League\Services\MailService;
 use League\Services\PaginationService;
@@ -15,6 +16,8 @@ use League\Services\PaginationService;
  */
 class ResultController extends AbstractController
 {
+    const HOME = 'result';
+
     /* @var $resultService \League\Services\ResultService */
     private $resultService;
     private $paginationService;
@@ -37,17 +40,8 @@ class ResultController extends AbstractController
 
         $matches = $resultMapper->getActualOpenResultsBySeason($season->getId());
 
-    /*    $pages = $resultMapper->getAllMatchDaysByLeague($topLeague->getId(), $matchDay);
-        $paginator = new Paginator(new \Zend\Paginator\Adapter\ArrayAdapter(array(1,2,3,4,5,6,7)));
-        $paginator
-            ->setCurrentPageNumber($matchDay)
-            ->setItemCountPerPage(1)
-            ->setPageRange(5);
-    */
-
         return new ViewModel(
             array(
-              //  'paginator' => $paginator,
                 'season' =>  $season,
                 'matches' =>  $matches
             )
@@ -61,6 +55,7 @@ class ResultController extends AbstractController
      */
     public function allResultsAction()
     {
+        $page = (int) $this->params()->fromRoute('id', 1);
 
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
         $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
@@ -69,22 +64,14 @@ class ResultController extends AbstractController
         /* @var $resultMapper \League\Mapper\ResultMapper */
         $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
 
-
-        $matches = $resultMapper->getActualResultsBySeason($season->getId());
-
-        /*    $pages = $resultMapper->getAllMatchDaysByLeague($topLeague->getId(), $matchDay);
-            $paginator = new Paginator(new \Zend\Paginator\Adapter\ArrayAdapter(array(1,2,3,4,5,6,7)));
-            $paginator
-                ->setCurrentPageNumber($matchDay)
-                ->setItemCountPerPage(1)
-                ->setPageRange(5);
-        */
+        $total = $resultMapper->getActualResultsByPages($season->getId());;
+        $pagination = new ItemPagination($total);
 
         return new ViewModel(
             array(
-                //  'paginator' => $paginator,
                 'season' =>  $season,
-                'matches' =>  $matches
+                'matches' =>  $resultMapper->getActualResultsByPages($season->getId(), $pagination->getOffset($page)),
+                'paginator' => $pagination->getPagination($page),
             )
         );
     }
@@ -124,7 +111,6 @@ class ResultController extends AbstractController
      */
     public function editAction()
     {
-
         $matchId  = (int) $this->params()->fromRoute('id', 0);
 
         /* @var $resultMapper \League\Mapper\ResultMapper */
@@ -150,17 +136,21 @@ class ResultController extends AbstractController
             $form->setData($postData);
             if ($form->isValid()) {
                 /* @var $data \Season\Entity\Match */
-                $data = $form->getData();//var_dump($data->getResult()->getName());die;
+                $data = $form->getData();
                 $resultMapper->save($data);
 
-                /* @var $mail \League\Mail\ResultMail */
-                $mail = $this->getMailService()->getMail(MailService::RESULT_MAIL);
+                /* @var $mail \League\Mail\ResultEditMail */
+                $mail = $this->getMailService()->getMail(MailService::EDITED_RESULT__MAIL);
                 $mail->setMatch($data);
                 $mail->sendMail($data->getBlack());
                 $mail->sendMail($data->getWhite());
 
-                return $this->redirect()->toRoute('result', array('action' => 'success'));
+                $this->flashMessenger()->addSuccessMessage('Result updated.');
+                return $this->redirect()->toRoute(self::HOME, array('action' => 'allResults'));
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
+
         }
 
         return new ViewModel(
@@ -210,7 +200,7 @@ class ResultController extends AbstractController
             $form->setData($postData);
             if ($form->isValid()) {
                 /* @var $data \Season\Entity\Match */
-                $data = $form->getData();//var_dump($data->getResult()->getName());die;
+                $data = $form->getData();
                 $resultMapper->save($data);
 
                 /* @var $mail \League\Mail\ResultMail */
@@ -219,7 +209,10 @@ class ResultController extends AbstractController
                 $mail->sendMail($data->getBlack());
                 $mail->sendMail($data->getWhite());
 
-                return $this->redirect()->toRoute('result', array('action' => 'success'));
+                $this->flashMessenger()->addSuccessMessage('Result entered.');
+                return $this->redirect()->toRoute(self::HOME, array('action' => 'success'));
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
         }
 

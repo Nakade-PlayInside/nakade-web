@@ -109,6 +109,12 @@ echo $this->doctype();
             $moderator[$this->translate('Edit Match Day', 'Application')] = $this->url('timeTable');
         }
 
+        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_MANAGER)) {
+            //match day
+            $moderator[$this->translate('Edit Result', 'Application')] =
+                $this->url('result', array('action' => 'allResults'));
+        }
+
         if ($this->isAllowed(RoleInterface::ROLE_REFEREE)) {
             $moderator[$this->translate('Arbitration', 'Application')] = $this->url('arbitration');
         }

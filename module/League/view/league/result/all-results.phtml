@@ -17,7 +17,7 @@ $this->headTitle('Results');
 <h3><?php echo $title; ?></h3>
 
 
-<?php //echo $this->paginationControl($this->paginator, 'Sliding', 'Shared'); ?>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'result'); ?>
 <table class="table profile">
 <tr>
     <th><?php echo $this->translate('ID');?></th>
@@ -39,12 +39,7 @@ echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
     <td class="center"><?php echo $match->getMatchDay()->getMatchDay();?></td>
     <td class="space"><?php echo $match->getMatchInfo();?></td>
     <td><?php echo $this->matchDayResult($match); ?></td>
-    <td><?php if (is_null($match->getResult()->getEnteredBy())) {
-            echo '<span style="color:red">automatic</span>';
-        } else {
-            echo $match->getResult()->getEnteredBy()->getShortName();
-        } ?>
-    </td>
+    <td><?php echo $this->enteredBy($match); ?></td>
     <td><?php  echo $match->getResult()->getDate()->format('d.m.y H:i'); ?></td>
     <td class="edit">
         <a class='button edit' title="<?php echo $this->translate('edit'); ?>"
@@ -54,7 +49,7 @@ echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
 <?php
 endforeach; ?>
 </table>
-
+<p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Result(s)"); ?></p>
 <?php $this->placeholder('openResults')->captureEnd();
 
   if (empty($this->matches)) {

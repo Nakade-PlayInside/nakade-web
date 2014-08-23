@@ -46,3 +46,6 @@ div.matchDayPagination {margin-top: 12px;}
     text-align: center;
 }
 
+.autoResult {
+    color: red;
+}

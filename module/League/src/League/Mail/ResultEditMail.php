@@ -2,11 +2,11 @@
 namespace League\Mail;
 
 /**
- * mail for both players after auto result
+ * mail for both players
  *
  * @package League\Mail
  */
-class AutoResultMail extends LeagueMail
+class ResultEditMail extends LeagueMail
 {
 
     /**
@@ -14,19 +14,19 @@ class AutoResultMail extends LeagueMail
      */
     public function getMailBody()
     {
+
         $message =
-            $this->translate('Your match result was automatically set at %URL%.') .
+            $this->translate('The result of your match was edited by your league manager on request.') .
             PHP_EOL . PHP_EOL .
             $this->translate('Your match: %MATCH_INFO%') .
             PHP_EOL .
-            $this->translate('RESULT: Suspended') .
+            $this->translate('Result: %RESULT%') .
             PHP_EOL . PHP_EOL .
-            $this->translate('According to our rules, a match is suspended if no result is provided 72h after match date.') . ' ' .
             $this->translate('In case of a mistake, please contact your league manager.') .
             PHP_EOL . PHP_EOL .
             $this->getSignature()->getSignatureText();
 
-        $this->makeReplacements($message);
+            $this->makeReplacements($message);
 
         return $message;
     }
@@ -34,10 +34,9 @@ class AutoResultMail extends LeagueMail
     /**
      * @return string
      */
-    public function getSubject()
+    public  function getSubject()
     {
-        return $this->translate('Your Match Result');
+        return $this->translate('Your Match Result was edited');
     }
-
 
 }

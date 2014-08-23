@@ -19,6 +19,7 @@ class MailService extends AbstractMailService
     const RESULT_REMINDER_MAIL = 'result_reminder';
     const AUTO_RESULT_MAIL = 'auto_result';
     const APPOINTMENT_REMINDER_MAIL = 'appointment_reminder';
+    const EDITED_RESULT__MAIL = 'result_edited';
 
     /**
      * @param string $typ
@@ -53,6 +54,10 @@ class MailService extends AbstractMailService
 
             case self::APPOINTMENT_REMINDER_MAIL:
                 $mail = new Mail\AppointmentReminderMail($this->getMessage(), $this->getTransport());
+                break;
+
+            case self::EDITED_RESULT__MAIL:
+                $mail = new Mail\ResultEditMail($this->getMessage(), $this->getTransport());
                 break;
 
             default:
