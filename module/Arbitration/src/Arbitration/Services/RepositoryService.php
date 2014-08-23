@@ -1,10 +1,10 @@
 <?php
 
-namespace Support\Services;
+namespace Arbitration\Services;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use \Support\Mapper;
+use Arbitration\Mapper;
 
 /**
  * Class RepositoryService
@@ -14,8 +14,7 @@ use \Support\Mapper;
 class RepositoryService implements FactoryInterface
 {
 
-    const MANAGER_MAPPER = 'manager';
-    const TICKET_MAPPER = 'ticket';
+    const REFEREE_MAPPER = 'referee';
 
     private $entityManager;
 
@@ -53,12 +52,8 @@ class RepositoryService implements FactoryInterface
     {
         switch (strtolower($typ)) {
 
-            case self::MANAGER_MAPPER:
-                $repository = new Mapper\ManagerMapper();
-                break;
-
-            case self::TICKET_MAPPER:
-                $repository = new Mapper\TicketMapper();
+            case self::REFEREE_MAPPER:
+                $repository = new Mapper\RefereeMapper();
                 break;
 
            default:

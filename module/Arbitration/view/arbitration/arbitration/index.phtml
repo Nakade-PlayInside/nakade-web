@@ -1,0 +1,44 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Arbitration');
+/* @var $referee \User\Entity\User */
+$this->headTitle('Referee View');
+
+?>
+
+<?php $this->placeholder('nothing')->captureStart();?>
+    <h3><?php echo $this->translate('No Referees found'); ?></h3>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+<?php $this->placeholder('manager')->captureStart();?>
+    <h3><?php echo $this->translate('Members of the Nakade Referee Arbitration'); ?></h3>
+    <hr/>
+<?php echo $this->translate("The mailing functionality is not implemented."); ?>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'moderator'); ?>
+    <table class="table profile">
+        <tr>
+            <th><?php echo $this->translate("ID"); ?></th>
+            <th><?php echo $this->translate("Name"); ?></th>
+            <th style="text-align: center"><?php echo $this->translate("Mail"); ?></th>
+        </tr>
+        <?php foreach ($this->referees as $referee) : ?>
+            <tr style="background-color:<?php
+            echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+                <td style="text-align: right"><?php echo $referee->getId(); ?></td>
+                <td><?php echo $referee->getName();?></td>
+                <td>
+                    <a class="button" title="<?php echo $this->translate('not implemented yet'); ?>"
+                       href="<?php //echo $this->url('manager') ; ?>">
+                        <div class='mail-16 mail-yellow-16 btnCenter'></div>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Referee(s)"); ?></p>
+<?php $this->placeholder('manager')->captureEnd();
+
+if (empty($this->referees)) {
+    echo $this->placeholder('nothing');
+} else {
+    echo $this->placeholder('manager');
+}

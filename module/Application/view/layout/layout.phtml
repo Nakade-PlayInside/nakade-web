@@ -104,6 +104,10 @@ echo $this->doctype();
             $moderator[$this->translate('My Manager', 'Application')] = $this->url('manager');
         }
 
+        if ($this->isAllowed(RoleInterface::ROLE_REFEREE)) {
+            $moderator[$this->translate('Arbitration', 'Application')] = $this->url('arbitration');
+        }
+
         $moderator[$this->translate('Tickets', 'Application')] = $this->url('ticket');
 
         echo $this->Submenu('Moderator', $moderator);

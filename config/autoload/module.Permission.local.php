@@ -45,8 +45,11 @@ return array(
             'Season\Controller\Confirm\register' => 'guest',
 
             'Support\Controller\Manager' => RoleInterface::ROLE_LEAGUE_OWNER,
-            'Support\Controller\Support' => 'guest',
+            'Support\Controller\Referee' => RoleInterface::ROLE_ADMIN,
+            'Support\Controller\Support' => RoleInterface::ROLE_GUEST,
             'Support\Controller\LeagueManager' => 'user',
+
+            'Arbitration\Controller\Arbitration' => RoleInterface::ROLE_REFEREE,
 
         )
     ),
