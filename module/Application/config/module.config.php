@@ -14,7 +14,6 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'Submenu' => 'Application\View\Helper\Submenu',
-            'isAllowed' => 'Application\View\Helper\Voter',
             // more helpers here ...
         )
     ),

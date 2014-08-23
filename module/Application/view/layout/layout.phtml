@@ -60,46 +60,48 @@ echo $this->doctype();
         );
     }
 
+    //admin and moderators
+    if ($this->isAllowed(RoleINterface::ROLE_MODERATOR)) {
 
-    if ($this->isAllowed(RoleINterface::ROLE_ADMIN)) {
+        $admin = array();
 
-        $admin = array(
+        //user
+        //todo: edit roles depending on own role
+        $admin[$this->translate('User', 'Application')] = $this->url('user');
 
-        $this->translate('User', 'Application')   =>
-            $this->url('user'),
+        //coupons
+        $admin[$this->translate('Coupons', 'Application')] =
+            $this->url('coupon', array('action' => 'moderate'));
 
-        $this->translate('Open Results', 'Application')    =>
-            $this->url('result'),
+        //referees
+        $admin[$this->translate('Referees', 'Application')] = $this->url('referee');
 
-        $this->translate('Edit Match Day', 'Application')    =>
-            $this->url('timeTable'),
+        //open results
+        $admin[$this->translate('Open Results', 'Application')] = $this->url('result');
 
-        $this->translate('New Season', 'Application')    =>
-            $this->url('createSeason', array('action' => 'create')),
+        //match day
+        $admin[$this->translate('Edit Match Day', 'Application')] = $this->url('timeTable');
 
-        $this->translate('Appointments', 'Application')    =>
-            $this->url('appointmentModerator'),
+        //appointment
+        $admin[$this->translate('Appointments', 'Application')] = $this->url('appointmentModerator');
 
-        $this->translate('Coupons', 'Application')    =>
-            $this->url('coupon', array('action' => 'moderate')),
-
-        $this->translate('Referees', 'Application')    =>
-            $this->url('referee'),
-
-        $this->translate('Tickets', 'Application')    =>
-        $this->url('ticket'),
-
-        );
 
         echo $this->Submenu('Admin', $admin);
     }
 
-    if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_MANAGER)) {
+    //manager and referees
+    if ($this->isManager()) {
 
         $moderator = array();
 
+        //todo: change to user if more association possible
+        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_OWNER)) {
+            $moderator[$this->translate('New Season', 'Application')] =
+                $this->url('createSeason', array('action' => 'create'));
+        }
+
         if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_MANAGER)) {
-            $moderator[$this->translate('Manager', 'Application')] = $this->url('manager');
+            $moderator[$this->translate('My Manager', 'Application')] = $this->url('manager');
         }
 
         $moderator[$this->translate('Tickets', 'Application')] = $this->url('ticket');

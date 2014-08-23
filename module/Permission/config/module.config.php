@@ -1,17 +1,15 @@
 <?php
-/**
- * The config information is passed to the relevant components by the
- * ServiceManager. The controllers section provides a list of all the
- * controllers provided by the module.
- *
- * Within the view_manager section, we add our view directory to the
- * TemplatePathStack configuration.
- *
- * @return array
- */
 namespace Permission;
 
 return array(
+
+    'view_helpers' => array(
+        'invokables' => array(
+            'isAllowed' => 'Permission\View\Helper\Voter',
+            'isManager' => 'Permission\View\Helper\IsManager',
+            // more helpers here ...
+        )
+    ),
 
    'controller_plugins' => array(
     'invokables' => array(
@@ -20,7 +18,6 @@ return array(
     ),
 
     'controllers' => array(
-
         'invokables' => array(
             'Permission\Controller\Forbidden' =>
                      'Permission\Controller\ForbiddenController',

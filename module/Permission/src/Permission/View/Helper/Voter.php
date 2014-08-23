@@ -1,15 +1,17 @@
 <?php
-namespace Application\View\Helper;
-
-use Nakade\Abstracts\AbstractViewHelper;
-use \Permission\Entity\RoleInterface;
+namespace Permission\View\Helper;
 
 /**
- * shows an reset pwd link image to user
+ * Class Voter
+ *
+ * @package Permission\View\Helper
  */
-class Voter extends AbstractViewHelper implements RoleInterface
+class Voter extends DefaultViewHelper
 {
+
     /**
+     * if a given role and its parents has access
+     *
      * @param $role
      *
      * @return bool
@@ -44,15 +46,6 @@ class Voter extends AbstractViewHelper implements RoleInterface
                break;
        }
         return $isAllowed;
-    }
-
-    /**
-     * @return \Permission\Services\VoterService
-     */
-    private function getVoterService()
-    {
-        $sm = $this->getView()->getHelperPluginManager()->getServiceLocator();
-        return $sm->get('Permission\Services\VoterService');
     }
 
 }
