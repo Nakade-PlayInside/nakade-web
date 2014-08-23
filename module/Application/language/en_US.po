@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-10 12:32+0100\n"
-"PO-Revision-Date: 2014-08-10 12:32+0100\n"
+"POT-Creation-Date: 2014-08-23 18:14+0100\n"
+"PO-Revision-Date: 2014-08-23 18:14+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -56,120 +56,166 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: ../view/layout/layout.phtml:36
+#: ../view/layout/layout.phtml:39
 msgid "BBC Nakade"
 msgstr ""
 
-#: ../view/layout/layout.phtml:39
+#: ../view/layout/layout.phtml:42
 msgid "Home"
 msgstr ""
 
-#: ../view/layout/layout.phtml:49
+#: ../view/layout/layout.phtml:53
 msgid "Dashboard"
 msgstr ""
 
-#: ../view/layout/layout.phtml:57
-msgid "User"
-msgstr ""
-
-#: ../view/layout/layout.phtml:60
-msgid "Open Results"
-msgstr ""
-
-#: ../view/layout/layout.phtml:63
-msgid "Edit Match Day"
-msgstr ""
-
-#: ../view/layout/layout.phtml:66
-msgid "New Season"
-msgstr ""
-
-#: ../view/layout/layout.phtml:69
-#: ../view/layout/layout.phtml:125
-msgid "Appointments"
-msgstr ""
-
-#: ../view/layout/layout.phtml:72
-msgid "Coupons"
-msgstr ""
-
-#: ../view/layout/layout.phtml:84
-msgid "Profile"
-msgstr ""
-
-#: ../view/layout/layout.phtml:89
-msgid "Inbox"
-msgstr ""
-
-#: ../view/layout/layout.phtml:92
-msgid "New Message"
-msgstr ""
-
-#: ../view/layout/layout.phtml:95
-msgid "Outbox"
-msgstr ""
-
-#: ../view/layout/layout.phtml:102
-msgid "Messages"
-msgstr ""
-
-#: ../view/layout/layout.phtml:108
-msgid "Schedule"
-msgstr ""
-
-#: ../view/layout/layout.phtml:111
-msgid "Standings"
-msgstr ""
-
-#: ../view/layout/layout.phtml:114
-msgid "results"
-msgstr ""
-
-#: ../view/layout/layout.phtml:120
-msgid "League"
-msgstr ""
-
-#: ../view/layout/layout.phtml:127
-msgid "Shift Date"
-msgstr ""
-
-#: ../view/layout/layout.phtml:129
-msgid "Confirm"
-msgstr ""
-
-#: ../view/layout/layout.phtml:136
-msgid "Logged in as "
-msgstr ""
-
-#: ../view/layout/layout.phtml:142
-msgid "Logout"
-msgstr ""
-
-#: ../view/layout/layout.phtml:149
+#: ../view/layout/layout.phtml:59
 msgid "LogIn"
 msgstr ""
 
-#: ../view/layout/layout.phtml:170
-msgid "Rules"
+#: ../view/layout/layout.phtml:70
+msgid "User"
 msgstr ""
 
-#: ../view/layout/layout.phtml:174
-msgid "Terms of Use"
+#: ../view/layout/layout.phtml:73
+msgid "Coupons"
+msgstr ""
+
+#: ../view/layout/layout.phtml:77
+msgid "Referees"
+msgstr ""
+
+#: ../view/layout/layout.phtml:80
+msgid "Open Results"
+msgstr ""
+
+#: ../view/layout/layout.phtml:83
+#: ../view/layout/layout.phtml:109
+msgid "Edit Match Day"
+msgstr ""
+
+#: ../view/layout/layout.phtml:86
+#: ../view/layout/layout.phtml:173
+msgid "Appointments"
+msgstr ""
+
+#: ../view/layout/layout.phtml:99
+msgid "New Season"
+msgstr ""
+
+#: ../view/layout/layout.phtml:104
+msgid "My Manager"
+msgstr ""
+
+#: ../view/layout/layout.phtml:114
+msgid "Edit Result"
+msgstr ""
+
+#: ../view/layout/layout.phtml:119
+msgid "Arbitration"
+msgstr ""
+
+#: ../view/layout/layout.phtml:122
+msgid "Tickets"
+msgstr ""
+
+#: ../view/layout/layout.phtml:132
+msgid "Profile"
+msgstr ""
+
+#: ../view/layout/layout.phtml:137
+msgid "Inbox"
+msgstr ""
+
+#: ../view/layout/layout.phtml:140
+msgid "New Message"
+msgstr ""
+
+#: ../view/layout/layout.phtml:143
+msgid "Outbox"
+msgstr ""
+
+#: ../view/layout/layout.phtml:150
+msgid "Messages"
+msgstr ""
+
+#: ../view/layout/layout.phtml:156
+msgid "Schedule"
+msgstr ""
+
+#: ../view/layout/layout.phtml:159
+msgid "Standings"
+msgstr ""
+
+#: ../view/layout/layout.phtml:162
+msgid "results"
+msgstr ""
+
+#: ../view/layout/layout.phtml:168
+msgid "League"
+msgstr ""
+
+#: ../view/layout/layout.phtml:175
+msgid "Shift Date"
 msgstr ""
 
 #: ../view/layout/layout.phtml:177
+msgid "Confirm"
+msgstr ""
+
+#: ../view/layout/layout.phtml:184
+msgid "Support"
+msgstr ""
+
+#: ../view/layout/layout.phtml:186
+msgid "My Tickets"
+msgstr ""
+
+#: ../view/layout/layout.phtml:188
+msgid "League Manager"
+msgstr ""
+
+#: ../view/layout/layout.phtml:191
+msgid "Admin"
+msgstr ""
+
+#: ../view/layout/layout.phtml:194
+msgid "Referee"
+msgstr ""
+
+#: ../view/layout/layout.phtml:202
+msgid "Logged in as "
+msgstr ""
+
+#: ../view/layout/layout.phtml:208
+msgid "Logout"
+msgstr ""
+
+#: ../view/layout/layout.phtml:229
+#: ../view/application/privacy/rules.phtml:4
+msgid "Rules"
+msgstr ""
+
+#: ../view/layout/layout.phtml:233
+#: ../view/application/privacy/use-terms.phtml:4
+msgid "Terms of Use"
+msgstr ""
+
+#: ../view/layout/layout.phtml:236
+#: ../view/application/imprint/index.phtml:3
 msgid "Imprint"
 msgstr ""
 
-#: ../view/layout/layout.phtml:178
+#: ../view/layout/layout.phtml:237
+#: ../view/application/contact/index.phtml:3
 msgid "Contact"
 msgstr ""
 
-#: ../view/layout/layout.phtml:179
+#: ../view/layout/layout.phtml:238
+#: ../view/application/training/index.phtml:4
 msgid "Location"
 msgstr ""
 
-#: ../view/layout/layout.phtml:181
+#: ../view/layout/layout.phtml:240
 msgid "All rights reserved."
 msgstr ""
 

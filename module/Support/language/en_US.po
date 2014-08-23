@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-08 11:40+0100\n"
-"PO-Revision-Date: 2014-08-08 11:40+0100\n"
+"POT-Creation-Date: 2014-08-23 20:13+0100\n"
+"PO-Revision-Date: 2014-08-23 20:13+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -15,469 +15,375 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/League/Mail/MatchReminderMail.php:18
-#: ../src/League/Mail/AppointmentReminderMail.php:18
-msgid "This is a reminder of your next match at %NEW_DATE% ."
+#: ../src/Support/Mail/TicketMail.php:18
+msgid "Dear %MODERATOR%"
 msgstr ""
 
-#: ../src/League/Mail/MatchReminderMail.php:20
-#: ../src/League/Mail/AutoResultMail.php:20
-#: ../src/League/Mail/ResultMail.php:21
-#: ../src/League/Mail/ScheduleMail.php:21
-#: ../src/League/Mail/ResultReminderMail.php:21
-#: ../src/League/Mail/AppointmentReminderMail.php:23
-msgid "Your match: %MATCH_INFO%"
+#: ../src/Support/Mail/TicketMail.php:20
+msgid "The ticket #%TICKET_NUMBER% is waiting for process."
 msgstr ""
 
-#: ../src/League/Mail/MatchReminderMail.php:22
-#: ../src/League/Mail/AppointmentReminderMail.php:25
-msgid "For any more details visit us at %URL%"
+#: ../src/Support/Mail/TicketMail.php:22
+msgid "Please logIn at %URL% as soon as possible."
 msgstr ""
 
-#: ../src/League/Mail/MatchReminderMail.php:36
-#: ../src/League/Mail/AppointmentReminderMail.php:39
-msgid "Your Match Reminder"
+#: ../src/Support/Mail/TicketMail.php:36
+msgid "Ticket #%TICKET_NUMBER% in Process"
 msgstr ""
 
-#: ../src/League/Mail/AutoResultMail.php:18
-msgid "Your match result was automatically set at %URL%."
+#: ../src/Support/Mail/RefereeNominationMail.php:18
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:18
+msgid "Dear %NAME%"
 msgstr ""
 
-#: ../src/League/Mail/AutoResultMail.php:22
-msgid "RESULT: Suspended"
+#: ../src/Support/Mail/RefereeNominationMail.php:20
+msgid "You are nominated being a member of the arbitrating body."
 msgstr ""
 
-#: ../src/League/Mail/AutoResultMail.php:24
-msgid "According to our rules, a match is suspended if no result is provided 72h after match date."
+#: ../src/Support/Mail/RefereeNominationMail.php:22
+msgid "Please contact other referees in case of making decisions."
 msgstr ""
 
-#: ../src/League/Mail/AutoResultMail.php:25
-#: ../src/League/Mail/ResultMail.php:25
-#: ../src/League/Mail/ScheduleMail.php:31
-msgid "In case of a mistake, please contact a league manager."
+#: ../src/Support/Mail/RefereeNominationMail.php:36
+msgid "Your Nomination as Referee"
 msgstr ""
 
-#: ../src/League/Mail/AutoResultMail.php:39
-#: ../src/League/Mail/ResultMail.php:39
-msgid "Your Match Result"
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:20
+msgid "You are nominated as League Manager of %ASSOCIATION% by %OWNER%."
 msgstr ""
 
-#: ../src/League/Mail/ResultMail.php:19
-msgid "The result of your match was submitted."
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:22
+msgid "Your task is to support participants of %ASSOCIATION%."
 msgstr ""
 
-#: ../src/League/Mail/ResultMail.php:23
-msgid "Result: %RESULT%"
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:24
+msgid "Therefore, you find your tickets in the moderator flag."
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:70
-msgid "No result was found."
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:25
+msgid "On request, you can edit results or making appointments."
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:76
-msgid "Result is a draw."
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:27
+msgid "It is advisable to reassure the request is wanted by both players."
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:80
-msgid "Your match was suspended."
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:29
+msgid "Remember to set a solved ticket to \"Done\"."
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:84
-msgid "%COLOR% win by resignation."
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:31
+msgid "Thank you for your commitment."
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:88
-msgid "%COLOR% win by forfeit."
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:45
+msgid "Your Nomination as League Manager of %ASSOCIATION%"
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:92
-msgid "%COLOR% win on time."
+#: ../src/Support/Mail/SupportMail.php:77
+#: ../src/Support/View/Helper/GetTicketStageInfo.php:23
+msgid "Waiting"
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:96
-msgid "%COLOR% win by %POINTS% points."
+#: ../src/Support/Mail/SupportMail.php:81
+#: ../src/Support/View/Helper/GetTicketStageInfo.php:27
+msgid "Reopened"
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:115
-msgid "Nobody"
+#: ../src/Support/Mail/SupportMail.php:85
+#: ../src/Support/View/Helper/GetTicketStageInfo.php:31
+msgid "In process"
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:118
-msgid "White"
+#: ../src/Support/Mail/SupportMail.php:89
+#: ../src/Support/View/Helper/GetTicketStageInfo.php:35
+msgid "Canceled"
 msgstr ""
 
-#: ../src/League/Mail/LeagueMail.php:120
-msgid "Black"
+#: ../src/Support/Mail/SupportMail.php:93
+#: ../src/Support/View/Helper/GetTicketStageInfo.php:39
+msgid "Done"
 msgstr ""
 
-#: ../src/League/Mail/ScheduleMail.php:18
-msgid "A new appointment for your match date at %URL% was set."
+#: ../src/Support/Mail/SupportMail.php:97
+#: ../src/Support/View/Helper/GetTicketStageInfo.php:43
+msgid "New"
 msgstr ""
 
-#: ../src/League/Mail/ScheduleMail.php:19
-msgid "The date was edited by a league manager on request."
+#: ../src/Support/Mail/SupportMail.php:113
+msgid "Administrator"
 msgstr ""
 
-#: ../src/League/Mail/ScheduleMail.php:23
-msgid "Actual match date: %OLD_DATE%"
+#: ../src/Support/Mail/SupportMail.php:117
+msgid "League Manager"
 msgstr ""
 
-#: ../src/League/Mail/ScheduleMail.php:25
-msgid "New match date: %NEW_DATE%"
+#: ../src/Support/Mail/SupportMail.php:121
+msgid "Referee"
 msgstr ""
 
-#: ../src/League/Mail/ScheduleMail.php:27
-msgid "This new date is binding even without confirming."
+#: ../src/Support/Mail/SupportMail.php:125
+msgid "unknown"
 msgstr ""
 
-#: ../src/League/Mail/ScheduleMail.php:28
-msgid "If you use a calendar application, do not forget to update."
+#: ../src/Support/Mail/ReplyInfoMail.php:18
+msgid "Your support request needs your reply for processing."
 msgstr ""
 
-#: ../src/League/Mail/ScheduleMail.php:29
-msgid "An updated iCal is found on your site after login at %URL%."
+#: ../src/Support/Mail/ReplyInfoMail.php:20
+msgid "Please logIn at %URL% and have a look to your open support tickets as soon as possible."
 msgstr ""
 
-#: ../src/League/Mail/ScheduleMail.php:45
-msgid "Your New Match Appointment"
+#: ../src/Support/Mail/ReplyInfoMail.php:22
+msgid "Your ticket: #%TICKET_NUMBER%"
 msgstr ""
 
-#: ../src/League/Mail/ResultReminderMail.php:18
-msgid "Your match result is overdue."
+#: ../src/Support/Mail/ReplyInfoMail.php:36
+#: ../src/Support/Mail/StageChangedMail.php:36
+msgid "Your Support Ticket #%TICKET_NUMBER%"
 msgstr ""
 
-#: ../src/League/Mail/ResultReminderMail.php:19
-msgid "Please provide your result immediately at %URL%."
+#: ../src/Support/Mail/StageChangedMail.php:18
+msgid "Your support request was processed."
 msgstr ""
 
-#: ../src/League/Mail/ResultReminderMail.php:24
-msgid "Match date: %NEW_DATE%"
+#: ../src/Support/Mail/StageChangedMail.php:20
+msgid "The new stage of your ticket #%TICKET_NUMBER% is \"%STAGE%\"."
 msgstr ""
 
-#: ../src/League/Mail/ResultReminderMail.php:26
-msgid "According to our rules, a match is suspended if no result is provided within the next 3 days."
+#: ../src/Support/Mail/StageChangedMail.php:22
+msgid "For more information logIn at %URL%."
 msgstr ""
 
-#: ../src/League/Mail/ResultReminderMail.php:27
-msgid "In case of a technical problem, please contact a league manager."
+#: ../src/Support/Form/SupportForm.php:38
+#: ../src/Support/Form/MailForm.php:29
+msgid "Subject"
 msgstr ""
 
-#: ../src/League/Mail/ResultReminderMail.php:41
-msgid "Your Match Result is Missing"
+#: ../src/Support/Form/SupportForm.php:40
+#: ../src/Support/Form/RefereeForm.php:24
+#: ../src/Support/Form/LeagueManagerForm.php:24
+#: ../src/Support/Form/LeagueManagerForm.php:36
+msgid "choose"
 msgstr ""
 
-#: ../src/League/Mail/AppointmentReminderMail.php:20
-msgid "Just in case, making an appointment is limited to 3 days before a match."
+#: ../src/Support/Form/SupportForm.php:64
+#: ../src/Support/Form/MailForm.php:43
+msgid "Message"
 msgstr ""
 
-#: ../src/League/Mail/AppointmentReminderMail.php:21
-msgid "If you cannot make it on %NEW_DATE%, use the option of making an appointment on %URL%."
+#: ../src/Support/Form/SupportForm.php:122
+msgid "Profile"
 msgstr ""
 
-#: ../src/League/View/Helper/OpenResult.php:27
-msgid "Enter Result"
+#: ../src/Support/Form/SupportForm.php:123
+msgid "Rights"
 msgstr ""
 
-#: ../src/League/View/Helper/OpenResult.php:28
-msgid "open"
+#: ../src/Support/Form/SupportForm.php:124
+msgid "Bug report"
 msgstr ""
 
-#: ../src/League/Form/MatchDayForm.php:45
-#: ../src/League/Form/ResultForm.php:71
-msgid "Match Id"
+#: ../src/Support/Form/SupportForm.php:125
+#: ../src/Support/Form/SupportForm.php:133
+#: ../src/Support/Form/SupportForm.php:141
+#: ../src/Support/Form/SupportForm.php:147
+msgid "Other"
 msgstr ""
 
-#: ../src/League/Form/MatchDayForm.php:55
-msgid "Match Day"
+#: ../src/Support/Form/SupportForm.php:131
+msgid "Appointment"
 msgstr ""
 
-#: ../src/League/Form/MatchDayForm.php:86
-msgid "Date"
-msgstr ""
-
-#: ../src/League/Form/MatchDayForm.php:102
-msgid "Time"
-msgstr ""
-
-#: ../src/League/Form/MatchDayForm.php:112
-msgid "Change Colors"
-msgstr ""
-
-#: ../src/League/Form/ResultForm.php:82
-msgid "Winner"
-msgstr ""
-
-#: ../src/League/Form/ResultForm.php:83
-msgid "No Winner"
-msgstr ""
-
-#: ../src/League/Form/ResultForm.php:95
+#: ../src/Support/Form/SupportForm.php:132
 msgid "Result"
 msgstr ""
 
-#: ../src/League/Form/ResultForm.php:96
-msgid "No Result"
+#: ../src/Support/Form/SupportForm.php:139
+msgid "Rules"
 msgstr ""
 
-#: ../src/League/Form/ResultForm.php:111
-msgid "Points"
+#: ../src/Support/Form/SupportForm.php:140
+msgid "Inappropriate behavior"
 msgstr ""
 
-#: ../src/League/iCal/iCal.php:188
-msgid "white"
+#: ../src/Support/Form/RefereeForm.php:22
+msgid "Available member"
 msgstr ""
 
-#: ../src/League/iCal/iCal.php:190
-msgid "black"
+#: ../src/Support/Form/LeagueManagerForm.php:22
+msgid "Manager"
 msgstr ""
 
-#: ../src/League/iCal/iCal.php:203
-msgid "My match vs %name%"
+#: ../src/Support/Form/LeagueManagerForm.php:34
+msgid "League"
 msgstr ""
 
-#: ../src/League/iCal/iCal.php:206
-msgid "KGS name: %name%"
+#: ../view/support/referee/index.phtml:9
+msgid "No Referee found"
 msgstr ""
 
-#: ../src/League/iCal/iCal.php:209
-msgid "my color is %color%"
+#: ../view/support/referee/index.phtml:13
+msgid "Referee Overview"
 msgstr ""
 
-#: ../src/League/iCal/iCal.php:228
-msgid "Nakade League Match vs %name%"
+#: ../view/support/referee/index.phtml:15
+msgid "add Referee"
 msgstr ""
 
-#: ../src/League/iCal/iCal.php:242
-msgid "No Info available"
+#: ../view/support/referee/index.phtml:21
+#: ../view/support/support/index.phtml:17
+#: ../view/support/ticket/index.phtml:17
+#: ../view/support/manager/index.phtml:20
+msgid "ID"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:23
-#: ../src/League/Standings/Results.php:72
-msgid "Resignation"
+#: ../view/support/referee/index.phtml:22
+#: ../view/support/manager/index.phtml:21
+msgid "Name"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:24
-msgid "Win by Points"
+#: ../view/support/referee/index.phtml:23
+#: ../view/support/manager/index.phtml:23
+msgid "Nominated"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:25
-#: ../src/League/Standings/Results.php:73
-msgid "Draw"
+#: ../view/support/referee/index.phtml:24
+#: ../view/support/manager/index.phtml:24
+msgid "active"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:26
-msgid "Lost by Forfeit"
+#: ../view/support/referee/index.phtml:33
+#: ../view/support/manager/index.phtml:34
+msgid "shift"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:27
-msgid "Game Suspended"
+#: ../view/support/referee/index.phtml:44
+#: ../view/support/support/index.phtml:43
+#: ../view/support/ticket/index.phtml:45
+#: ../view/support/manager/index.phtml:45
+msgid "Total"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:28
-msgid "Lost on Time"
+#: ../view/support/referee/index.phtml:44
+msgid "Referee(s)"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:49
-msgid "R"
+#: ../view/support/referee/add.phtml:4
+msgid "Add Referee"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:50
-msgid "Pt"
+#: ../view/support/referee/add.phtml:8
+msgid "Only members can become a referee."
 msgstr ""
 
-#: ../src/League/Standings/Results.php:51
-msgid "D"
+#: ../view/support/referee/add.phtml:9
+msgid "English is mandatory!"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:52
-msgid "F"
+#: ../view/support/support/index.phtml:9
+#: ../view/support/ticket/index.phtml:9
+msgid "No Tickets found"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:53
-msgid "S"
+#: ../view/support/support/index.phtml:13
+#: ../view/support/ticket/index.phtml:13
+msgid "My Support Tickets"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:54
-msgid "T"
+#: ../view/support/support/index.phtml:20
+#: ../view/support/ticket/index.phtml:21
+msgid "Date"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:74
-msgid "Forfeit"
+#: ../view/support/support/index.phtml:21
+#: ../view/support/support/detail.phtml:27
+#: ../view/support/ticket/index.phtml:22
+#: ../view/support/ticket/detail.phtml:27
+msgid "Stage"
 msgstr ""
 
-#: ../src/League/Standings/Results.php:75
-msgid "Suspended"
+#: ../view/support/support/index.phtml:22
+#: ../view/support/ticket/index.phtml:23
+msgid "Details"
+msgstr ""
+
+#: ../view/support/support/index.phtml:43
+#: ../view/support/ticket/index.phtml:45
+msgid "Ticket(s)"
+msgstr ""
+
+#: ../view/support/support/detail.phtml:11
+#: ../view/support/ticket/detail.phtml:11
+msgid "No Ticket found"
+msgstr ""
+
+#: ../view/support/support/detail.phtml:15
+#: ../view/support/ticket/detail.phtml:15
+msgid "Ticket Details"
+msgstr ""
+
+#: ../view/support/support/detail.phtml:44
+#: ../view/support/ticket/detail.phtml:44
+msgid "Return"
+msgstr ""
+
+#: ../view/support/support/detail.phtml:49
+#: ../view/support/ticket/detail.phtml:60
+msgid "Decline"
+msgstr ""
+
+#: ../view/support/support/detail.phtml:56
+#: ../view/support/ticket/detail.phtml:73
+msgid "Mail"
+msgstr ""
+
+#: ../view/support/support/add.phtml:4
+msgid "Support Inquiry"
+msgstr ""
+
+#: ../view/support/ticket/index.phtml:20
+msgid "Author"
+msgstr ""
+
+#: ../view/support/ticket/mail.phtml:4
+msgid "Support Message"
+msgstr ""
+
+#: ../view/support/ticket/detail.phtml:56
+msgid "Accept"
+msgstr ""
+
+#: ../view/support/ticket/detail.phtml:67
+msgid "Reopen"
+msgstr ""
+
+#: ../view/support/manager/index.phtml:9
+msgid "No League Manager found"
+msgstr ""
+
+#: ../view/support/manager/index.phtml:13
+msgid "My League Manager"
+msgstr ""
+
+#: ../view/support/manager/index.phtml:15
+msgid "add League Manager"
+msgstr ""
+
+#: ../view/support/manager/add.phtml:4
+msgid "Add League Manager"
 msgstr ""
 
 #: ../view/partial/pagination.phtml:6
 msgid "previous"
 msgstr ""
 
-#: ../view/partial/pagination.phtml:18
-msgid "click"
+#: ../view/partial/pagination.phtml:17
+msgid "Actual Page"
 msgstr ""
 
-#: ../view/partial/pagination.phtml:32
+#: ../view/partial/pagination.phtml:24
 msgid "next"
-msgstr ""
-
-#: ../view/league/table/index.phtml:9
-msgid "%name% 1. League"
-msgstr ""
-
-#: ../view/league/table/index.phtml:14
-#: ../view/league/table/table.phtml:20
-#: ../view/league/time-table/schedule.phtml:14
-msgid "No season found"
-msgstr ""
-
-#: ../view/league/table/index.phtml:23
-#: ../view/league/table/table.phtml:27
-msgid "Position"
-msgstr ""
-
-#: ../view/league/table/index.phtml:24
-#: ../view/league/table/table.phtml:28
-msgid "Player"
-msgstr ""
-
-#: ../view/league/table/index.phtml:25
-#: ../view/league/table/table.phtml:29
-msgid "Name"
-msgstr ""
-
-#: ../view/league/table/index.phtml:26
-msgid "Games"
-msgstr ""
-
-#: ../view/league/table/index.phtml:27
-msgid "G"
-msgstr ""
-
-#: ../view/league/table/index.phtml:29
-msgid "P"
-msgstr ""
-
-#: ../view/league/table/index.phtml:30
-msgid "Tiebreaker"
-msgstr ""
-
-#: ../view/league/table/index.phtml:31
-msgid "TB"
-msgstr ""
-
-#: ../view/league/table/table.phtml:10
-#: ../view/league/time-table/schedule.phtml:8
-msgid "%name% %no%. League"
-msgstr ""
-
-#: ../view/league/table/table.phtml:30
-msgid "played games"
-msgstr ""
-
-#: ../view/league/table/table.phtml:31
-msgid "GP"
-msgstr ""
-
-#: ../view/league/table/table.phtml:32
-msgid "Wins"
-msgstr ""
-
-#: ../view/league/table/table.phtml:33
-msgid "W"
-msgstr ""
-
-#: ../view/league/table/table.phtml:34
-msgid "Jigo"
-msgstr ""
-
-#: ../view/league/table/table.phtml:35
-msgid "J"
-msgstr ""
-
-#: ../view/league/table/table.phtml:36
-msgid "Lost"
-msgstr ""
-
-#: ../view/league/table/table.phtml:37
-msgid "L"
-msgstr ""
-
-#: ../view/league/time-table/index.phtml:4
-msgid "edit match day"
-msgstr ""
-
-#: ../view/league/time-table/index.phtml:11
-msgid "Matchday"
-msgstr ""
-
-#: ../view/league/time-table/index.phtml:12
-msgid "League"
-msgstr ""
-
-#: ../view/league/time-table/index.phtml:16
-#: ../view/league/time-table/index.phtml:30
-msgid "edit"
-msgstr ""
-
-#: ../view/league/time-table/my-schedule.phtml:4
-msgid "download your schedule calendar (iCal)"
-msgstr ""
-
-#: ../view/league/time-table/my-schedule.phtml:9
-msgid "%NAME% League No. %NUMBER%"
-msgstr ""
-
-#: ../view/league/time-table/my-schedule.phtml:20
-msgid "Download your calendar"
-msgstr ""
-
-#: ../view/league/time-table/my-schedule.phtml:26
-msgid "my color"
-msgstr ""
-
-#: ../view/league/time-table/edit.phtml:5
-msgid "edit match date"
-msgstr ""
-
-#: ../view/league/result/index.phtml:7
-msgid "%name% League - Open Results"
-msgstr ""
-
-#: ../view/league/result/index.phtml:13
-msgid "No open results found"
-msgstr ""
-
-#: ../view/league/result/my-result.phtml:7
-msgid "%name% League - My Results"
-msgstr ""
-
-#: ../view/league/result/my-result.phtml:14
-msgid "No results found"
-msgstr ""
-
-#: ../view/league/result/success.phtml:6
-msgid "Successful Input"
-msgstr ""
-
-#: ../view/league/result/success.phtml:8
-msgid "Congratulations!"
-msgstr ""
-
-#: ../view/league/result/success.phtml:9
-msgid "Soon you will receive an email with the result."
-msgstr ""
-
-#: ../view/league/result/actual-results.phtml:4
-msgid "Results - Match Day %no%"
-msgstr ""
-
-#: ../view/league/result/add.phtml:6
-msgid "%no%.Match day"
-msgstr ""
-
-#: ../view/league/result/add.phtml:12
-msgid "New Result"
 msgstr ""
 
 #~ msgid "Skeleton Application"

@@ -72,7 +72,7 @@ class TimeTableController extends AbstractController
 
         if (!$this->getService()->isAllowed($match)) {
             throw new \RuntimeException(
-                sprintf('You are not allowed to enter a result on this match.')
+                sprintf('You are not allowed to edit this match.')
             );
         }
 
@@ -104,8 +104,12 @@ class TimeTableController extends AbstractController
                 $mail->sendMail($data->getBlack());
                 $mail->sendMail($data->getWhite());
 
+                $this->flashMessenger()->addSuccessMessage('Date updated.');
                 return $this->redirect()->toRoute('timeTable');
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
+
         }
 
        return new ViewModel(

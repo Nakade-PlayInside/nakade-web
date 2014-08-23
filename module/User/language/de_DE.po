@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-10 12:21+0100\n"
-"PO-Revision-Date: 2014-08-10 12:24+0100\n"
+"POT-Creation-Date: 2014-08-23 18:34+0100\n"
+"PO-Revision-Date: 2014-08-23 18:34+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -299,6 +299,10 @@ msgstr "zurück"
 #: ../view/partial/pagination.phtml:17
 msgid "Actual Page"
 msgstr "Aktuelle Seite"
+
+#: ../view/partial/pagination.phtml:24
+msgid "next"
+msgstr "weiter"
 
 #: ../view/user/coupon/index.phtml:4
 #: ../view/user/coupon/info.phtml:3

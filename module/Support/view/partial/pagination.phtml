@@ -21,7 +21,7 @@
             <?php endforeach; ?>
             <!-- Next page link -->
             <?php if (isset($this->next)): ?>
-                <li>
+                <li <li title="<?php echo $this->translate('next'); ?>">
                     <a class="arrows-32 control-right-32" href="<?php echo $this->pagingUrl($this->next); ?>"></a>
                 </li>
             <?php endif; ?>
