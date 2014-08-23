@@ -32,8 +32,8 @@ return array(
             'League\Controller\Result\add' => 'guest',
             'League\Controller\Result\myResult' => 'guest',
             'League\Controller\Result\index' => 'admin',
-            'League\Controller\TimeTable\index' => 'admin',
-            'League\Controller\TimeTable\edit' => 'admin',
+            'League\Controller\TimeTable\index' => RoleInterface::ROLE_LEAGUE_MANAGER,
+            'League\Controller\TimeTable\edit'  => RoleInterface::ROLE_LEAGUE_MANAGER,
             'League\Controller\TimeTable\mySchedule' => 'guest',
             'League\Controller\TimeTable\schedule' => 'guest',
 
@@ -47,7 +47,7 @@ return array(
             'Support\Controller\Manager' => RoleInterface::ROLE_LEAGUE_OWNER,
             'Support\Controller\Referee' => RoleInterface::ROLE_ADMIN,
             'Support\Controller\Support' => RoleInterface::ROLE_GUEST,
-            'Support\Controller\LeagueManager' => 'user',
+            'Support\Controller\Ticket' => RoleInterface::ROLE_USER,
 
             'Arbitration\Controller\Arbitration' => RoleInterface::ROLE_REFEREE,
 

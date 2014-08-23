@@ -33,6 +33,7 @@ class TimeTableController extends AbstractController
     {
 
         //todo: paginator for leagues
+        //todo: filter for associations depending on role of the requesting user
         /* @var $seasonMapper \Season\Mapper\SeasonMapper */
         $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
         $season = $seasonMapper->getActiveSeasonByAssociation(1);
@@ -59,7 +60,6 @@ class TimeTableController extends AbstractController
     */
     public function editAction()
     {
-        //todo: move this to appointment modul
         $id  = (int) $this->params()->fromRoute('id', 0);
 
         /* @var $mapper \League\Mapper\ResultMapper */

@@ -45,6 +45,35 @@ class ResultMapper  extends AbstractMapper
      *
      * @return array
      */
+    public function getActualResultsBySeason($seasonId)
+    {
+        $now = new \DateTime();
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->leftJoin('Season\Entity\League', 'l', Join::WITH, 'm.league = l')
+            ->leftJoin('Season\Entity\Season', 's', Join::WITH, 'l.season = s')
+            ->innerJoin('l.season', 'Season')
+            ->where('m.result IS NOT NULL')
+            ->andWhere('Season.id = :seasonId')
+            ->andWhere('m.date < :now')
+            ->setParameter('seasonId', $seasonId)
+            ->setParameter('now', $now)
+            ->orderBy('l.number', 'ASC')
+            ->addOrderBy('m.matchDay', 'ASC')
+            ->addOrderBy('m.date', 'ASC')
+            ->addOrderBy('m.id', 'ASC');
+
+        return $qb->getQuery()->getResult();
+
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
     public function getAllOpenResultsBySeason($seasonId)
     {
         $em = $this->getEntityManager();

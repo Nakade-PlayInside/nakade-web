@@ -100,8 +100,13 @@ echo $this->doctype();
                 $this->url('createSeason', array('action' => 'create'));
         }
 
-        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_MANAGER)) {
+        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_OWNER)) {
             $moderator[$this->translate('My Manager', 'Application')] = $this->url('manager');
+        }
+
+        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_MANAGER)) {
+            //match day
+            $moderator[$this->translate('Edit Match Day', 'Application')] = $this->url('timeTable');
         }
 
         if ($this->isAllowed(RoleInterface::ROLE_REFEREE)) {
