@@ -25,10 +25,10 @@ $this->headTitle('Support');
             <tr style="background-color:<?php
             echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
                 <td style="text-align: right"><?php echo $support->getId(); ?></td>
-                <td><?php echo $support->getAssociation()->getName();?></td>
+                <td><?php echo $this->getAssociation($support->getAssociation());?></td>
                 <td><?php echo $support->getSubject()->getName(); ?></td>
                 <td><?php echo $support->getCreateDate()->format('d.m.y H:i'); ?></td>
-                <td>
+                <td title="<?php echo $this->ticketStageInfo($support->getStage()->getId());?>">
                     <div class="mail-16 <?php echo $this->ticketStage($support->getStage()->getId());?> btnCenter"></div>
                 </td>
                 <td>

@@ -32,6 +32,7 @@ class Authorize extends AbstractPermission implements AuthorizeInterface
         $this->resourceAction = $this->getResourceController() .'\\'. $routeMatch->getParam('action');
         $this->role = $this->getRoleByIdentity($authService);
         $this->authority = $this->getAuthorityByIdentity($authService);
+        $this->referee = $this->getRefereeByIdentity($authService);
         $this->acl = $aclService->getAcl();
 
         //permission check

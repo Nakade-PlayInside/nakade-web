@@ -9,6 +9,7 @@ use Zend\View\Model\ViewModel;
 
 /**
  * Class TicketController
+ * tickets for manager
  *
  * @package Support\Controller
  */
@@ -16,7 +17,6 @@ class TicketController extends DefaultController
 {
     const HOME = 'ticket';
 
-    //todo: PERMISSION isLM OR isSupport OR isReferee
     /**
      *
      * @return array|ViewModel
@@ -45,6 +45,7 @@ class TicketController extends DefaultController
      */
     public function detailAction()
     {
+        //todo: is LM, Owner, Ref or Admin
         $ticketId = (int) $this->params()->fromRoute('id', 0);
 
         return new ViewModel(
@@ -60,6 +61,7 @@ class TicketController extends DefaultController
      */
     public function mailAction()
     {
+        //todo: is LM, Owner, Ref or Admin
         $ticketId = (int) $this->params()->fromRoute('id', 0);
 
         $ticket = $this->setTicketState($ticketId, self::STAGE_WAITING);
@@ -76,15 +78,13 @@ class TicketController extends DefaultController
 
             //get post data, set data to from, prepare for validation
             $postData =  $request->getPost();
-
-            //cancel
+         //cancel
             if (isset($postData['button']['cancel'])) {
                 return $this->redirect()->toRoute(self::HOME, array('action' => 'detail', 'id' => $ticketId));
             }
 
             $form->setData($postData);
             if ($form->isValid()) {
-
                 $message = $form->getData();
                 $this->sendMail($ticket, MailService::REPLY_INFO_MAIL);
                 $this->getMapper()->save($message);
@@ -111,10 +111,12 @@ class TicketController extends DefaultController
      */
     public function doneAction()
     {
+        //todo: is LM, Owner, Ref or Admin
         $ticketId = (int) $this->params()->fromRoute('id', 0);
         $ticket = $this->setTicketState($ticketId, self::STAGE_DONE);
         if (!is_null($ticket)) {
             $ticket->setDoneDate(new \DateTime());
+            $this->getMapper()->save($ticket);
             $this->sendMail($ticket, MailService::STAGE_CHANGED_MAIL);
             $this->flashMessenger()->addSuccessMessage('Ticket done.');
         } else {
@@ -130,10 +132,12 @@ class TicketController extends DefaultController
      */
     public function acceptAction()
     {
+        //todo: is LM, Owner, Ref or Admin
         $ticketId = (int) $this->params()->fromRoute('id', 0);
         $ticket = $this->setTicketState($ticketId, self::STAGE_IN_PROCESS);
         if (!is_null($ticket)) {
             $ticket->setStartDate(new \DateTime());
+            $this->getMapper()->save($ticket);
             $this->sendMail($ticket, MailService::STAGE_CHANGED_MAIL);
             $this->flashMessenger()->addSuccessMessage('Ticket accepted.');
         } else {
@@ -149,10 +153,12 @@ class TicketController extends DefaultController
      */
     public function cancelAction()
     {
+        //todo: is LM, Owner, Ref or Admin
         $ticketId = (int) $this->params()->fromRoute('id', 0);
         $ticket = $this->setTicketState($ticketId, self::STAGE_CANCELED);
 
         if (!is_null($ticket)) {
+            $this->getMapper()->save($ticket);
             $this->flashMessenger()->addSuccessMessage('Ticket canceled.');
         } else {
             $this->flashMessenger()->addSuccessMessage('Input Error');
@@ -167,9 +173,11 @@ class TicketController extends DefaultController
      */
     public function reopenAction()
     {
+        //todo: is LM, Owner, Ref or Admin
         $ticketId = (int) $this->params()->fromRoute('id', 0);
         $ticket = $this->setTicketState($ticketId, self::STAGE_REOPENED);
         if (!is_null($ticket)) {
+            $this->getMapper()->save($ticket);
             $this->sendMail($ticket, MailService::STAGE_CHANGED_MAIL);
             $this->flashMessenger()->addSuccessMessage('Ticket reopened.');
         } else {

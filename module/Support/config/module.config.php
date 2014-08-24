@@ -9,6 +9,7 @@ return array(
             'activateAction'   => 'Support\View\Helper\GetActivateAction',
             'ticketStage'   => 'Support\View\Helper\GetTicketStage',
             'ticketStageInfo'   => 'Support\View\Helper\GetTicketStageInfo',
+            'getAssociation'   => 'Support\View\Helper\GetAssociation',
             // more helpers here ...
         )
     ),

@@ -15,10 +15,12 @@ $this->headTitle('Support');
     <h3><?php echo $this->translate('Ticket Details'); ?></h3>
 
     <table id="info">
-        <tr>
-            <td><?php echo $this->translate("League") . ': '; ?></td>
-            <td><?php echo $ticket->getAssociation()->getName(); ?></td>
-        </tr>
+        <?php if (!is_null($ticket->getAssociation())) : ?>
+            <tr>
+                <td><?php echo $this->translate("League") . ': '; ?></td>
+                <td><?php echo $ticket->getAssociation()->getName(); ?></td>
+            </tr>
+        <?php endif; ?>
         <tr>
             <td><?php echo $this->translate("Subject") . ': '; ?></td>
             <td><?php echo $ticket->getSubject()->getName(); ?></td>

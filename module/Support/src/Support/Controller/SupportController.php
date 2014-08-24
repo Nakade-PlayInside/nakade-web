@@ -10,6 +10,7 @@ use Zend\View\Model\ViewModel;
 
 /**
  * Class SupportController
+ * tickets for user
  *
  * @package Support\Controller
  */
@@ -24,9 +25,6 @@ class SupportController extends DefaultController
     public function indexAction()
     {
         $page = (int) $this->params()->fromRoute('id', 1);
-
-        //todo: isLeagueOwner as PERMISSION
-
         $total = $this->getTicketMapper()->getSupportRequestsByPages($this->identity()->getId());
         $pagination = new ItemPagination($total);
 
@@ -47,6 +45,7 @@ class SupportController extends DefaultController
      */
     public function detailAction()
     {
+        //todo: is ticket creator
         $ticketId = (int) $this->params()->fromRoute('id', 0);
 
         return new ViewModel(
@@ -113,6 +112,7 @@ class SupportController extends DefaultController
      */
     public function mailAction()
     {
+        //todo: is ticket creator
         $ticketId = (int) $this->params()->fromRoute('id', 0);
         $ticket = $this->setTicketState($ticketId, self::STAGE_IN_PROCESS);
         $author = $this->getUserById($this->identity()->getId());
@@ -164,6 +164,7 @@ class SupportController extends DefaultController
      */
     public function cancelAction()
     {
+        //todo: is ticket creator
         $ticketId = (int) $this->params()->fromRoute('id', 0);
         $ticket = $this->setTicketState($ticketId, self::STAGE_CANCELED);
 

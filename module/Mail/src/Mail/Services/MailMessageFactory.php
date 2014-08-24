@@ -14,6 +14,7 @@ use Zend\Mime\Message as Content;
 class MailMessageFactory extends MailMessage implements FactoryInterface
 {
 
+    //todo: expand service if mails queue is a performance problem; put mails into a table and send it by cron job
     /**
      * @param ServiceLocatorInterface $services
      *

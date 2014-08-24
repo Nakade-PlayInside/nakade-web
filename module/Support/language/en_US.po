@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-23 20:13+0100\n"
-"PO-Revision-Date: 2014-08-23 20:13+0100\n"
+"POT-Creation-Date: 2014-08-24 12:33+0100\n"
+"PO-Revision-Date: 2014-08-24 12:33+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -340,6 +340,14 @@ msgstr ""
 
 #: ../view/support/support/add.phtml:4
 msgid "Support Inquiry"
+msgstr ""
+
+#: ../view/support/support/add.phtml:10
+msgid "If you have a problem, please provide the necessary information."
+msgstr ""
+
+#: ../view/support/support/add.phtml:12
+msgid "Your request will be processed as soon as possible."
 msgstr ""
 
 #: ../view/support/ticket/index.phtml:20

@@ -41,7 +41,10 @@ class ButtonFieldset extends AbstractFieldset
             array(
                 'name' => 'Send',
                 'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array('value' => $this->translate('Submit'))
+                'attributes' => array(
+                    'value' => $this->translate('Submit'),
+                    'class' => 'btn btn-success actionBtn'
+                )
             )
         );
 
@@ -50,7 +53,10 @@ class ButtonFieldset extends AbstractFieldset
             array(
                 'name' => 'cancel',
                 'type'  => 'Zend\Form\Element\Submit',
-                'attributes' => array('value' => $this->translate('Cancel'))
+                'attributes' => array(
+                    'value' => $this->translate('Cancel'),
+                    'class' => 'btn btn-success actionBtn'
+                )
             )
         );
     }

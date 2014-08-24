@@ -54,6 +54,16 @@ class MailForm extends BaseForm implements SupportInterface
     public function getFilter()
     {
         $filter = new InputFilter();
+        $filter->add(
+            array(
+                'name' => self::MESSAGE,
+                'required' => true,
+                'allowEmpty' => false,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                ),
+            )
+        );
         return $filter;
     }
 

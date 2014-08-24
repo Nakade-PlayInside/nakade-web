@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-23 18:32+0100\n"
-"PO-Revision-Date: 2014-08-23 18:32+0100\n"
+"PO-Revision-Date: 2014-08-24 13:14+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -517,11 +517,11 @@ msgstr "Paarung"
 
 #: ../view/league/result/all-results.phtml:29
 msgid "Entered By"
-msgstr "eingetragen"
+msgstr "Eingereicht"
 
 #: ../view/league/result/all-results.phtml:30
 msgid "Enter Date"
-msgstr "Datum eintragen"
+msgstr "Datum"
 
 #: ../view/league/result/all-results.phtml:52
 msgid "Total"

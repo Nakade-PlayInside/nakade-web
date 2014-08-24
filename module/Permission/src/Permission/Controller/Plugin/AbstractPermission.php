@@ -158,7 +158,7 @@ abstract class AbstractPermission extends AbstractPlugin implements AuthorizeInt
         $acl = $this->getAcl();
         $controller = $this->getResourceController();
         $action = $this->getResourceAction();
-
+        
         // first check controller if no action is registered
         if ($acl->hasResource($controller) && !$acl->hasResource($action)) {
 

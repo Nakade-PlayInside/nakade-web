@@ -15,10 +15,12 @@ $this->headTitle('Support');
     <h3><?php echo $this->translate('Ticket Details'); ?></h3>
 
     <table id="info">
+    <?php if (!is_null($ticket->getAssociation())) : ?>
         <tr>
             <td><?php echo $this->translate("League") . ': '; ?></td>
             <td><?php echo $ticket->getAssociation()->getName(); ?></td>
         </tr>
+    <?php endif; ?>
         <tr>
             <td><?php echo $this->translate("Subject") . ': '; ?></td>
             <td><?php echo $ticket->getSubject()->getName(); ?></td>
@@ -66,12 +68,13 @@ $this->headTitle('Support');
         array('action' => 'reopen', 'id' => $ticket->getId())); ?>">
         <?php echo $this->translate("Reopen"); ?>
     </a>
+<?php else : ?>
+    <a class="btn btn-success actionBtn" href="<?php echo $this->url('ticket',
+        array('action' => 'mail', 'id' => $ticket->getId())); ?>">
+        <div class="mail-16 mail-yellow-16"></div><span><?php echo $this->translate("Mail");?></span>
+    </a>
 <?php endif; ?>
 
-<a class="btn btn-success actionBtn" href="<?php echo $this->url('ticket',
-    array('action' => 'mail', 'id' => $ticket->getId())); ?>">
-    <div class="mail-16 mail-yellow-16"></div><span><?php echo $this->translate("Mail");?></span>
-</a>
 
 <?php $this->placeholder('tickets')->captureEnd();
 

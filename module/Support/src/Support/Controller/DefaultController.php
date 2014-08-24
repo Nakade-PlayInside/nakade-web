@@ -78,7 +78,6 @@ class DefaultController extends AbstractController implements StageInterface, Su
         if (!is_null($ticket)) {
             $stage = $this->getStageById($state);
             $ticket->setStage($stage);
-            $this->getMapper()->save($ticket);
         }
         return $ticket;
     }
