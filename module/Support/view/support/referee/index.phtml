@@ -4,17 +4,17 @@ $this->plugin('translate')->setTranslatorTextDomain('Support');
 $this->headTitle('Moderator View');
 
 ?>
+<h3><?php echo $this->translate('Referee Overview'); ?></h3>
+<hr/>
+<a class="addUser buttons-32 user-add-32" title="<?php echo $this->translate("add Referee"); ?>" href="
+<?php echo $this->url('referee', array('action' => 'add')); ?>">
+</a>
 
 <?php $this->placeholder('nothing')->captureStart();?>
     <h3><?php echo $this->translate('No Referee found'); ?></h3>
 <?php $this->placeholder('nothing')->captureEnd(); ?>
 
 <?php $this->placeholder('referee')->captureStart();?>
-    <h3><?php echo $this->translate('Referee Overview'); ?></h3>
-    <hr/>
-    <a class="addUser buttons-32 user-add-32" title="<?php echo $this->translate("add Referee"); ?>" href="
-    <?php echo $this->url('referee', array('action' => 'add')); ?>">
-    </a>
 <?php echo $this->paginationControl($this->paginator, 'Sliding', 'moderator'); ?>
     <table class="table profile">
         <tr>

@@ -4,16 +4,16 @@ $this->plugin('translate')->setTranslatorTextDomain('Support');
 $this->headTitle('Moderator View');
 
 ?>
+<h3><?php echo $this->translate('My League Manager'); ?></h3>
+<hr/>
+<a class="addUser buttons-32 user-add-32" title="<?php echo $this->translate("add League Manager"); ?>" href="
+<?php echo $this->url('manager', array('action' => 'add')); ?>"></a>
 
 <?php $this->placeholder('nothing')->captureStart();?>
     <h3><?php echo $this->translate('No League Manager found'); ?></h3>
 <?php $this->placeholder('nothing')->captureEnd(); ?>
 
 <?php $this->placeholder('manager')->captureStart();?>
-    <h3><?php echo $this->translate('My League Manager'); ?></h3>
-    <hr/>
-    <a class="addUser buttons-32 user-add-32" title="<?php echo $this->translate("add League Manager"); ?>" href="
-    <?php echo $this->url('manager', array('action' => 'add')); ?>"></a>
 <?php echo $this->paginationControl($this->paginator, 'Sliding', 'moderator'); ?>
     <table class="table profile">
         <tr>
