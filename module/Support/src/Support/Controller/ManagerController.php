@@ -26,8 +26,6 @@ class ManagerController extends AbstractController
     {
         $page = (int) $this->params()->fromRoute('id', 1);
 
-        //todo: isLeagueOwner as PERMISSION
-
         $total = $this->getMapper()->getMyLeagueManagersByPages($this->identity()->getId());
         $pagination = new ItemPagination($total);
 

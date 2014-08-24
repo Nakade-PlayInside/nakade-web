@@ -45,7 +45,7 @@ class TicketController extends DefaultController
      */
     public function detailAction()
     {
-        //todo: is LM, Owner, Ref or Admin
+        //todo: logging for all actions
         $ticketId = (int) $this->params()->fromRoute('id', 0);
 
         return new ViewModel(
@@ -61,7 +61,6 @@ class TicketController extends DefaultController
      */
     public function mailAction()
     {
-        //todo: is LM, Owner, Ref or Admin
         $ticketId = (int) $this->params()->fromRoute('id', 0);
 
         $ticket = $this->setTicketState($ticketId, self::STAGE_WAITING);
@@ -111,7 +110,6 @@ class TicketController extends DefaultController
      */
     public function doneAction()
     {
-        //todo: is LM, Owner, Ref or Admin
         $ticketId = (int) $this->params()->fromRoute('id', 0);
         $ticket = $this->setTicketState($ticketId, self::STAGE_DONE);
         if (!is_null($ticket)) {
@@ -132,7 +130,6 @@ class TicketController extends DefaultController
      */
     public function acceptAction()
     {
-        //todo: is LM, Owner, Ref or Admin
         $ticketId = (int) $this->params()->fromRoute('id', 0);
         $ticket = $this->setTicketState($ticketId, self::STAGE_IN_PROCESS);
         if (!is_null($ticket)) {
@@ -153,7 +150,6 @@ class TicketController extends DefaultController
      */
     public function cancelAction()
     {
-        //todo: is LM, Owner, Ref or Admin
         $ticketId = (int) $this->params()->fromRoute('id', 0);
         $ticket = $this->setTicketState($ticketId, self::STAGE_CANCELED);
 
@@ -173,7 +169,6 @@ class TicketController extends DefaultController
      */
     public function reopenAction()
     {
-        //todo: is LM, Owner, Ref or Admin
         $ticketId = (int) $this->params()->fromRoute('id', 0);
         $ticket = $this->setTicketState($ticketId, self::STAGE_REOPENED);
         if (!is_null($ticket)) {
