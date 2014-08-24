@@ -10,10 +10,6 @@ use Zend\Validator\Exception;
  * chars, spaces and umlauts. Additional penalties are given for repeating
  * letters or words.
  *
- * The following option keys are supported:
- * 'length'    => length of a password
- * 'threshold'  => threshold for validation
- *
  * @package User\Form\Validator
  */
 class PasswordComplexity extends AbstractValidator {
@@ -32,15 +28,15 @@ class PasswordComplexity extends AbstractValidator {
     const MINOR_PENALTY = 5;
     const OPTIMAL_STRENGTH = 130;
 
-    private $length = 8;
-    private $threshold = 80;
+    const PWD_LENGTH = 8;
+    const THRESHOLD = 80;
 
     /**
      * @var array
      */
     protected $messageTemplates = array(
         self::INVALID   => "Invalid type given. String expected",
-        self::LENGTH    => "Optimal password length: '%length%'.",
+        self::LENGTH    => "Optimal password length: '8'",
         self::NO_DIGITS => "No digits found.",
         self::NO_UPPER  => "No uppercase letters found.",
         self::NO_LOWER  => "No lowercase letters found.",
@@ -52,30 +48,11 @@ class PasswordComplexity extends AbstractValidator {
     );
 
     /**
-     * @var array
-     */
-    protected $messageVariables = array(
-        'length' => 'length',
-    );
-
-    /**
      * @param null $options
      */
     public function __construct($options = null)
     {
      //@todo: translation
-
-        if (!empty($options)  && is_array($options)) {
-
-            if (array_key_exists('length', $options)) {
-                $this->length = $options['length'];
-            }
-
-            if (array_key_exists('threshold', $options)) {
-                $this->threshold = $options['threshold'];
-            }
-        }
-
         parent::__construct($options);
     }
 
@@ -90,11 +67,9 @@ class PasswordComplexity extends AbstractValidator {
         $this->setValue($value);
 
         $strength = self::OPTIMAL_STRENGTH - $this->checkViolations($value);
-        if ($this->threshold >= $strength) {
+        if (self::THRESHOLD >= $strength) {
              return false;
         }
-
-
         return true;
     }
 
@@ -107,7 +82,8 @@ class PasswordComplexity extends AbstractValidator {
     {
         $violation=0;
 
-        $lenFactor = $this->length - strlen($value);
+
+        $lenFactor = self::PWD_LENGTH - strlen($value);
         if ($lenFactor > 0) {
             $this->error(self::LENGTH);
         }
@@ -248,6 +224,5 @@ class PasswordComplexity extends AbstractValidator {
         $pattern = '/([a-zA-Z]{3,})(.)*\1\z/';
         return (bool) preg_match($pattern, $value);
     }
-
 
 }

@@ -24,7 +24,7 @@ class ResultReminderMail extends LeagueMail
             $this->translate('Match date: %NEW_DATE%') .
             PHP_EOL . PHP_EOL .
             $this->translate('According to our rules, a match is suspended if no result is provided within the next 3 days.') . ' ' .
-            $this->translate('In case of a technical problem, please contact a league manager.') .
+            $this->translate('In case of a technical problem, please contact your league manager.') .
             PHP_EOL . PHP_EOL .
             $this->getSignature()->getSignatureText();
 

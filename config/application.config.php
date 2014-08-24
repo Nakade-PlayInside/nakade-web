@@ -14,6 +14,8 @@ return array(
         'Permission',
         'Message',
         'Appointment',
+        'Support',
+        'Arbitration',
 
         ),
     'module_listener_options' => array(

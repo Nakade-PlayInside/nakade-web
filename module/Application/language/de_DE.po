@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-10 12:32+0100\n"
-"PO-Revision-Date: 2014-08-10 12:32+0100\n"
+"POT-Creation-Date: 2014-08-23 18:14+0100\n"
+"PO-Revision-Date: 2014-08-23 18:17+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -56,120 +56,166 @@ msgstr "Bitte löse das Captcha."
 msgid "Submit"
 msgstr "Abschicken"
 
-#: ../view/layout/layout.phtml:36
+#: ../view/layout/layout.phtml:39
 msgid "BBC Nakade"
 msgstr "BBC Nakade"
 
-#: ../view/layout/layout.phtml:39
+#: ../view/layout/layout.phtml:42
 msgid "Home"
 msgstr "Startseite"
 
-#: ../view/layout/layout.phtml:49
+#: ../view/layout/layout.phtml:53
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: ../view/layout/layout.phtml:57
-msgid "User"
-msgstr "Benutzer"
-
-#: ../view/layout/layout.phtml:60
-msgid "Open Results"
-msgstr "Offene Ergebnisse"
-
-#: ../view/layout/layout.phtml:63
-msgid "Edit Match Day"
-msgstr "Spieltag Ändern"
-
-#: ../view/layout/layout.phtml:66
-msgid "New Season"
-msgstr "Neue Saison"
-
-#: ../view/layout/layout.phtml:69
-#: ../view/layout/layout.phtml:125
-msgid "Appointments"
-msgstr "Terminverlegung"
-
-#: ../view/layout/layout.phtml:72
-msgid "Coupons"
-msgstr "Gutscheine"
-
-#: ../view/layout/layout.phtml:84
-msgid "Profile"
-msgstr "Profil"
-
-#: ../view/layout/layout.phtml:89
-msgid "Inbox"
-msgstr "Posteingang"
-
-#: ../view/layout/layout.phtml:92
-msgid "New Message"
-msgstr "Neue Nachricht"
-
-#: ../view/layout/layout.phtml:95
-msgid "Outbox"
-msgstr "Gesendet"
-
-#: ../view/layout/layout.phtml:102
-msgid "Messages"
-msgstr "Nachrichten"
-
-#: ../view/layout/layout.phtml:108
-msgid "Schedule"
-msgstr "Spielplan"
-
-#: ../view/layout/layout.phtml:111
-msgid "Standings"
-msgstr "Tabelle"
-
-#: ../view/layout/layout.phtml:114
-msgid "results"
-msgstr "Ergebnisse"
-
-#: ../view/layout/layout.phtml:120
-msgid "League"
-msgstr "Liga"
-
-#: ../view/layout/layout.phtml:127
-msgid "Shift Date"
-msgstr "Verlegen"
-
-#: ../view/layout/layout.phtml:129
-msgid "Confirm"
-msgstr "Bestätigen"
-
-#: ../view/layout/layout.phtml:136
-msgid "Logged in as "
-msgstr "angemeldet als"
-
-#: ../view/layout/layout.phtml:142
-msgid "Logout"
-msgstr "Abmelden"
-
-#: ../view/layout/layout.phtml:149
+#: ../view/layout/layout.phtml:59
 msgid "LogIn"
 msgstr "Login"
 
-#: ../view/layout/layout.phtml:170
+#: ../view/layout/layout.phtml:70
+msgid "User"
+msgstr "Benutzer"
+
+#: ../view/layout/layout.phtml:73
+msgid "Coupons"
+msgstr "Gutscheine"
+
+#: ../view/layout/layout.phtml:77
+msgid "Referees"
+msgstr "Schiedsrichter"
+
+#: ../view/layout/layout.phtml:80
+msgid "Open Results"
+msgstr "Offene Ergebnisse"
+
+#: ../view/layout/layout.phtml:83
+#: ../view/layout/layout.phtml:109
+msgid "Edit Match Day"
+msgstr "Spieltag bearbeiten"
+
+#: ../view/layout/layout.phtml:86
+#: ../view/layout/layout.phtml:173
+msgid "Appointments"
+msgstr "Terminverlegung"
+
+#: ../view/layout/layout.phtml:99
+msgid "New Season"
+msgstr "Neue Saison"
+
+#: ../view/layout/layout.phtml:104
+msgid "My Manager"
+msgstr "Meine Manager"
+
+#: ../view/layout/layout.phtml:114
+msgid "Edit Result"
+msgstr "Ergebnis bearbeiten"
+
+#: ../view/layout/layout.phtml:119
+msgid "Arbitration"
+msgstr "Schiedsgericht"
+
+#: ../view/layout/layout.phtml:122
+msgid "Tickets"
+msgstr "Tickets"
+
+#: ../view/layout/layout.phtml:132
+msgid "Profile"
+msgstr "Profil"
+
+#: ../view/layout/layout.phtml:137
+msgid "Inbox"
+msgstr "Posteingang"
+
+#: ../view/layout/layout.phtml:140
+msgid "New Message"
+msgstr "Neue Nachricht"
+
+#: ../view/layout/layout.phtml:143
+msgid "Outbox"
+msgstr "Gesendet"
+
+#: ../view/layout/layout.phtml:150
+msgid "Messages"
+msgstr "Nachrichten"
+
+#: ../view/layout/layout.phtml:156
+msgid "Schedule"
+msgstr "Spielplan"
+
+#: ../view/layout/layout.phtml:159
+msgid "Standings"
+msgstr "Tabelle"
+
+#: ../view/layout/layout.phtml:162
+msgid "results"
+msgstr "Ergebnisse"
+
+#: ../view/layout/layout.phtml:168
+msgid "League"
+msgstr "Liga"
+
+#: ../view/layout/layout.phtml:175
+msgid "Shift Date"
+msgstr "Verlegen"
+
+#: ../view/layout/layout.phtml:177
+msgid "Confirm"
+msgstr "Bestätigen"
+
+#: ../view/layout/layout.phtml:184
+msgid "Support"
+msgstr "Support"
+
+#: ../view/layout/layout.phtml:186
+msgid "My Tickets"
+msgstr "Meine Tickets"
+
+#: ../view/layout/layout.phtml:188
+msgid "League Manager"
+msgstr "Liga-Manager"
+
+#: ../view/layout/layout.phtml:191
+msgid "Admin"
+msgstr "Admin"
+
+#: ../view/layout/layout.phtml:194
+msgid "Referee"
+msgstr "Schiedsrichter"
+
+#: ../view/layout/layout.phtml:202
+msgid "Logged in as "
+msgstr "angemeldet als"
+
+#: ../view/layout/layout.phtml:208
+msgid "Logout"
+msgstr "Abmelden"
+
+#: ../view/layout/layout.phtml:229
+#: ../view/application/privacy/rules.phtml:4
 msgid "Rules"
 msgstr "Regelwerk"
 
-#: ../view/layout/layout.phtml:174
+#: ../view/layout/layout.phtml:233
+#: ../view/application/privacy/use-terms.phtml:4
 msgid "Terms of Use"
 msgstr "AGB"
 
-#: ../view/layout/layout.phtml:177
+#: ../view/layout/layout.phtml:236
+#: ../view/application/imprint/index.phtml:3
 msgid "Imprint"
 msgstr "Impressum"
 
-#: ../view/layout/layout.phtml:178
+#: ../view/layout/layout.phtml:237
+#: ../view/application/contact/index.phtml:3
 msgid "Contact"
 msgstr "Kontakt"
 
-#: ../view/layout/layout.phtml:179
+#: ../view/layout/layout.phtml:238
+#: ../view/application/training/index.phtml:4
 msgid "Location"
 msgstr "Spielort"
 
-#: ../view/layout/layout.phtml:181
+#: ../view/layout/layout.phtml:240
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
 

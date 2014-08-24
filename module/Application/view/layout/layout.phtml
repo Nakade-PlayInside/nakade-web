@@ -1,4 +1,7 @@
-<?php echo $this->doctype(); ?>
+<?php
+use Permission\Entity\RoleINterface;
+echo $this->doctype();
+?>
 
 <html lang="en">
     <head>
@@ -42,42 +45,87 @@
 
 
 <?php
-     if ($user = $this->identity()) {
+
+    if ($this->isAllowed(RoleINterface::ROLE_GUEST)) {
 
          echo sprintf('<li><a href="%s">%s</a></li>',
              $this->url('dashboard'),
              $this->translate('Dashboard', 'Application')
          );
+    } else {
+
+        echo sprintf('<li><a href="%s">%s</a></li>',
+            $this->url('login'),
+            $this->translate('LogIn', 'Application')
+        );
+    }
+
+    //admin and moderators
+    if ($this->isAllowed(RoleINterface::ROLE_MODERATOR)) {
+
+        $admin = array();
+
+        //user
+        //todo: edit roles depending on own role
+        $admin[$this->translate('User', 'Application')] = $this->url('user');
+
+        //coupons
+        $admin[$this->translate('Coupons', 'Application')] =
+            $this->url('coupon', array('action' => 'moderate'));
+
+        //referees
+        $admin[$this->translate('Referees', 'Application')] = $this->url('referee');
+
+        //open results
+        $admin[$this->translate('Open Results', 'Application')] = $this->url('result');
+
+        //match day
+        $admin[$this->translate('Edit Match Day', 'Application')] = $this->url('timeTable');
+
+        //appointment
+        $admin[$this->translate('Appointments', 'Application')] = $this->url('appointmentModerator');
 
 
-        if ($user->getRole()=='admin') {
+        echo $this->Submenu('Admin', $admin);
+    }
 
-            $admin = array(
+    //manager and referees
+    if ($this->isManager()) {
 
-            $this->translate('User', 'Application')   =>
-                $this->url('user'),
+        $moderator = array();
 
-            $this->translate('Open Results', 'Application')    =>
-                $this->url('result'),
-
-            $this->translate('Edit Match Day', 'Application')    =>
-                $this->url('timeTable'),
-
-            $this->translate('New Season', 'Application')    =>
-                $this->url('createSeason', array('action' => 'create')),
-
-            $this->translate('Appointments', 'Application')    =>
-                $this->url('appointmentModerator'),
-
-            $this->translate('Coupons', 'Application')    =>
-                $this->url('coupon', array('action' => 'moderate')),
-
-            );
-
-            echo $this->Submenu('Admin', $admin);
-
-
+        //todo: change to user if more association possible
+        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_OWNER)) {
+            $moderator[$this->translate('New Season', 'Application')] =
+                $this->url('createSeason', array('action' => 'create'));
         }
+
+        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_OWNER)) {
+            $moderator[$this->translate('My Manager', 'Application')] = $this->url('manager');
+        }
+
+        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_MANAGER)) {
+            //match day
+            $moderator[$this->translate('Edit Match Day', 'Application')] = $this->url('timeTable');
+        }
+
+        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_MANAGER)) {
+            //match day
+            $moderator[$this->translate('Edit Result', 'Application')] =
+                $this->url('result', array('action' => 'allResults'));
+        }
+
+        if ($this->isAllowed(RoleInterface::ROLE_REFEREE)) {
+            $moderator[$this->translate('Arbitration', 'Application')] = $this->url('arbitration');
+        }
+
+        $moderator[$this->translate('Tickets', 'Application')] = $this->url('ticket');
+
+        echo $this->Submenu('Moderator', $moderator);
+
+    }
+
+    if ($this->isAllowed(RoleINterface::ROLE_GUEST)) {
 
         echo sprintf('<li><a href="%s">%s</a></li>',
             $this->url('profile'),
@@ -131,10 +179,28 @@
              )
          );
 
+        // todo: only active League Players can do request for a LM
+         echo $this->Submenu(
+             $this->translate('Support', 'Application'),
+             array (
+                 $this->translate('My Tickets', 'Application')   =>
+                     $this->url('support'),
+                 $this->translate('League Manager', 'Application')   =>
+                     $this->url('support', array('action' => 'add',
+                         'id' => \Support\Controller\SupportTypeInterface::LEAGUE_MANAGER_TICKET)),
+                 $this->translate('Admin', 'Application')   =>
+                     $this->url('support', array('action' => 'add',
+                         'id' => \Support\Controller\SupportTypeInterface::ADMIN_TICKET)),
+                 $this->translate('Referee', 'Application')   =>
+                     $this->url('support', array('action' => 'add',
+                         'id' => \Support\Controller\SupportTypeInterface::REFEREE_TICKET)),
+             )
+         );
+
         echo sprintf('<li style="color:lightblue;line-height:19px;
                 padding:10px; padding-left:20px;">%s %s</li>',
             $this->translate('Logged in as ', 'Application'),
-            $this->escapeHtml($user->getUsername())
+            $this->escapeHtml($this->identity()->getUsername())
         );
 
         echo sprintf('<li><a href="%s">%s</a></li>',
@@ -142,14 +208,7 @@
             $this->translate('Logout', 'Application')
         );
 
-     } else {
-
-        echo sprintf('<li><a href="%s">%s</a></li>',
-            $this->url('login'),
-            $this->translate('LogIn', 'Application')
-        );
-
-     }
+    }
 ?>
                         </ul>
                     </div><!--/.nav-collapse -->

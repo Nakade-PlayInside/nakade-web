@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-08 11:40+0100\n"
-"PO-Revision-Date: 2014-08-08 11:45+0100\n"
+"POT-Creation-Date: 2014-08-23 18:32+0100\n"
+"PO-Revision-Date: 2014-08-24 13:14+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -25,6 +25,7 @@ msgstr "Dies ist eine Erinnerung an deine nächste Partie am %NEW_DATE% ."
 #: ../src/League/Mail/AutoResultMail.php:20
 #: ../src/League/Mail/ResultMail.php:21
 #: ../src/League/Mail/ScheduleMail.php:21
+#: ../src/League/Mail/ResultEditMail.php:21
 #: ../src/League/Mail/ResultReminderMail.php:21
 #: ../src/League/Mail/AppointmentReminderMail.php:23
 msgid "Your match: %MATCH_INFO%"
@@ -55,8 +56,9 @@ msgstr "Entsprechend unseres Regelwerks wird eine Partie als ausgesetzt gewertet
 #: ../src/League/Mail/AutoResultMail.php:25
 #: ../src/League/Mail/ResultMail.php:25
 #: ../src/League/Mail/ScheduleMail.php:31
-msgid "In case of a mistake, please contact a league manager."
-msgstr "Im Falle eines Fehlers, wende dich bitte an einen Liga-Manager."
+#: ../src/League/Mail/ResultEditMail.php:25
+msgid "In case of a mistake, please contact your league manager."
+msgstr "Im Falle eines Fehlers, wende dich bitte an deinen Liga-Manager."
 
 #: ../src/League/Mail/AutoResultMail.php:39
 #: ../src/League/Mail/ResultMail.php:39
@@ -68,6 +70,7 @@ msgid "The result of your match was submitted."
 msgstr "Das Ergebnis deiner Partie wurde eingereicht."
 
 #: ../src/League/Mail/ResultMail.php:23
+#: ../src/League/Mail/ResultEditMail.php:23
 msgid "Result: %RESULT%"
 msgstr "Ergebnis: %RESULT%"
 
@@ -116,8 +119,8 @@ msgid "A new appointment for your match date at %URL% was set."
 msgstr "Eine Terminverlegung für deine Partie auf %URL% wurde beantragt."
 
 #: ../src/League/Mail/ScheduleMail.php:19
-msgid "The date was edited by a league manager on request."
-msgstr "Der Termin wurde auf Anfrage durch einen Liga-Manager gesetzt."
+msgid "The date was edited by your league manager on request."
+msgstr "Der Termin wurde auf Anfrage durch deinen Liga-Manager gesetzt."
 
 #: ../src/League/Mail/ScheduleMail.php:23
 msgid "Actual match date: %OLD_DATE%"
@@ -143,6 +146,14 @@ msgstr "Die aktuelle iCal Datei findest du auf deinem Dashboard auf %URL% nach d
 msgid "Your New Match Appointment"
 msgstr "Deine neue Terminvereinbarung"
 
+#: ../src/League/Mail/ResultEditMail.php:19
+msgid "The result of your match was edited by your league manager on request."
+msgstr "Das Ergebnis wurde auf Anfrage durch deinen Liga-Manager korrigiert."
+
+#: ../src/League/Mail/ResultEditMail.php:39
+msgid "Your Match Result was edited"
+msgstr "Das Ergebnis deiner Partie wurde korrigiert"
+
 #: ../src/League/Mail/ResultReminderMail.php:18
 msgid "Your match result is overdue."
 msgstr "Dein Spielergebnis fehlt."
@@ -160,8 +171,8 @@ msgid "According to our rules, a match is suspended if no result is provided wit
 msgstr "Unserem Regelwerk entsprechend wird ein Spiel als ausgesetzt gewertet, falls kein Ergebnis innerhalb von 3 Tagen eingereicht wird."
 
 #: ../src/League/Mail/ResultReminderMail.php:27
-msgid "In case of a technical problem, please contact a league manager."
-msgstr "Im Falle eines technischen Problems, wende dich bitte an einen Liga-Manager."
+msgid "In case of a technical problem, please contact your league manager."
+msgstr "Im Falle eines technischen Problems, wende dich bitte an deinen Liga-Manager."
 
 #: ../src/League/Mail/ResultReminderMail.php:41
 msgid "Your Match Result is Missing"
@@ -174,6 +185,22 @@ msgstr "Nur für den Fall der Fälle - Terminverschiebungen sind maximal bis 3 T
 #: ../src/League/Mail/AppointmentReminderMail.php:21
 msgid "If you cannot make it on %NEW_DATE%, use the option of making an appointment on %URL%."
 msgstr "Falls du deinen Termin am %NEW_DATE% nicht einhalten kannst, nutze die Möglichkeit auf %URL% den Termin zu verschieben. "
+
+#: ../src/League/View/Helper/GetEnteredBy.php:30
+msgid "automatic"
+msgstr "automatisch"
+
+#: ../src/League/View/Helper/GetMatchInfo.php:26
+msgid "Season"
+msgstr "Saison"
+
+#: ../src/League/View/Helper/GetMatchInfo.php:31
+msgid "League"
+msgstr "Liga"
+
+#: ../src/League/View/Helper/GetMatchInfo.php:36
+msgid "Match day"
+msgstr "Spieltag"
 
 #: ../src/League/View/Helper/OpenResult.php:27
 msgid "Enter Result"
@@ -199,10 +226,6 @@ msgstr "Datum"
 #: ../src/League/Form/MatchDayForm.php:102
 msgid "Time"
 msgstr "Zeit"
-
-#: ../src/League/Form/MatchDayForm.php:112
-msgid "Change Colors"
-msgstr "Farben tauschen"
 
 #: ../src/League/Form/ResultForm.php:82
 msgid "Winner"
@@ -311,6 +334,7 @@ msgid "Suspended"
 msgstr " nicht gespielt"
 
 #: ../view/partial/pagination.phtml:6
+#: ../view/partial/myPagination.phtml:6
 msgid "previous"
 msgstr "zurück"
 
@@ -321,6 +345,10 @@ msgstr "klick"
 #: ../view/partial/pagination.phtml:32
 msgid "next"
 msgstr "weiter"
+
+#: ../view/partial/myPagination.phtml:17
+msgid "Actual Page"
+msgstr "Aktuelle Seite"
 
 #: ../view/league/table/index.phtml:9
 msgid "%name% 1. League"
@@ -412,10 +440,6 @@ msgstr "Spieltag bearbeiten"
 msgid "Matchday"
 msgstr "Spieltag"
 
-#: ../view/league/time-table/index.phtml:12
-msgid "League"
-msgstr "Liga"
-
 #: ../view/league/time-table/index.phtml:16
 #: ../view/league/time-table/index.phtml:30
 msgid "edit"
@@ -451,9 +475,11 @@ msgstr "keine offenen Ergebnisse gefunden"
 
 #: ../view/league/result/my-result.phtml:7
 msgid "%name% League - My Results"
-msgstr "%name% Liga - Meine Ergenisse"
+msgstr "%name% Liga - Meine Ergebnisse"
 
 #: ../view/league/result/my-result.phtml:14
+#: ../view/league/result/actual-results.phtml:10
+#: ../view/league/result/all-results.phtml:13
 msgid "No results found"
 msgstr "Keine Ergebnisse gefunden"
 
@@ -473,13 +499,50 @@ msgstr "Du wirst eine Email mit dem Ergebnis erhalten."
 msgid "Results - Match Day %no%"
 msgstr "Ergebnisse - %no%. Spieltag"
 
-#: ../view/league/result/add.phtml:6
-msgid "%no%.Match day"
-msgstr "%no%.Spieltag"
+#: ../view/league/result/edit.phtml:6
+msgid "Edit Result"
+msgstr "Ergebnis bearbeiten"
 
-#: ../view/league/result/add.phtml:12
+#: ../view/league/result/all-results.phtml:7
+msgid "%name% League - All Results"
+msgstr "%name% Liga - Alle Ergebnisse"
+
+#: ../view/league/result/all-results.phtml:23
+msgid "ID"
+msgstr "ID"
+
+#: ../view/league/result/all-results.phtml:27
+msgid "Pairing"
+msgstr "Paarung"
+
+#: ../view/league/result/all-results.phtml:29
+msgid "Entered By"
+msgstr "Eingereicht"
+
+#: ../view/league/result/all-results.phtml:30
+msgid "Enter Date"
+msgstr "Datum"
+
+#: ../view/league/result/all-results.phtml:52
+msgid "Total"
+msgstr "Insgesamt"
+
+#: ../view/league/result/all-results.phtml:52
+msgid "Result(s)"
+msgstr "Ergebnis(se)"
+
+#: ../view/league/result/add.phtml:6
 msgid "New Result"
 msgstr "Neues Ergebnis"
+
+#~ msgid "Division"
+#~ msgstr "Abteilung"
+
+#~ msgid "Change Colors"
+#~ msgstr "Farben tauschen"
+
+#~ msgid "%no%.Match day"
+#~ msgstr "%no%.Spieltag"
 
 #~ msgid "No schedule found"
 #~ msgstr "Kein Spielplan gefunden"
@@ -628,9 +691,6 @@ msgstr "Neues Ergebnis"
 #~ msgid "Matchplan"
 #~ msgstr "Spielplan"
 
-#~ msgid "Season"
-#~ msgstr "Saison"
-
 #~ msgid "My"
 #~ msgstr "Mein"
 
@@ -753,9 +813,6 @@ msgstr "Neues Ergebnis"
 
 #~ msgid "Champion:"
 #~ msgstr "Meister"
-
-#~ msgid "Actual Season"
-#~ msgstr "Aktuelle Saison"
 
 #~ msgid "Open Matches:"
 #~ msgstr "Offene Partien:"

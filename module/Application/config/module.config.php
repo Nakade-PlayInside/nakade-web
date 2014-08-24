@@ -20,8 +20,6 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' =>
-                'Application\Controller\IndexController',
             'Application\Controller\Training' =>
                 'Application\Controller\TrainingController',
             'Application\Controller\Privacy' =>
@@ -31,6 +29,8 @@ return array(
 
         ),
         'factories' => array(
+            'Application\Controller\Index' =>
+                'Application\Services\IndexControllerFactory',
             'Application\Controller\Contact' =>
                 'Application\Services\ContactControllerFactory',
         ),

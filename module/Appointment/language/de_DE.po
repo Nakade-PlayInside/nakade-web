@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-06 08:38+0100\n"
-"PO-Revision-Date: 2014-08-06 08:41+0100\n"
+"POT-Creation-Date: 2014-08-23 18:26+0100\n"
+"PO-Revision-Date: 2014-08-23 18:26+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -21,7 +21,7 @@ msgstr "Du hast eine Terminverlegung für eine Partie auf %URL% beantragt."
 
 #: ../src/Appointment/Mail/SubmitterMail.php:26
 #: ../src/Appointment/Mail/ResponderMail.php:27
-#: ../src/Appointment/Mail/ConfirmMail.php:27
+#: ../src/Appointment/Mail/ConfirmMail.php:21
 #: ../src/Appointment/Mail/InfoMail.php:20
 #: ../src/Appointment/Mail/RejectMail.php:26
 msgid "Your match: %MATCH_INFO%"
@@ -36,7 +36,7 @@ msgstr "Aktueller Termin: %OLD_DATE%"
 
 #: ../src/Appointment/Mail/SubmitterMail.php:30
 #: ../src/Appointment/Mail/ResponderMail.php:31
-#: ../src/Appointment/Mail/ConfirmMail.php:29
+#: ../src/Appointment/Mail/ConfirmMail.php:23
 #: ../src/Appointment/Mail/InfoMail.php:24
 msgid "New match date: %NEW_DATE%"
 msgstr "Neuer Termin: %NEW_DATE%"
@@ -93,19 +93,19 @@ msgstr "Der neue Termin ist nach der Bestätigung verbindlich. "
 msgid "Confirm your League Appointment at nakade.de"
 msgstr "Bestätige deinen Termin auf nakade.de"
 
-#: ../src/Appointment/Mail/ConfirmMail.php:25
+#: ../src/Appointment/Mail/ConfirmMail.php:19
 msgid "The new appointment for your match date at %URL% is confirmed."
 msgstr "Die Terminverlegung deiner Partie auf %URL% wurde bestätigt."
 
-#: ../src/Appointment/Mail/ConfirmMail.php:31
+#: ../src/Appointment/Mail/ConfirmMail.php:25
 msgid "If you use a calendar application, do not forget to update."
 msgstr "Du kannst jetzt deinen digitalen Terminkalendar aktualisieren."
 
-#: ../src/Appointment/Mail/ConfirmMail.php:32
+#: ../src/Appointment/Mail/ConfirmMail.php:26
 msgid "An updated iCal is found on your site after login at %URL%."
 msgstr "Den aktuellen iCal  findest du auf der Begrüßungsseite nach Anmeldung auf %URL%."
 
-#: ../src/Appointment/Mail/ConfirmMail.php:46
+#: ../src/Appointment/Mail/ConfirmMail.php:40
 msgid "Your League Appointment is confirmed"
 msgstr "Deine Terminverlegung wurde bestätigt"
 
@@ -153,7 +153,7 @@ msgstr "Nur der Liga-Manager kann einen einmal abgewiesenen Termin bearbeiten."
 msgid "If you cannot find a solution, the league manager will make a decision."
 msgstr "Falls du keine Einigung mit deinem Gegner erzielen kannst, wird der Liga-Manager eine Entscheidung gemäß den Regeln treffen. "
 
-#: ../src/Appointment/Mail/RejectMail.php:51
+#: ../src/Appointment/Mail/RejectMail.php:50
 msgid "Your League Appointment is rejected"
 msgstr "Deine Terminverlegung wurde abgewiesen"
 
@@ -244,48 +244,47 @@ msgstr "Weitere Informationen dazu findest du in deiner email."
 msgid "Match Appointments"
 msgstr "Terminverlegungen"
 
-#: ../view/appointment/moderator/index.phtml:12
-#: ../view/appointment/moderator/info.phtml:13
+#: ../view/appointment/moderator/index.phtml:10
+msgid "No Appointment found"
+msgstr "Keine Termine gefunden."
+
+#: ../view/appointment/moderator/index.phtml:18
 msgid "ID"
 msgstr "ID"
 
-#: ../view/appointment/moderator/index.phtml:13
-#: ../view/appointment/moderator/info.phtml:17
+#: ../view/appointment/moderator/index.phtml:19
 msgid "Match"
 msgstr "Partie"
 
-#: ../view/appointment/moderator/index.phtml:14
-#: ../view/appointment/moderator/info.phtml:21
+#: ../view/appointment/moderator/index.phtml:20
 msgid "Date"
 msgstr "Datum"
 
-#: ../view/appointment/moderator/index.phtml:15
-#: ../view/appointment/moderator/info.phtml:25
+#: ../view/appointment/moderator/index.phtml:21
 msgid "Appointment"
 msgstr "Termin"
 
-#: ../view/appointment/moderator/index.phtml:16
+#: ../view/appointment/moderator/index.phtml:22
 msgid "Submitter"
 msgstr "Antragsteller"
 
-#: ../view/appointment/moderator/index.phtml:17
+#: ../view/appointment/moderator/index.phtml:23
 msgid "submitted"
 msgstr "eingereicht"
 
-#: ../view/appointment/moderator/index.phtml:18
-#: ../view/appointment/moderator/info.phtml:35
+#: ../view/appointment/moderator/index.phtml:24
 msgid "Stage"
 msgstr "Status"
 
-#: ../view/appointment/moderator/index.phtml:19
+#: ../view/appointment/moderator/index.phtml:25
 msgid "Info"
 msgstr "Info"
 
-#: ../view/appointment/moderator/index.phtml:46
+#: ../view/appointment/moderator/index.phtml:52
 msgid "Total"
 msgstr "Insgesamt"
 
-#: ../view/appointment/moderator/index.phtml:46
+#: ../view/appointment/moderator/index.phtml:52
 msgid "Appointments"
 msgstr "Terminverlegungen"
 

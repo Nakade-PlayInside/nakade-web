@@ -1,0 +1,398 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ZendSkeletonApplication\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-08-24 12:33+0100\n"
+"PO-Revision-Date: 2014-08-24 12:33+0100\n"
+"Last-Translator: Holger Maerz <holger@nakade.de>\n"
+"Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.3\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../src/Support/Mail/TicketMail.php:18
+msgid "Dear %MODERATOR%"
+msgstr ""
+
+#: ../src/Support/Mail/TicketMail.php:20
+msgid "The ticket #%TICKET_NUMBER% is waiting for process."
+msgstr ""
+
+#: ../src/Support/Mail/TicketMail.php:22
+msgid "Please logIn at %URL% as soon as possible."
+msgstr ""
+
+#: ../src/Support/Mail/TicketMail.php:36
+msgid "Ticket #%TICKET_NUMBER% in Process"
+msgstr ""
+
+#: ../src/Support/Mail/RefereeNominationMail.php:18
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:18
+msgid "Dear %NAME%"
+msgstr ""
+
+#: ../src/Support/Mail/RefereeNominationMail.php:20
+msgid "You are nominated being a member of the arbitrating body."
+msgstr ""
+
+#: ../src/Support/Mail/RefereeNominationMail.php:22
+msgid "Please contact other referees in case of making decisions."
+msgstr ""
+
+#: ../src/Support/Mail/RefereeNominationMail.php:36
+msgid "Your Nomination as Referee"
+msgstr ""
+
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:20
+msgid "You are nominated as League Manager of %ASSOCIATION% by %OWNER%."
+msgstr ""
+
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:22
+msgid "Your task is to support participants of %ASSOCIATION%."
+msgstr ""
+
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:24
+msgid "Therefore, you find your tickets in the moderator flag."
+msgstr ""
+
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:25
+msgid "On request, you can edit results or making appointments."
+msgstr ""
+
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:27
+msgid "It is advisable to reassure the request is wanted by both players."
+msgstr ""
+
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:29
+msgid "Remember to set a solved ticket to \"Done\"."
+msgstr ""
+
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:31
+msgid "Thank you for your commitment."
+msgstr ""
+
+#: ../src/Support/Mail/LeagueManagerNominationMail.php:45
+msgid "Your Nomination as League Manager of %ASSOCIATION%"
+msgstr ""
+
+#: ../src/Support/Mail/SupportMail.php:77
+#: ../src/Support/View/Helper/GetTicketStageInfo.php:23
+msgid "Waiting"
+msgstr ""
+
+#: ../src/Support/Mail/SupportMail.php:81
+#: ../src/Support/View/Helper/GetTicketStageInfo.php:27
+msgid "Reopened"
+msgstr ""
+
+#: ../src/Support/Mail/SupportMail.php:85
+#: ../src/Support/View/Helper/GetTicketStageInfo.php:31
+msgid "In process"
+msgstr ""
+
+#: ../src/Support/Mail/SupportMail.php:89
+#: ../src/Support/View/Helper/GetTicketStageInfo.php:35
+msgid "Canceled"
+msgstr ""
+
+#: ../src/Support/Mail/SupportMail.php:93
+#: ../src/Support/View/Helper/GetTicketStageInfo.php:39
+msgid "Done"
+msgstr ""
+
+#: ../src/Support/Mail/SupportMail.php:97
+#: ../src/Support/View/Helper/GetTicketStageInfo.php:43
+msgid "New"
+msgstr ""
+
+#: ../src/Support/Mail/SupportMail.php:113
+msgid "Administrator"
+msgstr ""
+
+#: ../src/Support/Mail/SupportMail.php:117
+msgid "League Manager"
+msgstr ""
+
+#: ../src/Support/Mail/SupportMail.php:121
+msgid "Referee"
+msgstr ""
+
+#: ../src/Support/Mail/SupportMail.php:125
+msgid "unknown"
+msgstr ""
+
+#: ../src/Support/Mail/ReplyInfoMail.php:18
+msgid "Your support request needs your reply for processing."
+msgstr ""
+
+#: ../src/Support/Mail/ReplyInfoMail.php:20
+msgid "Please logIn at %URL% and have a look to your open support tickets as soon as possible."
+msgstr ""
+
+#: ../src/Support/Mail/ReplyInfoMail.php:22
+msgid "Your ticket: #%TICKET_NUMBER%"
+msgstr ""
+
+#: ../src/Support/Mail/ReplyInfoMail.php:36
+#: ../src/Support/Mail/StageChangedMail.php:36
+msgid "Your Support Ticket #%TICKET_NUMBER%"
+msgstr ""
+
+#: ../src/Support/Mail/StageChangedMail.php:18
+msgid "Your support request was processed."
+msgstr ""
+
+#: ../src/Support/Mail/StageChangedMail.php:20
+msgid "The new stage of your ticket #%TICKET_NUMBER% is \"%STAGE%\"."
+msgstr ""
+
+#: ../src/Support/Mail/StageChangedMail.php:22
+msgid "For more information logIn at %URL%."
+msgstr ""
+
+#: ../src/Support/Form/SupportForm.php:38
+#: ../src/Support/Form/MailForm.php:29
+msgid "Subject"
+msgstr ""
+
+#: ../src/Support/Form/SupportForm.php:40
+#: ../src/Support/Form/RefereeForm.php:24
+#: ../src/Support/Form/LeagueManagerForm.php:24
+#: ../src/Support/Form/LeagueManagerForm.php:36
+msgid "choose"
+msgstr ""
+
+#: ../src/Support/Form/SupportForm.php:64
+#: ../src/Support/Form/MailForm.php:43
+msgid "Message"
+msgstr ""
+
+#: ../src/Support/Form/SupportForm.php:122
+msgid "Profile"
+msgstr ""
+
+#: ../src/Support/Form/SupportForm.php:123
+msgid "Rights"
+msgstr ""
+
+#: ../src/Support/Form/SupportForm.php:124
+msgid "Bug report"
+msgstr ""
+
+#: ../src/Support/Form/SupportForm.php:125
+#: ../src/Support/Form/SupportForm.php:133
+#: ../src/Support/Form/SupportForm.php:141
+#: ../src/Support/Form/SupportForm.php:147
+msgid "Other"
+msgstr ""
+
+#: ../src/Support/Form/SupportForm.php:131
+msgid "Appointment"
+msgstr ""
+
+#: ../src/Support/Form/SupportForm.php:132
+msgid "Result"
+msgstr ""
+
+#: ../src/Support/Form/SupportForm.php:139
+msgid "Rules"
+msgstr ""
+
+#: ../src/Support/Form/SupportForm.php:140
+msgid "Inappropriate behavior"
+msgstr ""
+
+#: ../src/Support/Form/RefereeForm.php:22
+msgid "Available member"
+msgstr ""
+
+#: ../src/Support/Form/LeagueManagerForm.php:22
+msgid "Manager"
+msgstr ""
+
+#: ../src/Support/Form/LeagueManagerForm.php:34
+msgid "League"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:9
+msgid "No Referee found"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:13
+msgid "Referee Overview"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:15
+msgid "add Referee"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:21
+#: ../view/support/support/index.phtml:17
+#: ../view/support/ticket/index.phtml:17
+#: ../view/support/manager/index.phtml:20
+msgid "ID"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:22
+#: ../view/support/manager/index.phtml:21
+msgid "Name"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:23
+#: ../view/support/manager/index.phtml:23
+msgid "Nominated"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:24
+#: ../view/support/manager/index.phtml:24
+msgid "active"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:33
+#: ../view/support/manager/index.phtml:34
+msgid "shift"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:44
+#: ../view/support/support/index.phtml:43
+#: ../view/support/ticket/index.phtml:45
+#: ../view/support/manager/index.phtml:45
+msgid "Total"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:44
+msgid "Referee(s)"
+msgstr ""
+
+#: ../view/support/referee/add.phtml:4
+msgid "Add Referee"
+msgstr ""
+
+#: ../view/support/referee/add.phtml:8
+msgid "Only members can become a referee."
+msgstr ""
+
+#: ../view/support/referee/add.phtml:9
+msgid "English is mandatory!"
+msgstr ""
+
+#: ../view/support/support/index.phtml:9
+#: ../view/support/ticket/index.phtml:9
+msgid "No Tickets found"
+msgstr ""
+
+#: ../view/support/support/index.phtml:13
+#: ../view/support/ticket/index.phtml:13
+msgid "My Support Tickets"
+msgstr ""
+
+#: ../view/support/support/index.phtml:20
+#: ../view/support/ticket/index.phtml:21
+msgid "Date"
+msgstr ""
+
+#: ../view/support/support/index.phtml:21
+#: ../view/support/support/detail.phtml:27
+#: ../view/support/ticket/index.phtml:22
+#: ../view/support/ticket/detail.phtml:27
+msgid "Stage"
+msgstr ""
+
+#: ../view/support/support/index.phtml:22
+#: ../view/support/ticket/index.phtml:23
+msgid "Details"
+msgstr ""
+
+#: ../view/support/support/index.phtml:43
+#: ../view/support/ticket/index.phtml:45
+msgid "Ticket(s)"
+msgstr ""
+
+#: ../view/support/support/detail.phtml:11
+#: ../view/support/ticket/detail.phtml:11
+msgid "No Ticket found"
+msgstr ""
+
+#: ../view/support/support/detail.phtml:15
+#: ../view/support/ticket/detail.phtml:15
+msgid "Ticket Details"
+msgstr ""
+
+#: ../view/support/support/detail.phtml:44
+#: ../view/support/ticket/detail.phtml:44
+msgid "Return"
+msgstr ""
+
+#: ../view/support/support/detail.phtml:49
+#: ../view/support/ticket/detail.phtml:60
+msgid "Decline"
+msgstr ""
+
+#: ../view/support/support/detail.phtml:56
+#: ../view/support/ticket/detail.phtml:73
+msgid "Mail"
+msgstr ""
+
+#: ../view/support/support/add.phtml:4
+msgid "Support Inquiry"
+msgstr ""
+
+#: ../view/support/support/add.phtml:10
+msgid "If you have a problem, please provide the necessary information."
+msgstr ""
+
+#: ../view/support/support/add.phtml:12
+msgid "Your request will be processed as soon as possible."
+msgstr ""
+
+#: ../view/support/ticket/index.phtml:20
+msgid "Author"
+msgstr ""
+
+#: ../view/support/ticket/mail.phtml:4
+msgid "Support Message"
+msgstr ""
+
+#: ../view/support/ticket/detail.phtml:56
+msgid "Accept"
+msgstr ""
+
+#: ../view/support/ticket/detail.phtml:67
+msgid "Reopen"
+msgstr ""
+
+#: ../view/support/manager/index.phtml:9
+msgid "No League Manager found"
+msgstr ""
+
+#: ../view/support/manager/index.phtml:13
+msgid "My League Manager"
+msgstr ""
+
+#: ../view/support/manager/index.phtml:15
+msgid "add League Manager"
+msgstr ""
+
+#: ../view/support/manager/add.phtml:4
+msgid "Add League Manager"
+msgstr ""
+
+#: ../view/partial/pagination.phtml:6
+msgid "previous"
+msgstr ""
+
+#: ../view/partial/pagination.phtml:17
+msgid "Actual Page"
+msgstr ""
+
+#: ../view/partial/pagination.phtml:24
+msgid "next"
+msgstr ""
+
+#~ msgid "Skeleton Application"
+#~ msgstr "Tutorial"

@@ -61,8 +61,15 @@ class AclService implements FactoryInterface, RoleInterface
         $acl->addRole(new Role(self::ROLE_GUEST), self::DEFAULT_ROLE);
         $acl->addRole(new Role(self::ROLE_USER), self::ROLE_GUEST);
         $acl->addRole(new Role(self::ROLE_MEMBER), self::ROLE_USER);
-        $acl->addRole(new Role(self::ROLE_MODERATOR), self::ROLE_MEMBER);
+
+        $acl->addRole(new Role(self::ROLE_MANAGER), self::ROLE_USER);
+        $acl->addRole(new Role(self::ROLE_MODERATOR), self::ROLE_MANAGER);
         $acl->addRole(new Role(self::ROLE_ADMIN), self::ROLE_MODERATOR);
+
+        //additional roles -> look for ticket module in default mapper for role assignment
+        $acl->addRole(new Role(self::ROLE_LEAGUE_MANAGER), self::ROLE_MANAGER);
+        $acl->addRole(new Role(self::ROLE_LEAGUE_OWNER), self::ROLE_LEAGUE_MANAGER);
+        $acl->addRole(new Role(self::ROLE_REFEREE), self::ROLE_MANAGER);
     }
 
     /**

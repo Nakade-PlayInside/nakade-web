@@ -22,4 +22,10 @@ interface RoleInterface
     const ROLE_MEMBER = 'member';
     const ROLE_MODERATOR = 'moderator';
     const ROLE_ADMIN = 'admin';
+
+    //authority roles
+    const ROLE_MANAGER = 'manager';
+    const ROLE_LEAGUE_OWNER = 'league_owner';
+    const ROLE_LEAGUE_MANAGER = 'league_manager';
+    const ROLE_REFEREE = 'referee';
 }

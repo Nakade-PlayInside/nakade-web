@@ -1,0 +1,59 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('League');
+/* @var $match \Season\Entity\Match */
+/* @var $season \Season\Entity\Season */
+$season = $this->season;
+$association = $season->getAssociation()->getName();
+$title = $this->translate("%name% League - All Results");
+$title = str_replace("%name%", $association, $title);
+$this->headTitle('Results');
+?>
+
+<?php $this->placeholder('noResults')->captureStart();?>
+<h3><?php echo $this->translate('No results found')?></h3>
+<?php $this->placeholder('noResults')->captureEnd(); ?>
+
+<?php $this->placeholder('openResults')->captureStart();?>
+<h3><?php echo $title; ?></h3>
+
+
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'result'); ?>
+<table class="table profile">
+<tr>
+    <th><?php echo $this->translate('ID');?></th>
+    <th><?php echo $this->translate('Date');?></th>
+    <th><?php echo $this->translate('League');?></th>
+    <th><?php echo $this->translate('Match Day');?></th>
+    <th><?php echo $this->translate('Pairing');?></th>
+    <th><?php echo $this->translate('Result');?></th>
+    <th><?php echo $this->translate('Entered By');?></th>
+    <th><?php echo $this->translate('Enter Date');?></th>
+    <th><?php echo $this->translate('edit');?></th>
+</tr>
+<?php foreach ($this->matches as $match) : ?>
+<tr style="background-color:<?php
+echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+    <td><?php echo $match->getId();?></td>
+    <td><?php echo $match->getDate()->format('d.m.y');?></td>
+    <td class="center"><?php echo $match->getLeague()->getNumber();?></td>
+    <td class="center"><?php echo $match->getMatchDay()->getMatchDay();?></td>
+    <td class="space"><?php echo $match->getMatchInfo();?></td>
+    <td><?php echo $this->matchDayResult($match); ?></td>
+    <td><?php echo $this->enteredBy($match); ?></td>
+    <td><?php  echo $match->getResult()->getDate()->format('d.m.y H:i'); ?></td>
+    <td class="edit">
+        <a class='button edit' title="<?php echo $this->translate('edit'); ?>"
+           href="<?php echo $this->url('result', array('action' => 'edit', 'id' => $match->getId())); ?>"></a>
+    </td>
+</tr>
+<?php
+endforeach; ?>
+</table>
+<p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Result(s)"); ?></p>
+<?php $this->placeholder('openResults')->captureEnd();
+
+  if (empty($this->matches)) {
+      echo $this->placeholder('noResults');
+  } else {
+      echo $this->placeholder('openResults');
+  }

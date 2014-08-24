@@ -1,6 +1,7 @@
 <?php
 namespace Permission\Controller\Plugin;
 
+use Support\Services\RepositoryService;
 use Permission\Entity\RoleInterface;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\Mvc\MvcEvent;
@@ -22,6 +23,10 @@ abstract class AbstractPermission extends AbstractPlugin implements AuthorizeInt
     protected $resourceAction;
     protected $acl;
     protected $role;
+    protected $authority;
+    protected $referee;
+    protected $mapper;
+    protected $repository;
 
 
     /**
@@ -156,14 +161,120 @@ abstract class AbstractPermission extends AbstractPlugin implements AuthorizeInt
 
         // first check controller if no action is registered
         if ($acl->hasResource($controller) && !$acl->hasResource($action)) {
-            return $acl->isAllowed($this->getRole(), $controller);
+
+            //allow by roles or by authority or by being referee
+            return ($acl->isAllowed($this->getRole(), $controller) ||
+                $acl->isAllowed($this->getAuthority(), $controller) ||
+                $acl->isAllowed($this->getReferee(), $controller)
+            );
         } elseif ($acl->hasResource($action)) {
-            return $acl->isAllowed($this->getRole(), $action);
+
+            return ($acl->isAllowed($this->getRole(), $action) ||
+                $acl->isAllowed($this->getAuthority(), $action)||
+                $acl->isAllowed($this->getReferee(), $action)
+            );
         }
 
         return false;
     }
 
+    /**
+     * @param string $authority
+     */
+    public function setAuthority($authority)
+    {
+        $this->authority = $authority;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthority()
+    {
+        return $this->authority;
+    }
+
+    /**
+     * @param string $referee
+     */
+    public function setReferee($referee)
+    {
+        $this->referee = $referee;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReferee()
+    {
+        return $this->referee;
+    }
+
+
+
+
+    /**
+     * @param AuthenticationService $auth
+     *
+     * @return string
+     */
+    protected function getAuthorityByIdentity(AuthenticationService $auth)
+    {
+        $role = self::DEFAULT_ROLE;
+
+        if ($auth->hasIdentity()) {
+            /* @var $identity \User\Entity\User */
+            $identity = $auth->getIdentity();
+
+           if ($this->getMapper()->isOwner($identity->getId())) {
+                $role = self::ROLE_LEAGUE_OWNER;
+            } elseif ($this->getMapper()->isLeagueManager($identity->getId())) {
+                $role = self::ROLE_LEAGUE_MANAGER;
+            }
+        }
+
+        return $role;
+    }
+
+    /**
+     * @param AuthenticationService $auth
+     *
+     * @return string
+     */
+    protected function getRefereeByIdentity(AuthenticationService $auth)
+    {
+        $role = self::DEFAULT_ROLE;
+
+        if ($auth->hasIdentity()) {
+            /* @var $identity \User\Entity\User */
+            $identity = $auth->getIdentity();
+
+            if ($this->getMapper()->isReferee($identity->getId())) {
+                $role = self::ROLE_REFEREE;
+            }
+        }
+
+        return $role;
+    }
+
+    /**
+     * @return \Support\Services\RepositoryService
+     */
+    protected function getRepository()
+    {
+        return $this->repository;
+    }
+
+    /**
+     * @return \Support\Mapper\ManagerMapper
+     */
+    protected function getMapper()
+    {
+        if (is_null($this->mapper)) {
+            $this->mapper = $this->getRepository()->getMapper(RepositoryService::MANAGER_MAPPER);
+        }
+        return $this->mapper;
+    }
 
     /**
      * @param AuthenticationService $auth
@@ -201,6 +312,7 @@ abstract class AbstractPermission extends AbstractPlugin implements AuthorizeInt
             case 'Zend\Authentication\AuthenticationService':
                 $service = $this->getServiceManager()->get('Zend\Authentication\AuthenticationService');
                 break;
+
             default:
                 throw new \RuntimeException(
                     sprintf('An unknown service type was provided.')

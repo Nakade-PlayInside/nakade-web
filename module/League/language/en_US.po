@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-08 11:40+0100\n"
-"PO-Revision-Date: 2014-08-08 11:40+0100\n"
+"POT-Creation-Date: 2014-08-23 18:32+0100\n"
+"PO-Revision-Date: 2014-08-23 18:32+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -24,6 +24,7 @@ msgstr ""
 #: ../src/League/Mail/AutoResultMail.php:20
 #: ../src/League/Mail/ResultMail.php:21
 #: ../src/League/Mail/ScheduleMail.php:21
+#: ../src/League/Mail/ResultEditMail.php:21
 #: ../src/League/Mail/ResultReminderMail.php:21
 #: ../src/League/Mail/AppointmentReminderMail.php:23
 msgid "Your match: %MATCH_INFO%"
@@ -54,7 +55,8 @@ msgstr ""
 #: ../src/League/Mail/AutoResultMail.php:25
 #: ../src/League/Mail/ResultMail.php:25
 #: ../src/League/Mail/ScheduleMail.php:31
-msgid "In case of a mistake, please contact a league manager."
+#: ../src/League/Mail/ResultEditMail.php:25
+msgid "In case of a mistake, please contact your league manager."
 msgstr ""
 
 #: ../src/League/Mail/AutoResultMail.php:39
@@ -67,6 +69,7 @@ msgid "The result of your match was submitted."
 msgstr ""
 
 #: ../src/League/Mail/ResultMail.php:23
+#: ../src/League/Mail/ResultEditMail.php:23
 msgid "Result: %RESULT%"
 msgstr ""
 
@@ -115,7 +118,7 @@ msgid "A new appointment for your match date at %URL% was set."
 msgstr ""
 
 #: ../src/League/Mail/ScheduleMail.php:19
-msgid "The date was edited by a league manager on request."
+msgid "The date was edited by your league manager on request."
 msgstr ""
 
 #: ../src/League/Mail/ScheduleMail.php:23
@@ -142,6 +145,14 @@ msgstr ""
 msgid "Your New Match Appointment"
 msgstr ""
 
+#: ../src/League/Mail/ResultEditMail.php:19
+msgid "The result of your match was edited by your league manager on request."
+msgstr ""
+
+#: ../src/League/Mail/ResultEditMail.php:39
+msgid "Your Match Result was edited"
+msgstr ""
+
 #: ../src/League/Mail/ResultReminderMail.php:18
 msgid "Your match result is overdue."
 msgstr ""
@@ -159,7 +170,7 @@ msgid "According to our rules, a match is suspended if no result is provided wit
 msgstr ""
 
 #: ../src/League/Mail/ResultReminderMail.php:27
-msgid "In case of a technical problem, please contact a league manager."
+msgid "In case of a technical problem, please contact your league manager."
 msgstr ""
 
 #: ../src/League/Mail/ResultReminderMail.php:41
@@ -172,6 +183,22 @@ msgstr ""
 
 #: ../src/League/Mail/AppointmentReminderMail.php:21
 msgid "If you cannot make it on %NEW_DATE%, use the option of making an appointment on %URL%."
+msgstr ""
+
+#: ../src/League/View/Helper/GetEnteredBy.php:30
+msgid "automatic"
+msgstr ""
+
+#: ../src/League/View/Helper/GetMatchInfo.php:26
+msgid "Season"
+msgstr ""
+
+#: ../src/League/View/Helper/GetMatchInfo.php:31
+msgid "League"
+msgstr ""
+
+#: ../src/League/View/Helper/GetMatchInfo.php:36
+msgid "Match day"
 msgstr ""
 
 #: ../src/League/View/Helper/OpenResult.php:27
@@ -197,10 +224,6 @@ msgstr ""
 
 #: ../src/League/Form/MatchDayForm.php:102
 msgid "Time"
-msgstr ""
-
-#: ../src/League/Form/MatchDayForm.php:112
-msgid "Change Colors"
 msgstr ""
 
 #: ../src/League/Form/ResultForm.php:82
@@ -310,6 +333,7 @@ msgid "Suspended"
 msgstr ""
 
 #: ../view/partial/pagination.phtml:6
+#: ../view/partial/myPagination.phtml:6
 msgid "previous"
 msgstr ""
 
@@ -319,6 +343,10 @@ msgstr ""
 
 #: ../view/partial/pagination.phtml:32
 msgid "next"
+msgstr ""
+
+#: ../view/partial/myPagination.phtml:17
+msgid "Actual Page"
 msgstr ""
 
 #: ../view/league/table/index.phtml:9
@@ -411,10 +439,6 @@ msgstr ""
 msgid "Matchday"
 msgstr ""
 
-#: ../view/league/time-table/index.phtml:12
-msgid "League"
-msgstr ""
-
 #: ../view/league/time-table/index.phtml:16
 #: ../view/league/time-table/index.phtml:30
 msgid "edit"
@@ -453,6 +477,8 @@ msgid "%name% League - My Results"
 msgstr ""
 
 #: ../view/league/result/my-result.phtml:14
+#: ../view/league/result/actual-results.phtml:10
+#: ../view/league/result/all-results.phtml:13
 msgid "No results found"
 msgstr ""
 
@@ -472,11 +498,39 @@ msgstr ""
 msgid "Results - Match Day %no%"
 msgstr ""
 
-#: ../view/league/result/add.phtml:6
-msgid "%no%.Match day"
+#: ../view/league/result/edit.phtml:6
+msgid "Edit Result"
 msgstr ""
 
-#: ../view/league/result/add.phtml:12
+#: ../view/league/result/all-results.phtml:7
+msgid "%name% League - All Results"
+msgstr ""
+
+#: ../view/league/result/all-results.phtml:23
+msgid "ID"
+msgstr ""
+
+#: ../view/league/result/all-results.phtml:27
+msgid "Pairing"
+msgstr ""
+
+#: ../view/league/result/all-results.phtml:29
+msgid "Entered By"
+msgstr ""
+
+#: ../view/league/result/all-results.phtml:30
+msgid "Enter Date"
+msgstr ""
+
+#: ../view/league/result/all-results.phtml:52
+msgid "Total"
+msgstr ""
+
+#: ../view/league/result/all-results.phtml:52
+msgid "Result(s)"
+msgstr ""
+
+#: ../view/league/result/add.phtml:6
 msgid "New Result"
 msgstr ""
 

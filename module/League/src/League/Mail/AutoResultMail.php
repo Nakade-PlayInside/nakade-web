@@ -22,7 +22,7 @@ class AutoResultMail extends LeagueMail
             $this->translate('RESULT: Suspended') .
             PHP_EOL . PHP_EOL .
             $this->translate('According to our rules, a match is suspended if no result is provided 72h after match date.') . ' ' .
-            $this->translate('In case of a mistake, please contact a league manager.') .
+            $this->translate('In case of a mistake, please contact your league manager.') .
             PHP_EOL . PHP_EOL .
             $this->getSignature()->getSignatureText();
 

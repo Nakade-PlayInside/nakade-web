@@ -104,8 +104,8 @@ class MatchDayForm extends AbstractForm
             )
         );
 
-        //check
-        $this->add(
+        //check  JUST FOR LEAGUE OWNERS
+      /*  $this->add(
             array(
                 'type' => 'Zend\Form\Element\Checkbox',
                 'name' => 'changeColors',
@@ -115,6 +115,7 @@ class MatchDayForm extends AbstractForm
                 ),
             )
         );
+      */
 
         $this->add($this->getService()->getFieldset(SeasonFieldsetService::BUTTON_FIELD_SET));
 

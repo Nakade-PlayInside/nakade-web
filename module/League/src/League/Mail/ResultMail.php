@@ -22,7 +22,7 @@ class ResultMail extends LeagueMail
             PHP_EOL .
             $this->translate('Result: %RESULT%') .
             PHP_EOL . PHP_EOL .
-            $this->translate('In case of a mistake, please contact a league manager.') .
+            $this->translate('In case of a mistake, please contact your league manager.') .
             PHP_EOL . PHP_EOL .
             $this->getSignature()->getSignatureText();
 

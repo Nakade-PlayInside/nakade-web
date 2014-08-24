@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-04 16:17+0100\n"
-"PO-Revision-Date: 2014-08-04 16:21+0100\n"
+"POT-Creation-Date: 2014-08-23 18:33+0100\n"
+"PO-Revision-Date: 2014-08-23 18:33+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -16,23 +16,23 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Message/Mail/NotifyMail.php:38
+#: ../src/Message/Mail/NotifyMail.php:35
 msgid "Dear %NAME%"
 msgstr "Hallo %NAME%"
 
-#: ../src/Message/Mail/NotifyMail.php:39
+#: ../src/Message/Mail/NotifyMail.php:36
 msgid "You have got a new message by %SENDER% in your mailbox at %URL%."
 msgstr "Du hast eine neue Nachricht von %SENDER% in deinem Postfach bei %URL%."
 
-#: ../src/Message/Mail/NotifyMail.php:41
+#: ../src/Message/Mail/NotifyMail.php:38
 msgid "Please logIn at %URL% for reading."
 msgstr "Um diese zu lesen, musst du dich bei %URL% einloggen."
 
-#: ../src/Message/Mail/NotifyMail.php:43
+#: ../src/Message/Mail/NotifyMail.php:40
 msgid "For messages in your preferred language, just edit your profile."
 msgstr "Für Nachrichten in deiner bevorzugten Sprache, nutze die Einstellungsmöglichkeit in deinem Profil. "
 
-#: ../src/Message/Mail/NotifyMail.php:71
+#: ../src/Message/Mail/NotifyMail.php:68
 msgid "New Message at %URL%"
 msgstr "Neue Nachricht auf %URL%"
 
@@ -208,6 +208,10 @@ msgstr "zurück"
 #: ../view/partial/pagination.phtml:17
 msgid "Actual Page"
 msgstr "Aktuelle Seite"
+
+#: ../view/partial/pagination.phtml:24
+msgid "next"
+msgstr "weiter"
 
 #~ msgid "back"
 #~ msgstr "zurück"

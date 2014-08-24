@@ -1,19 +1,9 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for
- * the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc.
- * (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace Application\Controller;
 
-use Message\Mapper\MessageMapper;
-use Zend\Form\Element\DateTime;
-use Zend\Mvc\Controller\AbstractActionController;
+
+use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -21,7 +11,7 @@ use Zend\View\Model\ViewModel;
  *
  * @package Application\Controller
  */
-class IndexController extends AbstractActionController
+class IndexController extends AbstractController
 {
 
     /**
@@ -50,7 +40,7 @@ class IndexController extends AbstractActionController
             array('action' => 'show')
         );
 
-        $page = new ViewModel(array( 'No' => "5"));
+        $page = new ViewModel(array( 'voter' => $this->getService()));
 
         $page->addChild($blogWidget, 'blogWidget');
         $page->addChild($tableWidget, 'tableWidget');

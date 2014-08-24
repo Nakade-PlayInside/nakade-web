@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-06 08:38+0100\n"
-"PO-Revision-Date: 2014-08-06 08:38+0100\n"
+"POT-Creation-Date: 2014-08-23 18:26+0100\n"
+"PO-Revision-Date: 2014-08-23 18:26+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: ../src/Appointment/Mail/SubmitterMail.php:26
 #: ../src/Appointment/Mail/ResponderMail.php:27
-#: ../src/Appointment/Mail/ConfirmMail.php:27
+#: ../src/Appointment/Mail/ConfirmMail.php:21
 #: ../src/Appointment/Mail/InfoMail.php:20
 #: ../src/Appointment/Mail/RejectMail.php:26
 msgid "Your match: %MATCH_INFO%"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: ../src/Appointment/Mail/SubmitterMail.php:30
 #: ../src/Appointment/Mail/ResponderMail.php:31
-#: ../src/Appointment/Mail/ConfirmMail.php:29
+#: ../src/Appointment/Mail/ConfirmMail.php:23
 #: ../src/Appointment/Mail/InfoMail.php:24
 msgid "New match date: %NEW_DATE%"
 msgstr ""
@@ -93,19 +93,19 @@ msgstr ""
 msgid "Confirm your League Appointment at nakade.de"
 msgstr ""
 
-#: ../src/Appointment/Mail/ConfirmMail.php:25
+#: ../src/Appointment/Mail/ConfirmMail.php:19
 msgid "The new appointment for your match date at %URL% is confirmed."
 msgstr ""
 
-#: ../src/Appointment/Mail/ConfirmMail.php:31
+#: ../src/Appointment/Mail/ConfirmMail.php:25
 msgid "If you use a calendar application, do not forget to update."
 msgstr ""
 
-#: ../src/Appointment/Mail/ConfirmMail.php:32
+#: ../src/Appointment/Mail/ConfirmMail.php:26
 msgid "An updated iCal is found on your site after login at %URL%."
 msgstr ""
 
-#: ../src/Appointment/Mail/ConfirmMail.php:46
+#: ../src/Appointment/Mail/ConfirmMail.php:40
 msgid "Your League Appointment is confirmed"
 msgstr ""
 
@@ -153,7 +153,7 @@ msgstr ""
 msgid "If you cannot find a solution, the league manager will make a decision."
 msgstr ""
 
-#: ../src/Appointment/Mail/RejectMail.php:51
+#: ../src/Appointment/Mail/RejectMail.php:50
 msgid "Your League Appointment is rejected"
 msgstr ""
 
@@ -244,48 +244,47 @@ msgstr ""
 msgid "Match Appointments"
 msgstr ""
 
-#: ../view/appointment/moderator/index.phtml:12
-#: ../view/appointment/moderator/info.phtml:13
-msgid "ID"
-msgstr ""
-
-#: ../view/appointment/moderator/index.phtml:13
-#: ../view/appointment/moderator/info.phtml:17
-msgid "Match"
-msgstr ""
-
-#: ../view/appointment/moderator/index.phtml:14
-#: ../view/appointment/moderator/info.phtml:21
-msgid "Date"
-msgstr ""
-
-#: ../view/appointment/moderator/index.phtml:15
-#: ../view/appointment/moderator/info.phtml:25
-msgid "Appointment"
-msgstr ""
-
-#: ../view/appointment/moderator/index.phtml:16
-msgid "Submitter"
-msgstr ""
-
-#: ../view/appointment/moderator/index.phtml:17
-msgid "submitted"
+#: ../view/appointment/moderator/index.phtml:10
+msgid "No Appointment found"
 msgstr ""
 
 #: ../view/appointment/moderator/index.phtml:18
-#: ../view/appointment/moderator/info.phtml:35
-msgid "Stage"
+msgid "ID"
 msgstr ""
 
 #: ../view/appointment/moderator/index.phtml:19
+msgid "Match"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:20
+msgid "Date"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:21
+msgid "Appointment"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:22
+msgid "Submitter"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:23
+msgid "submitted"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:24
+msgid "Stage"
+msgstr ""
+
+#: ../view/appointment/moderator/index.phtml:25
 msgid "Info"
 msgstr ""
 
-#: ../view/appointment/moderator/index.phtml:46
+#: ../view/appointment/moderator/index.phtml:52
 msgid "Total"
 msgstr ""
 
-#: ../view/appointment/moderator/index.phtml:46
+#: ../view/appointment/moderator/index.phtml:52
 msgid "Appointments"
 msgstr ""
 

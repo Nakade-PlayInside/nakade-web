@@ -80,6 +80,7 @@ class ConfirmController extends DefaultController
                 $participant->setDate(new \DateTime());
                 $participant->setHasAccepted(true);
                 $this->getSeasonMapper()->save($participant);
+
                 return $this->redirect()->toRoute('dashboard');
             }
 

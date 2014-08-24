@@ -1,9 +1,6 @@
 <?php
-/**
- * This is a sample "local" configuration for your application. To use it, copy
- * it to your config/autoload/ directory of your application, and edit to suit
- * your application.
-  */
+use Permission\Entity\RoleInterface;
+
 return array(
 
     'Permission' => array(
@@ -14,38 +11,45 @@ return array(
         //resources for permission control
         'resources' => array (
             'nav-admin' => 'admin',
-            'Authentication\Controller\Dashboard' => 'guest',
+            'Authentication\Controller\Dashboard' => RoleInterface::ROLE_GUEST,
 
-            'User\Controller\User' => 'admin',
-            'User\Controller\Profile' => 'guest',
-            'User\Controller\Coupon' => 'guest',
-            'User\Controller\Coupon\moderate' => 'admin',
-            'User\Controller\Coupon\inactivate' => 'admin',
+            'User\Controller\User' => RoleInterface::ROLE_ADMIN,
+            'User\Controller\Profile' => RoleInterface::ROLE_GUEST,
+            'User\Controller\Coupon' => RoleInterface::ROLE_GUEST,
+            'User\Controller\Coupon\moderate' => RoleInterface::ROLE_ADMIN,
+            'User\Controller\Coupon\inactivate' => RoleInterface::ROLE_ADMIN,
 
-            'Appointment\Controller\Appointment' => 'guest',
-            'Appointment\Controller\Show' => 'guest',
+            'Appointment\Controller\Appointment' => RoleInterface::ROLE_GUEST,
+            'Appointment\Controller\Show' => RoleInterface::ROLE_GUEST,
             'Appointment\Controller\Show\reject' => 'moderator',
             'Appointment\Controller\Moderator' => 'moderator',
 
-            'Message\Controller\Message' => 'guest',
+            'Message\Controller\Message' => RoleInterface::ROLE_GUEST,
 
-            'Authentication\Controller\DashboardController' => 'guest',
-
-            'League\Controller\Table\table' => 'guest',
-            'League\Controller\Result\add' => 'guest',
-            'League\Controller\Result\myResult' => 'guest',
-            'League\Controller\Result\index' => 'admin',
-            'League\Controller\TimeTable\index' => 'admin',
-            'League\Controller\TimeTable\edit' => 'admin',
-            'League\Controller\TimeTable\mySchedule' => 'guest',
-            'League\Controller\TimeTable\schedule' => 'guest',
+            'League\Controller\Table\table' => RoleInterface::ROLE_GUEST,
+            'League\Controller\Result\add' => RoleInterface::ROLE_GUEST,
+            'League\Controller\Result\myResult' => RoleInterface::ROLE_GUEST,
+            'League\Controller\Result\index' => RoleInterface::ROLE_ADMIN,
+            'League\Controller\Result\allResults' => RoleInterface::ROLE_LEAGUE_MANAGER,
+            'League\Controller\Result\edit' => RoleInterface::ROLE_LEAGUE_MANAGER,
+            'League\Controller\TimeTable\index' => RoleInterface::ROLE_LEAGUE_MANAGER,
+            'League\Controller\TimeTable\edit'  => RoleInterface::ROLE_LEAGUE_MANAGER,
+            'League\Controller\TimeTable\mySchedule' => RoleInterface::ROLE_GUEST,
+            'League\Controller\TimeTable\schedule' => RoleInterface::ROLE_GUEST,
 
             'Season\Controller\Season' => 'admin',
             'Season\Controller\Player' => 'admin',
             'Season\Controller\League' => 'admin',
             'Season\Controller\MatchDay' => 'admin',
             'Season\Controller\Schedule' => 'admin',
-            'Season\Controller\Confirm\register' => 'guest',
+            'Season\Controller\Confirm\register' => RoleInterface::ROLE_GUEST,
+
+            'Support\Controller\Manager' => RoleInterface::ROLE_LEAGUE_OWNER,
+            'Support\Controller\Referee' => RoleInterface::ROLE_MODERATOR,
+            'Support\Controller\Support' => RoleInterface::ROLE_GUEST,
+            'Support\Controller\Ticket' => RoleInterface::ROLE_MANAGER, //LM, admin, owner, refs
+
+            'Arbitration\Controller\Arbitration' => RoleInterface::ROLE_REFEREE,
 
         )
     ),
