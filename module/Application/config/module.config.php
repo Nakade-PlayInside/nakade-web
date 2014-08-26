@@ -11,13 +11,6 @@
 namespace Application;
 return array(
 
-    'view_helpers' => array(
-        'invokables' => array(
-            'Submenu' => 'Application\View\Helper\Submenu',
-            // more helpers here ...
-        )
-    ),
-
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Training' =>
@@ -111,7 +104,6 @@ return array(
 
     'service_manager' => array(
         'factories' => array(
-            'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
             'Application\Services\ContactFormFactory'
                 => 'Application\Services\ContactFormFactory',
             'Application\Services\MailService'
@@ -146,6 +138,8 @@ return array(
                   '/../view/error/404.phtml',
             'error/index'             => __DIR__ .
                   '/../view/error/index.phtml',
+            'subMenu' => __DIR__ . '/../view/partial/subMenu.phtml',
+            'topMenu' => __DIR__ . '/../view/partial/topMenu.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

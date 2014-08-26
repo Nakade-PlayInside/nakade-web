@@ -231,3 +231,7 @@ div.error {
     text-decoration: underline;
     margin-top: 10px;
 }
+
+.nakadeNav ul li {
+    display: inline-block;
+}

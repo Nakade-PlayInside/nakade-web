@@ -1,5 +1,5 @@
 <?php
-use Permission\Entity\RoleINterface;
+use Permission\Entity\RoleInterface;
 echo $this->doctype();
 ?>
 
@@ -27,198 +27,23 @@ echo $this->doctype();
 
     </head>
     <body>
-        <div class="navbar navbar-fixed-top">
-
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('BBC Nakade') ?></a>
-                    <div class="nav-collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home', 'Application') ?></a></li>
-
-
-
-
-<?php
-
-    if ($this->isAllowed(RoleINterface::ROLE_GUEST)) {
-
-         echo sprintf('<li><a href="%s">%s</a></li>',
-             $this->url('dashboard'),
-             $this->translate('Dashboard', 'Application')
-         );
-    } else {
-
-        echo sprintf('<li><a href="%s">%s</a></li>',
-            $this->url('login'),
-            $this->translate('LogIn', 'Application')
-        );
-    }
-
-    //admin and moderators
-    if ($this->isAllowed(RoleINterface::ROLE_MODERATOR)) {
-
-        $admin = array();
-
-        //user
-        //todo: edit roles depending on own role
-        $admin[$this->translate('User', 'Application')] = $this->url('user');
-
-        //coupons
-        $admin[$this->translate('Coupons', 'Application')] =
-            $this->url('coupon', array('action' => 'moderate'));
-
-        //referees
-        $admin[$this->translate('Referees', 'Application')] = $this->url('referee');
-
-        //open results
-        $admin[$this->translate('Open Results', 'Application')] = $this->url('result');
-
-        //match day
-        $admin[$this->translate('Edit Match Day', 'Application')] = $this->url('timeTable');
-
-        //appointment
-        $admin[$this->translate('Appointments', 'Application')] = $this->url('appointmentModerator');
-
-
-        echo $this->Submenu('Admin', $admin);
-    }
-
-    //manager and referees
-    if ($this->isManager()) {
-
-        $moderator = array();
-
-        //todo: change to user if more association possible
-        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_OWNER)) {
-            $moderator[$this->translate('New Season', 'Application')] =
-                $this->url('createSeason', array('action' => 'create'));
-        }
-
-        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_OWNER)) {
-            $moderator[$this->translate('My Manager', 'Application')] = $this->url('manager');
-        }
-
-        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_MANAGER)) {
-            //match day
-            $moderator[$this->translate('Edit Match Day', 'Application')] = $this->url('timeTable');
-        }
-
-        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_MANAGER)) {
-            //match day
-            $moderator[$this->translate('Edit Result', 'Application')] =
-                $this->url('result', array('action' => 'allResults'));
-        }
-
-        if ($this->isAllowed(RoleInterface::ROLE_REFEREE)) {
-            $moderator[$this->translate('Arbitration', 'Application')] = $this->url('arbitration');
-        }
-
-        $moderator[$this->translate('Tickets', 'Application')] = $this->url('ticket');
-
-        echo $this->Submenu('Moderator', $moderator);
-
-    }
-
-    if ($this->isAllowed(RoleINterface::ROLE_GUEST)) {
-
-        echo sprintf('<li><a href="%s">%s</a></li>',
-            $this->url('profile'),
-            $this->translate('Profile', 'Application')
-        );
-
-        $messages = array(
-
-            $this->translate('Inbox', 'Application')  =>
-                $this->url('message'),
-
-            $this->translate('New Message', 'Application')  =>
-                $this->url('message', array('action' => 'new')),
-
-             $this->translate('Outbox', 'Application')  =>
-                 $this->url('message', array('action' => 'outbox')),
-
-
-        );
-
-         echo $this->Submenu(
-             $this->translate('Messages', 'Application'),
-             $messages
-         );
-
-        $league = array(
-
-            $this->translate('Schedule', 'Application')   =>
-                $this->url('timeTable', array('action' => 'schedule')),
-
-            $this->translate('Standings', 'Application')  =>
-                $this->url('actual', array('action' => 'table')),
-
-            $this->translate('results', 'Application')    =>
-                $this->url('result', array('action' => 'myResult')),
-
-        );
-
-        echo $this->Submenu(
-            $this->translate('League', 'Application'),
-            $league
-        );
-
-         echo $this->Submenu(
-             $this->translate('Appointments', 'Application'),
-             array (
-                 $this->translate('Shift Date', 'Application')   =>
-                     $this->url('appointmentShow', array('action' => 'available')),
-                 $this->translate('Confirm', 'Application')   =>
-                     $this->url('appointmentShow'),
-             )
-         );
-
-        // todo: only active League Players can do request for a LM
-         echo $this->Submenu(
-             $this->translate('Support', 'Application'),
-             array (
-                 $this->translate('My Tickets', 'Application')   =>
-                     $this->url('support'),
-                 $this->translate('League Manager', 'Application')   =>
-                     $this->url('support', array('action' => 'add',
-                         'id' => \Support\Controller\SupportTypeInterface::LEAGUE_MANAGER_TICKET)),
-                 $this->translate('Admin', 'Application')   =>
-                     $this->url('support', array('action' => 'add',
-                         'id' => \Support\Controller\SupportTypeInterface::ADMIN_TICKET)),
-                 $this->translate('Referee', 'Application')   =>
-                     $this->url('support', array('action' => 'add',
-                         'id' => \Support\Controller\SupportTypeInterface::REFEREE_TICKET)),
-             )
-         );
-
-        echo sprintf('<li style="color:lightblue;line-height:19px;
-                padding:10px; padding-left:20px;">%s %s</li>',
-            $this->translate('Logged in as ', 'Application'),
-            $this->escapeHtml($this->identity()->getUsername())
-        );
-
-        echo sprintf('<li><a href="%s">%s</a></li>',
-            $this->url('login', array('action'=>'logout')),
-            $this->translate('Logout', 'Application')
-        );
-
-    }
-?>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('BBC Nakade') ?></a>
+                <?php
+                echo $this->navigation('app_navigation')->menu()->renderPartial(null, 'topMenu'); ?>
             </div>
-
-            <?php //todo: flashMessenger renders not after redirecting
-                echo $this->flashMessenger()->render('success'); ?>
-            <?php echo $this->flashMessenger()->render('error'); ?>
         </div>
+        <?php //todo: flashMessenger renders not after redirecting
+        echo $this->flashMessenger()->render('success'); ?>
+        <?php echo $this->flashMessenger()->render('error'); ?>
+    </div>
         <div class="container">
             <?php echo $this->content; ?>
             <hr>
