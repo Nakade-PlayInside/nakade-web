@@ -21,6 +21,7 @@ return array(
             'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
             'app_navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+            'footer_navigation' => 'Application\Navigation\FooterNavigationFactory',
         ),
     ),
     'translator' => array(
@@ -28,9 +29,42 @@ return array(
         'fallback' => 'en_US',
     ),
 
+    'view_helper_config' => array(
+        'flashmessenger' => array(
+            'message_open_format'      => '<div%s>',
+            'message_close_string'     => '</div>',
+        )
+    ),
+
 
     //global config key for all navigation configurations
     'navigation' => array(
+
+        //footer
+        'siteMenu' => array(
+            'rules' => array(
+                'label' => 'Rules',
+                'route' => 'privacy',
+                'action' => 'rules',
+            ),
+            'useTerms' => array(
+                'label' => 'Terms of Use',
+                'route' => 'privacy',
+                'action' => 'useTerms',
+            ),
+            'imprint' => array(
+                'label' => 'Imprint',
+                'route' => 'imprint',
+            ),
+            'contact' => array(
+                'label' => 'Contact',
+                'route' => 'contact',
+            ),
+            'training' => array(
+                'label' => 'Location',
+                'route' => 'training',
+            ),
+        ),
 
         //not more than one subMenu level (mobile!)
         'default' => array(
@@ -50,8 +84,6 @@ return array(
             'dashboard' => array(
                 'label' => 'Dashboard',
                 'route' => 'dashboard',
-                'controller' => 'Authentication\Controller\Dashboard',
-                'action' => 'index',
                 'privilege' => RoleInterface::ROLE_GUEST,
                 'order' => 1,
             ),

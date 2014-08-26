@@ -1,8 +1,6 @@
 <?php /* @var $page \Zend\Navigation\Page\AbstractPage */
-/* @var $subPage \Zend\Navigation\Page\AbstractPage */
 $this->plugin('translate')->setTranslatorTextDomain('Application');
 ?>
-
 <div class="nav-collapse">
     <ul class="nav">
         <?php foreach ($this->container as $page) : ?>
@@ -13,9 +11,7 @@ $this->plugin('translate')->setTranslatorTextDomain('Application');
                             <?php echo $this->translate($page->getLabel()); ?>
                             <b class="caret"></b>
                         </a>
-                        <?php
-                        echo $this->partialLoop('subMenu',
-                            array(array('pages' => $page->getPages())));  ?>
+                        <?php echo $this->partialLoop('subMenu', array(array('pages' => $page->getPages()))); ?>
                     </li>
                 <?php else : ?>
                     <li <?php if ($page->isActive()) : ?>class="active"<?php endif; ?>>

@@ -140,6 +140,7 @@ return array(
                   '/../view/error/index.phtml',
             'subMenu' => __DIR__ . '/../view/partial/subMenu.phtml',
             'topMenu' => __DIR__ . '/../view/partial/topMenu.phtml',
+            'siteMenu' => __DIR__ . '/../view/partial/siteMenu.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
