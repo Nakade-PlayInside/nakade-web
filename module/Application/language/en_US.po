@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-23 18:14+0100\n"
-"PO-Revision-Date: 2014-08-23 18:14+0100\n"
+"POT-Creation-Date: 2014-08-26 22:52+0100\n"
+"PO-Revision-Date: 2014-08-26 22:52+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -56,166 +56,11 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: ../view/layout/layout.phtml:39
+#: ../view/layout/layout.phtml:40
 msgid "BBC Nakade"
 msgstr ""
 
-#: ../view/layout/layout.phtml:42
-msgid "Home"
-msgstr ""
-
-#: ../view/layout/layout.phtml:53
-msgid "Dashboard"
-msgstr ""
-
-#: ../view/layout/layout.phtml:59
-msgid "LogIn"
-msgstr ""
-
-#: ../view/layout/layout.phtml:70
-msgid "User"
-msgstr ""
-
-#: ../view/layout/layout.phtml:73
-msgid "Coupons"
-msgstr ""
-
-#: ../view/layout/layout.phtml:77
-msgid "Referees"
-msgstr ""
-
-#: ../view/layout/layout.phtml:80
-msgid "Open Results"
-msgstr ""
-
-#: ../view/layout/layout.phtml:83
-#: ../view/layout/layout.phtml:109
-msgid "Edit Match Day"
-msgstr ""
-
-#: ../view/layout/layout.phtml:86
-#: ../view/layout/layout.phtml:173
-msgid "Appointments"
-msgstr ""
-
-#: ../view/layout/layout.phtml:99
-msgid "New Season"
-msgstr ""
-
-#: ../view/layout/layout.phtml:104
-msgid "My Manager"
-msgstr ""
-
-#: ../view/layout/layout.phtml:114
-msgid "Edit Result"
-msgstr ""
-
-#: ../view/layout/layout.phtml:119
-msgid "Arbitration"
-msgstr ""
-
-#: ../view/layout/layout.phtml:122
-msgid "Tickets"
-msgstr ""
-
-#: ../view/layout/layout.phtml:132
-msgid "Profile"
-msgstr ""
-
-#: ../view/layout/layout.phtml:137
-msgid "Inbox"
-msgstr ""
-
-#: ../view/layout/layout.phtml:140
-msgid "New Message"
-msgstr ""
-
-#: ../view/layout/layout.phtml:143
-msgid "Outbox"
-msgstr ""
-
-#: ../view/layout/layout.phtml:150
-msgid "Messages"
-msgstr ""
-
-#: ../view/layout/layout.phtml:156
-msgid "Schedule"
-msgstr ""
-
-#: ../view/layout/layout.phtml:159
-msgid "Standings"
-msgstr ""
-
-#: ../view/layout/layout.phtml:162
-msgid "results"
-msgstr ""
-
-#: ../view/layout/layout.phtml:168
-msgid "League"
-msgstr ""
-
-#: ../view/layout/layout.phtml:175
-msgid "Shift Date"
-msgstr ""
-
-#: ../view/layout/layout.phtml:177
-msgid "Confirm"
-msgstr ""
-
-#: ../view/layout/layout.phtml:184
-msgid "Support"
-msgstr ""
-
-#: ../view/layout/layout.phtml:186
-msgid "My Tickets"
-msgstr ""
-
-#: ../view/layout/layout.phtml:188
-msgid "League Manager"
-msgstr ""
-
-#: ../view/layout/layout.phtml:191
-msgid "Admin"
-msgstr ""
-
-#: ../view/layout/layout.phtml:194
-msgid "Referee"
-msgstr ""
-
-#: ../view/layout/layout.phtml:202
-msgid "Logged in as "
-msgstr ""
-
-#: ../view/layout/layout.phtml:208
-msgid "Logout"
-msgstr ""
-
-#: ../view/layout/layout.phtml:229
-#: ../view/application/privacy/rules.phtml:4
-msgid "Rules"
-msgstr ""
-
-#: ../view/layout/layout.phtml:233
-#: ../view/application/privacy/use-terms.phtml:4
-msgid "Terms of Use"
-msgstr ""
-
-#: ../view/layout/layout.phtml:236
-#: ../view/application/imprint/index.phtml:3
-msgid "Imprint"
-msgstr ""
-
-#: ../view/layout/layout.phtml:237
-#: ../view/application/contact/index.phtml:3
-msgid "Contact"
-msgstr ""
-
-#: ../view/layout/layout.phtml:238
-#: ../view/application/training/index.phtml:4
-msgid "Location"
-msgstr ""
-
-#: ../view/layout/layout.phtml:240
+#: ../view/layout/layout.phtml:56
 msgid "All rights reserved."
 msgstr ""
 
@@ -299,6 +144,149 @@ msgstr ""
 
 #: ../view/error/404.phtml:1
 msgid "A 404 error occurred"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:6
+#: ../view/application/privacy/rules.phtml:4
+msgid "Rules"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:7
+#: ../view/application/privacy/use-terms.phtml:4
+msgid "Terms of Use"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:8
+#: ../view/application/imprint/index.phtml:3
+msgid "Imprint"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:9
+#: ../view/application/contact/index.phtml:3
+msgid "Contact"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:10
+#: ../view/application/training/index.phtml:4
+msgid "Location"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:11
+msgid "Home"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:12
+msgid "Profile"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:13
+msgid "Dashboard"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:14
+msgid "Messages"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:15
+msgid "Inbox"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:16
+msgid "New Message"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:17
+msgid "Outbox"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:18
+msgid "League"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:19
+msgid "Schedule"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:20
+msgid "Standings"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:21
+msgid "Results"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:22
+msgid "Moderator"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:23
+msgid "New Season"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:24
+msgid "My Manager"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:25
+#: ../view/partial/menuLabel.phtml:33
+msgid "Edit Match Day"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:26
+msgid "Edit Result"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:27
+msgid "Arbitration"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:28
+#: ../view/partial/menuLabel.phtml:38
+msgid "Admin"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:29
+msgid "User"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:30
+msgid "Coupons"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:31
+msgid "Referees"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:32
+msgid "Open Results"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:34
+msgid "Appointments"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:35
+msgid "Support"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:36
+msgid "My Tickets"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:37
+msgid "League Manager"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:39
+msgid "Referee"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:40
+msgid "Logout"
+msgstr ""
+
+#: ../view/partial/topMenu.phtml:26
+msgid "LogIn"
 msgstr ""
 
 #: ../view/application/contact/index.phtml:8

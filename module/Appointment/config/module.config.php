@@ -145,7 +145,6 @@ return array(
         'factories' => array(
             'Appointment\Services\RepositoryService'      =>
                 'Appointment\Services\RepositoryService',
-            'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
             'Appointment\Services\AppointmentFormFactory' =>
                 'Appointment\Services\AppointmentFormFactory',
             'Appointment\Services\MailService' =>
@@ -166,13 +165,6 @@ return array(
         'template_path_stack'   => array(
             __DIR__ . '/../view',
         ),
-    ),
-
-    'view_helper_config' => array(
-        'flashmessenger' => array(
-            'message_open_format'      => '<div%s>',
-            'message_close_string'     => '</div>',
-        )
     ),
 
     //Doctrine2

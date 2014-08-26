@@ -83,8 +83,6 @@ return array(
                 'Authentication\Services\AuthFormFactory',
             'Authentication\Services\AuthSessionService'   =>
                 'Authentication\Services\AuthSessionService',
-            'translator'        =>
-                'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
 

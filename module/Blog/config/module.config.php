@@ -38,7 +38,6 @@ return array(
                 'Blog\Services\RepositoryService',
             'Blog\Services\CarouselPostService'      =>
                 'Blog\Services\CarouselPostService',
-            'translator'    => 'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
 

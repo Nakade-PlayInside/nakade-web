@@ -51,8 +51,6 @@ return array(
                 'Permission\Services\AclService',
             'Permission\Services\VoterService' =>
                 'Permission\Services\VoterService',
-            'translator'        =>
-                'Zend\I18n\Translator\TranslatorServiceFactory',
         ),
     ),
 
