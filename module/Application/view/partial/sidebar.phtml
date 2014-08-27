@@ -1,0 +1,42 @@
+<?php /* @var $page \Zend\Navigation\Page\AbstractPage */
+$this->plugin('translate')->setTranslatorTextDomain('Application');
+?>
+    <div>
+        <?php echo $this->translate("Logged in as") . ' ';?><span><?php echo $this->identity()->getUsername()?></span>
+        <a href="<?php echo $this->url('login', array('action' => 'logout'))?>">
+            <?php echo $this->translate("LogOut") ?>
+        </a>
+    </div>
+
+    <ul>
+    <li><?php echo $this->translate("You have ") . ' '; ?><span class="info"><?php echo $this->noMessage(); ?></span>
+            <a href="<?php echo $this->url('message')?>" title="<?php echo $this->translate("go to mailbox"); ?>">
+                <?php echo ' ' . $this->translate("new mails"); ?>
+                <div class="infoBtn mail-16 mail-yellow-16 btnCenter"></div>
+            </a>
+    </li>
+
+    <li>
+        <?php echo $this->translate("You have ") . ' '; ?><span class="info"><?php echo $this->noAppointment(); ?></span>
+        <a href="<?php echo $this->url('appointmentShow')?>" title="<?php echo $this->translate("go to confirmation"); ?>">
+            <?php echo ' ' . $this->translate("new appointments"); ?>
+            <div class="infoBtn mail-16 time-16"></div>
+        </a>
+    </li>
+
+    <li>
+        <?php echo $this->translate("You have ") . ' '; ?><span class="info"><?php echo $this->noWaitingTicket(); ?></span>
+        <a href="<?php echo $this->url('support')?>" title="<?php echo $this->translate("go to tickets"); ?>">
+            <?php echo ' ' . $this->translate("waiting tickets"); ?>
+            <div class="infoBtn mail-16 time-16"></div>
+        </a>
+    </li>
+
+    <li>
+        <?php echo $this->translate("You have ") . ' '; ?><span class="info"><?php echo $this->noInvited(); ?></span>
+        <a href="<?php echo $this->url('coupon')?>" title="<?php echo $this->translate("go to invitation"); ?>">
+            <?php echo ' ' . $this->translate("friends invited"); ?>
+            <div class="infoBtn buttons-16 info-16 btnCenter"></div>
+        </a>
+    </li>
+    </ul>

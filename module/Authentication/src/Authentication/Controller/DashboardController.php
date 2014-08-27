@@ -16,6 +16,7 @@ class DashboardController extends AbstractActionController
      */
     public function indexAction()
     {
+        //@veraltet
         $messageWidget  = $this->forward()
             ->dispatch('/Message/Controller/Message', array('action' => 'info'));
 
@@ -23,6 +24,7 @@ class DashboardController extends AbstractActionController
         $scheduleWidget  = $this->forward()
             ->dispatch('/League/Controller/TimeTable', array('action' => 'mySchedule'));
 
+        //@veraltet
         $appointmentWidget  = $this->forward()
             ->dispatch('/Appointment/Controller/Show', array('action' => 'message'));
 
@@ -32,6 +34,7 @@ class DashboardController extends AbstractActionController
         $inviteWidget  = $this->forward()
             ->dispatch('/User/Controller/Coupon', array('action' => 'invite'));
 
+        //@veraltet
         $inviteInfo  = $this->forward()
             ->dispatch('/User/Controller/Coupon', array('action' => 'info'));
 

@@ -1,0 +1,30 @@
+
+div#sidebar {
+    display: inline-block;
+}
+
+div#sidebar ul {
+    margin: 10px 0;
+    list-style: none;
+}
+
+#sidebar span {
+    font-weight: bold;
+    padding-right: 5px;
+}
+
+#sidebar span.info {
+    color: red;
+}
+
+#sidebar a {
+    display: inline-block;
+    font-weight: bold;
+}
+
+#sidebar .infoBtn {
+    vertical-align: text-bottom;
+    display: inline-block;
+    margin-left: 5px;
+}
+

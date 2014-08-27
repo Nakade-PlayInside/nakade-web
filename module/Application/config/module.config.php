@@ -11,6 +11,16 @@
 namespace Application;
 return array(
 
+    'view_helpers' => array(
+        'invokables' => array(
+            'noAppointment'   => 'Application\View\Helper\GetAppointmentAmount',
+            'noInvited'   => 'Application\View\Helper\GetInvitedAmount',
+            'noMessage'   => 'Application\View\Helper\GetMessageAmount',
+            'noWaitingTicket'   => 'Application\View\Helper\GetWaitingTicketAmount',
+            // more helpers here ...
+        )
+    ),
+
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Training' =>
@@ -141,6 +151,7 @@ return array(
             'subMenu' => __DIR__ . '/../view/partial/subMenu.phtml',
             'topMenu' => __DIR__ . '/../view/partial/topMenu.phtml',
             'siteMenu' => __DIR__ . '/../view/partial/siteMenu.phtml',
+            'sidebar' => __DIR__ . '/../view/partial/sidebar.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
