@@ -4,13 +4,14 @@ namespace Support\Mapper;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Nakade\Pagination\ItemPagination;
+use Support\Entity\StageInterface;
 
 /**
  * Class ManagerMapper
  *
  * @package Support\Mapper
  */
-class TicketMapper extends DefaultMapper
+class TicketMapper extends DefaultMapper implements StageInterface
 {
 
     private $where = 'Where';
@@ -85,6 +86,28 @@ class TicketMapper extends DefaultMapper
         //todo: edit paginator request
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @param int $userId
+     *
+     * @return array
+     */
+    public function getWaitingTicketsByUser($userId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Tickets')
+            ->select('s')
+            ->from('Support\Entity\SupportRequest', 's')
+            ->innerJoin('s.creator', 'User')
+            ->innerJoin('s.stage', 'Stage')
+            ->where('User.id = :userId')
+            ->andWhere('Stage.id = :stageId')
+            ->setParameter('userId', $userId)
+            ->setParameter('stageId', self::STAGE_WAITING);
+
+        return $qb->getQuery()->getResult();
+    }
+
 
     /**
      * @param QueryBuilder $queryBuilder

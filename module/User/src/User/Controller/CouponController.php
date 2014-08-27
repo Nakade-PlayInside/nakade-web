@@ -31,20 +31,6 @@ class CouponController extends AbstractController
     }
 
     /**
-     * Showing the user's profile
-     *
-     * @return \Zend\View\Model\ViewModel
-     */
-    public function infoAction()
-    {
-        return new ViewModel(
-            array(
-                'coupons'    => $this->getUserMapper()->getCouponByUser($this->identity()),
-            )
-        );
-    }
-
-    /**
      * @return \Zend\View\Model\ViewModel
      */
     public function moderateAction()

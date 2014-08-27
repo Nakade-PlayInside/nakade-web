@@ -10,8 +10,6 @@ use Nakade\Abstracts\AbstractViewHelper;
  */
 class DefaultViewHelper extends AbstractViewHelper
 {
-    protected $amount=0;
-
     /**
      * @param string $name
      *
@@ -34,22 +32,6 @@ class DefaultViewHelper extends AbstractViewHelper
         }
 
         return  $locator->get($name);
-    }
-
-    /**
-     * @param int $amount
-     */
-    public function setAmount($amount)
-    {
-        $this->amount = $amount;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAmount()
-    {
-       return $this->amount;
     }
 
     /**

@@ -19,7 +19,7 @@ $this->plugin('translate')->setTranslatorTextDomain('Application');
     <li>
         <?php echo $this->translate("You have ") . ' '; ?><span class="info"><?php echo $this->noAppointment(); ?></span>
         <a href="<?php echo $this->url('appointmentShow')?>" title="<?php echo $this->translate("go to confirmation"); ?>">
-            <?php echo ' ' . $this->translate("new appointments"); ?>
+            <?php echo ' ' . $this->translate("open appointments"); ?>
             <div class="infoBtn mail-16 time-16"></div>
         </a>
     </li>
@@ -32,6 +32,8 @@ $this->plugin('translate')->setTranslatorTextDomain('Application');
         </a>
     </li>
 
+
+    <?php if (date('c') < date('c', strtotime('12/31/2014'))) :?>
     <li>
         <?php echo $this->translate("You have ") . ' '; ?><span class="info"><?php echo $this->noInvited(); ?></span>
         <a href="<?php echo $this->url('coupon')?>" title="<?php echo $this->translate("go to invitation"); ?>">
@@ -39,4 +41,5 @@ $this->plugin('translate')->setTranslatorTextDomain('Application');
             <div class="infoBtn buttons-16 info-16 btnCenter"></div>
         </a>
     </li>
+    <?php endif; ?>
     </ul>
