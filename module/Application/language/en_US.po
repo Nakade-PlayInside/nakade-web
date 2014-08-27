@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-26 22:52+0100\n"
-"PO-Revision-Date: 2014-08-26 22:52+0100\n"
+"POT-Creation-Date: 2014-08-27 15:23+0100\n"
+"PO-Revision-Date: 2014-08-27 15:24+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -60,7 +60,7 @@ msgstr ""
 msgid "BBC Nakade"
 msgstr ""
 
-#: ../view/layout/layout.phtml:56
+#: ../view/layout/layout.phtml:61
 msgid "All rights reserved."
 msgstr ""
 
@@ -147,17 +147,14 @@ msgid "A 404 error occurred"
 msgstr ""
 
 #: ../view/partial/menuLabel.phtml:6
-#: ../view/application/privacy/rules.phtml:4
 msgid "Rules"
 msgstr ""
 
 #: ../view/partial/menuLabel.phtml:7
-#: ../view/application/privacy/use-terms.phtml:4
 msgid "Terms of Use"
 msgstr ""
 
 #: ../view/partial/menuLabel.phtml:8
-#: ../view/application/imprint/index.phtml:3
 msgid "Imprint"
 msgstr ""
 
@@ -167,7 +164,6 @@ msgid "Contact"
 msgstr ""
 
 #: ../view/partial/menuLabel.phtml:10
-#: ../view/application/training/index.phtml:4
 msgid "Location"
 msgstr ""
 
@@ -283,6 +279,53 @@ msgstr ""
 
 #: ../view/partial/menuLabel.phtml:40
 msgid "Logout"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:5
+msgid "Logged in as"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:7
+msgid "LogOut"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:12
+#: ../view/partial/sidebar.phtml:20
+#: ../view/partial/sidebar.phtml:28
+#: ../view/partial/sidebar.phtml:38
+msgid "You have "
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:13
+msgid "go to mailbox"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:14
+msgid "new mails"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:21
+msgid "go to confirmation"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:22
+msgid "open appointments"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:29
+msgid "go to tickets"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:30
+msgid "waiting tickets"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:39
+msgid "go to invitation"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:40
+msgid "friends invited"
 msgstr ""
 
 #: ../view/partial/topMenu.phtml:26

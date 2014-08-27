@@ -1,15 +1,4 @@
-<?php
-$this->plugin('translate')->setTranslatorTextDomain('Auth');
-
-echo $this->messageWidget;
-echo $this->appointmentWidget;
-if (isset($this->inviteInfo)) {
-    echo $this->inviteInfo;
-}
-?>
-
-<hr>
-
+<?php $this->plugin('translate')->setTranslatorTextDomain('Auth'); ?>
 <?php
 
 echo $this->participationWidget;

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-26 22:51+0100\n"
-"PO-Revision-Date: 2014-08-26 22:51+0100\n"
+"POT-Creation-Date: 2014-08-27 15:19+0100\n"
+"PO-Revision-Date: 2014-08-27 15:23+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -60,7 +60,7 @@ msgstr "Abschicken"
 msgid "BBC Nakade"
 msgstr "BBC Nakade"
 
-#: ../view/layout/layout.phtml:56
+#: ../view/layout/layout.phtml:61
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
 
@@ -147,17 +147,14 @@ msgid "A 404 error occurred"
 msgstr "Es trat ein 404 Fehler auf"
 
 #: ../view/partial/menuLabel.phtml:6
-#: ../view/application/privacy/rules.phtml:4
 msgid "Rules"
 msgstr "Regelwerk"
 
 #: ../view/partial/menuLabel.phtml:7
-#: ../view/application/privacy/use-terms.phtml:4
 msgid "Terms of Use"
 msgstr "AGB"
 
 #: ../view/partial/menuLabel.phtml:8
-#: ../view/application/imprint/index.phtml:3
 msgid "Imprint"
 msgstr "Impressum"
 
@@ -167,7 +164,6 @@ msgid "Contact"
 msgstr "Kontakt"
 
 #: ../view/partial/menuLabel.phtml:10
-#: ../view/application/training/index.phtml:4
 msgid "Location"
 msgstr "Spielort"
 
@@ -285,6 +281,53 @@ msgstr "Schiedsrichter"
 msgid "Logout"
 msgstr "Abmelden"
 
+#: ../view/partial/sidebar.phtml:5
+msgid "Logged in as"
+msgstr "angemeldet als"
+
+#: ../view/partial/sidebar.phtml:7
+msgid "LogOut"
+msgstr "Abmelden"
+
+#: ../view/partial/sidebar.phtml:12
+#: ../view/partial/sidebar.phtml:20
+#: ../view/partial/sidebar.phtml:28
+#: ../view/partial/sidebar.phtml:38
+msgid "You have "
+msgstr "Du hast"
+
+#: ../view/partial/sidebar.phtml:13
+msgid "go to mailbox"
+msgstr "zu den Nachrichten"
+
+#: ../view/partial/sidebar.phtml:14
+msgid "new mails"
+msgstr "neue Nachrichten"
+
+#: ../view/partial/sidebar.phtml:21
+msgid "go to confirmation"
+msgstr "zur Bestätigung"
+
+#: ../view/partial/sidebar.phtml:22
+msgid "open appointments"
+msgstr "offene Termine"
+
+#: ../view/partial/sidebar.phtml:29
+msgid "go to tickets"
+msgstr "zu den Support-Tickets"
+
+#: ../view/partial/sidebar.phtml:30
+msgid "waiting tickets"
+msgstr "wartende Tickets"
+
+#: ../view/partial/sidebar.phtml:39
+msgid "go to invitation"
+msgstr "zur den Einladungen"
+
+#: ../view/partial/sidebar.phtml:40
+msgid "friends invited"
+msgstr "Freunde eingeladen"
+
 #: ../view/partial/topMenu.phtml:26
 msgid "LogIn"
 msgstr "Login"
@@ -361,9 +404,6 @@ msgstr "Turnier und Liga Regelwerk"
 
 #~ msgid "Confirm"
 #~ msgstr "Bestätigen"
-
-#~ msgid "Logged in as "
-#~ msgstr "angemeldet als"
 
 #~ msgid "User overview"
 #~ msgstr "Benutzer Übersicht"
