@@ -16,11 +16,6 @@ class DashboardController extends AbstractActionController
      */
     public function indexAction()
     {
-        //@veraltet
-        $messageWidget  = $this->forward()
-            ->dispatch('/Message/Controller/Message', array('action' => 'info'));
-
-
         $scheduleWidget  = $this->forward()
             ->dispatch('/League/Controller/TimeTable', array('action' => 'mySchedule'));
 
@@ -40,7 +35,6 @@ class DashboardController extends AbstractActionController
 
         $page = new ViewModel(array());
         $page->addChild($participationWidget, 'participationWidget');
-        $page->addChild($messageWidget, 'messageWidget');
         $page->addChild($appointmentWidget, 'appointmentWidget');
         $page->addChild($scheduleWidget, 'scheduleWidget');
 

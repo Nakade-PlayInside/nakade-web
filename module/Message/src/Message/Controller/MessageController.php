@@ -141,22 +141,6 @@ class MessageController extends AbstractController
     }
 
     /**
-     * widget for dashboard
-     *
-     * @return \Zend\Http\Response|ViewModel
-     */
-    public function infoAction()
-    {
-        $user = $this->identity();
-        $noNewMails = $this->getMessageMapper()->getNumberOfNewMessages($user);
-
-        return new ViewModel(
-            array('noNewMails' => $noNewMails)
-        );
-
-    }
-
-    /**
      * @return \Message\Mapper\MessageMapper
      */
     public function getMessageMapper()

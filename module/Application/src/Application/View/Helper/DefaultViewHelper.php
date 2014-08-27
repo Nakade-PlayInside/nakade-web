@@ -51,4 +51,14 @@ class DefaultViewHelper extends AbstractViewHelper
     {
        return $this->amount;
     }
+
+    /**
+     * @return \User\Entity\User
+     */
+    public function getIdentity()
+    {
+        /* @var $view \Zend\View\Renderer\PhpRenderer */
+        $view = $this->getView();
+        return $view->identity();
+    }
 }
