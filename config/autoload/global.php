@@ -45,24 +45,32 @@ return array(
             'rules' => array(
                 'label' => 'Rules',
                 'route' => 'privacy',
+                'controller' => 'Application\Controller\Privacy',
                 'action' => 'rules',
             ),
             'useTerms' => array(
                 'label' => 'Terms of Use',
                 'route' => 'privacy',
+                'controller' => 'Application\Controller\Privacy',
                 'action' => 'useTerms',
             ),
             'imprint' => array(
                 'label' => 'Imprint',
                 'route' => 'imprint',
+                'controller' => 'Application\Controller\Imprint',
+                'action' => 'index',
             ),
             'contact' => array(
                 'label' => 'Contact',
                 'route' => 'contact',
+                'controller' => 'Application\Controller\Contact',
+                'action' => 'index',
             ),
             'training' => array(
                 'label' => 'Location',
                 'route' => 'training',
+                'controller' => 'Application\Controller\Training',
+                'action' => 'index',
             ),
         ),
 
@@ -73,17 +81,23 @@ return array(
             'home' => array(
                 'label' => 'Home',
                 'route' => 'home',
+                'controller' => 'Application\Controller\Index',
+                'action' => 'index',
             ),
             //profile
             'profile' => array(
                 'label' => 'Profile',
                 'route' => 'profile',
+                'controller' => 'User\Controller\Profile',
+                'action' => 'index',
                 'privilege' => RoleInterface::ROLE_GUEST
             ),
             //dashboard
             'dashboard' => array(
                 'label' => 'Dashboard',
                 'route' => 'dashboard',
+                'controller' => 'Authentication\Controller\Dashboard',
+                'action' => 'index',
                 'privilege' => RoleInterface::ROLE_GUEST,
                 'order' => 1,
             ),
@@ -98,15 +112,19 @@ return array(
                     'inbox' => array(
                         'label' => 'Inbox',
                         'route' => 'message',
+                        'controller' => 'Message\Controller\Message',
+                        'action' => 'index'
                     ),
                     'new_messages' => array(
                         'label' => 'New Message',
                         'route' => 'message',
+                        'controller' => 'Message\Controller\Message',
                         'action' => 'new'
                     ),
                     'outbox' => array(
                         'label' => 'Outbox',
                         'route' => 'message',
+                        'controller' => 'Message\Controller\Message',
                         'action' => 'outbox'
                     ),
                 )
@@ -116,25 +134,27 @@ return array(
             'league' => array(
                 'label' => 'League',
                 'route' => 'timeTable',
-                'action' => 'schedule',
                 'privilege' => RoleInterface::ROLE_GUEST,
                 'order' => 6,
                 'pages' => array(
                     'schedule' => array(
                         'label' => 'Schedule',
                         'route' => 'timeTable',
+                        'controller' => 'League\Controller\TimeTable',
                         'action' => 'schedule',
                         'order' => 1,
                     ),
                     'standings' => array(
                         'label' => 'Standings',
                         'route' => 'actual',
+                        'controller' => 'League\Controller\Table',
                         'action' => 'table',
                         'order' => 2,
                     ),
                     'results' => array(
                         'label' => 'Results',
                         'route' => 'result',
+                        'controller' => 'League\Controller\Result',
                         'action' => 'myResult',
                         'order' => 3,
                     ),
@@ -150,6 +170,7 @@ return array(
                     'new_season' => array(
                         'label' => 'New Season',
                         'route' => 'createSeason',
+                        'controller' => 'Season\Controller\Season',
                         'action' => 'create',
                         'privilege' => RoleInterface::ROLE_LEAGUE_OWNER,
                         'order' => 1,
@@ -157,18 +178,23 @@ return array(
                     'manager' => array(
                         'label' => 'My Manager',
                         'route' => 'manager',
+                        'controller' => 'Support\Controller\Manager',
+                        'action' => 'index',
                         'privilege' => RoleInterface::ROLE_LEAGUE_OWNER,
                         'order' => 2,
                     ),
                     'edit_match_day' => array(
                         'label' => 'Edit Match Day',
                         'route' => 'timeTable',
+                        'controller' => 'League\Controller\TimeTable',
+                        'action' => 'index',
                         'privilege' => RoleInterface::ROLE_LEAGUE_MANAGER,
                         'order' => 3,
                     ),
                     'edit_result' => array(
                         'label' => 'Edit Result',
                         'route' => 'result',
+                        'controller' => 'League\Controller\Result',
                         'action' => 'allResults',
                         'privilege' => RoleInterface::ROLE_LEAGUE_MANAGER,
                         'order' => 4,
@@ -176,6 +202,8 @@ return array(
                     'arbitration' => array(
                         'label' => 'Arbitration',
                         'route' => 'arbitration',
+                        'controller' => 'Arbitration\Controller\Arbitration',
+                        'action' => 'index',
                         'privilege' => RoleInterface::ROLE_REFEREE,
                     ),
 
@@ -192,31 +220,42 @@ return array(
                     'user' => array(
                         'label' => 'User',
                         'route' => 'user',
+                        'controller' => 'User\Controller\User',
+                        'action' => 'index',
                         'order' => 1,
                     ),
                     'coupons' => array(
                         'label' => 'Coupons',
                         'route' => 'coupon',
+                        'controller' => 'User\Controller\Coupon',
                         'action' => 'moderate',
                         'order' => 2,
                     ),
                     'referees' => array(
                         'label' => 'Referees',
                         'route' => 'referee',
+                        'controller' => 'Support\Controller\Referee',
+                        'action' => 'index',
                         'order' => 3,
                     ),
                     'edit_result' => array(
                         'label' => 'Open Results',
                         'route' => 'result',
+                        'controller' => 'League\Controller\Result',
+                        'action' => 'index',
                         'order' => 4,
                     ),
                     'edit_match_day' => array(
                         'label' => 'Edit Match Day',
                         'route' => 'timeTable',
+                        'controller' => 'League\Controller\TimeTable',
+                        'action' => 'index',
                     ),
                     'appointments' => array(
                         'label' => 'Appointments',
                         'route' => 'appointmentModerator',
+                        'controller' => 'Appointment\Controller\Moderator',
+                        'action' => 'index',
                     ),
 
                 )
@@ -232,24 +271,32 @@ return array(
                     'tickets' => array(
                         'label' => 'My Tickets',
                         'route' => 'support',
+                        'controller' => 'Support\Controller\Support',
+                        'action' => 'index',
                         'order' => 1,
                     ),
                     'leagueManager' => array(
                         'label' => 'League Manager',
                         'route' => 'support',
-                        'params' => array ('action' => 'add', 'id' => 2),
+                        'controller' => 'Support\Controller\Support',
+                        'action' => 'add',
+                        'params' => array ('id' => 2),
                         'order' => 2,
                     ),
                     'admin' => array(
                         'label' => 'Admin',
                         'route' => 'support',
-                        'params' => array ('action' => 'add', 'id' => 1),
+                        'controller' => 'Support\Controller\Support',
+                        'action' => 'add',
+                        'params' => array ('id' => 1),
                         'order' => 3,
                     ),
                     'referee' => array(
                         'label' => 'Referee',
                         'route' => 'support',
-                        'params' => array ('action' => 'add', 'id' => 3),
+                        'controller' => 'Support\Controller\Support',
+                        'action' => 'add',
+                        'params' => array ('id' => 3),
                         'order' => 4,
                     ),
                 )
@@ -259,7 +306,8 @@ return array(
             'logOut' => array(
                 'label' => 'Logout',
                 'route' => 'login',
-                'params' => array("action" => 'logout'),
+                'controller' => 'Authentication\Controller\Authentication',
+                'action' => 'logout',
                 'order' => 100,
                 'privilege' => RoleInterface::ROLE_GUEST,
             ),

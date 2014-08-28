@@ -1,6 +1,7 @@
 <?php /* @var $page \Zend\Navigation\Page\AbstractPage */
 $this->plugin('translate')->setTranslatorTextDomain('Application');
 ?>
+<div class="widget">
     <div>
         <?php echo $this->translate("Logged in as") . ' ';?><span><?php echo $this->identity()->getUsername()?></span>
         <a href="<?php echo $this->url('login', array('action' => 'logout'))?>">
@@ -43,3 +44,4 @@ $this->plugin('translate')->setTranslatorTextDomain('Application');
     </li>
     <?php endif; ?>
     </ul>
+</div>
