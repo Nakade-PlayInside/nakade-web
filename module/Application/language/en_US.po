@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-27 15:23+0100\n"
-"PO-Revision-Date: 2014-08-27 15:24+0100\n"
+"POT-Creation-Date: 2014-08-28 10:34+0100\n"
+"PO-Revision-Date: 2014-08-28 10:34+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -212,6 +212,7 @@ msgid "Results"
 msgstr ""
 
 #: ../view/partial/menuLabel.phtml:22
+#: ../view/partial/sidebar.phtml:58
 msgid "Moderator"
 msgstr ""
 
@@ -281,51 +282,73 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:5
+#: ../view/partial/menuLabel.phtml:41
+msgid "Tickets"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:42
+msgid "Shift Date"
+msgstr ""
+
+#: ../view/partial/menuLabel.phtml:43
+msgid "Confirm"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:6
 msgid "Logged in as"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:7
+#: ../view/partial/sidebar.phtml:9
 msgid "LogOut"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:12
-#: ../view/partial/sidebar.phtml:20
-#: ../view/partial/sidebar.phtml:28
-#: ../view/partial/sidebar.phtml:38
-msgid "You have "
-msgstr ""
-
-#: ../view/partial/sidebar.phtml:13
-msgid "go to mailbox"
-msgstr ""
-
-#: ../view/partial/sidebar.phtml:14
-msgid "new mails"
+#: ../view/partial/sidebar.phtml:15
+msgid "Edit Profile"
 msgstr ""
 
 #: ../view/partial/sidebar.phtml:21
-msgid "go to confirmation"
+#: ../view/partial/sidebar.phtml:29
+#: ../view/partial/sidebar.phtml:37
+#: ../view/partial/sidebar.phtml:47
+#: ../view/partial/sidebar.phtml:59
+msgid "You have "
 msgstr ""
 
 #: ../view/partial/sidebar.phtml:22
-msgid "open appointments"
+msgid "go to mailbox"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:29
-msgid "go to tickets"
+#: ../view/partial/sidebar.phtml:23
+msgid "new mails"
 msgstr ""
 
 #: ../view/partial/sidebar.phtml:30
-msgid "waiting tickets"
+msgid "go to confirmation"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:31
+msgid "open appointments"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:38
+#: ../view/partial/sidebar.phtml:60
+msgid "go to tickets"
 msgstr ""
 
 #: ../view/partial/sidebar.phtml:39
+msgid "waiting tickets"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:48
 msgid "go to invitation"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:40
+#: ../view/partial/sidebar.phtml:49
 msgid "friends invited"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:61
+msgid "open tickets"
 msgstr ""
 
 #: ../view/partial/topMenu.phtml:26

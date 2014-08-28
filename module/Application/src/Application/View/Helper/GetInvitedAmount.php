@@ -5,7 +5,7 @@ use User\Services\RepositoryService;
 /**
  * Class GetInvitedAmount
  *
- * @package Appointment\View\Helper
+ * @package Application\View\Helper
  */
 class GetInvitedAmount extends DefaultViewHelper
 {

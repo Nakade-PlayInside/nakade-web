@@ -77,144 +77,10 @@ return array(
         //not more than one subMenu level (mobile!)
         'default' => array(
 
-            //home
-            'home' => array(
-                'label' => 'Home',
-                'route' => 'home',
-                'controller' => 'Application\Controller\Index',
-                'action' => 'index',
-            ),
-            //profile
-            'profile' => array(
-                'label' => 'Profile',
-                'route' => 'profile',
-                'controller' => 'User\Controller\Profile',
-                'action' => 'index',
-                'privilege' => RoleInterface::ROLE_GUEST
-            ),
-            //dashboard
-            'dashboard' => array(
-                'label' => 'Dashboard',
-                'route' => 'dashboard',
-                'controller' => 'Authentication\Controller\Dashboard',
-                'action' => 'index',
-                'privilege' => RoleInterface::ROLE_GUEST,
-                'order' => 1,
-            ),
-
-            //messages
-            'messages' => array(
-                'label' => 'Messages',
-                'route' => 'message',
-                'order' => 5,
-                'privilege' => RoleInterface::ROLE_GUEST,
-                'pages' => array(
-                    'inbox' => array(
-                        'label' => 'Inbox',
-                        'route' => 'message',
-                        'controller' => 'Message\Controller\Message',
-                        'action' => 'index'
-                    ),
-                    'new_messages' => array(
-                        'label' => 'New Message',
-                        'route' => 'message',
-                        'controller' => 'Message\Controller\Message',
-                        'action' => 'new'
-                    ),
-                    'outbox' => array(
-                        'label' => 'Outbox',
-                        'route' => 'message',
-                        'controller' => 'Message\Controller\Message',
-                        'action' => 'outbox'
-                    ),
-                )
-            ),
-
-            //league
-            'league' => array(
-                'label' => 'League',
-                'route' => 'timeTable',
-                'privilege' => RoleInterface::ROLE_GUEST,
-                'order' => 6,
-                'pages' => array(
-                    'schedule' => array(
-                        'label' => 'Schedule',
-                        'route' => 'timeTable',
-                        'controller' => 'League\Controller\TimeTable',
-                        'action' => 'schedule',
-                        'order' => 1,
-                    ),
-                    'standings' => array(
-                        'label' => 'Standings',
-                        'route' => 'actual',
-                        'controller' => 'League\Controller\Table',
-                        'action' => 'table',
-                        'order' => 2,
-                    ),
-                    'results' => array(
-                        'label' => 'Results',
-                        'route' => 'result',
-                        'controller' => 'League\Controller\Result',
-                        'action' => 'myResult',
-                        'order' => 3,
-                    ),
-                )
-            ),
-            //manager
-            'manager' => array(
-                'label' => 'Moderator',
-                'route' => 'ticket',
-                'privilege' => RoleInterface::ROLE_MANAGER,
-                'order' => 3,
-                'pages' => array(
-                    'new_season' => array(
-                        'label' => 'New Season',
-                        'route' => 'createSeason',
-                        'controller' => 'Season\Controller\Season',
-                        'action' => 'create',
-                        'privilege' => RoleInterface::ROLE_LEAGUE_OWNER,
-                        'order' => 1,
-                    ),
-                    'manager' => array(
-                        'label' => 'My Manager',
-                        'route' => 'manager',
-                        'controller' => 'Support\Controller\Manager',
-                        'action' => 'index',
-                        'privilege' => RoleInterface::ROLE_LEAGUE_OWNER,
-                        'order' => 2,
-                    ),
-                    'edit_match_day' => array(
-                        'label' => 'Edit Match Day',
-                        'route' => 'timeTable',
-                        'controller' => 'League\Controller\TimeTable',
-                        'action' => 'index',
-                        'privilege' => RoleInterface::ROLE_LEAGUE_MANAGER,
-                        'order' => 3,
-                    ),
-                    'edit_result' => array(
-                        'label' => 'Edit Result',
-                        'route' => 'result',
-                        'controller' => 'League\Controller\Result',
-                        'action' => 'allResults',
-                        'privilege' => RoleInterface::ROLE_LEAGUE_MANAGER,
-                        'order' => 4,
-                    ),
-                    'arbitration' => array(
-                        'label' => 'Arbitration',
-                        'route' => 'arbitration',
-                        'controller' => 'Arbitration\Controller\Arbitration',
-                        'action' => 'index',
-                        'privilege' => RoleInterface::ROLE_REFEREE,
-                    ),
-
-                )
-            ),
-
             //admin
             'admin' => array(
                 'label' => 'Admin',
                 'route' => 'user',
-                'order' => 2,
                 'privilege' => RoleInterface::ROLE_MODERATOR,
                 'pages' => array(
                     'user' => array(
@@ -222,28 +88,24 @@ return array(
                         'route' => 'user',
                         'controller' => 'User\Controller\User',
                         'action' => 'index',
-                        'order' => 1,
                     ),
                     'coupons' => array(
                         'label' => 'Coupons',
                         'route' => 'coupon',
                         'controller' => 'User\Controller\Coupon',
                         'action' => 'moderate',
-                        'order' => 2,
                     ),
                     'referees' => array(
                         'label' => 'Referees',
                         'route' => 'referee',
                         'controller' => 'Support\Controller\Referee',
                         'action' => 'index',
-                        'order' => 3,
                     ),
                     'edit_result' => array(
                         'label' => 'Open Results',
                         'route' => 'result',
                         'controller' => 'League\Controller\Result',
                         'action' => 'index',
-                        'order' => 4,
                     ),
                     'edit_match_day' => array(
                         'label' => 'Edit Match Day',
@@ -261,11 +123,120 @@ return array(
                 )
             ),
 
+            //home
+            'home' => array(
+                'label' => 'Home',
+                'route' => 'home',
+                'controller' => 'Application\Controller\Index',
+                'action' => 'index',
+            ),
+            //profile
+            /*   'profile' => array(
+                   'label' => 'Profile',
+                   'route' => 'profile',
+                   'controller' => 'User\Controller\Profile',
+                   'action' => 'index',
+                   'privilege' => RoleInterface::ROLE_GUEST
+               ),*/
+            //dashboard
+            'dashboard' => array(
+                'label' => 'Dashboard',
+                'route' => 'dashboard',
+                'controller' => 'Authentication\Controller\Dashboard',
+                'action' => 'index',
+                'privilege' => RoleInterface::ROLE_GUEST,
+            ),
+
+            //messages
+            /*   'messages' => array(
+                   'label' => 'Messages',
+                   'route' => 'message',
+                   'order' => 5,
+                   'privilege' => RoleInterface::ROLE_GUEST,
+                   'pages' => array(
+                       'inbox' => array(
+                           'label' => 'Inbox',
+                           'route' => 'message',
+                           'controller' => 'Message\Controller\Message',
+                           'action' => 'index'
+                       ),
+                       'new_messages' => array(
+                           'label' => 'New Message',
+                           'route' => 'message',
+                           'controller' => 'Message\Controller\Message',
+                           'action' => 'new'
+                       ),
+                       'outbox' => array(
+                           'label' => 'Outbox',
+                           'route' => 'message',
+                           'controller' => 'Message\Controller\Message',
+                           'action' => 'outbox'
+                       ),
+                   )
+               ),*/
+
+            //league
+            'league' => array(
+                'label' => 'League',
+                'route' => 'timeTable',
+                'privilege' => RoleInterface::ROLE_GUEST,
+                'pages' => array(
+                    'schedule' => array(
+                        'label' => 'Schedule',
+                        'route' => 'timeTable',
+                        'controller' => 'League\Controller\TimeTable',
+                        'action' => 'schedule',
+                    ),
+                    'standings' => array(
+                        'label' => 'Standings',
+                        'route' => 'actual',
+                        'controller' => 'League\Controller\Table',
+                        'action' => 'table',
+                    ),
+                    'results' => array(
+                        'label' => 'Results',
+                        'route' => 'result',
+                        'controller' => 'League\Controller\Result',
+                        'action' => 'myResult',
+                    ),
+                    'available' => array(
+                        'label' => 'Shift Date',
+                        'route' => 'appointmentShow',
+                        'controller' => 'Appointment\Controller\Show',
+                        'action' => 'available',
+                    ),
+                )
+            ),
+
+            //appointment
+         /*   'appointment' => array(
+                'label' => 'Appointment',
+                'route' => 'appointmentShow',
+                'privilege' => RoleInterface::ROLE_GUEST,
+                'pages' => array(
+                    'available' => array(
+                        'label' => 'Shift Date',
+                        'route' => 'appointmentShow',
+                        'controller' => 'Appointment\Controller\Show',
+                        'action' => 'available',
+                    ),
+                    'confirm' => array(
+                        'label' => 'Confirm',
+                        'route' => 'appointmentShow',
+                        'controller' => 'Appointment\Controller\Show',
+                        'action' => 'index',
+                    ),
+                )
+            ),*/
+
+
+
+
+
             //support
             'support' => array(
                 'label' => 'Support',
                 'route' => 'support',
-                'order' => 8,
                 'privilege' => RoleInterface::ROLE_GUEST,
                 'pages' => array(
                     'tickets' => array(
@@ -273,7 +244,6 @@ return array(
                         'route' => 'support',
                         'controller' => 'Support\Controller\Support',
                         'action' => 'index',
-                        'order' => 1,
                     ),
                     'leagueManager' => array(
                         'label' => 'League Manager',
@@ -281,7 +251,6 @@ return array(
                         'controller' => 'Support\Controller\Support',
                         'action' => 'add',
                         'params' => array ('id' => 2),
-                        'order' => 2,
                     ),
                     'admin' => array(
                         'label' => 'Admin',
@@ -289,7 +258,6 @@ return array(
                         'controller' => 'Support\Controller\Support',
                         'action' => 'add',
                         'params' => array ('id' => 1),
-                        'order' => 3,
                     ),
                     'referee' => array(
                         'label' => 'Referee',
@@ -297,8 +265,59 @@ return array(
                         'controller' => 'Support\Controller\Support',
                         'action' => 'add',
                         'params' => array ('id' => 3),
-                        'order' => 4,
                     ),
+                )
+            ),
+
+            //manager
+            'manager' => array(
+                'label' => 'Moderator',
+                'route' => 'ticket',
+                'privilege' => RoleInterface::ROLE_MANAGER,
+                'pages' => array(
+                    'new_season' => array(
+                        'label' => 'New Season',
+                        'route' => 'createSeason',
+                        'controller' => 'Season\Controller\Season',
+                        'action' => 'create',
+                        'privilege' => RoleInterface::ROLE_LEAGUE_OWNER,
+                    ),
+                    'manager' => array(
+                        'label' => 'My Manager',
+                        'route' => 'manager',
+                        'controller' => 'Support\Controller\Manager',
+                        'action' => 'index',
+                        'privilege' => RoleInterface::ROLE_LEAGUE_OWNER,
+                    ),
+                    'edit_match_day' => array(
+                        'label' => 'Edit Match Day',
+                        'route' => 'timeTable',
+                        'controller' => 'League\Controller\TimeTable',
+                        'action' => 'index',
+                        'privilege' => RoleInterface::ROLE_LEAGUE_MANAGER,
+                    ),
+                    'edit_result' => array(
+                        'label' => 'Edit Result',
+                        'route' => 'result',
+                        'controller' => 'League\Controller\Result',
+                        'action' => 'allResults',
+                        'privilege' => RoleInterface::ROLE_LEAGUE_MANAGER,
+                    ),
+                    'arbitration' => array(
+                        'label' => 'Arbitration',
+                        'route' => 'arbitration',
+                        'controller' => 'Arbitration\Controller\Arbitration',
+                        'action' => 'index',
+                        'privilege' => RoleInterface::ROLE_REFEREE,
+                    ),
+                    'tickets' => array(
+                        'label' => 'Tickets',
+                        'route' => 'ticket',
+                        'controller' => 'Support\Controller\Ticket',
+                        'action' => 'index',
+                        'privilege' => RoleInterface::ROLE_MANAGER,
+                    ),
+
                 )
             ),
 

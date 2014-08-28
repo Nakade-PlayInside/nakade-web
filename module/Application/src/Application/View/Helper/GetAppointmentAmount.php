@@ -5,7 +5,7 @@ use Appointment\Services\RepositoryService;
 /**
  * Class GetAppointmentAmount
  *
- * @package Appointment\View\Helper
+ * @package Application\View\Helper
  */
 class GetAppointmentAmount extends DefaultViewHelper
 {

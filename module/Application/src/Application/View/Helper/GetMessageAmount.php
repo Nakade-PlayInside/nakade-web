@@ -5,7 +5,7 @@ use Message\Services\RepositoryService;
 /**
  * Class GetMessageAmount
  *
- * @package Appointment\View\Helper
+ * @package Application\View\Helper
  */
 class GetMessageAmount extends DefaultViewHelper
 {

@@ -28,3 +28,19 @@ div#sidebar ul {
     margin-left: 5px;
 }
 
+#sidebar .profile {
+    margin-top: 5px;
+}
+
+#sidebar .profile a {
+    font-weight: normal;
+}
+
+#sidebar .profile a div {
+    vertical-align: -1px;
+}
+
+#sidebar .moderator div {
+    font-weight: bold;
+    padding-right: 5px;
+}

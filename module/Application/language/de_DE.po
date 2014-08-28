@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-27 15:19+0100\n"
-"PO-Revision-Date: 2014-08-27 15:23+0100\n"
+"POT-Creation-Date: 2014-08-28 10:32+0100\n"
+"PO-Revision-Date: 2014-08-28 10:33+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -212,6 +212,7 @@ msgid "Results"
 msgstr "Ergebnisse"
 
 #: ../view/partial/menuLabel.phtml:22
+#: ../view/partial/sidebar.phtml:58
 msgid "Moderator"
 msgstr "Moderator"
 
@@ -281,52 +282,74 @@ msgstr "Schiedsrichter"
 msgid "Logout"
 msgstr "Abmelden"
 
-#: ../view/partial/sidebar.phtml:5
+#: ../view/partial/menuLabel.phtml:41
+msgid "Tickets"
+msgstr "Tickets"
+
+#: ../view/partial/menuLabel.phtml:42
+msgid "Shift Date"
+msgstr "Termin verschieben"
+
+#: ../view/partial/menuLabel.phtml:43
+msgid "Confirm"
+msgstr "Bestätigen"
+
+#: ../view/partial/sidebar.phtml:6
 msgid "Logged in as"
 msgstr "angemeldet als"
 
-#: ../view/partial/sidebar.phtml:7
+#: ../view/partial/sidebar.phtml:9
 msgid "LogOut"
 msgstr "Abmelden"
 
-#: ../view/partial/sidebar.phtml:12
-#: ../view/partial/sidebar.phtml:20
-#: ../view/partial/sidebar.phtml:28
-#: ../view/partial/sidebar.phtml:38
+#: ../view/partial/sidebar.phtml:15
+msgid "Edit Profile"
+msgstr "Profil bearbeiten"
+
+#: ../view/partial/sidebar.phtml:21
+#: ../view/partial/sidebar.phtml:29
+#: ../view/partial/sidebar.phtml:37
+#: ../view/partial/sidebar.phtml:47
+#: ../view/partial/sidebar.phtml:59
 msgid "You have "
 msgstr "Du hast"
 
-#: ../view/partial/sidebar.phtml:13
+#: ../view/partial/sidebar.phtml:22
 msgid "go to mailbox"
 msgstr "zu den Nachrichten"
 
-#: ../view/partial/sidebar.phtml:14
+#: ../view/partial/sidebar.phtml:23
 msgid "new mails"
 msgstr "neue Nachrichten"
 
-#: ../view/partial/sidebar.phtml:21
+#: ../view/partial/sidebar.phtml:30
 msgid "go to confirmation"
 msgstr "zur Bestätigung"
 
-#: ../view/partial/sidebar.phtml:22
+#: ../view/partial/sidebar.phtml:31
 msgid "open appointments"
 msgstr "offene Termine"
 
-#: ../view/partial/sidebar.phtml:29
+#: ../view/partial/sidebar.phtml:38
+#: ../view/partial/sidebar.phtml:60
 msgid "go to tickets"
 msgstr "zu den Support-Tickets"
 
-#: ../view/partial/sidebar.phtml:30
+#: ../view/partial/sidebar.phtml:39
 msgid "waiting tickets"
 msgstr "wartende Tickets"
 
-#: ../view/partial/sidebar.phtml:39
+#: ../view/partial/sidebar.phtml:48
 msgid "go to invitation"
 msgstr "zur den Einladungen"
 
-#: ../view/partial/sidebar.phtml:40
+#: ../view/partial/sidebar.phtml:49
 msgid "friends invited"
 msgstr "Freunde eingeladen"
+
+#: ../view/partial/sidebar.phtml:61
+msgid "open tickets"
+msgstr "offene Tickets"
 
 #: ../view/partial/topMenu.phtml:26
 msgid "LogIn"
@@ -395,15 +418,6 @@ msgstr "Datenschutz"
 #: ../view/application/privacy/rules.phtml:8
 msgid "Tournament and League Rules"
 msgstr "Turnier und Liga Regelwerk"
-
-#~ msgid "Tickets"
-#~ msgstr "Tickets"
-
-#~ msgid "Shift Date"
-#~ msgstr "Verlegen"
-
-#~ msgid "Confirm"
-#~ msgstr "Bestätigen"
 
 #~ msgid "User overview"
 #~ msgstr "Benutzer Übersicht"

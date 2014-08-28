@@ -3,9 +3,17 @@ $this->plugin('translate')->setTranslatorTextDomain('Application');
 ?>
 <div class="widget">
     <div>
-        <?php echo $this->translate("Logged in as") . ' ';?><span><?php echo $this->identity()->getUsername()?></span>
+        <div title="<?php echo $this->translate("Logged in as"); ?>" class="infoBtn status-16 status-online-16 btnCenter"></div>
+        <span style="text-indent: 5px"><?php echo $this->identity()->getUsername()?></span>
         <a href="<?php echo $this->url('login', array('action' => 'logout'))?>">
             <?php echo $this->translate("LogOut") ?>
+        </a>
+    </div>
+
+    <div class="profile">
+        <a href="<?php echo $this->url('profile')?>">
+            <?php echo $this->translate("Edit Profile") ?>
+            <div class="infoBtn status-16 user-16 btnCenter"></div>
         </a>
     </div>
 
@@ -44,4 +52,17 @@ $this->plugin('translate')->setTranslatorTextDomain('Application');
     </li>
     <?php endif; ?>
     </ul>
+
+    <?php if ($this->isManager()) : ?>
+    <div class="moderator">
+        <div><div class="infoBtn status-16 support-16 btnCenter"></div><?php echo $this->translate("Moderator"); ?></div>
+        <?php echo $this->translate("You have ") . ' '; ?><span class="info"><?php echo $this->noModeratorTicket(); ?></span>
+        <a href="<?php echo $this->url('ticket')?>" title="<?php echo $this->translate("go to tickets"); ?>">
+            <?php echo ' ' . $this->translate("open tickets"); ?>
+            <div class="infoBtn buttons-16 exclamation-16 btnCenter"></div>
+        </a>
+    </div>
+    <?php endif; ?>
+
+
 </div>

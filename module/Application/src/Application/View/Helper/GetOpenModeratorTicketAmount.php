@@ -1,13 +1,13 @@
 <?php
 namespace Application\View\Helper;
-use Support\Services\RepositoryService;
+use \Support\Services\RepositoryService;
 
 /**
- * Class GetWaitingTicketAmount
+ * Class GetAppointmentAmount
  *
  * @package Application\View\Helper
  */
-class GetWaitingTicketAmount extends DefaultViewHelper
+class GetOpenModeratorTicketAmount extends DefaultViewHelper
 {
 
     /**
@@ -15,8 +15,9 @@ class GetWaitingTicketAmount extends DefaultViewHelper
      */
     public function __invoke()
     {
-        $uid = $this->getIdentity()->getId();
-        return count($this->getMapper()->getWaitingTicketsByUser($uid));
+        $userId = $this->getIdentity()->getId();
+
+        return count($this->getMapper()->getNewTicketsByManager($userId));
     }
 
     /**

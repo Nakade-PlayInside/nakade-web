@@ -17,6 +17,7 @@ return array(
             'noInvited'   => 'Application\View\Helper\GetInvitedAmount',
             'noMessage'   => 'Application\View\Helper\GetMessageAmount',
             'noWaitingTicket'   => 'Application\View\Helper\GetWaitingTicketAmount',
+            'noModeratorTicket'   => 'Application\View\Helper\GetOpenModeratorTicketAmount',
             // more helpers here ...
         )
     ),
