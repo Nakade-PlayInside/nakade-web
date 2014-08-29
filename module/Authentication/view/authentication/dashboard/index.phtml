@@ -1,26 +1,4 @@
-<?php
-$this->plugin('translate')->setTranslatorTextDomain('Auth');
-
-$loginText = $this->translate("Logged in as %name%");
-$userName = (string) $this->identity()->getUsername();
-$login = str_replace("%name%", "<span>$userName</span>", $loginText); ?>
-
-<div class="loginMessage"><?php echo $login; ?>
-    <a href="<?php echo $this->url('login', array('action' => 'logout'))?>">
-        <?php echo $this->translate("LogOut") ?>
-    </a>
-</div>
-
-<?php
-echo $this->messageWidget;
-echo $this->appointmentWidget;
-if (isset($this->inviteInfo)) {
-    echo $this->inviteInfo;
-}
-?>
-
-<hr>
-
+<?php $this->plugin('translate')->setTranslatorTextDomain('Auth'); ?>
 <?php
 
 echo $this->participationWidget;

@@ -238,6 +238,62 @@ class ScheduleMapper  extends AbstractMapper
     }
 
     /**
+     * @param $uid
+     *
+     * @return null|\DateTime
+     */
+    public function getNextMatchDateByUser($uid)
+    {
+        $result = $this->getEntityManager()
+            ->createQueryBuilder('Match')
+            ->select('MIN(m.date)')
+            ->from('Season\Entity\Match', 'm')
+            ->innerJoin('m.white', 'White')
+            ->innerJoin('m.black', 'Black')
+            ->where('(White.id = :uid OR Black.id = :uid)')
+            ->andWhere('m.result IS NULL')
+            ->andWhere('m.date > :now')
+            ->setParameter('uid', $uid)
+            ->setParameter('now', new \DateTime())
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if(!is_null($result)) {
+            try {
+                $date = new \DateTime(array_shift($result));
+            } catch (\Exception $e) {
+                return null;
+            }
+            return $date;
+        }
+
+        return $result;
+
+    }
+
+    /**
+     * @param $uid
+     *
+     * @return array
+     */
+    public function getOpenResultByUser($uid)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('Match')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->innerJoin('m.white', 'White')
+            ->innerJoin('m.black', 'Black')
+            ->where('(White.id = :uid OR Black.id = :uid)')
+            ->andWhere('m.result IS NULL')
+            ->andWhere('m.date > :now')
+            ->setParameter('uid', $uid)
+            ->setParameter('now', new \DateTime())
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param array $result
      *
      * @return array
@@ -254,6 +310,8 @@ class ScheduleMapper  extends AbstractMapper
 
         return array_unique($idArray);
     }
+
+
 
 }
 

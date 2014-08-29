@@ -1,5 +1,7 @@
 <?php
-use Permission\Entity\RoleINterface;
+use Permission\Entity\RoleInterface;
+
+$this->plugin('translate')->setTranslatorTextDomain('Application');
 echo $this->doctype();
 ?>
 
@@ -20,15 +22,19 @@ echo $this->doctype();
         <?php echo $this->headScript()
                         ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript',
                             array('conditional' => 'lt IE 9',))
+
+                        ->prependFile('/js/jquery.countdown.min.js')
+                        ->prependFile('/js/jquery.plugin.min.js')
+
                         ->prependFile('/js/bootstrap-collapse.js')
                         ->prependFile('/js/bootstrap.min.js')
                         ->prependFile('/js/jquery-2.0.3.min.js')
+
         ?>
 
     </head>
     <body>
         <div class="navbar navbar-fixed-top">
-
             <div class="navbar-inner">
                 <div class="container">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -37,213 +43,31 @@ echo $this->doctype();
                         <span class="icon-bar"></span>
                     </a>
                     <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('BBC Nakade') ?></a>
-                    <div class="nav-collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home', 'Application') ?></a></li>
-
-
-
-
-<?php
-
-    if ($this->isAllowed(RoleINterface::ROLE_GUEST)) {
-
-         echo sprintf('<li><a href="%s">%s</a></li>',
-             $this->url('dashboard'),
-             $this->translate('Dashboard', 'Application')
-         );
-    } else {
-
-        echo sprintf('<li><a href="%s">%s</a></li>',
-            $this->url('login'),
-            $this->translate('LogIn', 'Application')
-        );
-    }
-
-    //admin and moderators
-    if ($this->isAllowed(RoleINterface::ROLE_MODERATOR)) {
-
-        $admin = array();
-
-        //user
-        //todo: edit roles depending on own role
-        $admin[$this->translate('User', 'Application')] = $this->url('user');
-
-        //coupons
-        $admin[$this->translate('Coupons', 'Application')] =
-            $this->url('coupon', array('action' => 'moderate'));
-
-        //referees
-        $admin[$this->translate('Referees', 'Application')] = $this->url('referee');
-
-        //open results
-        $admin[$this->translate('Open Results', 'Application')] = $this->url('result');
-
-        //match day
-        $admin[$this->translate('Edit Match Day', 'Application')] = $this->url('timeTable');
-
-        //appointment
-        $admin[$this->translate('Appointments', 'Application')] = $this->url('appointmentModerator');
-
-
-        echo $this->Submenu('Admin', $admin);
-    }
-
-    //manager and referees
-    if ($this->isManager()) {
-
-        $moderator = array();
-
-        //todo: change to user if more association possible
-        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_OWNER)) {
-            $moderator[$this->translate('New Season', 'Application')] =
-                $this->url('createSeason', array('action' => 'create'));
-        }
-
-        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_OWNER)) {
-            $moderator[$this->translate('My Manager', 'Application')] = $this->url('manager');
-        }
-
-        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_MANAGER)) {
-            //match day
-            $moderator[$this->translate('Edit Match Day', 'Application')] = $this->url('timeTable');
-        }
-
-        if ($this->isAllowed(RoleInterface::ROLE_LEAGUE_MANAGER)) {
-            //match day
-            $moderator[$this->translate('Edit Result', 'Application')] =
-                $this->url('result', array('action' => 'allResults'));
-        }
-
-        if ($this->isAllowed(RoleInterface::ROLE_REFEREE)) {
-            $moderator[$this->translate('Arbitration', 'Application')] = $this->url('arbitration');
-        }
-
-        $moderator[$this->translate('Tickets', 'Application')] = $this->url('ticket');
-
-        echo $this->Submenu('Moderator', $moderator);
-
-    }
-
-    if ($this->isAllowed(RoleINterface::ROLE_GUEST)) {
-
-        echo sprintf('<li><a href="%s">%s</a></li>',
-            $this->url('profile'),
-            $this->translate('Profile', 'Application')
-        );
-
-        $messages = array(
-
-            $this->translate('Inbox', 'Application')  =>
-                $this->url('message'),
-
-            $this->translate('New Message', 'Application')  =>
-                $this->url('message', array('action' => 'new')),
-
-             $this->translate('Outbox', 'Application')  =>
-                 $this->url('message', array('action' => 'outbox')),
-
-
-        );
-
-         echo $this->Submenu(
-             $this->translate('Messages', 'Application'),
-             $messages
-         );
-
-        $league = array(
-
-            $this->translate('Schedule', 'Application')   =>
-                $this->url('timeTable', array('action' => 'schedule')),
-
-            $this->translate('Standings', 'Application')  =>
-                $this->url('actual', array('action' => 'table')),
-
-            $this->translate('results', 'Application')    =>
-                $this->url('result', array('action' => 'myResult')),
-
-        );
-
-        echo $this->Submenu(
-            $this->translate('League', 'Application'),
-            $league
-        );
-
-         echo $this->Submenu(
-             $this->translate('Appointments', 'Application'),
-             array (
-                 $this->translate('Shift Date', 'Application')   =>
-                     $this->url('appointmentShow', array('action' => 'available')),
-                 $this->translate('Confirm', 'Application')   =>
-                     $this->url('appointmentShow'),
-             )
-         );
-
-        // todo: only active League Players can do request for a LM
-         echo $this->Submenu(
-             $this->translate('Support', 'Application'),
-             array (
-                 $this->translate('My Tickets', 'Application')   =>
-                     $this->url('support'),
-                 $this->translate('League Manager', 'Application')   =>
-                     $this->url('support', array('action' => 'add',
-                         'id' => \Support\Controller\SupportTypeInterface::LEAGUE_MANAGER_TICKET)),
-                 $this->translate('Admin', 'Application')   =>
-                     $this->url('support', array('action' => 'add',
-                         'id' => \Support\Controller\SupportTypeInterface::ADMIN_TICKET)),
-                 $this->translate('Referee', 'Application')   =>
-                     $this->url('support', array('action' => 'add',
-                         'id' => \Support\Controller\SupportTypeInterface::REFEREE_TICKET)),
-             )
-         );
-
-        echo sprintf('<li style="color:lightblue;line-height:19px;
-                padding:10px; padding-left:20px;">%s %s</li>',
-            $this->translate('Logged in as ', 'Application'),
-            $this->escapeHtml($this->identity()->getUsername())
-        );
-
-        echo sprintf('<li><a href="%s">%s</a></li>',
-            $this->url('login', array('action'=>'logout')),
-            $this->translate('Logout', 'Application')
-        );
-
-    }
-?>
-                        </ul>
-                    </div><!--/.nav-collapse -->
+                    <?php echo $this->navigation('app_navigation')->menu()->renderPartial(null, 'topMenu'); ?>
                 </div>
             </div>
-
-            <?php //todo: flashMessenger renders not after redirecting
-                echo $this->flashMessenger()->render('success'); ?>
+            <?php echo $this->flashMessenger()->render('success'); ?>
             <?php echo $this->flashMessenger()->render('error'); ?>
         </div>
+        <? if ($this->identity()) :?>
+        <div id="sidebar" class="span3">
+            <?php echo $this->partial('sidebar'); ?>
+        </div>
+        <?php endif; ?>
         <div class="container">
             <?php echo $this->content; ?>
             <hr>
             <footer>
                 <div class="copyright">
+                    <?php
+                    echo $this->navigation('footer_navigation')->menu()->renderPartial(null, 'siteMenu'); ?>
                     <ul>
-                        <li><a href="<?php echo $this->url('privacy', array('action' => 'rules')) ?>">
-                                <?php echo $this->translate("Rules", 'Application'); ?>
-                            </a>
-                        </li>
-                        <li><a href="<?php echo $this->url('privacy', array('action' => 'useTerms')) ?>">
-                                <?php echo $this->translate("Terms of Use", 'Application'); ?>
-                            </a>
-                        </li>
-                        <li><a href="<?php echo $this->url('imprint') ?>"><?php echo $this->translate("Imprint", 'Application'); ?></a></li>
-                        <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate("Contact", 'Application'); ?></a></li>
-                        <li><a href="<?php echo $this->url('training') ?>"><?php echo $this->translate("Location", 'Application'); ?></a></li>
                         <li class="version">v0.3.1</li>
-                        <li><?php echo $this->translate('All rights reserved.', 'Application') ?></li>
-                        <li>&copy; Copyright 2013-2014 Dr. Holger Maerz</li>
+                        <li><?php echo $this->translate('All rights reserved.'); ?></li>
+                        <li>&copy; 2013-14 Dr. Holger Maerz</li>
                     </ul>
                 </div>
             </footer>
-        </div> <!-- /container -->
-        <?php //echo $this->inlineScript() ?>
-
+        </div>
     </body>
 </html>

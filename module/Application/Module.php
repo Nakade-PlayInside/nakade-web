@@ -12,12 +12,6 @@
 namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
-
-// Add these import statements:
-use Blog\Model\Blog;
-use Blog\Model\BlogTable;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
 use Zend\Authentication\AuthenticationService;
 
 class Module
@@ -33,6 +27,7 @@ class Module
             'translator'
         );
 
+        /* @var $authService \Zend\Authentication\AuthenticationService */
         $authService = $events->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
         $locale = $this->getLocale($authService);
 
@@ -110,29 +105,4 @@ class Module
         );
     }
 
-    /**
-     * @return array
-     */
-    public function getServiceConfig()
-    {
-        return array(
-            'factories' => array(
-
-                'Application\Model\BlogTable' =>  function($serviceManager) {
-                    $tableGateway = $serviceManager->get('BlogTableGateway');
-                    $table = new BlogTable($tableGateway);
-                    return $table;
-                },
-                'BlogTableGateway' => function ($serviceManager) {
-                    $dbAdapter =
-                        $serviceManager->get('Zend\Db\Adapter\Adapter');
-                    $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new Blog());
-                    return new TableGateway(
-                        'wp_posts', $dbAdapter, null, $resultSetPrototype
-                    );
-                },
-            ),
-        );
-    }
 }

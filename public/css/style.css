@@ -7,6 +7,7 @@
 @import "pagination.css";
 @import "privacy.css";
 @import "support.css";
+@import "sidebar.css";
 
 
 body {
@@ -76,8 +77,21 @@ div.container a.brand {
 
 form input[type="submit"] {margin-top: 10px;margin-right: 10px;}
 
-.copyright ul { margin: 0; padding: 0.8em; text-align: center;}
-.copyright ul li { list-style: none; display:inline;margin: 0.4em; padding: 0;}
+.copyright {
+    width: 100%;
+    text-align: center;
+}
+
+.copyright ul {
+    margin: 0;
+    padding: 5px;
+    display: inline-block;
+}
+.copyright ul li {
+    list-style: none;
+    display:inline;
+    margin: 5px;
+    padding: 0;}
 .version {color: #68b604;}
 
 /* checkboxes label */
@@ -205,7 +219,6 @@ div.widget {
     font-size:smaller;
 }
 
-
 div.success {
     width: 100%;
     background-color: #57a900;
@@ -230,4 +243,8 @@ div.error {
     font-weight: bold;
     text-decoration: underline;
     margin-top: 10px;
+}
+
+.nakadeNav ul li {
+    display: inline-block;
 }

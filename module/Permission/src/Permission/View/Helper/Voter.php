@@ -18,7 +18,10 @@ class Voter extends DefaultViewHelper
      */
     public function __invoke($role)
     {
-       $isAllowed = false;
+       if(empty($role)) {
+           return true;
+       }
+
        switch ($role) {
            case self::ROLE_ADMIN:
                $isAllowed = $this->getVoterService()->isAdmin();
@@ -44,6 +47,10 @@ class Voter extends DefaultViewHelper
            case self::ROLE_LEAGUE_MANAGER:
                $isAllowed = $this->getVoterService()->isLeagueManager();
                break;
+           case self::ROLE_MANAGER:
+               $isAllowed = $this->getVoterService()->isManager();
+               break;
+           default: $isAllowed = false;
        }
         return $isAllowed;
     }

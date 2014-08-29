@@ -16,15 +16,8 @@ class DashboardController extends AbstractActionController
      */
     public function indexAction()
     {
-        $messageWidget  = $this->forward()
-            ->dispatch('/Message/Controller/Message', array('action' => 'info'));
-
-
         $scheduleWidget  = $this->forward()
             ->dispatch('/League/Controller/TimeTable', array('action' => 'mySchedule'));
-
-        $appointmentWidget  = $this->forward()
-            ->dispatch('/Appointment/Controller/Show', array('action' => 'message'));
 
         $participationWidget  = $this->forward()
             ->dispatch('/Season/Controller/Season', array('action' => 'show'));
@@ -32,19 +25,13 @@ class DashboardController extends AbstractActionController
         $inviteWidget  = $this->forward()
             ->dispatch('/User/Controller/Coupon', array('action' => 'invite'));
 
-        $inviteInfo  = $this->forward()
-            ->dispatch('/User/Controller/Coupon', array('action' => 'info'));
-
         $page = new ViewModel(array());
         $page->addChild($participationWidget, 'participationWidget');
-        $page->addChild($messageWidget, 'messageWidget');
-        $page->addChild($appointmentWidget, 'appointmentWidget');
         $page->addChild($scheduleWidget, 'scheduleWidget');
 
         //open beta until end of year
         if (date('c') < date('c', strtotime('12/31/2014'))) {
             $page->addChild($inviteWidget, 'inviteWidget');
-            $page->addChild($inviteInfo, 'inviteInfo');
         }
 
         return $page;

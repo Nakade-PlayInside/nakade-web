@@ -67,10 +67,6 @@ class MessageForm extends BaseForm implements ModeratorInterface
                 'options' =>  $this->getOpponents()
             );
         }
-        $valueOptions['moderators'] = array(
-            'label' => $this->translate('Moderators'),
-            'options' => $this->getModerators(),
-        );
 
         return $valueOptions;
     }
@@ -89,25 +85,6 @@ class MessageForm extends BaseForm implements ModeratorInterface
 
         return $opponents;
     }
-
-    /**
-     * @return array
-     */
-    private function getModerators()
-    {
-        $moderators = array(
-            self::ADMIN_MESSAGE => $this->translate('Admin'),
-            self::REFEREE_MESSAGE => $this->translate('Referee'),
-        );
-
-        if($this->hasRecipients()) {
-            $moderators[self::LM_MESSAGE] = $this->translate('League Manager');
-        }
-
-        return $moderators;
-    }
-
-
 
     /**
      * @return InputFilter

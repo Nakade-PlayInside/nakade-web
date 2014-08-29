@@ -4,13 +4,14 @@ namespace Support\Mapper;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Nakade\Pagination\ItemPagination;
+use Support\Entity\StageInterface;
 
 /**
  * Class ManagerMapper
  *
  * @package Support\Mapper
  */
-class TicketMapper extends DefaultMapper
+class TicketMapper extends DefaultMapper implements StageInterface
 {
 
     private $where = 'Where';
@@ -82,9 +83,60 @@ class TicketMapper extends DefaultMapper
         $this->addRefereeTickets($qb, $userId);
         $this->addLeagueManagerTickets($qb, $userId);
 
-        //todo: edit paginator request
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * get new tickets for moderators, referees, league managers or its owning user.
+     * composed request depending on roles.
+     *
+     * @param int $userId
+     *
+     * @return array
+     */
+    public function getNewTicketsByManager($userId)
+    {
+        $userId=1;
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Tickets')
+            ->select('s.id')
+            ->from('Support\Entity\SupportRequest', 's')
+            ->innerJoin('s.type', 'type');
+
+        $this->addAdminTickets($qb, $userId);
+        $this->addRefereeTickets($qb, $userId);
+        $this->addLeagueManagerTickets($qb, $userId);
+
+        $qb->innerJoin('s.stage', 'Stage')
+           ->andWhere('Stage.id =  :new OR Stage.id =  :process OR Stage.id =  :reopened')
+           ->setParameter('new', self::STAGE_NEW)
+           ->setParameter('process', self::STAGE_IN_PROCESS)
+           ->setParameter('reopened', self::STAGE_REOPENED);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $userId
+     *
+     * @return array
+     */
+    public function getWaitingTicketsByUser($userId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('Tickets')
+            ->select('s')
+            ->from('Support\Entity\SupportRequest', 's')
+            ->innerJoin('s.creator', 'User')
+            ->innerJoin('s.stage', 'Stage')
+            ->where('User.id = :userId')
+            ->andWhere('Stage.id = :stageId')
+            ->setParameter('userId', $userId)
+            ->setParameter('stageId', self::STAGE_WAITING);
+
+        return $qb->getQuery()->getResult();
+    }
+
 
     /**
      * @param QueryBuilder $queryBuilder
@@ -101,6 +153,7 @@ class TicketMapper extends DefaultMapper
                 ->setParameter('adminTicketId', self::ADMIN_TICKET);
             $this->shiftWhere();
         }
+
     }
 
     /**

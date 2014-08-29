@@ -1,0 +1,13 @@
+<?php /* @var $page \Zend\Navigation\Page\AbstractPage */
+$this->plugin('translate')->setTranslatorTextDomain('Application');
+?>
+<ul class="navigation">
+    <?php foreach ($this->container as $page) : ?>
+        <?php if ($page->isVisible()) : ?>
+               <li <?php if ($page->isActive()) : ?>class="active"<?php endif; ?>>
+                    <a  href="<?php echo $page->getHref(); ?>"><?php
+                        echo $this->translate($page->getLabel()) ?></a>
+                </li>
+            <?php endif; ?>
+    <?php endforeach; ?>
+</ul>
