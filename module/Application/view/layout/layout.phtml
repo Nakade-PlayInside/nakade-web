@@ -49,7 +49,7 @@ echo $this->doctype();
             <?php echo $this->flashMessenger()->render('success'); ?>
             <?php echo $this->flashMessenger()->render('error'); ?>
         </div>
-        <? if ($this->identity()) :?>
+        <?php if ($this->identity()) :?>
         <div id="sidebar" class="span3">
             <?php echo $this->partial('sidebar'); ?>
         </div>
