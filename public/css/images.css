@@ -254,3 +254,45 @@
 .support-32{ background-position: 0 -306px; width: 32px; height: 32px; }
 .user-32{ background-position: 0 -340px; width: 32px; height: 32px; }
 
+.nakade-32 {
+    background: url(../images/nakade-32.png) no-repeat top left;
+}
+
+.bug-32{ background-position: 0 0; width: 32px; height: 32px; }
+.chart-32{ background-position: 0 -34px; width: 32px; height: 32px; }
+.crown-bronze-32{ background-position: 0 -68px; width: 32px; height: 32px; }
+.crown-gold-32{ background-position: 0 -102px; width: 32px; height: 32px; }
+.crown-silver-32{ background-position: 0 -136px; width: 32px; height: 32px; }
+.cup-bronze-32{ background-position: 0 -170px; width: 32px; height: 32px; }
+.cup-gold-32{ background-position: 0 -204px; width: 32px; height: 32px; }
+.cup-silver-32{ background-position: 0 -238px; width: 32px; height: 32px; }
+.glasses-32{ background-position: 0 -272px; width: 32px; height: 32px; }
+.go-black-32{ background-position: 0 -306px; width: 32px; height: 32px; }
+.go-green-32{ background-position: 0 -340px; width: 32px; height: 32px; }
+.match-32{ background-position: 0 -374px; width: 32px; height: 32px; }
+.medal-bronze-32{ background-position: 0 -408px; width: 32px; height: 32px; }
+.medal-gold-32{ background-position: 0 -442px; width: 32px; height: 32px; }
+.medal-silver-32{ background-position: 0 -476px; width: 32px; height: 32px; }
+.metro-32{ background-position: 0 -510px; width: 26px; height: 26px; }
+.stats-32{ background-position: 0 -538px; width: 32px; height: 32px; }
+
+
+.nakade-16 {
+    background: url(../images/nakade-16.png) no-repeat top left;
+}
+
+.black-16{ background-position: 0 0; width: 16px; height: 16px; }
+.bug-16{ background-position: 0 -18px; width: 16px; height: 16px; }
+.chart-16{ background-position: 0 -36px; width: 16px; height: 16px; }
+.crown-bronze-16{ background-position: 0 -54px; width: 16px; height: 16px; }
+.crown-gold-16{ background-position: 0 -72px; width: 16px; height: 16px; }
+.crown-silver-16{ background-position: 0 -90px; width: 16px; height: 16px; }
+.cup-bronze-16{ background-position: 0 -108px; width: 16px; height: 16px; }
+.cup-gold-16{ background-position: 0 -126px; width: 16px; height: 16px; }
+.cup-silver-16{ background-position: 0 -144px; width: 16px; height: 16px; }
+.match-16{ background-position: 0 -162px; width: 16px; height: 16px; }
+.medal-bronze-16{ background-position: 0 -180px; width: 16px; height: 16px; }
+.medal-gold-16{ background-position: 0 -198px; width: 16px; height: 16px; }
+.medal-silver-16{ background-position: 0 -216px; width: 16px; height: 16px; }
+.stats-16{ background-position: 0 -234px; width: 16px; height: 16px; }
+.white-16{ background-position: 0 -252px; width: 16px; height: 16px; }

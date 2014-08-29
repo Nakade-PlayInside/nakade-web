@@ -11,7 +11,7 @@ class GetOpenModeratorTicketAmount extends DefaultViewHelper
 {
 
     /**
-     * @return string
+     * @return int
      */
     public function __invoke()
     {

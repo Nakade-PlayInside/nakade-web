@@ -194,7 +194,7 @@ return array(
                         'action' => 'table',
                     ),
                     'results' => array(
-                        'label' => 'Results',
+                        'label' => 'Enter Result',
                         'route' => 'result',
                         'controller' => 'League\Controller\Result',
                         'action' => 'myResult',

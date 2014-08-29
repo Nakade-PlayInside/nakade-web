@@ -1,11 +1,16 @@
 
 div#sidebar {
     display: inline-block;
+    cursor: default;
 }
 
 div#sidebar ul {
     margin: 10px 0;
     list-style: none;
+}
+
+div#sidebar ul li.nextMatch {
+    margin-bottom: 5px;
 }
 
 #sidebar span {
@@ -25,7 +30,7 @@ div#sidebar ul {
 #sidebar .infoBtn {
     vertical-align: text-bottom;
     display: inline-block;
-    margin-left: 5px;
+    margin-right: 5px;
 }
 
 #sidebar .profile {
@@ -43,4 +48,16 @@ div#sidebar ul {
 #sidebar .moderator div {
     font-weight: bold;
     padding-right: 5px;
+}
+
+#sidebar .nextMatch {
+    font-weight: bold;
+}
+
+#sidebar .nextMatch a {
+    color: #000000;
+}
+
+#sidebar .nextMatch span {
+    color: #57a900;
 }

@@ -18,6 +18,9 @@ return array(
             'noMessage'   => 'Application\View\Helper\GetMessageAmount',
             'noWaitingTicket'   => 'Application\View\Helper\GetWaitingTicketAmount',
             'noModeratorTicket'   => 'Application\View\Helper\GetOpenModeratorTicketAmount',
+            'nextMatch'   => 'Application\View\Helper\GetNextMatch',
+            'myOpenResult'   => 'Application\View\Helper\GetOpenResultAmount',
+
             // more helpers here ...
         )
     ),

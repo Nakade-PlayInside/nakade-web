@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-28 10:32+0100\n"
-"PO-Revision-Date: 2014-08-28 10:33+0100\n"
+"POT-Creation-Date: 2014-08-29 18:38+0100\n"
+"PO-Revision-Date: 2014-08-29 18:39+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -56,11 +56,11 @@ msgstr "Bitte löse das Captcha."
 msgid "Submit"
 msgstr "Abschicken"
 
-#: ../view/layout/layout.phtml:40
+#: ../view/layout/layout.phtml:45
 msgid "BBC Nakade"
 msgstr "BBC Nakade"
 
-#: ../view/layout/layout.phtml:61
+#: ../view/layout/layout.phtml:66
 msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
 
@@ -159,7 +159,6 @@ msgid "Imprint"
 msgstr "Impressum"
 
 #: ../view/partial/menuLabel.phtml:9
-#: ../view/application/contact/index.phtml:3
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -208,11 +207,11 @@ msgid "Standings"
 msgstr "Tabelle"
 
 #: ../view/partial/menuLabel.phtml:21
-msgid "Results"
-msgstr "Ergebnisse"
+msgid "Enter Result"
+msgstr "Ergebnis eintragen"
 
 #: ../view/partial/menuLabel.phtml:22
-#: ../view/partial/sidebar.phtml:58
+#: ../view/partial/sidebar.phtml:104
 msgid "Moderator"
 msgstr "Moderator"
 
@@ -306,48 +305,69 @@ msgstr "Abmelden"
 msgid "Edit Profile"
 msgstr "Profil bearbeiten"
 
-#: ../view/partial/sidebar.phtml:21
-#: ../view/partial/sidebar.phtml:29
-#: ../view/partial/sidebar.phtml:37
-#: ../view/partial/sidebar.phtml:47
-#: ../view/partial/sidebar.phtml:59
+#: ../view/partial/sidebar.phtml:22
+msgid "time left to your next match"
+msgstr "verbleibende Zeit bis zu deiner nächsten Partie"
+
+#: ../view/partial/sidebar.phtml:26
+msgid "go to schedule"
+msgstr "zum Spielplan"
+
+#: ../view/partial/sidebar.phtml:27
+msgid "Next match"
+msgstr "Nächste Partie"
+
+#: ../view/partial/sidebar.phtml:51
+#: ../view/partial/sidebar.phtml:60
+#: ../view/partial/sidebar.phtml:68
+#: ../view/partial/sidebar.phtml:78
+#: ../view/partial/sidebar.phtml:90
+#: ../view/partial/sidebar.phtml:107
 msgid "You have "
 msgstr "Du hast"
 
-#: ../view/partial/sidebar.phtml:22
+#: ../view/partial/sidebar.phtml:52
 msgid "go to mailbox"
 msgstr "zu den Nachrichten"
 
-#: ../view/partial/sidebar.phtml:23
+#: ../view/partial/sidebar.phtml:53
 msgid "new mails"
 msgstr "neue Nachrichten"
 
-#: ../view/partial/sidebar.phtml:30
+#: ../view/partial/sidebar.phtml:61
 msgid "go to confirmation"
 msgstr "zur Bestätigung"
 
-#: ../view/partial/sidebar.phtml:31
+#: ../view/partial/sidebar.phtml:62
 msgid "open appointments"
 msgstr "offene Termine"
 
-#: ../view/partial/sidebar.phtml:38
-#: ../view/partial/sidebar.phtml:60
+#: ../view/partial/sidebar.phtml:69
+#: ../view/partial/sidebar.phtml:110
 msgid "go to tickets"
 msgstr "zu den Support-Tickets"
 
-#: ../view/partial/sidebar.phtml:39
+#: ../view/partial/sidebar.phtml:70
 msgid "waiting tickets"
 msgstr "wartende Tickets"
 
-#: ../view/partial/sidebar.phtml:48
+#: ../view/partial/sidebar.phtml:81
 msgid "go to invitation"
 msgstr "zur den Einladungen"
 
-#: ../view/partial/sidebar.phtml:49
+#: ../view/partial/sidebar.phtml:82
 msgid "friends invited"
 msgstr "Freunde eingeladen"
 
-#: ../view/partial/sidebar.phtml:61
+#: ../view/partial/sidebar.phtml:94
+msgid "go to results"
+msgstr "zu den Ergebnissen"
+
+#: ../view/partial/sidebar.phtml:95
+msgid "open results"
+msgstr "offene Ergebnisse"
+
+#: ../view/partial/sidebar.phtml:111
 msgid "open tickets"
 msgstr "offene Tickets"
 
@@ -419,6 +439,9 @@ msgstr "Datenschutz"
 msgid "Tournament and League Rules"
 msgstr "Turnier und Liga Regelwerk"
 
+#~ msgid "Results"
+#~ msgstr "Ergebnisse"
+
 #~ msgid "User overview"
 #~ msgstr "Benutzer Übersicht"
 
@@ -436,9 +459,6 @@ msgstr "Turnier und Liga Regelwerk"
 
 #~ msgid "season overview"
 #~ msgstr "neue Saison"
-
-#~ msgid "all open results"
-#~ msgstr "alle offenen Ergebnisse"
 
 #~ msgid "Training"
 #~ msgstr "Training"

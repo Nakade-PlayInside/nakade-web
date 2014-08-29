@@ -11,12 +11,11 @@ class GetMessageAmount extends DefaultViewHelper
 {
 
     /**
-     * @return string
+     * @return int
      */
     public function __invoke()
     {
         $uid = $this->getIdentity()->getId();
-        $this->getMapper()->getNumberOfNewMessages($uid);
         return $this->getMapper()->getNumberOfNewMessages($uid);
     }
 
