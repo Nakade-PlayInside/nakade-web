@@ -13,6 +13,19 @@ div#sidebar ul li.nextMatch {
     margin-bottom: 5px;
 }
 
+div#sidebar ul li a:hover,
+#sidebar .moderator a {
+    text-decoration: none;
+}
+
+div#sidebar em {
+    font-style: normal;
+}
+
+div#sidebar a:hover em {
+    text-decoration: underline;
+}
+
 #sidebar span {
     font-weight: bold;
     padding-right: 5px;
@@ -54,10 +67,6 @@ div#sidebar ul li.nextMatch {
     font-weight: bold;
 }
 
-#sidebar .nextMatch a {
-    color: #000000;
-}
-
 #sidebar .nextMatch span {
-    color: #57a900;
+    color: #000000;
 }

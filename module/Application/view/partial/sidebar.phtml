@@ -19,82 +19,72 @@ $this->plugin('translate')->setTranslatorTextDomain('Application');
 
     <ul>
         <?php  if (!is_null($this->nextMatch())) : ?>
-        <li class="nextMatch" title="<?php echo $this->translate("time left to your next match"); ?>">
-            <div class="infoBtn nakade-16 match-16 btnCenter"></div>
+            <li class="nextMatch" title="<?php echo $this->translate("time left to your next match"); ?>">
+                <a href="<?php echo $this->url('timeTable', array('action' => 'schedule'))?>"
+                   title="<?php echo $this->translate("go to schedule"); ?>">
+                    <div class="infoBtn nakade-16 match-16 btnCenter"></div>
+                    <em><?php echo $this->translate("Next match");?></em>
+                </a>
+                <span id="MyCountdown" class="info"><?php echo $this->nextMatch()->format('d.m.Y-H:i'); ?></span>
+            </li>
+            <script type="text/javascript" >
 
-            <a href="<?php echo $this->url('timeTable', array('action' => 'schedule'))?>"
-               title="<?php echo $this->translate("go to schedule"); ?>">
-                <?php echo $this->translate("Next match");?>
-            </a>
-            <span id="MyCountdown" class="info">
-                <?php echo $this->nextMatch()->format('d.m.Y-H:i'); ?>
-            </span>
+                var phpDateTime = $('#MyCountdown').text();
 
-        </li>
-        <script type="text/javascript" >
+                //split date and time
+                var parts = phpDateTime.split("-");
+                var dateParts = parts[0].split(".");
+                var timeParts = parts[1].split(":");
+                var nextMatch = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0], timeParts[0], timeParts[1]);
 
-            var phpDateTime = $('#MyCountdown').text();
+                $('#MyCountdown').countdown({until: nextMatch, compact: true, format: 'dHms', significant: 4});
 
-            //split date and time
-            var parts = phpDateTime.split("-");
-            var dateParts = parts[0].split(".");
-            var timeParts = parts[1].split(":");
-            var nextMatch = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0], timeParts[0], timeParts[1]);
-
-            $('#MyCountdown').countdown({until: nextMatch, compact: true, format: 'dHms', significant: 4});
-
-        </script>
+            </script>
         <?php endif; ?>
 
         <li>
-            <div class="infoBtn mail-16 mail-yellow-16 btnCenter"></div>
-            <?php echo $this->translate("You have ") . ' '; ?><span class="info"><?php echo $this->noMessage(); ?></span>
             <a href="<?php echo $this->url('message')?>" title="<?php echo $this->translate("go to mailbox"); ?>">
-                <?php echo ' ' . $this->translate("new mails"); ?>
-
+                <div class="infoBtn mail-16 mail-yellow-16 btnCenter"></div>
+                <span class="info"><?php echo $this->noMessage(); ?></span>
+                <em><?php echo ' ' . $this->translate("new mails"); ?></em>
             </a>
         </li>
 
         <li>
-            <div class="infoBtn buttons-16 date-16"></div>
-            <?php echo $this->translate("You have ") . ' '; ?><span class="info"><?php echo $this->noAppointment(); ?></span>
             <a href="<?php echo $this->url('appointmentShow')?>" title="<?php echo $this->translate("go to confirmation"); ?>">
-                <?php echo ' ' . $this->translate("open appointments"); ?>
+                <div class="infoBtn buttons-16 date-16"></div>
+                <span class="info"><?php echo $this->noAppointment(); ?></span>
+                <em><?php echo ' ' . $this->translate("open appointments"); ?></em>
             </a>
         </li>
 
         <li>
-            <div class="infoBtn mail-16 time-16"></div>
-            <?php echo $this->translate("You have ") . ' '; ?><span class="info"><?php echo $this->noWaitingTicket(); ?></span>
             <a href="<?php echo $this->url('support')?>" title="<?php echo $this->translate("go to tickets"); ?>">
-                <?php echo ' ' . $this->translate("waiting tickets"); ?>
+                <div class="infoBtn mail-16 time-16"></div>
+                <span class="info"><?php echo $this->noWaitingTicket(); ?></span>
+                <em><?php echo ' ' . $this->translate("waiting tickets"); ?></em>
             </a>
         </li>
 
 
         <?php if (date('c') < date('c', strtotime('12/31/2014'))) :?>
             <li>
-                <div class="infoBtn buttons-16 info-16 btnCenter"></div>
-                <?php echo $this->translate("You have ") . ' '; ?><span class="info">
-                    <?php echo $this->noInvited(); ?>
-                </span>
                 <a href="<?php echo $this->url('coupon')?>" title="<?php echo $this->translate("go to invitation"); ?>">
-                    <?php echo ' ' . $this->translate("friends invited"); ?>
+                    <div class="infoBtn buttons-16 info-16 btnCenter"></div>
+                    <span class="info"><?php echo $this->noInvited(); ?></span>
+                    <em><?php echo ' ' . $this->translate("friends invited"); ?></em>
                 </a>
             </li>
         <?php endif; ?>
 
         <?php if ($this->myOpenResult()>0) :?>
-        <li>
-            <div class="infoBtn buttons-16 exclamation-16 btnCenter"></div>
-            <?php echo $this->translate("You have ") . ' '; ?><span class="info">
-                <?php echo $this->myOpenResult(); ?>
-            </span>
-            <a href="<?php echo $this->url('result', array('action' => 'myResult'))?>"
-               title="<?php echo $this->translate("go to results"); ?>">
-                <?php echo ' ' . $this->translate("open results"); ?>
-            </a>
-        </li>
+            <li>
+                <a href="<?php echo $this->url('result', array('action' => 'myResult'))?>" title="<?php echo $this->translate("go to results"); ?>">
+                    <div class="infoBtn buttons-16 exclamation-16 btnCenter"></div>
+                    <span class="info"><?php echo $this->myOpenResult(); ?></span>
+                    <em><?php echo ' ' . $this->translate("open results"); ?></em>
+                </a>
+            </li>
         <?php endif; ?>
     </ul>
 
@@ -103,13 +93,11 @@ $this->plugin('translate')->setTranslatorTextDomain('Application');
             <div>
                 <div class="infoBtn status-16 support-16 btnCenter"></div><?php echo $this->translate("Moderator"); ?>
             </div>
-            <div class="infoBtn buttons-16 exclamation-16 btnCenter"></div>
-            <?php echo $this->translate("You have ") . ' '; ?><span class="info">
-                <?php echo $this->noModeratorTicket(); ?>
-            </span>
-            <a href="<?php echo $this->url('ticket')?>" title="<?php echo $this->translate("go to tickets"); ?>">
-                <?php echo ' ' . $this->translate("open tickets"); ?>
 
+            <a href="<?php echo $this->url('ticket')?>" title="<?php echo $this->translate("go to tickets"); ?>">
+                <div class="infoBtn buttons-16 exclamation-16 btnCenter"></div>
+                <span class="info"><?php echo $this->noModeratorTicket(); ?></span>
+                <em><?php echo ' ' . $this->translate("open tickets"); ?></em>
             </a>
         </div>
     <?php endif; ?>
