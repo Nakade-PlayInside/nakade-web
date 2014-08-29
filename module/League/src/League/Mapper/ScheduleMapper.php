@@ -278,6 +278,9 @@ class ScheduleMapper  extends AbstractMapper
      */
     public function getOpenResultByUser($uid)
     {
+        $limit = new \DateTime();
+        $limit->modify('+3 day');
+
         return $this->getEntityManager()
             ->createQueryBuilder('Match')
             ->select('m')
@@ -286,9 +289,10 @@ class ScheduleMapper  extends AbstractMapper
             ->innerJoin('m.black', 'Black')
             ->where('(White.id = :uid OR Black.id = :uid)')
             ->andWhere('m.result IS NULL')
-            ->andWhere('m.date > :now')
+            ->andWhere('m.date > :now AND m.date < :limit')
             ->setParameter('uid', $uid)
             ->setParameter('now', new \DateTime())
+            ->setParameter('limit', $limit)
             ->getQuery()
             ->getResult();
     }
