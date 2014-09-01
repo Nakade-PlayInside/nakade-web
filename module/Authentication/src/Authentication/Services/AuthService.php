@@ -1,6 +1,7 @@
 <?php
 namespace Authentication\Services;
 
+use Authentication\Adapter\AuthStorage;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Authentication\AuthenticationService;
@@ -21,7 +22,8 @@ class AuthService implements FactoryInterface
     {
 
         $adapter = $services->get('Authentication\Services\AuthAdapterService');
-        $storage = $services->get('Authentication\Services\AuthStorageService');
+        $sessionManager = $services->get('Zend\Session\SessionManager');
+        $storage = new AuthStorage('nakade', null, $sessionManager);
 
         //Zend Authentication Services
         return new AuthenticationService($storage, $adapter);

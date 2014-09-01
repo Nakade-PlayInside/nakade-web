@@ -45,6 +45,10 @@ class AuthController extends DefaultController
 
                 if ($authResult->isValid()) {
                     $this->getFailureContainer()->clear();
+
+                    $message = sprintf('Welcome %s!',$authResult->getIdentity()->getFirstName());
+                    $this->flashMessenger()->addSuccessMessage($message);
+
                     return $this->redirect()->toRoute('dashboard');
                 } else {
                     $this->getFailureContainer()->addFailedAttempt();

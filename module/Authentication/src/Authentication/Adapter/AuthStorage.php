@@ -11,11 +11,6 @@ use Zend\Authentication\Storage\Session;
 class AuthStorage extends Session
 {
 
-    public function getManager()
-    {
-        return $this->getSessionContainer();
-    }
-
     /**
      * @param bool $isRemember
      */

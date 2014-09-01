@@ -87,10 +87,8 @@ return array(
                 'Authentication\Services\AuthOptionsService',
             'Authentication\Services\AuthAdapterService'   =>
                 'Authentication\Services\AuthAdapterService',
-            'Authentication\Services\AuthStorageService'   =>
-                'Authentication\Services\AuthStorageService',
-            'Authentication\Services\StorageOptionsService'   =>
-                'Authentication\Services\StorageOptionsService',
+            'Zend\Session\SessionManager' => 'Zend\Session\Service\SessionManagerFactory',
+            'Zend\Session\Config\ConfigInterface' => 'Zend\Session\Service\SessionConfigFactory',
 
         ),
     ),
