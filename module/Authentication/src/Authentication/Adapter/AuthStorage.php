@@ -1,69 +1,46 @@
 <?php
 namespace Authentication\Adapter;
 
-use Zend\Authentication\Storage;
+use Zend\Authentication\Storage\Session;
 
 /**
- * Handling the session lifetime. By default session lifetime is set to 14 days.
- * This storage is based on the Login Example by Abdul Malik Iksan.
- * For further information see his blog https://samsonasik.wordpress.com/
+ * Class AuthStorage
  *
+ * @package Authentication\Adapter
  */
-class AuthStorage extends Storage\Session
+class AuthStorage extends Session
 {
-    //in seconds
-    private $cookieLifeTime=1209600;
 
     /**
-     * constructor
+     * @param bool $isRemember
      */
-    public function __construct()
+    public function setRememberMe($isRemember=false)
     {
-        parent::__construct('nakade', null, null);
-    }
-
-
-    /**
-     * Sets the lifetime of a session by a flag. Default lifetime is 14d.
-     * Life time is set in seconds.
-     *
-     * @param boolean $rememberMe
-     */
-    public function setRememberMe($rememberMe=false)
-    {
-        if ($rememberMe) {
-            $this->session->getManager()->rememberMe($this->cookieLifeTime);
+        if ($isRemember) {
+            $this->getSessionContainer()
+                ->getManager()
+                ->rememberMe();
         }
     }
 
     /**
-     * deletes the session cookie
-     *
-     */
-    public function forgetMe()
-    {
-        $this->session->getManager()->forgetMe();
-    }
-
-    /**
-     * unsets the session and destroys the cookie.
-     * This method is called by the Zend Authentication Services
-     * during logOut.
+     * logout
      */
     public function clear()
     {
 
-        $this->forgetMe();
+        $this->getSessionContainer()->getManager()->forgetMe();
         parent::clear();
-
     }
 
     /**
-     * @param int $cookieLifeTime
+     * @return \Zend\Session\AbstractContainer
      */
-    public function setCookieLifeTime($cookieLifeTime)
+    public function getSessionContainer()
     {
-        $this->cookieLifeTime = $cookieLifeTime;
+        return $this->session;
     }
+
+
 
 }

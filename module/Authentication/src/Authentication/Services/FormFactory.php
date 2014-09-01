@@ -12,10 +12,11 @@ use Zend\Captcha\AdapterInterface ;
  *
  * @package Authentication\Services
  */
-class AuthFormFactory extends AbstractFormFactory
+class FormFactory extends AbstractFormFactory
 {
     const AUTH = 'auth';
     private $captcha;
+    private $session;
 
     /**
      * @param \Zend\ServiceManager\ServiceLocatorInterface $services
@@ -25,17 +26,17 @@ class AuthFormFactory extends AbstractFormFactory
     public function createService(ServiceLocatorInterface $services)
     {
 
-        $config     = $services->get('config');
+        $config  = $services->get('config');
 
+        //text domain
         $textDomain = isset($config['NakadeAuth']['text_domain']) ?
             $config['NakadeAuth']['text_domain'] : null;
 
-        $captcha    = $services->get('Nakade\Services\NakadeCaptchaFactory');
-        $translator = $services->get('translator');
+        $this->captcha = $services->get('Nakade\Services\NakadeCaptchaFactory');
+        $this->session = $services->get('Authentication\Services\SessionService');
 
-        $this->setTranslatorTextDomain($textDomain);
-        $this->setTranslator($translator);
-        $this->setCaptcha($captcha);
+        $translator = $services->get('translator');
+        $this->setTranslator($translator, $textDomain);
 
         return $this;
     }
@@ -56,8 +57,8 @@ class AuthFormFactory extends AbstractFormFactory
         switch (strtolower($typ)) {
 
             case self::AUTH:
-                $form = new AuthForm($this->getCaptcha());
-                break; //init made by binding entity
+                $form = new AuthForm($this->captcha, $this->session);
+                break;
 
             default:
                 throw new \RuntimeException(
@@ -65,9 +66,7 @@ class AuthFormFactory extends AbstractFormFactory
                 );
         }
 
-        $form->setTranslator($this->getTranslator());
-        $form->setTranslatorTextDomain($this->getTranslatorTextDomain());
-        $form->init();
+        $form->setTranslator($this->getTranslator(), $this->getTranslatorTextDomain());
         return $form;
     }
 

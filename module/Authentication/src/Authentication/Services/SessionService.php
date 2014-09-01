@@ -6,13 +6,12 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class AuthSessionService
+ * ClassSessionService
  *
  * @package Authentication\Services
  */
-class AuthSessionService implements FactoryInterface
+class SessionService implements FactoryInterface
 {
-
     /**
      * @param ServiceLocatorInterface $services
      *
@@ -21,13 +20,11 @@ class AuthSessionService implements FactoryInterface
     public function createService(ServiceLocatorInterface $services)
     {
 
-        $config  = $services->get('config');
-
-        $maxAuthAttempts = isset($config['NakadeAuth']['max_auth_attempts']) ?
+       $config  = $services->get('config');
+       $maxAuthAttempts = isset($config['NakadeAuth']['max_auth_attempts']) ?
             $config['NakadeAuth']['max_auth_attempts'] : 0;
 
-        return new FailureContainer($maxAuthAttempts);
-
+       return new FailureContainer($maxAuthAttempts);
     }
 
 }

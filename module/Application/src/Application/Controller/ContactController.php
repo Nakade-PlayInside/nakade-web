@@ -2,6 +2,7 @@
 
 namespace Application\Controller;
 
+use Application\Services\ContactFormFactory;
 use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
 
@@ -18,7 +19,8 @@ class ContactController extends AbstractController
      */
     public function indexAction()
     {
-        $form = $this->getForm('contact');
+        $form = $this->getForm(ContactFormFactory::CONTACT_FORM);
+        $form->init();
 
         /* @var $request \Zend\Http\Request */
         $request = $this->getRequest();

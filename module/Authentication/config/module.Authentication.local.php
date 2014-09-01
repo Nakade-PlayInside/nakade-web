@@ -1,12 +1,6 @@
 <?php
 /**
- * This is a sample "local" configuration for your application. To use it, copy
- * it to your config/autoload/ directory of your application, and edit to suit
- * your application.
- *
- * This configuration example demonstrates using an SMTP mail transport, a
- * ReCaptcha CAPTCHA adapter, and setting the to and sender addresses for the
- * mail message.
+ * module.config.local
  */
 return array(
 
@@ -17,8 +11,13 @@ return array(
 
         //show captcha after n failed attempts
         'max_auth_attempts' => 5,
+    ),
 
-        //remember user -> time in d
-        'cookie_life_time' => 14,
+    'session_config' => array(
+        'remember_me_seconds' => 1209600, //14d
+        'use_cookies' => true,
+        'cookie_httponly' => true,
+        'name'                => 'NAKADE_SESSION_ID',
+
     ),
 );

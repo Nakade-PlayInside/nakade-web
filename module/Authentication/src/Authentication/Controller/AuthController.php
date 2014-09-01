@@ -1,15 +1,16 @@
 <?php
 namespace Authentication\Controller;
 
+use Authentication\Entity\Login;
+use Zend\Session\Container;
 use Zend\View\Model\ViewModel;
-use Nakade\Abstracts\AbstractController;
 
 /**
- * Authentication controller for login of registered users.
- * Controller is using Doctrine for data base access and customized
- * authentication.
+ * Class AuthController
+ *
+ * @package Authentication\Controller
  */
-class AuthController extends AbstractController
+class AuthController extends DefaultController
 {
     /**
      * If not loggedIn this action method shows a login form.
@@ -19,41 +20,13 @@ class AuthController extends AbstractController
     public function loginAction()
     {
 
-        //if already login, redirect to success page
        if ($this->getService()->hasIdentity()) {
            return $this->redirect()->toRoute('dashboard');
        }
 
-       /* @var $form \Authentication\Form\AuthForm */
-       $form =  $this->getForm('auth');
-
-        /* @var $session \Authentication\Session\FailureContainer */
-       $session =  $this->getSession();
-       $showCaptcha = $session->hasExceededAllowedAttempts();
-       $form->setIsShowingCaptcha($showCaptcha);
-
-       return new ViewModel(
-           array(
-               'form'      => $form,
-               'messages'  => $this->flashmessenger()->getMessages()
-           )
-       );
-
-    }
-
-    /**
-     * User authentication process. After stripping and validating form data,
-     * the authentication adapter is requested with the given credentials. If
-     * successfully authenticated, the identity is stored in the session.
-     * If flag is set, session lifetime is 14d.
-     *
-     * @return \Zend\Http\Response
-     */
-    public function authenticateAction()
-    {
-
-        /* @var $form \Authentication\Form\AuthForm */
-        $form =  $this->getForm('auth');
+        $form =  $this->getLoginForm();
+        $login = new Login();
+        $form->bindEntity($login);
 
         /* @var $request \Zend\Http\Request */
         $request = $this->getRequest();
@@ -62,51 +35,34 @@ class AuthController extends AbstractController
             $postData =  $request->getPost();
             $form->setData($postData);
 
-            //proving valid data
             if ($form->isValid()) {
 
-                $data = $form->getData();
+                /* @var $login \Authentication\Entity\Login */
+                $login = $form->getData();
 
-                $identity   = $data['identity'];
-                $password   = $data['password'];
-                $rememberMe = $data['rememberMe'];
-
-                //set values to adapter
-                $this->getService()
-                    ->getAdapter()
-                    ->setIdentityValue($identity)
-                    ->setCredentialValue($password);
-
-                //set value to session storage
-                $this->getService()
-                    ->getStorage()
-                    ->setRememberMe($rememberMe);
-
-                /* @var $authResult \Zend\Authentication\Result */
-                $authResult = $this->getService()->authenticate();
-
-                //save message temporary into flash messenger
-                foreach ($authResult->getMessages() as $message) {
-                    $this->flashmessenger()->addMessage($message);
-                }
+                $authResult = $this->authenticate($login);
+                $this->getStorage()->setRememberMe($login->isRememberMe());
 
                 if ($authResult->isValid()) {
+                    $this->getFailureContainer()->clear();
 
-                    /* @var $session \Authentication\Session\FailureContainer */
-                    $session =  $this->getSession();
-                    $session->clear();
+                    $message = sprintf('Welcome %s!',$authResult->getIdentity()->getFirstName());
+                    $this->flashMessenger()->addSuccessMessage($message);
+
                     return $this->redirect()->toRoute('dashboard');
+                } else {
+                    $this->getFailureContainer()->addFailedAttempt();
+                    $this->flashMessenger()->addErrorMessage('Invalid Credentials');
                 }
-
-                /* @var $session \Authentication\Session\FailureContainer */
-                $session = $this->getSession();
-                $session->addFailedAttempt();
-                //todo: session not working
-
+            } else {
+                $this->flashMessenger()->addErrorMessage('Input Error');
             }
         }
 
-        return $this->redirect()->toRoute('login');
+        return new ViewModel(
+            array('form'  => $form,
+            )
+        );
 
     }
 
@@ -115,11 +71,12 @@ class AuthController extends AbstractController
      */
     public function logoutAction()
     {
-
         //clears session and destroys cookie
         $this->getService()->clearIdentity();
-
         $this->flashmessenger()->addSuccessMessage("You have been logged out");
         return $this->redirect()->toRoute('login');
     }
+
+
+
 }

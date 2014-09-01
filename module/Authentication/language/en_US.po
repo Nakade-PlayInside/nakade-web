@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-21 00:41+0100\n"
-"PO-Revision-Date: 2014-05-21 00:41+0100\n"
+"POT-Creation-Date: 2014-08-31 22:45+0100\n"
+"PO-Revision-Date: 2014-08-31 22:45+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -15,15 +15,15 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Authentication/Form/AuthForm.php:62
+#: ../src/Authentication/Form/AuthForm.php:59
 msgid "Username"
 msgstr ""
 
-#: ../src/Authentication/Form/AuthForm.php:73
+#: ../src/Authentication/Form/AuthForm.php:70
 msgid "Password"
 msgstr ""
 
-#: ../src/Authentication/Form/AuthForm.php:85
+#: ../src/Authentication/Form/AuthForm.php:82
 msgid "Remember?"
 msgstr ""
 
@@ -35,36 +35,32 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:88
+#: ../src/Authentication/Adapter/AuthAdapter.php:92
 msgid "Supplied credential is invalid."
 msgstr ""
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:99
+#: ../src/Authentication/Adapter/AuthAdapter.php:103
 msgid "Account is not verified."
 msgstr ""
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:100
+#: ../src/Authentication/Adapter/AuthAdapter.php:104
 msgid "Please check your email."
 msgstr ""
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:111
+#: ../src/Authentication/Adapter/AuthAdapter.php:115
 msgid "Account is not active."
 msgstr ""
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:112
+#: ../src/Authentication/Adapter/AuthAdapter.php:116
 msgid "Please refer an administrator."
 msgstr ""
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:135
+#: ../src/Authentication/Adapter/AuthAdapter.php:139
 msgid "Authentication successful."
 msgstr ""
 
-#: ../view/authentication/dashboard/index.phtml:4
-msgid "Logged in as %name%"
-msgstr ""
-
-#: ../view/authentication/dashboard/index.phtml:10
-msgid "LogOut"
+#: ../view/authentication/auth/login.phtml:11
+msgid "Forgotten your login details?"
 msgstr ""
 
 #~ msgid "Skeleton Application"
