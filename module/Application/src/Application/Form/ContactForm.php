@@ -97,6 +97,7 @@ class ContactForm extends AbstractForm
                 'type'  => 'Zend\Form\Element\Submit',
                 'attributes' => array(
                     'value' =>   $this->translate('Submit'),
+                    'class' => 'btn btn-success actionBtn'
 
                 ),
             )

@@ -1,18 +1,16 @@
 <?php
 namespace Authentication\Session;
 
-use Zend\Session\Container;
+use Zend\Session\AbstractContainer;
 
 /**
- * The amount of failed authentication attempts are collected in a session.
- * Basically, this is used for showing up a Captcha after too many failed
- * attempts. You can still access the data as usual: $_SESSION[name][key]
+ * Class FailureContainer
  *
- * @author Dr.Holger Maerz <grrompf@gmail.com>
+ * @package Authentication\Session
  */
-class FailureContainer extends Container
+class FailureContainer extends AbstractContainer
 {
-    private $attempts = 0;
+    const ATTEMPT = 'attempt';
     private $maxAttempts = 0;
 
     /**
@@ -20,29 +18,35 @@ class FailureContainer extends Container
      */
     public function __construct($maxAttempts=0)
     {
-       $this->maxAttempts = $maxAttempts;
-       parent::__construct('FailedAuthAttempts');
+
+        $this->maxAttempts = $maxAttempts;
+        parent::__construct('FailedAuthAttempts');
     }
 
 
     /**
-     * Sets the amount of failed authentication, adding one
-     * each time the method is called.
-     *
+     * @return int
      */
     public function addFailedAttempt()
     {
-         $this->attempts++;
+        $attempts = $this->getFailedAttempt() + 1;
+        $this->offsetSet(self::ATTEMPT, $attempts);
+
+        return $attempts;
     }
 
     /**
-     * Sets the amount of failed authentication, adding one
-     * each time the method is called.
-     *
+     * @return int
      */
     public function getFailedAttempt()
     {
-        return $this->attempts;
+        $attempts = 0;
+        if ($this->offsetExists(self::ATTEMPT)) {
+            $attempts = intval($this->offsetGet(self::ATTEMPT));
+        } else {
+            $this->offsetSet(self::ATTEMPT, $attempts);
+        }
+        return $attempts;
     }
 
     /**
@@ -50,7 +54,7 @@ class FailureContainer extends Container
      */
     public function clear()
     {
-        $this->attempts=0;
+        $this->offsetSet(self::ATTEMPT, 0);
     }
 
     /**
@@ -58,7 +62,15 @@ class FailureContainer extends Container
      */
     public function hasExceededAllowedAttempts()
     {
-        return $this->attempts >= $this->maxAttempts;
+        return $this->getFailedAttempt() >= $this->getMaxAttempts();
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxAttempts()
+    {
+        return $this->maxAttempts;
     }
 
 

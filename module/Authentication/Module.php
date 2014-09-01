@@ -4,7 +4,9 @@ namespace Authentication;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 
 /**
- * Module for customized authentication.
+ * Class Module
+ *
+ * @package Authentication
  */
 class Module implements AutoloaderProviderInterface
 {

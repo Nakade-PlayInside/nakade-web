@@ -26,7 +26,7 @@ class AuthControllerFactory implements FactoryInterface
         /* @var $serviceManager \Zend\ServiceManager\ServiceManager */
         $serviceManager = $services->getServiceLocator();
 
-        if (!$serviceManager->has('Authentication\Services\AuthFormFactory')) {
+        if (!$serviceManager->has('Authentication\Services\FormFactory')) {
             throw new \RuntimeException(
                 sprintf('Login Form Service is not found.')
             );
@@ -38,21 +38,21 @@ class AuthControllerFactory implements FactoryInterface
             );
         }
 
-        if (!$serviceManager->has('Authentication\Services\AuthSessionService')) {
+        if (!$serviceManager->has('Authentication\Services\SessionService')) {
             throw new \RuntimeException(
-                sprintf('Authentication Session Service is not found.')
+                sprintf('Failure Container not found.')
             );
         }
 
         /* @var $form \Nakade\Abstracts\AbstractFormFactory */
-        $form           = $serviceManager->get('Authentication\Services\AuthFormFactory');
+        $form           = $serviceManager->get('Authentication\Services\FormFactory');
         $auth           = $serviceManager->get('Zend\Authentication\AuthenticationService');
-        $session        = $serviceManager->get('Authentication\Services\AuthSessionService');
+        $container = $serviceManager->get('Authentication\Services\SessionService');
 
         $controller = new AuthController();
         $controller->setFormFactory($form);
         $controller->setService($auth);
-        $controller->setSession($session);
+        $controller->setFailureContainer($container);
 
         return $controller;
     }

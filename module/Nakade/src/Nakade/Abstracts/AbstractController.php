@@ -20,7 +20,6 @@ class AbstractController extends AbstractActionController
     protected $repository;
     protected $translator;
     protected $mailService;
-    protected $session;
 
     /**
      * @return mixed
@@ -131,25 +130,5 @@ class AbstractController extends AbstractActionController
     {
         return $this->mailService;
     }
-
-    /**
-     * @param Container $session
-     *
-     * @return $this
-     */
-    public function setSession(Container $session)
-    {
-        $this->session = $session;
-        return $this;
-    }
-
-    /**
-     * @return Container
-     */
-    public function getSession()
-    {
-        return $this->session;
-    }
-
 
 }

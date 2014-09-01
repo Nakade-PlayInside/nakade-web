@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-21 00:39+0100\n"
-"PO-Revision-Date: 2014-05-21 00:41+0100\n"
+"POT-Creation-Date: 2014-08-31 22:45+0100\n"
+"PO-Revision-Date: 2014-08-31 22:45+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -15,15 +15,15 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Authentication/Form/AuthForm.php:62
+#: ../src/Authentication/Form/AuthForm.php:59
 msgid "Username"
 msgstr "Benutzername"
 
-#: ../src/Authentication/Form/AuthForm.php:73
+#: ../src/Authentication/Form/AuthForm.php:70
 msgid "Password"
 msgstr "Passwort"
 
-#: ../src/Authentication/Form/AuthForm.php:85
+#: ../src/Authentication/Form/AuthForm.php:82
 msgid "Remember?"
 msgstr "eingeloggt bleiben?"
 
@@ -35,37 +35,39 @@ msgstr "Bitte löse das Captcha."
 msgid "Submit"
 msgstr "Abschicken"
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:88
+#: ../src/Authentication/Adapter/AuthAdapter.php:92
 msgid "Supplied credential is invalid."
 msgstr "Zugangsdaten sind ungültig."
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:99
+#: ../src/Authentication/Adapter/AuthAdapter.php:103
 msgid "Account is not verified."
 msgstr "Dein Account ist noch nicht verifiziert."
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:100
+#: ../src/Authentication/Adapter/AuthAdapter.php:104
 msgid "Please check your email."
 msgstr "Bitte überprüfe deine emails. "
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:111
+#: ../src/Authentication/Adapter/AuthAdapter.php:115
 msgid "Account is not active."
 msgstr "Zugang deaktiviert."
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:112
+#: ../src/Authentication/Adapter/AuthAdapter.php:116
 msgid "Please refer an administrator."
 msgstr "Bitte kontaktiere einen Administrator."
 
-#: ../src/Authentication/Adapter/AuthAdapter.php:135
+#: ../src/Authentication/Adapter/AuthAdapter.php:139
 msgid "Authentication successful."
 msgstr "Anmeldung erfolgreich."
 
-#: ../view/authentication/dashboard/index.phtml:4
-msgid "Logged in as %name%"
-msgstr "Angemeldet als %name%"
+#: ../view/authentication/auth/login.phtml:11
+msgid "Forgotten your login details?"
+msgstr "Zugangsdaten vergessen?"
 
-#: ../view/authentication/dashboard/index.phtml:10
-msgid "LogOut"
-msgstr "Abmelden"
+#~ msgid "Logged in as %name%"
+#~ msgstr "Angemeldet als %name%"
+
+#~ msgid "LogOut"
+#~ msgstr "Abmelden"
 
 #~ msgid "You got %number% new messages"
 #~ msgstr "Du hast %number% neue Nachrichten"

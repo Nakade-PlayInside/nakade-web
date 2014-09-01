@@ -1,15 +1,14 @@
 <?php
 namespace Authentication\Adapter;
 
-use Zend\Authentication\Storage;
+use Zend\Authentication\Storage\Session;
 
 /**
- * Handling the session lifetime. By default session lifetime is set to 14 days.
- * This storage is based on the Login Example by Abdul Malik Iksan.
- * For further information see his blog https://samsonasik.wordpress.com/
+ * Class AuthStorage
  *
+ * @package Authentication\Adapter
  */
-class AuthStorage extends Storage\Session
+class AuthStorage extends Session
 {
     //in seconds
     private $cookieLifeTime=1209600;
@@ -19,7 +18,7 @@ class AuthStorage extends Storage\Session
      */
     public function __construct()
     {
-        parent::__construct('nakade', null, null);
+        parent::__construct('nakade');
     }
 
 
@@ -32,7 +31,9 @@ class AuthStorage extends Storage\Session
     public function setRememberMe($rememberMe=false)
     {
         if ($rememberMe) {
-            $this->session->getManager()->rememberMe($this->cookieLifeTime);
+            $this->getSessionContainer()
+                ->getManager()
+                ->rememberMe($this->cookieLifeTime);
         }
     }
 
@@ -42,7 +43,9 @@ class AuthStorage extends Storage\Session
      */
     public function forgetMe()
     {
-        $this->session->getManager()->forgetMe();
+        $this->getSessionContainer()
+            ->getManager()
+            ->forgetMe();
     }
 
     /**
@@ -65,5 +68,15 @@ class AuthStorage extends Storage\Session
     {
         $this->cookieLifeTime = $cookieLifeTime;
     }
+
+    /**
+     * @return \Zend\Session\AbstractContainer
+     */
+    public function getSessionContainer()
+    {
+        return $this->session;
+    }
+
+
 
 }

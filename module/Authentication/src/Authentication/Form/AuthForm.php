@@ -1,53 +1,51 @@
 <?php
 namespace Authentication\Form;
 
+use Authentication\Form\Hydrator\LoginHydrator;
 use Nakade\Abstracts\AbstractForm;
-use Zend\I18n\Translator\Translator;
+use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\InputFilter\InputFilter;
-use Zend\Captcha\AdapterInterface ;
+use \Authentication\Session\FailureContainer;
 
 /**
  * Authentication form with Captcha
  *
  * @package Authentication\Form
  */
-class AuthForm extends AbstractForm
+class AuthForm extends AbstractForm implements AuthInterface
 {
+    private $session;
     private $captcha;
-    protected $showCaptcha = false;
 
     /**
-     * @param AdapterInterface $captcha
+     * @param mixed            $captcha
+     * @param FailureContainer $session
      */
-    public function __construct(AdapterInterface $captcha)
+    public function __construct($captcha,FailureContainer $session)
     {
+        parent::__construct($this->getFormName());
+
         $this->captcha = $captcha;
-        parent::__construct('LoginForm');
+        $this->session = $session;
+
+        $hydrator = new LoginHydrator();
+        $this->setHydrator($hydrator);
+
         $this->setInputFilter($this->getFilter());
-        //$contact = new Contact();
-        //$this->bind($contact);
     }
 
     /**
-     * @param bool $show
+     * @param \Authentication\Entity\Login $object
      */
-    public function setIsShowingCaptcha($show)
+    public function bindEntity($object)
     {
-        $this->showCaptcha = $show;
+        $this->init();
+        $this->setInputFilter($this->getFilter());
+        $this->bind($object);
     }
 
     /**
-     * getter
-     * @return bool $isCaptchaShowing
-     */
-    public function isShowingCaptcha()
-    {
-        return $this->showCaptcha;
-    }
-
-    /**
-     * Initializing the form. Call this method for receiving the formular.
-     * This enables toggling the Captcha
+     * init
      */
     public function init()
     {
@@ -55,7 +53,7 @@ class AuthForm extends AbstractForm
         //identity
         $this->add(
             array(
-                'name' => 'identity',
+                'name' => self::IDENTITY,
                 'type' => 'Zend\Form\Element\Text',
                 'options' => array(
                     'label' =>  $this->translate('Username').':',
@@ -66,7 +64,7 @@ class AuthForm extends AbstractForm
         //password
         $this->add(
             array(
-                'name'  => 'password',
+                'name'  => self::PASSWORD,
                 'type' => 'Zend\Form\Element\Password',
                 'options' => array(
                     'label' =>  $this->translate('Password').':',
@@ -78,10 +76,10 @@ class AuthForm extends AbstractForm
         //checkbox remember Me
         $this->add(
             array(
-                'name'  => 'rememberMe',
+                'name'  => self::REMEMBER,
                 'type'  => 'Zend\Form\Element\Checkbox',
                 'options' => array(
-                    'label' =>  $this->translate('Remember?') .':',
+                    'label' =>  $this->translate('Remember?'),
                 ),
                 'attributes' => array(
                     'class' => 'checkbox',
@@ -89,14 +87,14 @@ class AuthForm extends AbstractForm
             )
         );
 
-        if ($this->isShowingCaptcha()) {
+        if ($this->hasCaptcha()) {
             $this->add(
                 array(
                     'name'  => 'captcha',
                     'type'  => 'Zend\Form\Element\Captcha',
                     'options' => array(
                         'label' => $this->translate('Please verify you are human.'),
-                        'captcha' => $this->captcha
+                        'captcha' => $this->getCaptcha(),
                     ),
                 )
             );
@@ -125,10 +123,12 @@ class AuthForm extends AbstractForm
                 'type'  => 'Zend\Form\Element\Submit',
                 'attributes' => array(
                     'value' =>   $this->translate('Submit'),
+                    'class' => 'btn btn-success actionBtn'
 
                 ),
             )
         );
+
     }
 
     /**
@@ -144,7 +144,18 @@ class AuthForm extends AbstractForm
                 'required'   => true,
                 'filters'    => array(
                     array('name'    => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripNewLines'),
                 ),
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array (
+                            'encoding' => 'UTF-8',
+                            'max' => 50
+                        )
+                    ),
+                )
             )
         );
 
@@ -154,10 +165,56 @@ class AuthForm extends AbstractForm
                 'required'   => true,
                 'filters'    => array(
                     array('name'    => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                    array('name' => 'StripNewLines'),
                 ),
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array (
+                            'encoding' => 'UTF-8',
+                            'max' => 80
+                        )
+                    ),
+                )
 
             )
         );
         return $filter;
     }
+
+    /**
+     * @return string
+     */
+    public function getFormName()
+    {
+        return 'LoginForm';
+    }
+
+    /**
+     * @return \Authentication\Session\FailureContainer
+     */
+    private function hasCaptcha()
+    {
+        return ($this->getSession()->hasExceededAllowedAttempts());
+    }
+
+
+    /**
+     * @return FailureContainer
+     */
+    private function getSession()
+    {
+        return $this->session;
+    }
+
+    /**
+     * @return \Nakade\Services\NakadeCaptchaFactory
+     */
+    private function getCaptcha()
+    {
+        return $this->captcha;
+    }
+
+
 }

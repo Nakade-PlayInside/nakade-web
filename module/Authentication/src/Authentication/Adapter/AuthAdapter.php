@@ -17,7 +17,7 @@ class AuthAdapter extends ObjectRepository
 {
 
     private  $translator;
-    private  $textDomain="Application";
+    private  $textDomain="Auth";
     private  $pwdService;
 
     /**

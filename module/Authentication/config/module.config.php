@@ -78,11 +78,17 @@ return array(
 
             //neccessary for using authentication in ViewHelper and Controller
             'Zend\Authentication\AuthenticationService'       =>
-                'Authentication\Services\AuthServiceFactory',
-            'Authentication\Services\AuthFormFactory'   =>
-                'Authentication\Services\AuthFormFactory',
-            'Authentication\Services\AuthSessionService'   =>
-                'Authentication\Services\AuthSessionService',
+                'Authentication\Services\AuthService',
+            'Authentication\Services\FormFactory'   =>
+                'Authentication\Services\FormFactory',
+            'Authentication\Services\SessionService'   =>
+                'Authentication\Services\SessionService',
+            'Authentication\Services\AuthOptionsService'   =>
+                'Authentication\Services\AuthOptionsService',
+            'Authentication\Services\AuthAdapterService'   =>
+                'Authentication\Services\AuthAdapterService',
+            'Authentication\Services\AuthStorageService'   =>
+                'Authentication\Services\AuthStorageService',
         ),
     ),
 
