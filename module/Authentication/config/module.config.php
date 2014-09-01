@@ -89,6 +89,9 @@ return array(
                 'Authentication\Services\AuthAdapterService',
             'Authentication\Services\AuthStorageService'   =>
                 'Authentication\Services\AuthStorageService',
+            'Authentication\Services\StorageOptionsService'   =>
+                'Authentication\Services\StorageOptionsService',
+
         ),
     ),
 

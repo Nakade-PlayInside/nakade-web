@@ -10,63 +10,32 @@ use Zend\Authentication\Storage\Session;
  */
 class AuthStorage extends Session
 {
-    //in seconds
-    private $cookieLifeTime=1209600;
 
-    /**
-     * constructor
-     */
-    public function __construct()
+    public function getManager()
     {
-        parent::__construct('nakade');
+        return $this->getSessionContainer();
     }
 
-
     /**
-     * Sets the lifetime of a session by a flag. Default lifetime is 14d.
-     * Life time is set in seconds.
-     *
-     * @param boolean $rememberMe
+     * @param bool $isRemember
      */
-    public function setRememberMe($rememberMe=false)
+    public function setRememberMe($isRemember=false)
     {
-        if ($rememberMe) {
+        if ($isRemember) {
             $this->getSessionContainer()
                 ->getManager()
-                ->rememberMe($this->cookieLifeTime);
+                ->rememberMe();
         }
     }
 
     /**
-     * deletes the session cookie
-     *
-     */
-    public function forgetMe()
-    {
-        $this->getSessionContainer()
-            ->getManager()
-            ->forgetMe();
-    }
-
-    /**
-     * unsets the session and destroys the cookie.
-     * This method is called by the Zend Authentication Services
-     * during logOut.
+     * logout
      */
     public function clear()
     {
 
-        $this->forgetMe();
+        $this->getSessionContainer()->getManager()->forgetMe();
         parent::clear();
-
-    }
-
-    /**
-     * @param int $cookieLifeTime
-     */
-    public function setCookieLifeTime($cookieLifeTime)
-    {
-        $this->cookieLifeTime = $cookieLifeTime;
     }
 
     /**

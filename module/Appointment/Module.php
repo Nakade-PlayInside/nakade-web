@@ -41,6 +41,8 @@ class Module implements AutoloaderProviderInterface,
      * @param Console $console
      *
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
     public function getConsoleUsage(Console $console)
     {
