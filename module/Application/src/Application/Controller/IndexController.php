@@ -52,9 +52,7 @@ class IndexController extends AbstractController
             $page->addChild($registerWidget, 'registerWidget');
         }
 
-
         return $page;
-
     }
 
 }

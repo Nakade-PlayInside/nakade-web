@@ -42,6 +42,12 @@ return array(
 
         //footer
         'siteMenu' => array(
+            'faq' => array(
+                'label' => 'FAQ',
+                'route' => 'privacy',
+                'controller' => 'Application\Controller\Privacy',
+                'action' => 'faq',
+            ),
             'rules' => array(
                 'label' => 'Rules',
                 'route' => 'privacy',

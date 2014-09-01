@@ -37,4 +37,13 @@ class PrivacyController extends AbstractActionController
     }
 
 
+    /**
+     * @return array|ViewModel
+     */
+    public function faqAction()
+    {
+        return new ViewModel();
+    }
+
+
 }

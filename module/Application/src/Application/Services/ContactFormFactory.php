@@ -35,8 +35,8 @@ class ContactFormFactory extends AbstractFormFactory
         }
 
         //configuration
-        $textDomain = isset($config['Appointment']['text_domain']) ?
-            $config['Appointment']['text_domain'] : null;
+        $textDomain = isset($config['Application']['text_domain']) ?
+            $config['Application']['text_domain'] : null;
 
         $translator = $services->get('translator');
         $captcha = $services->get('Nakade\Services\NakadeCaptchaFactory');
@@ -75,7 +75,7 @@ class ContactFormFactory extends AbstractFormFactory
 
         $form->setTranslator($this->getTranslator());
         $form->setTranslatorTextDomain($this->getTranslatorTextDomain());
-        $form->init();
+
         return $form;
     }
 
