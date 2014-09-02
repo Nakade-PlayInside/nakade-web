@@ -1,5 +1,5 @@
 #ticket {
-    width: 80%;
+    max-width: 800px;
     margin-bottom: 10px;
     border: 1px solid grey;
 }

@@ -6,39 +6,33 @@ $title = str_replace('%no%', $this->matchDay, $title);
 $this->headTitle('Actual Results');
 ?>
 
-<?php $this->placeholder('noResults')->captureStart();?>
-<h3><?php echo $this->translate('No results found')?></h3>
-<?php $this->placeholder('noResults')->captureEnd(); ?>
-
 <?php $this->placeholder('openResults')->captureStart();?>
+    <div class="widget">
+        <h3><?php echo $title; ?></h3>
 
-<h3><?php echo $title; ?></h3>
 
+        <?php echo $this->paginationControl($this->pagination, 'Sliding', 'matchDay'); ?>
+        <table class="results">
+            <?php foreach ($this->matches as $match) : ?>
+                <tr>
+                    <td style="text-decoration: <?php echo $this->isWinner($match, $match->getBlack()); ?>"><?php echo $match->getBlack()->getShortName();?></td>
+                    <td class="versus">-</td>
+                    <td style="text-decoration: <?php echo $this->isWinner($match, $match->getWhite()); ?>" class="space"><?php echo $match->getWhite()->getShortName();?></td>
+                    <td><?php echo $this->matchDayResult($match); ?></td>
+                </tr>
+            <?php
+            endforeach; ?>
+        </table>
 
-<?php echo $this->paginationControl($this->pagination, 'Sliding', 'matchDay'); ?>
-<table class="results">
-<?php foreach ($this->matches as $match) : ?>
-<tr>
-    <td style="text-decoration: <?php echo $this->isWinner($match, $match->getBlack()); ?>"><?php echo $match->getBlack()->getShortName();?></td>
-    <td class="versus">-</td>
-    <td style="text-decoration: <?php echo $this->isWinner($match, $match->getWhite()); ?>" class="space"><?php echo $match->getWhite()->getShortName();?></td>
-    <td><?php echo $this->matchDayResult($match); ?></td>
-</tr>
-<?php
-endforeach; ?>
-</table>
-
-<ul class='legend'>
-<?php foreach ($this->legend as $legendLine) : ?>
-<li><?php echo $legendLine; ?></li>
-<?php
-endforeach; ?>
-</ul>
-
+        <ul class='legend'>
+            <?php foreach ($this->legend as $legendLine) : ?>
+                <li><?php echo $legendLine; ?></li>
+            <?php
+            endforeach; ?>
+        </ul>
+    </div>
 <?php $this->placeholder('openResults')->captureEnd();
 
-  if (is_null($this->matches)) {
-      echo $this->placeholder('noResults');
-  } else {
-      echo $this->placeholder('openResults');
-  }
+if (!is_null($this->matches)) {
+    echo $this->placeholder('openResults');
+}

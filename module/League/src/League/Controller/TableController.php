@@ -1,51 +1,41 @@
 <?php
 namespace League\Controller;
 
-use League\Services\TableService;
+use League\Standings\MatchStats;
 use League\Standings\Sorting\SortingInterface;
-use Nakade\Abstracts\AbstractController;
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
-use League\Services\RepositoryService;
+use League\Standings\Sorting\PlayerPosition;
+use League\Standings\Sorting\PlayerSorting as SORT;
 
 /**
- * League tables and schedules of the actual season.
- * Top league table is presented by the default action index.
- * ActionSeasonServiceFactory is needed to be set.
+ * Class TableController
  *
- * @author Holger Maerz <holger@nakade.de>
+ * @package League\Controller
  */
-class TableController extends AbstractController
+class TableController extends DefaultController
 {
 
-    private $tableService;
-
     /**
-    * Default action showing up the Top League table
-    * in a short and compact version. This can be used as a widget.
+    * top league widget
     *
     * @return array|ViewModel
     */
     public function indexAction()
     {
-        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-        $season = $seasonMapper->getActiveSeasonByAssociation(1);
+        $sortBy  = $this->params()->fromRoute('sort', SortingInterface::BY_POINTS);
 
-        /* @var $leagueMapper \League\Mapper\LeagueMapper */
-        $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-        $topLeague = $leagueMapper->getTopLeagueBySeason($season->getId());
-        $matches = $leagueMapper->getMatchesByLeague($topLeague->getId());
+        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
+        $league = $this->getLeagueMapper()->getTopLeagueBySeason($season->getId());
+        $matches = $this->getLeagueMapper()->getMatchesByLeague($league->getId());
 
         return new ViewModel(
             array(
-              'league'   => $topLeague,
-              'table'    => $this->getTableService()->getPlayersTable($matches)
+              'tournament'   => $league,
+              'table'    => $this->getPlayersTable($matches, $sortBy),
             )
         );
     }
-
-
 
 
     /**
@@ -56,54 +46,40 @@ class TableController extends AbstractController
     */
     public function tableAction()
     {
-       $userId = $this->identity()->getId();
-
-       /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-       $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-       $season = $seasonMapper->getActiveSeasonByAssociation(1);
-
-       /* @var $matchMapper \League\Mapper\ScheduleMapper */
-       $matchMapper = $this->getRepository()->getMapper(RepositoryService::SCHEDULE_MAPPER);
-
-       /* @var $leagueMapper \League\Mapper\LeagueMapper */
-       $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-       $league = $matchMapper->getLeagueByUser($season->getId(), $userId);
-       if (is_null($league)) {
-           $league = $leagueMapper->getTopLeagueBySeason($season->getId());
-       }
-       $matches = $leagueMapper->getMatchesByLeague($league->getId());
-
        //sorting the table
        $sortBy  = $this->params()->fromRoute('sort', SortingInterface::BY_POINTS);
 
+       $userId = $this->identity()->getId();
+       $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
+       $league = $this->getScheduleMapper()->getLeagueByUser($season->getId(), $userId);
+
+       if (is_null($league)) {
+           $league = $this->getLeagueMapper()->getTopLeagueBySeason($season->getId());
+       }
+       $matches = $this->getLeagueMapper()->getMatchesByLeague($league->getId());
+
        return new ViewModel(
            array(
-              'table'   => $this->getTableService()->getPlayersTable($matches, $sortBy),
-              'league'  => $league,
-
+              'tournament'  => $league,
+              'table'   => $this->getPlayersTable($matches, $sortBy),
            )
        );
     }
 
-
-
     /**
-     * @param TableService $service
+     * @param array  $matches
+     * @param string $sort
      *
-     * @return $this
+     * @return array
      */
-    public function setTableService(TableService $service)
+    private function getPlayersTable(array $matches, $sort=SortingInterface::BY_POINTS)
     {
-        $this->tableService = $service;
-        return $this;
-    }
-
-    /**
-     * @return TableService
-     */
-    public function getTableService()
-    {
-        return $this->tableService;
+        $info = new MatchStats($matches);
+        $players = $info->getMatchStats();
+        $sorting = SORT::getInstance();
+        $sorting->sorting($players, $sort);
+        $pos = new PlayerPosition($players, $sort);
+        return $pos->getPosition();
     }
 
 

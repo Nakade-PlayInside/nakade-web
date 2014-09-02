@@ -221,8 +221,6 @@ return array(
                 'League\Services\LeagueFormService',
             'League\Services\ResultService' =>
                 'League\Services\ResultService',
-            'League\Services\TableService' =>
-                'League\Services\TableService',
             'League\Services\MailService' =>
                 'League\Services\MailService',
             'League\Services\MatchVoterService' =>

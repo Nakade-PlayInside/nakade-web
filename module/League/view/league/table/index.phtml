@@ -3,52 +3,60 @@ $this->plugin('translate')->setTranslatorTextDomain('League');
 $this->headTitle("Top Table");
 
 /* @var $player \League\Entity\Player */
-/* @var $league \Season\Entity\League */
-$league = $this->league;
-$association = $league->getSeason()->getAssociation()->getName();
-$title = $this->translate("%name% 1. League") . " " . $league->getSeason()->getStartDate()->format('Y');
-$title = str_replace("%name%", $association, $title);
+/* @var $tournament \Season\Entity\League */
+$title = $this->translate("%NAME% %NO%.League No. %NUMBER%");
+$tb1 = 'TB1';
+$tb2 = 'TB2';
+$tb3 = 'TB3';
+
+if (!is_null($tournament)) {
+    $title = str_replace("%NAME%", $tournament->getSeason()->getAssociation()->getName(), $title);
+    $title = str_replace("%NO%", $tournament->getNumber(), $title);
+    $title = str_replace("%NUMBER%", $tournament->getSeason()->getNumber(), $title);
+    $tb1 = $tournament->getSeason()->getTieBreaker1();
+    $tb2 = $tournament->getSeason()->getTieBreaker2();
+    $tb3 = $tournament->getSeason()->getTieBreaker3();
+}
+
 ?>
+
 <?php $this->placeholder('noSeason')->captureStart();?>
-
 <h3><?php echo $this->translate('No season found')?></h3>
-
 <?php $this->placeholder('noSeason')->captureEnd(); ?>
 
 <?php $this->placeholder('standings')->captureStart();?>
-
 <h3><?php echo $title; ?></h3>
 <table class="table" style="width: auto; margin-top: 0.5em;">
-<tr>
-    <th title="<?php echo $this->translate('Position');?>">No</th>
-    <th title="<?php echo $this->translate('Player');?>">
-        <?php echo $this->translate('Name')?></a></th>
-    <th title="<?php echo $this->translate('Games')?>">
-        <?php echo $this->translate('G')?></th>
-    <th title="<?php echo $this->translate('Points')?>">
-        <?php echo $this->translate('P')?></th>
-    <th title="<?php echo $this->translate('Tiebreaker')?>">
-        <?php echo $this->translate('TB')?></th>
-   </tr>
-<?php foreach ($this->table as $player) : ?>
-<tr style="background-color:<?php
-    echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-    <td><?php echo $player->getPosition() ?></td>
-    <td><?php echo $player->getUser()->getShortName();?></td>
-    <td><?php echo $player->getGamesPlayed(); ?></td>
-    <td><?php echo $player->getGamesPoints();?></td>
-    <td><?php echo $player->getFirstTiebreak();?></td>
+    <tr>
+        <th title="<?php echo $this->translate('Position');?>">No</th>
+        <th title="<?php echo $this->translate('Player');?>">
+            <?php echo $this->translate('Name')?></a></th>
+        <th title="<?php echo $this->translate('Games')?>">
+            <?php echo $this->translate('G')?></th>
+        <th title="<?php echo $this->translate('Points')?>">
+            <?php echo $this->translate('P')?></th>
+        <th title="<?php echo $this->translate('Tiebreaker')?>">
+            <?php echo $this->translate('TB')?></th>
+    </tr>
+    <?php foreach ($this->table as $player) : ?>
+        <tr style="background-color:<?php
+        echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+            <td><?php echo $player->getPosition() ?></td>
+            <td><?php echo $player->getUser()->getShortName();?></td>
+            <td><?php echo $player->getGamesPlayed(); ?></td>
+            <td><?php echo $player->getGamesPoints();?></td>
+            <td><?php echo $player->getFirstTiebreak();?></td>
 
-</tr>
-<?php
-endforeach; ?>
+        </tr>
+    <?php
+    endforeach; ?>
 </table>
+<?php $this->placeholder('standings')->captureEnd();?>
 
-
-<?php $this->placeholder('standings')->captureEnd();
-
-  if (is_null($this->table)) {
-      echo $this->placeholder('noSeason');
-  } else {
-      echo $this->placeholder('standings');
-  }
+<div class="widget">
+    <?php if (is_null($this->table)) {
+        echo $this->placeholder('noSeason');
+    } else {
+        echo $this->placeholder('standings');
+    } ?>
+</div>

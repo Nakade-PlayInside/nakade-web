@@ -4,17 +4,18 @@ $this->plugin('translate')->setTranslatorTextDomain('Support');
 $this->headTitle('Moderator View');
 
 ?>
-<h3><?php echo $this->translate('My League Manager'); ?></h3>
-<hr/>
-<a class="addUser buttons-32 user-add-32" title="<?php echo $this->translate("add League Manager"); ?>" href="
+<div class="widget">
+    <h3><?php echo $this->translate('My League Manager'); ?></h3>
+    <hr/>
+    <a class="addUser buttons-32 user-add-32" title="<?php echo $this->translate("add League Manager"); ?>" href="
 <?php echo $this->url('manager', array('action' => 'add')); ?>"></a>
 
-<?php $this->placeholder('nothing')->captureStart();?>
+    <?php $this->placeholder('nothing')->captureStart();?>
     <h3><?php echo $this->translate('No League Manager found'); ?></h3>
-<?php $this->placeholder('nothing')->captureEnd(); ?>
+    <?php $this->placeholder('nothing')->captureEnd(); ?>
 
-<?php $this->placeholder('manager')->captureStart();?>
-<?php echo $this->paginationControl($this->paginator, 'Sliding', 'moderator'); ?>
+    <?php $this->placeholder('manager')->captureStart();?>
+    <?php echo $this->paginationControl($this->paginator, 'Sliding', 'moderator'); ?>
     <table class="table profile">
         <tr>
             <th><?php echo $this->translate("ID"); ?></th>
@@ -43,10 +44,13 @@ $this->headTitle('Moderator View');
         <?php endforeach; ?>
     </table>
     <p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("League Manager"); ?></p>
-<?php $this->placeholder('manager')->captureEnd();
+    <?php $this->placeholder('manager')->captureEnd();?>
 
-if (empty($this->managers)) {
-    echo $this->placeholder('nothing');
-} else {
-    echo $this->placeholder('manager');
-}
+
+    <?php if (empty($this->managers)) {
+        echo $this->placeholder('nothing');
+    } else {
+        echo $this->placeholder('manager');
+    }
+    ?>
+</div>
