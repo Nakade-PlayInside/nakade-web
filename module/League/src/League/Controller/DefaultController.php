@@ -38,6 +38,14 @@ class DefaultController extends AbstractController
     }
 
     /**
+     * @return \League\Mapper\ResultMapper
+     */
+    public function getResultMapper()
+    {
+        return $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
+    }
+
+    /**
      * @return \League\Services\RepositoryService
      */
     public function getRepository()

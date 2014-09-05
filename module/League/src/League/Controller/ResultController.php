@@ -5,6 +5,7 @@ use League\Services\LeagueFormService;
 use League\Services\RepositoryService;
 use Nakade\Abstracts\AbstractController;
 use Nakade\Pagination\ItemPagination;
+use Season\Controller\DefaultController;
 use Zend\View\Model\ViewModel;
 use League\Services\MailService;
 use League\Services\PaginationService;
@@ -14,7 +15,7 @@ use League\Services\PaginationService;
  * matches.
  *
  */
-class ResultController extends AbstractController
+class ResultController extends DefaultController
 {
     const HOME = 'result';
 
@@ -30,15 +31,8 @@ class ResultController extends AbstractController
     public function indexAction()
     {
 
-        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-        $season = $seasonMapper->getActiveSeasonByAssociation(1);
-
-        /* @var $resultMapper \League\Mapper\ResultMapper */
-        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
-
-
-        $matches = $resultMapper->getActualOpenResultsBySeason($season->getId());
+        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
+        $matches = $this->getResultMapper()->getActualOpenResultsBySeason($season->getId());
 
         return new ViewModel(
             array(
