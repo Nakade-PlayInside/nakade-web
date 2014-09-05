@@ -2,12 +2,14 @@
 $this->plugin('translate')->setTranslatorTextDomain('Message');
 $this->headTitle("Messages");
 ?>
+<div class="widget">
     <h3><?php echo $this->translate('Send Message'); ?></h3>
 
-<?php
+    <?php
 
-$this->form->prepare();
-echo $this->form()->openTag($this->form);
-echo $this->formCollection($this->form);
-echo $this->form()->closeTag();
-
+    $this->form->prepare();
+    echo $this->form()->openTag($this->form);
+    echo $this->formCollection($this->form);
+    echo $this->form()->closeTag();
+    ?>
+</div>

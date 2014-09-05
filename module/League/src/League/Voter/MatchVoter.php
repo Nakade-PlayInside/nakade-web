@@ -64,7 +64,8 @@ class MatchVoter implements RoleInterface
         if (is_null($user)) {
             return false;
         }
-        return self::ROLE_ADMIN == $user->getRole();
+        return self::ROLE_ADMIN == $user->getRole() ||
+            self::ROLE_MODERATOR == $user->getRole();
     }
 
     /**

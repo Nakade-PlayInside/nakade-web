@@ -3,14 +3,11 @@ $this->plugin('translate')->setTranslatorTextDomain('Appointment');
 $title = $this->translate("Rejected Appointments");
 $this->headTitle($title);
 
+/* @var $appointment \Appointment\Entity\Appointment */
 ?>
-<?php
-
-
-    /* @var $appointment \Appointment\Entity\Appointment */
-?>
+<div class="widget">
     <h3><?php echo $title;?></h3>
-<?php $this->placeholder('Message')->captureStart();?>
+    <?php $this->placeholder('Message')->captureStart();?>
 
     <table class="table rejectAdmin" style="width:auto;margin-top: 0.5em;">
         <tr>
@@ -27,10 +24,10 @@ $this->headTitle($title);
 
         <?php foreach ($this->rejectedAppointments as $appointment) : ?>
             <?php
-                $submitter = $appointment->getSubmitter();
-                $subName = $submitter->getShortName();
-                $responder = $appointment->getResponder();
-                $resName = $responder->getShortName();
+            $submitter = $appointment->getSubmitter();
+            $subName = $submitter->getShortName();
+            $responder = $appointment->getResponder();
+            $resName = $responder->getShortName();
             ?>
             <tr style="background-color:<?php
             echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
@@ -45,11 +42,12 @@ $this->headTitle($title);
         <?php endforeach; ?>
     </table>
 
-<?php $this->placeholder('Message')->captureEnd();
+    <?php $this->placeholder('Message')->captureEnd();
 
-if (!empty($this->rejectedAppointments)) {
-    echo $this->placeholder('Message');
-} else {
-    echo $this->translate("No rejected appointments found.");
-}
-
+    if (!empty($this->rejectedAppointments)) {
+        echo $this->placeholder('Message');
+    } else {
+        echo $this->translate("No rejected appointments found.");
+    }
+    ?>
+</div>

@@ -11,8 +11,6 @@
  */
 namespace League;
 
-use League\Standings\Sorting\SortingInterface;
-
 return array(
 
     'view_helpers' => array(
@@ -161,8 +159,6 @@ return array(
                     'defaults' => array(
                         'controller' => 'League\Controller\Table',
                         'action'     => 'index',
-                        'sort'       => 'sort=' . SortingInterface::BY_POINTS,
-                        'league' => 1,
                     ),
                 ),
 

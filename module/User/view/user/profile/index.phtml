@@ -5,7 +5,8 @@ $title = $this->translate('Profile');
 $this->headTitle($title);
 /* @var $profile \User\Entity\User */
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
+<div class="widget">
+<h3><?php echo $this->escapeHtml($title); ?></h3>
 <table class="table profile">
 <tr>
     <td><?php echo $this->translate("Name:");?></td>
@@ -71,3 +72,4 @@ $this->headTitle($title);
 </tr>
 
 </table>
+</div>

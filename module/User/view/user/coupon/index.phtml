@@ -5,7 +5,9 @@ $title = $this->translate('My Invitations');
 $this->headTitle($title);
 /* @var $profile \User\Entity\User */
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<div class="widget">
+<h3><?php echo $this->escapeHtml($title); ?></h3>
 
 <?php $this->placeholder('nothing')->captureStart(); ?>
 <div class="message"><?php echo $this->translate("No Invitations yet ?!"); ?><br/>
@@ -47,3 +49,4 @@ if (!empty($this->coupons)) {
 }
 ?>
 <a class="btn btn-success" href="<?php echo $this->url('dashboard')?>"><?php echo $this->translate("Return"); ?></a>
+</div>

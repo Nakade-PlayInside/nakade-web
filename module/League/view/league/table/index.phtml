@@ -10,12 +10,18 @@ if (!is_null($tournament)) {
     $title = str_replace("%NAME%", $tournament->getSeason()->getAssociation()->getName(), $title);
     $title = str_replace("%YEAR%", $tournament->getSeason()->getStartDate()->format('Y'), $title);
 }
+$leagueInfo = $this->translate("%No%.League");
+$leagueInfo = str_replace('%No%', $tournament->getNumber(), $leagueInfo);
+
+$matchDayInfo = $this->translate("%No%.Match Day");
+$matchDayInfo = str_replace('%No%', $this->matchDay, $matchDayInfo);
 
 ?>
 
 <?php $this->placeholder('standings')->captureStart();?>
     <div class="widget">
-        <h3><?php echo $title; ?></h3>
+        <h3 style="margin: 0;"><?php echo $title; ?></h3>
+        <h5><?php echo $leagueInfo . ' - ' . $matchDayInfo; ?></h5>
         <table class="table" style="width: auto; margin-top: 0.5em;">
             <tr>
                 <th title="<?php echo $this->translate('Position');?>">No</th>
