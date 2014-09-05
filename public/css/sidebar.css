@@ -1,5 +1,6 @@
-
 div#sidebar {
+    float: left;
+    margin: 0 10px;
     display: inline-block;
     cursor: default;
 }
@@ -7,6 +8,10 @@ div#sidebar {
 div#sidebar ul {
     margin: 10px 0;
     list-style: none;
+}
+
+div#sidebar ul li {
+    white-space: nowrap;
 }
 
 div#sidebar ul li.nextMatch {

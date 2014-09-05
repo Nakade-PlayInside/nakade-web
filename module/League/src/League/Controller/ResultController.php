@@ -3,9 +3,7 @@ namespace League\Controller;
 
 use League\Services\LeagueFormService;
 use League\Services\RepositoryService;
-use Nakade\Abstracts\AbstractController;
 use Nakade\Pagination\ItemPagination;
-use Season\Controller\DefaultController;
 use Zend\View\Model\ViewModel;
 use League\Services\MailService;
 use League\Services\PaginationService;
@@ -32,12 +30,11 @@ class ResultController extends DefaultController
     {
 
         $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
-        $matches = $this->getResultMapper()->getActualOpenResultsBySeason($season->getId());
 
         return new ViewModel(
             array(
                 'season' =>  $season,
-                'matches' =>  $matches
+                'matches' =>  $this->getResultMapper()->getActualOpenResultsBySeason($season->getId())
             )
         );
     }
@@ -51,20 +48,15 @@ class ResultController extends DefaultController
     {
         $page = (int) $this->params()->fromRoute('id', 1);
 
-        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-        $season = $seasonMapper->getActiveSeasonByAssociation(1);
-
-        /* @var $resultMapper \League\Mapper\ResultMapper */
-        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
-
-        $total = $resultMapper->getActualResultsByPages($season->getId());;
+        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
+        $total = $this->getResultMapper()->getActualResultsByPages($season->getId());;
         $pagination = new ItemPagination($total);
 
         return new ViewModel(
             array(
                 'season' =>  $season,
-                'matches' =>  $resultMapper->getActualResultsByPages($season->getId(), $pagination->getOffset($page)),
+                'matches' =>  $this->getResultMapper()
+                        ->getActualResultsByPages($season->getId(), $pagination->getOffset($page)),
                 'paginator' => $pagination->getPagination($page),
             )
         );
@@ -78,21 +70,13 @@ class ResultController extends DefaultController
     */
     public function myResultAction()
     {
-        $userId = $this->identity()->getId();
-
-        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-        $season = $seasonMapper->getActiveSeasonByAssociation(1);
-
-        /* @var $resultMapper \League\Mapper\ResultMapper */
-        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
-
-        $matches = $resultMapper->getResultsByUser($season->getId(), $userId);
+        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
 
         return new ViewModel(
             array(
                'season' =>  $season,
-               'matches' =>  $matches
+               'matches' =>  $this->getResultMapper()
+                       ->getResultsByUser($season->getId(), $this->identity()->getId()),
             )
         );
 
@@ -107,10 +91,7 @@ class ResultController extends DefaultController
     {
         $matchId  = (int) $this->params()->fromRoute('id', 0);
 
-        /* @var $resultMapper \League\Mapper\ResultMapper */
-        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
-        /* @var $match \Season\Entity\Match */
-        $match = $resultMapper->getMatchById($matchId);
+        $match = $this->getResultMapper()->getMatchById($matchId);
 
         /* @var $form \League\Form\ResultForm */
         $form = $this->getForm(LeagueFormService::RESULT_FORM);
@@ -131,7 +112,7 @@ class ResultController extends DefaultController
             if ($form->isValid()) {
                 /* @var $data \Season\Entity\Match */
                 $data = $form->getData();
-                $resultMapper->save($data);
+                $this->getResultMapper()->save($data);
 
                 /* @var $mail \League\Mail\ResultEditMail */
                 $mail = $this->getMailService()->getMail(MailService::EDITED_RESULT__MAIL);
@@ -165,10 +146,7 @@ class ResultController extends DefaultController
 
         $matchId  = (int) $this->params()->fromRoute('id', 0);
 
-        /* @var $resultMapper \League\Mapper\ResultMapper */
-        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
-        /* @var $match \Season\Entity\Match */
-        $match = $resultMapper->getMatchById($matchId);
+        $match = $this->getResultMapper()->getMatchById($matchId);
 
         if (!$this->getService()->isAllowed($match)) {
             throw new \RuntimeException(
@@ -195,7 +173,7 @@ class ResultController extends DefaultController
             if ($form->isValid()) {
                 /* @var $data \Season\Entity\Match */
                 $data = $form->getData();
-                $resultMapper->save($data);
+                $this->getResultMapper()->save($data);
 
                 /* @var $mail \League\Mail\ResultMail */
                 $mail = $this->getMailService()->getMail(MailService::RESULT_MAIL);
@@ -219,7 +197,7 @@ class ResultController extends DefaultController
     }
 
     /**
-     * results by match day
+     * result widget
      *
      * @return \Zend\Http\Response|ViewModel
      */
@@ -227,29 +205,18 @@ class ResultController extends DefaultController
     {
         $matchDay = $this->params()->fromRoute('id');
 
-        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-        $season = $seasonMapper->getActiveSeasonByAssociation(1);
-
-        /* @var $leagueMapper \League\Mapper\LeagueMapper */
-        $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-        $topLeague = $leagueMapper->getTopLeagueBySeason($season->getId());
-
-        /* @var $resultMapper \League\Mapper\ResultMapper */
-        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
+        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
+        $topLeague = $this->getLeagueMapper()->getTopLeagueBySeason($season->getId());
 
         if (empty($matchDay)) {
-            $matchDay = $resultMapper->getActualMatchDayByLeague($topLeague->getId());
+            $matchDay = $this->getResultMapper()->getActualMatchDayByLeague($topLeague->getId());
         }
-
-        $matches = $resultMapper->getMatchesByMatchDay($topLeague->getId(), $matchDay);
-        $pagination = $this->getPaginationService()->getPagination($topLeague->getId(), $matchDay);
-        $legend = $this->getResultService()->getLegendByMatches($matches);
+        $matches = $this->getResultMapper()->getMatchesByMatchDay($topLeague->getId(), $matchDay);
 
         return new ViewModel(
             array(
-                'pagination' => $pagination,
-                'legend' => $legend,
+                'pagination' => $this->getPaginationService()->getPagination($topLeague->getId(), $matchDay),
+                'legend' => $this->getResultService()->getLegendByMatches($matches),
                 'matchDay' =>  $matchDay,
                 'matches' =>  $matches
             )

@@ -2,15 +2,15 @@
     <?php echo $this->blogWidget;?>
 </div>
 
-<div class="row">
+<div class="row" style="padding 10px;">
 
-    <div class="span2" style="width:auto; margin-top:0.5em; margin-right:2em;">
+    <div class="span2" style="width:auto;">
         <?php echo $this->tableWidget;?>
    </div>
 
-    <div class="span3" style="width:auto; margin-top:0.5em; margin-right:2em;">
-        <div style="margin-bottom: 30px;"><?php echo $this->resultWidget;?></div>
-        <div><?php echo $this->rulesWidget;?></div>
+    <div class="span3" style="width:auto;">
+        <?php echo $this->resultWidget;?>
+        <?php echo $this->rulesWidget;?>
     </div>
 
     <?php $this->placeholder('nakade')->captureStart();?>
@@ -28,7 +28,7 @@
     <?php $this->placeholder('register')->captureEnd();?>
 
 
-    <div class="span4" style="width:300px;margin-top:0.5em; margin-right:2em;">
+    <div class="span4" style="width:300px;">
     <?php
 
     if (empty($this->registerWidget)) {

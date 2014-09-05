@@ -15,7 +15,7 @@ if (!is_null($this->league)) {
 ?>
 <?php $this->placeholder('schedule')->captureStart();?>
     <div class="widget">
-        <h3><?php echo $title; ?></h3>
+        <h3><?php echo $title;?></h3>
         <a class="iCal" title="<?php echo $iCalInfo; ?>" href="<?php echo $this->url('timeTable', array('action' => 'iCal')); ?>">
             <?php echo $this->translate("Download your calendar"); ?>
         </a>
