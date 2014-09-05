@@ -1,11 +1,12 @@
 <?php $this->plugin('translate')->setTranslatorTextDomain('Auth'); ?>
 <?php
 
+echo $this->scheduleWidget;
+
 echo $this->participationWidget;
 
 if (isset($this->inviteWidget)) {
     echo $this->inviteWidget;
 }
 
-echo $this->scheduleWidget;
 

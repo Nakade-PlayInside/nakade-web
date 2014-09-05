@@ -7,20 +7,19 @@ use Zend\View\Helper\AbstractHelper;
  *
  * @package League\View\Helper
  */
-class PagingUrl extends AbstractHelper
+class LeaguePaging extends AbstractHelper
 {
     /**
      * @param int    $page
-     * @param string $param
      *
      * @return mixed
      */
-    public function __invoke($page, $param='id')
+    public function __invoke($page)
     {
         $route = $this->getRouteMatch()->getMatchedRouteName();
         $action = $this->getRouteMatch()->getParam('action');
 
-        return $this->getView()->url($route, array('action' => $action, $param => $page));
+        return $this->getView()->url($route, array('action' => $action, 'league' => 'league=' . $page));
     }
 
 

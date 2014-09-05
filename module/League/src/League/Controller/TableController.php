@@ -1,6 +1,7 @@
 <?php
 namespace League\Controller;
 
+use League\Pagination\LeaguePagination;
 use League\Standings\MatchStats;
 use League\Standings\Sorting\SortingInterface;
 use Zend\Http\Response;
@@ -23,16 +24,13 @@ class TableController extends DefaultController
     */
     public function indexAction()
     {
-        $sortBy  = $this->params()->fromRoute('sort', SortingInterface::BY_POINTS);
-
-        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
-        $league = $this->getLeagueMapper()->getTopLeagueBySeason($season->getId());
+        $league = $this->getActualLeague();
         $matches = $this->getLeagueMapper()->getMatchesByLeague($league->getId());
 
         return new ViewModel(
             array(
               'tournament'   => $league,
-              'table'    => $this->getPlayersTable($matches, $sortBy),
+              'table'    => $this->getPlayersTable($matches),
             )
         );
     }
@@ -44,26 +42,81 @@ class TableController extends DefaultController
     *
     * @return array|ViewModel
     */
-    public function tableAction()
+    public function detailedAction()
     {
-       //sorting the table
-       $sortBy  = $this->params()->fromRoute('sort', SortingInterface::BY_POINTS);
+       $sortBy  = $this->params()->fromRoute('sort');
+       $leagueNo  = $this->params()->fromRoute('league');
 
-       $userId = $this->identity()->getId();
-       $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
-       $league = $this->getScheduleMapper()->getLeagueByUser($season->getId(), $userId);
+       $sortBy = str_replace('sort=', '', $sortBy);
+       $leagueNo = str_replace('league=', '', $leagueNo);
 
-       if (is_null($league)) {
-           $league = $this->getLeagueMapper()->getTopLeagueBySeason($season->getId());
-       }
+
+       $league = $this->getActualLeague($leagueNo);
        $matches = $this->getLeagueMapper()->getMatchesByLeague($league->getId());
 
        return new ViewModel(
            array(
               'tournament'  => $league,
               'table'   => $this->getPlayersTable($matches, $sortBy),
+              'paginator' => $this->getPaginator()->getPagination($league->getNumber()),
            )
        );
+    }
+
+    /**
+     * @return \Season\Entity\Season|null
+     */
+    private function getActualSeason()
+    {
+        $association = 1;
+        return $this->getSeasonMapper()->getActiveSeasonByAssociation($association);
+    }
+
+
+    /**
+     * @param null|int $leagueNo
+     *
+     * @return null|\Season\Entity\League
+     */
+    private function getActualLeague($leagueNo=null)
+    {
+        $season = $this->getActualSeason();
+        $league = null;
+
+        if(is_null($season)) {
+            return  $league;
+        }
+
+        if(!is_null($leagueNo)) {
+            return $this->getLeagueMapper()->getLeagueByNumber($season, $leagueNo);
+        }
+
+        $user = $this->identity();
+        if(!empty($user)) {
+            $league = $this->getScheduleMapper()->getLeagueByUser($season->getId(), $user->getId());
+        }
+
+        if (empty($league)) {
+            $league = $this->getLeagueMapper()->getTopLeagueBySeason($season->getId());
+        }
+
+        return  $league;
+    }
+
+
+    /**
+     * @return LeaguePagination
+     */
+    private function getPaginator()
+    {
+        $leaguesInSeason = array();
+        $season = $this->getActualSeason();
+
+        if(!is_null($season)) {
+            $leaguesInSeason = $this->getLeagueMapper()->getLeaguesBySeason($season->getId());
+        }
+
+        return  new LeaguePagination($leaguesInSeason);
     }
 
     /**

@@ -16,20 +16,32 @@ class LeagueMapper extends AbstractMapper
     /**
      * @param int $seasonId
      *
-     * @return mixed
+     * @return \Season\Entity\League|null
      */
     public function getTopLeagueBySeason($seasonId)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder('League');
-        $qb->select('l')
+        return $this->getLeagueByNumber($seasonId);
+    }
+
+    /**
+     * @param int $seasonId
+     * @param int $number
+     *
+     * @return \Season\Entity\League|null
+     */
+    public function getLeagueByNumber($seasonId, $number=1)
+    {
+        return  $this->getEntityManager()
+            ->createQueryBuilder('League')
+            ->select('l')
             ->from('Season\Entity\League', 'l')
             ->innerJoin('l.season', 'season')
-            ->andWhere('season.id = :seasonId')
-            ->orderBy('l.number', 'DESC')
-            ->setMaxResults(1)
-            ->setParameter('seasonId', $seasonId);
-
-        return $qb->getQuery()->getOneOrNullResult();
+            ->where('season.id = :seasonId')
+            ->andWhere('l.number = :number')
+            ->setParameter('seasonId', $seasonId)
+            ->setParameter('number', $number)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
@@ -51,6 +63,25 @@ class LeagueMapper extends AbstractMapper
 
         $result = $qb->getQuery()->getResult();
         return $result;
+    }
+
+    /**
+     * @param int $seasonId
+     *
+     * @return array
+     */
+    public function getLeaguesBySeason($seasonId)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('league')
+            ->select('l')
+            ->from('Season\Entity\League', 'l')
+            ->innerJoin('l.season', 'Season')
+            ->where('Season.id = :seasonId')
+            ->setParameter('seasonId', $seasonId)
+            ->getQuery()
+            ->getResult();
+
     }
 
 

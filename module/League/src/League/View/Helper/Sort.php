@@ -14,10 +14,11 @@ class Sort extends AbstractHelper implements SortingInterface
 
     /**
      * @param string $sort
+     * @param int $leagueNo
      *
-     * @return string
+     * @return mixed
      */
-    public function __invoke($sort=self::BY_NAME)
+    public function __invoke($sort=self::BY_NAME, $leagueNo=1)
     {
         $sm = $this->getView()->getHelperPluginManager()->getServiceLocator();
         $request = $sm->get('request');
@@ -28,7 +29,10 @@ class Sort extends AbstractHelper implements SortingInterface
         $route = $routeMatch->getMatchedRouteName();
         $action = $routeMatch->getParam('action');
 
-        return $this->getView()->url($route, array('action' => $action, 'sort' => $sort));
+        return $this->getView()->url($route, array(
+            'action' => $action,
+            'sort' => 'sort=' . $sort,
+            'league' => 'league=' . $leagueNo));
 
     }
 

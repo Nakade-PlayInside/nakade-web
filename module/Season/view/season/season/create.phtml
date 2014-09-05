@@ -73,6 +73,7 @@ if ($season->hasLeagues() && !$season->hasMatchDays() ) {
 if ($season->hasSchedule() ) {
     echo $this->placeholder('schedule');
 }
+//todo : hasMatchDays not correct
 if ($season->hasMatchDays() && !$season->hasSchedule()) {
     echo $this->placeholder('matchDays');
 }

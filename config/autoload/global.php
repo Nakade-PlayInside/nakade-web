@@ -195,9 +195,9 @@ return array(
                     ),
                     'standings' => array(
                         'label' => 'Standings',
-                        'route' => 'actual',
+                        'route' => 'table',
                         'controller' => 'League\Controller\Table',
-                        'action' => 'table',
+                        'action' => 'detailed',
                     ),
                     'results' => array(
                         'label' => 'Enter Result',
