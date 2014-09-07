@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-23 18:32+0100\n"
-"PO-Revision-Date: 2014-08-24 13:14+0100\n"
+"POT-Creation-Date: 2014-09-07 15:09+0100\n"
+"PO-Revision-Date: 2014-09-07 15:09+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -190,18 +190,6 @@ msgstr "Falls du deinen Termin am %NEW_DATE% nicht einhalten kannst, nutze die M
 msgid "automatic"
 msgstr "automatisch"
 
-#: ../src/League/View/Helper/GetMatchInfo.php:26
-msgid "Season"
-msgstr "Saison"
-
-#: ../src/League/View/Helper/GetMatchInfo.php:31
-msgid "League"
-msgstr "Liga"
-
-#: ../src/League/View/Helper/GetMatchInfo.php:36
-msgid "Match day"
-msgstr "Spieltag"
-
 #: ../src/League/View/Helper/OpenResult.php:27
 msgid "Enter Result"
 msgstr "Ergebnis eintragen"
@@ -333,10 +321,20 @@ msgstr "nicht Erschienen"
 msgid "Suspended"
 msgstr " nicht gespielt"
 
+#: ../view/partial/leaguePagination.phtml:6
 #: ../view/partial/pagination.phtml:6
 #: ../view/partial/myPagination.phtml:6
 msgid "previous"
 msgstr "zurück"
+
+#: ../view/partial/leaguePagination.phtml:15
+#: ../view/partial/leaguePagination.phtml:21
+msgid "League"
+msgstr "Liga"
+
+#: ../view/partial/leaguePagination.phtml:19
+msgid "Actual"
+msgstr "Aktuell"
 
 #: ../view/partial/pagination.phtml:18
 msgid "click"
@@ -350,85 +348,86 @@ msgstr "weiter"
 msgid "Actual Page"
 msgstr "Aktuelle Seite"
 
-#: ../view/league/table/index.phtml:9
-msgid "%name% 1. League"
-msgstr "%name% 1. Liga"
+#: ../view/league/table/index.phtml:7
+msgid "%NAME% League %YEAR%"
+msgstr "%NAME% Liga %YEAR%"
 
-#: ../view/league/table/index.phtml:14
-#: ../view/league/table/table.phtml:20
-#: ../view/league/time-table/schedule.phtml:14
-msgid "No season found"
-msgstr "Keine Saison gefunden."
+#: ../view/league/table/index.phtml:13
+msgid "%No%.League"
+msgstr "%No%.Liga"
 
-#: ../view/league/table/index.phtml:23
-#: ../view/league/table/table.phtml:27
+#: ../view/league/table/index.phtml:16
+msgid "%No%.Match Day"
+msgstr "%No%.Spieltag"
+
+#: ../view/league/table/index.phtml:27
+#: ../view/league/table/detailed.phtml:31
 msgid "Position"
 msgstr "Platz"
 
-#: ../view/league/table/index.phtml:24
-#: ../view/league/table/table.phtml:28
+#: ../view/league/table/index.phtml:28
+#: ../view/league/table/detailed.phtml:32
 msgid "Player"
 msgstr "Spieler"
 
-#: ../view/league/table/index.phtml:25
-#: ../view/league/table/table.phtml:29
+#: ../view/league/table/index.phtml:29
+#: ../view/league/table/detailed.phtml:34
 msgid "Name"
 msgstr "Name"
 
-#: ../view/league/table/index.phtml:26
+#: ../view/league/table/index.phtml:30
 msgid "Games"
 msgstr "Spiele"
 
-#: ../view/league/table/index.phtml:27
+#: ../view/league/table/index.phtml:31
 msgid "G"
 msgstr "S"
 
-#: ../view/league/table/index.phtml:29
+#: ../view/league/table/index.phtml:33
 msgid "P"
 msgstr "P"
 
-#: ../view/league/table/index.phtml:30
+#: ../view/league/table/index.phtml:34
 msgid "Tiebreaker"
 msgstr "Tie-Breaker"
 
-#: ../view/league/table/index.phtml:31
+#: ../view/league/table/index.phtml:35
 msgid "TB"
 msgstr "TB"
 
-#: ../view/league/table/table.phtml:10
-#: ../view/league/time-table/schedule.phtml:8
-msgid "%name% %no%. League"
-msgstr "%name% %no%. Liga"
+#: ../view/league/table/detailed.phtml:10
+msgid "%NAME% League - %NUMBER%.Season"
+msgstr "%NAME% Liga - %NUMBER%.Saison"
 
-#: ../view/league/table/table.phtml:30
+#: ../view/league/table/detailed.phtml:37
 msgid "played games"
 msgstr "gespielte Partien"
 
-#: ../view/league/table/table.phtml:31
+#: ../view/league/table/detailed.phtml:39
 msgid "GP"
 msgstr "GP"
 
-#: ../view/league/table/table.phtml:32
+#: ../view/league/table/detailed.phtml:42
 msgid "Wins"
 msgstr "Siege"
 
-#: ../view/league/table/table.phtml:33
+#: ../view/league/table/detailed.phtml:44
 msgid "W"
 msgstr "S"
 
-#: ../view/league/table/table.phtml:34
+#: ../view/league/table/detailed.phtml:47
 msgid "Jigo"
 msgstr "Jigo"
 
-#: ../view/league/table/table.phtml:35
+#: ../view/league/table/detailed.phtml:49
 msgid "J"
 msgstr "U"
 
-#: ../view/league/table/table.phtml:36
+#: ../view/league/table/detailed.phtml:52
 msgid "Lost"
 msgstr "Niederlagen"
 
-#: ../view/league/table/table.phtml:37
+#: ../view/league/table/detailed.phtml:54
 msgid "L"
 msgstr "N"
 
@@ -436,14 +435,24 @@ msgstr "N"
 msgid "edit match day"
 msgstr "Spieltag bearbeiten"
 
-#: ../view/league/time-table/index.phtml:11
+#: ../view/league/time-table/index.phtml:12
 msgid "Matchday"
 msgstr "Spieltag"
 
-#: ../view/league/time-table/index.phtml:16
-#: ../view/league/time-table/index.phtml:30
+#: ../view/league/time-table/index.phtml:17
+#: ../view/league/time-table/index.phtml:31
+#: ../view/league/result/all-results.phtml:31
+#: ../view/league/result/all-results.phtml:45
 msgid "edit"
 msgstr "bearbeiten"
+
+#: ../view/league/time-table/schedule.phtml:8
+msgid "Schedule %name% %no%. League"
+msgstr "Spielplan %name% %no%. Liga"
+
+#: ../view/league/time-table/schedule.phtml:14
+msgid "No season found"
+msgstr "Keine Saison gefunden."
 
 #: ../view/league/time-table/my-schedule.phtml:4
 msgid "download your schedule calendar (iCal)"
@@ -461,7 +470,7 @@ msgstr "Lade dir deinen Spielplan runter"
 msgid "my color"
 msgstr "Meine Spielfarbe"
 
-#: ../view/league/time-table/edit.phtml:5
+#: ../view/league/time-table/edit.phtml:7
 msgid "edit match date"
 msgstr "Spieltag bearbeiten"
 
@@ -477,9 +486,8 @@ msgstr "keine offenen Ergebnisse gefunden"
 msgid "%name% League - My Results"
 msgstr "%name% Liga - Meine Ergebnisse"
 
-#: ../view/league/result/my-result.phtml:14
-#: ../view/league/result/actual-results.phtml:10
-#: ../view/league/result/all-results.phtml:13
+#: ../view/league/result/my-result.phtml:13
+#: ../view/league/result/all-results.phtml:14
 msgid "No results found"
 msgstr "Keine Ergebnisse gefunden"
 
@@ -502,6 +510,16 @@ msgstr "Ergebnisse - %no%. Spieltag"
 #: ../view/league/result/edit.phtml:6
 msgid "Edit Result"
 msgstr "Ergebnis bearbeiten"
+
+#: ../view/league/result/edit.phtml:7
+#: ../view/league/result/add.phtml:8
+msgid "%name% %no%.Season - %number%.League"
+msgstr "%name% %no%.Saison - %number%.Liga"
+
+#: ../view/league/result/edit.phtml:13
+#: ../view/league/result/add.phtml:14
+msgid "Match day"
+msgstr "Spieltag"
 
 #: ../view/league/result/all-results.phtml:7
 msgid "%name% League - All Results"
@@ -531,18 +549,20 @@ msgstr "Insgesamt"
 msgid "Result(s)"
 msgstr "Ergebnis(se)"
 
-#: ../view/league/result/add.phtml:6
-msgid "New Result"
-msgstr "Neues Ergebnis"
+#~ msgid "Season"
+#~ msgstr "Saison"
+
+#~ msgid "%name% 1. League"
+#~ msgstr "%name% 1. Liga"
+
+#~ msgid "New Result"
+#~ msgstr "Neues Ergebnis"
 
 #~ msgid "Division"
 #~ msgstr "Abteilung"
 
 #~ msgid "Change Colors"
 #~ msgstr "Farben tauschen"
-
-#~ msgid "%no%.Match day"
-#~ msgstr "%no%.Spieltag"
 
 #~ msgid "No schedule found"
 #~ msgstr "Kein Spielplan gefunden"
