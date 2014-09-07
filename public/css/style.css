@@ -23,24 +23,14 @@ body {
     margin-top: 0.5em;
 }
 
-.league .versus {
-    padding: 0 6px;
+.league td {
+    padding: 0 5px;
 }
 
-.league .space {
-   padding-right: 10px;
+.league .infoBtn {
+    vertical-align: text-bottom;
+    display: inline-block;
 }
-
-.league .black {
-   width: 20px;
-   background: url('../images/black.png') no-repeat center center;
-}
-
-.league .white {
-   width: 20px;
-   background: url('../images/white.png') no-repeat center center;
-}
-
 
 .zf-green {
     color: #68b604;

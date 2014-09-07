@@ -1,0 +1,52 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Support');
+/* @var $ticket \Support\Entity\Feature */
+$this->headTitle('Moderator View');
+
+?>
+<div class="widget">
+    <h3><?php echo $this->translate('Feature Requests & Bugs'); ?></h3>
+    <hr/>
+    <a class="addFeature nakade-16 bug-16" href="<?php echo $this->url('feature', array('action' => 'add')); ?>">
+        <?php echo $this->translate("add Request"); ?>
+    </a>
+
+    <?php $this->placeholder('nothing')->captureStart();?>
+    <h3><?php echo $this->translate('Nothing found'); ?></h3>
+    <?php $this->placeholder('nothing')->captureEnd(); ?>
+
+    <?php $this->placeholder('feature')->captureStart();?>
+    <table class="table profile">
+        <tr>
+            <th><?php echo $this->translate("ID"); ?></th>
+            <th><?php echo $this->translate("Type"); ?></th>
+            <th><?php echo $this->translate("Creator"); ?></th>
+            <th><?php echo $this->translate("Date"); ?></th>
+        </tr>
+        <?php foreach ($this->features as $ticket) : ?>
+            <tr style="background-color:<?php
+            echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+                <td style="text-align: right"><?php echo $ticket->getId(); ?></td>
+                <td><?php echo $ticket->getType();?></td>
+                <td><?php echo $ticket->getCreator()->getShortName();?></td>
+                <td><?php echo $ticket->getCreateDate()->format('d.m.y H:i'); ?></td>
+                <td>
+                    <a class="button" title="<?php echo $this->translate('shift'); ?>"
+                       href="<?php echo $this->url('feature', array('action' => 'detail', 'id' => $ticket->getId())); ?>">
+                        <div class='btnCenter buttons-16 info-16'></div>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <p><?php echo $this->translate("Total") . ' ' . count($this->features) . ' ' . $this->translate("Request(s)"); ?></p>
+    <?php $this->placeholder('feature')->captureEnd();?>
+
+
+    <?php if (empty($this->features)) {
+        echo $this->placeholder('nothing');
+    } else {
+        echo $this->placeholder('feature');
+    }
+    ?>
+</div>

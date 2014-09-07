@@ -48,6 +48,7 @@ return array(
             'Support\Controller\Referee' => RoleInterface::ROLE_MODERATOR,
             'Support\Controller\Support' => RoleInterface::ROLE_GUEST,
             'Support\Controller\Ticket' => RoleInterface::ROLE_MANAGER, //LM, admin, owner, refs
+            'Support\Controller\Feature' => RoleInterface::ROLE_GUEST,
 
             'Arbitration\Controller\Arbitration' => RoleInterface::ROLE_REFEREE,
 

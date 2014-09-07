@@ -136,14 +136,7 @@ return array(
                 'controller' => 'Application\Controller\Index',
                 'action' => 'index',
             ),
-            //profile
-            /*   'profile' => array(
-                   'label' => 'Profile',
-                   'route' => 'profile',
-                   'controller' => 'User\Controller\Profile',
-                   'action' => 'index',
-                   'privilege' => RoleInterface::ROLE_GUEST
-               ),*/
+
             //dashboard
             'dashboard' => array(
                 'label' => 'Dashboard',
@@ -152,34 +145,6 @@ return array(
                 'action' => 'index',
                 'privilege' => RoleInterface::ROLE_GUEST,
             ),
-
-            //messages
-            /*   'messages' => array(
-                   'label' => 'Messages',
-                   'route' => 'message',
-                   'order' => 5,
-                   'privilege' => RoleInterface::ROLE_GUEST,
-                   'pages' => array(
-                       'inbox' => array(
-                           'label' => 'Inbox',
-                           'route' => 'message',
-                           'controller' => 'Message\Controller\Message',
-                           'action' => 'index'
-                       ),
-                       'new_messages' => array(
-                           'label' => 'New Message',
-                           'route' => 'message',
-                           'controller' => 'Message\Controller\Message',
-                           'action' => 'new'
-                       ),
-                       'outbox' => array(
-                           'label' => 'Outbox',
-                           'route' => 'message',
-                           'controller' => 'Message\Controller\Message',
-                           'action' => 'outbox'
-                       ),
-                   )
-               ),*/
 
             //league
             'league' => array(
@@ -214,30 +179,6 @@ return array(
                 )
             ),
 
-            //appointment
-         /*   'appointment' => array(
-                'label' => 'Appointment',
-                'route' => 'appointmentShow',
-                'privilege' => RoleInterface::ROLE_GUEST,
-                'pages' => array(
-                    'available' => array(
-                        'label' => 'Shift Date',
-                        'route' => 'appointmentShow',
-                        'controller' => 'Appointment\Controller\Show',
-                        'action' => 'available',
-                    ),
-                    'confirm' => array(
-                        'label' => 'Confirm',
-                        'route' => 'appointmentShow',
-                        'controller' => 'Appointment\Controller\Show',
-                        'action' => 'index',
-                    ),
-                )
-            ),*/
-
-
-
-
 
             //support
             'support' => array(
@@ -271,6 +212,12 @@ return array(
                         'controller' => 'Support\Controller\Support',
                         'action' => 'add',
                         'params' => array ('id' => 3),
+                    ),
+                    'bug' => array(
+                        'label' => 'Bug Report',
+                        'route' => 'feature',
+                        'controller' => 'Support\Controller\Feature',
+                        'action' => 'index',
                     ),
                 )
             ),

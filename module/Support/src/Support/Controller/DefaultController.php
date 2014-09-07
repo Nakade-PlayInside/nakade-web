@@ -36,6 +36,16 @@ class DefaultController extends AbstractController implements StageInterface, Su
     }
 
     /**
+     * @return \Support\Mapper\FeatureMapper
+     */
+    protected function getFeatureMapper()
+    {
+        /* @var $repo \Support\Services\RepositoryService */
+        $repo = $this->getRepository();
+        return $repo->getMapper(RepositoryService::FEATURE_MAPPER);
+    }
+
+    /**
      * @param int $stageId
      *
      * @return \Support\Entity\SupportStage
