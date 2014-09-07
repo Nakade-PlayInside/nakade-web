@@ -2,6 +2,9 @@
 $this->plugin('translate')->setTranslatorTextDomain('League');
 /* @var $match \Season\Entity\Match */
 $title = $this->translate("Results - Match Day %no%");
+if (empty($this->matchDay)) {
+    $this->matchDay=1;
+}
 $title = str_replace('%no%', $this->matchDay, $title);
 $this->headTitle('Actual Results');
 ?>
@@ -30,6 +33,6 @@ $this->headTitle('Actual Results');
     </div>
 <?php $this->placeholder('openResults')->captureEnd();
 
-if (!is_null($this->matches) && $this->matchDay>0) {
+if (!is_null($this->matches)) {
     echo $this->placeholder('openResults');
 }

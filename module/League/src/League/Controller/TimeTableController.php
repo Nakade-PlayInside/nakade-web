@@ -1,14 +1,9 @@
 <?php
 namespace League\Controller;
 
-use League\iCal\iCal;
 use League\Services\ICalService;
 use League\Services\LeagueFormService;
-use League\Services\RepositoryService;
-use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
-use Zend\Http\PhpEnvironment\Response as iCalResponse;
-use Zend\Http\Headers;
 use League\Services\MailService;
 
 
@@ -34,7 +29,7 @@ class TimeTableController extends DefaultController
 
         //todo: paginator for leagues
         //todo: filter for associations depending on role of the requesting user
-        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
+        $season = $this->getActualSeason();
 
         return new ViewModel(
             array(
@@ -114,19 +109,18 @@ class TimeTableController extends DefaultController
      */
     public function scheduleAction()
     {
-        $userId = $this->identity()->getId();
-
-        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
-        $league = $this->getScheduleMapper()->getLeagueByUser($season->getId(), $userId);
-
-        if (is_null($league)) {
-            $league = $this->getLeagueMapper()->getTopLeagueBySeason($season->getId());
+        $leagueNo  = $this->params()->fromRoute('league', null);
+        if (!is_null($leagueNo)) {
+            $leagueNo = str_replace('league=', '', $leagueNo);
         }
+
+        $league = $this->getActualLeague();
 
         return new ViewModel(
             array(
                 'league' => $league,
-                'matches' => $this->getScheduleMapper()->getScheduleByLeague($league)
+                'matches' => $this->getScheduleMapper()->getScheduleByLeague($league),
+                'paginator' => $this->getLeaguePaginator()->getPagination($league->getNumber()),
             )
         );
     }
@@ -141,7 +135,7 @@ class TimeTableController extends DefaultController
     {
         $userId = $this->identity()->getId();
 
-        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
+        $season = $season = $this->getActualSeason();
         $league = $this->getScheduleMapper()->getLeagueByUser($season->getId(), $userId);
 
         $matches = array();
@@ -164,7 +158,7 @@ class TimeTableController extends DefaultController
     {
         $userId = $this->identity()->getId();
 
-        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
+        $season = $season = $this->getActualSeason();
         $league = $this->getScheduleMapper()->getLeagueByUser($season->getId(), $userId);
 
         $matches = array();

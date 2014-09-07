@@ -2,7 +2,6 @@
 namespace League\Controller;
 
 use League\Services\LeagueFormService;
-use League\Services\RepositoryService;
 use Nakade\Pagination\ItemPagination;
 use Zend\View\Model\ViewModel;
 use League\Services\MailService;
@@ -29,7 +28,7 @@ class ResultController extends DefaultController
     public function indexAction()
     {
 
-        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
+        $season = $this->getActualSeason();
 
         return new ViewModel(
             array(
@@ -48,7 +47,7 @@ class ResultController extends DefaultController
     {
         $page = (int) $this->params()->fromRoute('id', 1);
 
-        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
+        $season = $this->getActualSeason();
         $total = $this->getResultMapper()->getActualResultsByPages($season->getId());;
         $pagination = new ItemPagination($total);
 
@@ -70,8 +69,7 @@ class ResultController extends DefaultController
     */
     public function myResultAction()
     {
-        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
-
+        $season = $this->getActualSeason();
         return new ViewModel(
             array(
                'season' =>  $season,
@@ -204,13 +202,17 @@ class ResultController extends DefaultController
     public function actualResultsAction()
     {
         $matchDay = $this->params()->fromRoute('id');
-
-        $season = $this->getSeasonMapper()->getActiveSeasonByAssociation(1);
+        $season = $this->getActualSeason();
         $topLeague = $this->getLeagueMapper()->getTopLeagueBySeason($season->getId());
 
         if (empty($matchDay)) {
             $matchDay = $this->getResultMapper()->getActualMatchDayByLeague($topLeague->getId());
+
+            if ($matchDay==0) {
+                $matchDay=1;
+            }
         }
+
         $matches = $this->getResultMapper()->getMatchesByMatchDay($topLeague->getId(), $matchDay);
 
         return new ViewModel(

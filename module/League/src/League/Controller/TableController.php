@@ -1,7 +1,6 @@
 <?php
 namespace League\Controller;
 
-use League\Pagination\LeaguePagination;
 use League\Standings\MatchStats;
 use League\Standings\Sorting\SortingInterface;
 use Zend\Http\Response;
@@ -67,66 +66,11 @@ class TableController extends DefaultController
             array(
                 'tournament'  => $league,
                 'table'   => $this->getPlayersTable($matches, $sortBy),
-                'paginator' => $this->getPaginator()->getPagination($league->getNumber()),
+                'paginator' => $this->getLeaguePaginator()->getPagination($league->getNumber()),
             )
         );
     }
 
-    /**
-     * @return \Season\Entity\Season|null
-     */
-    private function getActualSeason()
-    {
-        $association = 1;
-        return $this->getSeasonMapper()->getActiveSeasonByAssociation($association);
-    }
-
-
-    /**
-     * @param null|int $leagueNo
-     *
-     * @return null|\Season\Entity\League
-     */
-    private function getActualLeague($leagueNo=null)
-    {
-        $season = $this->getActualSeason();
-        $league = null;
-
-        if(is_null($season)) {
-            return  $league;
-        }
-
-        if(!is_null($leagueNo)) {
-            return $this->getLeagueMapper()->getLeagueByNumber($season, $leagueNo);
-        }
-
-        $user = $this->identity();
-        if(!empty($user)) {
-            $league = $this->getScheduleMapper()->getLeagueByUser($season->getId(), $user->getId());
-        }
-
-        if (empty($league)) {
-            $league = $this->getLeagueMapper()->getTopLeagueBySeason($season->getId());
-        }
-
-        return  $league;
-    }
-
-
-    /**
-     * @return LeaguePagination
-     */
-    private function getPaginator()
-    {
-        $leaguesInSeason = array();
-        $season = $this->getActualSeason();
-
-        if(!is_null($season)) {
-            $leaguesInSeason = $this->getLeagueMapper()->getLeaguesBySeason($season->getId());
-        }
-
-        return  new LeaguePagination($leaguesInSeason);
-    }
 
     /**
      * @param array  $matches
