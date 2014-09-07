@@ -256,18 +256,21 @@ class ScheduleMapper  extends AbstractMapper
             ->setParameter('uid', $uid)
             ->setParameter('now', new \DateTime())
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
 
-        if(!is_null($result)) {
+        $minDate = array_shift($result[0]);
+        if(!empty($minDate)) {
+
             try {
-                $date = new \DateTime(array_shift($result));
+
+                $date = new \DateTime($minDate);
             } catch (\Exception $e) {
                 return null;
             }
             return $date;
         }
 
-        return $result;
+        return null;
 
     }
 

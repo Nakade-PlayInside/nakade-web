@@ -11,7 +11,7 @@ use Zend\Paginator\Adapter\ArrayAdapter;
  */
 class ItemPagination implements PaginationInterface
 {
-    private $paginator;
+    protected $paginator;
 
     /**
      * @param array $items
@@ -23,7 +23,7 @@ class ItemPagination implements PaginationInterface
         $this->paginator->setDefaultItemCountPerPage(self::ITEMS_PER_PAGE);
     }
 
-    private function getAdapter($total)
+    protected function getAdapter($total)
     {
         $pageArray = range(1, $total);
         return new ArrayAdapter($pageArray);

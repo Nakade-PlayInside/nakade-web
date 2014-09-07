@@ -16,6 +16,7 @@ class RepositoryService implements FactoryInterface
 
     const MANAGER_MAPPER = 'manager';
     const TICKET_MAPPER = 'ticket';
+    const FEATURE_MAPPER = 'feature';
 
     private $entityManager;
 
@@ -59,6 +60,10 @@ class RepositoryService implements FactoryInterface
 
             case self::TICKET_MAPPER:
                 $repository = new Mapper\TicketMapper();
+                break;
+
+            case self::FEATURE_MAPPER:
+                $repository = new Mapper\FeatureMapper();
                 break;
 
            default:

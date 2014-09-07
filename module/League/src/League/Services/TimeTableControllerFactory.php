@@ -27,14 +27,12 @@ class TimeTableControllerFactory implements FactoryInterface
         $factory    = $serviceManager->get('League\Services\LeagueFormService');
         $iCal = $serviceManager->get('League\Services\ICalService');
         $mail = $serviceManager->get('League\Services\MailService');
-        $voter = $serviceManager->get('League\Services\MatchVoterService');
 
         $controller = new TimeTableController();
         $controller->setRepository($repository);
         $controller->setFormFactory($factory);
         $controller->setICalService($iCal);
         $controller->setMailService($mail);
-        $controller->setService($voter);
 
         return $controller;
     }

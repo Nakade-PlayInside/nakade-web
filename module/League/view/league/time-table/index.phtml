@@ -4,32 +4,34 @@ $this->plugin('translate')->setTranslatorTextDomain('League');
 $title = $this->translate('edit match day');
 $this->headTitle('League');
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
+<div class="widget">
+    <h3><?php echo $this->escapeHtml($title); ?></h3>
 
-<table class="table results">
-<tr>
-    <th><?php echo $this->translate("Matchday"); ?></th>
-    <th><?php echo $this->translate("League"); ?></th>
-    <th><?php echo $this->translate("Black"); ?></th>
-    <th><?php echo $this->translate("White"); ?></th>
-    <th class="center"><?php echo $this->translate("Date"); ?></th>
-    <th><?php echo $this->translate("edit"); ?></th>
-</tr>
-<?php
+    <table class="table results">
+        <tr>
+            <th><?php echo $this->translate("Matchday"); ?></th>
+            <th><?php echo $this->translate("League"); ?></th>
+            <th><?php echo $this->translate("Black"); ?></th>
+            <th><?php echo $this->translate("White"); ?></th>
+            <th class="center"><?php echo $this->translate("Date"); ?></th>
+            <th><?php echo $this->translate("edit"); ?></th>
+        </tr>
+        <?php
 
 
-foreach ($this->matches as $match) : ?>
-<tr style="background-color:<?php
-    echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-    <td class="center"><?php echo $match->getMatchDay()->getMatchDay(); ?></td>
-    <td class="center"><?php echo $match->getLeague()->getNumber(); ?></td>
-    <td><?php echo $match->getBlack()->getCompleteName();?></td>
-    <td><?php echo $match->getWhite()->getCompleteName();?></td>
-    <td class="center"><?php echo $match->getDate()->format('D, d.m.Y H:i');?></td>
-    <td class="edit">
-        <a class="button edit" title="<?php echo $this->translate('edit')?>"
-           href="<?php echo $this->url('timeTable', array('action' => 'edit', 'id' => $match->getId()));?>"></a>
-    </td>
-</tr>
-<?php endforeach; ?>
-</table>
+        foreach ($this->matches as $match) : ?>
+            <tr style="background-color:<?php
+            echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+                <td class="center"><?php echo $match->getMatchDay()->getMatchDay(); ?></td>
+                <td class="center"><?php echo $match->getLeague()->getNumber(); ?></td>
+                <td><?php echo $match->getBlack()->getCompleteName();?></td>
+                <td><?php echo $match->getWhite()->getCompleteName();?></td>
+                <td class="center"><?php echo $match->getDate()->format('D, d.m.Y H:i');?></td>
+                <td class="edit">
+                    <a class="button edit" title="<?php echo $this->translate('edit')?>"
+                       href="<?php echo $this->url('timeTable', array('action' => 'edit', 'id' => $match->getId()));?>"></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</div>

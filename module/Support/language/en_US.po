@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-24 12:33+0100\n"
-"PO-Revision-Date: 2014-08-24 12:33+0100\n"
+"POT-Creation-Date: 2014-09-07 15:01+0100\n"
+"PO-Revision-Date: 2014-09-07 15:01+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -162,6 +162,7 @@ msgstr ""
 
 #: ../src/Support/Form/SupportForm.php:40
 #: ../src/Support/Form/RefereeForm.php:24
+#: ../src/Support/Form/FeatureForm.php:24
 #: ../src/Support/Form/LeagueManagerForm.php:24
 #: ../src/Support/Form/LeagueManagerForm.php:36
 msgid "choose"
@@ -172,43 +173,59 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: ../src/Support/Form/SupportForm.php:122
+#: ../src/Support/Form/SupportForm.php:132
 msgid "Profile"
 msgstr ""
 
-#: ../src/Support/Form/SupportForm.php:123
+#: ../src/Support/Form/SupportForm.php:133
 msgid "Rights"
 msgstr ""
 
-#: ../src/Support/Form/SupportForm.php:124
+#: ../src/Support/Form/SupportForm.php:134
 msgid "Bug report"
 msgstr ""
 
-#: ../src/Support/Form/SupportForm.php:125
-#: ../src/Support/Form/SupportForm.php:133
-#: ../src/Support/Form/SupportForm.php:141
-#: ../src/Support/Form/SupportForm.php:147
+#: ../src/Support/Form/SupportForm.php:135
+#: ../src/Support/Form/SupportForm.php:143
+#: ../src/Support/Form/SupportForm.php:151
+#: ../src/Support/Form/SupportForm.php:157
 msgid "Other"
 msgstr ""
 
-#: ../src/Support/Form/SupportForm.php:131
+#: ../src/Support/Form/SupportForm.php:141
 msgid "Appointment"
 msgstr ""
 
-#: ../src/Support/Form/SupportForm.php:132
+#: ../src/Support/Form/SupportForm.php:142
 msgid "Result"
 msgstr ""
 
-#: ../src/Support/Form/SupportForm.php:139
+#: ../src/Support/Form/SupportForm.php:149
 msgid "Rules"
 msgstr ""
 
-#: ../src/Support/Form/SupportForm.php:140
+#: ../src/Support/Form/SupportForm.php:150
 msgid "Inappropriate behavior"
 msgstr ""
 
 #: ../src/Support/Form/RefereeForm.php:22
 msgid "Available member"
+msgstr ""
+
+#: ../src/Support/Form/FeatureForm.php:22
+msgid "Type"
+msgstr ""
+
+#: ../src/Support/Form/FeatureForm.php:34
+msgid "Description"
+msgstr ""
+
+#: ../src/Support/Form/FeatureForm.php:78
+msgid "Feature"
+msgstr ""
+
+#: ../src/Support/Form/FeatureForm.php:79
+msgid "Bug"
 msgstr ""
 
 #: ../src/Support/Form/LeagueManagerForm.php:22
@@ -219,50 +236,87 @@ msgstr ""
 msgid "League"
 msgstr ""
 
-#: ../view/support/referee/index.phtml:9
-msgid "No Referee found"
+#: ../view/support/feature/index.phtml:8
+msgid "Feature Requests & Bugs"
 msgstr ""
 
-#: ../view/support/referee/index.phtml:13
-msgid "Referee Overview"
+#: ../view/support/feature/index.phtml:11
+msgid "add Request"
 msgstr ""
 
-#: ../view/support/referee/index.phtml:15
-msgid "add Referee"
+#: ../view/support/feature/index.phtml:15
+msgid "Nothing found"
 msgstr ""
 
-#: ../view/support/referee/index.phtml:21
-#: ../view/support/support/index.phtml:17
-#: ../view/support/ticket/index.phtml:17
-#: ../view/support/manager/index.phtml:20
+#: ../view/support/feature/index.phtml:21
 msgid "ID"
 msgstr ""
 
+#: ../view/support/feature/index.phtml:23
+msgid "Creator"
+msgstr ""
+
+#: ../view/support/feature/index.phtml:24
+msgid "Date"
+msgstr ""
+
+#: ../view/support/feature/index.phtml:34
+msgid "shift"
+msgstr ""
+
+#: ../view/support/feature/index.phtml:42
+msgid "Total"
+msgstr ""
+
+#: ../view/support/feature/index.phtml:42
+msgid "Request(s)"
+msgstr ""
+
+#: ../view/support/feature/detail.phtml:11
+msgid "No Ticket found"
+msgstr ""
+
+#: ../view/support/feature/detail.phtml:15
+msgid "Request Details"
+msgstr ""
+
+#: ../view/support/feature/detail.phtml:19
+msgid "Stage"
+msgstr ""
+
+#: ../view/support/feature/detail.phtml:33
+msgid "Return"
+msgstr ""
+
+#: ../view/support/feature/add.phtml:4
+msgid "Add Feature or Bug Report"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:7
+msgid "Referee Overview"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:9
+msgid "add Referee"
+msgstr ""
+
+#: ../view/support/referee/index.phtml:14
+msgid "No Referee found"
+msgstr ""
+
 #: ../view/support/referee/index.phtml:22
-#: ../view/support/manager/index.phtml:21
+#: ../view/support/manager/index.phtml:22
 msgid "Name"
 msgstr ""
 
 #: ../view/support/referee/index.phtml:23
-#: ../view/support/manager/index.phtml:23
+#: ../view/support/manager/index.phtml:24
 msgid "Nominated"
 msgstr ""
 
 #: ../view/support/referee/index.phtml:24
-#: ../view/support/manager/index.phtml:24
+#: ../view/support/manager/index.phtml:25
 msgid "active"
-msgstr ""
-
-#: ../view/support/referee/index.phtml:33
-#: ../view/support/manager/index.phtml:34
-msgid "shift"
-msgstr ""
-
-#: ../view/support/referee/index.phtml:44
-#: ../view/support/support/index.phtml:43
-#: ../view/support/ticket/index.phtml:45
-#: ../view/support/manager/index.phtml:45
-msgid "Total"
 msgstr ""
 
 #: ../view/support/referee/index.phtml:44
@@ -291,18 +345,6 @@ msgstr ""
 msgid "My Support Tickets"
 msgstr ""
 
-#: ../view/support/support/index.phtml:20
-#: ../view/support/ticket/index.phtml:21
-msgid "Date"
-msgstr ""
-
-#: ../view/support/support/index.phtml:21
-#: ../view/support/support/detail.phtml:27
-#: ../view/support/ticket/index.phtml:22
-#: ../view/support/ticket/detail.phtml:27
-msgid "Stage"
-msgstr ""
-
 #: ../view/support/support/index.phtml:22
 #: ../view/support/ticket/index.phtml:23
 msgid "Details"
@@ -313,9 +355,10 @@ msgstr ""
 msgid "Ticket(s)"
 msgstr ""
 
-#: ../view/support/support/detail.phtml:11
-#: ../view/support/ticket/detail.phtml:11
-msgid "No Ticket found"
+#: ../view/support/support/mail.phtml:4
+#: ../view/support/support/add.phtml:4
+#: ../view/support/ticket/mail.phtml:4
+msgid "Support Inquiry"
 msgstr ""
 
 #: ../view/support/support/detail.phtml:15
@@ -323,30 +366,21 @@ msgstr ""
 msgid "Ticket Details"
 msgstr ""
 
-#: ../view/support/support/detail.phtml:44
-#: ../view/support/ticket/detail.phtml:44
-msgid "Return"
-msgstr ""
-
-#: ../view/support/support/detail.phtml:49
-#: ../view/support/ticket/detail.phtml:60
+#: ../view/support/support/detail.phtml:50
+#: ../view/support/ticket/detail.phtml:62
 msgid "Decline"
 msgstr ""
 
-#: ../view/support/support/detail.phtml:56
-#: ../view/support/ticket/detail.phtml:73
+#: ../view/support/support/detail.phtml:57
+#: ../view/support/ticket/detail.phtml:74
 msgid "Mail"
-msgstr ""
-
-#: ../view/support/support/add.phtml:4
-msgid "Support Inquiry"
 msgstr ""
 
 #: ../view/support/support/add.phtml:10
 msgid "If you have a problem, please provide the necessary information."
 msgstr ""
 
-#: ../view/support/support/add.phtml:12
+#: ../view/support/support/add.phtml:11
 msgid "Your request will be processed as soon as possible."
 msgstr ""
 
@@ -354,28 +388,24 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: ../view/support/ticket/mail.phtml:4
-msgid "Support Message"
-msgstr ""
-
-#: ../view/support/ticket/detail.phtml:56
+#: ../view/support/ticket/detail.phtml:58
 msgid "Accept"
 msgstr ""
 
-#: ../view/support/ticket/detail.phtml:67
+#: ../view/support/ticket/detail.phtml:69
 msgid "Reopen"
 msgstr ""
 
-#: ../view/support/manager/index.phtml:9
-msgid "No League Manager found"
-msgstr ""
-
-#: ../view/support/manager/index.phtml:13
+#: ../view/support/manager/index.phtml:8
 msgid "My League Manager"
 msgstr ""
 
-#: ../view/support/manager/index.phtml:15
+#: ../view/support/manager/index.phtml:10
 msgid "add League Manager"
+msgstr ""
+
+#: ../view/support/manager/index.phtml:14
+msgid "No League Manager found"
 msgstr ""
 
 #: ../view/support/manager/add.phtml:4

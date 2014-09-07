@@ -4,8 +4,8 @@ $this->headTitle("Messages");
 /* @var $message \Message\Entity\Message */
 ?>
 
-    <h3><?php echo $this->translate("Messages - Inbox"); ?></h3>
-
+<div class="widget">
+<h3><?php echo $this->translate("Messages - Inbox"); ?></h3>
 <?php $this->placeholder('nothing')->captureStart();?>
     <h3><?php echo $this->translate('No messages found')?></h3>
 <?php $this->placeholder('nothing')->captureEnd(); ?>
@@ -68,6 +68,8 @@ if (0==count($this->messages)) {
 } else {
     echo $this->placeholder('messages');
 }
+?>
+</div>
 
 
 

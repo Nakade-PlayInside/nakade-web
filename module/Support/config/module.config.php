@@ -24,6 +24,8 @@ return array(
                 'Support\Services\TicketControllerFactory',
             'Support\Controller\Referee' =>
                 'Support\Services\RefereeControllerFactory',
+            'Support\Controller\Feature' =>
+                'Support\Services\FeatureControllerFactory',
         ),
 
     ),
@@ -83,6 +85,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Support\Controller\Referee',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'feature' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/feature[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Support\Controller\Feature',
                         'action'     => 'index',
                     ),
                 ),

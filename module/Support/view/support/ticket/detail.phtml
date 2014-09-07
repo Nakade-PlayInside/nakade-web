@@ -8,42 +8,42 @@ $this->headTitle('Support');
 ?>
 
 <?php $this->placeholder('nothing')->captureStart();?>
-    <h3><?php echo $this->translate('No Ticket found'); ?></h3>
+<h3><?php echo $this->translate('No Ticket found'); ?></h3>
 <?php $this->placeholder('nothing')->captureEnd(); ?>
 
 <?php $this->placeholder('ticket')->captureStart();?>
-    <h3><?php echo $this->translate('Ticket Details'); ?></h3>
+<h3><?php echo $this->translate('Ticket Details'); ?></h3>
 
-    <table id="info">
+<table id="info">
     <?php if (!is_null($ticket->getAssociation())) : ?>
         <tr>
             <td><?php echo $this->translate("League") . ': '; ?></td>
             <td><?php echo $ticket->getAssociation()->getName(); ?></td>
         </tr>
     <?php endif; ?>
-        <tr>
-            <td><?php echo $this->translate("Subject") . ': '; ?></td>
-            <td><?php echo $ticket->getSubject()->getName(); ?></td>
-        </tr>
-        <tr>
-            <td><?php echo $this->translate("Stage") . ': '; ?></td>
-            <td title="<?php echo $this->ticketStageInfo($ticket->getStage()->getId());?>">
-                <div class="mail-16 <?php echo $this->ticketStage($ticket->getStage()->getId());?> btnCenter"></div>
+    <tr>
+        <td><?php echo $this->translate("Subject") . ': '; ?></td>
+        <td><?php echo $ticket->getSubject()->getName(); ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate("Stage") . ': '; ?></td>
+        <td title="<?php echo $this->ticketStageInfo($ticket->getStage()->getId());?>">
+            <div class="mail-16 <?php echo $this->ticketStage($ticket->getStage()->getId());?> btnCenter"></div>
+        </td>
+    </tr>
+</table>
+
+<table id="ticket">
+    <?php foreach ($ticket->getMessages() as $message) : ?>
+        <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+            <td><label><?php echo $message->getAuthor()->getShortName()?></label><label><?php echo $message->getDate()->format('d.m.y H:i'); ?></label>
+                <p><?php echo $message->getMessage(); ?></p>
             </td>
         </tr>
-    </table>
+    <?php endforeach; ?>
+</table>
 
-    <table id="ticket">
-        <?php foreach ($ticket->getMessages() as $message) : ?>
-            <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-                <td><label><?php echo $message->getAuthor()->getShortName()?></label><label><?php echo $message->getDate()->format('d.m.y H:i'); ?></label>
-                    <p><?php echo $message->getMessage(); ?></p>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
-
-    <a class="btn btn-success return" href="<?php echo $this->url('ticket'); ?>"><?php echo $this->translate("Return"); ?></a>
+<a class="btn btn-success return" href="<?php echo $this->url('ticket'); ?>"><?php echo $this->translate("Return"); ?></a>
 
 <?php if ($ticket->getStage()->isOngoing()) : ?>
     <a class="btn btn-success" href="<?php echo $this->url('ticket',
@@ -76,10 +76,13 @@ $this->headTitle('Support');
 <?php endif; ?>
 
 
-<?php $this->placeholder('tickets')->captureEnd();
+<?php $this->placeholder('tickets')->captureEnd();?>
 
-if (empty($this->ticket)) {
-    echo $this->placeholder('nothing');
-} else {
-    echo $this->placeholder('tickets');
-}
+<div class="widget">
+    <?php if (empty($this->ticket)) {
+        echo $this->placeholder('nothing');
+    } else {
+        echo $this->placeholder('tickets');
+    }
+    ?>
+</div>

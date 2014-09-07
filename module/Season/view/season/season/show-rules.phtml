@@ -5,31 +5,34 @@ $season = $this->season;
 $this->headTitle('Rules');
 $title = $this->translate('Times and Komi');
 ?>
-
-<h3><?php echo $title;?></h3>
-
-<?php $this->placeholder('noSeason')->captureStart();?>
-      <?php echo $this->translate("No season found."); ?>
-<?php $this->placeholder('noSeason')->captureEnd();?>
-
-
 <?php $this->placeholder('actual')->captureStart();?>
-
-<ul class="legend">
-<?php foreach ($this->rulesInfo($season) as $line) : ?>
-    <li><?php echo $line; ?></li>
-<?php
-endforeach; ?>
-</ul>
-
+    <div class="widget" style="display:list-item; list-style-type: none;">
+        <h3><?php echo $title;?></h3>
+        <table class="legend">
+            <tr>
+                <td><?php echo $this->translate('Time') . ': '; ?></td>
+                <td class="value"><?php echo $season->getTime()->getBaseTime(); ?></td>
+                <td><?php echo $this->translate('min.'); ?></td>
+            </tr>
+            <?php if ($season->getTime()->hasAdditionalTime()) : ?>
+                <tr>
+                    <td><?php echo $this->translate('Byoyomi') . ': '; ?></td>
+                    <td class="value"><?php echo $season->getTime()->getMoves() . '/' . $season->getTime()->getAdditionalTime(); ?></td>
+                    <td></td>
+                </tr>
+            <?php endif; ?>
+            <tr>
+                <td><?php echo $this->translate('Komi') . ': '; ?></td>
+                <td class="value"><?php echo $season->getKomi(); ?></td>
+                <td><?php echo $this->translate('points');?></td>
+            </tr>
+        </table>
+    </div>
 <?php $this->placeholder('actual')->captureEnd(); ?>
 
 
 <?php
-
- if (empty($this->season)) {
-     echo $this->placeholder('noSeason');
- } else {
-     echo $this->placeholder('actual');
- }
+if (!empty($this->season)) {
+    echo $this->placeholder('actual');
+}
 

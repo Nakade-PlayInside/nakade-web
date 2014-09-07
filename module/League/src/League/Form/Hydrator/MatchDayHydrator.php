@@ -55,10 +55,10 @@ class MatchDayHydrator implements HydratorInterface
             $this->matchTime = $match->getDate();
         }
         if (!is_null($match->getBlack())) {
-            $this->black = $match->getBlack()->getName();
+            $this->black = $match->getBlack()->getShortName();
         }
         if (!is_null($match->getWhite())) {
-            $this->white = $match->getWhite()->getName();
+            $this->white = $match->getWhite()->getShortName();
         }
     }
 

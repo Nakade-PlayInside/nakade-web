@@ -10,10 +10,24 @@ a.iCal {
     font-weight: bold;
 }
 
-ul.legend {
+.legend {
     margin-top: 10px;
     margin-left: 10px;
     list-style-type:none;
+}
+
+.legend td{
+    text-align: left;
+    text-indent: 5px;
+}
+
+.legend td.value {
+    text-align: right;
+}
+
+.legend td:first-of-type {
+    font-weight: bold;
+    text-indent: 0px;
 }
 
 table.results {
@@ -48,4 +62,23 @@ div.matchDayPagination {margin-top: 12px;}
 
 .autoResult {
     color: red;
+}
+
+.standings {
+    width: auto;
+    margin-top: 10px;
+}
+
+.standings td {
+    text-align: right;
+    padding: 5px 10px;
+}
+
+.standings td:first-of-type {
+    text-align: center;
+}
+
+td.name {
+    text-align: left;
+    white-space:nowrap;
 }

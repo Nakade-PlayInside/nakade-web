@@ -28,7 +28,7 @@ return array(
             'matchDayResult'     => 'League\View\Helper\MatchDayResult',
             'pagingUrl'     => 'League\View\Helper\PagingUrl',
             'enteredBy'     => 'League\View\Helper\GetEnteredBy',
-            'matchInfo'     => 'League\View\Helper\GetMatchInfo',
+            'leaguePaging'     => 'League\View\Helper\LeaguePaging',
             // more helpers here ...
         )
     ),
@@ -147,13 +147,14 @@ return array(
         'routes' => array(
 
             //actual season
-            'actual' => array(
+            'table' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/actual[/:action][/:sort]',
+                    'route'    => '/table[/:action][/:sort][/:league]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'sort'     => '[a-zA-Z][a-zA-Z0-9_-]+',
+                        'sort'   => 'sort=[a-zA-Z][a-zA-Z0-9_-]+',
+                        'league' => 'league=[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'League\Controller\Table',
@@ -181,10 +182,11 @@ return array(
             'timeTable' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/timeTable[/:action][/:id]',
+                    'route'    => '/timeTable[/:action][/:id][/:league]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
+                        'league' => 'league=[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'League\Controller\TimeTable',
@@ -204,6 +206,7 @@ return array(
         'template_map' => array(
                 'matchDay' => __DIR__ . '/../view/partial/pagination.phtml', // Note: the key is optional
                 'result' => __DIR__ . '/../view/partial/myPagination.phtml', // Note: the key is optional
+                'league' => __DIR__ . '/../view/partial/leaguePagination.phtml', // Note: the key is optional
         ),
 
         'template_path_stack' => array(
@@ -221,8 +224,6 @@ return array(
                 'League\Services\LeagueFormService',
             'League\Services\ResultService' =>
                 'League\Services\ResultService',
-            'League\Services\TableService' =>
-                'League\Services\TableService',
             'League\Services\MailService' =>
                 'League\Services\MailService',
             'League\Services\MatchVoterService' =>

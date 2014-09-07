@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-23 18:32+0100\n"
-"PO-Revision-Date: 2014-08-23 18:32+0100\n"
+"POT-Creation-Date: 2014-09-07 15:03+0100\n"
+"PO-Revision-Date: 2014-09-07 15:03+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -189,18 +189,6 @@ msgstr ""
 msgid "automatic"
 msgstr ""
 
-#: ../src/League/View/Helper/GetMatchInfo.php:26
-msgid "Season"
-msgstr ""
-
-#: ../src/League/View/Helper/GetMatchInfo.php:31
-msgid "League"
-msgstr ""
-
-#: ../src/League/View/Helper/GetMatchInfo.php:36
-msgid "Match day"
-msgstr ""
-
 #: ../src/League/View/Helper/OpenResult.php:27
 msgid "Enter Result"
 msgstr ""
@@ -332,9 +320,19 @@ msgstr ""
 msgid "Suspended"
 msgstr ""
 
+#: ../view/partial/leaguePagination.phtml:6
 #: ../view/partial/pagination.phtml:6
 #: ../view/partial/myPagination.phtml:6
 msgid "previous"
+msgstr ""
+
+#: ../view/partial/leaguePagination.phtml:15
+#: ../view/partial/leaguePagination.phtml:21
+msgid "League"
+msgstr ""
+
+#: ../view/partial/leaguePagination.phtml:19
+msgid "Actual"
 msgstr ""
 
 #: ../view/partial/pagination.phtml:18
@@ -349,85 +347,86 @@ msgstr ""
 msgid "Actual Page"
 msgstr ""
 
-#: ../view/league/table/index.phtml:9
-msgid "%name% 1. League"
+#: ../view/league/table/index.phtml:7
+msgid "%NAME% League %YEAR%"
 msgstr ""
 
-#: ../view/league/table/index.phtml:14
-#: ../view/league/table/table.phtml:20
-#: ../view/league/time-table/schedule.phtml:14
-msgid "No season found"
+#: ../view/league/table/index.phtml:13
+msgid "%No%.League"
 msgstr ""
 
-#: ../view/league/table/index.phtml:23
-#: ../view/league/table/table.phtml:27
-msgid "Position"
-msgstr ""
-
-#: ../view/league/table/index.phtml:24
-#: ../view/league/table/table.phtml:28
-msgid "Player"
-msgstr ""
-
-#: ../view/league/table/index.phtml:25
-#: ../view/league/table/table.phtml:29
-msgid "Name"
-msgstr ""
-
-#: ../view/league/table/index.phtml:26
-msgid "Games"
+#: ../view/league/table/index.phtml:16
+msgid "%No%.Match Day"
 msgstr ""
 
 #: ../view/league/table/index.phtml:27
-msgid "G"
+#: ../view/league/table/detailed.phtml:31
+msgid "Position"
+msgstr ""
+
+#: ../view/league/table/index.phtml:28
+#: ../view/league/table/detailed.phtml:32
+msgid "Player"
 msgstr ""
 
 #: ../view/league/table/index.phtml:29
-msgid "P"
+#: ../view/league/table/detailed.phtml:34
+msgid "Name"
 msgstr ""
 
 #: ../view/league/table/index.phtml:30
-msgid "Tiebreaker"
+msgid "Games"
 msgstr ""
 
 #: ../view/league/table/index.phtml:31
+msgid "G"
+msgstr ""
+
+#: ../view/league/table/index.phtml:33
+msgid "P"
+msgstr ""
+
+#: ../view/league/table/index.phtml:34
+msgid "Tiebreaker"
+msgstr ""
+
+#: ../view/league/table/index.phtml:35
 msgid "TB"
 msgstr ""
 
-#: ../view/league/table/table.phtml:10
-#: ../view/league/time-table/schedule.phtml:8
-msgid "%name% %no%. League"
+#: ../view/league/table/detailed.phtml:10
+msgid "%NAME% League - %NUMBER%.Season"
 msgstr ""
 
-#: ../view/league/table/table.phtml:30
+#: ../view/league/table/detailed.phtml:37
 msgid "played games"
 msgstr ""
 
-#: ../view/league/table/table.phtml:31
+#: ../view/league/table/detailed.phtml:39
 msgid "GP"
 msgstr ""
 
-#: ../view/league/table/table.phtml:32
+#: ../view/league/table/detailed.phtml:42
 msgid "Wins"
 msgstr ""
 
-#: ../view/league/table/table.phtml:33
+#: ../view/league/table/detailed.phtml:44
 msgid "W"
 msgstr ""
 
-#: ../view/league/table/table.phtml:34
+#: ../view/league/table/detailed.phtml:47
 msgid "Jigo"
 msgstr ""
 
-#: ../view/league/table/table.phtml:35
+#: ../view/league/table/detailed.phtml:49
 msgid "J"
 msgstr ""
 
-#: ../view/league/table/table.phtml:36
+#: ../view/league/table/detailed.phtml:52
 msgid "Lost"
 msgstr ""
 
-#: ../view/league/table/table.phtml:37
+#: ../view/league/table/detailed.phtml:54
 msgid "L"
 msgstr ""
 
@@ -435,13 +434,23 @@ msgstr ""
 msgid "edit match day"
 msgstr ""
 
-#: ../view/league/time-table/index.phtml:11
+#: ../view/league/time-table/index.phtml:12
 msgid "Matchday"
 msgstr ""
 
-#: ../view/league/time-table/index.phtml:16
-#: ../view/league/time-table/index.phtml:30
+#: ../view/league/time-table/index.phtml:17
+#: ../view/league/time-table/index.phtml:31
+#: ../view/league/result/all-results.phtml:31
+#: ../view/league/result/all-results.phtml:45
 msgid "edit"
+msgstr ""
+
+#: ../view/league/time-table/schedule.phtml:8
+msgid "Schedule %name% %no%. League"
+msgstr ""
+
+#: ../view/league/time-table/schedule.phtml:14
+msgid "No season found"
 msgstr ""
 
 #: ../view/league/time-table/my-schedule.phtml:4
@@ -460,7 +469,7 @@ msgstr ""
 msgid "my color"
 msgstr ""
 
-#: ../view/league/time-table/edit.phtml:5
+#: ../view/league/time-table/edit.phtml:7
 msgid "edit match date"
 msgstr ""
 
@@ -476,9 +485,8 @@ msgstr ""
 msgid "%name% League - My Results"
 msgstr ""
 
-#: ../view/league/result/my-result.phtml:14
-#: ../view/league/result/actual-results.phtml:10
-#: ../view/league/result/all-results.phtml:13
+#: ../view/league/result/my-result.phtml:13
+#: ../view/league/result/all-results.phtml:14
 msgid "No results found"
 msgstr ""
 
@@ -500,6 +508,16 @@ msgstr ""
 
 #: ../view/league/result/edit.phtml:6
 msgid "Edit Result"
+msgstr ""
+
+#: ../view/league/result/edit.phtml:7
+#: ../view/league/result/add.phtml:8
+msgid "%name% %no%.Season - %number%.League"
+msgstr ""
+
+#: ../view/league/result/edit.phtml:13
+#: ../view/league/result/add.phtml:14
+msgid "Match day"
 msgstr ""
 
 #: ../view/league/result/all-results.phtml:7
@@ -528,10 +546,6 @@ msgstr ""
 
 #: ../view/league/result/all-results.phtml:52
 msgid "Result(s)"
-msgstr ""
-
-#: ../view/league/result/add.phtml:6
-msgid "New Result"
 msgstr ""
 
 #~ msgid "Skeleton Application"

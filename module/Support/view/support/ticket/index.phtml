@@ -43,10 +43,13 @@ $this->headTitle('Support');
         <?php endforeach; ?>
     </table>
     <p><?php echo $this->translate("Total") . ' ' . $this->paginator->getTotalItemCount() . ' ' . $this->translate("Ticket(s)"); ?></p>
-<?php $this->placeholder('tickets')->captureEnd();
+<?php $this->placeholder('tickets')->captureEnd();?>
 
-if (empty($this->supportRequests)) {
+<div class="widget">
+<?php if (empty($this->supportRequests)) {
     echo $this->placeholder('nothing');
 } else {
     echo $this->placeholder('tickets');
 }
+?>
+</div>

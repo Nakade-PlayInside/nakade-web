@@ -10,16 +10,17 @@ use Zend\View\Helper\AbstractHelper;
 class PagingUrl extends AbstractHelper
 {
     /**
-     * @param int $page
+     * @param int    $page
+     * @param string $param
      *
-     * @return string
+     * @return mixed
      */
-    public function __invoke($page)
+    public function __invoke($page, $param='id')
     {
         $route = $this->getRouteMatch()->getMatchedRouteName();
         $action = $this->getRouteMatch()->getParam('action');
 
-        return $this->getView()->url($route, array('action' => $action, 'id' => $page));
+        return $this->getView()->url($route, array('action' => $action, $param => $page));
     }
 
 

@@ -6,30 +6,29 @@ $this->headTitle($title);
 /* @var $match \Season\Entity\Match */
 ?>
 
-<h3><?php echo $title;?></h3>
+
 <?php $this->placeholder('Message')->captureStart();?>
-
-<table class="table rejectAdmin">
-    <tr>
-        <th><?php echo $this->translate("ID");?></th>
-        <th><?php echo $this->translate("Date");?></th>
-        <th><?php echo $this->translate("Match");?></th>
-    </tr>
-<?php foreach ($this->availableMatches as $match) : ?>
-    <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-            <td><?php echo $match->getId();?></td>
-            <td><?php echo $match->getDate()->format('d.m. H:i');?></td>
-            <td><a title="<?php echo $this->translate('click for making an appointment');?>" href="<?php
-                echo $this->url('appointment', array('id' => $match->getId()));?>"><?php
-                echo $match->getMatchInfo(); ?></a>
-            </td>
-    </tr>
-<?php
-endforeach; ?>
-</table>
-
-
-
+    <div class="widget">
+        <h3><?php echo $title;?></h3>
+        <table class="table rejectAdmin">
+            <tr>
+                <th><?php echo $this->translate("ID");?></th>
+                <th><?php echo $this->translate("Date");?></th>
+                <th><?php echo $this->translate("Match");?></th>
+            </tr>
+            <?php foreach ($this->availableMatches as $match) : ?>
+                <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
+                    <td><?php echo $match->getId();?></td>
+                    <td><?php echo $match->getDate()->format('d.m. H:i');?></td>
+                    <td><a title="<?php echo $this->translate('click for making an appointment');?>" href="<?php
+                        echo $this->url('appointment', array('id' => $match->getId()));?>"><?php
+                            echo $match->getMatchInfo(); ?></a>
+                    </td>
+                </tr>
+            <?php
+            endforeach; ?>
+        </table>
+    </div>
 <?php $this->placeholder('Message')->captureEnd();
 
 if (count($this->availableMatches)>0) {

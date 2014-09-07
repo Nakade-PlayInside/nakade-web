@@ -97,6 +97,7 @@ class Schedule extends SeasonRepositoryBase
      */
     private function getMatchDay($matchDay)
     {
+
         $round = $matchDay - 1;
         if (empty($this->matchDays) || !array_key_exists($round, $this->matchDays)) {
             throw new \RuntimeException(

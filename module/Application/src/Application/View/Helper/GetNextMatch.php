@@ -16,7 +16,6 @@ class GetNextMatch extends DefaultViewHelper
     public function __invoke()
     {
         $uid = $this->getIdentity()->getId();
-
         return $this->getMapper()->getNextMatchDateByUser($uid);
     }
 

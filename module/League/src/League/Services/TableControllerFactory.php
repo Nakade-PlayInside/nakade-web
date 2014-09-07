@@ -26,11 +26,9 @@ class TableControllerFactory implements FactoryInterface
 
 
         $repository = $serviceManager->get('League\Services\RepositoryService');
-        $table = $serviceManager->get('League\Services\TableService');
 
         $controller = new TableController();
         $controller->setRepository($repository);
-        $controller->setTableService($table);
 
         return $controller;
     }

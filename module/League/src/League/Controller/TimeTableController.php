@@ -1,14 +1,9 @@
 <?php
 namespace League\Controller;
 
-use League\iCal\iCal;
 use League\Services\ICalService;
 use League\Services\LeagueFormService;
-use League\Services\RepositoryService;
-use Nakade\Abstracts\AbstractController;
 use Zend\View\Model\ViewModel;
-use Zend\Http\PhpEnvironment\Response as iCalResponse;
-use Zend\Http\Headers;
 use League\Services\MailService;
 
 
@@ -17,7 +12,7 @@ use League\Services\MailService;
  * matches.
  *
  */
-class TimeTableController extends AbstractController
+class TimeTableController extends DefaultController
 {
     /**
      * @var ICalService
@@ -34,18 +29,12 @@ class TimeTableController extends AbstractController
 
         //todo: paginator for leagues
         //todo: filter for associations depending on role of the requesting user
-        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-        $season = $seasonMapper->getActiveSeasonByAssociation(1);
-
-        /* @var $resultMapper \League\Mapper\ResultMapper */
-        $resultMapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
-        $matches = $resultMapper->getAllOpenResultsBySeason($season->getId());
+        $season = $this->getActualSeason();
 
         return new ViewModel(
             array(
                 'season' =>  $season,
-                'matches' =>  $matches
+                'matches' =>  $this->getResultMapper()->getAllOpenResultsBySeason($season->getId())
             )
         );
 
@@ -62,18 +51,10 @@ class TimeTableController extends AbstractController
     {
         $id  = (int) $this->params()->fromRoute('id', 0);
 
-        /* @var $mapper \League\Mapper\ResultMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::RESULT_MAPPER);
-        $match = $mapper->getMatchById($id);
+        $match = $this->getResultMapper()->getMatchById($id);
 
         if (is_null($match)) {
             return $this->redirect()->toRoute('timeTable');
-        }
-
-        if (!$this->getService()->isAllowed($match)) {
-            throw new \RuntimeException(
-                sprintf('You are not allowed to edit this match.')
-            );
         }
 
         /* @var $form \League\Form\MatchDayForm */
@@ -96,7 +77,7 @@ class TimeTableController extends AbstractController
             if ($form->isValid()) {
 
                 $data = $form->getData();
-                $mapper->save($data);
+                $this->getResultMapper()->save($data);
 
                 /* @var $mail \League\Mail\ScheduleMail */
                 $mail = $this->getMailService()->getMail(MailService::SCHEDULE_MAIL);
@@ -128,28 +109,14 @@ class TimeTableController extends AbstractController
      */
     public function scheduleAction()
     {
-        $userId = $this->identity()->getId();
-
-        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-        $season = $seasonMapper->getActiveSeasonByAssociation(1);
-
-        /* @var $matchMapper \League\Mapper\ScheduleMapper */
-        $matchMapper = $this->getRepository()->getMapper(RepositoryService::SCHEDULE_MAPPER);
-
-        $league = $matchMapper->getLeagueByUser($season->getId(), $userId);
-        if (is_null($league)) {
-            /* @var $leagueMapper \League\Mapper\LeagueMapper */
-            $leagueMapper = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-            $league = $leagueMapper->getTopLeagueBySeason($season->getId());
-        }
-
-        $matches = $matchMapper->getScheduleByLeague($league);
+        $leagueNo  = $this->params()->fromRoute('league', null);
+        $league = $this->getActualLeague($leagueNo);
 
         return new ViewModel(
             array(
                 'league' => $league,
-                'matches' => $matches,
+                'matches' => $this->getScheduleMapper()->getScheduleByLeague($league),
+                'paginator' => $this->getLeaguePaginator()->getPagination($league->getNumber()),
             )
         );
     }
@@ -164,18 +131,12 @@ class TimeTableController extends AbstractController
     {
         $userId = $this->identity()->getId();
 
-        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-        $season = $seasonMapper->getActiveSeasonByAssociation(1);
+        $season = $season = $this->getActualSeason();
+        $league = $this->getScheduleMapper()->getLeagueByUser($season->getId(), $userId);
 
-        /* @var $matchMapper \League\Mapper\ScheduleMapper */
-        $matchMapper = $this->getRepository()->getMapper(RepositoryService::SCHEDULE_MAPPER);
-
-        /* @var $league \Season\Entity\League */
-        $league = $matchMapper->getLeagueByUser($season->getId(), $userId);
         $matches = array();
         if (!is_null($league)) {
-            $matches = $matchMapper->getMyScheduleByUser($league->getId(), $userId);
+            $matches = $this->getScheduleMapper()->getMyScheduleByUser($league->getId(), $userId);
         }
 
         return new ViewModel(
@@ -193,18 +154,12 @@ class TimeTableController extends AbstractController
     {
         $userId = $this->identity()->getId();
 
-        /* @var $seasonMapper \Season\Mapper\SeasonMapper */
-        $seasonMapper = $this->getRepository()->getMapper(RepositoryService::SEASON_MAPPER);
-        $season = $seasonMapper->getActiveSeasonByAssociation(1);
+        $season = $season = $this->getActualSeason();
+        $league = $this->getScheduleMapper()->getLeagueByUser($season->getId(), $userId);
 
-        /* @var $matchMapper \League\Mapper\ScheduleMapper */
-        $matchMapper = $this->getRepository()->getMapper(RepositoryService::SCHEDULE_MAPPER);
-
-        /* @var $league \Season\Entity\League */
-        $league = $matchMapper->getLeagueByUser($season->getId(), $userId);
         $matches = array();
         if (!is_null($league)) {
-            $matches = $matchMapper->getMyScheduleByUser($league->getId(), $userId);
+            $matches = $this->getScheduleMapper()->getMyScheduleByUser($league->getId(), $userId);
         }
 
         return $this->getICalService()->getSchedule($userId, $matches);

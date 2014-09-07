@@ -50,7 +50,7 @@ echo $this->doctype();
             <?php echo $this->flashMessenger()->render('error'); ?>
         </div>
         <?php if ($this->identity()) :?>
-        <div id="sidebar" class="span4">
+        <div id="sidebar">
             <?php echo $this->partial('sidebar'); ?>
         </div>
         <?php endif; ?>

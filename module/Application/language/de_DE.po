@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-01 19:17+0100\n"
-"PO-Revision-Date: 2014-09-01 19:17+0100\n"
+"POT-Creation-Date: 2014-09-07 14:57+0100\n"
+"PO-Revision-Date: 2014-09-07 14:58+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -292,6 +292,14 @@ msgstr "Termin verschieben"
 #: ../view/partial/menuLabel.phtml:43
 msgid "Confirm"
 msgstr "Bestätigen"
+
+#: ../view/partial/menuLabel.phtml:44
+msgid "FAQ"
+msgstr "FAQ"
+
+#: ../view/partial/menuLabel.phtml:45
+msgid "Bug Report"
+msgstr "Bug melden"
 
 #: ../view/partial/sidebar.phtml:6
 msgid "Logged in as"

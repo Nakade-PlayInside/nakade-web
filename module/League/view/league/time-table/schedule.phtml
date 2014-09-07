@@ -5,46 +5,42 @@ $this->plugin('translate')->setTranslatorTextDomain('League');
 /* @var $league \Season\Entity\League */
 $season = $this->league;
 $association = $league->getSeason()->getAssociation()->getName();
-$title = $this->translate("%name% %no%. League") . " " . $league->getSeason()->getStartDate()->format('Y');
+$title = $this->translate("Schedule %name% %no%. League") . " " . $league->getSeason()->getStartDate()->format('Y');
 $title = str_replace("%name%", $association, $title);
 $title = str_replace("%no%", $league->getNumber(), $title);
 $this->headTitle('schedule');
 ?>
 <?php $this->placeholder('noSeason')->captureStart();?>
-<h3><?php echo $this->translate('No season found')?></h3>
+    <h3><?php echo $this->translate('No season found')?></h3>
 <?php $this->placeholder('noSeason')->captureEnd(); ?>
 
 <?php $this->placeholder('schedule')->captureStart();?>
-<h3><?php echo $title; ?></h3>
-<table class="league">
-<?php foreach ($this->matches as $match) : ?>
-<tr style="background-color:<?php echo $this->highlightMatch($match); ?>">
-    <td class="space"><?php echo $match->getDate()->format('d.m. H:i');?></td>
-    <td class="black"></td>
-    <td style="text-decoration: <?php echo $this->isWinner($match, $match->getBlack()); ?>" title="<?php
-        echo $match->getBlack()->getShortName();?>"><?php
-            echo $match->getBlack()->getOnlineName();
-    ?>
-    </td>
-    <td class="versus">-</td>
-    <td class="white"></td>
-    <td class="space" style="text-decoration:<?php echo $this->isWinner($match, $match->getWhite()); ?>" title="<?php
-    echo $match->getWhite()->getShortName();?>"><?php
-        echo $match->getWhite()->getOnlineName();
-    ?>
-    </td>
-    <td><?php echo $this->result($match); ?></td>
-</tr>
-<?php
-endforeach;
-?>
-</table>
-
-
+    <div class="widget">
+        <h3><?php echo $title; ?></h3>
+        <?php echo $this->paginationControl($this->paginator, 'Sliding', 'league'); ?>
+        <table class="league">
+            <?php foreach ($this->matches as $match) : ?>
+                <tr style="background-color:<?php echo $this->highlightMatch($match); ?>">
+                    <td style="text-decoration: <?php echo $this->isWinner($match, $match->getBlack()); ?>">
+                        <div class="infoBtn nakade-16 black-16"></div>
+                        <?php echo $match->getBlack()->getShortName(); ?>
+                    </td>
+                    <td>-</td>
+                    <td style="text-decoration:<?php echo $this->isWinner($match, $match->getWhite()); ?>" >
+                        <div style="display:inline-block; vertical-align: text-bottom" class="infoBtn nakade-16 white-16"></div>
+                        <?php echo $match->getWhite()->getShortName(); ?>
+                    </td>
+                    <td><?php echo $this->matchDayResult($match); ?></td>
+                </tr>
+            <?php
+            endforeach;
+            ?>
+        </table>
+    </div>
 <?php $this->placeholder('schedule')->captureEnd();
 
-  if (is_null($this->matches)) {
-      echo $this->placeholder('noSeason');
-  } else {
-      echo $this->placeholder('schedule');
-  }
+if (is_null($this->matches)) {
+    echo $this->placeholder('noSeason');
+} else {
+    echo $this->placeholder('schedule');
+}

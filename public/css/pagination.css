@@ -61,5 +61,70 @@
     text-decoration: none;
 }
 
+/***************/
 
+#myLeague {
+    display: inline-block;
+    color:#57a900;
+    font-weight:bold;
+    margin: 0 30px;
+    border: 0;
+}
+
+#myLeague .large {
+    height: 32px;
+    line-height: 32px;
+    font-size: larger;
+}
+
+#myLeague .smaller {
+    height: 16px;
+    line-height: 16px;
+    font-size: inherit;
+}
+
+#myLeague ul {
+    display: inline-block;
+    list-style: none;
+    height: inherit;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+#myLeague ul li {
+    display: inherit;
+    line-height: inherit;
+    height: inherit;
+    padding: inherit;
+    margin: inherit;
+    vertical-align: middle;
+    font-size: smaller;
+    font-weight: normal;
+    border: 0;
+}
+
+#myLeague ul li a {
+    color: inherit;
+    display: inherit;
+    background-color: transparent;
+}
+
+#myLeague ul li a:hover {
+    text-decoration: underline;
+}
+
+#myLeague ul li.current {
+    padding: 0 4px;
+    font-size: larger;
+    font-weight: bold;
+}
+
+#myLeague li.current a {
+    cursor:default;
+}
+
+#myLeague li.current a:hover {
+    text-decoration: none;
+}
 

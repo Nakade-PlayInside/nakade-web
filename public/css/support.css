@@ -1,5 +1,5 @@
 #ticket {
-    width: 80%;
+    max-width: 800px;
     margin-bottom: 10px;
     border: 1px solid grey;
 }
@@ -42,4 +42,12 @@ table#info td {
 
 .actionBtn span {
     vertical-align: middle;
+}
+
+.addFeature {
+    display:inline-block;
+    vertical-align: text-bottom;
+    white-space: nowrap;
+    padding-left: 20px;
+    font-weight: bold;
 }

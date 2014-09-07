@@ -38,7 +38,7 @@ class ConfirmForm extends BaseForm
                 'type'  => 'Zend\Form\Element\Submit',
                 'attributes' => array(
                     'value' =>   $this->translate('Confirm'),
-
+                    'class' => 'btn btn-success actionBtn'
                 ),
             )
         );
@@ -50,6 +50,7 @@ class ConfirmForm extends BaseForm
                 'type'  => 'Zend\Form\Element\Submit',
                 'attributes' => array(
                     'value' =>   $this->translate('Reject'),
+                    'class' => 'btn btn-success actionBtn'
 
                 ),
             )
