@@ -53,12 +53,6 @@ class TableController extends DefaultController
         $leagueNo  = $this->params()->fromRoute('league', null);
 
         $sortBy = str_replace('sort=', '', $sortBy);
-        if (!is_null($leagueNo)) {
-            $leagueNo = str_replace('league=', '', $leagueNo);
-        }
-
-
-
         $league = $this->getActualLeague($leagueNo);
         $matches = $this->getLeagueMapper()->getMatchesByLeague($league->getId());
 

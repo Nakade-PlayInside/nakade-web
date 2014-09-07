@@ -78,6 +78,7 @@ class DefaultController extends AbstractController
         }
 
         if(!is_null($leagueNo)) {
+            $leagueNo = $this->extractLeague($leagueNo);
             return $this->getLeagueMapper()->getLeagueByNumber($season, $leagueNo);
         }
 
@@ -106,6 +107,16 @@ class DefaultController extends AbstractController
         }
 
         return  new LeaguePagination($leaguesInSeason);
+    }
+
+    /**
+     * @param $leagueNo
+     *
+     * @return int
+     */
+    protected function extractLeague($leagueNo)
+    {
+        return intval(str_replace('league=', '', $leagueNo));
     }
 
 

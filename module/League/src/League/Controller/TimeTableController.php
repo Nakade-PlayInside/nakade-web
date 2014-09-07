@@ -110,11 +110,7 @@ class TimeTableController extends DefaultController
     public function scheduleAction()
     {
         $leagueNo  = $this->params()->fromRoute('league', null);
-        if (!is_null($leagueNo)) {
-            $leagueNo = str_replace('league=', '', $leagueNo);
-        }
-
-        $league = $this->getActualLeague();
+        $league = $this->getActualLeague($leagueNo);
 
         return new ViewModel(
             array(

@@ -182,10 +182,11 @@ return array(
             'timeTable' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/timeTable[/:action][/:id]',
+                    'route'    => '/timeTable[/:action][/:id][/:league]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
+                        'league' => 'league=[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'League\Controller\TimeTable',
