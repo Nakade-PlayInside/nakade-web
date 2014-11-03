@@ -12,6 +12,7 @@ use \Zend\InputFilter\InputFilter;
 class RegisterClosedBetaForm extends BaseForm implements RoleInterface
 {
 
+
     /**
      * Init the form. It is neccessary to call this function
      * before using the form.
@@ -22,7 +23,19 @@ class RegisterClosedBetaForm extends BaseForm implements RoleInterface
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_FIRST_NAME));
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_LAST_NAME));
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_USERNAME));
-        $this->add($this->getUserFieldFactory()->getField(self::FIELD_EMAIL));
+
+        $this->add(
+                array(
+                'name' => self::FIELD_EMAIL,
+                'type' => 'Zend\Form\Element\Email',
+                'options' => array('label' =>  $this->translate('email') . ':'),
+                'attributes' => array(
+                    'multiple' => false,
+                    'readonly' => true
+                )
+            )
+        );
+
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_KGS));
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_CODE));
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_AGREEMENT));

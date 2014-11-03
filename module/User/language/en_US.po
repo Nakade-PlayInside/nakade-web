@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-24 12:21+0100\n"
-"PO-Revision-Date: 2014-08-24 12:21+0100\n"
+"POT-Creation-Date: 2014-11-03 12:46+0100\n"
+"PO-Revision-Date: 2014-11-03 12:46+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -16,28 +16,34 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../src/User/Mail/RegistrationMail.php:18
+#: ../src/User/Mail/ClosedBetaRegistrationMail.php:18
 msgid "Welcome %FIRST_NAME%"
 msgstr ""
 
 #: ../src/User/Mail/RegistrationMail.php:20
+#: ../src/User/Mail/ClosedBetaRegistrationMail.php:20
 msgid "Thank you for your registration at %URL%."
 msgstr ""
 
 #: ../src/User/Mail/RegistrationMail.php:21
+#: ../src/User/Mail/ClosedBetaRegistrationMail.php:21
 msgid "We are happy to welcome you in our community and hope you enjoy your time with us."
 msgstr ""
 
 #: ../src/User/Mail/RegistrationMail.php:23
+#: ../src/User/Mail/ClosedBetaRegistrationMail.php:23
 #: ../src/User/Mail/CredentialsMail.php:21
 msgid "Your Credentials"
 msgstr ""
 
 #: ../src/User/Mail/RegistrationMail.php:24
+#: ../src/User/Mail/ClosedBetaRegistrationMail.php:24
 #: ../src/User/Mail/CredentialsMail.php:22
 msgid "username"
 msgstr ""
 
 #: ../src/User/Mail/RegistrationMail.php:25
+#: ../src/User/Mail/ClosedBetaRegistrationMail.php:25
 #: ../src/User/Mail/CredentialsMail.php:23
 msgid "password"
 msgstr ""
@@ -66,13 +72,23 @@ msgid "If you failed to confirm in time, your account is deleted."
 msgstr ""
 
 #: ../src/User/Mail/RegistrationMail.php:34
+#: ../src/User/Mail/ClosedBetaRegistrationMail.php:30
 #: ../src/User/Mail/CredentialsMail.php:28
 #: ../src/User/Mail/VerifyMail.php:29
 msgid "In case of a problem, please contact us."
 msgstr ""
 
 #: ../src/User/Mail/RegistrationMail.php:47
+#: ../src/User/Mail/ClosedBetaRegistrationMail.php:43
 msgid "Your Registration at  %URL%"
+msgstr ""
+
+#: ../src/User/Mail/ClosedBetaRegistrationMail.php:27
+msgid "Use your credentials for logIn."
+msgstr ""
+
+#: ../src/User/Mail/ClosedBetaRegistrationMail.php:28
+msgid "To change the generated password, go to your profile."
 msgstr ""
 
 #: ../src/User/Mail/CouponMail.php:34
@@ -99,20 +115,20 @@ msgstr ""
 msgid "If you love the game, you will love us!"
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:46
-msgid "To sign up to our closed beta a coupon code is needed."
-msgstr ""
-
 #: ../src/User/Mail/CouponMail.php:47
-msgid "The coupon will expire on %EXPIRE_DATE%."
+msgid "To start sign up, please click on the link below"
 msgstr ""
 
-#: ../src/User/Mail/CouponMail.php:48
-msgid "To start sign up you can click the link below"
+#: ../src/User/Mail/CouponMail.php:49
+msgid "or you go to %URL% and enter the provided link."
 msgstr ""
 
 #: ../src/User/Mail/CouponMail.php:50
-msgid "or you go to %URL% and enter the coupon code"
+msgid "To sign up to our closed beta the provided coupon code is neccessary."
+msgstr ""
+
+#: ../src/User/Mail/CouponMail.php:51
+msgid "The coupon will expire on %EXPIRE_DATE%."
 msgstr ""
 
 #: ../src/User/Mail/CouponMail.php:52
@@ -172,16 +188,17 @@ msgstr ""
 msgid "last time edited on %pwdChangeDate%"
 msgstr ""
 
+#: ../src/User/Form/RegisterClosedBetaForm.php:31
+#: ../src/User/Form/InviteFriendForm.php:48
+msgid "email"
+msgstr ""
+
 #: ../src/User/Form/ConfirmForm.php:41
 msgid "Cancel"
 msgstr ""
 
 #: ../src/User/Form/ConfirmForm.php:50
 msgid "YES"
-msgstr ""
-
-#: ../src/User/Form/InviteFriendForm.php:48
-msgid "email"
 msgstr ""
 
 #: ../src/User/Form/InviteFriendForm.php:59
@@ -205,7 +222,7 @@ msgid "Invite NOW!"
 msgstr ""
 
 #: ../src/User/Form/Factory/UserFieldFactory.php:28
-msgid "KGS Name (opt.)"
+msgid "KGS Name"
 msgstr ""
 
 #: ../src/User/Form/Factory/UserFieldFactory.php:45
@@ -244,12 +261,8 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: ../src/User/Form/Factory/UserFieldFactory.php:148
-msgid "enter new password"
-msgstr ""
-
 #: ../src/User/Form/Factory/UserFieldFactory.php:156
-msgid "repeat new password"
+msgid "repeat password"
 msgstr ""
 
 #: ../src/User/Form/Factory/UserFieldFactory.php:164
@@ -305,44 +318,43 @@ msgid "next"
 msgstr ""
 
 #: ../view/user/coupon/index.phtml:4
-#: ../view/user/coupon/info.phtml:3
 msgid "My Invitations"
 msgstr ""
 
-#: ../view/user/coupon/index.phtml:11
+#: ../view/user/coupon/index.phtml:13
 msgid "No Invitations yet ?!"
 msgstr ""
 
-#: ../view/user/coupon/index.phtml:12
+#: ../view/user/coupon/index.phtml:14
 msgid "Tell your friends about the game of go!"
 msgstr ""
 
-#: ../view/user/coupon/index.phtml:20
+#: ../view/user/coupon/index.phtml:22
 #: ../view/user/coupon/moderate.phtml:19
 msgid "ID"
 msgstr ""
 
-#: ../view/user/coupon/index.phtml:21
+#: ../view/user/coupon/index.phtml:23
 #: ../view/user/coupon/moderate.phtml:20
 msgid "Sent To"
 msgstr ""
 
-#: ../view/user/coupon/index.phtml:22
+#: ../view/user/coupon/index.phtml:24
 #: ../view/user/coupon/moderate.phtml:21
 msgid "Date"
 msgstr ""
 
-#: ../view/user/coupon/index.phtml:23
+#: ../view/user/coupon/index.phtml:25
 #: ../view/user/coupon/moderate.phtml:23
 msgid "Expiry Date"
 msgstr ""
 
-#: ../view/user/coupon/index.phtml:24
+#: ../view/user/coupon/index.phtml:26
 #: ../view/user/coupon/moderate.phtml:24
 msgid "Sign Up"
 msgstr ""
 
-#: ../view/user/coupon/index.phtml:49
+#: ../view/user/coupon/index.phtml:51
 msgid "Return"
 msgstr ""
 
@@ -364,10 +376,6 @@ msgstr ""
 
 #: ../view/user/coupon/moderate.phtml:45
 msgid "Invitations"
-msgstr ""
-
-#: ../view/user/coupon/info.phtml:7
-msgid "You have invited %NUMBER% friends"
 msgstr ""
 
 #: ../view/user/coupon/invite.phtml:3
@@ -474,40 +482,42 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:11
+#: ../view/user/profile/index.phtml:12
 msgid "Name:"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:16
+#: ../view/user/profile/index.phtml:17
 msgid "Birthday:"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:19
-#: ../view/user/profile/index.phtml:31
-#: ../view/user/profile/index.phtml:39
-#: ../view/user/profile/index.phtml:47
-#: ../view/user/profile/index.phtml:60
-#: ../view/user/profile/index.phtml:68
+#: ../view/user/profile/index.phtml:20
+#: ../view/user/profile/index.phtml:32
+#: ../view/user/profile/index.phtml:40
+#: ../view/user/profile/index.phtml:48
+#: ../view/user/profile/index.phtml:61
+#: ../view/user/profile/index.phtml:69
+#: ../view/user/user/index.phtml:28
+#: ../view/user/user/index.phtml:58
 msgid "edit"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:24
+#: ../view/user/profile/index.phtml:25
 msgid "Nick:"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:36
+#: ../view/user/profile/index.phtml:37
 msgid "email:"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:44
+#: ../view/user/profile/index.phtml:45
 msgid "KGS:"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:52
+#: ../view/user/profile/index.phtml:53
 msgid "Username:"
 msgstr ""
 
-#: ../view/user/profile/index.phtml:57
+#: ../view/user/profile/index.phtml:58
 msgid "Password"
 msgstr ""
 
@@ -527,64 +537,64 @@ msgstr ""
 msgid "Registered Users"
 msgstr ""
 
-#: ../view/user/user/index.phtml:10
+#: ../view/user/user/index.phtml:11
 msgid "add user"
 msgstr ""
 
-#: ../view/user/user/index.phtml:16
+#: ../view/user/user/index.phtml:17
 #: ../view/user/user/details.phtml:19
 msgid "Sex"
 msgstr ""
 
-#: ../view/user/user/index.phtml:17
+#: ../view/user/user/index.phtml:18
 #: ../view/user/user/details.phtml:23
 msgid "Name"
 msgstr ""
 
-#: ../view/user/user/index.phtml:18
+#: ../view/user/user/index.phtml:19
 #: ../view/user/user/details.phtml:27
 msgid "Nick"
 msgstr ""
 
-#: ../view/user/user/index.phtml:19
+#: ../view/user/user/index.phtml:20
 msgid "Username"
 msgstr ""
 
-#: ../view/user/user/index.phtml:20
+#: ../view/user/user/index.phtml:21
 #: ../view/user/user/details.phtml:31
 msgid "KGS"
 msgstr ""
 
-#: ../view/user/user/index.phtml:22
+#: ../view/user/user/index.phtml:23
 #: ../view/user/user/details.phtml:55
 msgid "last Login"
 msgstr ""
 
-#: ../view/user/user/index.phtml:23
+#: ../view/user/user/index.phtml:24
 msgid "Details"
 msgstr ""
 
-#: ../view/user/user/index.phtml:24
+#: ../view/user/user/index.phtml:25
 msgid "verified"
 msgstr ""
 
-#: ../view/user/user/index.phtml:25
+#: ../view/user/user/index.phtml:26
 msgid "active"
 msgstr ""
 
-#: ../view/user/user/index.phtml:26
+#: ../view/user/user/index.phtml:27
 msgid "Pwd"
 msgstr ""
 
-#: ../view/user/user/index.phtml:44
+#: ../view/user/user/index.phtml:45
 msgid "show Details"
 msgstr ""
 
-#: ../view/user/user/index.phtml:49
+#: ../view/user/user/index.phtml:50
 msgid "shift"
 msgstr ""
 
-#: ../view/user/user/index.phtml:53
+#: ../view/user/user/index.phtml:54
 msgid "reset password"
 msgstr ""
 

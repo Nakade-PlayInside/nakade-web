@@ -14,6 +14,7 @@ class MailService extends AbstractMailService
 
     const CREDENTIALS_MAIL = 'credentials';
     const REGISTRATION_MAIL = 'registration';
+    const CLOSED_BETA_REGISTRATION_MAIL = 'closed_beta';
     const VERIFY_MAIL = 'verify';
     const COUPON_MAIL = 'coupon';
 
@@ -34,6 +35,10 @@ class MailService extends AbstractMailService
 
             case self::REGISTRATION_MAIL:
                 $mail = new Mail\RegistrationMail($this->getMessage(), $this->getTransport());
+                break;
+
+            case self::CLOSED_BETA_REGISTRATION_MAIL:
+                $mail = new Mail\ClosedBetaRegistrationMail($this->getMessage(), $this->getTransport());
                 break;
 
             case self::VERIFY_MAIL:

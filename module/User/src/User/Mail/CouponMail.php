@@ -43,12 +43,12 @@ class CouponMail extends NakadeMail
             $this->translate('If you love the game, you will love us!') . ' ' .
             PHP_EOL . PHP_EOL .
             "%NOTICE%" .
-            $this->translate("To sign up to our closed beta a coupon code is needed.") . ': ' . PHP_EOL . PHP_EOL .
-            $this->translate("The coupon will expire on %EXPIRE_DATE%.") . PHP_EOL .
-            $this->translate("To start sign up you can click the link below") . ': ' .
+            PHP_EOL . PHP_EOL .
+            $this->translate("To start sign up, please click on the link below") . ': ' .
             PHP_EOL . PHP_EOL . '%REGISTER_LINK%' . PHP_EOL . PHP_EOL .
-            $this->translate("or you go to %URL% and enter the coupon code") . ': ' .
-            PHP_EOL . PHP_EOL . '%CODE%' . PHP_EOL . PHP_EOL .
+            $this->translate("or you go to %URL% and enter the provided link.") . PHP_EOL . PHP_EOL .
+            $this->translate("To sign up to our closed beta the provided coupon code is neccessary.") . PHP_EOL .
+            $this->translate("The coupon will expire on %EXPIRE_DATE%.") . PHP_EOL .
             $this->translate("For more information just visit our website.") .
             PHP_EOL . PHP_EOL .
             $this->getSignature()->getSignatureText();

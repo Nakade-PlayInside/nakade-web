@@ -101,7 +101,9 @@ class UserFormService extends AbstractFormFactory
                 break;
 
             case self::REGISTER_CLOSED_BETA_FORM:
-                $form = new Form\RegisterClosedBetaForm($this->getServices(), $this->getUserHydrator());
+                $pwdService  = $this->getServices()->get('Nakade\Services\PasswordService');
+                $closedBeta = new Form\Hydrator\ClosedBetaHydrator($pwdService);
+                $form = new Form\RegisterClosedBetaForm($this->getServices(), $closedBeta);
                 break;
 
             case self::INVITE_FRIEND_FORM:

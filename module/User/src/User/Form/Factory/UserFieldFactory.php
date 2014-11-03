@@ -25,7 +25,7 @@ class UserFieldFactory extends AbstractTranslation
                 $field = array(
                     'name' => self::FIELD_KGS,
                     'type' => 'Zend\Form\Element\Text',
-                    'options' => array('label' =>  $this->translate('KGS Name (opt.)') . ':',)
+                    'options' => array('label' =>  $this->translate('KGS Name') . ':*',)
                 );
                 break;
 
@@ -33,7 +33,7 @@ class UserFieldFactory extends AbstractTranslation
                 $field = array(
                     'name' => self::FIELD_EMAIL,
                     'type' => 'Zend\Form\Element\Email',
-                    'options' => array('label' =>  $this->translate('email') . ':'),
+                    'options' => array('label' =>  $this->translate('email') . ':*'),
                     'attributes' => array('multiple' => false)
                 );
                 break;
@@ -101,7 +101,7 @@ class UserFieldFactory extends AbstractTranslation
                 $field = array(
                     'name' => self::FIELD_USERNAME,
                     'type' => 'Zend\Form\Element\Text',
-                    'options' => array('label' =>  $this->translate('User Name') . ':'),
+                    'options' => array('label' =>  $this->translate('User Name') . ':*'),
                 );
                 break;
 
@@ -121,7 +121,7 @@ class UserFieldFactory extends AbstractTranslation
                 $field = array(
                     'name' => self::FIELD_FIRST_NAME,
                     'type' => 'Zend\Form\Element\Text',
-                    'options' => array('label' =>  $this->translate('First Name') . ':')
+                    'options' => array('label' =>  $this->translate('First Name') . ': *')
                 );
                 break;
 
@@ -129,7 +129,7 @@ class UserFieldFactory extends AbstractTranslation
                 $field = array(
                     'name' => self::FIELD_LAST_NAME,
                     'type' => 'Zend\Form\Element\Text',
-                    'options' => array('label' =>  $this->translate('Family Name') . ':'),
+                    'options' => array('label' =>  $this->translate('Family Name') . ':*'),
                 );
                 break;
 
@@ -145,7 +145,7 @@ class UserFieldFactory extends AbstractTranslation
                 $field = array(
                     'name' => self::FIELD_PWD,
                     'type' => 'Zend\Form\Element\Password',
-                    'options' => array('label' =>  $this->translate('enter new password') . ':'),
+                    'options' => array('label' =>  $this->translate('password') . ':'),
                 );
                 break;
 
@@ -153,7 +153,7 @@ class UserFieldFactory extends AbstractTranslation
                 $field = array(
                     'name' => self::FIELD_PWD_REPEAT,
                     'type' => 'Zend\Form\Element\Password',
-                    'options' => array('label' =>  $this->translate('repeat new password') . ':')
+                    'options' => array('label' =>  $this->translate('repeat password') . ':')
                 );
                 break;
 
@@ -161,7 +161,7 @@ class UserFieldFactory extends AbstractTranslation
                 $field = array(
                     'name' => self::FIELD_CODE,
                     'type' => 'Zend\Form\Element\Text',
-                    'options' => array('label' =>  $this->translate('Coupon Code') . ':'),
+                    'options' => array('label' =>  $this->translate('Coupon Code') . ':*'),
                 );
                 break;
 

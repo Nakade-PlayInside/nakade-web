@@ -52,7 +52,7 @@ class RegistrationController extends AbstractController
                 $code = $user->getCouponCode();
 
                 /* @var $mail \User\Mail\CredentialsMail */
-                $mail = $this->getMailService()->getMail(MailService::REGISTRATION_MAIL);
+                $mail = $this->getMailService()->getMail(MailService::CLOSED_BETA_REGISTRATION_MAIL);
                 $mail->setUser($user);
                 $mail->sendMail($user);
 

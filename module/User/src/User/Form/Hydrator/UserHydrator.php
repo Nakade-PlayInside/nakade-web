@@ -14,7 +14,7 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
  *
  * @package User\Form\Hydrator
  */
-class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterface, SexInterface
+class UserHydrator implements UserHydratorInterface, RoleInterface, LanguageInterface, SexInterface
 {
     private $passwordGenerator;
 
@@ -199,7 +199,7 @@ class UserHydrator implements HydratorInterface, RoleInterface, LanguageInterfac
     /**
      * @param User &$user
      */
-    private function setVerification(User &$user)
+    public function setVerification(User &$user)
     {
         $dueDate  = new \DateTime();
         $dueDate = $dueDate->modify('+ 72 hour');
