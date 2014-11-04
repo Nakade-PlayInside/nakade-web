@@ -161,7 +161,10 @@ class UserFieldFactory extends AbstractTranslation
                 $field = array(
                     'name' => self::FIELD_CODE,
                     'type' => 'Zend\Form\Element\Text',
-                    'options' => array('label' =>  $this->translate('Coupon Code') . ':*'),
+                    'options' => array('label' =>  $this->translate('Coupon Code') . ':'),
+                    'attributes' => array(
+                        'readonly' => true
+                    )
                 );
                 break;
 

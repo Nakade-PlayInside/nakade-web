@@ -103,8 +103,8 @@ class UserFilterFactory extends AbstractTranslation  implements UserFieldInterfa
             case self::FIELD_KGS :
                 $filter = array(
                     'name' => self::FIELD_KGS,
-                    'required' => false,
-                    'allowEmpty' => true,
+                    'required' => true,
+                    'allowEmpty' => false,
                     'filters' => $this->getStripFilter(),
                     'validators'=> array(
                         array(

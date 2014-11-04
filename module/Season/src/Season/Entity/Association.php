@@ -29,6 +29,12 @@ class Association
     private $name;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\Season\Entity\EventType", cascade={"persist"})
+     * @ORM\JoinColumn(name="type", referencedColumnName="id", nullable=false)
+     */
+    private $type;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\Season\Entity\SeasonDates", cascade={"persist"})
      * @ORM\JoinColumn(name="seasonDates", referencedColumnName="id", nullable=false)
      */
@@ -94,6 +100,23 @@ class Association
     {
         return $this->name;
     }
+
+    /**
+     * @param int $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
 
     /**
      * @param User $owner

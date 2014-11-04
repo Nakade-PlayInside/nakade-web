@@ -24,7 +24,7 @@ class ClosedBetaRegistrationMail extends UserMail
             $this->translate("username") . ': ' . '%USERNAME%' . PHP_EOL .
             $this->translate("password") . ': ' . '%PASSWORD%' . PHP_EOL .
             PHP_EOL . PHP_EOL .
-            $this->translate('Use your credentials for logIn.') .
+            $this->translate('Use your credentials for logIn.') . ' ' .
             $this->translate('To change the generated password, go to your profile.') . ' ' . PHP_EOL .
             PHP_EOL . PHP_EOL .
             $this->translate('In case of a problem, please contact us.') . PHP_EOL . PHP_EOL .

@@ -23,7 +23,7 @@ class RegisterClosedBetaForm extends BaseForm implements RoleInterface
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_FIRST_NAME));
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_LAST_NAME));
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_USERNAME));
-
+        $this->add($this->getUserFieldFactory()->getField(self::FIELD_KGS));
         $this->add(
                 array(
                 'name' => self::FIELD_EMAIL,
@@ -36,7 +36,7 @@ class RegisterClosedBetaForm extends BaseForm implements RoleInterface
             )
         );
 
-        $this->add($this->getUserFieldFactory()->getField(self::FIELD_KGS));
+
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_CODE));
         $this->add($this->getUserFieldFactory()->getField(self::FIELD_AGREEMENT));
 
