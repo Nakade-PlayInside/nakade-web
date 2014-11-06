@@ -16,6 +16,7 @@ return array(
         'Appointment',
         'Support',
         'Arbitration',
+        'Stats',
 
         ),
     'module_listener_options' => array(

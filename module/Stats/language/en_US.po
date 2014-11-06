@@ -1,0 +1,673 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ZendSkeletonApplication\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-15 12:20+0100\n"
+"PO-Revision-Date: 2014-07-15 12:20+0100\n"
+"Last-Translator: Holger Maerz <holger@nakade.de>\n"
+"Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.3\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../src/Season/Mail/ScheduleMail.php:21
+msgid "This is your actual schedule for the %NUMBER%.%ASSOCIATION% League at %URL%."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:25
+msgid "All matches are officially played on KGS."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:27
+#: ../src/Season/Mail/InvitationMail.php:22
+msgid "Base time: %BASE_TIME% min."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:29
+#: ../src/Season/Mail/InvitationMail.php:24
+#: ../src/Season/View/Helper/RulesInfo.php:29
+msgid "Byoyomi"
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:31
+#: ../src/Season/Mail/InvitationMail.php:26
+#: ../src/Season/View/Helper/RulesInfo.php:35
+msgid "Komi"
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:33
+#: ../src/Season/Mail/InvitationMail.php:28
+#: ../src/Season/Form/MatchDayConfigForm.php:95
+msgid "Match day"
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:35
+msgid "You have to provide your KGS name, so your opponent can recognize you."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:37
+msgid "In case of a match appointment, find your actual schedule on your dashboard ."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:38
+msgid "You can also download your actual schedule for ICal."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:39
+msgid "The deadline for appointments are 3 days before a match."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:41
+msgid "You will receive an email some days before a match."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:42
+msgid "Please keep an eye on your mailbox - also in case of appointments."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:44
+msgid "After a match, both players may enter the result."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:45
+msgid "Be aware on automatic emails if the result is not entered in time."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:46
+msgid "There is a deadline of 72h after a match."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:47
+msgid "Afterwards the match is automatically suspended."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:49
+msgid "Any further details on the tournament rules, you can find online."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:50
+msgid "If you have problems, please contact a league manager."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:51
+msgid "We hope you enjoy your matches and have a wonderful time on %URL%."
+msgstr ""
+
+#: ../src/Season/Mail/ScheduleMail.php:65
+msgid "Your Schedule - %ASSOCIATION% League"
+msgstr ""
+
+#: ../src/Season/Mail/InvitationMail.php:18
+msgid "A new season is announced at %URL%."
+msgstr ""
+
+#: ../src/Season/Mail/InvitationMail.php:19
+msgid "We are happy to invite you to participate in the %NUMBER%. %ASSOCIATION% League."
+msgstr ""
+
+#: ../src/Season/Mail/InvitationMail.php:20
+msgid "The starting date is tentatively scheduled for the %DATE%."
+msgstr ""
+
+#: ../src/Season/Mail/InvitationMail.php:30
+msgid "To ensure being in the league, please confirm your participation as soon as possible."
+msgstr ""
+
+#: ../src/Season/Mail/InvitationMail.php:32
+msgid "You can do so by clicking on the link provided below."
+msgstr ""
+
+#: ../src/Season/Mail/InvitationMail.php:34
+msgid "Or you just login at %URL% and confirm your participation on your site."
+msgstr ""
+
+#: ../src/Season/Mail/InvitationMail.php:36
+msgid "The deadline for confirming your participation is a month before starting date."
+msgstr ""
+
+#: ../src/Season/Mail/InvitationMail.php:37
+msgid "All later applications will be ignored."
+msgstr ""
+
+#: ../src/Season/Mail/InvitationMail.php:51
+msgid "Invitation - %NUMBER%. %ASSOCIATION% League"
+msgstr ""
+
+#: ../src/Season/View/Helper/ParticipationInfo.php:23
+msgid "Registration Closed"
+msgstr ""
+
+#: ../src/Season/View/Helper/ParticipationInfo.php:26
+msgid "You registered already!"
+msgstr ""
+
+#: ../src/Season/View/Helper/ParticipationInfo.php:30
+msgid "Register NOW!"
+msgstr ""
+
+#: ../src/Season/View/Helper/SeasonState.php:26
+msgid "invite participants"
+msgstr ""
+
+#: ../src/Season/View/Helper/SeasonState.php:29
+msgid "create leagues"
+msgstr ""
+
+#: ../src/Season/View/Helper/SeasonState.php:32
+msgid "configure match days"
+msgstr ""
+
+#: ../src/Season/View/Helper/SeasonState.php:35
+msgid "create schedule"
+msgstr ""
+
+#: ../src/Season/View/Helper/SeasonState.php:38
+msgid "activate season"
+msgstr ""
+
+#: ../src/Season/View/Helper/SeasonState.php:40
+msgid "active season"
+msgstr ""
+
+#: ../src/Season/View/Helper/PlayerAccepted.php:28
+msgid "Player accepted invitation"
+msgstr ""
+
+#: ../src/Season/View/Helper/RulesInfo.php:23
+#: ../src/Season/Form/MatchDayConfigForm.php:125
+msgid "Time"
+msgstr ""
+
+#: ../src/Season/View/Helper/RulesInfo.php:24
+msgid "min."
+msgstr ""
+
+#: ../src/Season/View/Helper/RulesInfo.php:36
+msgid "points"
+msgstr ""
+
+#: ../src/Season/Form/ConfirmForm.php:40
+msgid "Cancel"
+msgstr ""
+
+#: ../src/Season/Form/ConfirmForm.php:49
+msgid "YES"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayConfigForm.php:54
+msgid "Season"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayConfigForm.php:67
+msgid "No of rounds"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayConfigForm.php:80
+msgid "Cycle"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayConfigForm.php:110
+msgid "Start date"
+msgstr ""
+
+#: ../src/Season/Form/ParticipantForm.php:57
+#: ../src/Season/Form/LeagueForm.php:65
+#: ../src/Season/Form/SeasonForm.php:70
+msgid "Association"
+msgstr ""
+
+#: ../src/Season/Form/ParticipantForm.php:69
+#: ../src/Season/Form/LeagueForm.php:77
+#: ../src/Season/Form/SeasonForm.php:80
+msgid "Season no."
+msgstr ""
+
+#: ../src/Season/Form/ParticipantForm.php:80
+msgid "No of invited players"
+msgstr ""
+
+#: ../src/Season/Form/ParticipantForm.php:93
+#: ../src/Season/Form/LeagueForm.php:120
+msgid "Add player"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:69
+msgid "Round"
+msgstr ""
+
+#: ../src/Season/Form/MatchDayForm.php:83
+msgid "Date"
+msgstr ""
+
+#: ../src/Season/Form/LeagueForm.php:89
+msgid "League no."
+msgstr ""
+
+#: ../src/Season/Form/LeagueForm.php:103
+msgid "Remove player"
+msgstr ""
+
+#: ../src/Season/Form/SeasonForm.php:108
+msgid "Winning points"
+msgstr ""
+
+#: ../src/Season/Form/SeasonForm.php:144
+msgid "Base time in minutes"
+msgstr ""
+
+#: ../src/Season/Form/SeasonForm.php:154
+#: ../src/Season/Form/SeasonForm.php:174
+msgid "Extra time"
+msgstr ""
+
+#: ../src/Season/Form/SeasonForm.php:165
+msgid "Periods"
+msgstr ""
+
+#: ../src/Season/Form/SeasonForm.php:183
+msgid "Moves per extra time"
+msgstr ""
+
+#: ../src/Season/Form/Fieldset/TieBreakerFieldset.php:47
+msgid "First tiebreaker"
+msgstr ""
+
+#: ../src/Season/Form/Fieldset/TieBreakerFieldset.php:59
+msgid "Second tiebreaker"
+msgstr ""
+
+#: ../src/Season/Form/Fieldset/TieBreakerFieldset.php:71
+msgid "Third tiebreaker"
+msgstr ""
+
+#: ../src/Season/Form/Fieldset/ButtonFieldset.php:44
+msgid "Submit"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:31
+msgid "Monday"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:32
+msgid "Tuesday"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:33
+msgid "Wednesday"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:34
+msgid "Thursday"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:35
+msgid "Friday"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:36
+msgid "Saturday"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:37
+msgid "Sunday"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:47
+msgid "daily"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:48
+msgid "on weekdays"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:49
+msgid "weekly"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:50
+msgid "fortnightly"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:51
+msgid "all 3 weeks"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:52
+msgid "monthly"
+msgstr ""
+
+#: ../src/Season/Schedule/DateHelper.php:69
+#: ../src/Season/Schedule/DateHelper.php:85
+msgid "unknown"
+msgstr ""
+
+#: ../view/season/confirm/failure.phtml:3
+msgid "Confirmation failed"
+msgstr ""
+
+#: ../view/season/confirm/failure.phtml:8
+msgid "Your confirmation failed."
+msgstr ""
+
+#: ../view/season/confirm/failure.phtml:9
+msgid "Probably, you accepted your invitation already."
+msgstr ""
+
+#: ../view/season/confirm/failure.phtml:10
+msgid "Log in to find out!"
+msgstr ""
+
+#: ../view/season/confirm/error.phtml:3
+msgid "Data Transmission Error"
+msgstr ""
+
+#: ../view/season/confirm/error.phtml:8
+msgid "Expected data not found."
+msgstr ""
+
+#: ../view/season/confirm/error.phtml:9
+msgid "Did you really use the correct link provided by email?"
+msgstr ""
+
+#: ../view/season/confirm/success.phtml:3
+msgid "Participation is confirmed"
+msgstr ""
+
+#: ../view/season/confirm/success.phtml:10
+msgid "Your participation is confirmed."
+msgstr ""
+
+#: ../view/season/confirm/success.phtml:11
+msgid "It will take some time before the new schedule is announced."
+msgstr ""
+
+#: ../view/season/confirm/success.phtml:12
+msgid "You can follow the actual stage of development on the dashboard."
+msgstr ""
+
+#: ../view/season/confirm/register.phtml:7
+msgid "Register for New Season?"
+msgstr ""
+
+#: ../view/season/confirm/register.phtml:8
+msgid "Your registration is binding."
+msgstr ""
+
+#: ../view/season/confirm/register.phtml:9
+msgid "The match schedule is released subsequently after ending of registration."
+msgstr ""
+
+#: ../view/season/player/index.phtml:11
+msgid "Player Roster"
+msgstr ""
+
+#: ../view/season/player/index.phtml:13
+msgid "League"
+msgstr ""
+
+#: ../view/season/player/index.phtml:18
+msgid "No season found."
+msgstr ""
+
+#: ../view/season/player/index.phtml:25
+msgid "Invited players"
+msgstr ""
+
+#: ../view/season/player/index.phtml:34
+msgid "Available players"
+msgstr ""
+
+#: ../view/season/player/add.phtml:4
+msgid "add player"
+msgstr ""
+
+#: ../view/season/season/index.phtml:7
+msgid "Season Overview"
+msgstr ""
+
+#: ../view/season/season/index.phtml:23
+msgid "Number of leagues"
+msgstr ""
+
+#: ../view/season/season/index.phtml:24
+msgid "Number of players"
+msgstr ""
+
+#: ../view/season/season/index.phtml:25
+msgid "Number of matches"
+msgstr ""
+
+#: ../view/season/season/index.phtml:26
+msgid "Open matches"
+msgstr ""
+
+#: ../view/season/season/index.phtml:27
+#: ../view/season/season/create.phtml:24
+msgid "First match"
+msgstr ""
+
+#: ../view/season/season/index.phtml:28
+#: ../view/season/season/create.phtml:25
+msgid "Last match"
+msgstr ""
+
+#: ../view/season/season/index.phtml:29
+#: ../view/season/season/create.phtml:26
+msgid "State"
+msgstr ""
+
+#: ../view/season/season/show-rules.phtml:6
+msgid "Times and Komi"
+msgstr ""
+
+#: ../view/season/season/show.phtml:6
+msgid "Call for Participation"
+msgstr ""
+
+#: ../view/season/season/show.phtml:15
+msgid "League No."
+msgstr ""
+
+#: ../view/season/season/show.phtml:17
+msgid "Base Time"
+msgstr ""
+
+#: ../view/season/season/show.phtml:20
+msgid "Start"
+msgstr ""
+
+#: ../view/season/season/show.phtml:22
+#: ../view/season/season/create.phtml:20
+msgid "Participants"
+msgstr ""
+
+#: ../view/season/season/show.phtml:23
+msgid "Stage"
+msgstr ""
+
+#: ../view/season/season/edit.phtml:6
+msgid "Edit Season"
+msgstr ""
+
+#: ../view/season/season/create.phtml:7
+#: ../view/season/season/add.phtml:6
+msgid "Create Season"
+msgstr ""
+
+#: ../view/season/season/create.phtml:17
+msgid "Leagues"
+msgstr ""
+
+#: ../view/season/season/create.phtml:23
+msgid "Matches"
+msgstr ""
+
+#: ../view/season/season/create.phtml:31
+msgid "edit Season"
+msgstr ""
+
+#: ../view/season/season/create.phtml:35
+msgid "invite Player"
+msgstr ""
+
+#: ../view/season/season/create.phtml:39
+msgid "add League"
+msgstr ""
+
+#: ../view/season/season/create.phtml:43
+msgid "edit League"
+msgstr ""
+
+#: ../view/season/season/create.phtml:44
+msgid "configure Match Days"
+msgstr ""
+
+#: ../view/season/season/create.phtml:48
+msgid "edit Match Days"
+msgstr ""
+
+#: ../view/season/season/create.phtml:49
+msgid "remove Match Days"
+msgstr ""
+
+#: ../view/season/season/create.phtml:50
+msgid "create Schedule"
+msgstr ""
+
+#: ../view/season/season/create.phtml:54
+msgid "remove Schedule"
+msgstr ""
+
+#: ../view/season/season/create.phtml:55
+msgid "activate Season"
+msgstr ""
+
+#: ../view/season/season/activate.phtml:7
+msgid "Activate Season?"
+msgstr ""
+
+#: ../view/season/season/activate.phtml:8
+msgid "This is the final step of a new season."
+msgstr ""
+
+#: ../view/season/season/activate.phtml:9
+msgid "All participating players will receive their match schedule."
+msgstr ""
+
+#: ../view/season/match-day/index.phtml:9
+#: ../view/season/match-day/delete.phtml:9
+#: ../view/season/schedule/index.phtml:9
+msgid "No match days found."
+msgstr ""
+
+#: ../view/season/match-day/index.phtml:13
+#: ../view/season/schedule/index.phtml:13
+msgid "Match Days of the Next Season"
+msgstr ""
+
+#: ../view/season/match-day/index.phtml:16
+#: ../view/season/match-day/delete.phtml:19
+#: ../view/season/schedule/index.phtml:16
+msgid "round"
+msgstr ""
+
+#: ../view/season/match-day/index.phtml:17
+#: ../view/season/match-day/delete.phtml:20
+#: ../view/season/schedule/index.phtml:17
+msgid "date"
+msgstr ""
+
+#: ../view/season/match-day/index.phtml:18
+#: ../view/season/match-day/index.phtml:26
+#: ../view/season/schedule/index.phtml:18
+#: ../view/season/league/index.phtml:30
+msgid "edit"
+msgstr ""
+
+#: ../view/season/match-day/index.phtml:33
+msgid "Return"
+msgstr ""
+
+#: ../view/season/match-day/delete.phtml:13
+msgid "Remove all Match Days?"
+msgstr ""
+
+#: ../view/season/match-day/delete.phtml:14
+msgid "These are all match days of the next season."
+msgstr ""
+
+#: ../view/season/match-day/delete.phtml:15
+msgid "If deleted, you will have to renew the match day configuration."
+msgstr ""
+
+#: ../view/season/match-day/edit.phtml:6
+msgid "Edit Match Days"
+msgstr ""
+
+#: ../view/season/match-day/add.phtml:4
+msgid "Match Day Configuration"
+msgstr ""
+
+#: ../view/season/schedule/delete.phtml:5
+msgid "There are %NUMBER% matches scheduled for the next season."
+msgstr ""
+
+#: ../view/season/schedule/delete.phtml:11
+msgid "No schedule found."
+msgstr ""
+
+#: ../view/season/schedule/delete.phtml:15
+msgid "Remove Schedule?"
+msgstr ""
+
+#: ../view/season/schedule/delete.phtml:17
+msgid "If deleted, you will have to renew the match schedule."
+msgstr ""
+
+#: ../view/season/schedule/create.phtml:7
+msgid "Create Schedule?"
+msgstr ""
+
+#: ../view/season/schedule/create.phtml:8
+msgid "This will create a match plan for all players."
+msgstr ""
+
+#: ../view/season/schedule/create.phtml:9
+msgid "Afterwards you will have to activate the new season."
+msgstr ""
+
+#: ../view/season/league/index.phtml:4
+msgid "Edit Leagues"
+msgstr ""
+
+#: ../view/season/league/index.phtml:9
+msgid "No league found."
+msgstr ""
+
+#: ../view/season/league/index.phtml:16
+msgid "Id"
+msgstr ""
+
+#: ../view/season/league/index.phtml:17
+msgid "No"
+msgstr ""
+
+#: ../view/season/league/index.phtml:18
+msgid "Player"
+msgstr ""
+
+#: ../view/season/league/edit.phtml:4
+msgid "Edit League"
+msgstr ""
+
+#: ../view/season/league/add.phtml:4
+msgid "Add New League"
+msgstr ""
+
+#~ msgid "Skeleton Application"
+#~ msgstr "Tutorial"

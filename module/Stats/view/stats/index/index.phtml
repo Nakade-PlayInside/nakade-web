@@ -1,0 +1,27 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Stats');
+$this->headTitle('Stats');
+?>
+
+<h3><?php echo $title;?></h3>
+
+<?php $this->placeholder('noSeason')->captureStart();?>
+      <?php echo $this->translate("No matches found."); ?>
+<?php $this->placeholder('noSeason')->captureEnd();?>
+
+
+<?php $this->placeholder('actual')->captureStart();?>
+
+<h5><?php echo $this->translate("My performance"); ?></h5>
+
+<?php $this->placeholder('actual')->captureEnd(); ?>
+
+
+<?php
+
+ if (empty($this->season)) {
+     echo $this->placeholder('noSeason');
+ } else {
+     echo $this->placeholder('actual');
+ }
+
