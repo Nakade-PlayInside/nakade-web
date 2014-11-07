@@ -7,9 +7,9 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class SeasonControllerFactory
+ * Class IndexControllerFactory
  *
- * @package Season\Services
+ * @package Stats\Services
  */
 class IndexControllerFactory implements FactoryInterface
 {
@@ -21,7 +21,14 @@ class IndexControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $services)
     {
+        /* @var $services \Zend\Mvc\Controller\AbstractController */
+        $serviceManager = $services->getServiceLocator();
+
+        $repository = $serviceManager->get('Stats\Services\RepositoryService');
+
         $controller = new IndexController();
+        $controller->setRepository($repository);
+
         return $controller;
     }
 }

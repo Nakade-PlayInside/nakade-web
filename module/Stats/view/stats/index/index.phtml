@@ -13,13 +13,15 @@ $this->headTitle('Stats');
 <?php $this->placeholder('actual')->captureStart();?>
 
 <h5><?php echo $this->translate("My performance"); ?></h5>
+<?php echo $this->stats->getGamesPlayed(); ?>
+
 
 <?php $this->placeholder('actual')->captureEnd(); ?>
 
 
 <?php
 
- if (empty($this->season)) {
+ if (empty($this->stats)) {
      echo $this->placeholder('noSeason');
  } else {
      echo $this->placeholder('actual');

@@ -56,7 +56,8 @@ return array(
 
     'service_manager' => array(
         'factories' => array(
-
+            'Stats\Services\RepositoryService'      =>
+                'Stats\Services\RepositoryService',
         ),
     ),
 
