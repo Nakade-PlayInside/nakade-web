@@ -1,7 +1,7 @@
 <?php
 namespace League\View\Helper;
 
-use League\Standings\ResultInterface;
+use Nakade\Result\ResultInterface;
 use Zend\View\Helper\AbstractHelper;
 use Season\Entity\Match;
 use User\Entity\User;
@@ -22,8 +22,8 @@ class Winner extends AbstractHelper implements ResultInterface
     public function __invoke(Match $match, User $user)
     {
         if (!$match->hasResult() ||
-            $match->getResult()->getResultType()->getId() == ResultInterface::DRAW ||
-            $match->getResult()->getResultType()->getId() == ResultInterface::SUSPENDED) {
+            $match->getResult()->getResultType()->getId() == self::DRAW ||
+            $match->getResult()->getResultType()->getId() == self::SUSPENDED) {
             return '';
         } elseif ($match->getResult()->getWinner() == $user) {
             return 'underline;';

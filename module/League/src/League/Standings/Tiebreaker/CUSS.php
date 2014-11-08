@@ -2,7 +2,7 @@
 namespace League\Standings\Tiebreaker;
 
 use League\Standings\Results as RESULT;
-use League\Standings\GameStats;
+use Nakade\Stats\GameStats;
 
 
 /**

@@ -1,7 +1,7 @@
 <?php
 namespace League\View\Helper;
 
-use League\Standings\ResultInterface;
+use Nakade\Result\ResultInterface;
 use Zend\View\Helper\AbstractHelper;
 use Season\Entity\Match;
 

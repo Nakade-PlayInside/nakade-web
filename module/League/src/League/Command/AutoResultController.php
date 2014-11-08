@@ -4,7 +4,7 @@ namespace League\Command;
 use League\Entity\Result;
 use League\Services\RepositoryService;
 use League\Services\MailService;
-use League\Standings\ResultInterface;
+use Nakade\Result\ResultInterface;
 use Zend\Console\Request as ConsoleRequest;
 
 /**

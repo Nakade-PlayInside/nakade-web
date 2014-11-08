@@ -7,7 +7,7 @@
 
 namespace League\Mail;
 
-use League\Standings\ResultInterface;
+use Nakade\Result\ResultInterface;
 use Mail\NakadeMail;
 use Mail\Services\MailMessageFactory;
 use Season\Entity\Match;
