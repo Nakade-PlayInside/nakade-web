@@ -1,7 +1,8 @@
 <?php
-namespace League\Standings\Games;
+namespace Nakade\Stats;
 
-use League\Standings\StatsFactory;
+use Nakade\Stats\StatsFactory;
+use Nakade\Stats\Games;
 use RuntimeException;
 
 /**
@@ -18,6 +19,15 @@ class GamesStatsFactory extends StatsFactory
     const GAMES_SUSPENDED = 'suspended';
 
     /**
+     * Constructor providing an array of match entities
+     * @param array $matches
+     */
+    public function __construct(array $matches)
+    {
+        $this->matches=$matches;
+    }
+
+    /**
      * @param string $typ
      *
      * @return string
@@ -30,23 +40,23 @@ class GamesStatsFactory extends StatsFactory
         switch (strtolower($typ)) {
 
            case self::GAMES_PLAYED:
-               $stats = PlayedGames::getInstance();
+               $stats = Games\PlayedGames::getInstance();
                break;
 
            case self::GAMES_LOST:
-               $stats = LostGames::getInstance();
+               $stats = Games\LostGames::getInstance();
                break;
 
            case self::GAMES_WON:
-               $stats = WonGames::getInstance();
+               $stats = Games\WonGames::getInstance();
                break;
 
            case self::GAMES_DRAW:
-               $stats = DrawGames::getInstance();
+               $stats = Games\DrawGames::getInstance();
                break;
 
            case self::GAMES_SUSPENDED:
-               $stats = SuspendedGames::getInstance();
+               $stats = Games\SuspendedGames::getInstance();
                break;
 
            default      :

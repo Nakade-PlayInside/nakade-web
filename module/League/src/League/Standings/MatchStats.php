@@ -3,7 +3,7 @@ namespace League\Standings;
 
 use League\Entity\Player;
 use League\Standings\Tiebreaker\TiebreakerFactory;
-use League\Standings\Games\GamesStatsFactory;
+use Nakade\Stats\GamesStatsFactory;
 
 /**
  * Determining the games stats for having a sorted table of
@@ -137,19 +137,19 @@ class MatchStats extends MatchInfo
 
         $results = array(
            'gamesPlayed'    => $this->getGamesStatsFactory()
-                                    ->getPoints('played'),
+                                    ->getPoints(GamesStatsFactory::GAMES_PLAYED),
 
            'gamesSuspended' => $this->getGamesStatsFactory()
-                                    ->getPoints('suspended'),
+                                    ->getPoints(GamesStatsFactory::GAMES_SUSPENDED),
 
            'gamesWin'       => $this->getGamesStatsFactory()
-                                    ->getPoints('won'),
+                                    ->getPoints(GamesStatsFactory::GAMES_WON),
 
            'gamesDraw'      => $this->getGamesStatsFactory()
-                                    ->getPoints('draw'),
+                                    ->getPoints(GamesStatsFactory::GAMES_DRAW),
 
            'gamesLost'      => $this->getGamesStatsFactory()
-                                    ->getPoints('lost'),
+                                    ->getPoints(GamesStatsFactory::GAMES_LOST),
 
            'gamesPoints'    => $this->getPoints(),
 
@@ -169,11 +169,11 @@ class MatchStats extends MatchInfo
 
     private function getPoints()
     {
-        return  (int) $this->getGamesStatsFactory()->getPoints('won')  * (int) $this->getWinPoints() +
-                (int) $this->getGamesStatsFactory()->getPoints('draw') * (int) $this->getDrawPoints();
+        return  (int) $this->getGamesStatsFactory()->getPoints(GamesStatsFactory::GAMES_WON)  *
+                (int) $this->getWinPoints() +
+                (int) $this->getGamesStatsFactory()->getPoints(GamesStatsFactory::GAMES_DRAW) *
+                (int) $this->getDrawPoints();
     }
-
-
 
 }
 

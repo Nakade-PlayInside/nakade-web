@@ -1,12 +1,14 @@
 <?php
-namespace League\Standings;
+namespace League\Standings\Tiebreaker;
 
+
+use Nakade\Result\ResultInterface;
 /**
  * base class for game statistics.
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class GameStats
+abstract class TiebreakerStats implements TiebreakerInterface, ResultInterface
 {
     protected static $instances=array();
     protected $allMatches;

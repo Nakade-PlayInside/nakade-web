@@ -9,8 +9,7 @@
 namespace Stats\Calculation;
 
 
-use League\Standings\Games\GamesStatsFactory;
-use Nakade\Result\ResultInterface;
+use Nakade\Stats\GamesStatsFactory;
 use Stats\Entity\MatchStats;
 
 class MatchStatsFactory {
@@ -31,11 +30,12 @@ class MatchStatsFactory {
             'suspended' => $matchStats->getPoints(GamesStatsFactory::GAMES_SUSPENDED),
             'wins'   => $matchStats->getPoints(GamesStatsFactory::GAMES_WON),
             'draws'  => $matchStats->getPoints(GamesStatsFactory::GAMES_DRAW),
-            'loss'  => $matchStats->getPoints(GamesStatsFactory::GAMES_LOST),
+            'loss'  => $matchStats->getPoints(GamesStatsFactory::GAMES_LOST)
+        );
 
 
-        $this->stats = new MatchStats(count($matches));
-        $this->calculate();
+   //     $this->stats = new MatchStats(count($matches));
+     //   $this->calculate();
     }
 
     /**
@@ -54,7 +54,7 @@ class MatchStatsFactory {
         /* @var $match \Season\Entity\Match */
         foreach($this->matches as $match) {
 
-            $match->getResult()->getResultType() == ResultInterface::SUSPENDED;
+          //  $match->getResult()->getResultType() == ResultInterface::SUSPENDED;
         }
     }
 

@@ -1,7 +1,7 @@
 <?php
 namespace League\Standings\Tiebreaker;
 
-use League\Standings\StatsFactory;
+use Nakade\Stats\StatsFactory;
 use RuntimeException;
 
 /**
@@ -14,10 +14,20 @@ use RuntimeException;
 class TiebreakerFactory extends StatsFactory
 {
     protected $tieBreaker;
+
     const TB_HAHN = 'hahn';
     const TB_CUSS = 'cuss';
     const TB_SODOS = 'sodos';
     const TB_SOS = 'sos';
+
+    /**
+     * Constructor providing an array of match entities
+     * @param array $matches
+     */
+    public function __construct(array $matches)
+    {
+        $this->matches=$matches;
+    }
 
     /**
      * @param string $typ
@@ -90,7 +100,7 @@ class TiebreakerFactory extends StatsFactory
 
         $this->setTiebreaker($typ);
 
-        /* @var $tiebreaker \League\Standings\GameStats */
+        /* @var $tiebreaker \League\Standings\Tiebreaker\TiebreakerStats */
         $tiebreaker = $this->getTieBreaker();
         $allMatches = $this->getMatches();
         $tiebreaker->setMatches($allMatches);

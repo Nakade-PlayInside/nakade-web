@@ -1,8 +1,6 @@
 <?php
 namespace League\Standings\Tiebreaker;
 
-use League\Standings\Results as RESULT;
-
 /**
  * Calculating the Sum of defeated Opponents Scores.
  * This tiebreaker is suited best as a third tiebreaker since the only
@@ -28,8 +26,8 @@ class SODOS extends SOS
         foreach ($this->getMatches() as $match) {
 
             if (!$match->hasResult() ||
-               $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED ||
-               $match->getResult()->getResultType()->getId() == RESULT::DRAW
+               $match->getResult()->getResultType()->getId() == self::SUSPENDED ||
+               $match->getResult()->getResultType()->getId() == self::DRAW
             ) {
                continue;
             }
