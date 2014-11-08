@@ -10,36 +10,30 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MatchStats
 {
-    private $matches;
+    private $total;
     private $played;
     private $wins;
     private $draws;
     private $suspended;
-    private $close;
-    private $time;
-    private $forfeit;
+    private $points;
+    private $lostOnTime;
+    private $lostByForfeit;
     private $loss;
 
-    public function __construct($matches)
-    {
-        $this->played=$this->wins=$this->draws=$this->suspended=$this->close=$this->time=$this->forfeit=$this->loss=0;
-        $this->matches=$matches;
-    }
-
     /**
-     * @param int $close
+     * @param int $points
      */
-    public function setClose($close)
+    public function setPoints($points)
     {
-        $this->close = $close;
+        $this->points = $points;
     }
 
     /**
      * @return int
      */
-    public function getClose()
+    public function getPoints()
     {
-        return $this->close;
+        return $this->points;
     }
 
     /**
@@ -59,19 +53,19 @@ class MatchStats
     }
 
     /**
-     * @param int $forfeit
+     * @param int $lostByForfeit
      */
-    public function setForfeit($forfeit)
+    public function setLostByForfeit($lostByForfeit)
     {
-        $this->forfeit = $forfeit;
+        $this->lostByForfeit = $lostByForfeit;
     }
 
     /**
      * @return int
      */
-    public function getForfeit()
+    public function getLostByForfeit()
     {
-        return $this->forfeit;
+        return $this->lostByForfeit;
     }
 
     /**
@@ -91,19 +85,19 @@ class MatchStats
     }
 
     /**
-     * @param int $matches
+     * @param int $total
      */
-    public function setMatches($matches)
+    public function setTotal($total)
     {
-        $this->matches = $matches;
+        $this->total = $total;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getMatches()
+    public function getTotal()
     {
-        return $this->matches;
+        return $this->total;
     }
 
     /**
@@ -140,19 +134,19 @@ class MatchStats
     }
 
     /**
-     * @param int $time
+     * @param int $lostOnTime
      */
-    public function setTime($time)
+    public function setLostOnTime($lostOnTime)
     {
-        $this->time = $time;
+        $this->lostOnTime = $lostOnTime;
     }
 
     /**
      * @return int
      */
-    public function getTime()
+    public function getLostOnTime()
     {
-        return $this->time;
+        return $this->lostOnTime;
     }
 
     /**
@@ -171,7 +165,15 @@ class MatchStats
         return $this->wins;
     }
 
-
+    public function populate($data)
+    {
+        foreach ($data as $key => $value) {
+            $method = 'set'.ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+    }
 
 
 

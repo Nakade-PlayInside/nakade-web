@@ -2,6 +2,7 @@
 namespace Stats\Controller;
 
 use Nakade\Abstracts\AbstractController;
+use Stats\Calculation\MatchStatsFactory;
 use Stats\Entity\MatchStats;
 use Stats\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
@@ -25,35 +26,11 @@ class IndexController extends AbstractController
         $mapper = $this->getRepository()->getMapper(RepositoryService::STATS_MAPPER);
 
         $matches = $mapper->getMatchStatsByUser($userId);
-
-        $wins = $draws = $suspended = 0;
-        /* @var $match \Season\Entity\Match */
-        foreach($matches as $match) {
-
-            if($match->getResult()->getResultType() == 3) {
-                $draws++;
-                continue;
-            }
-
-            if($match->getResult()->getResultType() == 5) {
-                $suspended++;
-                continue;
-            }
-
-
-            if($match->getResult()->getWinner() == $userId) {
-                $wins++;
-            }
-        }
-        var_dump($wins);
-        var_dump($draws);
-        var_dump($suspended);
-
-        $stats = new MatchStats();
-        $stats->setGamesPlayed(count($matches));
+        $factory = new MatchStatsFactory($matches, $userId);
+        var_dump($factory->getMatchStats());
 
         return new ViewModel(
-            array('stats' => $stats)
+            array('stats' => array())
         );
     }
 

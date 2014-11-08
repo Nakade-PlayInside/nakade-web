@@ -14,51 +14,37 @@ use Stats\Entity\MatchStats;
 
 class MatchStatsFactory {
 
-    private $matches;
-    private $stats;
-
-
+    private $matchStats;
 
     public function __construct(array $matches, $userId)
     {
-        $this->matches=$matches;
-        $matchStats = new GamesStatsFactory($this->matches);
+        $matchStats = new GamesStatsFactory($matches);
         $matchStats->setPlayerId($userId);
 
         $results = array(
+            'total'  => count($matches),
             'played'    => $matchStats->getPoints(GamesStatsFactory::GAMES_PLAYED),
             'suspended' => $matchStats->getPoints(GamesStatsFactory::GAMES_SUSPENDED),
             'wins'   => $matchStats->getPoints(GamesStatsFactory::GAMES_WON),
             'draws'  => $matchStats->getPoints(GamesStatsFactory::GAMES_DRAW),
-            'loss'  => $matchStats->getPoints(GamesStatsFactory::GAMES_LOST)
+            'loss'  => $matchStats->getPoints(GamesStatsFactory::GAMES_LOST),
+            'points'  => $matchStats->getPoints(GamesStatsFactory::GAMES_BY_POINTS),
+            'lostOnTime'  => $matchStats->getPoints(GamesStatsFactory::GAMES_LOST_ON_TIME),
+            'lostByForfeit'  => $matchStats->getPoints(GamesStatsFactory::GAMES_LOST_BY_FORFEIT)
         );
 
+        $this->matchStats = new MatchStats();
+        $this->matchStats->populate($results);
 
-   //     $this->stats = new MatchStats(count($matches));
-     //   $this->calculate();
     }
 
     /**
      * @return MatchStats
      */
-    public function getStats()
+    public function getMatchStats()
     {
-        return $this->stats;
+        return $this->matchStats;
     }
-
-    /**
-     * @return mixed
-     */
-    private function calculate()
-    {
-        /* @var $match \Season\Entity\Match */
-        foreach($this->matches as $match) {
-
-          //  $match->getResult()->getResultType() == ResultInterface::SUSPENDED;
-        }
-    }
-
-
 
 
 }

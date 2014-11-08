@@ -16,8 +16,24 @@ class ColorStats
     private $whiteWins;
     private $blackLoss;
     private $whiteLoss;
-    private $closeWithBlack;
-    private $closeWithWhite;
+    private $blackDraws;
+    private $whiteDraws;
+
+    /**
+     * @param int $blackDraws
+     */
+    public function setBlackDraws($blackDraws)
+    {
+        $this->blackDraws = $blackDraws;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBlackDraws()
+    {
+        return $this->blackDraws;
+    }
 
     /**
      * @param int $blackLoss
@@ -68,39 +84,23 @@ class ColorStats
     }
 
     /**
-     * @param int $closeWithBlack
+     * @param int $whiteDraws
      */
-    public function setCloseWithBlack($closeWithBlack)
+    public function setWhiteDraws($whiteDraws)
     {
-        $this->closeWithBlack = $closeWithBlack;
+        $this->whiteDraws = $whiteDraws;
     }
 
     /**
      * @return int
      */
-    public function getCloseWithBlack()
+    public function getWhiteDraws()
     {
-        return $this->closeWithBlack;
+        return $this->whiteDraws;
     }
 
     /**
-     * @param int $closeWithWhite
-     */
-    public function setCloseWithWhite($closeWithWhite)
-    {
-        $this->closeWithWhite = $closeWithWhite;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCloseWithWhite()
-    {
-        return $this->closeWithWhite;
-    }
-
-    /**
-     * @param mixed $whiteLoss
+     * @param int $whiteLoss
      */
     public function setWhiteLoss($whiteLoss)
     {
@@ -124,7 +124,7 @@ class ColorStats
     }
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getWhiteMatches()
     {
@@ -132,7 +132,7 @@ class ColorStats
     }
 
     /**
-     * @param int $whiteWins
+     * @param mixed $whiteWins
      */
     public function setWhiteWins($whiteWins)
     {
@@ -140,12 +140,22 @@ class ColorStats
     }
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getWhiteWins()
     {
         return $this->whiteWins;
     }
 
+
+    public function populate($data)
+    {
+        foreach ($data as $key => $value) {
+            $method = 'set'.ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+    }
 
 }

@@ -17,6 +17,9 @@ class GamesStatsFactory extends StatsFactory
     const GAMES_WON = 'won';
     const GAMES_DRAW = 'draw';
     const GAMES_SUSPENDED = 'suspended';
+    const GAMES_BY_POINTS = 'points';
+    const GAMES_LOST_ON_TIME = 'time';
+    const GAMES_LOST_BY_FORFEIT = 'forfeit';
 
     /**
      * Constructor providing an array of match entities
@@ -57,6 +60,18 @@ class GamesStatsFactory extends StatsFactory
 
            case self::GAMES_SUSPENDED:
                $stats = Games\SuspendedGames::getInstance();
+               break;
+
+           case self::GAMES_BY_POINTS:
+               $stats = Games\PointGames::getInstance();
+               break;
+
+           case self::GAMES_LOST_ON_TIME:
+               $stats = Games\TimeLossGames::getInstance();
+               break;
+
+           case self::GAMES_LOST_BY_FORFEIT:
+               $stats = Games\ForfeitLossGames::getInstance();
                break;
 
            default      :
