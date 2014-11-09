@@ -20,6 +20,12 @@ class GamesStatsFactory extends StatsFactory
     const GAMES_BY_POINTS = 'points';
     const GAMES_LOST_ON_TIME = 'time';
     const GAMES_LOST_BY_FORFEIT = 'forfeit';
+    const CLOSE_MATCHES = 'close';
+    const CLOSE_WINS = 'close_wins';
+    const GAMES_ON_BLACK = 'black';
+    const GAMES_ON_WHITE = 'white';
+    const WIN_ON_BLACK = 'black_win';
+    const WIN_ON_WHITE = 'white_win';
 
     /**
      * Constructor providing an array of match entities
@@ -74,10 +80,36 @@ class GamesStatsFactory extends StatsFactory
                $stats = Games\ForfeitLossGames::getInstance();
                break;
 
-           default      :
-               throw new RuntimeException(
-                   sprintf('An unknown stats was provided.')
-               );
+           case self::CLOSE_MATCHES:
+               $stats = Games\CloseMatches::getInstance();
+               break;
+
+           case self::CLOSE_WINS:
+               $stats = Games\CloseWins::getInstance();
+               break;
+
+           case self::GAMES_ON_BLACK:
+               $stats = Games\BlackGames::getInstance();
+               break;
+
+           case self::GAMES_ON_WHITE:
+               $stats = Games\WhiteGames::getInstance();
+               break;
+
+           case self::WIN_ON_BLACK:
+               $stats = Games\BlackWonGames::getInstance();
+               break;
+
+           case self::WIN_ON_WHITE:
+               $stats = Games\WhiteWonGames::getInstance();
+               break;
+
+
+
+           default :
+              throw new RuntimeException(
+                  sprintf('An unknown stats was provided.')
+              );
         }
 
          if ($this->getPlayerId() == null) {

@@ -22,15 +22,21 @@ class MatchStatsFactory {
         $matchStats->setPlayerId($userId);
 
         $results = array(
-            'total'  => count($matches),
-            'played'    => $matchStats->getPoints(GamesStatsFactory::GAMES_PLAYED),
+            'total' => count($matches),
+            'played' => $matchStats->getPoints(GamesStatsFactory::GAMES_PLAYED),
             'suspended' => $matchStats->getPoints(GamesStatsFactory::GAMES_SUSPENDED),
-            'wins'   => $matchStats->getPoints(GamesStatsFactory::GAMES_WON),
-            'draws'  => $matchStats->getPoints(GamesStatsFactory::GAMES_DRAW),
-            'loss'  => $matchStats->getPoints(GamesStatsFactory::GAMES_LOST),
-            'points'  => $matchStats->getPoints(GamesStatsFactory::GAMES_BY_POINTS),
-            'lostOnTime'  => $matchStats->getPoints(GamesStatsFactory::GAMES_LOST_ON_TIME),
-            'lostByForfeit'  => $matchStats->getPoints(GamesStatsFactory::GAMES_LOST_BY_FORFEIT)
+            'wins' => $matchStats->getPoints(GamesStatsFactory::GAMES_WON),
+            'draws' => $matchStats->getPoints(GamesStatsFactory::GAMES_DRAW),
+            'defeats' => $matchStats->getPoints(GamesStatsFactory::GAMES_LOST),
+            'points' => $matchStats->getPoints(GamesStatsFactory::GAMES_BY_POINTS),
+            'lostOnTime' => $matchStats->getPoints(GamesStatsFactory::GAMES_LOST_ON_TIME),
+            'lostByForfeit' => $matchStats->getPoints(GamesStatsFactory::GAMES_LOST_BY_FORFEIT),
+            'closeMatches' => $matchStats->getPoints(GamesStatsFactory::CLOSE_MATCHES),
+            'closeWins' => $matchStats->getPoints(GamesStatsFactory::CLOSE_WINS),
+            'black' => $matchStats->getPoints(GamesStatsFactory::GAMES_ON_BLACK),
+            'white' => $matchStats->getPoints(GamesStatsFactory::GAMES_ON_WHITE),
+            'winOnBlack' => $matchStats->getPoints(GamesStatsFactory::WIN_ON_BLACK),
+            'winOnWhite' => $matchStats->getPoints(GamesStatsFactory::WIN_ON_WHITE),
         );
 
         $this->matchStats = new MatchStats();
