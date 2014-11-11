@@ -26,6 +26,11 @@ class GamesStatsFactory extends StatsFactory
     const GAMES_ON_WHITE = 'white';
     const WIN_ON_BLACK = 'black_win';
     const WIN_ON_WHITE = 'white_win';
+    const DEFEAT_ON_BLACK = 'black_defeat';
+    const DEFEAT_ON_WHITE = 'white_defeat';
+    const DRAW_ON_BLACK = 'black_draw';
+    const DRAW_ON_WHITE = 'white_draw';
+
 
     /**
      * Constructor providing an array of match entities
@@ -104,7 +109,21 @@ class GamesStatsFactory extends StatsFactory
                $stats = Games\WhiteWonGames::getInstance();
                break;
 
+           case self::DEFEAT_ON_BLACK:
+               $stats = Games\BlackDefeatedGames::getInstance();
+               break;
 
+           case self::DEFEAT_ON_WHITE:
+               $stats = Games\WhiteDefeatedGames::getInstance();
+               break;
+
+           case self::DRAW_ON_BLACK:
+               $stats = Games\BlackDrawGames::getInstance();
+               break;
+
+           case self::DRAW_ON_WHITE:
+               $stats = Games\WhiteDrawGames::getInstance();
+               break;
 
            default :
               throw new RuntimeException(

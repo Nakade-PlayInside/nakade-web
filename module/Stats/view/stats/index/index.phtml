@@ -1,6 +1,7 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('Stats');
 $this->headTitle('Stats');
+/* @var $stats \Stats\Entity\MatchStats */
 ?>
 
 <h3><?php echo $title;?></h3>
@@ -8,55 +9,131 @@ $this->headTitle('Stats');
 
 
 <?php $this->placeholder('noSeason')->captureStart();?>
-      <?php echo $this->translate("No matches found."); ?>
+   <?php echo $this->translate("No matches found."); ?>
 <?php $this->placeholder('noSeason')->captureEnd();?>
 
 
 <?php $this->placeholder('actual')->captureStart();?>
 
-<h5><?php echo $this->translate("My performance"); ?></h5>
-
-    <div id="container" style="width:50%; height:400px;"></div>
+    <div id="container" style="width:350px; height:300px;"></div>
     <script>
+
         $(function () {
-            $('#container').highcharts({
-                title: {
-                    text: '<?php echo $this->translate('Win Percentage')?>'
-                },
+
+        var total = <?php echo $stats->getPlayed()?>;
+        var black =   '<?php echo $this->translate('Black')?>';
+        var white =   '<?php echo $this->translate('White')?>';
+        var title =   total + ' <?php echo $this->translate('Matches')?>';
+
+        var colors = Highcharts.getOptions().colors,
+            categories = [
+                '<?php echo $this->translate('Wins')?>',
+                '<?php echo $this->translate('Defeats')?>',
+                '<?php echo $this->translate('Draws')?>'
+            ],
+            data = [{
+                y: <?php echo $stats->getWins()?>,
+                color: colors[0],
+                drilldown: {
+                    name: 'Wins',
+                    categories: [black, white],
+                    data: [<?php echo $stats->getWinOnBlack()?>, <?php echo $stats->getWinOnWhite()?>],
+                    color: colors[0]
+                }
+            }, {
+                y: <?php echo $stats->getDefeats()?>,
+                color: colors[1],
+                drilldown: {
+                    name: 'Defeats',
+                    categories: [black, white],
+                    data: [<?php echo $stats->getDefeatOnBlack()?>, <?php echo $stats->getDefeatOnWhite()?>],
+                    color: colors[1]
+                }
+            }, {
+                y: 1,
+                color: colors[2],
+                drilldown: {
+                    name: 'Draws',
+                    categories: [black, white],
+                    data: [1,0],
+                    color: colors[2]
+                }
+            } ],
+            matchData = [],
+            colorData = [],
+            i,
+            j,
+            dataLen = data.length,
+            drillDataLen,
+            brightness;
+
+
+        // Build the data arrays
+        for (i = 0; i < dataLen; i += 1) {
+
+            // add match data
+            matchData.push({
+                name: categories[i],
+                y: data[i].y,
+                color: data[i].color
+            });
+
+            // add version data
+            drillDataLen = data[i].drilldown.data.length;
+            for (j = 0; j < drillDataLen; j += 1) {
+                brightness = 0.2 - (j / drillDataLen) / 5;
+                colorData.push({
+                    name: data[i].drilldown.categories[j],
+                    y: data[i].drilldown.data[j],
+                    color: Highcharts.Color(data[i].color).brighten(brightness).get()
+                });
+            }
+        }
+
+        // Create the chart
+        $('#container').highcharts({
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                floating: true,
+                text: title
+            },
+            plotOptions: {
+                pie: {
+                    shadow: false,
+                    center: ['50%', '50%']
+                }
+            },
+
+            series: [{
+                data: matchData,
+                size: '60%',
                 tooltip: {
                     pointFormat: '<b>{point.percentage:.1f}%</b>'
                 },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                            },
-                            formatter: function() {
-                                if (this.y != 0) {
-                                    return '<b>' + this.point.name + '</b> ' + this.y +'%';
-                                } else {
-                                    return null;
-                                }
-                            }
-                        }
-                    }
+                dataLabels: {
+                    formatter: function () {
+                        return this.y > 1 ? this.y + ' ' + this.point.name: null;
+                    },
+                    color: 'white',
+                    distance: -50
+                }
+            }, {
+                data: colorData,
+                size: '80%',
+                innerSize: '60%',
+                tooltip: {
+                    pointFormat: '<b>{point.percentage:.1f}%</b>'
                 },
-                series: [{
-                    type: 'pie',
-                    name: 'Performance',
-                    data: [
-                        ['<?php echo $this->translate('Wins')?>', 73.2],
-                        ['<?php echo $this->translate('Defeats')?>', 26.8],
-                        ['<?php echo $this->translate('Draws')?>',    0],
-                        ['<?php echo $this->translate('Suspended')?>',    0],
-                        ['<?php echo $this->translate('Forfeits')?>',   0]
-                    ]
-                }]
-            });
+                dataLabels: {
+                    formatter: function () {
+                        // display only if larger than 1
+                        return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + this.y : null;
+                    }
+                }
+            }]
+        });
         });
 
     </script>
@@ -66,7 +143,7 @@ $this->headTitle('Stats');
 
 <?php
 
- if (empty($this->stats)) {
+ if (empty($this->stats) || $stats->getPlayed() == 0) {
      echo $this->placeholder('noSeason');
  } else {
      echo $this->placeholder('actual');

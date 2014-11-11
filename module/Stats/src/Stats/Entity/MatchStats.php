@@ -20,11 +20,23 @@ class MatchStats extends AbstractMatchStats
         if (!empty($this->played)) {
             $result = $this->getWins() * 100 / $this->getPlayed();
         }
-        return $result;
+        return number_format($result, 1);
     }
 
     /**
-     * @return float
+     * @return string
+     */
+    public function getDefeatPercentage()
+    {
+        $result = 0;
+        if (!empty($this->played)) {
+            $result = $this->getDefeats() * 100 / $this->getPlayed();
+        }
+        return number_format($result, 1);
+    }
+
+    /**
+     * @return string
      */
     public function getCloseMatchWinPercentage()
     {
@@ -32,11 +44,11 @@ class MatchStats extends AbstractMatchStats
         if (!empty($this->closeMatches)) {
             $result = $this->getCloseWins() * 100 / $this->getCloseMatches();
         }
-        return $result;
+        return number_format($result, 1);
     }
 
     /**
-     * @return float
+     * @return string
      */
     public function getWinPercentageOnBlack()
     {
@@ -44,11 +56,11 @@ class MatchStats extends AbstractMatchStats
         if (!empty($this->black)) {
             $result = $this->getWinOnBlack() * 100 / $this->getBlack();
         }
-        return $result;
+        return number_format($result, 1);
     }
 
     /**
-     * @return float
+     * @return string
      */
     public function getWinPercentageOnWhite()
     {
@@ -56,7 +68,7 @@ class MatchStats extends AbstractMatchStats
         if (!empty($this->white)) {
             $result = $this->getWinOnWhite() * 100 / $this->getWhite();
         }
-        return $result;
+        return number_format($result, 1);
     }
 
 

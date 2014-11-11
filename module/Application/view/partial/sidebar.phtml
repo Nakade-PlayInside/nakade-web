@@ -17,6 +17,12 @@ $this->plugin('translate')->setTranslatorTextDomain('Application');
         </a>
     </div>
 
+    <div class="stats">
+        <a href="<?php echo $this->url('stats')?>" title="<?php echo $this->translate("go to match statistics");?>">
+            <div class="infoBtn nakade-16 stats-16 btnCenter"></div><?php echo $this->translate("Match Statistics") ?>
+        </a>
+    </div>
+
     <ul>
         <?php  if (!is_null($this->nextMatch())) : ?>
             <li class="nextMatch" title="<?php echo $this->translate("time left to your next match"); ?>">

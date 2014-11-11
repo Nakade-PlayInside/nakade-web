@@ -37,6 +37,10 @@ class MatchStatsFactory {
             'white' => $matchStats->getPoints(GamesStatsFactory::GAMES_ON_WHITE),
             'winOnBlack' => $matchStats->getPoints(GamesStatsFactory::WIN_ON_BLACK),
             'winOnWhite' => $matchStats->getPoints(GamesStatsFactory::WIN_ON_WHITE),
+            'DefeatOnBlack' => $matchStats->getPoints(GamesStatsFactory::DEFEAT_ON_BLACK),
+            'DefeatOnWhite' => $matchStats->getPoints(GamesStatsFactory::DEFEAT_ON_WHITE),
+            'DrawOnBlack' => $matchStats->getPoints(GamesStatsFactory::DRAW_ON_BLACK),
+            'DrawOnWhite' => $matchStats->getPoints(GamesStatsFactory::DRAW_ON_WHITE),
         );
 
         $this->matchStats = new MatchStats();
