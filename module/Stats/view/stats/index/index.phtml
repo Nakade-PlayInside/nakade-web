@@ -5,6 +5,8 @@ $this->headTitle('Stats');
 
 <h3><?php echo $title;?></h3>
 
+
+
 <?php $this->placeholder('noSeason')->captureStart();?>
       <?php echo $this->translate("No matches found."); ?>
 <?php $this->placeholder('noSeason')->captureEnd();?>
@@ -13,8 +15,51 @@ $this->headTitle('Stats');
 <?php $this->placeholder('actual')->captureStart();?>
 
 <h5><?php echo $this->translate("My performance"); ?></h5>
-<?php //echo $this->stats->getGamesPlayed(); ?>
 
+    <div id="container" style="width:50%; height:400px;"></div>
+    <script>
+        $(function () {
+            $('#container').highcharts({
+                title: {
+                    text: '<?php echo $this->translate('Win Percentage')?>'
+                },
+                tooltip: {
+                    pointFormat: '<b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            },
+                            formatter: function() {
+                                if (this.y != 0) {
+                                    return '<b>' + this.point.name + '</b> ' + this.y +'%';
+                                } else {
+                                    return null;
+                                }
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Performance',
+                    data: [
+                        ['<?php echo $this->translate('Wins')?>', 73.2],
+                        ['<?php echo $this->translate('Defeats')?>', 26.8],
+                        ['<?php echo $this->translate('Draws')?>',    0],
+                        ['<?php echo $this->translate('Suspended')?>',    0],
+                        ['<?php echo $this->translate('Forfeits')?>',   0]
+                    ]
+                }]
+            });
+        });
+
+    </script>
 
 <?php $this->placeholder('actual')->captureEnd(); ?>
 
