@@ -3,11 +3,11 @@ namespace Nakade\Stats\Games;
 
 use Nakade\Stats\GameStats;
 /**
- * Class CloseMatches
+ * Class CloseDefeats
  *
  * @package Nakade\Stats\Games
  */
-class CloseWins extends GameStats
+class CloseDefeats extends GameStats
 {
 
     /**
@@ -28,7 +28,7 @@ class CloseWins extends GameStats
                 continue;
             }
 
-            if ($match->getResult()->getWinner()->getId()==$playerId) {
+            if ($match->getResult()->getWinner()->getId()!=$playerId) {
                 $count++;
             }
         }

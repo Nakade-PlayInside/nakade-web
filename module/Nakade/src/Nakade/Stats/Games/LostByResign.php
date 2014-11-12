@@ -3,11 +3,11 @@ namespace Nakade\Stats\Games;
 
 use Nakade\Stats\GameStats;
 /**
- * Class CloseMatches
+ * Class LostByResign
  *
  * @package Nakade\Stats\Games
  */
-class CloseWins extends GameStats
+class LostByResign extends GameStats
 {
 
     /**
@@ -23,16 +23,15 @@ class CloseWins extends GameStats
         foreach ($this->getMatches() as $match) {
 
             if (!$match->hasResult() ||
-                $match->getResult()->getResultType()->getId() != self::BYPOINTS ||
-                $match->getResult()->getResultType()->getId() == self::SUSPENDED ) {
+                $match->getResult()->getResultType()->getId() != self::RESIGNATION
+            ) {
                 continue;
             }
 
-            if ($match->getResult()->getWinner()->getId()==$playerId) {
+            if ($match->getResult()->getWinner()->getId() != $playerId) {
                 $count++;
             }
         }
-
         return $count;
     }
 

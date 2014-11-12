@@ -10,65 +10,126 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MatchStats extends AbstractMatchStats
 {
+    private $closeDefeats;
+    private $lostByResign;
+    private $highWins;
+    private $blackDefeat;
+    private $whiteDefeat;
+    private $blackDraw;
+    private $whiteDraw;
 
     /**
-     * @return float
+     * @param int $highWins
      */
-    public function getWinPercentage()
+    public function setHighWins($highWins)
     {
-        $result = 0;
-        if (!empty($this->played)) {
-            $result = $this->getWins() * 100 / $this->getPlayed();
-        }
-        return number_format($result, 1);
+        $this->highWins = $highWins;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getDefeatPercentage()
+    public function getHighWins()
     {
-        $result = 0;
-        if (!empty($this->played)) {
-            $result = $this->getDefeats() * 100 / $this->getPlayed();
-        }
-        return number_format($result, 1);
+        return $this->highWins;
+    }
+
+
+    /**
+     * @param int $lostByResign
+     */
+    public function setLostByResign($lostByResign)
+    {
+        $this->lostByResign = $lostByResign;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getCloseMatchWinPercentage()
+    public function getLostByResign()
     {
-        $result = 0;
-        if (!empty($this->closeMatches)) {
-            $result = $this->getCloseWins() * 100 / $this->getCloseMatches();
-        }
-        return number_format($result, 1);
+        return $this->lostByResign;
     }
 
     /**
-     * @return string
+     * @param int $closeDefeats
      */
-    public function getWinPercentageOnBlack()
+    public function setCloseDefeats($closeDefeats)
     {
-        $result = 0;
-        if (!empty($this->black)) {
-            $result = $this->getWinOnBlack() * 100 / $this->getBlack();
-        }
-        return number_format($result, 1);
+        $this->closeDefeats = $closeDefeats;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getWinPercentageOnWhite()
+    public function getCloseDefeats()
     {
-        $result = 0;
-        if (!empty($this->white)) {
-            $result = $this->getWinOnWhite() * 100 / $this->getWhite();
-        }
-        return number_format($result, 1);
+        return $this->closeDefeats;
+    }
+
+
+    /**
+     * @param int $blackDraw
+     */
+    public function setDrawOnBlack($blackDraw)
+    {
+        $this->blackDraw = $blackDraw;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDrawOnBlack()
+    {
+        return $this->blackDraw;
+    }
+
+    /**
+     * @param int $whiteDraw
+     */
+    public function setDrawOnWhite($whiteDraw)
+    {
+        $this->whiteDraw = $whiteDraw;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDrawOnWhite()
+    {
+        return $this->whiteDraw;
+    }
+
+    /**
+     * @param int $blackDefeat
+     */
+    public function setDefeatOnBlack($blackDefeat)
+    {
+        $this->blackDefeat = $blackDefeat;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefeatOnBlack()
+    {
+        return $this->blackDefeat;
+    }
+
+    /**
+     * @param int $whiteDefeat
+     */
+    public function setDefeatOnWhite($whiteDefeat)
+    {
+        $this->whiteDefeat = $whiteDefeat;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefeatOnWhite()
+    {
+        return $this->whiteDefeat;
     }
 
 

@@ -37,10 +37,13 @@ class MatchStatsFactory {
             'white' => $matchStats->getPoints(GamesStatsFactory::GAMES_ON_WHITE),
             'winOnBlack' => $matchStats->getPoints(GamesStatsFactory::WIN_ON_BLACK),
             'winOnWhite' => $matchStats->getPoints(GamesStatsFactory::WIN_ON_WHITE),
-            'DefeatOnBlack' => $matchStats->getPoints(GamesStatsFactory::DEFEAT_ON_BLACK),
-            'DefeatOnWhite' => $matchStats->getPoints(GamesStatsFactory::DEFEAT_ON_WHITE),
-            'DrawOnBlack' => $matchStats->getPoints(GamesStatsFactory::DRAW_ON_BLACK),
-            'DrawOnWhite' => $matchStats->getPoints(GamesStatsFactory::DRAW_ON_WHITE),
+            'defeatOnBlack' => $matchStats->getPoints(GamesStatsFactory::DEFEAT_ON_BLACK),
+            'defeatOnWhite' => $matchStats->getPoints(GamesStatsFactory::DEFEAT_ON_WHITE),
+            'drawOnBlack' => $matchStats->getPoints(GamesStatsFactory::DRAW_ON_BLACK),
+            'drawOnWhite' => $matchStats->getPoints(GamesStatsFactory::DRAW_ON_WHITE),
+            'closeDefeats' => $matchStats->getPoints(GamesStatsFactory::CLOSE_DEFEATS),
+            'lostByResign' => $matchStats->getPoints(GamesStatsFactory::LOST_BY_RESIGN),
+            'highWins' => $matchStats->getPoints(GamesStatsFactory::HIGH_WINS),
         );
 
         $this->matchStats = new MatchStats();

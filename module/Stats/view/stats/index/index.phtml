@@ -15,15 +15,29 @@ $this->headTitle('Stats');
 
 <?php $this->placeholder('actual')->captureStart();?>
 
-    <div id="container" style="width:350px; height:300px;"></div>
+    <div id="matchStatsContainer" style="display:inline-block;width:310px; height:300px;"></div>
+    <div id="winStatsContainer" style="display:inline-block;min-width: 310px; height: 300px; max-width: 410px;"></div>
+    <div id="defeatStatsContainer" style="display:inline-block;min-width: 310px; height: 300px; max-width: 410px;"></div>
     <script>
 
         $(function () {
 
         var total = <?php echo $stats->getPlayed()?>;
+        var defeats =  <?php echo $stats->getDefeats()?>;
+        var wins =  <?php echo $stats->getWins()?>;
         var black =   '<?php echo $this->translate('Black')?>';
         var white =   '<?php echo $this->translate('White')?>';
-        var title =   total + ' <?php echo $this->translate('Matches')?>';
+        var matchTitle =   total + ' <?php echo $this->translate('Matches')?>';
+        var winTitle =  wins + ' <?php echo $this->translate('Wins')?>';
+        var defeatTitle =  defeats + ' <?php echo $this->translate('Defeats')?>';
+        var matchDataName =  '<?php echo $this->translate('Match Share')?>';
+        var colorDataName =  '<?php echo $this->translate('Total Share')?>';
+        var SeriesName =  '<?php echo $this->translate('Share')?>';
+        var close =  '<?php echo $this->translate('Close')?>';
+        var resign =  '<?php echo $this->translate('Resigns')?>';
+        var onTime =  '<?php echo $this->translate('On Time')?>';
+        var forfeit =  '<?php echo $this->translate('Forfeit')?>';
+
 
         var colors = Highcharts.getOptions().colors,
             categories = [
@@ -32,7 +46,7 @@ $this->headTitle('Stats');
                 '<?php echo $this->translate('Draws')?>'
             ],
             data = [{
-                y: <?php echo $stats->getWins()?>,
+                y: wins,
                 color: colors[0],
                 drilldown: {
                     name: 'Wins',
@@ -41,7 +55,7 @@ $this->headTitle('Stats');
                     color: colors[0]
                 }
             }, {
-                y: <?php echo $stats->getDefeats()?>,
+                y: defeats,
                 color: colors[1],
                 drilldown: {
                     name: 'Defeats',
@@ -50,12 +64,12 @@ $this->headTitle('Stats');
                     color: colors[1]
                 }
             }, {
-                y: 1,
+                y: <?php echo $stats->getDraws()?>,
                 color: colors[2],
                 drilldown: {
                     name: 'Draws',
                     categories: [black, white],
-                    data: [1,0],
+                    data: [<?php echo $stats->getDrawOnBlack()?>, <?php echo $stats->getDrawOnWhite()?>],
                     color: colors[2]
                 }
             } ],
@@ -91,13 +105,19 @@ $this->headTitle('Stats');
         }
 
         // Create the chart
-        $('#container').highcharts({
+        $('#matchStatsContainer').highcharts({
             chart: {
-                type: 'pie'
+                type: 'pie',
+                marginTop: 50
+
+            },
+            credits: {
+                enabled: false
             },
             title: {
-                floating: true,
-                text: title
+               // floating: true,
+                y: 40,
+                text: matchTitle
             },
             plotOptions: {
                 pie: {
@@ -108,25 +128,32 @@ $this->headTitle('Stats');
 
             series: [{
                 data: matchData,
-                size: '60%',
+                name: matchDataName,
+                size: '70%',
                 tooltip: {
-                    pointFormat: '<b>{point.percentage:.1f}%</b>'
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
                 },
                 dataLabels: {
                     formatter: function () {
                         return this.y > 1 ? this.y + ' ' + this.point.name: null;
                     },
-                    color: 'white',
-                    distance: -50
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'white',
+                        textShadow: '0px 1px 2px black'
+                    },
+                    distance: -45
                 }
             }, {
                 data: colorData,
+                name: colorDataName,
                 size: '80%',
-                innerSize: '60%',
+                innerSize: '70%',
                 tooltip: {
-                    pointFormat: '<b>{point.percentage:.1f}%</b>'
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
                 },
                 dataLabels: {
+                    distance: 5,
                     formatter: function () {
                         // display only if larger than 1
                         return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + this.y : null;
@@ -134,9 +161,126 @@ $this->headTitle('Stats');
                 }
             }]
         });
+
+        //win container
+        $('#winStatsContainer').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: winTitle,
+                align: 'center',
+                verticalAlign: 'middle',
+                y: 50
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: true,
+                        distance: -35,
+                        style: {
+                            fontWeight: 'bold',
+                            color: 'white',
+                            textShadow: '0px 1px 2px black'
+                        }
+                    },
+                    startAngle: -90,
+                    endAngle: 90,
+                    center: ['50%', '75%']
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: SeriesName,
+                innerSize: '55%',
+                data: [
+                    [close, <?php echo $stats->getCloseWins()?>],
+                    [resign, <?php echo $stats->getHighWins()?>]
+                ],
+                dataLabels: {
+                    formatter: function () {
+                        return this.y > 0 ? this.y + ' ' + this.point.name: null;
+                    },
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'white',
+                        textShadow: '0px 1px 2px black'
+                    },
+                    distance: -35
+                }
+            }]
+        });
+
+        //defeat container
+        $('#defeatStatsContainer').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: defeatTitle,
+                align: 'center',
+                verticalAlign: 'middle',
+                y: 50
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: true,
+                        distance: -35,
+                        style: {
+                            fontWeight: 'bold',
+                            color: 'white',
+                            textShadow: '0px 1px 2px black'
+                        }
+                    },
+                    startAngle: -90,
+                    endAngle: 90,
+                    center: ['50%', '75%']
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: SeriesName,
+                innerSize: '55%',
+                data: [
+                    [close, <?php echo $stats->getCloseDefeats()?>],
+                    [resign, <?php echo $stats->getLostByResign()?>],
+                    [onTime, <?php echo $stats->getLostOnTime()?>],
+                    [forfeit, <?php echo $stats->getLostByForfeit()?>]
+                ],
+                dataLabels: {
+                    formatter: function () {
+                        return this.y > 0 ? this.y + ' ' + this.point.name: null;
+                    },
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'white',
+                        textShadow: '0px 1px 2px black'
+                    },
+                    distance: -35
+                }
+            }]
+        });
         });
 
     </script>
+
 
 <?php $this->placeholder('actual')->captureEnd(); ?>
 

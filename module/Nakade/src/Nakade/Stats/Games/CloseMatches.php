@@ -23,7 +23,8 @@ class CloseMatches extends GameStats
         foreach ($this->getMatches() as $match) {
 
             if (!$match->hasResult() ||
-                $match->getResult()->getResultType()->getId() != self::BYPOINTS ) {
+                $match->getResult()->getResultType()->getId() != self::BYPOINTS ||
+                $match->getResult()->getResultType()->getId() == self::SUSPENDED ) {
                 continue;
             }
 

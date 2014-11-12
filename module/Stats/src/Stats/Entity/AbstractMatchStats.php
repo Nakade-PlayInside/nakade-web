@@ -21,77 +21,13 @@ abstract class AbstractMatchStats implements MatchStatsInterface
     protected $white;
     protected $blackWin;
     protected $whiteWin;
-    protected $blackDefeat;
-    protected $whiteDefeat;
-    protected $blackDraw;
-    protected $whiteDraw;
+
     protected $suspended;
     protected $lostOnTime;
     protected $lostByForfeit;
 
-    /**
-     * @param int $blackDraw
-     */
-    public function setDrawOnBlack($blackDraw)
-    {
-        $this->blackDraw = $blackDraw;
-    }
 
-    /**
-     * @return int
-     */
-    public function getDrawOnBlack()
-    {
-        return $this->blackDraw;
-    }
 
-    /**
-     * @param int $whiteDraw
-     */
-    public function setDrawOnWhite($whiteDraw)
-    {
-        $this->whiteDraw = $whiteDraw;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDrawOnWhite()
-    {
-        return $this->whiteDraw;
-    }
-
-    /**
-     * @param int $blackDefeat
-     */
-    public function setDefeatOnBlack($blackDefeat)
-    {
-        $this->blackDefeat = $blackDefeat;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDefeatOnBlack()
-    {
-        return $this->blackDefeat;
-    }
-
-    /**
-     * @param int $whiteDefeat
-     */
-    public function setDefeatOnWhite($whiteDefeat)
-    {
-        $this->whiteDefeat = $whiteDefeat;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDefeatOnWhite()
-    {
-        return $this->whiteDefeat;
-    }
 
 
     /**

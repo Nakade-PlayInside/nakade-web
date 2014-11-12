@@ -3,11 +3,11 @@ namespace Nakade\Stats\Games;
 
 use Nakade\Stats\GameStats;
 /**
- * Class CloseMatches
+ * Class HighWins
  *
  * @package Nakade\Stats\Games
  */
-class CloseWins extends GameStats
+class HighWins extends GameStats
 {
 
     /**
@@ -23,7 +23,8 @@ class CloseWins extends GameStats
         foreach ($this->getMatches() as $match) {
 
             if (!$match->hasResult() ||
-                $match->getResult()->getResultType()->getId() != self::BYPOINTS ||
+                $match->getResult()->getResultType()->getId() == self::BYPOINTS ||
+                $match->getResult()->getResultType()->getId() == self::DRAW ||
                 $match->getResult()->getResultType()->getId() == self::SUSPENDED ) {
                 continue;
             }

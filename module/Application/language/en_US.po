@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-07 14:58+0100\n"
-"PO-Revision-Date: 2014-09-07 14:58+0100\n"
+"POT-Creation-Date: 2014-11-12 13:11+0100\n"
+"PO-Revision-Date: 2014-11-12 13:11+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -56,11 +56,11 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: ../view/layout/layout.phtml:45
+#: ../view/layout/layout.phtml:48
 msgid "BBC Nakade"
 msgstr ""
 
-#: ../view/layout/layout.phtml:66
+#: ../view/layout/layout.phtml:69
 msgid "All rights reserved."
 msgstr ""
 
@@ -211,7 +211,7 @@ msgid "Enter Result"
 msgstr ""
 
 #: ../view/partial/menuLabel.phtml:22
-#: ../view/partial/sidebar.phtml:94
+#: ../view/partial/sidebar.phtml:100
 msgid "Moderator"
 msgstr ""
 
@@ -313,60 +313,68 @@ msgstr ""
 msgid "Edit Profile"
 msgstr ""
 
+#: ../view/partial/sidebar.phtml:21
+msgid "go to match statistics"
+msgstr ""
+
 #: ../view/partial/sidebar.phtml:22
+msgid "Match Statistics"
+msgstr ""
+
+#: ../view/partial/sidebar.phtml:28
 msgid "time left to your next match"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:24
+#: ../view/partial/sidebar.phtml:30
 msgid "go to schedule"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:26
+#: ../view/partial/sidebar.phtml:32
 msgid "Next match"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:46
+#: ../view/partial/sidebar.phtml:52
 msgid "go to mailbox"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:49
+#: ../view/partial/sidebar.phtml:55
 msgid "new mails"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:54
+#: ../view/partial/sidebar.phtml:60
 msgid "go to confirmation"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:57
+#: ../view/partial/sidebar.phtml:63
 msgid "open appointments"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:62
-#: ../view/partial/sidebar.phtml:97
+#: ../view/partial/sidebar.phtml:68
+#: ../view/partial/sidebar.phtml:103
 msgid "go to tickets"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:65
+#: ../view/partial/sidebar.phtml:71
 msgid "waiting tickets"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:72
+#: ../view/partial/sidebar.phtml:78
 msgid "go to invitation"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:75
+#: ../view/partial/sidebar.phtml:81
 msgid "friends invited"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:82
+#: ../view/partial/sidebar.phtml:88
 msgid "go to results"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:85
+#: ../view/partial/sidebar.phtml:91
 msgid "open results"
 msgstr ""
 
-#: ../view/partial/sidebar.phtml:100
+#: ../view/partial/sidebar.phtml:106
 msgid "open tickets"
 msgstr ""
 

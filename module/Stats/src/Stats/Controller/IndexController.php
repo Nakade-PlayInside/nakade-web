@@ -27,9 +27,10 @@ class IndexController extends AbstractController
 
         $matches = $mapper->getMatchStatsByUser($userId);
         $factory = new MatchStatsFactory($matches, $userId);
+        $stats = $factory->getMatchStats();
 
         return new ViewModel(
-            array('stats' => $factory->getMatchStats())
+            array('stats' => $stats)
         );
     }
 
