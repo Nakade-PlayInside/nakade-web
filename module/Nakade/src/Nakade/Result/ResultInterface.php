@@ -1,10 +1,10 @@
 <?php
-namespace League\Standings;
+namespace Nakade\Result;
 
 /**
  * Interface ResultInterface
  *
- * @package League\Standings
+ * @package Nakade\Result
  */
 Interface ResultInterface
 {

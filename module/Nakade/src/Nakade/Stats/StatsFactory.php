@@ -1,24 +1,16 @@
 <?php
-namespace League\Standings;
+namespace Nakade\Stats;
 
 /**
  * base class for game statistic factory.
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class StatsFactory
+abstract class StatsFactory implements StatsFactoryInterface
 {
-    protected  $allMatches;
+    protected  $matches;
     protected  $playerId;
 
-    /**
-     * Constructor providing an array of match entities
-     * @param array $allMatches
-     */
-    public function __construct($allMatches)
-    {
-        $this->allMatches=$allMatches;
-    }
 
     /**
      * set the playerId
@@ -46,7 +38,7 @@ class StatsFactory
      */
     public function getMatches()
     {
-        return $this->allMatches;
+        return $this->matches;
     }
 
 

@@ -1,15 +1,13 @@
 <?php
-namespace League\Standings\Games;
+namespace Nakade\Stats\Games;
 
-use League\Standings\Results as RESULT;
-use League\Standings\GameStats;
-
+use Nakade\Stats\GameStats;
 /**
  * Class DrawGames
  *
- * @package League\Standings\Games
+ * @package Nakade\Stats\Games
  */
-class DrawGames extends GameStats implements GameStatsInterface
+class DrawGames extends GameStats
 {
 
     /**
@@ -25,7 +23,7 @@ class DrawGames extends GameStats implements GameStatsInterface
         foreach ($this->getMatches() as $match) {
 
             if (!$match->hasResult() ||
-               $match->getResult()->getResultType()->getId() != RESULT::DRAW) {
+               $match->getResult()->getResultType()->getId() != self::DRAW) {
                 continue;
             }
 

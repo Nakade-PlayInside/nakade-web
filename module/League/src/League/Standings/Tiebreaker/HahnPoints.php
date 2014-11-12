@@ -1,9 +1,6 @@
 <?php
 namespace League\Standings\Tiebreaker;
 
-use League\Standings\Results as RESULT;
-use League\Standings\GameStats;
-
 /**
  * Calculating Hahn-Points. The Hahn points are referred by Prof. Hahn from
  * the Myongji University, Seoul - Korea.
@@ -17,7 +14,7 @@ use League\Standings\GameStats;
  *
  * @package League\Standings\Tiebreaker
  */
-class HahnPoints extends GameStats implements TiebreakerInterface
+class HahnPoints extends TiebreakerStats
 {
     const MAX_POINTS=40;
     const OFFSET_POINTS=20;
@@ -37,18 +34,18 @@ class HahnPoints extends GameStats implements TiebreakerInterface
         foreach ($this->getMatches() as $match) {
 
             if (!$match->hasResult() ||
-               $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED ||
-               $match->getResult()->getResultType()->getId() == RESULT::DRAW) {
+               $match->getResult()->getResultType()->getId() == self::SUSPENDED ||
+               $match->getResult()->getResultType()->getId() == self::DRAW) {
                continue;
             }
 
-            if ($match->getResult()->getResultType()->getId() == RESULT::BYPOINTS &&
+            if ($match->getResult()->getResultType()->getId() == self::BYPOINTS &&
                 $match->getResult()->getWinner()->getId() == $playerId ) {
                $count += $match->getResult()->getPoints() + self::OFFSET_POINTS;
                continue;
             }
 
-            if ($match->getResult()->getResultType()->getId() == RESULT::BYPOINTS &&
+            if ($match->getResult()->getResultType()->getId() == self::BYPOINTS &&
                $match->getResult()->getPoints() < self::OFFSET_POINTS  &&
                ($match->getBlack()->getId() == $playerId ||
                 $match->getWhite()->getId() == $playerId )) {

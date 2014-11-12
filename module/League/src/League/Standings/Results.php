@@ -2,6 +2,7 @@
 namespace League\Standings;
 
 use Nakade\Abstracts\AbstractTranslation;
+use Nakade\Result\ResultInterface;
 /**
  * Result types of matches. Instead of having
  * a data table, this is more convenient

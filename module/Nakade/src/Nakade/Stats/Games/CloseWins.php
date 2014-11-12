@@ -1,16 +1,13 @@
 <?php
-namespace League\Standings\Games;
+namespace Nakade\Stats\Games;
 
-use League\Standings\Results as RESULT;
-use League\Standings\GameStats;
-
-
+use Nakade\Stats\GameStats;
 /**
- * Class WonGames
+ * Class CloseMatches
  *
- * @package League\Standings\Games
+ * @package Nakade\Stats\Games
  */
-class WonGames extends GameStats implements GameStatsInterface
+class CloseWins extends GameStats
 {
 
     /**
@@ -26,9 +23,8 @@ class WonGames extends GameStats implements GameStatsInterface
         foreach ($this->getMatches() as $match) {
 
             if (!$match->hasResult() ||
-                !$match->getResult()->hasWinner() ||
-                $match->getResult()->getResultType()->getId() == RESULT::DRAW ||
-                $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED ) {
+                $match->getResult()->getResultType()->getId() != self::BYPOINTS ||
+                $match->getResult()->getResultType()->getId() == self::SUSPENDED ) {
                 continue;
             }
 
@@ -36,7 +32,10 @@ class WonGames extends GameStats implements GameStatsInterface
                 $count++;
             }
         }
+
         return $count;
     }
+
+
 }
 

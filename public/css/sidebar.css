@@ -63,6 +63,18 @@ div#sidebar a:hover em {
     vertical-align: -1px;
 }
 
+#sidebar .stats {
+    margin-top: 5px;
+}
+
+#sidebar .stats a {
+    font-weight: bold;
+}
+
+#sidebar .stats a div {
+    padding-right: 5px;
+}
+
 #sidebar .moderator div {
     font-weight: bold;
     padding-right: 5px;

@@ -1,10 +1,7 @@
 <?php
 namespace League\Standings\Tiebreaker;
 
-use League\Standings\Results as RESULT;
-use League\Standings\GameStats;
-use League\Standings\Games\WonGames;
-use League\Standings\Games\DrawGames;
+use Nakade\Stats\Games;
 
 /**
  * Calculating the Sum of Opponents Scores. This tiebreaker is almost intended
@@ -13,7 +10,7 @@ use League\Standings\Games\DrawGames;
  *
  * @package League\Standings\Tiebreaker
  */
-class SOS extends GameStats implements TiebreakerInterface
+class SOS extends TiebreakerStats
 {
 
     /**
@@ -30,7 +27,7 @@ class SOS extends GameStats implements TiebreakerInterface
         /* @var $match \Season\Entity\Match */
         foreach ($this->getMatches() as $match) {
 
-            if (!$match->getResult() || $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED) {
+            if (!$match->getResult() || $match->getResult()->getResultType()->getId() == self::SUSPENDED) {
                continue;
             }
 
@@ -85,7 +82,7 @@ class SOS extends GameStats implements TiebreakerInterface
      */
     protected function getNumberOfDrawGames($playerId)
     {
-        $obj = DrawGames::getInstance();
+        $obj = Games\DrawGames::getInstance();
         $obj->setMatches($this->getMatches());
         return (int) $obj->getNumberOfGames($playerId);
     }
@@ -97,7 +94,7 @@ class SOS extends GameStats implements TiebreakerInterface
      */
     protected function getNumberOfWonGames($playerId)
     {
-        $obj = WonGames::getInstance();
+        $obj = Games\WonGames::getInstance();
         $obj->setMatches($this->getMatches());
         return (int) $obj->getNumberOfGames($playerId);
     }

@@ -3,12 +3,25 @@
     {
         "type": "composer",
         "url": "http://packages.zendframework.com/"
+    },
+    {
+        "type": "package",
+        "package": {
+           "name": "highcharts",
+            "version": "4.0.4",
+            "source": {
+                "url": "git://github.com/highslide-software/highcharts.com.git",
+                "type": "git",
+                "reference": "tags/highstock-v4.0.4"
+            }
+        }
     }
   ],
   "require": {
-      
-	"zendframework/zendframework": "2.2.0",
-	"doctrine/common": "2.3.0",
+        "php": ">=5.4.0",
+        "highcharts": "4.0.4",
+        "zendframework/zendframework": "2.2.0",
+        "doctrine/common": "2.3.0",
         "zendframework/zendpdf": "2.0.2",
         "zendframework/zendservice-recaptcha": "2.0.1",
         "doctrine/doctrine-orm-module": "0.7.0",

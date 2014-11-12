@@ -1,10 +1,6 @@
 <?php
 namespace League\Standings\Tiebreaker;
 
-use League\Standings\Results as RESULT;
-use League\Standings\GameStats;
-
-
 /**
  * Calculating the Cumulative Sum of Scores which is the
  * sum of a player's points after each round (match day).
@@ -12,7 +8,7 @@ use League\Standings\GameStats;
  *
  * @package League\Standings\Tiebreaker
  */
-class CUSS extends GameStats implements  TiebreakerInterface
+class CUSS extends TiebreakerStats
 {
     /**
      * calculating the points
@@ -29,7 +25,7 @@ class CUSS extends GameStats implements  TiebreakerInterface
         /* @var $match \Season\Entity\Match */
         foreach ($this->getMatches() as $match) {
 
-            if (!$match->hasResult() || $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED) {
+            if (!$match->hasResult() || $match->getResult()->getResultType()->getId() == self::SUSPENDED) {
                continue;
             }
 

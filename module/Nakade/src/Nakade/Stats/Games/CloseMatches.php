@@ -1,15 +1,13 @@
 <?php
-namespace League\Standings\Games;
+namespace Nakade\Stats\Games;
 
-use League\Standings\Results as RESULT;
-use League\Standings\GameStats;
-
+use Nakade\Stats\GameStats;
 /**
- * Class LostGames
+ * Class CloseMatches
  *
- * @package League\Standings\Games
+ * @package Nakade\Stats\Games
  */
-class LostGames extends GameStats implements GameStatsInterface
+class CloseMatches extends GameStats
 {
 
     /**
@@ -25,10 +23,8 @@ class LostGames extends GameStats implements GameStatsInterface
         foreach ($this->getMatches() as $match) {
 
             if (!$match->hasResult() ||
-                $match->getResult()->getResultType()->getId() == RESULT::DRAW  ||
-                $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED ||
-                $match->getResult()->getWinner()->getId() == $playerId
-            ) {
+                $match->getResult()->getResultType()->getId() != self::BYPOINTS ||
+                $match->getResult()->getResultType()->getId() == self::SUSPENDED ) {
                 continue;
             }
 

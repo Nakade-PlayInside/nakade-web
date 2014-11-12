@@ -1,10 +1,10 @@
 <?php
-namespace League\Standings\Games;
+namespace Nakade\Stats;
 
 /**
  * Interface GameStatsInterface
  *
- * @package League\Standings\Games
+ * @package Nakade\Stats
  */
 interface GameStatsInterface
 {

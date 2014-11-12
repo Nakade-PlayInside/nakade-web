@@ -1,12 +1,13 @@
 <?php
-namespace League\Standings;
+namespace Nakade\Stats;
+use Nakade\Result\ResultInterface;
 
 /**
  * base class for game statistics.
  *
  * @author Dr.Holger Maerz <holger@nakade.de>
  */
-class GameStats
+abstract class GameStats implements GameStatsInterface, ResultInterface
 {
     protected static $instances=array();
     protected $allMatches;

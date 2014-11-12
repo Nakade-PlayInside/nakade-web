@@ -23,12 +23,15 @@ echo $this->doctype();
                         ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript',
                             array('conditional' => 'lt IE 9',))
 
+                        ->prependFile('/js/exporting.js')
+                        ->prependFile('/js/highcharts.js')
                         ->prependFile('/js/jquery.countdown.min.js')
                         ->prependFile('/js/jquery.plugin.min.js')
 
                         ->prependFile('/js/bootstrap-collapse.js')
                         ->prependFile('/js/bootstrap.min.js')
                         ->prependFile('/js/jquery-2.0.3.min.js')
+
 
         ?>
 

@@ -1,15 +1,13 @@
 <?php
-namespace League\Standings\Games;
+namespace Nakade\Stats\Games;
 
-use League\Standings\Results as RESULT;
-use League\Standings\GameStats;
-
+use Nakade\Stats\GameStats;
 /**
- * Class PlayedGames
+ * Class PointGames
  *
- * @package League\Standings\Games
+ * @package Nakade\Stats\Games
  */
-class PlayedGames extends GameStats implements GameStatsInterface
+class PointGames extends GameStats
 {
 
     /**
@@ -24,8 +22,8 @@ class PlayedGames extends GameStats implements GameStatsInterface
         /* @var $match \Season\Entity\Match */
         foreach ($this->getMatches() as $match) {
 
-            if (!$match->hasResult() || $match->getResult()->getResultType()->getId() == RESULT::SUSPENDED) {
-               continue;
+            if (!$match->hasResult()  || $match->getResult()->getResultType()->getId() != self::BYPOINTS) {
+                continue;
             }
 
             if ($match->getBlack()->getId() == $playerId || $match->getWhite()->getId() == $playerId) {
@@ -33,7 +31,9 @@ class PlayedGames extends GameStats implements GameStatsInterface
             }
 
         }
-        return $count;
+
+       return $count;
     }
+
 }
 
