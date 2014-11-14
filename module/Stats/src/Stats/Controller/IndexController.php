@@ -34,5 +34,26 @@ class IndexController extends AbstractController
         );
     }
 
+    /**
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function achievementAction()
+    {
+
+        $userId = $this->identity()->getId();
+
+        /* @var $mapper \Stats\Mapper\StatsMapper */
+        $mapper = $this->getRepository()->getMapper(RepositoryService::STATS_MAPPER);
+
+        $matches = $mapper->getMatchStatsByUser($userId);
+        $factory = new MatchStatsFactory($matches, $userId);
+        $stats = $factory->getMatchStats();
+
+        return new ViewModel(
+            array('stats' => $stats)
+        );
+    }
+
 
 }
