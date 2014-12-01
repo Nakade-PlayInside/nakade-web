@@ -1,15 +1,14 @@
 <?php
 namespace Stats\Controller;
 
-use League\Standings\Sorting\PlayerPosition;
+use Nakade\Standings\Sorting\PlayerPosition;
 use Nakade\Abstracts\AbstractController;
 use Stats\Calculation\MatchStatsFactory;
-use Stats\Entity\MatchStats;
 use Stats\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
 
-use League\Standings\Sorting\PlayerSorting as SORT;
-use League\Standings\MatchStats as Standings;
+use Nakade\Standings\Sorting\PlayerSorting as SORT;
+use Nakade\Standings\MatchStats as Standings;
 
 /**
  *

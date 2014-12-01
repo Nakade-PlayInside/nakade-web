@@ -1,12 +1,12 @@
 <?php
 namespace League\Controller;
 
-use League\Standings\MatchStats;
-use League\Standings\Sorting\SortingInterface;
+use Nakade\Standings\MatchStats;
+use Nakade\Standings\Sorting\SortingInterface;
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
-use League\Standings\Sorting\PlayerPosition;
-use League\Standings\Sorting\PlayerSorting as SORT;
+use Nakade\Standings\Sorting\PlayerPosition;
+use Nakade\Standings\Sorting\PlayerSorting as SORT;
 
 /**
  * Class TableController
