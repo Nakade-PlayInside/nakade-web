@@ -124,6 +124,7 @@ class MatchStats extends MatchInfo
         for ($i = 0; $i < count($players); ++$i) {
            $player =  $players[$i];
            $data = $this->getPlayersStats($player->getUser()->getId());
+
            $player->exchangeArray($data);
         }
 

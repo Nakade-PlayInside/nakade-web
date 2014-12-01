@@ -76,6 +76,7 @@ class TableController extends DefaultController
     {
         $info = new MatchStats($matches);
         $players = $info->getMatchStats();
+
         $sorting = SORT::getInstance();
         $sorting->sorting($players, $sort);
         $pos = new PlayerPosition($players, $sort);

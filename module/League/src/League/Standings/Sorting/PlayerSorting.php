@@ -266,7 +266,7 @@ class PlayerSorting implements SortingInterface
            $tbA = $compA->getSecondTiebreak();
            $tbB = $compB->getSecondTiebreak();
            if ($tbA == $tbB) {
-               return $this->sortByThirdTiebreak($compA, $compA);
+                return $this->sortByThirdTiebreak($compA, $compB);
            }
 
            return ($tbA > $tbB)?-1:1;
@@ -281,9 +281,10 @@ class PlayerSorting implements SortingInterface
      */
     private function sortByThirdTiebreak(Player $compA, Player $compB)
     {
-
            $tbA = $compA->getThirdTiebreak();
            $tbB = $compB->getThirdTiebreak();
+            var_dump($compA->getUser()->getName());
+        var_dump($compB->getUser()->getName());
            if ($tbA == $tbB) {
                return $this->sortByGamesPlayed($compA, $compB);
            }
