@@ -51,7 +51,7 @@ class MatchDayResult extends AbstractHelper implements ResultInterface
     }
 
     /**
-     * @return \League\Standings\Results
+     * @return \Nakade\Standings\Results
      *
      * @throws \RuntimeException
      */

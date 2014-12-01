@@ -2,7 +2,7 @@
 namespace League\Form;
 
 use User\Entity\User;
-use League\Standings\Results;
+use Nakade\Standings\Results;
 use Nakade\Abstracts\AbstractForm;
 use \League\Form\Hydrator\ResultHydrator;
 use Season\Services\SeasonFieldsetService;

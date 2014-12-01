@@ -234,7 +234,7 @@ class ResultController extends DefaultController
     }
 
     /**
-     * @return \League\Standings\Results
+     * @return \Nakade\Standings\Results
      */
     public function getResultService()
     {
