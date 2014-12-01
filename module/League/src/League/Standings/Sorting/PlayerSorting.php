@@ -283,8 +283,6 @@ class PlayerSorting implements SortingInterface
     {
            $tbA = $compA->getThirdTiebreak();
            $tbB = $compB->getThirdTiebreak();
-            var_dump($compA->getUser()->getName());
-        var_dump($compB->getUser()->getName());
            if ($tbA == $tbB) {
                return $this->sortByGamesPlayed($compA, $compB);
            }

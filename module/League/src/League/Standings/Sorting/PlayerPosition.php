@@ -54,8 +54,8 @@ class PlayerPosition implements SortingInterface
             if ($this->$method($previous, $player)) {
                 $player->setPosition($i+1);
             }
-
         }
+
     }
 
     /**
@@ -257,7 +257,7 @@ class PlayerPosition implements SortingInterface
            $tbA = $compA->getSecondTiebreak();
            $tbB = $compB->getSecondTiebreak();
            if ($tbA == $tbB) {
-               return $this->positionByThirdTiebreak($compA, $compA);
+               return $this->positionByThirdTiebreak($compA, $compB);
            }
 
            return ($tbA > $tbB);
