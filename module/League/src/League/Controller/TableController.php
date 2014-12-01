@@ -1,12 +1,9 @@
 <?php
 namespace League\Controller;
 
-use Nakade\Standings\MatchStats;
 use Nakade\Standings\Sorting\SortingInterface;
 use Zend\Http\Response;
 use Zend\View\Model\ViewModel;
-use Nakade\Standings\Sorting\PlayerPosition;
-use Nakade\Standings\Sorting\PlayerSorting as SORT;
 
 /**
  * Class TableController
@@ -35,7 +32,7 @@ class TableController extends DefaultController
             array(
                 'tournament'   => $league,
                 'matchDay' => $matchDay,
-                'table'    => $this->getPlayersTable($matches),
+                'table'    => $this->getService()->getTable($matches),
             )
         );
     }
@@ -59,29 +56,10 @@ class TableController extends DefaultController
         return new ViewModel(
             array(
                 'tournament'  => $league,
-                'table'   => $this->getPlayersTable($matches, $sortBy),
+                'table'   => $this->getService()->getTable($matches, $sortBy),
                 'paginator' => $this->getLeaguePaginator()->getPagination($league->getNumber()),
             )
         );
     }
-
-
-    /**
-     * @param array  $matches
-     * @param string $sort
-     *
-     * @return array
-     */
-    private function getPlayersTable(array $matches, $sort=SortingInterface::BY_POINTS)
-    {
-        $info = new MatchStats($matches);
-        $players = $info->getMatchStats();
-
-        $sorting = SORT::getInstance();
-        $sorting->sorting($players, $sort);
-        $pos = new PlayerPosition($players, $sort);
-        return $pos->getPosition();
-    }
-
 
 }

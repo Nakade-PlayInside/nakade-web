@@ -12,10 +12,32 @@ class PlayerPosition implements SortingInterface
     private $playersInLeague;
 
     /**
-     * @param array  $playersInLeague
-     * @param string $sort
+     * instance
+     * @var object
      */
-    public function __construct(array $playersInLeague, $sort=self::BY_POINTS)
+    private static $instance=null;
+
+    /**
+     * static for getting an instance of this class
+     * @return PlayerPosition
+     */
+    public static function getInstance()
+    {
+
+        if (is_null(self::$instance)) {
+            self::$instance=new self();
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * @param array $playersInLeague
+     * @param string $sort
+     *
+     * @return array
+     */
+    public function getStandings(array $playersInLeague, $sort=self::BY_POINTS)
     {
         $this->playersInLeague = $playersInLeague;
 
@@ -26,15 +48,7 @@ class PlayerPosition implements SortingInterface
             $this->setPosition();
         }
 
-
-    }
-
-    /**
-     * @return array
-     */
-    public function getPosition()
-    {
-       return $this->playersInLeague;
+        return $this->playersInLeague;
     }
 
     private function setPosition($method='positionByPoints')

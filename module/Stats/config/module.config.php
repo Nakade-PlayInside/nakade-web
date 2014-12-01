@@ -58,6 +58,8 @@ return array(
         'factories' => array(
             'Stats\Services\RepositoryService'      =>
                 'Stats\Services\RepositoryService',
+            'Nakade\Services\PlayersTableService' =>
+                'Nakade\Services\PlayersTableService',
         ),
     ),
 

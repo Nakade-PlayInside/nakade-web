@@ -27,6 +27,7 @@ return array(
             'Message\Controller\Message' => RoleInterface::ROLE_GUEST,
 
             'League\Controller\Table\table' => RoleInterface::ROLE_GUEST,
+            'League\Controller\Table\detailed' => RoleInterface::ROLE_GUEST,
             'League\Controller\Result\add' => RoleInterface::ROLE_GUEST,
             'League\Controller\Result\myResult' => RoleInterface::ROLE_GUEST,
             'League\Controller\Result\index' => RoleInterface::ROLE_ADMIN,

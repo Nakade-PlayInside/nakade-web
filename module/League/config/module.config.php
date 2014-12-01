@@ -230,6 +230,8 @@ return array(
                 'League\Services\MatchVoterService',
             'League\Services\PaginationService' =>
                 'League\Services\PaginationService',
+            'Nakade\Services\PlayersTableService' =>
+                'Nakade\Services\PlayersTableService',
         ),
     ),
 

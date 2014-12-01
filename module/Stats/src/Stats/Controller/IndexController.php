@@ -1,15 +1,10 @@
 <?php
 namespace Stats\Controller;
 
-use Nakade\Standings\Sorting\PlayerPosition;
 use Nakade\Abstracts\AbstractController;
 use Stats\Calculation\MatchStatsFactory;
 use Stats\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
-
-use Nakade\Standings\Sorting\PlayerSorting as SORT;
-use Nakade\Standings\MatchStats as Standings;
-
 /**
  *
  * @package Stats\Controller
@@ -54,16 +49,7 @@ class IndexController extends AbstractController
 
 
         $matches = $mapper->getMatchesByTournament(1);
-
-        // from TableController in League -> make a service?
-        $info = new Standings($matches);
-        $players = $info->getMatchStats();
-        $sorting = SORT::getInstance();
-        $sorting->sorting($players);
-        $pos = new PlayerPosition($players);
-
-        $table = $pos->getPosition();
-
+        $table = $this->getService()->getTable($matches); //$pos->getPosition();
 
         $pos = 1;
         foreach($table as $player) {

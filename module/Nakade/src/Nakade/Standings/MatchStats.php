@@ -17,11 +17,27 @@ class MatchStats extends MatchInfo
     private $tieBreakerFactory;
 
     /**
-     * @param array $matches
+     * instance
+     * @var object
      */
-    public function __construct(array $matches)
+    private static $instance=null;
+
+    /**
+     * static for getting an instance of this class
+     * @return MatchStats
+     */
+    public static function getInstance()
     {
 
+        if (is_null(self::$instance)) {
+            self::$instance=new self();
+        }
+
+        return self::$instance;
+    }
+
+    private function initMatches(array $matches)
+    {
         if (!empty($matches)) {
 
             $this->setMatches($matches);
@@ -55,24 +71,12 @@ class MatchStats extends MatchInfo
             $this->exchangeArray($data);
         }
     }
-    /**
-     * setter TiebreakerFactory
-     *
-     * @param TiebreakerFactory $factory
-     *
-     * @return $this
-     */
-    public function setTiebreakerFactory($factory)
-    {
-        $this->tieBreakerFactory = $factory;
-        return $this;
-    }
 
     /**
      * getter TiebreakerFactory
      * @return TiebreakerFactory
      */
-    public function getTiebreakerFactory()
+    private function getTiebreakerFactory()
     {
         if (is_null($this->tieBreakerFactory)) {
 
@@ -83,23 +87,10 @@ class MatchStats extends MatchInfo
     }
 
     /**
-     * setter GamesStats Factory
-     *
-     * @param GamesStatsFactory $factory
-     *
-     * @return $this
-     */
-    public function setGamesStatsFactory($factory)
-    {
-        $this->gamesStatsFactory = $factory;
-        return $this;
-    }
-
-    /**
      * getter GamesStats Factory
      * @return GamesStatsFactory
      */
-    public function getGamesStatsFactory()
+    private function getGamesStatsFactory()
     {
         if (is_null($this->gamesStatsFactory)) {
 
@@ -112,11 +103,13 @@ class MatchStats extends MatchInfo
 
 
     /**
+     * @param array $matches
+     *
      * @return array
      */
-    public function getMatchStats()
+    public function getMatchStats(array $matches)
     {
-
+        $this->initMatches($matches);
         $players = $this->getPlayers();
 
         /* @var $player \League\Entity\Player */
