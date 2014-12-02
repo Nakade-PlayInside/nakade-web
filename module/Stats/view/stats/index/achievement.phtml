@@ -1,7 +1,7 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('Stats');
 $this->headTitle('Stats');
-/* @var $tournament \Stats\Entity\Tournament */
+/* @var $player \Stats\Entity\PlayerStats */
 ?>
 
 <h3><?php //echo $title;?></h3>
@@ -15,15 +15,23 @@ $this->headTitle('Stats');
 
 <?php $this->placeholder('actual')->captureStart();?>
 
-tournaments : <?php echo count($this->tournaments); ?>
-pos : <?php echo $this->position; ?>
+<ul>
+    <li>tournaments : <?php echo $player->getNoTournaments(); ?></li>
+    <li>played : <?php echo $player->getNoGames(); ?></li>
+    <li>win : <?php echo $player->getNoWin(); ?></li>
+    <li>loss : <?php echo $player->getNoLoss(); ?></li>
+    <li>draw : <?php echo $player->getNoDraw(); ?></li>
+    <li>tournaments : <?php echo $player->getNoTournaments(); ?></li>
+</ul>
+tournaments : <?php echo $player->getNoTournaments(); ?>
+played : <?php echo $player->getNoGames(); ?>
 
 <?php $this->placeholder('actual')->captureEnd(); ?>
 
 
 <?php
 
- if (count($this->tournaments) == 0) {
+ if ($this->player->getNoTournaments() == 0) {
      echo $this->placeholder('noSeason');
  } else {
      echo $this->placeholder('actual');
