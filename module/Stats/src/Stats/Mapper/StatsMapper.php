@@ -77,5 +77,27 @@ class StatsMapper extends AbstractMapper
         return $result;
     }
 
+    /**
+     * @param $uid
+     *
+     * @return array
+     */
+    public function getConsecutiveMatchesByUser($uid)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder('myMatch')
+            ->select('m')
+            ->from('Season\Entity\Match', 'm')
+            ->innerJoin('m.black', 'Black')
+            ->innerJoin('m.white', 'White')
+            ->where('m.result IS NOT NULL')
+            ->andWhere('Black.id = :uid OR White.id = :uid')
+            ->setParameter('uid', $uid)
+            ->orderBy('m.date', 'ASC');
+
+        $result = $qb->getQuery()->getResult();
+        return $result;
+    }
+
 
 }

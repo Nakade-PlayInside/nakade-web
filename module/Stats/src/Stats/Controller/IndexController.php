@@ -84,8 +84,23 @@ class IndexController extends AbstractController
 
         }
 
+        $userMatches = $mapper->getConsecutiveMatchesByUser($userId);
 
-    //    var_dump($pos);
+        /* @var $match \Season\Entity\Match */
+        $conWin=array();
+        $win = 0;
+        foreach ($userMatches as $match) {
+
+            if ($match->getResult()->hasWinner() && $match->getResult()->getWinner()->getId() == $userId) {
+                $win++;
+            } else {
+                $conWin[] = $win;
+                $win = 0;
+            }
+        }
+
+        $max = max($conWin);
+        $stats->setNoConsecutiveWins($max);
         //var_dump($tournaments);die;
        // $factory = new MatchStatsFactory($matches, $userId);
        // $stats = $factory->getMatchStats();
