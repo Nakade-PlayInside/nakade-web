@@ -3,6 +3,7 @@ namespace Stats\Controller;
 
 use Nakade\Abstracts\AbstractController;
 use Stats\Calculation\MatchStatsFactory;
+use Stats\Entity\Championship;
 use Stats\Entity\PlayerStats;
 use Stats\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
@@ -78,7 +79,29 @@ class IndexController extends AbstractController
                     $stats->addNoWin($player->getGamesWin());
                     $stats->addNoLoss($player->getGamesLost());
                     $stats->addNoDraw($player->getGamesDraw());
+                    $stats->addPosition($player->getPosition());
+                }
 
+                //todo: distinguish between league and tournament
+                if ($tournament->getNumber() == 1) {
+
+                    switch($player->getPosition()) {
+                        case 1: $stats->getChampion()->addGold();
+                            break;
+                        case 2: $stats->getChampion()->addSilver();
+                            break;
+                        case 3: $stats->getChampion()->addBronze();
+                            break;
+                    }
+                } elseif ($tournament->getNumber() > 1) {
+                    switch($player->getPosition()) {
+                        case 1: $stats->getMedal()->addGold();
+                            break;
+                        case 2: $stats->getMedal()->addSilver();
+                            break;
+                        case 3: $stats->getMedal()->addBronze();
+                            break;
+                    }
                 }
             }
 
@@ -101,9 +124,7 @@ class IndexController extends AbstractController
 
         $max = max($conWin);
         $stats->setNoConsecutiveWins($max);
-        //var_dump($tournaments);die;
-       // $factory = new MatchStatsFactory($matches, $userId);
-       // $stats = $factory->getMatchStats();
+
 
         return new ViewModel(
             array(

@@ -23,8 +23,12 @@ $this->headTitle('Stats');
     <li>draw : <?php echo $player->getNoDraw(); ?></li>
     <li>consecutive wins : <?php echo $player->getNoConsecutiveWins(); ?></li>
 </ul>
-tournaments : <?php echo $player->getNoTournaments(); ?>
-played : <?php echo $player->getNoGames(); ?>
+positions :
+<?php foreach($player->getPosition() as $position) {
+    echo $position . ', ';
+}
+ ?>
+chp : <?php echo $player->getChampion()->getNoSilver(); ?>
 
 <?php $this->placeholder('actual')->captureEnd(); ?>
 

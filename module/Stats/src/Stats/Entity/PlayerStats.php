@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package Stats\Entity
  */
-class PlayerStats
+class PlayerStats extends Achievement
 {
     private $noTournaments=0;
     private $noGames=0;
@@ -16,6 +16,7 @@ class PlayerStats
     private $noLoss=0;
     private $noDraw=0;
     private $noConsecutiveWins=0;
+    private $position=array();
 
     /**
      * @param mixed $noConsecutiveWins
@@ -113,7 +114,21 @@ class PlayerStats
         return $this->noWin;
     }
 
+    /**
+     * @param array $position
+     */
+    public function addPosition($position)
+    {
+        $this->position[] = $position;
+    }
 
+    /**
+     * @return array
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
 
 
 }
