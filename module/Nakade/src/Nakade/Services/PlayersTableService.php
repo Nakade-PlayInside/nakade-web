@@ -36,13 +36,13 @@ class PlayersTableService implements FactoryInterface
      */
     public function getTable(array $matches, $sort=SortingInterface::BY_POINTS)
     {
-        $stats = MatchStats::getInstance();
+        $stats = new MatchStats();
         $players = $stats->getMatchStats($matches);
 
         $sorting = SORT::getInstance();
         $sorting->sorting($players, $sort);
 
-        $standings = PlayerPosition::getInstance();
+        $standings = new PlayerPosition();
         return $standings->getStandings($players, $sort);
     }
 }

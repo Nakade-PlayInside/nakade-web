@@ -10,4 +10,5 @@ namespace Stats\Entity;
 class Championship extends AbstractPrize
 {
 
+
 }

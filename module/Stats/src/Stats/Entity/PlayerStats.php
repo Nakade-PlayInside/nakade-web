@@ -1,8 +1,6 @@
 <?php
 namespace Stats\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Class PlayerStats
  *
@@ -10,20 +8,28 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PlayerStats extends Achievement
 {
-    private $noTournaments=0;
-    private $noGames=0;
-    private $noWin=0;
-    private $noLoss=0;
-    private $noDraw=0;
-    private $noConsecutiveWins=0;
-    private $position=array();
+    private $tournaments = array();
+    private $matches = array();
+    private $wins = array();
+    private $loss = array();
+    private $draws = array();
+    private $consecutiveWins = array();
+    private $position = array();
 
     /**
-     * @param mixed $noConsecutiveWins
+     * @param mixed $consecutiveWins
      */
-    public function setNoConsecutiveWins($noConsecutiveWins)
+    public function setConsecutiveWins($consecutiveWins)
     {
-        $this->noConsecutiveWins = $noConsecutiveWins;
+        $this->consecutiveWins = $consecutiveWins;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConsecutiveWins()
+    {
+        return $this->consecutiveWins;
     }
 
     /**
@@ -31,15 +37,49 @@ class PlayerStats extends Achievement
      */
     public function getNoConsecutiveWins()
     {
-        return $this->noConsecutiveWins;
+        return count($this->consecutiveWins);
     }
 
     /**
-     * @param int $noDraw
+     * @param array $matches
      */
-    public function addNoDraw($noDraw)
+    public function setMatches($matches)
     {
-        $this->noDraw += $noDraw;
+        $this->matches = $matches;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMatches()
+    {
+        return $this->matches;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNoMatches()
+    {
+        return count($this->matches);
+    }
+
+
+
+    /**
+     * @param array $draws
+     */
+    public function setDraws(array $draws)
+    {
+        $this->draws = $draws;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDraws()
+    {
+        return $this->draws;
     }
 
     /**
@@ -47,15 +87,7 @@ class PlayerStats extends Achievement
      */
     public function getNoDraw()
     {
-        return $this->noDraw;
-    }
-
-    /**
-     * @param int $noGames
-     */
-    public function addNoGames($noGames)
-    {
-        $this->noGames += $noGames;
+        return count($this->draws);
     }
 
     /**
@@ -63,15 +95,23 @@ class PlayerStats extends Achievement
      */
     public function getNoGames()
     {
-        return $this->noGames;
+        return $this->getNoWin() + $this->getNoDraw() + $this->getNoLoss();
     }
 
     /**
-     * @param int $noLoss
+     * @param array $loss
      */
-    public function addNoLoss($noLoss)
+    public function setLoss(array $loss)
     {
-        $this->noLoss += $noLoss;
+        $this->loss = $loss;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLoss()
+    {
+        return $this->loss;
     }
 
     /**
@@ -79,15 +119,23 @@ class PlayerStats extends Achievement
      */
     public function getNoLoss()
     {
-        return $this->noLoss;
+        return count($this->loss);
     }
 
     /**
-     * @param mixed $noTournaments
+     * @param array $tournaments
      */
-    public function setNoTournaments($noTournaments)
+    public function setTournaments(array $tournaments)
     {
-        $this->noTournaments = $noTournaments;
+        $this->tournaments = $tournaments;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTournaments()
+    {
+        return $this->tournaments;
     }
 
     /**
@@ -95,15 +143,23 @@ class PlayerStats extends Achievement
      */
     public function getNoTournaments()
     {
-        return $this->noTournaments;
+        return count($this->tournaments);
     }
 
     /**
-     * @param int $noWin
+     * @param array $wins
      */
-    public function addNoWin($noWin)
+    public function setWins(array $wins)
     {
-        $this->noWin += $noWin;
+        $this->wins = $wins;
+    }
+
+    /**
+     * @return array
+     */
+    public function getWins()
+    {
+        return $this->wins;
     }
 
     /**
@@ -111,11 +167,11 @@ class PlayerStats extends Achievement
      */
     public function getNoWin()
     {
-        return $this->noWin;
+        return count($this->wins);
     }
 
     /**
-     * @param array $position
+     * @param int $position
      */
     public function addPosition($position)
     {

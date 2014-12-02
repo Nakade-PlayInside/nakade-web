@@ -28,7 +28,9 @@ positions :
     echo $position . ', ';
 }
  ?>
-chp : <?php echo $player->getChampion()->getNoSilver(); ?>
+<br>gold : <?php echo $player->getChampion()->getNoGold(); ?>
+<br>silver : <?php echo $player->getChampion()->getNoSilver(); ?>
+<br>bronze : <?php echo $player->getChampion()->getNoBronze(); ?>
 
 <?php $this->placeholder('actual')->captureEnd(); ?>
 

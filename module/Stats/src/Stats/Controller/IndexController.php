@@ -2,8 +2,8 @@
 namespace Stats\Controller;
 
 use Nakade\Abstracts\AbstractController;
+use Nakade\Result\ResultInterface;
 use Stats\Calculation\MatchStatsFactory;
-use Stats\Entity\Championship;
 use Stats\Entity\PlayerStats;
 use Stats\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
@@ -59,71 +59,79 @@ class IndexController extends AbstractController
         // positions
         // achievements (placement)
 
-      //  var_dump(count($tournaments));
+        //var_dump($tournaments);
 
         $stats = new PlayerStats();
-        $stats->setNoTournaments(count($tournaments));
+        $stats->setTournaments($tournaments);
+
+        $userMatches = $mapper->getConsecutiveMatchesByUser($userId);
+
+
+        /* @var $match \Season\Entity\Match */
+        $consecutiveWins = array();
+        $wins = array();
+        $loss = array();
+        $draws = array();
+        foreach ($userMatches as $match) {
+
+            if ($match->getResult()->hasWinner() && $match->getResult()->getWinner()->getId() == $userId) {
+                $consecutiveWins[] = $match;
+                $wins[]=$match;
+            } else {
+                if (count($consecutiveWins) >= $stats->getNoConsecutiveWins()) {
+                    $stats->setConsecutiveWins($consecutiveWins);
+                }
+                if ($match->getResult()->hasWinner() && $match->getResult()->getWinner()->getId() != $userId) {
+                    $loss[] = $match;
+                }
+                if ($match->getResult()->getResultType() == ResultInterface::DRAW) {
+                    $draws[] = $match;
+                }
+                $consecutiveWins = array();
+            }
+        }
+        $stats->setWins($wins);
+        $stats->setLoss($loss);
+        $stats->setDraws($draws);
+
 
         foreach ($tournaments as $tournament)
         {
             $matches = $mapper->getMatchesByTournament($tournament->getId());
+
             $table = $this->getService()->getTable($matches);
-
-
+            var_dump('season:' . $tournament->getSeason()->getNumber());
+            
             /* @var  $player \League\Entity\Player */
             foreach ($table as $player) {
 
                 if ($player->getUser()->getId() == $userId) {
-
-                    $stats->addNoGames($player->getGamesPlayed());
-                    $stats->addNoWin($player->getGamesWin());
-                    $stats->addNoLoss($player->getGamesLost());
-                    $stats->addNoDraw($player->getGamesDraw());
                     $stats->addPosition($player->getPosition());
-                }
 
-                //todo: distinguish between league and tournament
-                if ($tournament->getNumber() == 1) {
 
-                    switch($player->getPosition()) {
-                        case 1: $stats->getChampion()->addGold();
-                            break;
-                        case 2: $stats->getChampion()->addSilver();
-                            break;
-                        case 3: $stats->getChampion()->addBronze();
-                            break;
-                    }
-                } elseif ($tournament->getNumber() > 1) {
-                    switch($player->getPosition()) {
-                        case 1: $stats->getMedal()->addGold();
-                            break;
-                        case 2: $stats->getMedal()->addSilver();
-                            break;
-                        case 3: $stats->getMedal()->addBronze();
-                            break;
+                    var_dump('pos:' .$player->getPosition());
+
+                    //todo: distinguish between league and tournament
+                    if ($tournament->getNumber() == 1) {
+                       // var_dump($player->getPosition());
+                        switch($player->getPosition()) {
+                            case 1: $stats->getChampion()->addGold();
+                               // var_dump($player->getPosition() . 'gold');die;
+                                break;
+                            case 2: $stats->getChampion()->addSilver();
+                                //var_dump($player->getPosition() . 'silver');
+
+                                break;
+                            case 3: $stats->getChampion()->addBronze();
+                                break;
+                        }
                     }
                 }
+
+
             }
 
         }
-
-        $userMatches = $mapper->getConsecutiveMatchesByUser($userId);
-
-        /* @var $match \Season\Entity\Match */
-        $conWin=array();
-        $win = 0;
-        foreach ($userMatches as $match) {
-
-            if ($match->getResult()->hasWinner() && $match->getResult()->getWinner()->getId() == $userId) {
-                $win++;
-            } else {
-                $conWin[] = $win;
-                $win = 0;
-            }
-        }
-
-        $max = max($conWin);
-        $stats->setNoConsecutiveWins($max);
 
 
         return new ViewModel(
