@@ -60,6 +60,10 @@ return array(
                 'Stats\Services\RepositoryService',
             'Nakade\Services\PlayersTableService' =>
                 'Nakade\Services\PlayersTableService',
+            'Stats\Services\PlayerStatsService' =>
+                'Stats\Services\PlayerStatsService',
+            'Stats\Services\AchievementService' =>
+                'Stats\Services\AchievementService',
         ),
     ),
 

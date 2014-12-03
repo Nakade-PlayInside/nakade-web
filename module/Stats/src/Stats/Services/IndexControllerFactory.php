@@ -25,7 +25,7 @@ class IndexControllerFactory implements FactoryInterface
         $serviceManager = $services->getServiceLocator();
 
         $repository = $serviceManager->get('Stats\Services\RepositoryService');
-        $standings  = $serviceManager->get('Nakade\Services\PlayersTableService');
+        $standings  = $serviceManager->get('Stats\Services\PlayerStatsService');
 
         $controller = new IndexController();
         $controller->setRepository($repository);

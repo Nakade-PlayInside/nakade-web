@@ -19,9 +19,6 @@ class Achievement
      */
     public function getChampion()
     {
-        if (is_null($this->champion)) {
-            $this->champion = new Championship();
-        }
         return $this->champion;
     }
 
@@ -30,9 +27,6 @@ class Achievement
      */
     public function getCup()
     {
-        if (is_null($this->cup)) {
-            $this->cup = new Cup();
-        }
         return $this->cup;
     }
 
@@ -41,11 +35,34 @@ class Achievement
      */
     public function getMedal()
     {
-        if (is_null($this->medal)) {
-            $this->medal = new Medal();
-        }
         return $this->medal;
     }
+
+    /**
+     * @param Championship $champion
+     */
+    public function setChampion(Championship $champion)
+    {
+        $this->champion = $champion;
+    }
+
+    /**
+     * @param Cup $cup
+     */
+    public function setCup(Cup $cup)
+    {
+        $this->cup = $cup;
+    }
+
+    /**
+     * @param Medal $medal
+     */
+    public function setMedal(Medal $medal)
+    {
+        $this->medal = $medal;
+    }
+
+
 
 
 
