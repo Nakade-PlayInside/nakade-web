@@ -232,6 +232,7 @@ return array(
                 'League\Services\PaginationService',
             'Nakade\Services\PlayersTableService' =>
                 'Nakade\Services\PlayersTableService',
+
         ),
     ),
 

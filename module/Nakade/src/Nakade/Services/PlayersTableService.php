@@ -11,7 +11,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class TableStandingsService
- * calculate and provide the statistic, standings and position of all matches in a league
+ * calculate and provide standings and position of all players in a league
  *
  * @package Nakade\Services
  */
@@ -36,13 +36,16 @@ class PlayersTableService implements FactoryInterface
      */
     public function getTable(array $matches, $sort=SortingInterface::BY_POINTS)
     {
-        $stats = new MatchStats();
-        $players = $stats->getMatchStats($matches);
+        //this is an extra service
+        $stats = new MatchStats($matches);
+        $players = $stats->getMatchStats();
 
+        //just sorting
         $sorting = SORT::getInstance();
         $sorting->sorting($players, $sort);
 
-        $standings = new PlayerPosition();
+        //evaluate player's position in table
+        $standings = PlayerPosition::getInstance();
         return $standings->getStandings($players, $sort);
     }
 }

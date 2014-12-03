@@ -26,10 +26,6 @@ abstract class AbstractMatchStats implements MatchStatsInterface
     protected $lostOnTime;
     protected $lostByForfeit;
 
-
-
-
-
     /**
      * @param int $white
      */

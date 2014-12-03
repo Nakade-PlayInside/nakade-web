@@ -1,5 +1,6 @@
 <?php
 namespace Stats\Entity;
+use Nakade\TournamentInterface;
 
 /**
  * AbstractPrize
@@ -8,17 +9,27 @@ namespace Stats\Entity;
  */
 abstract class AbstractPrize implements PrizeInterface
 {
-    protected $noGold=0;
-    protected $noSilver=0;
-    protected $noBronze=0;
+    protected $gold = array();
+    protected $silver = array();
+    protected $bronze = array();
 
     /**
+     * @param TournamentInterface $tournament
+     *
      * @return $this
      */
-    public function addBronze()
+    public function addBronze(TournamentInterface $tournament)
     {
-        $this->noBronze++;
+        $this->bronze[] = $tournament;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBronze()
+    {
+        return $this->bronze;
     }
 
     /**
@@ -26,16 +37,26 @@ abstract class AbstractPrize implements PrizeInterface
      */
     public function getNoBronze()
     {
-        return $this->noBronze;
+        return count($this->bronze);
     }
 
     /**
+     * @param TournamentInterface $tournament
+     *
      * @return $this
      */
-    public function addGold()
+    public function addGold(TournamentInterface $tournament)
     {
-        $this->noGold++;
+        $this->gold[] = $tournament;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGold()
+    {
+        return $this->gold;
     }
 
     /**
@@ -43,16 +64,26 @@ abstract class AbstractPrize implements PrizeInterface
      */
     public function getNoGold()
     {
-        return $this->noGold;
+        return count($this->gold);
     }
 
     /**
+     * @param TournamentInterface $tournament
+     *
      * @return $this
      */
-    public function addSilver()
+    public function addSilver(TournamentInterface $tournament)
     {
-        $this->noSilver++;
+        $this->silver[] = $tournament;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSilver()
+    {
+        return $this->silver;
     }
 
     /**
@@ -60,7 +91,7 @@ abstract class AbstractPrize implements PrizeInterface
      */
     public function getNoSilver()
     {
-        return $this->noSilver;
+        return count($this->silver);
     }
 
 }

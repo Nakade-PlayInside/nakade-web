@@ -16,33 +16,19 @@ class MatchStats extends MatchInfo
     private $gamesStatsFactory;
     private $tieBreakerFactory;
 
-    /**
-     * instance
-     * @var object
-     */
-    private static $instance=null;
-
-    /**
-     * static for getting an instance of this class
-     * @return MatchStats
-     */
-    public static function getInstance()
+    public function __construct(array $matches)
     {
-
-        if (is_null(self::$instance)) {
-            self::$instance=new self();
-        }
-
-        return self::$instance;
+        $this->setMatches($matches);
+        $this->initMatches();
     }
 
-    private function initMatches(array $matches)
+    private function initMatches()
     {
-        if (!empty($matches)) {
+        if (!empty($this->matches)) {
 
-            $this->setMatches($matches);
+
             /* @var $match \Season\Entity\Match */
-            $match = $matches[0];
+            $match = $this->matches[0];
 
             $data = array();
             $data['tieBreaker1'] = $match->getLeague()->getSeason()->getTieBreaker1()->getName();
@@ -51,7 +37,7 @@ class MatchStats extends MatchInfo
             $data['winPoints'] = $match->getLeague()->getSeason()->getWinPoints();
 
             $users = array();
-            foreach ($matches as $match) {
+            foreach ($this->matches as $match) {
                 $black = $match->getBlack();
                 if (!in_array($black, $users)) {
                     $users[] = $black;
@@ -103,13 +89,10 @@ class MatchStats extends MatchInfo
 
 
     /**
-     * @param array $matches
-     *
      * @return array
      */
-    public function getMatchStats(array $matches)
+    public function getMatchStats()
     {
-        $this->initMatches($matches);
         $players = $this->getPlayers();
 
         /* @var $player \League\Entity\Player */

@@ -99,30 +99,33 @@ class IndexController extends AbstractController
         {
             $matches = $mapper->getMatchesByTournament($tournament->getId());
 
+            $isOngoing = false;
+            foreach ($matches as $match) {
+                if (!$match->hasResult()) {
+                    $isOngoing = true;
+                    break;
+                }
+            }
+
+            if ($isOngoing) continue;
+
             $table = $this->getService()->getTable($matches);
-            var_dump('season:' . $tournament->getSeason()->getNumber());
-            
+
             /* @var  $player \League\Entity\Player */
             foreach ($table as $player) {
 
                 if ($player->getUser()->getId() == $userId) {
-                    $stats->addPosition($player->getPosition());
 
-
-                    var_dump('pos:' .$player->getPosition());
-
+                    //having the tournament provides data for the winner certificate
                     //todo: distinguish between league and tournament
                     if ($tournament->getNumber() == 1) {
-                       // var_dump($player->getPosition());
-                        switch($player->getPosition()) {
-                            case 1: $stats->getChampion()->addGold();
-                               // var_dump($player->getPosition() . 'gold');die;
-                                break;
-                            case 2: $stats->getChampion()->addSilver();
-                                //var_dump($player->getPosition() . 'silver');
 
+                        switch($player->getPosition()) {
+                            case 1: $stats->getChampion()->addGold($tournament);
                                 break;
-                            case 3: $stats->getChampion()->addBronze();
+                            case 2: $stats->getChampion()->addSilver($tournament);
+                                break;
+                            case 3: $stats->getChampion()->addBronze($tournament);
                                 break;
                         }
                     }

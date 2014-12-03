@@ -23,11 +23,6 @@ $this->headTitle('Stats');
     <li>draw : <?php echo $player->getNoDraw(); ?></li>
     <li>consecutive wins : <?php echo $player->getNoConsecutiveWins(); ?></li>
 </ul>
-positions :
-<?php foreach($player->getPosition() as $position) {
-    echo $position . ', ';
-}
- ?>
 <br>gold : <?php echo $player->getChampion()->getNoGold(); ?>
 <br>silver : <?php echo $player->getChampion()->getNoSilver(); ?>
 <br>bronze : <?php echo $player->getChampion()->getNoBronze(); ?>

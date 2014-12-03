@@ -14,7 +14,6 @@ class PlayerStats extends Achievement
     private $loss = array();
     private $draws = array();
     private $consecutiveWins = array();
-    private $position = array();
 
     /**
      * @param mixed $consecutiveWins
@@ -169,22 +168,5 @@ class PlayerStats extends Achievement
     {
         return count($this->wins);
     }
-
-    /**
-     * @param int $position
-     */
-    public function addPosition($position)
-    {
-        $this->position[] = $position;
-    }
-
-    /**
-     * @return array
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
 
 }
