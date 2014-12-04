@@ -240,7 +240,7 @@ div.error {
     display: inline-block;
 }
 
-ul.achievement {
+ul.achievement, ul.playerStats {
     list-style: none;
 }
 
@@ -251,6 +251,10 @@ ul.achievement li a div {
 ul.playerStats li a div {
     display: inline-block;
     text-align: right;
-    margin-left: 10px;
+    margin-right: 10px;
     vertical-align: text-bottom;
+}
+
+ul.playerStats li a:hover  {
+    font-weight: bold;
 }

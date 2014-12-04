@@ -14,21 +14,21 @@ $this->headTitle('Stats');
 
 
 <?php $this->placeholder('actual')->captureStart();?>
-
-<ul class="playerStats">
-    <?php foreach ($this->tournaments as $tournament) : ?>
-    <li>
-        <a href="<?php echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId()));?>"><?php
-            echo $tournament->getSeason()->getNumber() . '. ' .
-            $tournament->getSeason()->getAssociation()->getName(). ' ' .
-            $this->translate('League') . ', ' . $tournament->getNumber() . '. ' .
-            $this->translate('League') . ' ' . $tournament->getSeason()->getStartDate()->format('m/Y')  ?>
-        </a>
-    </li>
-
-    <?php endforeach; ?>
-</ul>
-
+<div class="widget">
+    <h3><?php echo 'My Tournaments' ?></h3>
+    <ul class="playerStats">
+        <?php foreach ($this->tournaments as $tournament) : ?>
+        <li>
+            <a href="<?php echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId()));?>"><?php
+                echo $tournament->getSeason()->getNumber() . '. ' .
+                $tournament->getSeason()->getAssociation()->getName(). ' ' .
+                $this->translate('League') . ', ' . $tournament->getNumber() . '. ' .
+                $this->translate('League') . ' ' . $tournament->getSeason()->getStartDate()->format('m/Y')  ?>
+            </a>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
 <?php $this->placeholder('actual')->captureEnd(); ?>
 
 
