@@ -67,7 +67,7 @@ class PlayerPosition implements SortingInterface
             $previous = $this->playersInLeague[$i-1];
             if ($this->$method($previous, $player)) {
                 $player->setPosition($i+1);
-            }
+            }// todo: same position
         }
 
     }

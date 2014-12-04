@@ -56,16 +56,6 @@ class PlayerStats extends Achievement
     }
 
     /**
-     * @return int
-     */
-    public function getNoMatches()
-    {
-        return count($this->matches);
-    }
-
-
-
-    /**
      * @param array $draws
      */
     public function setDraws(array $draws)

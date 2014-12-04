@@ -1,0 +1,83 @@
+<?php
+use \League\View\Helper\Sort;
+$this->plugin('translate')->setTranslatorTextDomain('League');
+$this->headTitle('table');
+
+/* @var $player \League\Entity\Player */
+/* @var $tournament \Season\Entity\League */
+/* @var $pagination \League\Pagination\LeaguePagination */
+
+$title = $this->translate("%NAME% League - %NUMBER%.Season");
+$tb1 = 'TB1';
+$tb2 = 'TB2';
+$tb3 = 'TB3';
+
+if (!is_null($tournament)) {
+    $title = str_replace("%NAME%", $tournament->getSeason()->getAssociation()->getName(), $title);
+    $title = str_replace("%NUMBER%", $tournament->getSeason()->getNumber(), $title);
+    $tb1 = $tournament->getSeason()->getTieBreaker1();
+    $tb2 = $tournament->getSeason()->getTieBreaker2();
+    $tb3 = $tournament->getSeason()->getTieBreaker3();
+}
+?>
+
+<?php $this->placeholder('standings')->captureStart(); ?>
+    <div class="widget">
+        <h3><?php echo $title; ?></h3>
+        <table class="table standings">
+            <tr>
+                <th title="<?php echo $this->translate('Position');?>">P</th>
+                <th title="<?php echo $this->translate('Player');?>">
+                    <?php echo $this->translate('Name')?>
+                </th>
+                <th title="<?php echo $this->translate('played games')?>">
+                        <?php echo $this->translate('GP')?>
+                </th>
+                <th title="<?php echo $this->translate('Wins')?>">
+                        <?php echo $this->translate('W')?>
+                </th>
+                <th title="<?php echo $this->translate('Jigo')?>">
+                        <?php echo $this->translate('J')?>
+                </th>
+                <th title="<?php echo $this->translate('Lost')?>">
+                        <?php echo $this->translate('L')?>
+                </th>
+                <th title="<?php echo $this->translate('Points')?>">
+                        <?php echo $this->translate('Pt')?>
+                </th>
+                <th title="<?php echo $tb1->getDescription()?>">
+                        <?php echo $tb1->getName()?>
+                </th>
+                <th title="<?php echo $tb2->getDescription()?>">
+                        <?php echo $tb2->getName()?>
+                </th>
+                <th title="<?php echo $tb3->getDescription(); ?>">
+                        <?php echo $tb3->getName()?>
+                </th>
+            </tr>
+            <?php foreach ($this->table as $player) : ?>
+                <tr style="background-color:<?php  echo $this->highlightUser($player->getUser()); ?>">
+                    <td><?php echo $player->getPosition() ?></td>
+                    <td class="name"><?php echo $player->getUser()->getShortName();?></td>
+                    <td><?php echo $player->getGamesPlayed(); ?></td>
+                    <td><?php echo $player->getGamesWin();?></td>
+                    <td><?php echo $player->getGamesDraw();?></td>
+                    <td><?php echo $player->getGamesLost();?></td>
+                    <td><?php echo $player->getGamesPoints();?></td>
+                    <td><?php echo $player->getFirstTiebreak();?></td>
+                    <td><?php echo $player->getSecondTiebreak();?></td>
+                    <td><?php echo $player->getThirdTiebreak();?></td>
+
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+<?php $this->placeholder('standings')->captureEnd(); ?>
+
+
+<?php
+
+if (!is_null($this->table)) {
+    echo $this->placeholder('standings');
+}
+

@@ -239,3 +239,18 @@ div.error {
 .nakadeNav ul li {
     display: inline-block;
 }
+
+ul.achievement {
+    list-style: none;
+}
+
+ul.achievement li a div {
+    display: inline-block;
+}
+
+ul.playerStats li a div {
+    display: inline-block;
+    text-align: right;
+    margin-left: 10px;
+    vertical-align: text-bottom;
+}

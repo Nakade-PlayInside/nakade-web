@@ -19,10 +19,12 @@ class PlayerStatsFactory {
     private $win = array();
     private $draw = array();
     private $defeat = array();
+    private $matches = array();
 
     public function __construct(array $matches, $userId)
     {
         $this->userId = $userId;
+        $this->matches = $matches;
 
         /* @var $match \Season\Entity\Match */
         foreach ($matches as $match) {
@@ -113,6 +115,14 @@ class PlayerStatsFactory {
     public function getWin()
     {
         return $this->win;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMatches()
+    {
+        return $this->matches;
     }
 
 }

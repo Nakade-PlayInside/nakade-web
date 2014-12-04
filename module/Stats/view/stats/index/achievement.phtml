@@ -15,17 +15,85 @@ $this->headTitle('Stats');
 
 <?php $this->placeholder('actual')->captureStart();?>
 
-<ul>
-    <li>tournaments : <?php echo $player->getNoTournaments(); ?></li>
-    <li>played : <?php echo $player->getNoGames(); ?></li>
-    <li>win : <?php echo $player->getNoWin(); ?></li>
-    <li>loss : <?php echo $player->getNoLoss(); ?></li>
-    <li>draw : <?php echo $player->getNoDraw(); ?></li>
-    <li>consecutive wins : <?php echo $player->getNoConsecutiveWins(); ?></li>
+<ul class="playerStats">
+    <li><?php echo $this->translate('Tournaments') .': '. $player->getNoTournaments(); ?><a
+            href="<?php echo $this->url('stats', array('action' => 'tournament'));?>"><div
+                class="buttons-16 info-16"></div>
+        </a>
+    </li>
+    <?php if ($player->getNoGames() > 0): ?>
+    <li><?php echo $this->translate('Played') .': '. $player->getNoGames(); ?></li>
+    <?php endif; ?>
+    <?php if ($player->getNoWin() > 0): ?>
+    <li><?php echo $this->translate('Win') .': '. $player->getNoWin(); ?></li>
+    <?php endif; ?>
+    <?php if ($player->getNoDraw() > 0): ?>
+    <li><?php echo $this->translate('Draw') .': '. $player->getNoDraw(); ?></li>
+    <?php endif; ?>
+    <?php if ($player->getNoLoss() > 0): ?>
+    <li><?php echo $this->translate('Defeat') .': '. $player->getNoLoss(); ?></li>
+    <?php endif; ?>
+    <?php if ($player->getNoConsecutiveWins() > 1): ?>
+    <li><?php echo $this->translate('Consecutive wins') .': '. $player->getNoConsecutiveWins(); ?></li>
+    <?php endif; ?>
 </ul>
-<br>gold : <?php echo $player->getChampion()->getNoGold(); ?>
-<br>silver : <?php echo $player->getChampion()->getNoSilver(); ?>
-<br>bronze : <?php echo $player->getChampion()->getNoBronze(); ?>
+
+<ul class="achievement">
+    <?php if ($player->getChampion()->getNoGold() > 0): ?>
+    <li><?php foreach ($player->getChampion()->getGold() as $tournament) :?>
+        <a  href="<?php  ?>"><div class="nakade-16 crown-gold-16"></div></a>
+        <?php endforeach;?>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getChampion()->getNoSilver() > 0): ?>
+    <li><?php foreach ($player->getChampion()->getSilver() as $tournament) :?>
+        <a  href="<?php  ?>"><div class="nakade-16 crown-silver-16"></div></a>
+        <?php endforeach;?>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getChampion()->getNoBronze() > 0): ?>
+    <li><?php foreach ($player->getChampion()->getBronze() as $tournament) :?>
+            <a  href="<?php  ?>"><div class="nakade-16 crown-bronze-16"></div></a>
+        <?php endforeach;?>
+    <?php endif; ?>
+
+    <?php if ($player->getCup()->getNoGold() > 0): ?>
+    <li><?php foreach ($player->getCup()->getGold() as $tournament) :?>
+            <a  href="<?php  ?>"><div class="nakade-16 cup-gold-16"></div></a>
+        <?php endforeach;?>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getCup()->getNoSilver() > 0): ?>
+        <li><?php foreach ($player->getCup()->getSilver() as $tournament) :?>
+                <a  href="<?php  ?>"><div class="nakade-16 cup-silver-16"></div></a>
+            <?php endforeach;?>
+        </li>
+    <?php endif; ?>
+    <?php if ($player->getCup()->getNoBronze() > 0): ?>
+    <li><?php foreach ($player->getCup()->getBronze() as $tournament) :?>
+            <a  href="<?php  ?>"><div class="nakade-16 cup-bronze-16"></div></a>
+        <?php endforeach;?>
+    <?php endif; ?>
+
+    <?php if ($player->getMedal()->getNoGold() > 0): ?>
+    <li><?php foreach ($player->getMedal()->getGold() as $tournament) :?>
+            <a  href="<?php  ?>"><div class="nakade-16 medal-gold-16"></div></a>
+        <?php endforeach;?>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getMedal()->getNoSilver() > 0): ?>
+        <li><?php foreach ($player->getMedal()->getSilver() as $tournament) :?>
+                <a  href="<?php  ?>"><div class="nakade-16 medal-silver-16"></div></a>
+            <?php endforeach;?>
+        </li>
+    <?php endif; ?>
+    <?php if ($player->getMedal()->getNoBronze() > 0): ?>
+    <li><?php foreach ($player->getMedal()->getBronze() as $tournament) :?>
+            <a  href="<?php  ?>"><div class="nakade-16 medal-bronze-16"></div></a>
+        <?php endforeach;?>
+    <?php endif; ?>
+
+</ul>
 
 <?php $this->placeholder('actual')->captureEnd(); ?>
 
