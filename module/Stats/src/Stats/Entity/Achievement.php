@@ -62,7 +62,13 @@ class Achievement
         $this->medal = $medal;
     }
 
-
+    /**
+     * @return bool
+     */
+    public function hasAchievement()
+    {
+        return !empty($this->champion) && !empty($this->cup) && !empty($this->medal);
+    }
 
 
 

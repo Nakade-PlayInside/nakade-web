@@ -13,6 +13,13 @@ namespace Stats;
 
 return array(
 
+    'view_helpers' => array(
+        'invokables' => array(
+            'achievementTitle'   => 'Stats\View\Helper\AchievementTitle',
+            // more helpers here ...
+        )
+    ),
+
     'controllers' => array(
         'factories' => array(
             'Stats\Controller\Index' =>
