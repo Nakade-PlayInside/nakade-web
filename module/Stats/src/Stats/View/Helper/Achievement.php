@@ -21,7 +21,7 @@ class Achievement extends AbstractHelper
     public function __invoke(League $tournament, $position)
     {
         $achievement = '';
-        if ($this->hasAchievement($position)) {
+        if (!$tournament->isOngoing() && $this->hasAchievement($position)) {
 
             $achievement = sprintf('<div class="nakade-16 %s-%s-16"></div>',
                 $this->getType($tournament),

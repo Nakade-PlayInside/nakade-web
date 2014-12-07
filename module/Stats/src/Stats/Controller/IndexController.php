@@ -78,6 +78,9 @@ class IndexController extends AbstractController
         $league =  $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER)->getLeagueById($lid);
         $matches = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER)->getMatchesByLeague($lid);
 
+        $isOngoing = $this->getService()->getAchievement()->isOngoing($matches);
+        $league->setIsOngoing($isOngoing);
+
         return new ViewModel(
             array(
                 'tournament'  => $league,

@@ -56,7 +56,7 @@ class AchievementService extends AbstractStatsService
      *
      * @return bool
      */
-    private function isOngoing(array $matches)
+    public function isOngoing(array $matches)
     {
         /* @var $match \Season\Entity\Match */
         foreach ($matches as $match) {
