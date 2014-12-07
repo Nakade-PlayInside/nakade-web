@@ -56,6 +56,7 @@ class PlayerStatsService extends AbstractStatsService
         $stats = new PlayerStats();
         $stats->setTournaments($tournaments);
         $stats->setMatches($factory->getMatches());
+        $stats->setPlayed($factory->getMatches());
         $stats->setWins($factory->getWin());
         $stats->setConsecutiveWins($factory->getMaxConsecutiveWins());
         $stats->setLoss($factory->getDefeat());

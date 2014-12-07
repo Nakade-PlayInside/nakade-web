@@ -16,6 +16,7 @@ $this->headTitle('Stats');
 <?php $this->placeholder('actual')->captureStart();?>
 <div class="widget">
     <h3><?php echo 'My Tournaments' ?></h3>
+    <?php echo $this->paginationControl($this->paginator, 'Sliding', 'matches'); ?>
     <ul class="playerStats">
         <?php foreach ($this->tournaments as $tournament) : ?>
         <li>
@@ -28,6 +29,10 @@ $this->headTitle('Stats');
         </li>
         <?php endforeach; ?>
     </ul>
+
+    <a class="btn btn-success return" href="<?php
+    echo $this->url('stats'); ?>"><?php echo $this->translate("Return"); ?>
+    </a>
 </div>
 <?php $this->placeholder('actual')->captureEnd(); ?>
 

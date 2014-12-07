@@ -9,7 +9,8 @@ $title = $this->translate("My Matches");
 
 <?php $this->placeholder('standings')->captureStart(); ?>
     <div class="widget">
-        <h3><?php echo $title . ' ('.count($this->matches) . ')';?></h3>
+        <h3><?php echo $title . ' ('.  $this->total . ')';?></h3>
+        <?php echo $this->paginationControl($this->paginator, 'Sliding', 'matches'); ?>
                 <table class="league">
                     <?php foreach ($this->matches as $match) : ?>
                         <tr>
@@ -28,7 +29,8 @@ $title = $this->translate("My Matches");
                     <?php
                     endforeach; ?>
                 </table>
-
+        <a style="margin-top: 10px;" class="btn btn-success return" href="<?php
+        echo $this->url('stats'); ?>"><?php echo $this->translate("Return"); ?></a>
     </div>
 
     <div class="widget" >

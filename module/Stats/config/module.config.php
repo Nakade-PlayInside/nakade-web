@@ -56,10 +56,13 @@ return array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
-
+        'template_map' => array(
+            'matches' => __DIR__ . '/../view/partial/pagination.phtml', // Note: the key is optional
+        ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+
     ),
 
     'service_manager' => array(

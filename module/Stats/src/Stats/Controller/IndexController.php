@@ -3,7 +3,7 @@ namespace Stats\Controller;
 
 use Nakade\Abstracts\AbstractController;
 use Nakade\Services\PlayersTableService;
-use Nakade\Standings\Sorting\SortingInterface;
+use Nakade\Pagination\ItemPagination;
 use Stats\Calculation\MatchStatsFactory;
 use Stats\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
@@ -56,13 +56,19 @@ class IndexController extends AbstractController
     public function tournamentAction()
     {
 
+        $page = (int) $this->params()->fromRoute('id', 1);
+
         $userId = $this->identity()->getId();
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
 
+        $tournaments = $stats->getTournaments();
+        $pagination = new ItemPagination($tournaments);
+
         return new ViewModel(
             array(
-                'tournaments' => $stats->getTournaments(),
+                'tournaments' => $pagination->getOffsetArray($stats->getTournaments(),$page),
+                'paginator' => $pagination->getPagination($page),
             )
         );
     }
@@ -95,6 +101,8 @@ class IndexController extends AbstractController
      */
     public function matchAction()
     {
+        $page = (int) $this->params()->fromRoute('id', 1);
+
         $userId = $this->identity()->getId();
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
@@ -106,10 +114,16 @@ class IndexController extends AbstractController
         $factory = new MatchStatsFactory($matches, $userId);
         $matchStats = $factory->getMatchStats();
 
+        $myGames = $stats->getMatches();
+        $pagination = new ItemPagination($myGames);
+
         return new ViewModel(
             array(
-                'matches' => $stats->getMatches(),
-                'stats' => $matchStats
+                'matches' => $pagination->getOffsetArray($myGames, $page),
+                'total' => count($myGames),
+                'stats' => $matchStats,
+                'paginator' => $pagination->getPagination($page),
+
             )
         );
     }
@@ -120,13 +134,20 @@ class IndexController extends AbstractController
      */
     public function consecutiveAction()
     {
+        $page = (int) $this->params()->fromRoute('id', 1);
+
         $userId = $this->identity()->getId();
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
 
+        $myGames = $stats->getConsecutiveWins();
+        $pagination = new ItemPagination($myGames);
+
         return new ViewModel(
             array(
-                'matches' => $stats->getConsecutiveWins(),
+                'matches' => $pagination->getOffsetArray($myGames, $page),
+                'total' => count($myGames),
+                'paginator' => $pagination->getPagination($page),
             )
         );
     }
@@ -137,6 +158,8 @@ class IndexController extends AbstractController
      */
     public function winAction()
     {
+        $page = (int) $this->params()->fromRoute('id', 1);
+
         $userId = $this->identity()->getId();
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
@@ -148,10 +171,16 @@ class IndexController extends AbstractController
         $factory = new MatchStatsFactory($matches, $userId);
         $matchStats = $factory->getMatchStats();
 
+        $myGames = $stats->getWins();
+        $pagination = new ItemPagination($myGames);
+
         return new ViewModel(
             array(
-                'matches' => $stats->getWins(),
-                'stats' => $matchStats
+                'matches' => $pagination->getOffsetArray($myGames, $page),
+                'total' => count($myGames),
+                'stats' => $matchStats,
+                'paginator' => $pagination->getPagination($page),
+
             )
         );
     }
@@ -162,6 +191,8 @@ class IndexController extends AbstractController
      */
     public function defeatAction()
     {
+        $page = (int) $this->params()->fromRoute('id', 1);
+
         $userId = $this->identity()->getId();
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
@@ -172,10 +203,15 @@ class IndexController extends AbstractController
         $factory = new MatchStatsFactory($matches, $userId);
         $matchStats = $factory->getMatchStats();
 
+        $myGames = $stats->getLoss();
+        $pagination = new ItemPagination($myGames);
+
         return new ViewModel(
             array(
-                'matches' => $stats->getLoss(),
-                'stats' => $matchStats
+                'matches' => $pagination->getOffsetArray($myGames, $page),
+                'total' => count($myGames),
+                'stats' => $matchStats,
+                'paginator' => $pagination->getPagination($page),
             )
         );
     }
@@ -186,13 +222,19 @@ class IndexController extends AbstractController
      */
     public function drawAction()
     {
+        $page = (int) $this->params()->fromRoute('id', 1);
+
         $userId = $this->identity()->getId();
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
+        $myGames = $stats->getDraws();
+        $pagination = new ItemPagination($myGames);
 
         return new ViewModel(
             array(
-                'matches' => $stats->getDraws(),
+                'matches' => $pagination->getOffsetArray($myGames, $page),
+                'total' => count($myGames),
+                'paginator' => $pagination->getPagination($page),
             )
         );
     }

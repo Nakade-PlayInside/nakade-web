@@ -73,6 +73,10 @@ if (!is_null($tournament)) {
                 </tr>
             <?php endforeach; ?>
         </table>
+
+        <a class="btn btn-success return" href="<?php
+        echo $this->url('stats'); ?>"><?php echo $this->translate("Return"); ?>
+        </a>
     </div>
 <?php $this->placeholder('standings')->captureEnd(); ?>
 
