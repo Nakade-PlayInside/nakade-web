@@ -16,7 +16,7 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'achievementTitle'   => 'Stats\View\Helper\AchievementTitle',
-            'achievement'   => 'Stats\View\Helper\Achievement',
+            'achievementImg'   => 'Stats\View\Helper\AchievementImg',
             // more helpers here ...
         )
     ),

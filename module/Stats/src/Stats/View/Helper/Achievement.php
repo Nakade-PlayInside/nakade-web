@@ -5,12 +5,15 @@ use Season\Entity\League;
 use Zend\View\Helper\AbstractHelper;
 
 /**
- * Class AchievementTitle
+ * Class Achievement
  *
  * @package Stats\View\Helper
  */
-class Achievement extends AbstractHelper
+abstract class Achievement extends AbstractHelper
 {
+    const CHAMPION = 1;
+    const RUNNER_UP = 2;
+    const THIRD = 3;
 
     /**
      * @param League $tournament
@@ -18,56 +21,37 @@ class Achievement extends AbstractHelper
      *
      * @return string
      */
-    public function __invoke(League $tournament, $position)
+    abstract public function __invoke(League $tournament, $position);
+
+
+    protected function getTitle($position)
     {
-        $achievement = '';
-        if (!$tournament->isOngoing() && $this->hasAchievement($position)) {
 
-            $achievement = sprintf('<div class="nakade-16 %s-%s-16"></div>',
-                $this->getType($tournament),
-                $this->getAchievement($position)
-            );
-        }
-
-        return $achievement;
-     }
-
-    private function getType(League $tournament)
-    {
-            $type = $tournament->getNumber();
-
-            if ($type == 1) {
-                return 'crown';
-            }
-            elseif ($type > 1) {
-                return 'medal';
-            }
-
-            return 'cup';
-
-    }
-
-    private function hasAchievement($position)
-    {
-        return $position >= 1 && $position <= 3;
-    }
-
-    private function getAchievement($position)
-    {
         switch ($position) {
             case AchievementTitle::CHAMPION:
-                $achievement = 'gold';
+                $title = $this->translate('Champion');
                 break;
             case AchievementTitle::RUNNER_UP:
-                $achievement = 'silver';
+                $title = $this->translate('Runner-Up');
                 break;
             case AchievementTitle::THIRD:
-                $achievement = 'bronze';
+                $title = $this->translate('Third');
                 break;
-            default: $achievement = '';
+            default: $title = $position . '.';
         }
 
-        return $achievement;
+        return $title;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return string
+     */
+    protected function translate($message)
+    {
+        $translate = $this->getView()->plugin('translate');
+        return $translate($message);
     }
 
 

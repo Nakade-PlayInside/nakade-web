@@ -36,23 +36,6 @@ class IndexController extends AbstractController
      *
      * @return \Zend\View\Model\ViewModel
      */
-    public function achievementAction()
-    {
-
-        $userId = $this->identity()->getId();
-        $stats = $this->getService()->getPlayerStats($userId);
-
-        return new ViewModel(
-            array(
-                'player' => $stats,
-            )
-        );
-    }
-
-    /**
-     *
-     * @return \Zend\View\Model\ViewModel
-     */
     public function tournamentAction()
     {
 
@@ -67,7 +50,7 @@ class IndexController extends AbstractController
 
         return new ViewModel(
             array(
-                'tournaments' => $pagination->getOffsetArray($stats->getTournaments(),$page),
+                'tournaments' => $pagination->getOffsetArray($stats->getTournaments(), $page),
                 'paginator' => $pagination->getPagination($page),
             )
         );
@@ -81,6 +64,7 @@ class IndexController extends AbstractController
     {
         $lid  = $this->params()->fromRoute('id', null);
 
+        /* @var $league \Season\Entity\League */
         $league =  $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER)->getLeagueById($lid);
         $matches = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER)->getMatchesByLeague($lid);
 

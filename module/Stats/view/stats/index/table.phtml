@@ -7,7 +7,7 @@ $this->headTitle('table');
 /* @var $tournament \Season\Entity\League */
 /* @var $pagination \League\Pagination\LeaguePagination */
 
-$title = $this->translate("%NAME% League - %NUMBER%.Season");
+$title = $this->translate("%NAME% League - %NUMBER%. Season");
 $tb1 = 'TB1';
 $tb2 = 'TB2';
 $tb3 = 'TB3';
@@ -23,7 +23,7 @@ if (!is_null($tournament)) {
 
 <?php $this->placeholder('standings')->captureStart(); ?>
     <div class="widget">
-        <h3><?php echo $title; ?></h3>
+        <h3><?php echo $tournament->getNumber() . '. ' . $title; ?></h3>
         <table class="table standings">
             <tr>
                 <th title="<?php echo $this->translate('Position');?>">P</th>
@@ -59,7 +59,7 @@ if (!is_null($tournament)) {
             <?php foreach ($this->table as $player) : ?>
                 <tr style="background-color:<?php  echo $this->highlightUser($player->getUser()); ?>">
                     <td><?php echo $player->getPosition() ?></td>
-                    <td><?php echo $this->achievement($tournament, $player->getPosition()); ?></td>
+                    <td><?php echo $this->achievementImg($tournament, $player->getPosition()); ?></td>
                     <td class="name"><?php echo $player->getUser()->getShortName();?></td>
                     <td><?php echo $player->getGamesPlayed(); ?></td>
                     <td><?php echo $player->getGamesWin();?></td>
