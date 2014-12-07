@@ -32,7 +32,10 @@ $title = $this->translate("My Wins");
 
     </div>
 
-    <div id="winStatsContainer" class="widget" style="min-width: 300px; height: 300px; max-width: 400px;"></div>
+    <div class="widget" >
+        <h3><?php echo $this->translate('Win Balance'); ?></h3>
+        <div class="highCharts" id="winStatsContainer"></div>
+    </div>
     <script>
 
     $(function () {

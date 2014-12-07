@@ -13,7 +13,7 @@ $title = $this->translate("My Draws");
                 <table class="league">
                     <?php foreach ($this->matches as $match) : ?>
                         <tr>
-                            <td class="space"><?php echo $match->getDate()->format('d.m.y  H:i');?></td>
+                            <td class="space"><?php echo $match->getDate()->format('d.m.y');?></td>
                             <td style="text-decoration:<?php
                                 echo $this->isWinner($match, $match->getBlack()); ?>"><?php
                                 echo $match->getBlack()->getShortName();?>

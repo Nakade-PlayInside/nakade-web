@@ -1,8 +1,10 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('Stats');
 $this->headTitle('Stats');
-/* @var $stats \Stats\Entity\MatchStats */
+/* @var $player \Stats\Entity\PlayerStats */
+/* @var $tournament \Season\Entity\League */
 ?>
+
 
 <?php $this->placeholder('noSeason')->captureStart();?>
    <?php echo $this->translate("No matches found."); ?>
@@ -10,280 +12,132 @@ $this->headTitle('Stats');
 
 
 <?php $this->placeholder('actual')->captureStart();?>
+<div class="widget">
+    <h3><?php echo 'My Stats';?></h3>
+<ul class="playerStats">
+    <li><a href="<?php echo $this->url('stats', array('action' => 'tournament'));?>"><div class="buttons-16 info-16">
+        </div><?php echo $this->translate('Tournaments') .': '; ?><?php echo $player->getNoTournaments(); ?></a>
+    </li>
+    <?php if ($player->getNoGames() > 0): ?>
+    <li><a href="<?php echo $this->url('stats', array('action' => 'match'));?>"><div class="buttons-16 info-16">
+         </div><?php echo $this->translate('Played') .': '. $player->getNoGames(); ?></a>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getNoWin() > 0): ?>
+    <li><a href="<?php echo $this->url('stats', array('action' => 'win'));?>"><div class="buttons-16 info-16">
+        </div><?php echo $this->translate('Win') .': '. $player->getNoWin(); ?></a>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getNoDraw() > 0): ?>
+    <li><a href="<?php echo $this->url('stats', array('action' => 'draw'));?>"><div class="buttons-16 info-16">
+        </div><?php echo $this->translate('Draw') .': '. $player->getNoDraw(); ?></a>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getNoLoss() > 0): ?>
+    <li><a href="<?php echo $this->url('stats', array('action' => 'defeat'));?>"><div class="buttons-16 info-16">
+        </div><?php echo $this->translate('Defeat') .': '. $player->getNoLoss(); ?></a>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getNoConsecutiveWins() > 1): ?>
+    <li><a href="<?php echo $this->url('stats', array('action' => 'consecutive'));?>"><div class="buttons-16 info-16">
+        </div><?php echo $this->translate('Consecutive wins') .': '. $player->getNoConsecutiveWins(); ?></a>
+    </li>
+    <?php endif; ?>
+</ul>
 
-    <div id="matchStatsContainer" style="display:inline-block;width:310px; height:300px;"></div>
-    <div id="winStatsContainer" style="display:inline-block;min-width: 310px; height: 300px; max-width: 410px;"></div>
-    <div id="defeatStatsContainer" style="display:inline-block;min-width: 310px; height: 300px; max-width: 410px;"></div>
-    <script>
+<?php if($player->hasAchievement()) :?>
+<h3><?php echo $this->translate("My Achievements"); ?></h3>
+<ul class="achievement">
+    <?php if ($player->getChampion()->getNoGold() > 0): ?>
+    <li><?php foreach ($player->getChampion()->getGold() as $tournament) :?>
+        <a  title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::CHAMPION); ?>"
+            href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
+                class="nakade-16 crown-gold-16"></div>
+        </a>
+        <?php endforeach;?>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getChampion()->getNoSilver() > 0): ?>
+    <li><?php foreach ($player->getChampion()->getSilver() as $tournament) :?>
+        <a  title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::RUNNER_UP); ?>"
+            href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
+                class="nakade-16 crown-silver-16"></div>
+        </a>
+        <?php endforeach;?>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getChampion()->getNoBronze() > 0): ?>
+    <li><?php foreach ($player->getChampion()->getBronze() as $tournament) :?>
+        <a  title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::THIRD); ?>"
+            href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
+                class="nakade-16 crown-bronze-16"></div>
+        </a>
+        <?php endforeach;?>
+    <?php endif; ?>
 
-        $(function () {
+    <?php if ($player->getCup()->getNoGold() > 0): ?>
+    <li><?php foreach ($player->getCup()->getGold() as $tournament) :?>
+        <a title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::CHAMPION); ?>"
+           href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
+                class="nakade-16 cup-gold-16"></div>
+        </a>
+        <?php endforeach;?>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getCup()->getNoSilver() > 0): ?>
+    <li><?php foreach ($player->getCup()->getSilver() as $tournament) :?>
+        <a title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::RUNNER_UP); ?>"
+           href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
+                class="nakade-16 cup-silver-16"></div>
+        </a>
+        <?php endforeach;?>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getCup()->getNoBronze() > 0): ?>
+    <li><?php foreach ($player->getCup()->getBronze() as $tournament) :?>
+        <a title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::THIRD); ?>"
+           href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
+                class="nakade-16 cup-bronze-16"></div>
+        </a>
+        <?php endforeach;?>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getMedal()->getNoGold() > 0): ?>
+    <li><?php foreach ($player->getMedal()->getGold() as $tournament) :?>
+        <a title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::CHAMPION); ?>"
+           href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
+                class="nakade-16 medal-gold-16"></div>
+        </a>
+        <?php endforeach;?>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getMedal()->getNoSilver() > 0): ?>
+    <li><?php foreach ($player->getMedal()->getSilver() as $tournament) :?>
+        <a title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::RUNNER_UP); ?>"
+           href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
+                class="nakade-16 medal-silver-16"></div>
+        </a>
+        <?php endforeach;?>
+    </li>
+    <?php endif; ?>
+    <?php if ($player->getMedal()->getNoBronze() > 0): ?>
+    <li><?php foreach ($player->getMedal()->getBronze() as $tournament) :?>
+        <a title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::THIRD); ?>"
+           href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
+                class="nakade-16 medal-bronze-16"></div>
+        </a>
+        <?php endforeach;?>
+    <?php endif; ?>
 
-        var total = <?php echo $stats->getPlayed()?>;
-        var defeats =  <?php echo $stats->getDefeats()?>;
-        var wins =  <?php echo $stats->getWins()?>;
-        var black =   '<?php echo $this->translate('Black')?>';
-        var white =   '<?php echo $this->translate('White')?>';
-        var matchTitle =   total + ' <?php echo $this->translate('Matches')?>';
-        var winTitle =  wins + ' <?php echo $this->translate('Wins')?>';
-        var defeatTitle =  defeats + ' <?php echo $this->translate('Defeats')?>';
-        var matchDataName =  '<?php echo $this->translate('Match Share')?>';
-        var colorDataName =  '<?php echo $this->translate('Total Share')?>';
-        var SeriesName =  '<?php echo $this->translate('Share')?>';
-        var close =  '<?php echo $this->translate('Close')?>';
-        var resign =  '<?php echo $this->translate('Resigns')?>';
-        var onTime =  '<?php echo $this->translate('On Time')?>';
-        var forfeit =  '<?php echo $this->translate('Forfeit')?>';
-
-
-        var colors = Highcharts.getOptions().colors,
-            categories = [
-                '<?php echo $this->translate('Wins')?>',
-                '<?php echo $this->translate('Defeats')?>',
-                '<?php echo $this->translate('Draws')?>'
-            ],
-            data = [{
-                y: wins,
-                color: colors[0],
-                drilldown: {
-                    name: 'Wins',
-                    categories: [black, white],
-                    data: [<?php echo $stats->getWinOnBlack()?>, <?php echo $stats->getWinOnWhite()?>],
-                    color: colors[0]
-                }
-            }, {
-                y: defeats,
-                color: colors[1],
-                drilldown: {
-                    name: 'Defeats',
-                    categories: [black, white],
-                    data: [<?php echo $stats->getDefeatOnBlack()?>, <?php echo $stats->getDefeatOnWhite()?>],
-                    color: colors[1]
-                }
-            }, {
-                y: <?php echo $stats->getDraws()?>,
-                color: colors[2],
-                drilldown: {
-                    name: 'Draws',
-                    categories: [black, white],
-                    data: [<?php echo $stats->getDrawOnBlack()?>, <?php echo $stats->getDrawOnWhite()?>],
-                    color: colors[2]
-                }
-            } ],
-            matchData = [],
-            colorData = [],
-            i,
-            j,
-            dataLen = data.length,
-            drillDataLen,
-            brightness;
-
-
-        // Build the data arrays
-        for (i = 0; i < dataLen; i += 1) {
-
-            // add match data
-            matchData.push({
-                name: categories[i],
-                y: data[i].y,
-                color: data[i].color
-            });
-
-            // add version data
-            drillDataLen = data[i].drilldown.data.length;
-            for (j = 0; j < drillDataLen; j += 1) {
-                brightness = 0.2 - (j / drillDataLen) / 5;
-                colorData.push({
-                    name: data[i].drilldown.categories[j],
-                    y: data[i].drilldown.data[j],
-                    color: Highcharts.Color(data[i].color).brighten(brightness).get()
-                });
-            }
-        }
-
-        // Create the chart
-        $('#matchStatsContainer').highcharts({
-            chart: {
-                type: 'pie',
-                marginTop: 50
-
-            },
-            credits: {
-                enabled: false
-            },
-            title: {
-               // floating: true,
-                y: 40,
-                text: matchTitle
-            },
-            plotOptions: {
-                pie: {
-                    shadow: false,
-                    center: ['50%', '50%']
-                }
-            },
-
-            series: [{
-                data: matchData,
-                name: matchDataName,
-                size: '70%',
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                dataLabels: {
-                    formatter: function () {
-                        return this.y > 1 ? this.y + ' ' + this.point.name: null;
-                    },
-                    style: {
-                        fontWeight: 'bold',
-                        color: 'white',
-                        textShadow: '0px 1px 2px black'
-                    },
-                    distance: -45
-                }
-            }, {
-                data: colorData,
-                name: colorDataName,
-                size: '80%',
-                innerSize: '70%',
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                dataLabels: {
-                    distance: 5,
-                    formatter: function () {
-                        // display only if larger than 1
-                        return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + this.y : null;
-                    }
-                }
-            }]
-        });
-
-        //win container
-        $('#winStatsContainer').highcharts({
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: 0,
-                plotShadow: false
-            },
-            credits: {
-                enabled: false
-            },
-            title: {
-                text: winTitle,
-                align: 'center',
-                verticalAlign: 'middle',
-                y: 50
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    dataLabels: {
-                        enabled: true,
-                        distance: -35,
-                        style: {
-                            fontWeight: 'bold',
-                            color: 'white',
-                            textShadow: '0px 1px 2px black'
-                        }
-                    },
-                    startAngle: -90,
-                    endAngle: 90,
-                    center: ['50%', '75%']
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: SeriesName,
-                innerSize: '55%',
-                data: [
-                    [close, <?php echo $stats->getCloseWins()?>],
-                    [resign, <?php echo $stats->getHighWins()?>]
-                ],
-                dataLabels: {
-                    formatter: function () {
-                        return this.y > 0 ? this.y + ' ' + this.point.name: null;
-                    },
-                    style: {
-                        fontWeight: 'bold',
-                        color: 'white',
-                        textShadow: '0px 1px 2px black'
-                    },
-                    distance: -35
-                }
-            }]
-        });
-
-        //defeat container
-        $('#defeatStatsContainer').highcharts({
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: 0,
-                plotShadow: false
-            },
-            credits: {
-                enabled: false
-            },
-            title: {
-                text: defeatTitle,
-                align: 'center',
-                verticalAlign: 'middle',
-                y: 50
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    dataLabels: {
-                        enabled: true,
-                        distance: -35,
-                        style: {
-                            fontWeight: 'bold',
-                            color: 'white',
-                            textShadow: '0px 1px 2px black'
-                        }
-                    },
-                    startAngle: -90,
-                    endAngle: 90,
-                    center: ['50%', '75%']
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: SeriesName,
-                innerSize: '55%',
-                data: [
-                    [close, <?php echo $stats->getCloseDefeats()?>],
-                    [resign, <?php echo $stats->getLostByResign()?>],
-                    [onTime, <?php echo $stats->getLostOnTime()?>],
-                    [forfeit, <?php echo $stats->getLostByForfeit()?>]
-                ],
-                dataLabels: {
-                    formatter: function () {
-                        return this.y > 0 ? this.y + ' ' + this.point.name: null;
-                    },
-                    style: {
-                        fontWeight: 'bold',
-                        color: 'white',
-                        textShadow: '0px 1px 2px black'
-                    },
-                    distance: -35
-                }
-            }]
-        });
-        });
-
-    </script>
-
-
+</ul>
+<?php endif;?>
+</div>
 <?php $this->placeholder('actual')->captureEnd(); ?>
 
 
 <?php
 
- if (empty($this->stats) || $stats->getPlayed() == 0) {
+ if ($this->player->getNoTournaments() == 0) {
      echo $this->placeholder('noSeason');
  } else {
      echo $this->placeholder('actual');

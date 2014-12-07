@@ -242,6 +242,7 @@ div.error {
 
 ul.achievement, ul.playerStats {
     list-style: none;
+    margin-left:0;
 }
 
 ul.achievement li a div {
@@ -257,4 +258,8 @@ ul.playerStats li a div {
 
 ul.playerStats li a:hover  {
     font-weight: bold;
+}
+
+div.highCharts {
+    min-width: 300px; height: 300px; max-width: 400px;
 }
