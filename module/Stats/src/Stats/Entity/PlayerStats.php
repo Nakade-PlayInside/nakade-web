@@ -10,6 +10,7 @@ class PlayerStats extends Achievement
 {
     private $tournaments = array();
     private $matches = array();
+    private $played = array();
     private $wins = array();
     private $loss = array();
     private $draws = array();
@@ -84,7 +85,7 @@ class PlayerStats extends Achievement
      */
     public function getNoGames()
     {
-        return $this->getNoWin() + $this->getNoDraw() + $this->getNoLoss();
+        return count($this->getPlayed());
     }
 
     /**
@@ -158,5 +159,23 @@ class PlayerStats extends Achievement
     {
         return count($this->wins);
     }
+
+    /**
+     * @param array $played
+     */
+    public function setPlayed(array $played)
+    {
+        $this->played = $played;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPlayed()
+    {
+        return $this->played;
+    }
+
+
 
 }

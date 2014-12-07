@@ -24,12 +24,27 @@ class PlayerStatsFactory {
     public function __construct(array $matches, $userId)
     {
         $this->userId = $userId;
-        $this->matches = $matches;
+        $this->matches = $this->filterPlayed($matches);
 
         /* @var $match \Season\Entity\Match */
         foreach ($matches as $match) {
             $this->evalResult($match);
         }
+    }
+
+    private function filterPlayed(array $matches)
+    {
+        $played = array();
+
+        /* @var $match Match*/
+        foreach($matches as $match) {
+            if ($match->getResult()->getResultType()->getId() == ResultInterface::SUSPENDED) {
+                continue;
+            }
+            $played[] = $match;
+        }
+        return $played;
+
     }
 
     private function evalResult(Match $match)

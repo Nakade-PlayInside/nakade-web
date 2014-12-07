@@ -100,9 +100,17 @@ class IndexController extends AbstractController
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
 
+        /* @var $mapper \Stats\Mapper\StatsMapper */
+        $mapper = $this->getRepository()->getMapper(RepositoryService::STATS_MAPPER);
+
+        $matches = $mapper->getMatchStatsByUser($userId);
+        $factory = new MatchStatsFactory($matches, $userId);
+        $matchStats = $factory->getMatchStats();
+
         return new ViewModel(
             array(
                 'matches' => $stats->getMatches(),
+                'stats' => $matchStats
             )
         );
     }
@@ -134,9 +142,17 @@ class IndexController extends AbstractController
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
 
+        /* @var $mapper \Stats\Mapper\StatsMapper */
+        $mapper = $this->getRepository()->getMapper(RepositoryService::STATS_MAPPER);
+
+        $matches = $mapper->getMatchStatsByUser($userId);
+        $factory = new MatchStatsFactory($matches, $userId);
+        $matchStats = $factory->getMatchStats();
+
         return new ViewModel(
             array(
                 'matches' => $stats->getWins(),
+                'stats' => $matchStats
             )
         );
     }
@@ -150,10 +166,17 @@ class IndexController extends AbstractController
         $userId = $this->identity()->getId();
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
+        /* @var $mapper \Stats\Mapper\StatsMapper */
+        $mapper = $this->getRepository()->getMapper(RepositoryService::STATS_MAPPER);
+
+        $matches = $mapper->getMatchStatsByUser($userId);
+        $factory = new MatchStatsFactory($matches, $userId);
+        $matchStats = $factory->getMatchStats();
 
         return new ViewModel(
             array(
                 'matches' => $stats->getLoss(),
+                'stats' => $matchStats
             )
         );
     }

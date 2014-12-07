@@ -1,8 +1,8 @@
 <?php
 use \League\View\Helper\Sort;
-$this->plugin('translate')->setTranslatorTextDomain('League');
+$this->plugin('translate')->setTranslatorTextDomain('Stats');
 $this->headTitle('table');
-
+/* @var $stats \Stats\Entity\MatchStats */
 /* @var $match \Season\Entity\Match */
 $title = $this->translate("My Defeats");
 ?>
@@ -13,7 +13,7 @@ $title = $this->translate("My Defeats");
                 <table class="league">
                     <?php foreach ($this->matches as $match) : ?>
                         <tr>
-                            <td class="space"><?php echo $match->getDate()->format('d.m.y  H:i');?></td>
+                            <td class="space"><?php echo $match->getDate()->format('d.m.y');?></td>
                             <td style="text-decoration:<?php
                                 echo $this->isWinner($match, $match->getBlack()); ?>"><?php
                                 echo $match->getBlack()->getShortName();?>
@@ -30,6 +30,156 @@ $title = $this->translate("My Defeats");
                 </table>
 
     </div>
+
+    <div id="defeatStatsContainer" class="widget" style="min-width: 300px; height: 300px; max-width: 400px;"></div>
+    <script>
+
+    $(function () {
+
+        var total = <?php echo $stats->getPlayed()?>;
+        var defeats =  <?php echo $stats->getDefeats()?>;
+        var wins =  <?php echo $stats->getWins()?>;
+        var black =   '<?php echo $this->translate('Black')?>';
+        var white =   '<?php echo $this->translate('White')?>';
+        var matchTitle =   total + ' <?php echo $this->translate('Matches')?>';
+        var winTitle =  wins + ' <?php echo $this->translate('Wins')?>';
+        var defeatTitle =  defeats + ' <?php echo $this->translate('Defeats')?>';
+        var matchDataName =  '<?php echo $this->translate('Match Share')?>';
+        var colorDataName =  '<?php echo $this->translate('Total Share')?>';
+        var SeriesName =  '<?php echo $this->translate('Share')?>';
+        var close =  '<?php echo $this->translate('Close')?>';
+        var resign =  '<?php echo $this->translate('Resigns')?>';
+        var onTime =  '<?php echo $this->translate('On Time')?>';
+        var forfeit =  '<?php echo $this->translate('Forfeit')?>';
+
+
+        var colors = Highcharts.getOptions().colors,
+            categories = [
+                '<?php echo $this->translate('Wins')?>',
+                '<?php echo $this->translate('Defeats')?>',
+                '<?php echo $this->translate('Draws')?>'
+            ],
+            data = [{
+                y: wins,
+                color: colors[0],
+                drilldown: {
+                    name: 'Wins',
+                    categories: [black, white],
+                    data: [<?php echo $stats->getWinOnBlack()?>, <?php echo $stats->getWinOnWhite()?>],
+                    color: colors[0]
+                }
+            }, {
+                y: defeats,
+                color: colors[1],
+                drilldown: {
+                    name: 'Defeats',
+                    categories: [black, white],
+                    data: [<?php echo $stats->getDefeatOnBlack()?>, <?php echo $stats->getDefeatOnWhite()?>],
+                    color: colors[1]
+                }
+            }, {
+                y: <?php echo $stats->getDraws()?>,
+                color: colors[2],
+                drilldown: {
+                    name: 'Draws',
+                    categories: [black, white],
+                    data: [<?php echo $stats->getDrawOnBlack()?>, <?php echo $stats->getDrawOnWhite()?>],
+                    color: colors[2]
+                }
+            } ],
+            matchData = [],
+            colorData = [],
+            i,
+            j,
+            dataLen = data.length,
+            drillDataLen,
+            brightness;
+
+
+        // Build the data arrays
+        for (i = 0; i < dataLen; i += 1) {
+
+            // add match data
+            matchData.push({
+                name: categories[i],
+                y: data[i].y,
+                color: data[i].color
+            });
+
+            // add version data
+            drillDataLen = data[i].drilldown.data.length;
+            for (j = 0; j < drillDataLen; j += 1) {
+                brightness = 0.2 - (j / drillDataLen) / 5;
+                colorData.push({
+                    name: data[i].drilldown.categories[j],
+                    y: data[i].drilldown.data[j],
+                    color: Highcharts.Color(data[i].color).brighten(brightness).get()
+                });
+            }
+        }
+
+        //defeat container
+        $('#defeatStatsContainer').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: defeatTitle,
+                align: 'center',
+                verticalAlign: 'middle',
+                y: 50
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: true,
+                        distance: -35,
+                        style: {
+                            fontWeight: 'bold',
+                            color: 'white',
+                            textShadow: '0px 1px 2px black'
+                        }
+                    },
+                    startAngle: -90,
+                    endAngle: 90,
+                    center: ['50%', '75%']
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: SeriesName,
+                innerSize: '55%',
+                data: [
+                    [close, <?php echo $stats->getCloseDefeats()?>],
+                    [resign, <?php echo $stats->getLostByResign()?>],
+                    [onTime, <?php echo $stats->getLostOnTime()?>],
+                    [forfeit, <?php echo $stats->getLostByForfeit()?>]
+                ],
+                dataLabels: {
+                    formatter: function () {
+                        return this.y > 0 ? this.y + ' ' + this.point.name: null;
+                    },
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'white',
+                        textShadow: '0px 1px 2px black'
+                    },
+                    distance: -35
+                }
+            }]
+        });
+    });
+
+    </script>
+
 <?php $this->placeholder('standings')->captureEnd(); ?>
 
 
