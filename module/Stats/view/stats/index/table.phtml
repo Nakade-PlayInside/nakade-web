@@ -24,6 +24,7 @@ if (!is_null($tournament)) {
 <?php $this->placeholder('standings')->captureStart(); ?>
     <div class="widget">
         <h3><?php echo $tournament->getNumber() . '. ' . $title; ?></h3>
+        <?php echo $this->paginationControl($this->paginator, 'Sliding', 'tournament'); ?>
         <table class="table standings">
             <tr>
                 <th title="<?php echo $this->translate('Position');?>">P</th>

@@ -5,6 +5,7 @@ use Nakade\Abstracts\AbstractController;
 use Nakade\Services\PlayersTableService;
 use Nakade\Pagination\ItemPagination;
 use Stats\Calculation\MatchStatsFactory;
+use Stats\Pagination\TournamentPagination;
 use Stats\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
 /**
@@ -64,6 +65,10 @@ class IndexController extends AbstractController
     {
         $lid  = $this->params()->fromRoute('id', null);
 
+        $items = array(1,2,3,4);
+        $pagination =  new TournamentPagination($items);
+
+
         /* @var $league \Season\Entity\League */
         $league =  $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER)->getLeagueById($lid);
         $matches = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER)->getMatchesByLeague($lid);
@@ -75,6 +80,7 @@ class IndexController extends AbstractController
             array(
                 'tournament'  => $league,
                 'table'   => $this->getTableService()->getTable($matches),
+                'paginator' => $pagination->getPagination($lid),
             )
         );
     }

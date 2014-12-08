@@ -58,6 +58,7 @@ return array(
         'doctype'                  => 'HTML5',
         'template_map' => array(
             'matches' => __DIR__ . '/../view/partial/pagination.phtml', // Note: the key is optional
+            'tournament' => __DIR__ . '/../view/partial/tournament.phtml', // Note: the key is optional
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

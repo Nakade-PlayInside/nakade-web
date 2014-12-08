@@ -1,0 +1,36 @@
+<?php if ($this->pageCount > 1): ?>
+    <div id="myLeague">
+        <ul class="large">
+            <!-- Previous page link -->
+            <?php if (isset($this->previous)): ?>
+                <li title="<?php echo $this->translate('previous'); ?>">
+                    <a class="arrows-32 control-left-32" href="<?php
+                    echo $this->url('stats', array('action' => 'table', 'id' => $this->previous)); ?>"></a>
+                </li>
+            <?php endif; ?>
+            <!-- Numbered page links -->
+            <?php foreach ($this->pagesInRange as $number): ?>
+                <?php if ($number != $this->current): ?>
+                    <li>
+                        <a href="<?php echo $this->paging($number);?>">
+                            <?php echo $number . '.' . $this->translate('League'); ?>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="current" title="<?php echo $this->translate("Actual") . $this->current; ?>">
+                        <a href="#">
+                            <?php echo $number . '.' . $this->translate('Tour'); ?>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <!-- Next page link -->
+            <?php if (isset($this->next)): ?>
+                <li>
+                    <a class="arrows-32 control-right-32" href="<?php echo
+                    $this->url('stats', array('action' => 'table', 'id' => $this->next)); ?>"></a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+<?php endif; ?>
