@@ -9,8 +9,6 @@ use League\Entity\Player;
  */
 class PlayerPosition implements SortingInterface
 {
-    private $playersInLeague;
-
     /**
      * instance
      * @var object
@@ -39,176 +37,33 @@ class PlayerPosition implements SortingInterface
      */
     public function getStandings(array $playersInLeague, $sort=self::BY_POINTS)
     {
-        $this->playersInLeague = $playersInLeague;
+        //first sort by points for position
+        $sorting = PlayerSorting::getInstance();
+        $sorting->sorting($playersInLeague);
 
-        $method = 'positionBy' . ucfirst($sort);
-        if (method_exists($this, $method)) {
-            $this->setPosition($method);
-        } else {
-            $this->setPosition();
-        }
-
-        return $this->playersInLeague;
-    }
-
-    private function setPosition($method='positionByPoints')
-    {
         $previous=null;
         /* @var  $player \League\Entity\Player */
         /* @var  $previous \League\Entity\Player */
-        for ($i=0; $i < count($this->playersInLeague); $i++) {
+        for ($i=0; $i < count($playersInLeague); $i++) {
 
-            $player = $this->playersInLeague[$i];
+            $player = $playersInLeague[$i];
             if ($i==0) {
                 $player->setPosition($i+1);
-               continue;
+                continue;
             }
 
-            $previous = $this->playersInLeague[$i-1];
-            if ($this->$method($previous, $player)) {
+            $previous = $playersInLeague[$i-1];
+            if ($this->positionByPoints($previous, $player)) {
                 $player->setPosition($i+1);
-            }// todo: same position
+            } else {
+                $player->setPosition($i);
+            }
         }
 
+        //sort by user input
+        $sorting->sorting($playersInLeague, $sort);
+        return $playersInLeague;
     }
-
-    /**
-     * @param Player $compA
-     * @param Player $compB
-     *
-     * @return int
-     */
-    public function positionByName(Player $compA, Player $compB)
-    {
-        $tbA =  $compA->getUser()->getShortName();
-        $tbB =  $compB->getUser()->getShortName();
-        if ($tbA == $tbB) {
-            return $this->positionByPoints($compA, $compB);
-        }
-
-        return (strcmp($tbA, $tbB)<0);
-    }
-
-    /**
-     * @param Player $compA
-     * @param Player $compB
-     *
-     * @return int
-     */
-    public function positionByPlayed(Player $compA, Player $compB)
-    {
-        $tbA =  $compA->getGamesPlayed();
-        $tbB =  $compB->getGamesPlayed();
-        if ($tbA == $tbB) {
-            return $this->positionByPoints($compA, $compB);
-        }
-
-        return ($tbA > $tbB);
-    }
-
-    /**
-     * @param Player $compA
-     * @param Player $compB
-     *
-     * @return int
-     */
-    public function positionByWin(Player $compA, Player $compB)
-    {
-        $tbA =  $compA->getGamesWin();
-        $tbB =  $compB->getGamesWin();
-        if ($tbA == $tbB) {
-            return $this->positionByPoints($compA, $compB);
-        }
-
-        return ($tbA > $tbB);
-    }
-
-    /**
-     * @param Player $compA
-     * @param Player $compB
-     *
-     * @return int
-     */
-    public function positionByDraw(Player $compA, Player $compB)
-    {
-        $tbA =  $compA->getGamesDraw();
-        $tbB =  $compB->getGamesDraw();
-        if ($tbA == $tbB) {
-            return $this->positionByPoints($compA, $compB);
-        }
-
-        return ($tbA > $tbB);
-    }
-
-    /**
-     * @param Player $compA
-     * @param Player $compB
-     *
-     * @return int
-     */
-    public function positionByLost(Player $compA, Player $compB)
-    {
-        $tbA =  $compA->getGamesLost();
-        $tbB =  $compB->getGamesLost();
-        if ($tbA == $tbB) {
-            return $this->positionByPoints($compA, $compB);
-        }
-
-        return ($tbA > $tbB);
-    }
-
-    /**
-     * @param Player $compA
-     * @param Player $compB
-     *
-     * @return int
-     */
-    public function positionByTb1(Player $compA, Player $compB)
-    {
-        $tbA =  $compA->getFirstTiebreak();
-        $tbB =  $compB->getFirstTiebreak();
-        if ($tbA == $tbB) {
-            return $this->positionByPoints($compA, $compB);
-        }
-
-        return ($tbA > $tbB);
-    }
-
-    /**
-     * @param Player $compA
-     * @param Player $compB
-     *
-     * @return int
-     */
-    public function positionByTb2(Player $compA, Player $compB)
-    {
-        $tbA =  $compA->getSecondTiebreak();
-        $tbB =  $compB->getSecondTiebreak();
-        if ($tbA == $tbB) {
-            return $this->positionByPoints($compA, $compB);
-        }
-
-        return ($tbA > $tbB);
-    }
-
-    /**
-     * @param Player $compA
-     * @param Player $compB
-     *
-     * @return int
-     */
-    public function positionByTb3(Player $compA, Player $compB)
-    {
-        $tbA =  $compA->getThirdTiebreak();
-        $tbB =  $compB->getThirdTiebreak();
-        if ($tbA == $tbB) {
-            return $this->positionByPoints($compA, $compB);
-        }
-
-        return ($tbA > $tbB);
-    }
-
-
 
     /**
      * @param Player $compA
@@ -227,6 +82,8 @@ class PlayerPosition implements SortingInterface
     }
 
     /**
+     * Players looses by having more games suspended in a tiebreak after winning points
+     *
      * @param Player $compA
      * @param Player $compB
      *
@@ -234,8 +91,8 @@ class PlayerPosition implements SortingInterface
      */
     private function positionBySuspendedGames(Player $compA, Player $compB)
     {
-        $tbA =  $compA->getGamesPoints();
-        $tbB =  $compB->getGamesPoints();
+        $tbA =  $compA->getGamesSuspended();
+        $tbB =  $compB->getGamesSuspended();
         if ($tbA == $tbB) {
             return $this->positionByFirstTiebreak($compA, $compB);
         }
@@ -305,6 +162,7 @@ class PlayerPosition implements SortingInterface
     {
         $tbA = $compA->getGamesPlayed();
         $tbB = $compB->getGamesPlayed();
+
         if ($tbA == $tbB) {
             return false;
         }

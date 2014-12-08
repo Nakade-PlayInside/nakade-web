@@ -155,6 +155,8 @@ class PlayerSorting implements SortingInterface
     }
 
     /**
+     * user sorting by table
+     *
      * @param Player $compA
      * @param Player $compB
      *
@@ -172,6 +174,8 @@ class PlayerSorting implements SortingInterface
     }
 
     /**
+     * user sorting by table
+     *
      * @param Player $compA
      * @param Player $compB
      *
@@ -189,6 +193,8 @@ class PlayerSorting implements SortingInterface
     }
 
     /**
+     * user sorting by table
+     *
      * @param Player $compA
      * @param Player $compB
      *

@@ -3,7 +3,6 @@
 namespace Nakade\Services;
 
 use Nakade\Standings\Sorting\PlayerPosition;
-use Nakade\Standings\Sorting\PlayerSorting as SORT;
 use Nakade\Standings\Sorting\SortingInterface;
 use Nakade\Standings\MatchStats;
 use Zend\ServiceManager\FactoryInterface;
@@ -40,12 +39,9 @@ class PlayersTableService implements FactoryInterface
         $stats = new MatchStats($matches);
         $players = $stats->getMatchStats();
 
-        //just sorting
-        $sorting = SORT::getInstance();
-        $sorting->sorting($players, $sort);
-
         //evaluate player's position in table
         $standings = PlayerPosition::getInstance();
         return $standings->getStandings($players, $sort);
+
     }
 }
