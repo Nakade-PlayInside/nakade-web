@@ -77,7 +77,7 @@ if (!is_null($tournament)) {
             </tr>
             <?php foreach ($this->table as $player) : ?>
                 <tr style="background-color:<?php  echo $this->highlightUser($player->getUser()); ?>">
-                    <td><?php echo $player->getPosition() ?></td>
+                    <td><?php echo $this->getPosition($player) ?></td>
                     <td class="name"><?php echo $player->getUser()->getShortName();?></td>
                     <td><?php echo $player->getGamesPlayed(); ?></td>
                     <td><?php echo $player->getGamesWin();?></td>
