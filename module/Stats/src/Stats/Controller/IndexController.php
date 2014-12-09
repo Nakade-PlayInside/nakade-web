@@ -65,9 +65,13 @@ class IndexController extends AbstractController
     {
         $lid  = $this->params()->fromRoute('id', null);
 
-        $items = array(1,2,3,4);
-        $pagination =  new TournamentPagination($items);
+        $userId = $this->identity()->getId();
+        /* @var $stats \Stats\Entity\PlayerStats */
+        $stats = $this->getService()->getPlayerStats($userId);
+        $tournaments = $stats->getTournaments();
 
+        $pagination =  new TournamentPagination($tournaments);
+        $pagination->setCurrentPageByItemId($lid);
 
         /* @var $league \Season\Entity\League */
         $league =  $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER)->getLeagueById($lid);
@@ -80,7 +84,7 @@ class IndexController extends AbstractController
             array(
                 'tournament'  => $league,
                 'table'   => $this->getTableService()->getTable($matches),
-                'paginator' => $pagination->getPagination($lid),
+                'pagination' => $pagination,
             )
         );
     }

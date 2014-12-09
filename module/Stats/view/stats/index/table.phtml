@@ -1,5 +1,4 @@
 <?php
-use \League\View\Helper\Sort;
 $this->plugin('translate')->setTranslatorTextDomain('Stats');
 $this->headTitle('table');
 
@@ -7,14 +6,11 @@ $this->headTitle('table');
 /* @var $tournament \Season\Entity\League */
 /* @var $pagination \League\Pagination\LeaguePagination */
 
-$title = $this->translate("%NAME% League - %NUMBER%. Season");
 $tb1 = 'TB1';
 $tb2 = 'TB2';
 $tb3 = 'TB3';
 
 if (!is_null($tournament)) {
-    $title = str_replace("%NAME%", $tournament->getSeason()->getAssociation()->getName(), $title);
-    $title = str_replace("%NUMBER%", $tournament->getSeason()->getNumber(), $title);
     $tb1 = $tournament->getSeason()->getTieBreaker1();
     $tb2 = $tournament->getSeason()->getTieBreaker2();
     $tb3 = $tournament->getSeason()->getTieBreaker3();
@@ -23,8 +19,8 @@ if (!is_null($tournament)) {
 
 <?php $this->placeholder('standings')->captureStart(); ?>
     <div class="widget">
-        <h3><?php echo $tournament->getNumber() . '. ' . $title; ?></h3>
-        <?php echo $this->paginationControl($this->paginator, 'Sliding', 'tournament'); ?>
+        <?php echo $this->paginationControl($this->pagination->getMyPagination(),
+            'Sliding', 'tournament', array('pager' => $this->pagination)); ?>
         <table class="table standings">
             <tr>
                 <th title="<?php echo $this->translate('Position');?>">P</th>
