@@ -27,11 +27,13 @@ class IndexControllerFactory implements FactoryInterface
         $repository = $serviceManager->get('Stats\Services\RepositoryService');
         $standings  = $serviceManager->get('Stats\Services\PlayerStatsService');
         $table  = $serviceManager->get('Nakade\Services\PlayersTableService');
+        $crossTblSrv = $serviceManager->get('Stats\Services\CrossTableService');
 
         $controller = new IndexController();
         $controller->setRepository($repository);
         $controller->setService($standings);
         $controller->setTableService($table);
+        $controller->setCrossTableService($crossTblSrv);
 
         return $controller;
     }

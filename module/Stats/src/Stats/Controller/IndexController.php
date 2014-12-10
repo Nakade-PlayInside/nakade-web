@@ -4,8 +4,10 @@ namespace Stats\Controller;
 use Nakade\Abstracts\AbstractController;
 use Nakade\Services\PlayersTableService;
 use Nakade\Pagination\ItemPagination;
+use Stats\Calculation\ContingencyTableFactory;
 use Stats\Calculation\MatchStatsFactory;
 use Stats\Pagination\TournamentPagination;
+use Stats\Services\CrossTableService;
 use Stats\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
 /**
@@ -15,6 +17,7 @@ use Zend\View\Model\ViewModel;
 class IndexController extends AbstractController
 {
     private $tableService;
+    private $crossTableService;
 
     /**
      *
@@ -88,6 +91,26 @@ class IndexController extends AbstractController
             )
         );
     }
+
+    /**
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function crossAction()
+    {
+        $lid  = $this->params()->fromRoute('id', 1);
+
+        /* @var $league \Season\Entity\League */
+        $league =  $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER)->getLeagueById($lid);
+
+        return new ViewModel(
+            array(
+                'league' => $league,
+                'table'   => $this->getCrossTableService()->getTable($lid),
+            )
+        );
+    }
+
 
     /**
      *
@@ -250,7 +273,20 @@ class IndexController extends AbstractController
         return $this->tableService;
     }
 
+    /**
+     * @param CrossTableService $crossTableService
+     */
+    public function setCrossTableService(CrossTableService $crossTableService)
+    {
+        $this->crossTableService = $crossTableService;
+    }
 
-
+    /**
+     * @return CrossTableService
+     */
+    public function getCrossTableService()
+    {
+        return $this->crossTableService;
+    }
 
 }

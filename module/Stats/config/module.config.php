@@ -76,6 +76,8 @@ return array(
                 'Stats\Services\PlayerStatsService',
             'Stats\Services\AchievementService' =>
                 'Stats\Services\AchievementService',
+            'Stats\Services\CrossTableService' =>
+                'Stats\Services\CrossTableService',
         ),
     ),
 

@@ -82,3 +82,14 @@ td.name {
     text-align: left;
     white-space:nowrap;
 }
+
+td.crossTableName {
+    text-align: left !important;
+    font-weight: bold;
+    white-space:nowrap;
+}
+
+td.crossTableResult {
+    text-align: center !important;
+    white-space:nowrap;
+}
