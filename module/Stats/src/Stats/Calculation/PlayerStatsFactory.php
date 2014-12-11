@@ -66,7 +66,7 @@ class PlayerStatsFactory {
 
     private function addDraw(Match $match)
     {
-        if ($match->getResult()->getResultType() == ResultInterface::DRAW) {
+        if ($match->getResult()->getResultType()->getId() == ResultInterface::DRAW) {
             $this->draw[] = $match;
         }
     }
