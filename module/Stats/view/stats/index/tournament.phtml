@@ -3,11 +3,6 @@ $this->plugin('translate')->setTranslatorTextDomain('Stats');
 $this->headTitle('Stats');
 /* @var $tournament \Season\Entity\League */
 ?>
-
-<h3><?php //echo $title;?></h3>
-
-
-
 <?php $this->placeholder('noSeason')->captureStart();?>
    <?php echo $this->translate("No matches found."); ?>
 <?php $this->placeholder('noSeason')->captureEnd();?>
@@ -15,7 +10,7 @@ $this->headTitle('Stats');
 
 <?php $this->placeholder('actual')->captureStart();?>
 <div class="widget">
-    <h3><?php echo 'My Tournaments' ?></h3>
+    <h3><?php echo $this->translate('My Tournaments') ?></h3>
     <?php echo $this->paginationControl($this->paginator, 'Sliding', 'matches'); ?>
     <ul class="playerStats">
         <?php foreach ($this->tournaments as $tournament) : ?>

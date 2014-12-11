@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-12 13:09+0100\n"
-"PO-Revision-Date: 2014-11-12 13:09+0100\n"
+"POT-Creation-Date: 2014-12-11 10:09+0100\n"
+"PO-Revision-Date: 2014-12-11 10:10+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -16,63 +16,272 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../view/stats/index/index.phtml:12
+#: ../src/Stats/View/Helper/Achievement.php:32
+msgid "Champion"
+msgstr "Meister"
+
+#: ../src/Stats/View/Helper/Achievement.php:35
+msgid "Runner-Up"
+msgstr "Vize-Meister"
+
+#: ../src/Stats/View/Helper/Achievement.php:38
+msgid "Third"
+msgstr "Dritter"
+
+#: ../src/Stats/View/Helper/AchievementTitle.php:25
+msgid "League"
+msgstr "Liga"
+
+#: ../view/partial/tournament.phtml:7
+msgid "%NAME% League - %NUMBER%. Season"
+msgstr "%NAME% Liga - %NUMBER%. Saison"
+
+#: ../view/partial/tournament.phtml:18
+#: ../view/partial/pagination.phtml:6
+msgid "previous"
+msgstr "zurück"
+
+#: ../view/partial/tournament.phtml:33
+msgid "Tournament"
+msgstr "Turnier"
+
+#: ../view/partial/pagination.phtml:17
+msgid "Actual Page"
+msgstr "Aktuelle Seite"
+
+#: ../view/partial/pagination.phtml:24
+msgid "next"
+msgstr "weiter"
+
+#: ../view/stats/index/index.phtml:10
+#: ../view/stats/index/tournament.phtml:7
 msgid "No matches found."
 msgstr "Keine Partien gefunden."
 
+#: ../view/stats/index/index.phtml:16
+msgid "My Stats"
+msgstr "Meine Statistiken"
+
+#: ../view/stats/index/index.phtml:19
+msgid "Tournaments"
+msgstr "Turniere"
+
+#: ../view/stats/index/index.phtml:23
+msgid "Played"
+msgstr "Gespielt"
+
 #: ../view/stats/index/index.phtml:28
+msgid "Win"
+msgstr "Siege"
+
+#: ../view/stats/index/index.phtml:33
+msgid "Draw"
+msgstr "Jigos"
+
+#: ../view/stats/index/index.phtml:38
+msgid "Defeat"
+msgstr "Niederlagen"
+
+#: ../view/stats/index/index.phtml:43
+msgid "Consecutive wins"
+msgstr "Siegeserie"
+
+#: ../view/stats/index/index.phtml:49
+msgid "My Achievements"
+msgstr "Meine Erfolge"
+
+#: ../view/stats/index/win.phtml:8
+msgid "My Wins"
+msgstr "Meine Siege"
+
+#: ../view/stats/index/win.phtml:35
+#: ../view/stats/index/defeat.phtml:33
+#: ../view/stats/index/tournament.phtml:29
+#: ../view/stats/index/draw.phtml:33
+#: ../view/stats/index/table.phtml:78
+#: ../view/stats/index/consecutive.phtml:33
+#: ../view/stats/index/cross.phtml:36
+#: ../view/stats/index/match.phtml:33
+msgid "Return"
+msgstr "Zurück"
+
+#: ../view/stats/index/win.phtml:40
+msgid "Win Balance"
+msgstr "Siegesbilanz"
+
+#: ../view/stats/index/win.phtml:50
+#: ../view/stats/index/defeat.phtml:47
+#: ../view/stats/index/match.phtml:48
 msgid "Black"
 msgstr "Schwarz"
 
-#: ../view/stats/index/index.phtml:29
+#: ../view/stats/index/win.phtml:51
+#: ../view/stats/index/defeat.phtml:48
+#: ../view/stats/index/match.phtml:49
 msgid "White"
 msgstr "Weiß"
 
-#: ../view/stats/index/index.phtml:30
+#: ../view/stats/index/win.phtml:52
+#: ../view/stats/index/defeat.phtml:49
+#: ../view/stats/index/match.phtml:50
 msgid "Matches"
 msgstr "Partien"
 
-#: ../view/stats/index/index.phtml:31
-#: ../view/stats/index/index.phtml:44
+#: ../view/stats/index/win.phtml:53
+#: ../view/stats/index/win.phtml:66
+#: ../view/stats/index/defeat.phtml:50
+#: ../view/stats/index/defeat.phtml:63
+#: ../view/stats/index/table.phtml:37
+#: ../view/stats/index/match.phtml:51
+#: ../view/stats/index/match.phtml:64
 msgid "Wins"
 msgstr "Siege"
 
-#: ../view/stats/index/index.phtml:32
-#: ../view/stats/index/index.phtml:45
+#: ../view/stats/index/win.phtml:54
+#: ../view/stats/index/win.phtml:67
+#: ../view/stats/index/defeat.phtml:51
+#: ../view/stats/index/defeat.phtml:64
+#: ../view/stats/index/match.phtml:52
+#: ../view/stats/index/match.phtml:65
 msgid "Defeats"
 msgstr "Niederlagen"
 
-#: ../view/stats/index/index.phtml:33
+#: ../view/stats/index/win.phtml:55
+#: ../view/stats/index/defeat.phtml:52
+#: ../view/stats/index/match.phtml:53
 msgid "Match Share"
 msgstr "Anteil"
 
-#: ../view/stats/index/index.phtml:34
+#: ../view/stats/index/win.phtml:56
+#: ../view/stats/index/defeat.phtml:53
+#: ../view/stats/index/match.phtml:54
 msgid "Total Share"
 msgstr "Gesamtanteil:"
 
-#: ../view/stats/index/index.phtml:35
+#: ../view/stats/index/win.phtml:57
+#: ../view/stats/index/defeat.phtml:54
+#: ../view/stats/index/match.phtml:55
 msgid "Share"
 msgstr "Anteil"
 
-#: ../view/stats/index/index.phtml:36
+#: ../view/stats/index/win.phtml:58
+#: ../view/stats/index/defeat.phtml:55
+#: ../view/stats/index/match.phtml:56
 msgid "Close"
 msgstr "knapp"
 
-#: ../view/stats/index/index.phtml:37
+#: ../view/stats/index/win.phtml:59
+#: ../view/stats/index/defeat.phtml:56
+#: ../view/stats/index/match.phtml:57
 msgid "Resigns"
 msgstr "Aufgaben"
 
-#: ../view/stats/index/index.phtml:38
+#: ../view/stats/index/win.phtml:60
+#: ../view/stats/index/defeat.phtml:57
+#: ../view/stats/index/match.phtml:58
 msgid "On Time"
 msgstr "Zeit"
 
-#: ../view/stats/index/index.phtml:39
+#: ../view/stats/index/win.phtml:61
+#: ../view/stats/index/defeat.phtml:58
+#: ../view/stats/index/match.phtml:59
 msgid "Forfeit"
 msgstr "Disqualifikation"
 
-#: ../view/stats/index/index.phtml:46
+#: ../view/stats/index/win.phtml:68
+#: ../view/stats/index/defeat.phtml:65
+#: ../view/stats/index/match.phtml:66
 msgid "Draws"
 msgstr "Jigos"
+
+#: ../view/stats/index/defeat.phtml:7
+msgid "My Defeats"
+msgstr "Meine Niederlagen"
+
+#: ../view/stats/index/defeat.phtml:37
+msgid "Defeat Balance"
+msgstr "Niederlagenbilanz"
+
+#: ../view/stats/index/tournament.phtml:13
+msgid "My Tournaments"
+msgstr "Meine Turniere"
+
+#: ../view/stats/index/draw.phtml:7
+msgid "My Draws"
+msgstr "Meine Jigos"
+
+#: ../view/stats/index/table.phtml:24
+#: ../view/stats/index/cross.phtml:16
+msgid "Cross Table"
+msgstr "Kreuztabelle"
+
+#: ../view/stats/index/table.phtml:26
+msgid "Results"
+msgstr "Ergebnisse"
+
+#: ../view/stats/index/table.phtml:29
+msgid "Position"
+msgstr "Platz"
+
+#: ../view/stats/index/table.phtml:31
+msgid "Player"
+msgstr "Spieler"
+
+#: ../view/stats/index/table.phtml:32
+msgid "Name"
+msgstr "Name"
+
+#: ../view/stats/index/table.phtml:34
+msgid "played games"
+msgstr "gespielte Partien"
+
+#: ../view/stats/index/table.phtml:35
+msgid "GP"
+msgstr "GP"
+
+#: ../view/stats/index/table.phtml:38
+msgid "W"
+msgstr "S"
+
+#: ../view/stats/index/table.phtml:40
+msgid "Jigo"
+msgstr "Jigo"
+
+#: ../view/stats/index/table.phtml:41
+msgid "J"
+msgstr "U"
+
+#: ../view/stats/index/table.phtml:43
+msgid "Lost"
+msgstr "Niederlagen"
+
+#: ../view/stats/index/table.phtml:44
+msgid "L"
+msgstr "N"
+
+#: ../view/stats/index/table.phtml:46
+msgid "Points"
+msgstr "Punkte"
+
+#: ../view/stats/index/table.phtml:47
+msgid "Pt"
+msgstr "P"
+
+#: ../view/stats/index/consecutive.phtml:7
+msgid "My Best Winning Streak"
+msgstr "Meine Längste Siegesserie"
+
+#: ../view/stats/index/cross.phtml:8
+msgid "%NO%. %NAME% League - %NUMBER%. Season"
+msgstr "%NO%. %NAME% Liga - %NUMBER%. Saison"
+
+#: ../view/stats/index/match.phtml:7
+msgid "My Matches"
+msgstr "Meine Partien"
+
+#: ../view/stats/index/match.phtml:37
+msgid "Match Balance"
+msgstr "Spielbilanz"
 
 #~ msgid ""
 #~ "This is your actual schedule for the %NUMBER%.%ASSOCIATION% League at %URL"
@@ -219,9 +428,6 @@ msgstr "Jigos"
 
 #~ msgid "min."
 #~ msgstr "min."
-
-#~ msgid "points"
-#~ msgstr "Punkte"
 
 #~ msgid "Cancel"
 #~ msgstr "Abbruch"
@@ -383,9 +589,6 @@ msgstr "Jigos"
 #~ msgid "Player Roster"
 #~ msgstr "Spielerliste"
 
-#~ msgid "League"
-#~ msgstr "Liga"
-
 #~ msgid "No season found."
 #~ msgstr "Keine Saison gefunden."
 
@@ -418,9 +621,6 @@ msgstr "Jigos"
 
 #~ msgid "Last match"
 #~ msgstr "letzte Partie"
-
-#~ msgid "State"
-#~ msgstr "Status"
 
 #~ msgid "Times and Komi"
 #~ msgstr "Bedenkzeit und Komi"
@@ -505,9 +705,6 @@ msgstr "Jigos"
 #~ msgid "edit"
 #~ msgstr "bearbeiten"
 
-#~ msgid "Return"
-#~ msgstr "Zurück"
-
 #~ msgid "Remove all Match Days?"
 #~ msgstr "Alle Spieltage löschen?"
 
@@ -556,9 +753,6 @@ msgstr "Jigos"
 
 #~ msgid "No"
 #~ msgstr "Nr"
-
-#~ msgid "Player"
-#~ msgstr "Spieler"
 
 #~ msgid "Edit League"
 #~ msgstr "Bearbeite Liga "
@@ -632,9 +826,6 @@ msgstr "Jigos"
 #~ msgid "player's name"
 #~ msgstr "Spieler Name"
 
-#~ msgid "Name"
-#~ msgstr "Name"
-
 #~ msgid "number of league"
 #~ msgstr "Liga-Nummer"
 
@@ -689,9 +880,6 @@ msgstr "Jigos"
 #~ msgid "No Winner"
 #~ msgstr "kein Sieger"
 
-#~ msgid "Result"
-#~ msgstr "Ergebnis"
-
 #~ msgid "No Result"
 #~ msgstr "kein Ergebnis"
 
@@ -703,9 +891,6 @@ msgstr "Jigos"
 
 #~ msgid "Win by Points"
 #~ msgstr "Sieg nach Punkten"
-
-#~ msgid "Jigo"
-#~ msgstr "Jigo"
 
 #~ msgid "Game Suspended"
 #~ msgstr "Spiel ausgesetzt"
@@ -737,17 +922,11 @@ msgstr "Jigos"
 #~ msgid "make matchplan"
 #~ msgstr "Spielplan erzeugen"
 
-#~ msgid "Matchplan"
-#~ msgstr "Spielplan"
-
 #~ msgid "My"
 #~ msgstr "Mein"
 
 #~ msgid "schedule"
 #~ msgstr "Spielplan:"
-
-#~ msgid "Table"
-#~ msgstr "Tabelle"
 
 #~ msgid "white"
 #~ msgstr "Weiß"
@@ -788,9 +967,6 @@ msgstr "Jigos"
 #~ msgid "add new player"
 #~ msgstr "Neuen Spieler hinzufügen"
 
-#~ msgid "Position"
-#~ msgstr "Platz"
-
 #~ msgid "Games"
 #~ msgstr "Spiele"
 
@@ -809,32 +985,11 @@ msgstr "Jigos"
 #~ msgid "my color"
 #~ msgstr "Meine Spielfarbe"
 
-#~ msgid "played games"
-#~ msgstr "gespielte Partien"
-
-#~ msgid "GP"
-#~ msgstr "GP"
-
 #~ msgid "Suspended games"
 #~ msgstr "ausgesetzte Partien"
 
 #~ msgid "GS"
 #~ msgstr "AP"
-
-#~ msgid "W"
-#~ msgstr "S"
-
-#~ msgid "J"
-#~ msgstr "U"
-
-#~ msgid "Lost"
-#~ msgstr "Niederlagen"
-
-#~ msgid "L"
-#~ msgstr "N"
-
-#~ msgid "Pt"
-#~ msgstr "P"
 
 #~ msgid "First Tiebreaker"
 #~ msgstr "erster Tie-Breaker"
@@ -895,12 +1050,6 @@ msgstr "Jigos"
 
 #~ msgid "Last Season"
 #~ msgstr "Letzte Saison"
-
-#~ msgid "Champion:"
-#~ msgstr "Meister"
-
-#~ msgid "Actual Season"
-#~ msgstr "Aktuelle Saison"
 
 #~ msgid "Open Matches:"
 #~ msgstr "Offene Partien:"

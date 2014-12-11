@@ -13,7 +13,7 @@ $this->headTitle('Stats');
 
 <?php $this->placeholder('actual')->captureStart();?>
 <div class="widget">
-    <h3><?php echo 'My Stats';?></h3>
+    <h3><?php echo $this->translate('My Stats');?></h3>
 <ul class="playerStats">
     <li><a href="<?php echo $this->url('stats', array('action' => 'tournament'));?>"><div class="buttons-16 info-16">
         </div><?php echo $this->translate('Tournaments') .': '; ?><?php echo $player->getNoTournaments(); ?></a>
