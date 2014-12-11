@@ -25,7 +25,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-
+        //todo: caching of factory results
         $userId = $this->identity()->getId();
         $stats = $this->getService()->getPlayerStats($userId);
 
@@ -42,7 +42,7 @@ class IndexController extends AbstractController
      */
     public function tournamentAction()
     {
-
+        //todo: caching of factory results
         $page = (int) $this->params()->fromRoute('id', 1);
 
         $userId = $this->identity()->getId();
@@ -69,6 +69,8 @@ class IndexController extends AbstractController
         $lid  = $this->params()->fromRoute('id', null);
 
         $userId = $this->identity()->getId();
+
+        //todo: caching of factory results
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
         $tournaments = $stats->getTournaments();
@@ -100,7 +102,7 @@ class IndexController extends AbstractController
     public function crossAction()
     {
         $lid  = $this->params()->fromRoute('id', 1);
-
+        //todo: caching of factory results
         /* @var $league \Season\Entity\League */
         $league =  $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER)->getLeagueById($lid);
 
@@ -120,7 +122,7 @@ class IndexController extends AbstractController
     public function matchAction()
     {
         $page = (int) $this->params()->fromRoute('id', 1);
-
+        //todo: caching of factory results
         $userId = $this->identity()->getId();
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
@@ -153,7 +155,7 @@ class IndexController extends AbstractController
     public function consecutiveAction()
     {
         $page = (int) $this->params()->fromRoute('id', 1);
-
+        //todo: caching of factory results
         $userId = $this->identity()->getId();
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
@@ -177,7 +179,7 @@ class IndexController extends AbstractController
     public function winAction()
     {
         $page = (int) $this->params()->fromRoute('id', 1);
-
+        //todo: caching of factory results
         $userId = $this->identity()->getId();
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
@@ -210,7 +212,7 @@ class IndexController extends AbstractController
     public function defeatAction()
     {
         $page = (int) $this->params()->fromRoute('id', 1);
-
+        //todo: caching of factory results
         $userId = $this->identity()->getId();
         /* @var $stats \Stats\Entity\PlayerStats */
         $stats = $this->getService()->getPlayerStats($userId);
