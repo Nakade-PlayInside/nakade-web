@@ -3,6 +3,7 @@
 namespace Season\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nakade\TournamentInterface;
 
 /**
  * Class LeagueModel
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
-class LeagueModel
+class LeagueModel implements TournamentInterface
 {
 
   /**

@@ -13,6 +13,14 @@ namespace Stats;
 
 return array(
 
+    'view_helpers' => array(
+        'invokables' => array(
+            'achievementTitle'   => 'Stats\View\Helper\AchievementTitle',
+            'achievementImg'   => 'Stats\View\Helper\AchievementImg',
+            // more helpers here ...
+        )
+    ),
+
     'controllers' => array(
         'factories' => array(
             'Stats\Controller\Index' =>
@@ -32,7 +40,7 @@ return array(
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
-                    ),
+                     ),
                     'defaults' => array(
                         'controller' => 'Stats\Controller\Index',
                         'action'     => 'index',
@@ -48,16 +56,28 @@ return array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
-
+        'template_map' => array(
+            'matches' => __DIR__ . '/../view/partial/pagination.phtml', // Note: the key is optional
+            'tournament' => __DIR__ . '/../view/partial/tournament.phtml', // Note: the key is optional
+        ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+
     ),
 
     'service_manager' => array(
         'factories' => array(
             'Stats\Services\RepositoryService'      =>
                 'Stats\Services\RepositoryService',
+            'Nakade\Services\PlayersTableService' =>
+                'Nakade\Services\PlayersTableService',
+            'Stats\Services\PlayerStatsService' =>
+                'Stats\Services\PlayerStatsService',
+            'Stats\Services\AchievementService' =>
+                'Stats\Services\AchievementService',
+            'Stats\Services\CrossTableService' =>
+                'Stats\Services\CrossTableService',
         ),
     ),
 

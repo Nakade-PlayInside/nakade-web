@@ -1,0 +1,47 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Stats');
+$this->headTitle('table');
+
+/* @var $league \Season\Entity\League */
+/* @var $playerResult \Stats\Entity\PlayerResult */
+
+$title = $this->translate("%NO%. %NAME% League - %NUMBER%. Season");
+$title = str_replace("%NAME%", $league->getSeason()->getAssociation()->getName(), $title);
+$title = str_replace("%NUMBER%", $league->getSeason()->getNumber(), $title);
+$title = str_replace("%NO%", $league->getNumber(), $title);
+?>
+
+<?php $this->placeholder('standings')->captureStart(); ?>
+    <div class="widget">
+        <h3><?php echo $this->translate('Cross Table') . ' '. $title ; ?></h3>
+        <table class="table standings">
+            <tr>
+                <th></th>
+                <?php foreach ($this->table as $playerResult) : ?>
+                <th><?php echo $playerResult->getUser()->getShortName(); ?></th>
+                <?php endforeach; ?>
+            </tr>
+            <?php foreach ($this->table as $playerResult) : ?>
+                <tr style="background-color:<?php  echo $this->highlightUser($playerResult->getUser()); ?>">
+                    <td class="crossTableName"><?php echo $playerResult->getUser()->getShortName(); ?></td>
+                    <?php foreach ($playerResult->getResults() as $result) : ?>
+                        <td class="crossTableResult"><?php echo $result ?></td>
+                    <?php endforeach; ?>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+
+        <a class="btn btn-success return" href="<?php
+        echo $this->url('stats',
+            array('action' => 'table', 'id' => $league->getId())); ?>"><?php echo $this->translate("Return"); ?>
+        </a>
+    </div>
+<?php $this->placeholder('standings')->captureEnd(); ?>
+
+
+<?php
+
+if (!is_null($this->table)) {
+    echo $this->placeholder('standings');
+}
+

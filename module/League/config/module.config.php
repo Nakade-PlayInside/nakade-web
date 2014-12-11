@@ -29,6 +29,7 @@ return array(
             'pagingUrl'     => 'League\View\Helper\PagingUrl',
             'enteredBy'     => 'League\View\Helper\GetEnteredBy',
             'leaguePaging'     => 'League\View\Helper\LeaguePaging',
+            'getPosition'     => 'League\View\Helper\GetPosition',
             // more helpers here ...
         )
     ),
@@ -230,6 +231,9 @@ return array(
                 'League\Services\MatchVoterService',
             'League\Services\PaginationService' =>
                 'League\Services\PaginationService',
+            'Nakade\Services\PlayersTableService' =>
+                'Nakade\Services\PlayersTableService',
+
         ),
     ),
 

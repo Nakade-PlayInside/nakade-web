@@ -16,6 +16,7 @@ class League extends LeagueModel
   private $noPlayers=0;
   private $players = array();
   private $removePlayers = array();
+  private $isOngoing = true;
 
     /**
      * @param int $noPlayers
@@ -66,6 +67,23 @@ class League extends LeagueModel
     }
 
     /**
+     * @param boolean $isOngoing
+     */
+    public function setIsOngoing($isOngoing)
+    {
+        $this->isOngoing = $isOngoing;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isOngoing()
+    {
+        return $this->isOngoing;
+    }
+
+
+    /**
      * for form data
      *
      * @param array $data
@@ -81,6 +99,9 @@ class League extends LeagueModel
         }
         if (isset($data['removePlayers'])) {
             $this->removePlayers = $data['removePlayers'];
+        }
+        if (isset($data['isOngoing'])) {
+            $this->isOngoing = $data['isOngoing'];
         }
     }
 

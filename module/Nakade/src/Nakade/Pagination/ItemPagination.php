@@ -49,5 +49,16 @@ class ItemPagination implements PaginationInterface
         return self::ITEMS_PER_PAGE * ($page -1);
     }
 
+    /**
+     * @param array $items
+     * @param int $page
+     *
+     * @return array
+     */
+    public function getOffsetArray(array $items, $page)
+    {
+        return array_slice($items, $this->getOffset($page), self::ITEMS_PER_PAGE);
+    }
+
 }
 

@@ -1,7 +1,7 @@
 <?php
 namespace League\View\Helper;
 
-use League\Standings\Sorting\SortingInterface;
+use Nakade\Standings\Sorting\SortingInterface;
 use Zend\View\Helper\AbstractHelper;
 
 /**

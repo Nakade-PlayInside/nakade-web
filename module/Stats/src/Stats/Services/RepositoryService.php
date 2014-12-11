@@ -2,6 +2,7 @@
 
 namespace Stats\Services;
 
+use League\Mapper\LeagueMapper;
 use Stats\Mapper\StatsMapper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -16,6 +17,7 @@ class RepositoryService implements FactoryInterface
 {
 
     const STATS_MAPPER = 'stats';
+    const LEAGUE_MAPPER = 'league';
 
     private $entityManager;
 
@@ -56,6 +58,10 @@ class RepositoryService implements FactoryInterface
 
            case self::STATS_MAPPER:
                $repository = new StatsMapper();
+               break;
+
+           case self::LEAGUE_MAPPER:
+               $repository = new LeagueMapper();
                break;
 
            default:

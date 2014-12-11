@@ -37,7 +37,7 @@ $matchDayInfo = str_replace('%No%', $this->matchDay, $matchDayInfo);
             <?php foreach ($this->table as $player) : ?>
                 <tr style="background-color:<?php
                 echo $this->cycle(array("#F0F0F0","transparent"))->next()?>">
-                    <td><?php echo $player->getPosition() ?></td>
+                    <td><?php echo $this->getPosition($player); ?></td>
                     <td><?php echo $player->getUser()->getShortName();?></td>
                     <td><?php echo $player->getGamesPlayed(); ?></td>
                     <td><?php echo $player->getGamesPoints();?></td>

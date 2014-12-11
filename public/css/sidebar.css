@@ -45,7 +45,7 @@ div#sidebar a:hover em {
     font-weight: bold;
 }
 
-#sidebar .infoBtn {
+#sidebar .infoBtn, .infoBtn {
     vertical-align: text-bottom;
     display: inline-block;
     margin-right: 5px;

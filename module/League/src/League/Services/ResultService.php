@@ -3,7 +3,7 @@
 namespace League\Services;
 
 
-use League\Standings\Results;
+use Nakade\Standings\Results;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 /**

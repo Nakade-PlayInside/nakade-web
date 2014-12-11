@@ -1,0 +1,42 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Stats');
+$this->headTitle('Stats');
+/* @var $tournament \Season\Entity\League */
+?>
+<?php $this->placeholder('noSeason')->captureStart();?>
+   <?php echo $this->translate("No matches found."); ?>
+<?php $this->placeholder('noSeason')->captureEnd();?>
+
+
+<?php $this->placeholder('actual')->captureStart();?>
+<div class="widget">
+    <h3><?php echo $this->translate('My Tournaments') ?></h3>
+    <?php echo $this->paginationControl($this->paginator, 'Sliding', 'matches'); ?>
+    <ul class="playerStats">
+        <?php foreach ($this->tournaments as $tournament) : ?>
+        <li>
+            <a href="<?php echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId()));?>"><?php
+                echo $tournament->getSeason()->getNumber() . '. ' .
+                $tournament->getSeason()->getAssociation()->getName(). ' ' .
+                $this->translate('League') . ', ' . $tournament->getNumber() . '. ' .
+                $this->translate('League') . ' ' . $tournament->getSeason()->getStartDate()->format('m/Y')  ?>
+            </a>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+
+    <a class="btn btn-success return" href="<?php
+    echo $this->url('stats'); ?>"><?php echo $this->translate("Return"); ?>
+    </a>
+</div>
+<?php $this->placeholder('actual')->captureEnd(); ?>
+
+
+<?php
+
+ if (count($this->tournaments) == 0) {
+     echo $this->placeholder('noSeason');
+ } else {
+     echo $this->placeholder('actual');
+ }
+

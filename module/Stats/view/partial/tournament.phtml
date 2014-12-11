@@ -1,0 +1,48 @@
+<?php if ($this->pageCount > 1): ?>
+    <?php
+
+        /* @var $actual \Season\Entity\League */
+        $actual = $this->pager->getItemByPage($this->current);
+
+        $title = $this->translate("%NAME% League - %NUMBER%. Season");
+        $title = str_replace("%NAME%", $actual->getSeason()->getAssociation()->getName(), $title);
+        $title = str_replace("%NUMBER%", $actual->getSeason()->getNumber(), $title);
+        $actualTitle = $actual->getNumber() . '. ' . $title;
+
+        $action = $this->actionName;
+    ?>
+    <div id="myLeague">
+        <ul class="large">
+            <!-- Previous page link -->
+            <?php if (isset($this->previous)): ?>
+                <li title="<?php echo $this->translate('previous'); ?>">
+                    <a class="arrows-32 control-left-32" href="<?php
+                    echo $this->url($this->route, array('action' => 'table', 'id' =>
+                        $this->pager->getItemByPage($this->previous)->getId())); ?>"></a>
+                </li>
+            <?php endif; ?>
+            <!-- Numbered page links -->
+            <?php foreach ($this->pagesInRange as $page): ?>
+                <?php if ($page != $this->current): ?>
+                    <li>
+                        <a href="<?php echo $this->paging($page);?>">
+                            <?php echo $page . '.' . $this->translate('League'); ?>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="current" title="<?php echo $this->current . '. ' . $this->translate("Tournament"); ?>">
+                        <a href="#" ><?php echo $actualTitle; ?></a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <!-- Next page link -->
+            <?php if (isset($this->next)): ?>
+                <li>
+                    <a class="arrows-32 control-right-32" href="<?php echo
+                    $this->url($this->route, array('action' => 'table', 'id' =>
+                        $this->pager->getItemByPage($this->next)->getId())); ?>"></a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+<?php endif; ?>

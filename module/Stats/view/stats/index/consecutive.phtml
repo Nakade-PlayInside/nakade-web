@@ -1,0 +1,43 @@
+<?php
+use \League\View\Helper\Sort;
+$this->plugin('translate')->setTranslatorTextDomain('Stats');
+$this->headTitle('table');
+
+/* @var $match \Season\Entity\Match */
+$title = $this->translate("My Best Winning Streak");
+?>
+
+<?php $this->placeholder('standings')->captureStart(); ?>
+    <div class="widget">
+        <h3><?php echo $title . ' ('.  $this->total . ')';?></h3>
+        <?php echo $this->paginationControl($this->paginator, 'Sliding', 'matches'); ?>
+                <table class="league">
+                    <?php foreach ($this->matches as $match) : ?>
+                        <tr>
+                            <td class="space"><?php echo $match->getDate()->format('d.m.y');?></td>
+                            <td style="text-decoration:<?php
+                                echo $this->isWinner($match, $match->getBlack()); ?>"><?php
+                                echo $match->getBlack()->getShortName();?>
+                            </td>
+                            <td class="versus">-</td>
+                            <td class="space" style="text-decoration:<?php
+                                echo $this->isWinner($match, $match->getWhite()); ?>"><?php
+                                echo $match->getWhite()->getShortName();?>
+                            </td>
+                            <td><?php  echo $this->openResult($match); ?></td>
+                        </tr>
+                    <?php
+                    endforeach; ?>
+                </table>
+        <a style="margin-top: 10px;" class="btn btn-success return" href="<?php
+        echo $this->url('stats'); ?>"><?php echo $this->translate("Return"); ?>
+        </a>
+    </div>
+<?php $this->placeholder('standings')->captureEnd(); ?>
+
+
+<?php
+if (count($this->matches)>0) {
+    echo $this->placeholder('standings');
+}
+
