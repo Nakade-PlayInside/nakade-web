@@ -2,7 +2,6 @@
 $this->plugin('translate')->setTranslatorTextDomain('Stats');
 $this->headTitle('table');
 
-/* @var $user \User\Entity\User */
 /* @var $league \Season\Entity\League */
 /* @var $playerResult \Stats\Entity\PlayerResult */
 
@@ -14,7 +13,7 @@ $title = str_replace("%NO%", $league->getNumber(), $title);
 
 <?php $this->placeholder('standings')->captureStart(); ?>
     <div class="widget">
-        <h3><?php echo $title; ?></h3>
+        <h3><?php echo $this->translate('Cross Table') . ' '. $title ; ?></h3>
         <table class="table standings">
             <tr>
                 <th></th>
@@ -33,7 +32,8 @@ $title = str_replace("%NO%", $league->getNumber(), $title);
         </table>
 
         <a class="btn btn-success return" href="<?php
-        echo $this->url('stats'); ?>"><?php echo $this->translate("Return"); ?>
+        echo $this->url('stats',
+            array('action' => 'table', 'id' => $league->getId())); ?>"><?php echo $this->translate("Return"); ?>
         </a>
     </div>
 <?php $this->placeholder('standings')->captureEnd(); ?>

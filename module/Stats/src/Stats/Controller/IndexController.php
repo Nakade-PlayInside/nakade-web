@@ -90,6 +90,7 @@ class IndexController extends AbstractController
                 'pagination' => $pagination,
             )
         );
+
     }
 
     /**

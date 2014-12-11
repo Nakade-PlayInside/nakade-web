@@ -20,7 +20,10 @@ if (!is_null($tournament)) {
 <?php $this->placeholder('standings')->captureStart(); ?>
     <div class="widget">
         <?php echo $this->paginationControl($this->pagination->getMyPagination(),
-            'Sliding', 'tournament', array('pager' => $this->pagination)); ?>
+            'Sliding', 'tournament', array('pager' => $this->pagination)); ?><a title="<?php echo
+            $this->translate('Cross Table'); ?>" href="<?php echo $this->url($this->request, array('action' => 'cross',
+            'id' => $tournament->getId()))?>"><div class="infoBtn nakade-16 chart-16 btnCenter"></div><?php echo
+            $this->translate("Results"); ?></a>
         <table class="table standings">
             <tr>
                 <th title="<?php echo $this->translate('Position');?>">P</th>
@@ -75,6 +78,7 @@ if (!is_null($tournament)) {
         echo $this->url('stats'); ?>"><?php echo $this->translate("Return"); ?>
         </a>
     </div>
+
 <?php $this->placeholder('standings')->captureEnd(); ?>
 
 

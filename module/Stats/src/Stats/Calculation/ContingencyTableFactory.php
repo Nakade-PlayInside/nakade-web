@@ -82,7 +82,13 @@ class ContingencyTableFactory {
         /* @var $match \Season\Entity\Match */
         foreach ($this->matches as $match) {
             if ($this->isMatch($match, $playerA, $playerB)) {
-                return $this->evalResult($match->getResult(), $playerA);
+
+                $result = $match->getResult();
+                if (empty($result)) {
+                    return self::MATCH_NOT_PLAYED;
+                }
+
+                return $this->evalWinner($result, $playerA);
             }
         }
         return self::MATCH_NOT_PLAYED;
@@ -92,14 +98,6 @@ class ContingencyTableFactory {
     {
         return ($match->getBlack() == $playerA && $match->getWhite() == $playerB) ||
             ($match->getBlack() == $playerB && $match->getWhite() == $playerA);
-    }
-
-    private function evalResult(Result $result, User $user)
-    {
-        if (empty($result)) {
-            return self::MATCH_NOT_PLAYED;
-        }
-        return $this->evalWinner($result, $user);
     }
 
     private function evalWinner(Result $result, User $user)
