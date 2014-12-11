@@ -1,0 +1,1100 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ZendSkeletonApplication\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-11 10:09+0100\n"
+"PO-Revision-Date: 2014-12-11 10:10+0100\n"
+"Last-Translator: Holger Maerz <holger@nakade.de>\n"
+"Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.3\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../src/Stats/View/Helper/Achievement.php:32
+msgid "Champion"
+msgstr "Meister"
+
+#: ../src/Stats/View/Helper/Achievement.php:35
+msgid "Runner-Up"
+msgstr "Vize-Meister"
+
+#: ../src/Stats/View/Helper/Achievement.php:38
+msgid "Third"
+msgstr "Dritter"
+
+#: ../src/Stats/View/Helper/AchievementTitle.php:25
+msgid "League"
+msgstr "Liga"
+
+#: ../view/partial/tournament.phtml:7
+msgid "%NAME% League - %NUMBER%. Season"
+msgstr "%NAME% Liga - %NUMBER%. Saison"
+
+#: ../view/partial/tournament.phtml:18
+#: ../view/partial/pagination.phtml:6
+msgid "previous"
+msgstr "zurück"
+
+#: ../view/partial/tournament.phtml:33
+msgid "Tournament"
+msgstr "Turnier"
+
+#: ../view/partial/pagination.phtml:17
+msgid "Actual Page"
+msgstr "Aktuelle Seite"
+
+#: ../view/partial/pagination.phtml:24
+msgid "next"
+msgstr "weiter"
+
+#: ../view/stats/index/index.phtml:10
+#: ../view/stats/index/tournament.phtml:7
+msgid "No matches found."
+msgstr "Keine Partien gefunden."
+
+#: ../view/stats/index/index.phtml:16
+msgid "My Stats"
+msgstr "Meine Statistiken"
+
+#: ../view/stats/index/index.phtml:19
+msgid "Tournaments"
+msgstr "Turniere"
+
+#: ../view/stats/index/index.phtml:23
+msgid "Played"
+msgstr "Gespielt"
+
+#: ../view/stats/index/index.phtml:28
+msgid "Win"
+msgstr "Siege"
+
+#: ../view/stats/index/index.phtml:33
+msgid "Draw"
+msgstr "Jigos"
+
+#: ../view/stats/index/index.phtml:38
+msgid "Defeat"
+msgstr "Niederlagen"
+
+#: ../view/stats/index/index.phtml:43
+msgid "Consecutive wins"
+msgstr "Siegeserie"
+
+#: ../view/stats/index/index.phtml:49
+msgid "My Achievements"
+msgstr "Meine Erfolge"
+
+#: ../view/stats/index/win.phtml:8
+msgid "My Wins"
+msgstr "Meine Siege"
+
+#: ../view/stats/index/win.phtml:35
+#: ../view/stats/index/defeat.phtml:33
+#: ../view/stats/index/tournament.phtml:29
+#: ../view/stats/index/draw.phtml:33
+#: ../view/stats/index/table.phtml:78
+#: ../view/stats/index/consecutive.phtml:33
+#: ../view/stats/index/cross.phtml:36
+#: ../view/stats/index/match.phtml:33
+msgid "Return"
+msgstr "Zurück"
+
+#: ../view/stats/index/win.phtml:40
+msgid "Win Balance"
+msgstr "Siegesbilanz"
+
+#: ../view/stats/index/win.phtml:50
+#: ../view/stats/index/defeat.phtml:47
+#: ../view/stats/index/match.phtml:48
+msgid "Black"
+msgstr "Schwarz"
+
+#: ../view/stats/index/win.phtml:51
+#: ../view/stats/index/defeat.phtml:48
+#: ../view/stats/index/match.phtml:49
+msgid "White"
+msgstr "Weiß"
+
+#: ../view/stats/index/win.phtml:52
+#: ../view/stats/index/defeat.phtml:49
+#: ../view/stats/index/match.phtml:50
+msgid "Matches"
+msgstr "Partien"
+
+#: ../view/stats/index/win.phtml:53
+#: ../view/stats/index/win.phtml:66
+#: ../view/stats/index/defeat.phtml:50
+#: ../view/stats/index/defeat.phtml:63
+#: ../view/stats/index/table.phtml:37
+#: ../view/stats/index/match.phtml:51
+#: ../view/stats/index/match.phtml:64
+msgid "Wins"
+msgstr "Siege"
+
+#: ../view/stats/index/win.phtml:54
+#: ../view/stats/index/win.phtml:67
+#: ../view/stats/index/defeat.phtml:51
+#: ../view/stats/index/defeat.phtml:64
+#: ../view/stats/index/match.phtml:52
+#: ../view/stats/index/match.phtml:65
+msgid "Defeats"
+msgstr "Niederlagen"
+
+#: ../view/stats/index/win.phtml:55
+#: ../view/stats/index/defeat.phtml:52
+#: ../view/stats/index/match.phtml:53
+msgid "Match Share"
+msgstr "Anteil"
+
+#: ../view/stats/index/win.phtml:56
+#: ../view/stats/index/defeat.phtml:53
+#: ../view/stats/index/match.phtml:54
+msgid "Total Share"
+msgstr "Gesamtanteil:"
+
+#: ../view/stats/index/win.phtml:57
+#: ../view/stats/index/defeat.phtml:54
+#: ../view/stats/index/match.phtml:55
+msgid "Share"
+msgstr "Anteil"
+
+#: ../view/stats/index/win.phtml:58
+#: ../view/stats/index/defeat.phtml:55
+#: ../view/stats/index/match.phtml:56
+msgid "Close"
+msgstr "knapp"
+
+#: ../view/stats/index/win.phtml:59
+#: ../view/stats/index/defeat.phtml:56
+#: ../view/stats/index/match.phtml:57
+msgid "Resigns"
+msgstr "Aufgaben"
+
+#: ../view/stats/index/win.phtml:60
+#: ../view/stats/index/defeat.phtml:57
+#: ../view/stats/index/match.phtml:58
+msgid "On Time"
+msgstr "Zeit"
+
+#: ../view/stats/index/win.phtml:61
+#: ../view/stats/index/defeat.phtml:58
+#: ../view/stats/index/match.phtml:59
+msgid "Forfeit"
+msgstr "Disqualifikation"
+
+#: ../view/stats/index/win.phtml:68
+#: ../view/stats/index/defeat.phtml:65
+#: ../view/stats/index/match.phtml:66
+msgid "Draws"
+msgstr "Jigos"
+
+#: ../view/stats/index/defeat.phtml:7
+msgid "My Defeats"
+msgstr "Meine Niederlagen"
+
+#: ../view/stats/index/defeat.phtml:37
+msgid "Defeat Balance"
+msgstr "Niederlagenbilanz"
+
+#: ../view/stats/index/tournament.phtml:13
+msgid "My Tournaments"
+msgstr "Meine Turniere"
+
+#: ../view/stats/index/draw.phtml:7
+msgid "My Draws"
+msgstr "Meine Jigos"
+
+#: ../view/stats/index/table.phtml:24
+#: ../view/stats/index/cross.phtml:16
+msgid "Cross Table"
+msgstr "Kreuztabelle"
+
+#: ../view/stats/index/table.phtml:26
+msgid "Results"
+msgstr "Ergebnisse"
+
+#: ../view/stats/index/table.phtml:29
+msgid "Position"
+msgstr "Platz"
+
+#: ../view/stats/index/table.phtml:31
+msgid "Player"
+msgstr "Spieler"
+
+#: ../view/stats/index/table.phtml:32
+msgid "Name"
+msgstr "Name"
+
+#: ../view/stats/index/table.phtml:34
+msgid "played games"
+msgstr "gespielte Partien"
+
+#: ../view/stats/index/table.phtml:35
+msgid "GP"
+msgstr "GP"
+
+#: ../view/stats/index/table.phtml:38
+msgid "W"
+msgstr "S"
+
+#: ../view/stats/index/table.phtml:40
+msgid "Jigo"
+msgstr "Jigo"
+
+#: ../view/stats/index/table.phtml:41
+msgid "J"
+msgstr "U"
+
+#: ../view/stats/index/table.phtml:43
+msgid "Lost"
+msgstr "Niederlagen"
+
+#: ../view/stats/index/table.phtml:44
+msgid "L"
+msgstr "N"
+
+#: ../view/stats/index/table.phtml:46
+msgid "Points"
+msgstr "Punkte"
+
+#: ../view/stats/index/table.phtml:47
+msgid "Pt"
+msgstr "P"
+
+#: ../view/stats/index/consecutive.phtml:7
+msgid "My Best Winning Streak"
+msgstr "Meine Längste Siegesserie"
+
+#: ../view/stats/index/cross.phtml:8
+msgid "%NO%. %NAME% League - %NUMBER%. Season"
+msgstr "%NO%. %NAME% Liga - %NUMBER%. Saison"
+
+#: ../view/stats/index/match.phtml:7
+msgid "My Matches"
+msgstr "Meine Partien"
+
+#: ../view/stats/index/match.phtml:37
+msgid "Match Balance"
+msgstr "Spielbilanz"
+
+#~ msgid ""
+#~ "This is your actual schedule for the %NUMBER%.%ASSOCIATION% League at %URL"
+#~ "%."
+#~ msgstr ""
+#~ "Dies ist dein aktueller Spielplan zur %NUMBER%.%ASSOCIATION% Liga auf %URL"
+#~ "%."
+
+#~ msgid "All matches are officially played on KGS."
+#~ msgstr "Offiziell werden alle Partien auf KGS gespielt."
+
+#~ msgid "Base time: %BASE_TIME% min."
+#~ msgstr "Bedenkzeit:  %BASE_TIME% min."
+
+#~ msgid "Byoyomi"
+#~ msgstr "Byoyomi"
+
+#~ msgid "Komi"
+#~ msgstr "Komi"
+
+#~ msgid ""
+#~ "You have to provide your KGS name, so your opponent can recognize you."
+#~ msgstr ""
+#~ "Damit dein Gegner dich findet, solltest du deinen KGS Namen in deinem "
+#~ "Profil eintragen."
+
+#~ msgid ""
+#~ "In case of a match appointment, find your actual schedule on your "
+#~ "dashboard ."
+#~ msgstr ""
+#~ "Im Falle einer Terminverschiebung, findest du deine aktuellen Termine auf "
+#~ "deinem Dashboard."
+
+#~ msgid "You can also download your actual schedule for ICal."
+#~ msgstr "Du kannst dir auch deinen aktuellen Spielplan für iCal runterladen."
+
+#~ msgid "The deadline for appointments are 3 days before a match."
+#~ msgstr ""
+#~ "Terminverschiebungen sind bis maximal 3 Tage vor einer Partie möglich."
+
+#~ msgid "You will receive an email some days before a match."
+#~ msgstr "Einige Tage vor jeder Partie Du bekommst du eine Erinnerungsmail."
+
+#~ msgid "Please keep an eye on your mailbox - also in case of appointments."
+#~ msgstr ""
+#~ "Bitte rufe regelmäßig deine eMails ab - insbesondere für den Fall einer "
+#~ "Terminverschiebung. "
+
+#~ msgid "After a match, both players may enter the result."
+#~ msgstr "Nach einer Partie können beide Spieler das Ergebnis eintragen."
+
+#~ msgid "Be aware on automatic emails if the result is not entered in time."
+#~ msgstr ""
+#~ "Falls das Ergebnis nicht rechtzeitig eingetragen wird, werden beide "
+#~ "Spieler automatisch per eMail daran erinnert. "
+
+#~ msgid "There is a deadline of 72h after a match."
+#~ msgstr "Die Ergebniseingabe ist auf 72h nach einer Partie befristet."
+
+#~ msgid "Afterwards the match is automatically suspended."
+#~ msgstr "Danach wird die Partie automatisch ergebnislos gewertet.  "
+
+#~ msgid "Any further details on the tournament rules, you can find online."
+#~ msgstr "Weitere Informationen zum Reglement findest du online."
+
+#~ msgid "If you have problems, please contact a league manager."
+#~ msgstr "Bei Fragen kontaktiere bitte einen Liga Manager."
+
+#~ msgid "We hope you enjoy your matches and have a wonderful time on %URL%."
+#~ msgstr ""
+#~ "Wir wünschen dir viel Spaß und Erfolg bei deinen Partien auf %URL%. "
+
+#~ msgid "Your Schedule - %ASSOCIATION% League"
+#~ msgstr "Dein Spielplan - %ASSOCIATION% Liga"
+
+#~ msgid "A new season is announced at %URL%."
+#~ msgstr "Eine neue Saison wurde auf %URL% angekündigt."
+
+#~ msgid ""
+#~ "We are happy to invite you to participate in the %NUMBER%. %ASSOCIATION% "
+#~ "League."
+#~ msgstr ""
+#~ "Hiermit laden wir dich zur %NUMBER%. %ASSOCIATION% Liga ein und würden "
+#~ "uns über deine Teilnahme sehr freuen. "
+
+#~ msgid "The starting date is tentatively scheduled for the %DATE%."
+#~ msgstr "Der vorläufige Saisonbeginn ist für den %DATE% festgelegt. "
+
+#~ msgid ""
+#~ "To ensure being in the league, please confirm your participation as soon "
+#~ "as possible."
+#~ msgstr "Mit einer umgehenden Zusage, wird dir deine Teilnahme garantiert."
+
+#~ msgid "You can do so by clicking on the link provided below."
+#~ msgstr ""
+#~ "Mit einem Klick auf den Link kannst du deine Teilnahme direkt bestätigen."
+
+#~ msgid ""
+#~ "Or you just login at %URL% and confirm your participation on your site."
+#~ msgstr ""
+#~ "Oder du loggst dich auf %URL% ein und bestätigst deine Teilnahme auf "
+#~ "deinem Dashboard."
+
+#~ msgid ""
+#~ "The deadline for confirming your participation is a month before starting "
+#~ "date."
+#~ msgstr "Teilnahmeschluss ist ein Monat vor Saisonbeginn."
+
+#~ msgid "All later applications will be ignored."
+#~ msgstr "Alle späteren Rückmeldungen werden ignoriert."
+
+#~ msgid "Invitation - %NUMBER%. %ASSOCIATION% League"
+#~ msgstr "Einladung zur %NUMBER%. %ASSOCIATION% Liga"
+
+#~ msgid "Registration Closed"
+#~ msgstr "Anmeldefrist abgelaufen"
+
+#~ msgid "You registered already!"
+#~ msgstr "Du bist schon angemeldet!"
+
+#~ msgid "Register NOW!"
+#~ msgstr "JETZT Anmelden!"
+
+#~ msgid "invite participants"
+#~ msgstr "Teilnehmer einladen"
+
+#~ msgid "create leagues"
+#~ msgstr "Ligen erstellen"
+
+#~ msgid "configure match days"
+#~ msgstr "konfiguriere Spieltage"
+
+#~ msgid "create schedule"
+#~ msgstr "Spielplan erstellen"
+
+#~ msgid "activate season"
+#~ msgstr "Saison aktivieren"
+
+#~ msgid "active season"
+#~ msgstr "aktive Saison"
+
+#~ msgid "Player accepted invitation"
+#~ msgstr "Zusagen von Spielern "
+
+#~ msgid "min."
+#~ msgstr "min."
+
+#~ msgid "Cancel"
+#~ msgstr "Abbruch"
+
+#~ msgid "YES"
+#~ msgstr "JA"
+
+#~ msgid "Season"
+#~ msgstr "Saison"
+
+#~ msgid "No of rounds"
+#~ msgstr "Spieltage"
+
+#~ msgid "Cycle"
+#~ msgstr "Turnus"
+
+#~ msgid "Start date"
+#~ msgstr "Beginn "
+
+#~ msgid "Association"
+#~ msgstr "Verein"
+
+#~ msgid "Season no."
+#~ msgstr "Saison Nr."
+
+#~ msgid "No of invited players"
+#~ msgstr "Anzahl eingeladener Spieler"
+
+#~ msgid "Add player"
+#~ msgstr "Spieler hinzufügen"
+
+#~ msgid "Round"
+#~ msgstr "Runde"
+
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#~ msgid "League no."
+#~ msgstr "Liga Nr."
+
+#~ msgid "Remove player"
+#~ msgstr "Spieler entfernen"
+
+#~ msgid "Winning points"
+#~ msgstr "Siegpunkte"
+
+#~ msgid "Base time in minutes"
+#~ msgstr "Basiszeit in Minuten"
+
+#~ msgid "Extra time"
+#~ msgstr "Verlängerung"
+
+#~ msgid "Periods"
+#~ msgstr "Perioden"
+
+#~ msgid "Moves per extra time"
+#~ msgstr "Züge per Periode"
+
+#~ msgid "First tiebreaker"
+#~ msgstr "erster Tiebreak"
+
+#~ msgid "Second tiebreaker"
+#~ msgstr "zweiter Tiebreak"
+
+#~ msgid "Third tiebreaker"
+#~ msgstr "dritter Tiebreak"
+
+#~ msgid "Submit"
+#~ msgstr "Abschicken"
+
+#~ msgid "Monday"
+#~ msgstr "Montag"
+
+#~ msgid "Tuesday"
+#~ msgstr "Dienstag"
+
+#~ msgid "Wednesday"
+#~ msgstr "Mittwoch"
+
+#~ msgid "Thursday"
+#~ msgstr "Donnerstag"
+
+#~ msgid "Friday"
+#~ msgstr "Freitag"
+
+#~ msgid "Saturday"
+#~ msgstr "Samstag"
+
+#~ msgid "Sunday"
+#~ msgstr "Sonntag"
+
+#~ msgid "daily"
+#~ msgstr "täglich"
+
+#~ msgid "on weekdays"
+#~ msgstr "werktags"
+
+#~ msgid "weekly"
+#~ msgstr "wöchentlich"
+
+#~ msgid "fortnightly"
+#~ msgstr "14-täglich"
+
+#~ msgid "all 3 weeks"
+#~ msgstr "alle 3 Wochen"
+
+#~ msgid "monthly"
+#~ msgstr "monatlich"
+
+#~ msgid "unknown"
+#~ msgstr "unbekannt"
+
+#~ msgid "Confirmation failed"
+#~ msgstr "Bestätigung fehlgeschlagen"
+
+#~ msgid "Your confirmation failed."
+#~ msgstr "Deine Bestätigung ist fehlgeschlagen."
+
+#~ msgid "Probably, you accepted your invitation already."
+#~ msgstr "Möglicherweise hast du deine Einladung schon bestätigt."
+
+#~ msgid "Log in to find out!"
+#~ msgstr "Log dich ein, um es herauszufinden!"
+
+#~ msgid "Data Transmission Error"
+#~ msgstr "Datenübertragungsfehler"
+
+#~ msgid "Expected data not found."
+#~ msgstr "Erwartete Daten wurden nicht gefunden."
+
+#~ msgid "Did you really use the correct link provided by email?"
+#~ msgstr "Hast du den korrekten Link der Email benutzt?"
+
+#~ msgid "Participation is confirmed"
+#~ msgstr "Teilnahme ist bestätigt."
+
+#~ msgid "Your participation is confirmed."
+#~ msgstr "Deine Teilnahme wurde bestätigt."
+
+#~ msgid "It will take some time before the new schedule is announced."
+#~ msgstr ""
+#~ "Es wird ein wenig dauern, bis der neue Spielplan bekanntgegeben wird."
+
+#~ msgid "You can follow the actual stage of development on the dashboard."
+#~ msgstr "Du kannst den aktuellen Stand auf deinem Dashboard mitverfolgen."
+
+#~ msgid "Register for New Season?"
+#~ msgstr "Für die neue Saison anmelden?"
+
+#~ msgid "Your registration is binding."
+#~ msgstr "Deine Anmeldung ist verbindlich."
+
+#~ msgid ""
+#~ "The match schedule is released subsequently after ending of registration."
+#~ msgstr ""
+#~ "Der Spielplan wird zeitnah nach Beendigung der Anmeldefrist "
+#~ "veröffentlicht. "
+
+#~ msgid "Player Roster"
+#~ msgstr "Spielerliste"
+
+#~ msgid "No season found."
+#~ msgstr "Keine Saison gefunden."
+
+#~ msgid "Invited players"
+#~ msgstr "Eingeladene Spieler"
+
+#~ msgid "Available players"
+#~ msgstr "Verfügbare Spieler"
+
+#~ msgid "add player"
+#~ msgstr "Spieler hinzufügen"
+
+#~ msgid "Season Overview"
+#~ msgstr "Saisonübersicht"
+
+#~ msgid "Number of leagues"
+#~ msgstr "Anzahl an Ligen"
+
+#~ msgid "Number of players"
+#~ msgstr "Anzahl an Spielern"
+
+#~ msgid "Number of matches"
+#~ msgstr "Spielanzahl"
+
+#~ msgid "Open matches"
+#~ msgstr "offene Partien"
+
+#~ msgid "First match"
+#~ msgstr "erste Partie"
+
+#~ msgid "Last match"
+#~ msgstr "letzte Partie"
+
+#~ msgid "Times and Komi"
+#~ msgstr "Bedenkzeit und Komi"
+
+#~ msgid "Call for Participation"
+#~ msgstr "Einladung zur neuen Saison"
+
+#~ msgid "League No."
+#~ msgstr "Liga Nr."
+
+#~ msgid "Base Time"
+#~ msgstr "Bedenkzeit"
+
+#~ msgid "Start"
+#~ msgstr "Beginn "
+
+#~ msgid "Participants"
+#~ msgstr "Teilnehmer"
+
+#~ msgid "Stage"
+#~ msgstr "Status"
+
+#~ msgid "Edit Season"
+#~ msgstr "Saison Bearbeiten "
+
+#~ msgid "Create Season"
+#~ msgstr "Saison Anlegen"
+
+#~ msgid "Leagues"
+#~ msgstr "Ligen"
+
+#~ msgid "edit Season"
+#~ msgstr "bearbeite Saison"
+
+#~ msgid "invite Player"
+#~ msgstr "Spieler einladen"
+
+#~ msgid "add League"
+#~ msgstr "Liga hinzufügen"
+
+#~ msgid "edit League"
+#~ msgstr "bearbeite Liga "
+
+#~ msgid "configure Match Days"
+#~ msgstr "konfiguriere Spieltage"
+
+#~ msgid "edit Match Days"
+#~ msgstr "bearbeite Spieltage "
+
+#~ msgid "remove Match Days"
+#~ msgstr "lösche Spieltage"
+
+#~ msgid "create Schedule"
+#~ msgstr "Spielplan erstellen"
+
+#~ msgid "remove Schedule"
+#~ msgstr "Spielplan löschen"
+
+#~ msgid "activate Season"
+#~ msgstr "Saison aktivieren"
+
+#~ msgid "Activate Season?"
+#~ msgstr "Saison aktivieren?"
+
+#~ msgid "This is the final step of a new season."
+#~ msgstr ""
+#~ "Mit diesem letzten Schritt wird die Erstellung einer neuen Saison "
+#~ "abgeschlossen."
+
+#~ msgid "All participating players will receive their match schedule."
+#~ msgstr "Allen Teilnehmern wird der Spielplan per email zugestellt."
+
+#~ msgid "Match Days of the Next Season"
+#~ msgstr "Spieltage der neuen Saison"
+
+#~ msgid "round"
+#~ msgstr "Runde"
+
+#~ msgid "date"
+#~ msgstr "Datum"
+
+#~ msgid "edit"
+#~ msgstr "bearbeiten"
+
+#~ msgid "Remove all Match Days?"
+#~ msgstr "Alle Spieltage löschen?"
+
+#~ msgid "These are all match days of the next season."
+#~ msgstr "Dies sind alle Spieltage der neuen Saison."
+
+#~ msgid "If deleted, you will have to renew the match day configuration."
+#~ msgstr ""
+#~ "Nach dem Löschen musst du die Spieltagkonfiguration erneut ausführen."
+
+#~ msgid "Edit Match Days"
+#~ msgstr "Bearbeite Spieltage"
+
+#~ msgid "Match Day Configuration"
+#~ msgstr "Konfiguration der Spieltage"
+
+#~ msgid "There are %NUMBER% matches scheduled for the next season."
+#~ msgstr "Es wurden %NUMBER% Partien für die nächsten Saison angesetzt."
+
+#~ msgid "No schedule found."
+#~ msgstr "Kein Spielplan gefunden."
+
+#~ msgid "Remove Schedule?"
+#~ msgstr "Spielplan Löschen?"
+
+#~ msgid "If deleted, you will have to renew the match schedule."
+#~ msgstr "Nach dem Löschen musst du den Spieltplan erneut erstellen."
+
+#~ msgid "Create Schedule?"
+#~ msgstr "Erstelle Spielplan?"
+
+#~ msgid "This will create a match plan for all players."
+#~ msgstr "Ein Spielplan für alle Teilnehmer wird erstellt."
+
+#~ msgid "Afterwards you will have to activate the new season."
+#~ msgstr "Danach muss die neue Saison noch aktiviert werden."
+
+#~ msgid "Edit Leagues"
+#~ msgstr " Liga Bearbeiten"
+
+#~ msgid "No league found."
+#~ msgstr "Keine Liga gefunden."
+
+#~ msgid "Id"
+#~ msgstr "ID"
+
+#~ msgid "No"
+#~ msgstr "Nr"
+
+#~ msgid "Edit League"
+#~ msgstr "Bearbeite Liga "
+
+#~ msgid "Add New League"
+#~ msgstr "Neue Liga hinzufügen"
+
+#~ msgid "Base time"
+#~ msgstr "Bedenkzeit"
+
+#~ msgid "Edit New Season"
+#~ msgstr "Neue Saison bearbeiten"
+
+#~ msgid "Create a New Season"
+#~ msgstr "Neue Saison anlegen"
+
+#~ msgid "Edit New Season's Leagues"
+#~ msgstr "Bearbeiten der Ligen der neuen Saison"
+
+#~ msgid "create matches"
+#~ msgstr "erstelle Partien"
+
+#~ msgid "in process"
+#~ msgstr "in Bearbeitung"
+
+#~ msgid "Create Leagues"
+#~ msgstr "Ligen anlegen"
+
+#~ msgid "Number of players accepted"
+#~ msgstr "Teilnehmeranzahl"
+
+#~ msgid "Number of assigned players"
+#~ msgstr "Anzahl zugeordneter Spieler"
+
+#~ msgid "Number of unassigned players"
+#~ msgstr "Anzahl Spieler ohne Zuordnung"
+
+#~ msgid "Due date"
+#~ msgstr "Termin"
+
+#~ msgid "Found %no% empty league(s)"
+#~ msgstr "%no% leere Ligen gefunden"
+
+#~ msgid "Unassigned Leagues"
+#~ msgstr "Ligen ohne Zuordnung"
+
+#~ msgid "No unassigned leagues found."
+#~ msgstr "Keine Ligen ohne Zuordnung gefunden."
+
+#~ msgid "ended"
+#~ msgstr "beendet"
+
+#~ msgid "ongoing"
+#~ msgstr "laufend"
+
+#~ msgid "will start soon"
+#~ msgstr "wird in Kürze beginnen"
+
+#~ msgid "Delete"
+#~ msgstr "Löschen"
+
+#~ msgid "Create"
+#~ msgstr "Anlegen"
+
+#~ msgid "The new season will automatically become active."
+#~ msgstr "Die neue Saision wird automatisch aktiviert."
+
+#~ msgid "No players found"
+#~ msgstr "Keine Spieler gefunden"
+
+#~ msgid "player's name"
+#~ msgstr "Spieler Name"
+
+#~ msgid "number of league"
+#~ msgstr "Liga-Nummer"
+
+#~ msgid "every %NUMBER% days"
+#~ msgstr "alle  %NUMBER% Tage"
+
+#~ msgid "every %NUMBER% weeks"
+#~ msgstr "alle %NUMBER% Wochen"
+
+#~ msgid "add new matchplan"
+#~ msgstr "Neuen Spielplan erzeugen"
+
+#~ msgid "Matchday course:"
+#~ msgstr "Turnus:"
+
+#~ msgid "weekly matchday"
+#~ msgstr "wöchentlicher Spieltag"
+
+#~ msgid "single match weekly"
+#~ msgstr "ein Spiel pro Woche"
+
+#~ msgid "Period:"
+#~ msgstr "Periode:"
+
+#~ msgid "three weeks"
+#~ msgstr "alle drei Wochen"
+
+#~ msgid "Start time"
+#~ msgstr "Uhrzeit"
+
+#~ msgid "Title:"
+#~ msgstr "Titel:"
+
+#~ msgid "Season ID"
+#~ msgstr "Saison ID"
+
+#~ msgid "Number:"
+#~ msgstr "Anzahl:"
+
+#~ msgid "Draw points:"
+#~ msgstr "Punkte für ein Unentschieden"
+
+#~ msgid "no draw"
+#~ msgstr "kein Unentschieden"
+
+#~ msgid "no tiebreak"
+#~ msgstr "kein Tiebreak"
+
+#~ msgid "Winner"
+#~ msgstr "Sieger"
+
+#~ msgid "No Winner"
+#~ msgstr "kein Sieger"
+
+#~ msgid "No Result"
+#~ msgstr "kein Ergebnis"
+
+#~ msgid "Go"
+#~ msgstr "Los!"
+
+#~ msgid "Change Colors"
+#~ msgstr "Farben tauschen"
+
+#~ msgid "Win by Points"
+#~ msgstr "Sieg nach Punkten"
+
+#~ msgid "Game Suspended"
+#~ msgstr "Spiel ausgesetzt"
+
+#~ msgid "Lost on Time"
+#~ msgstr "auf Zeit verloren "
+
+#~ msgid "no matches"
+#~ msgstr "Gesamtpartien"
+
+#~ msgid "status"
+#~ msgstr "Status"
+
+#~ msgid "open"
+#~ msgstr "offen"
+
+#~ msgid "leagues"
+#~ msgstr "Ligen"
+
+#~ msgid "match schedule"
+#~ msgstr "Spielplan"
+
+#~ msgid "yes"
+#~ msgstr "ja"
+
+#~ msgid "no"
+#~ msgstr "nein"
+
+#~ msgid "make matchplan"
+#~ msgstr "Spielplan erzeugen"
+
+#~ msgid "My"
+#~ msgstr "Mein"
+
+#~ msgid "schedule"
+#~ msgstr "Spielplan:"
+
+#~ msgid "white"
+#~ msgstr "Weiß"
+
+#~ msgid "black"
+#~ msgstr "Schwarz"
+
+#~ msgid "My match vs %name%"
+#~ msgstr "Meine Partie gegen %name%"
+
+#~ msgid "KGS name: %name%"
+#~ msgstr "KGS Name: %name%"
+
+#~ msgid "my color is %color%"
+#~ msgstr "meine Spielfarbe ist %color%"
+
+#~ msgid "Nakade League Match vs %name%"
+#~ msgstr "Nakade Liga Partie gegen %name%"
+
+#~ msgid "waiting for activating"
+#~ msgstr "warte auf Aktivierung"
+
+#~ msgid "leagues missing"
+#~ msgstr "Ligen fehlen"
+
+#~ msgid "players missing"
+#~ msgstr "Spieler fehlen"
+
+#~ msgid "match schedule missing"
+#~ msgstr "Spielplan fehlt"
+
+#~ msgid "remove from league"
+#~ msgstr "von der Liga entfernen"
+
+#~ msgid "remove"
+#~ msgstr "entfernen"
+
+#~ msgid "add new player"
+#~ msgstr "Neuen Spieler hinzufügen"
+
+#~ msgid "Games"
+#~ msgstr "Spiele"
+
+#~ msgid "G"
+#~ msgstr "S"
+
+#~ msgid "P"
+#~ msgstr "P"
+
+#~ msgid "Tiebreaker"
+#~ msgstr "Tie-Breaker"
+
+#~ msgid "TB"
+#~ msgstr "TB"
+
+#~ msgid "my color"
+#~ msgstr "Meine Spielfarbe"
+
+#~ msgid "Suspended games"
+#~ msgstr "ausgesetzte Partien"
+
+#~ msgid "GS"
+#~ msgstr "AP"
+
+#~ msgid "First Tiebreaker"
+#~ msgstr "erster Tie-Breaker"
+
+#~ msgid "Second Tiebreaker"
+#~ msgstr "zweiter Tie-Breaker"
+
+#~ msgid "Third Tiebreaker"
+#~ msgstr "dritter Tie-Breaker"
+
+#~ msgid "results"
+#~ msgstr "Ergebnisse"
+
+#~ msgid "No open results found"
+#~ msgstr "keine offenen Ergebnisse gefunden"
+
+#~ msgid "All open results"
+#~ msgstr "Alle offenen Ergebnisse"
+
+#~ msgid "Enter Result"
+#~ msgstr "Ergebnis eintragen"
+
+#~ msgid "my open results"
+#~ msgstr "Meine offenen Ergebnisse"
+
+#~ msgid "My results"
+#~ msgstr "Meine Ergebnisse"
+
+#~ msgid "No results found"
+#~ msgstr "Keine Ergebnisse gefunden"
+
+#~ msgid "my results"
+#~ msgstr "Meine Ergebnisse"
+
+#~ msgid "next season"
+#~ msgstr "nächste Saison"
+
+#~ msgid "edit match date"
+#~ msgstr "Spieltag bearbeiten"
+
+#~ msgid "Players:"
+#~ msgstr "Spieler:"
+
+#~ msgid "First Match:"
+#~ msgstr "Erste Partie:"
+
+#~ msgid "Last Match:"
+#~ msgstr "Letzte Partie:"
+
+#~ msgid "Add Player to Season No. "
+#~ msgstr "Spieler für Saison Nr. "
+
+#~ msgid "No Season found."
+#~ msgstr "Keine Saison gefunden."
+
+#~ msgid "Actual Season "
+#~ msgstr "Aktuelle Saison"
+
+#~ msgid "Last Season"
+#~ msgstr "Letzte Saison"
+
+#~ msgid "Open Matches:"
+#~ msgstr "Offene Partien:"
+
+#~ msgid "Last Game:"
+#~ msgstr "Letzte Partie:"
+
+#~ msgid "Add League to Season No. "
+#~ msgstr "Liga für Saison Nr. "
+
+#~ msgid "Add players to new season"
+#~ msgstr "Spieler zur neuen Saison hinzufügen "
+
+#~ msgid "New Season: "
+#~ msgstr "Neue Saison"
+
+#~ msgid "Season begin:"
+#~ msgstr "Saisonstart:"
+
+#~ msgid "Season Start"
+#~ msgstr "Saisonbeginn"
+
+#~ msgid "No actual season found."
+#~ msgstr "Keine laufende Saison gefunden."
+
+#~ msgid "Open Results"
+#~ msgstr "Offene Ergebnisse"
+
+#~ msgid "Top League"
+#~ msgstr "Top-Liga"
+
+#~ msgid "Hahn"
+#~ msgstr "Hahn"
+
+#~ msgid "Value is required and can't be empty"
+#~ msgstr "Eine Auswahl ist notwendig"
+
+#~ msgid "The input does not appear to be a float"
+#~ msgstr "Die Eingabe ist keine Fließkommazahl"
+
+#~ msgid "Neues Resultat eintragen"
+#~ msgstr "Neues Ergebnis  eintragen"
+
+#~ msgid "Make New Season: No "
+#~ msgstr "Neue Saison anlegen: Nr."
+
+#~ msgid "Skeleton Application"
+#~ msgstr "Tutorial"

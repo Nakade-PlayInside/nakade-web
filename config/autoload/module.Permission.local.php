@@ -54,6 +54,9 @@ return array(
             'Arbitration\Controller\Arbitration' => RoleInterface::ROLE_REFEREE,
 
             'Stats\Controller\Index' => RoleInterface::ROLE_GUEST,
+            'Certificate\Controller\Index' => RoleInterface::ROLE_GUEST,
+
+
 
         )
     ),

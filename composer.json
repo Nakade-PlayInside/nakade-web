@@ -23,6 +23,7 @@
         "zendframework/zendframework": "2.2.0",
         "doctrine/common": "2.3.0",
         "zendframework/zendpdf": "2.0.2",
+        "dino/dompdf-module": "dev-master",
         "zendframework/zendservice-recaptcha": "2.0.1",
         "doctrine/doctrine-orm-module": "0.7.0",
         "zf-commons/zfc-rbac": "dev-master"
