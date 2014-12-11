@@ -120,7 +120,7 @@ class ContingencyTableFactory {
 
     private function evalNotAWin(Result $result)
     {
-        if ($result->getResultType() == ResultInterface::SUSPENDED) {
+        if ($result->getResultType()->getId() == ResultInterface::SUSPENDED) {
             return self::MATCH_SUSPENDED;
         }
 
