@@ -26,7 +26,7 @@ return array(
     'router' => array(
         'routes' => array(
 
-            'stats' => array(
+            'certificate' => array(
                 'type'    => 'segment',
                 'options' => array(
                     'route'    => '/certificate[/:action][/:id]',

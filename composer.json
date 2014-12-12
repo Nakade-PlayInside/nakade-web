@@ -1,4 +1,9 @@
 {
+  "config": {
+        "github-protocols": ["https", "git"],
+        "process-timeout": 900
+  },
+
   "repositories": [
     {
         "type": "composer",
@@ -10,9 +15,9 @@
            "name": "highcharts",
             "version": "4.0.4",
             "source": {
-                "url": "git://github.com/highslide-software/highcharts.com.git",
+                "url": "git://github.com/highslide-software/highcharts.com",
                 "type": "git",
-                "reference": "tags/highstock-v4.0.4"
+                "reference": "tags/v4.0.4"
             }
         }
     }
