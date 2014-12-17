@@ -4,7 +4,7 @@ namespace Stats\Controller;
 use Nakade\Abstracts\AbstractController;
 use Nakade\Services\PlayersTableService;
 use Nakade\Pagination\ItemPagination;
-use Stats\Calculation\ContingencyTableFactory;
+use DOMPDFModule\View\Model\PdfModel;
 use Stats\Calculation\MatchStatsFactory;
 use Stats\Pagination\TournamentPagination;
 use Stats\Services\CrossTableService;
@@ -257,6 +257,47 @@ class IndexController extends AbstractController
                 'paginator' => $pagination->getPagination($page),
             )
         );
+    }
+
+    /**
+     * @return PdfModel|ViewModel
+     */
+    public function certificateAction()
+    {
+        $userId = $this->identity()->getId();
+
+        $mapper = $this->getRepository()->getMapper(RepositoryService::STATS_MAPPER);
+
+        /* @var $user \User\Entity\User */
+        $user = $mapper->getUserById($userId);
+
+        $name = $user->getCertificateName();
+
+
+        $stats = $this->getService()->getPlayerStats($userId);
+
+        $pdf = new PdfModel();
+        $pdf->setOption('filename', 'certificate'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"
+        $pdf->setOption('paperOrientation', 'portrait'); // Defaults to "portrait"
+
+        // To set view variables
+        $pdf->setVariables(array(
+            'winner' => $name,
+            'award' => '2nd Place',
+            'tournament' => '4. Nakade League 2015 - 2. Division'
+        ));
+
+        return $pdf;
+        return new ViewModel(
+            array(
+                'winner' => 'Stephan Grohel-Lornemann',
+                'award' => '2nd Place',
+                'tournament' => '4. Nakade League 2015 - 2. Division'
+
+            )
+        );
+        //  return $pdf;
     }
 
 

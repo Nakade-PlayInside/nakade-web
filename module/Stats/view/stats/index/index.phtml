@@ -51,7 +51,7 @@ $this->headTitle('Stats');
     <?php if ($player->getChampion()->getNoGold() > 0): ?>
     <li><?php foreach ($player->getChampion()->getGold() as $tournament) :?>
         <a  title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::CHAMPION); ?>"
-            href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
+            href="<?php  echo $this->url('stats', array('action' => 'certificate', 'id' => $tournament->getId())); ?>"><div
                 class="nakade-16 crown-gold-16"></div>
         </a>
         <?php endforeach;?>
