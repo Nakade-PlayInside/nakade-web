@@ -1,39 +1,121 @@
 <?php
 $this->plugin('translate')->setTranslatorTextDomain('Certificate');
 $this->headTitle('Stats');
-/* @var $player \Stats\Entity\PlayerStats */
-/* @var $tournament \Season\Entity\League */
+
+$title = $this->translate("Certificate");
+$restTitle= substr( $title, 1 );
+$firstLetter= $title[0];
+
 ?>
 
 
-<?php $this->placeholder('noSeason')->captureStart();?>
-   <h1><?php echo $this->translate("Certificate of Excellence"); ?></h1>
-   <h3>Awarded To</h3>
-    <h2>Heinz Pooh</h2>
+    <style type="text/css">
 
-    For Winning the 2. Division
-
-    Of the 4. Nakade League 2015
-
-    //in the Game of Go
-
-    13th November 2015
-    Dr. H. Maerz
-<?php $this->placeholder('noSeason')->captureEnd();?>
+        @font-face {
+            font-family: oldEnglish;
+            src: url('http://images.nakade.de/OLDENGL.TTF');
+        }
 
 
-<?php $this->placeholder('actual')->captureStart();?>
-<div class="widget">
+        div#certificate {
+            position: relative;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 16pt;
+            font-weight: normal;
+            width:100%;
+            display: block;
+            text-align: center;
+            border: 0;
+            white-space: nowrap;
+        }
 
+        div#certificate .watermark {
+            position: absolute;
+            top: 42%;
+            left:35%;
+            display: block;
+            width: 10em;
+            height: 10em;
+            opacity: .2;
+            z-index: -1;
+        }
+
+        #certificate .founder {
+            margin-top: 2em;
+            margin-bottom: 1em;
+        }
+
+        #certificate .awards {
+            margin-bottom: 2.5em !important;
+            margin-top: 2em !important;
+        }
+
+        #certificate .for {
+            margin: 3em 0;
+        }
+
+        #certificate .txt {
+            margin-top: 3em;
+            margin-bottom: 1em;
+        }
+
+        #certificate h1 {
+            font-family: DejaVu, Helvetica, Arial, sans-serif;
+            font-size: 5em;
+            margin:0;
+        }
+
+        #certificate h1 span {
+            color:  #57a900;
+            text-shadow: 0 0 1px #000;
+        }
+
+        #certificate .winner {
+            font-weight: bold;
+            font-size: 2.5em;
+            z-index: 100;
+        }
+
+        #certificate .place {
+            font-weight: bold;
+            font-size: 3em;
+            z-index: 100;
+        }
+
+        #certificate .tournament {
+            font-weight: bold;
+            font-size: 1.6em;
+        }
+
+        #certificate h3, h4 {
+            text-align: center;
+        }
+
+        div#certificate .signature {
+            position: absolute;
+            bottom: 2em;
+            left: 1.5em;
+            text-align: left;
+            font-size: 0.7em;
+        }
+    </style>
+
+
+<div id="certificate">
+    <div class="founder"><?php echo $this->translate("Nakade - The Game of Go Online"); ?></div>
+    <h1><span><?php echo $firstLetter; ?></span><?php echo $restTitle; ?></h1>
+    <div class="awards"><?php echo $this->translate("Awards"); ?></div>
+    <div class="winner"><?php echo $this->winner; ?></div>
+    <div class="for"><?php echo $this->translate("For"); ?></div>
+    <div class="place"><?php echo $this->award; ?></div>
+    <div class="txt"><?php echo $this->translate("Of The Go Tournament"); ?></div>
+    <div class="tournament"><?php echo $this->tournament; ?></div>
+    <div class="watermark">
+        <img src="http://images.nakade.de/go.jpg" height="100%" width="100%">
+    </div>
+    <div class="signature">
+        <div style="font-style: italic">13th November 2015</div>
+        <div class="name">Nakade - Online Go Tournaments</div>
+    </div>
 </div>
-<?php $this->placeholder('actual')->captureEnd(); ?>
-
-
-<?php
-
- if (true) {
-     echo $this->placeholder('noSeason');
- } else {
-     echo $this->placeholder('actual');
- }
 

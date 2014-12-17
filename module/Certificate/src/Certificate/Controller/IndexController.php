@@ -18,16 +18,29 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         $pdf = new PdfModel();
-        $pdf->setOption('filename', 'monthly-report'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption('filename', 'certificate'); // Triggers PDF download, automatically appends ".pdf"
         $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"
         $pdf->setOption('paperOrientation', 'portrait'); // Defaults to "portrait"
 
         // To set view variables
         $pdf->setVariables(array(
-            'message' => 'Hello'
+            'winner' => 'Stephan Grohel-Lornemann',
+            'award' => '2nd Place',
+            'tournament' => '4. Nakade League 2015 - 2. Division'
         ));
 
-        return $pdf;
+
+
+       return $pdf;
+       return new ViewModel(
+            array(
+                'winner' => 'Tina Maerz',
+                'award' => '2nd Place',
+                'tournament' => '4. Nakade League 2015 - 2. Division'
+
+            )
+        );
+      //  return $pdf;
     }
 
 
