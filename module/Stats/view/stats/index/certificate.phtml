@@ -105,7 +105,7 @@ $firstLetter= $title[0];
 <div id="certificate">
     <div class="founder"><?php echo $this->translate("Nakade - The Game of Go Online"); ?></div>
     <h1><span><?php echo $firstLetter; ?></span><?php echo $restTitle; ?></h1>
-    <div class="awards"><?php echo $this->translate("Awards"); ?></div>
+    <div class="awards"><?php echo $this->translate("Awarded To"); ?></div>
     <div class="winner"><?php echo $certificate->getName(); ?></div>
     <div class="for"><?php echo $this->translate("For"); ?></div>
     <div class="place"><?php echo $certificate->getAward(); ?></div>
@@ -121,7 +121,7 @@ $firstLetter= $title[0];
             $this->plugin('translate')->getTranslator()->getLocale()
             ); ?>
         </div>
-        <div class="name">Nakade - Online Go Tournaments</div>
+        <div class="name"><? echo $this->translate("Nakade - Online Go Tournaments");?></div>
     </div>
 </div>
 <?php else : ?>

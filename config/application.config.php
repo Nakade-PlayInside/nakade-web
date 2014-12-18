@@ -18,7 +18,6 @@ return array(
         'Arbitration',
         'Stats',
         'DOMPDFModule',
-        'Certificate',
 
         ),
     'module_listener_options' => array(
