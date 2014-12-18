@@ -6,9 +6,9 @@ $title = $this->translate("Certificate");
 $restTitle= substr( $title, 1 );
 $firstLetter= $title[0];
 
+/* @var $certificate \Stats\Entity\Certificate */
+
 ?>
-
-
     <style type="text/css">
 
         @font-face {
@@ -101,21 +101,31 @@ $firstLetter= $title[0];
     </style>
 
 
+<?php if (!is_null($this->certificate) && $this->certificate->hasAward()): ?>
 <div id="certificate">
     <div class="founder"><?php echo $this->translate("Nakade - The Game of Go Online"); ?></div>
     <h1><span><?php echo $firstLetter; ?></span><?php echo $restTitle; ?></h1>
     <div class="awards"><?php echo $this->translate("Awards"); ?></div>
-    <div class="winner"><?php echo $this->winner; ?></div>
+    <div class="winner"><?php echo $certificate->getName(); ?></div>
     <div class="for"><?php echo $this->translate("For"); ?></div>
-    <div class="place"><?php echo $this->award; ?></div>
+    <div class="place"><?php echo $certificate->getAward(); ?></div>
     <div class="txt"><?php echo $this->translate("Of The Go Tournament"); ?></div>
-    <div class="tournament"><?php echo $this->tournament; ?></div>
+    <div class="tournament"><?php echo $certificate->getTournamentInfo(); ?></div>
     <div class="watermark">
         <img src="http://images.nakade.de/go.jpg" height="100%" width="100%">
     </div>
     <div class="signature">
-        <div style="font-style: italic">13th November 2015</div>
+        <div style="font-style: italic"><?php echo $this->dateFormat(
+            new DateTime(), IntlDateFormatter::LONG, // date
+            IntlDateFormatter::NONE, // time
+            $this->plugin('translate')->getTranslator()->getLocale()
+            ); ?>
+        </div>
         <div class="name">Nakade - Online Go Tournaments</div>
     </div>
 </div>
-
+<?php else : ?>
+    <div id="certificate">
+        <div class="winner"><?php echo $this->translate('Nothing Awarded'); ?></div>
+    </div>
+<?php endif; ?>

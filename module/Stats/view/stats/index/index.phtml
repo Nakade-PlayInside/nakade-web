@@ -60,7 +60,7 @@ $this->headTitle('Stats');
     <?php if ($player->getChampion()->getNoSilver() > 0): ?>
     <li><?php foreach ($player->getChampion()->getSilver() as $tournament) :?>
         <a  title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::RUNNER_UP); ?>"
-            href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
+            href="<?php  echo $this->url('stats', array('action' => 'certificate', 'id' => $tournament->getId())); ?>"><div
                 class="nakade-16 crown-silver-16"></div>
         </a>
         <?php endforeach;?>
@@ -69,7 +69,7 @@ $this->headTitle('Stats');
     <?php if ($player->getChampion()->getNoBronze() > 0): ?>
     <li><?php foreach ($player->getChampion()->getBronze() as $tournament) :?>
         <a  title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::THIRD); ?>"
-            href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
+            href="<?php  echo $this->url('stats', array('action' => 'certificate', 'id' => $tournament->getId())); ?>"><div
                 class="nakade-16 crown-bronze-16"></div>
         </a>
         <?php endforeach;?>
@@ -78,8 +78,8 @@ $this->headTitle('Stats');
     <?php if ($player->getCup()->getNoGold() > 0): ?>
     <li><?php foreach ($player->getCup()->getGold() as $tournament) :?>
         <a title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::CHAMPION); ?>"
-           href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
-                class="nakade-16 cup-gold-16"></div>
+           href="<?php  echo $this->url('stats', array('action' => 'certificate', 'id' => $tournament->getId())); ?>">
+            <div class="nakade-16 cup-gold-16"></div>
         </a>
         <?php endforeach;?>
     </li>
@@ -87,8 +87,8 @@ $this->headTitle('Stats');
     <?php if ($player->getCup()->getNoSilver() > 0): ?>
     <li><?php foreach ($player->getCup()->getSilver() as $tournament) :?>
         <a title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::RUNNER_UP); ?>"
-           href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
-                class="nakade-16 cup-silver-16"></div>
+           href="<?php  echo $this->url('stats', array('action' => 'certificate', 'id' => $tournament->getId())); ?>">
+            <div class="nakade-16 cup-silver-16"></div>
         </a>
         <?php endforeach;?>
     </li>
@@ -96,8 +96,8 @@ $this->headTitle('Stats');
     <?php if ($player->getCup()->getNoBronze() > 0): ?>
     <li><?php foreach ($player->getCup()->getBronze() as $tournament) :?>
         <a title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::THIRD); ?>"
-           href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
-                class="nakade-16 cup-bronze-16"></div>
+           href="<?php  echo $this->url('stats', array('action' => 'certificate', 'id' => $tournament->getId())); ?>">
+            <div class="nakade-16 cup-bronze-16"></div>
         </a>
         <?php endforeach;?>
     </li>
@@ -105,8 +105,8 @@ $this->headTitle('Stats');
     <?php if ($player->getMedal()->getNoGold() > 0): ?>
     <li><?php foreach ($player->getMedal()->getGold() as $tournament) :?>
         <a title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::CHAMPION); ?>"
-           href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
-                class="nakade-16 medal-gold-16"></div>
+           href="<?php  echo $this->url('stats', array('action' => 'certificate', 'id' => $tournament->getId())); ?>">
+            <div class="nakade-16 medal-gold-16"></div>
         </a>
         <?php endforeach;?>
     </li>
@@ -114,8 +114,8 @@ $this->headTitle('Stats');
     <?php if ($player->getMedal()->getNoSilver() > 0): ?>
     <li><?php foreach ($player->getMedal()->getSilver() as $tournament) :?>
         <a title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::RUNNER_UP); ?>"
-           href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
-                class="nakade-16 medal-silver-16"></div>
+           href="<?php  echo $this->url('stats', array('action' => 'certificate', 'id' => $tournament->getId())); ?>">
+            <div class="nakade-16 medal-silver-16"></div>
         </a>
         <?php endforeach;?>
     </li>
@@ -123,8 +123,8 @@ $this->headTitle('Stats');
     <?php if ($player->getMedal()->getNoBronze() > 0): ?>
     <li><?php foreach ($player->getMedal()->getBronze() as $tournament) :?>
         <a title="<? echo $this->achievementTitle($tournament, \Stats\View\Helper\AchievementTitle::THIRD); ?>"
-           href="<?php  echo $this->url('stats', array('action' => 'table', 'id' => $tournament->getId())); ?>"><div
-                class="nakade-16 medal-bronze-16"></div>
+           href="<?php  echo $this->url('stats', array('action' => 'certificate', 'id' => $tournament->getId())); ?>">
+            <div class="nakade-16 medal-bronze-16"></div>
         </a>
         <?php endforeach;?>
     <?php endif; ?>

@@ -118,7 +118,7 @@ class CertificateFactory extends AbstractTranslation implements EventTypeInterfa
     {
         $details = '';
         if ($this->isLeague()) {
-            sprintf('%s. %s',
+            $details = sprintf('%s. %s',
                 $this->getLeague()->getNumber(),
                 $this->translate('Division')
             );
