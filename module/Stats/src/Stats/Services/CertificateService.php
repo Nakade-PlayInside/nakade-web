@@ -8,14 +8,8 @@
 
 namespace Stats\Services;
 
-use League\Entity\Player;
-use Season\Entity\League;
-use Stats\Calculation\AchievementStatsFactory;
-use Zend\ServiceManager\FactoryInterface;
+use Stats\Calculation\CertificateFactory;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\I18n\Translator\Translator;
-use Zend\I18n\Translator\TranslatorAwareInterface;
-
 
 /**
  * Class CertificateService
@@ -27,7 +21,6 @@ class CertificateService extends AbstractStatsService
 {
     private $standings;
     private $factory;
-    private $translator;
 
     /**
      * @param ServiceLocatorInterface $services
@@ -41,80 +34,35 @@ class CertificateService extends AbstractStatsService
 
         $this->repository = $services->get('Stats\Services\RepositoryService');
         $this->standings  = $services->get('Nakade\Services\PlayersTableService');
-        $this->factory = new AchievementStatsFactory();
+
+
+        $config  = $services->get('config');
+
+        //text domain
+        $textDomain = isset($config['Stats']['text_domain']) ?
+            $config['Stats']['text_domain'] : null;
+
+        $translator = $services->get('translator');
+        $this->factory = new CertificateFactory($translator, $textDomain);
 
         return $this;
-    }
-
-    public function evalAward($userId, $leagueId)
-    {
-
-        $league = $this->getLeague($leagueId);
-        $matches = $this->getMatchesByLeague($league);
-        $table = $this->getTable($matches);
-        $player = $this->getPlayer($table, $userId);
 
     }
 
-    public function getName(Player $player)
+    public function getCertificate($userId, $leagueId)
     {
-        return $player->getUser()->getCertificateName();
-    }
 
-    public function getTournamentInfo(League $league)
-    {
-        $info = sprintf('%s. %s %s %s',
-            $league->getSeason()->getNumber(),
-            $league->getSeason()->getAssociation()->getName(),
-            $this->getTournamentType($league),
-            $league->getSeason()->getStartDate()->format('Y'),
-            $league->getNumber()
-        );
+        $matches = $this->getMapper()->getMatchesByTournament($leagueId);
 
-        if ($this->hasDetails($league)) {
-            $info .= ' - ' . $this->getLeagueDetails($league);
-        }
-        return $info;
-    }
-
-    private function getTournamentType(League $league)
-    {
-        $type = $league->getSeason()->getAssociation()->getType()->getId();
-        $info = $this->translate('Tournament');
-
-        if ($type==1) {
-            $info = $this->translate('League');
+        //no certificates for ongoing tournaments
+        if (empty($matches) || $this->isOngoing($matches)) {
+            return null;
         }
 
-        return $info;
-    }
+        $league = $this->getLeagueMapper()->getLeagueById($leagueId);
+        $player = $this->getPlayer($matches, $userId);
 
-    private function getLeagueDetails(League $league)
-    {
-        $details = '';
-        if ($this->hasDetails($league)) {
-            sprintf('%s. %s',
-                $league->getNumber(),
-                $this->translate('Division')
-            );
-        }
-
-        return $details;
-    }
-
-    private function hasDetails(League $league)
-    {
-        return $league->getSeason()->getAssociation()->getType()->getId() == 1;
-    }
-
-    /**
-     * @param int $leagueId
-     *
-     * @return League
-     */
-    private function getLeague($leagueId)
-    {
-        return $this->getLeagueMapper()->getLeagueById($leagueId);
+        return $this->getFactory()->getCertificate($league, $player);
     }
 
     /**
@@ -135,33 +83,15 @@ class CertificateService extends AbstractStatsService
     }
 
     /**
-     * @param League $league
-     *
-     * @return array
-     */
-    private function getMatchesByLeague(League $league)
-    {
-        return $this->getMapper()->getMatchesByTournament($league->getId());
-    }
-
-    /**
      * @param array $matches
-     *
-     * @return array
-     */
-    private function getTable(array $matches)
-    {
-        return $this->getPlayerTableService()->getTable($matches);
-    }
-
-    /**
-     * @param array $table
      * @param int $userId
      *
      * @return \League\Entity\Player|null
      */
-    private function getPlayer(array $table, $userId)
+    private function getPlayer(array $matches, $userId)
     {
+        $table = $this->getPlayerTableService()->getTable($matches);
+
         /* @var  $player \League\Entity\Player */
         foreach ($table as $player) {
 
@@ -181,77 +111,11 @@ class CertificateService extends AbstractStatsService
     }
 
     /**
-     * @return AchievementStatsFactory
+     * @return CertificateFactory
      */
     public function getFactory()
     {
         return $this->factory;
     }
-
-
-
-    /**
-     * @param Translator $translator
-     *
-     * @param string     $textDomain
-     *
-     * @return Translator|TranslatorAwareInterface
-     */
-    public function setTranslator(Translator $translator = null, $textDomain = null)
-    {
-        if (isset($translator)) {
-            $this->translator=$translator;
-        }
-
-        if (isset($textDomain)) {
-            $this->textDomain=$textDomain;
-        }
-        return $translator;
-    }
-
-    /**
-     * Returns translator used in object
-     *
-     * @return Translator
-     */
-    public function getTranslator()
-    {
-        return $this->translator;
-    }
-
-    /**
-     * Checks if the object has a translator
-     *
-     * @return bool
-     */
-    public function hasTranslator()
-    {
-        return isset($this->translator);
-    }
-
-
-    /**
-     * Helper for i18N. If a translator is set to the controller, the
-     * message is translated.
-     *
-     * @param string $message
-     *
-     * @return string
-     */
-    public function translate($message)
-    {
-
-        $translator = $this->getTranslator();
-        if (is_null($translator)) {
-            return $message;
-        }
-
-        return $translator->translate(
-            $message,
-            $this->getTranslatorTextDomain()
-        );
-
-    }
-
 
 }
