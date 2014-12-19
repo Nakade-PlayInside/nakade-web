@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-11 10:09+0100\n"
-"PO-Revision-Date: 2014-12-11 10:09+0100\n"
+"POT-Creation-Date: 2014-12-18 14:28+0100\n"
+"PO-Revision-Date: 2014-12-18 14:28+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -14,6 +14,23 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../src/Stats/Calculation/CertificateFactory.php:77
+msgid "Place"
+msgstr ""
+
+#: ../src/Stats/Calculation/CertificateFactory.php:106
+msgid "Tournament"
+msgstr ""
+
+#: ../src/Stats/Calculation/CertificateFactory.php:108
+#: ../src/Stats/View/Helper/AchievementTitle.php:25
+msgid "League"
+msgstr ""
+
+#: ../src/Stats/Calculation/CertificateFactory.php:123
+msgid "Division"
+msgstr ""
 
 #: ../src/Stats/View/Helper/Achievement.php:32
 msgid "Champion"
@@ -27,10 +44,6 @@ msgstr ""
 msgid "Third"
 msgstr ""
 
-#: ../src/Stats/View/Helper/AchievementTitle.php:25
-msgid "League"
-msgstr ""
-
 #: ../view/partial/tournament.phtml:7
 msgid "%NAME% League - %NUMBER%. Season"
 msgstr ""
@@ -38,10 +51,6 @@ msgstr ""
 #: ../view/partial/tournament.phtml:18
 #: ../view/partial/pagination.phtml:6
 msgid "previous"
-msgstr ""
-
-#: ../view/partial/tournament.phtml:33
-msgid "Tournament"
 msgstr ""
 
 #: ../view/partial/pagination.phtml:17
@@ -191,6 +200,34 @@ msgstr ""
 #: ../view/stats/index/defeat.phtml:65
 #: ../view/stats/index/match.phtml:66
 msgid "Draws"
+msgstr ""
+
+#: ../view/stats/index/certificate.phtml:5
+msgid "Certificate"
+msgstr ""
+
+#: ../view/stats/index/certificate.phtml:106
+msgid "Nakade - The Game of Go Online"
+msgstr ""
+
+#: ../view/stats/index/certificate.phtml:108
+msgid "Awarded To"
+msgstr ""
+
+#: ../view/stats/index/certificate.phtml:110
+msgid "For"
+msgstr ""
+
+#: ../view/stats/index/certificate.phtml:112
+msgid "Of The Go Tournament"
+msgstr ""
+
+#: ../view/stats/index/certificate.phtml:124
+msgid "Nakade - Online Go Tournaments"
+msgstr ""
+
+#: ../view/stats/index/certificate.phtml:129
+msgid "Nothing Awarded"
 msgstr ""
 
 #: ../view/stats/index/defeat.phtml:7

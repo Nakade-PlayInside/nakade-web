@@ -78,6 +78,8 @@ return array(
                 'Stats\Services\AchievementService',
             'Stats\Services\CrossTableService' =>
                 'Stats\Services\CrossTableService',
+            'Stats\Services\CertificateService' =>
+                'Stats\Services\CertificateService',
         ),
     ),
 

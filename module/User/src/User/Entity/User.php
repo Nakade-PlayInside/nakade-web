@@ -96,6 +96,25 @@ class User extends UserModel implements UserInterface, RoleInterface
     }
 
     /**
+     * get name for certificates depending on name's length
+     *
+     * @return string
+     */
+    public function getCertificateName()
+    {
+        $name = $this->getName();
+
+        if (strlen($name) > self::CERTIFICATE_NAME_LENGTH) {
+            $name = sprintf('%s. %s',
+                ucfirst($this->firstName[0]),
+                ucfirst($this->lastName)
+            );
+        }
+
+        return $name;
+    }
+
+    /**
      * @param string $passwordPlain
      */
     public function setPasswordPlain($passwordPlain)

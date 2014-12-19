@@ -12,6 +12,19 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class StatsMapper extends AbstractMapper
 {
+
+    /**
+     * @param int $uid
+     *
+     * @return User
+     */
+    public function getUserById($uid)
+    {
+        return $this->getEntityManager()
+            ->getRepository('User\Entity\User')
+            ->find($uid);
+    }
+
     /**
      * @param int $uid
      *

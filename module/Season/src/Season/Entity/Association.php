@@ -102,15 +102,15 @@ class Association
     }
 
     /**
-     * @param int $type
+     * @param EventType $type
      */
-    public function setType($type)
+    public function setType(EventType $type)
     {
         $this->type = $type;
     }
 
     /**
-     * @return int
+     * @return EventType
      */
     public function getType()
     {

@@ -17,6 +17,7 @@ return array(
         'Support',
         'Arbitration',
         'Stats',
+        'DOMPDFModule',
 
         ),
     'module_listener_options' => array(

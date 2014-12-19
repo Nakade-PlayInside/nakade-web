@@ -44,14 +44,6 @@ class CrossTableService extends AbstractStatsService
     }
 
     /**
-     * @return  \League\Mapper\LeagueMapper;
-     */
-    private function getLeagueMapper()
-    {
-        return $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
-    }
-
-    /**
      * @param int $leagueId
      *
      * @return array

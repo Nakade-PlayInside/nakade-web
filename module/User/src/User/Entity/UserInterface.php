@@ -4,6 +4,8 @@ namespace User\Entity;
 interface UserInterface
 {
 
+    const CERTIFICATE_NAME_LENGTH = 25;
+
     /**
      * Returns the email
      *

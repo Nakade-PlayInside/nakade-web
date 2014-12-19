@@ -1,23 +1,16 @@
 <?php
 namespace Stats\Controller;
 
-use Nakade\Abstracts\AbstractController;
-use Nakade\Services\PlayersTableService;
 use Nakade\Pagination\ItemPagination;
-use Stats\Calculation\ContingencyTableFactory;
-use Stats\Calculation\MatchStatsFactory;
+use DOMPDFModule\View\Model\PdfModel;
 use Stats\Pagination\TournamentPagination;
-use Stats\Services\CrossTableService;
-use Stats\Services\RepositoryService;
 use Zend\View\Model\ViewModel;
 /**
  *
  * @package Stats\Controller
  */
-class IndexController extends AbstractController
+class IndexController extends DefaultController
 {
-    private $tableService;
-    private $crossTableService;
 
     /**
      *
@@ -26,12 +19,9 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         //todo: caching of factory results
-        $userId = $this->identity()->getId();
-        $stats = $this->getService()->getPlayerStats($userId);
-
         return new ViewModel(
             array(
-                'player' => $stats,
+                'player' => $this->getPlayerStats(),
             )
         );
     }
@@ -44,10 +34,7 @@ class IndexController extends AbstractController
     {
         //todo: caching of factory results
         $page = (int) $this->params()->fromRoute('id', 1);
-
-        $userId = $this->identity()->getId();
-        /* @var $stats \Stats\Entity\PlayerStats */
-        $stats = $this->getService()->getPlayerStats($userId);
+        $stats = $this->getPlayerStats();
 
         $tournaments = $stats->getTournaments();
         $pagination = new ItemPagination($tournaments);
@@ -68,19 +55,16 @@ class IndexController extends AbstractController
     {
         $lid  = $this->params()->fromRoute('id', null);
 
-        $userId = $this->identity()->getId();
-
         //todo: caching of factory results
-        /* @var $stats \Stats\Entity\PlayerStats */
-        $stats = $this->getService()->getPlayerStats($userId);
+        $stats = $this->getPlayerStats();
         $tournaments = $stats->getTournaments();
 
         $pagination =  new TournamentPagination($tournaments);
         $pagination->setCurrentPageByItemId($lid);
 
         /* @var $league \Season\Entity\League */
-        $league =  $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER)->getLeagueById($lid);
-        $matches = $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER)->getMatchesByLeague($lid);
+        $league =  $this->getLeagueMapper()->getLeagueById($lid);
+        $matches = $this->getLeagueMapper()->getMatchesByLeague($lid);
 
         $isOngoing = $this->getService()->getAchievement()->isOngoing($matches);
         $league->setIsOngoing($isOngoing);
@@ -103,12 +87,10 @@ class IndexController extends AbstractController
     {
         $lid  = $this->params()->fromRoute('id', 1);
         //todo: caching of factory results
-        /* @var $league \Season\Entity\League */
-        $league =  $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER)->getLeagueById($lid);
 
         return new ViewModel(
             array(
-                'league' => $league,
+                'league' => $this->getLeagueMapper()->getLeagueById($lid),
                 'table'   => $this->getCrossTableService()->getTable($lid),
             )
         );
@@ -123,16 +105,9 @@ class IndexController extends AbstractController
     {
         $page = (int) $this->params()->fromRoute('id', 1);
         //todo: caching of factory results
-        $userId = $this->identity()->getId();
-        /* @var $stats \Stats\Entity\PlayerStats */
-        $stats = $this->getService()->getPlayerStats($userId);
 
-        /* @var $mapper \Stats\Mapper\StatsMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::STATS_MAPPER);
-
-        $matches = $mapper->getMatchStatsByUser($userId);
-        $factory = new MatchStatsFactory($matches, $userId);
-        $matchStats = $factory->getMatchStats();
+        $stats = $this->getPlayerStats();
+        $matchStats = $this->getMatchStats();
 
         $myGames = $stats->getMatches();
         $pagination = new ItemPagination($myGames);
@@ -156,9 +131,7 @@ class IndexController extends AbstractController
     {
         $page = (int) $this->params()->fromRoute('id', 1);
         //todo: caching of factory results
-        $userId = $this->identity()->getId();
-        /* @var $stats \Stats\Entity\PlayerStats */
-        $stats = $this->getService()->getPlayerStats($userId);
+        $stats = $this->getPlayerStats();
 
         $myGames = $stats->getConsecutiveWins();
         $pagination = new ItemPagination($myGames);
@@ -180,16 +153,8 @@ class IndexController extends AbstractController
     {
         $page = (int) $this->params()->fromRoute('id', 1);
         //todo: caching of factory results
-        $userId = $this->identity()->getId();
-        /* @var $stats \Stats\Entity\PlayerStats */
-        $stats = $this->getService()->getPlayerStats($userId);
-
-        /* @var $mapper \Stats\Mapper\StatsMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::STATS_MAPPER);
-
-        $matches = $mapper->getMatchStatsByUser($userId);
-        $factory = new MatchStatsFactory($matches, $userId);
-        $matchStats = $factory->getMatchStats();
+        $stats = $this->getPlayerStats();
+        $matchStats = $this->getMatchStats();
 
         $myGames = $stats->getWins();
         $pagination = new ItemPagination($myGames);
@@ -213,15 +178,8 @@ class IndexController extends AbstractController
     {
         $page = (int) $this->params()->fromRoute('id', 1);
         //todo: caching of factory results
-        $userId = $this->identity()->getId();
-        /* @var $stats \Stats\Entity\PlayerStats */
-        $stats = $this->getService()->getPlayerStats($userId);
-        /* @var $mapper \Stats\Mapper\StatsMapper */
-        $mapper = $this->getRepository()->getMapper(RepositoryService::STATS_MAPPER);
-
-        $matches = $mapper->getMatchStatsByUser($userId);
-        $factory = new MatchStatsFactory($matches, $userId);
-        $matchStats = $factory->getMatchStats();
+        $stats = $this->getPlayerStats();
+        $matchStats = $this->getMatchStats();
 
         $myGames = $stats->getLoss();
         $pagination = new ItemPagination($myGames);
@@ -244,9 +202,7 @@ class IndexController extends AbstractController
     {
         $page = (int) $this->params()->fromRoute('id', 1);
 
-        $userId = $this->identity()->getId();
-        /* @var $stats \Stats\Entity\PlayerStats */
-        $stats = $this->getService()->getPlayerStats($userId);
+        $stats = $this->getPlayerStats();
         $myGames = $stats->getDraws();
         $pagination = new ItemPagination($myGames);
 
@@ -259,37 +215,28 @@ class IndexController extends AbstractController
         );
     }
 
-
     /**
-     * @param PlayersTableService $tableService
+     * @return PdfModel|ViewModel
      */
-    public function setTableService(PlayersTableService $tableService)
+    public function certificateAction()
     {
-        $this->tableService = $tableService;
+        $userId = $this->identity()->getId();
+        $lid  = $this->params()->fromRoute('id', null);
+
+        $certificate = $this->getCertificateService()->getCertificate($userId, $lid);
+
+        $pdf = new PdfModel();
+        $pdf->setOption('filename', 'certificate'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"
+        $pdf->setOption('paperOrientation', 'portrait'); // Defaults to "portrait"
+
+        // To set view variables
+        $pdf->setVariables(array(
+            'certificate' => $certificate,
+        ));
+
+        return $pdf;
     }
 
-    /**
-     * @return PlayersTableService
-     */
-    public function getTableService()
-    {
-        return $this->tableService;
-    }
-
-    /**
-     * @param CrossTableService $crossTableService
-     */
-    public function setCrossTableService(CrossTableService $crossTableService)
-    {
-        $this->crossTableService = $crossTableService;
-    }
-
-    /**
-     * @return CrossTableService
-     */
-    public function getCrossTableService()
-    {
-        return $this->crossTableService;
-    }
 
 }

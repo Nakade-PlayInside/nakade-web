@@ -9,6 +9,7 @@ nbproject/
 .project
 .settings
 .ssh
+composer.phar
 
 #ignore cached data, vendor etc
 vendor/*

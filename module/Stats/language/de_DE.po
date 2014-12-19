@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-11 10:09+0100\n"
-"PO-Revision-Date: 2014-12-11 10:10+0100\n"
+"POT-Creation-Date: 2014-12-18 14:26+0100\n"
+"PO-Revision-Date: 2014-12-18 14:27+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -15,6 +15,23 @@ msgstr ""
 "X-Generator: Poedit 1.5.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../src/Stats/Calculation/CertificateFactory.php:77
+msgid "Place"
+msgstr "Platz"
+
+#: ../src/Stats/Calculation/CertificateFactory.php:106
+msgid "Tournament"
+msgstr "Turnier"
+
+#: ../src/Stats/Calculation/CertificateFactory.php:108
+#: ../src/Stats/View/Helper/AchievementTitle.php:25
+msgid "League"
+msgstr "Liga"
+
+#: ../src/Stats/Calculation/CertificateFactory.php:123
+msgid "Division"
+msgstr "Liga"
 
 #: ../src/Stats/View/Helper/Achievement.php:32
 msgid "Champion"
@@ -28,10 +45,6 @@ msgstr "Vize-Meister"
 msgid "Third"
 msgstr "Dritter"
 
-#: ../src/Stats/View/Helper/AchievementTitle.php:25
-msgid "League"
-msgstr "Liga"
-
 #: ../view/partial/tournament.phtml:7
 msgid "%NAME% League - %NUMBER%. Season"
 msgstr "%NAME% Liga - %NUMBER%. Saison"
@@ -40,10 +53,6 @@ msgstr "%NAME% Liga - %NUMBER%. Saison"
 #: ../view/partial/pagination.phtml:6
 msgid "previous"
 msgstr "zurück"
-
-#: ../view/partial/tournament.phtml:33
-msgid "Tournament"
-msgstr "Turnier"
 
 #: ../view/partial/pagination.phtml:17
 msgid "Actual Page"
@@ -193,6 +202,34 @@ msgstr "Disqualifikation"
 #: ../view/stats/index/match.phtml:66
 msgid "Draws"
 msgstr "Jigos"
+
+#: ../view/stats/index/certificate.phtml:5
+msgid "Certificate"
+msgstr "Urkunde"
+
+#: ../view/stats/index/certificate.phtml:106
+msgid "Nakade - The Game of Go Online"
+msgstr "Nakade - Das Portal für das Go-Spiel  Online"
+
+#: ../view/stats/index/certificate.phtml:108
+msgid "Awarded To"
+msgstr "Für den Außerordentlichen Erfolg Von"
+
+#: ../view/stats/index/certificate.phtml:110
+msgid "For"
+msgstr "Für das Erreichen des"
+
+#: ../view/stats/index/certificate.phtml:112
+msgid "Of The Go Tournament"
+msgstr "beim  Online Go-Turnier"
+
+#: ../view/stats/index/certificate.phtml:124
+msgid "Nakade - Online Go Tournaments"
+msgstr "Nakade - Online Go-Turniere"
+
+#: ../view/stats/index/certificate.phtml:129
+msgid "Nothing Awarded"
+msgstr "Keinen Erfolg erreicht"
 
 #: ../view/stats/index/defeat.phtml:7
 msgid "My Defeats"

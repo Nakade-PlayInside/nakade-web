@@ -45,6 +45,14 @@ abstract class AbstractStatsService implements FactoryInterface
         return $this->getRepository()->getMapper(RepositoryService::STATS_MAPPER);
     }
 
+    /**
+     * @return \League\Mapper\LeagueMapper
+     */
+    public function getLeagueMapper()
+    {
+        return $this->getRepository()->getMapper(RepositoryService::LEAGUE_MAPPER);
+    }
+
 
 
 }
