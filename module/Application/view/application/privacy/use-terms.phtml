@@ -4,6 +4,17 @@ $this->plugin('translate')->setTranslatorTextDomain('Application');
 $title = $this->translate("Terms of Use");
 $this->headTitle($title);
 ?>
+<div id="google_translate_element">
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'de',
+                includedLanguages: 'cs,de,el,en,es,fr,it,ja,ko,nl,pl,ru,tr,zh-CN',
+                layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT,
+                autoDisplay: false},
+            'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <div id="termsOfUse">
 <h1>Allgemeine Geschäftsbedingungen</h1>
 <h2>(Gültig seit 31.07.2014)</h2><br>
@@ -267,4 +278,5 @@ wir haben in diesem Fall das Recht, das Nutzungsverhältnis zu beenden.
 </dd>
 </dl>
 
+</div>
 </div>

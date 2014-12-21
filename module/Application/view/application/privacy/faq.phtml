@@ -3,6 +3,17 @@
 $title = $this->translate("FAQ");
 $this->headTitle($title);
 ?>
+<div id="google_translate_element">
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'de',
+                includedLanguages: 'cs,de,el,en,es,fr,it,ja,ko,nl,pl,ru,tr,zh-CN',
+                layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT,
+                autoDisplay: false},
+            'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <div id="termsOfUse">
 <h1><?php echo "FAQ"; ?></h1>
 <h2>(letzte Aktualisierung vom 01.09.2014)</h2><br>
@@ -44,4 +55,5 @@ $this->headTitle($title);
 </dd>
 
 
+</div>
 </div>
