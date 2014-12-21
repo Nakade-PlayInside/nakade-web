@@ -42,22 +42,20 @@ class PlayerPosition implements SortingInterface
         $sorting->sorting($playersInLeague);
 
         $previous=null;
+        $position = 1;
         /* @var  $player \League\Entity\Player */
         /* @var  $previous \League\Entity\Player */
         for ($i=0; $i < count($playersInLeague); $i++) {
 
             $player = $playersInLeague[$i];
-            if ($i==0) {
-                $player->setPosition($i+1);
-                continue;
+            if ($i>0) {
+                $previous = $playersInLeague[$i-1];
+                if ($this->positionByPoints($previous, $player)) {
+                    $position = $i+1;
+                }
             }
+            $player->setPosition($position);
 
-            $previous = $playersInLeague[$i-1];
-            if ($this->positionByPoints($previous, $player)) {
-                $player->setPosition($i+1);
-            } else {
-                $player->setPosition($i);
-            }
         }
 
         //sort by user input
