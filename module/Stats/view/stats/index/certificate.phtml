@@ -6,6 +6,9 @@ $title = $this->translate("Certificate");
 $restTitle= substr( $title, 1 );
 $firstLetter= $title[0];
 
+//the watermark img
+$img = "http://images.nakade.de/go.jpg";
+
 /* @var $certificate \Stats\Entity\Certificate */
 
 ?>
@@ -111,9 +114,12 @@ $firstLetter= $title[0];
     <div class="place"><?php echo $certificate->getAward(); ?></div>
     <div class="txt"><?php echo $this->translate("Of The Go Tournament"); ?></div>
     <div class="tournament"><?php echo $certificate->getTournamentInfo(); ?></div>
-    <div class="watermark">
-        <img src="http://images.nakade.de/go.jpg" height="100%" width="100%">
-    </div>
+    <?php if ( @fopen($img , "r")) :?>
+        <div class="watermark">
+            <img src="<?php echo $img; ?>" height="100%" width="100%">
+
+        </div>
+    <?php endif; ?>
     <div class="signature">
         <div style="font-style: italic"><?php echo $this->dateFormat(
             new DateTime(), IntlDateFormatter::LONG, // date
