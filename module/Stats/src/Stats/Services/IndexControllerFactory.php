@@ -29,6 +29,7 @@ class IndexControllerFactory implements FactoryInterface
         $table  = $serviceManager->get('Nakade\Services\PlayersTableService');
         $crossTblSrv = $serviceManager->get('Stats\Services\CrossTableService');
         $certificateSrv = $serviceManager->get('Stats\Services\CertificateService');
+        $egdSrv = $serviceManager->get('Nakade\Webservice\EGDService');
 
         $controller = new IndexController();
         $controller->setRepository($repository);
@@ -36,6 +37,7 @@ class IndexControllerFactory implements FactoryInterface
         $controller->setTableService($table);
         $controller->setCrossTableService($crossTblSrv);
         $controller->setCertificateService($certificateSrv);
+        $controller->setEgdService($egdSrv);
 
 
         return $controller;

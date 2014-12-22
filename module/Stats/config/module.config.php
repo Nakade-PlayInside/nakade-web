@@ -80,6 +80,8 @@ return array(
                 'Stats\Services\CrossTableService',
             'Stats\Services\CertificateService' =>
                 'Stats\Services\CertificateService',
+            'Nakade\Webservice\EGDService' =>
+                'Nakade\Webservice\EGDService',
         ),
     ),
 

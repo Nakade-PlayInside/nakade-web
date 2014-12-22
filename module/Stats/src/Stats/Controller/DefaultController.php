@@ -3,6 +3,7 @@ namespace Stats\Controller;
 
 use Nakade\Abstracts\AbstractController;
 use Nakade\Services\PlayersTableService;
+use Nakade\Webservice\EGDService;
 use Stats\Calculation\MatchStatsFactory;
 use Stats\Services\CertificateService;
 use Stats\Services\CrossTableService;
@@ -20,6 +21,7 @@ class DefaultController extends AbstractController
     protected $tableService;
     protected $crossTableService;
     protected $certificateService;
+    protected $egdService;
 
 
     /**
@@ -105,6 +107,22 @@ class DefaultController extends AbstractController
         $matches = $this->getStatsMapper()->getMatchStatsByUser($userId);
         $factory = new MatchStatsFactory($matches, $userId);
         return $factory->getMatchStats();
+    }
+
+    /**
+     * @param EGDService $egdService
+     */
+    public function setEgdService(EGDService $egdService)
+    {
+        $this->egdService = $egdService;
+    }
+
+    /**
+     * @return EGDService
+     */
+    public function getEgdService()
+    {
+        return $this->egdService;
     }
 
 

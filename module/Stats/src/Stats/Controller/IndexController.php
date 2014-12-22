@@ -18,6 +18,9 @@ class IndexController extends DefaultController
      */
     public function indexAction()
     {
+        $service = $this->getEgdService();
+        $service->findPlayer();
+
         //todo: caching of factory results
         return new ViewModel(
             array(
@@ -237,6 +240,7 @@ class IndexController extends DefaultController
 
         return $pdf;
     }
+
 
 
 }
