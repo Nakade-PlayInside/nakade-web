@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-23 12:53+0100\n"
-"PO-Revision-Date: 2014-12-23 12:53+0100\n"
+"POT-Creation-Date: 2014-12-23 12:55+0100\n"
+"PO-Revision-Date: 2014-12-23 12:55+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: en_US\n"
@@ -398,11 +398,11 @@ msgstr ""
 msgid "A copy of your request is sent to you."
 msgstr ""
 
-#: ../view/application/index/index.phtml:18
+#: ../view/application/index/index.phtml:21
 msgid "Nakade Tutorials"
 msgstr ""
 
-#: ../view/application/index/index.phtml:19
+#: ../view/application/index/index.phtml:22
 msgid "Use the playlist to find more tutorials"
 msgstr ""
 
