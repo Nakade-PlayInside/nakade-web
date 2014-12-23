@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-12 13:10+0100\n"
-"PO-Revision-Date: 2014-11-12 13:11+0100\n"
+"POT-Creation-Date: 2014-12-23 12:50+0100\n"
+"PO-Revision-Date: 2014-12-23 12:51+0100\n"
 "Last-Translator: Holger Maerz <holger@nakade.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -398,6 +398,14 @@ msgstr "Vielen Dank für deine Anfrage."
 msgid "A copy of your request is sent to you."
 msgstr "Eine Kopie deines Anliegens wurde an dich geschickt. "
 
+#: ../view/application/index/index.phtml:18
+msgid "Nakade Tutorials"
+msgstr "Nakade Lehrvideos"
+
+#: ../view/application/index/index.phtml:19
+msgid "Use the playlist to find more tutorials"
+msgstr "mehr Videos findest du unter der playlist "
+
 #: ../view/application/training/index.phtml:8
 msgid "Every Tuesday from 5:00 p.m. to 10:00 p.m."
 msgstr "Jeden Dienstag von 17h bis 22h."
@@ -442,7 +450,7 @@ msgstr "Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreib
 msgid "Privacy"
 msgstr "Datenschutz"
 
-#: ../view/application/privacy/rules.phtml:8
+#: ../view/application/privacy/rules.phtml:19
 msgid "Tournament and League Rules"
 msgstr "Turnier und Liga Regelwerk"
 
