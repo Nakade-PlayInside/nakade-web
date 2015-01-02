@@ -60,6 +60,8 @@ class MessageController extends AbstractController
     }
 
     /**
+     * showing message queue
+     *
      * @return \Zend\Http\Response|ViewModel
      */
     public function showInboxAction()

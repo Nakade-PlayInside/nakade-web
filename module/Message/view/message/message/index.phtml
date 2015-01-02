@@ -5,13 +5,7 @@ $this->headTitle("Messages");
 ?>
 
 <div class="widget">
-<h3><?php echo $this->translate("Messages - Inbox"); ?></h3>
-<?php $this->placeholder('nothing')->captureStart();?>
-    <h3><?php echo $this->translate('No messages found')?></h3>
-<?php $this->placeholder('nothing')->captureEnd(); ?>
-
-
-<?php $this->placeholder('messages')->captureStart();?>
+    <h3><?php echo $this->translate("Messages - Inbox"); ?></h3>
     <a class="btn msgButton" href="<?php echo $this->url('message', array('action' => 'new')); ?>" >
         <div class="msgIcon mail-16 mail-green-16"></div>
         <?php echo $this->translate("New Message"); ?>
@@ -21,6 +15,13 @@ $this->headTitle("Messages");
         <div class="msgIcon mail-16 outbox-16"></div>
         <?php echo $this->translate('Outbox');?>
     </a>
+
+<?php $this->placeholder('nothing')->captureStart();?>
+    <h4 style="margin: 10px 0;"><?php echo $this->translate('No messages found')?></h4>
+<?php $this->placeholder('nothing')->captureEnd(); ?>
+
+
+<?php $this->placeholder('messages')->captureStart();?>
 <?php echo $this->paginationControl($this->paginator, 'Sliding', 'messages'); ?>
     <table id="messages" class="table">
         <tr>
