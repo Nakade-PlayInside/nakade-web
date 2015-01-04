@@ -6,15 +6,15 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class TableStandingsService
- * calculate and provide standings and position of all players in a league
+ * Class EGDService
  *
- * @package Nakade\Services
+ * @package Nakade\Webservice
  */
 class EGDService implements FactoryInterface
 {
 
     private $rest;
+
     /**
      * @param ServiceLocatorInterface $services
      *
@@ -23,14 +23,20 @@ class EGDService implements FactoryInterface
     public function createService(ServiceLocatorInterface $services)
     {
 
-        $this->rest = new AbstractRestService('http://www.europeangodatabase.eu/EGD/Find_Player.php');
+        $this->rest = new AbstractRestService('http://www.europeangodatabase.eu/EGD/GetPlayerDataByData.php');
         return $this;
     }
 
 
     public function findPlayer()
     {
-        $this->getRest()->post();
+        $data = array('lastname' => 'Maerz', 'name' => 'Martina');
+        $result = $this->getRest()->get($data);
+
+        if (array_key_exists('players', $result)) {
+            var_export($result['players']);
+        }
+
     }
 
     /**

@@ -2,103 +2,159 @@
 
 namespace Nakade\Webservice;
 
-use Nakade\Standings\Sorting\PlayerPosition;
-use Nakade\Standings\Sorting\SortingInterface;
-use Nakade\Standings\MatchStats;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * Class TableStandingsService
- * calculate and provide standings and position of all players in a league
+ * Receive data from external websites oder services. You have to provide the url, data needed in correct naming and
+ * form, to get a proper result. For GET request, you will setup an AJAX request by default and get JSON result as an
+ * array by default. Otherwise, you receive a DOM result.
  *
- * @package Nakade\Services
+ * @package Nakade\Webservice
  */
 class AbstractRestService
 {
     private $url;
+    private $curl;
+    private $response;
 
     /**
-     * @param ServiceLocatorInterface $services
-     *
-     * @return \Nakade\Services\PlayersTableService
+     * @param $url
      */
     public function __construct($url)
     {
         $this->url = $url;
     }
 
+
     /**
-     * @param array $matches
-     * @param string $sort
-     * @return array
+     * @param array $data
+     *
+     * @return \DOMDocument
      */
-    public function post()
+    public function post(array $data)
     {
-        //next example will insert new conversation
-        $service_url = $this->getUrl();
-        $curl = curl_init($service_url);
-        $curl_post_data = array(
-            'ricerca' => '1',
-            'name' => 'Holger',
-            'last_name' => 'Maerz',
-            'country' => '',
-            'club' => '',
-            'pin_player' => ''
-       //     'filter' => '0'
-        );
+        $this->init()->setPostData($data);
+        $this->exec();
+
+        return $this->getDom();
+
+    }
+
+
+    /**
+     * Get REST by GET request. By default return value is Json as an array. If option is set true,
+     * the DOM is returned.
+     *
+     * @param array $param
+     * @param bool $isDOM
+     *
+     * @return array|\DOMDocument|null
+     */
+    public function get(array $param, $isDOM=false)
+    {
+        $this->setQuery($param)->init();
+        $this->exec();
+
+        if ($isDOM) {
+            return $this->getDom();
+        }
+
+        return $this->getJson();
+    }
+
+
+    /**
+     * init a cUrl session
+     *
+     * @return $this
+     */
+    private function init()
+    {
+        $curl = curl_init($this->url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        return $this->setCurl($curl);
+    }
+
+    /**
+     * get request query
+     *
+     * @param array $param
+     *
+     * @return $this
+     */
+    private function setQuery(array $param)
+    {
+        if (!empty($param)) {
+            $query = http_build_query($param);
+            $this->url .= '?' . $query;
+        }
+        return $this;
+    }
+
+    /**
+     * post request data
+     *
+     * @param array $data
+     *
+     * @return $this
+     */
+    private function setPostData(array $data)
+    {
+        $curl = $this->curl;
         curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
-        $curl_response = curl_exec($curl);
-        if ($curl_response === false) {
-            $info = curl_getinfo($curl);
-            curl_close($curl);
-            die('error occured during curl exec. Additioanl info: ' . var_export($info));
-        }
-        curl_close($curl);
-        $decoded = json_decode($curl_response);
-        if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
-            die('error occured: ' . $decoded->response->errormessage);
-        }
-        echo 'response ok!';
-        //echo $curl_response;
-        var_export($decoded->response);
-       // $test = simplexml_load_string($curl_response);
-        var_export($curl_response);
-
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        return $this->setCurl($curl);
     }
 
-    public function get()
+    /**
+     * execute service url
+     *
+     * @return $this
+     */
+    private function exec()
     {
-        //next example will recieve all messages for specific conversation
-        $service_url = $this->getUrl();
-        $curl = curl_init($service_url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $curl_response = curl_exec($curl);
-        if ($curl_response === false) {
-            $info = curl_getinfo($curl);
-            curl_close($curl);
-            die('error occured during curl exec. Additioanl info: ' . var_export($info));
-        }
-        curl_close($curl);
-        $decoded = json_decode($curl_response);
-        if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
-            die('error occured: ' . $decoded->response->errormessage);
-        }
-        echo 'response ok!';
-        var_export($decoded->response);
+        $this->response = curl_exec($this->curl);
+        curl_close($this->curl);
+
+        return $this;
+    }
+
+    /**
+     * get json as array or null
+     *
+     * @return null|array
+     */
+    private function getJson()
+    {
+        $json = json_decode($this->response, true);
+        return $json;
+    }
+
+    /**
+     * @return \DOMDocument
+     */
+    private function getDom()
+    {
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->loadHTML($this->response);
+
+        return $dom;
     }
 
 
     /**
-     * @return string
+     * set a cUrl resource
+     *
+     * @param $curl
+     *
+     * @return $this
      */
-    public function getUrl()
+    private function setCurl($curl)
     {
-        return $this->url;
+        $this->curl = $curl;
+        return $this;
     }
-
 
 
 }
