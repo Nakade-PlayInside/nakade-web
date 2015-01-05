@@ -19,8 +19,12 @@ class IndexController extends DefaultController
     public function indexAction()
     {
         $service = $this->getEgdService();
-        $service->findByName('Deutschmann', 'Robert');
+        $objA = $service->findByName('Gräf', 'Danny');
         $service->findByPIN('14274590');
+
+        if ($objA!==false) {
+            var_dump($objA);
+        }
 
         //todo: caching of factory results
         return new ViewModel(
