@@ -13,6 +13,9 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class EGDService implements FactoryInterface
 {
 
+    const PLAYER_DATA_URL = 'http://www.europeangodatabase.eu/EGD/GetPlayerDataByData.php';
+    const PLAYER_PIN_URL = 'http://www.europeangodatabase.eu/EGD/GetPlayerDataByPIN.php';
+
     private $rest;
 
     /**
@@ -22,19 +25,37 @@ class EGDService implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $services)
     {
-
-        $this->rest = new AbstractRestService('http://www.europeangodatabase.eu/EGD/GetPlayerDataByData.php');
+        $this->rest = new AbstractRestService();
         return $this;
     }
 
 
-    public function findPlayer()
+    public function findByName($lastName, $name)
     {
-        $data = array('lastname' => 'Maerz', 'name' => 'Martina');
+        $this->getRest()->setUrl(self::PLAYER_DATA_URL);
+
+        $data = array('lastname' => $lastName, 'name' => $name);
         $result = $this->getRest()->get($data);
+
+        //more than one player
+        //no result
+        //name == last name while last name == first name
+        //export data to EGF Data Model
 
         if (array_key_exists('players', $result)) {
             var_export($result['players']);
+        }
+
+    }
+
+    public function findByPin($pin)
+    {
+        $this->getRest()->setUrl(self::PLAYER_PIN_URL);
+
+        $data = array('pin' => $pin);
+        $result = $this->getRest()->get($data);
+        if (array_key_exists('retcode', $result)) {
+            var_export($result);
         }
 
     }

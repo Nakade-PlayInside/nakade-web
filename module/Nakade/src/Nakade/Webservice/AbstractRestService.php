@@ -18,14 +18,11 @@ class AbstractRestService
     private $curl;
     private $response;
 
-    /**
-     * @param $url
-     */
-    public function __construct($url)
+    public function setUrl($url)
     {
         $this->url = $url;
+         return $this;
     }
-
 
     /**
      * @param array $data
@@ -40,7 +37,6 @@ class AbstractRestService
         return $this->getDom();
 
     }
-
 
     /**
      * Get REST by GET request. By default return value is Json as an array. If option is set true,

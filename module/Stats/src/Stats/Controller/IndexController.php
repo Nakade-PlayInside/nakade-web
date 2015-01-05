@@ -19,7 +19,8 @@ class IndexController extends DefaultController
     public function indexAction()
     {
         $service = $this->getEgdService();
-        $service->findPlayer();
+        $service->findByName('Deutschmann', 'Robert');
+        $service->findByPIN('14274590');
 
         //todo: caching of factory results
         return new ViewModel(
