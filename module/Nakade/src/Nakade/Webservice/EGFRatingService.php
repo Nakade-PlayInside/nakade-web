@@ -20,8 +20,8 @@ class EGFRatingService implements FactoryInterface
     const CON_MAX = 10;
     const CON_MIN = 116;
 
-    private $player_A;
-    private $player_B;
+    private $playerA;
+    private $playerB;
 
 
     /**
@@ -35,15 +35,10 @@ class EGFRatingService implements FactoryInterface
     }
 
 
-    public function startWithMatch(Match $match)
+    public function startWithMatch(Rating $playerA, Rating $playerB)
     {
-        $player_A = new Rating();
-        $player_A->setUser($match->getBlack());
-        $player_A->setMatch($match);
-
-        $player_B = new Rating();
-        $player_B->setUser($match->getWhite());
-        $player_B->setMatch($match);
+        $this->playerA = $playerA;
+        $this->playerB = $playerB;
 
         //getRating from database
         //if no rating then try get EGF Rating
@@ -84,21 +79,20 @@ class EGFRatingService implements FactoryInterface
     private function getWinningExpectancyOfWeakerPlayer()
     {
 
-        $D = $this->getRatingDifference(2000, 1900);
+        $D = $this->getRatingDifference();
         $a = $this->getFactorA(1900);
 
-        return 1 / (exp($D/$a +1)) - (self::EPSILON/2);
+        return 1 / (exp($D/$a + 1)) - (self::EPSILON/2);
 
     }
 
     /**
-     * @param int $ratingA
-     * @param int $ratingB
-     *
      * @return int
      */
-    private function getRatingDifference($ratingA, $ratingB)
+    private function getRatingDifference()
     {
+        $ratingA = $this->getPlayerA()->getRating();
+        $ratingB = $this->getPlayerB()->getRating();
         $diff = abs($ratingA-$ratingB);
         return intval($diff);
     }
@@ -134,6 +128,39 @@ class EGFRatingService implements FactoryInterface
             return intval($con);
         }
     }
+
+    /**
+     * @param Rating $playerA
+     */
+    public function setPlayerA(Rating $playerA)
+    {
+        $this->playerA = $playerA;
+    }
+
+    /**
+     * @return Rating
+     */
+    public function getPlayerA()
+    {
+        return $this->playerA;
+    }
+
+    /**
+     * @param Rating $playerB
+     */
+    public function setPlayerB(Rating $playerB)
+    {
+        $this->playerB = $playerB;
+    }
+
+    /**
+     * @return Rating
+     */
+    public function getPlayerB()
+    {
+        return $this->playerB;
+    }
+
 
 
 }

@@ -1,6 +1,5 @@
 <?php
 namespace Stats\Entity;
-use Season\Entity\Match;
 use User\Entity\User;
 
 /**
@@ -12,40 +11,9 @@ use User\Entity\User;
 class Rating
 {
     private $user;
-    private $egfRating;
-    private $match;
-
-    /**
-     * @param int $egfRating
-     */
-    public function setEgfRating($egfRating)
-    {
-        $this->egfRating = $egfRating;
-    }
-
-    /**
-     * @return int
-     */
-    public function getEgfRating()
-    {
-        return $this->egfRating;
-    }
-
-    /**
-     * @param Match $match
-     */
-    public function setMatch(Match $match)
-    {
-        $this->match = $match;
-    }
-
-    /**
-     * @return Match
-     */
-    public function getMatch()
-    {
-        return $this->match;
-    }
+    private $rating;
+    private $newRating;
+    private $achievedResult;
 
     /**
      * @param User $user
@@ -61,6 +29,54 @@ class Rating
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @param int $newRating
+     */
+    public function setNewRating($newRating)
+    {
+        $this->newRating = $newRating;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNewRating()
+    {
+        return $this->newRating;
+    }
+
+    /**
+     * @param int $rating
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * @param float $achievedResult
+     */
+    public function setAchievedResult($achievedResult)
+    {
+        $this->achievedResult = $achievedResult;
+    }
+
+    /**
+     * @return float
+     */
+    public function getAchievedResult()
+    {
+        return $this->achievedResult;
     }
 
 
