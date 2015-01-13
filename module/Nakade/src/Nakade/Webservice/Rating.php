@@ -79,6 +79,4 @@ class Rating
         return $this->achievedResult;
     }
 
-
-
 }
