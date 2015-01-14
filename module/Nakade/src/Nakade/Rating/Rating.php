@@ -1,7 +1,7 @@
 <?php
-namespace Stats\Entity;
-use User\Entity\User;
+namespace Nakade\Rating;
 
+use User\Entity\User;
 /**
  * Class Rating
  * Prototype
@@ -77,6 +77,42 @@ class Rating
     public function getAchievedResult()
     {
         return $this->achievedResult;
+    }
+
+    /**
+     * populating data as an array.
+     * key of the array is getter methods name.
+     *
+     * @param array $data
+     */
+
+    public function populate($data)
+    {
+        foreach ($data as $key => $value) {
+            $method = 'set'.ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+    }
+
+    /**
+     * @param array $data
+     */
+    public function exchangeArray($data)
+    {
+        $this->populate($data);
+
+    }
+
+    /**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
     }
 
 }

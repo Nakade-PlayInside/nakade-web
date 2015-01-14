@@ -1,8 +1,8 @@
 <?php
 
-namespace Nakade\Webservice;
+namespace Nakade\Rating;
 
-use Entities\User;
+use User\Entity\User;
 use League\Entity\Result;
 use Nakade\Result\ResultInterface;
 
@@ -37,7 +37,11 @@ class EGFResult
      */
     public function getAchievedResult(User $player)
     {
-        if ($this->hasResult()) {
+        if ($this->hasNoResult()) {
+            return null;
+        }
+
+        if ($this->isSuspended()) {
             return null;
         }
 
@@ -65,16 +69,23 @@ class EGFResult
     /**
      * @return bool
      */
-    private function hasResult()
+    private function hasNoResult()
     {
-        return !is_null($this->getResult()) &&
-        $this->getResult()->getResultType()->getId() != ResultInterface::SUSPENDED;
+        return is_null($this->getResult());
     }
 
     /**
      * @return bool
      */
-    private function isDraw()
+    private function isSuspended()
+    {
+        return $this->getResult()->getResultType()->getId() == ResultInterface::SUSPENDED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDraw()
     {
         return $this->getResult()->getResultType()->getId() == ResultInterface::DRAW;
     }
@@ -82,7 +93,7 @@ class EGFResult
     /**
      * @return Result
      */
-    private function getResult()
+    public function getResult()
     {
         return $this->result;
     }

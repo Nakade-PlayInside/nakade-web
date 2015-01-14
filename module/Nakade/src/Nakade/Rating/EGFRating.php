@@ -1,8 +1,6 @@
 <?php
 
-namespace Nakade\Webservice;
-
-use Stats\Entity\Rating;
+namespace Nakade\Rating;
 
 /**
  * Class EGFRating
@@ -44,7 +42,7 @@ class EGFRating
 
             $stronger = $this->getStrongerPlayer();
             $weaker   = $this->getWeakerPlayer();
-            
+
             $this->setMinWinningExpectancy($weaker->getRating());
             $this->setMaxWinningExpectancy($this->getMinWinningExpectancy());
 
