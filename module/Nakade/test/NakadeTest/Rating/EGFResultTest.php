@@ -4,7 +4,6 @@ namespace NakadeTest\Rating;
 use League\Entity\Result;
 use League\Entity\ResultType;
 use Nakade\Rating\EGFResult;
-use Nakade\Rating\Rating;
 use Nakade\Result\ResultInterface;
 use User\Entity\User;
 use PHPUnit_Framework_TestCase;
@@ -27,8 +26,6 @@ class EGFResultTest extends PHPUnit_Framework_TestCase
     public function testHasNoResult()
     {
         $user = new User();
-        $result = new Result();
-
         $egfResult = new EGFResult(null);
         $res = $egfResult->getAchievedResult($user);
 
@@ -36,17 +33,15 @@ class EGFResultTest extends PHPUnit_Framework_TestCase
             $res,
             sprintf('Null is expected')
         );
-
-        $type = new ResultType();
-        $type->setId(ResultInterface::SUSPENDED);
     }
-/*
+
     public function testMatchSuspended()
     {
         $user = new User();
         $result = new Result();
         $type = new ResultType();
         $type->setId(ResultInterface::SUSPENDED);
+        $result->setResultType($type);
 
         $egfResult = new EGFResult($result);
         $res = $egfResult->getAchievedResult($user);
@@ -56,7 +51,7 @@ class EGFResultTest extends PHPUnit_Framework_TestCase
             sprintf('Null is expected')
         );
     }
-*/
+
     public function testMatchDraw()
     {
         $user = new User();
@@ -74,6 +69,58 @@ class EGFResultTest extends PHPUnit_Framework_TestCase
             0.5,
             $res,
             sprintf("Expected result '0.5'. Found '%s", $res)
+        );
+    }
+
+
+    public function testWinResult()
+    {
+        $user = new User();
+        $user->setId(1);
+
+        $result = new Result();
+
+        $result->setWinner($user);
+        $type = new ResultType();
+        $type->setId(ResultInterface::RESIGNATION);
+        $result->setResultType($type);
+
+
+        $egfResult = new EGFResult($result);
+
+        $res = $egfResult->getAchievedResult($user);
+
+        $this->assertSame(
+            1.0,
+            $res,
+            sprintf("Expected result '1.0'. Found '%s", $res)
+        );
+    }
+
+    public function testLossResult()
+    {
+        $user = new User();
+        $user->setId(1);
+
+        $user2 = new User();
+        $user->setId(2);
+
+        $result = new Result();
+
+        $result->setWinner($user);
+        $type = new ResultType();
+        $type->setId(ResultInterface::RESIGNATION);
+        $result->setResultType($type);
+
+
+        $egfResult = new EGFResult($result);
+
+        $res = $egfResult->getAchievedResult($user2);
+
+        $this->assertSame(
+            floatval(0),
+            $res,
+            sprintf("Expected result '0'. Found '%s", $res)
         );
     }
 

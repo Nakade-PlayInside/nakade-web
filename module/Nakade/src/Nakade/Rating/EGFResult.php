@@ -22,7 +22,7 @@ class EGFResult
     /**
      * @param Result $result
      */
-    public function __construct(Result $result)
+    public function __construct(Result $result=null)
     {
         $this->result = $result;
     }
@@ -89,6 +89,15 @@ class EGFResult
     {
         return $this->getResult()->getResultType()->getId() == ResultInterface::DRAW;
     }
+
+    /**
+     * @param Result $result
+     */
+    public function setResult(Result $result)
+    {
+        $this->result = $result;
+    }
+
 
     /**
      * @return Result
