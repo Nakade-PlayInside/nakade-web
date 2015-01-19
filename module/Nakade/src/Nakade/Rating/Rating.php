@@ -10,6 +10,7 @@ use User\Entity\User;
  */
 class Rating
 {
+    const MINIMUM_RATING = 100;
     private $user;
     private $rating;
     private $newRating;
@@ -77,6 +78,40 @@ class Rating
     public function getAchievedResult()
     {
         return $this->achievedResult;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRating()
+    {
+        return !is_null($this->rating);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasResult()
+    {
+        return !is_null($this->achievedResult);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasValidRating()
+    {
+        return $this->hasRating() && $this->rating >= self::MINIMUM_RATING;
+    }
+
+    /**
+     * Returns true if player has a result and a valid rating. Both are necessary for calculating a new rating.
+     *
+     * @return bool
+     */
+    public function isValid()
+    {
+        return $this->hasResult() && $this->hasValidRating();
     }
 
     /**

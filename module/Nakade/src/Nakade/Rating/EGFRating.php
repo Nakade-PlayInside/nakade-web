@@ -36,7 +36,7 @@ class EGFRating
     public function doCalculation()
     {
 
-        if ($this->hasResult() && $this->hasRating()) {
+        if ($this->getPlayerA()->isValid() && $this->getPlayerB()->isValid()) {
 
             $this->setRatingDifference($this->getPlayerA(), $this->getPlayerB());
 
@@ -55,24 +55,6 @@ class EGFRating
         }
         return false;
 
-    }
-
-    /**
-     * @return bool
-     */
-    private function hasRating()
-    {
-        $ratingA = $this->getPlayerA()->getRating();
-        $ratingB = $this->getPlayerB()->getRating();
-        return !is_null($ratingA) && $ratingA >= 100 && !is_null($ratingB) && $ratingB >= 100;
-    }
-
-    /**
-     * @return bool
-     */
-    private function hasResult()
-    {
-        return !is_null($this->getPlayerA()->getAchievedResult());
     }
 
     /**
