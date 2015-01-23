@@ -14,6 +14,8 @@ class EGFResultTest extends PHPUnit_Framework_TestCase
 
     public function __construct() {
 
+        $user = new User();
+
         $this->data=array(
             'user' => new User(),
             'rating' => 2000,
