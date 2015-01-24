@@ -2,7 +2,7 @@
 
 <phpunit bootstrap="Bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="Nakade">
+        <testsuite name="NakadeTest">
             <directory>../module/Nakade/test</directory>
         </testsuite>
     </testsuites>
