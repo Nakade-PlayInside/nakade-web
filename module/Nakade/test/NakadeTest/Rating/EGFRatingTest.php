@@ -7,7 +7,6 @@ use PHPUnit_Framework_TestCase;
 
 class EGFRatingTest extends PHPUnit_Framework_TestCase
 {
-    protected $rating=array();
     private $playerA;
     private $playerB;
     private $object;
@@ -50,24 +49,6 @@ class EGFRatingTest extends PHPUnit_Framework_TestCase
     public function getObject() {
 
         return $this->object;
-    }
-
-    /**
-     * Call protected/private method of a class.
-     *
-     * @param object &$object    Instantiated object that we will run method on.
-     * @param string $methodName Method name to call
-     * @param array  $parameters Array of parameters to pass into method.
-     *
-     * @return mixed Method return.
-     */
-    public function invokeMethod(&$object, $methodName, array $parameters = array())
-    {
-        $reflection = new \ReflectionClass(get_class($object));
-        $method = $reflection->getMethod($methodName);
-        $method->setAccessible(true);
-
-        return $method->invokeArgs($object, $parameters);
     }
 
     /**
@@ -131,36 +112,6 @@ class EGFRatingTest extends PHPUnit_Framework_TestCase
             105,
             $this->getObject()->getFactorA(2000),
             sprintf("Expected value '%s' not found.", 105)
-        );
-    }
-
-    /**
-     * @dataProvider conProvider
-     */
-    public function testGetCon($rating, $expected)
-    {
-        $con = $this->getObject()->getCon($rating);
-
-        $this->assertSame(
-            $expected,
-            $con,
-            sprintf("Expected value '%s' not found.", $expected)
-        );
-
-    }
-
-    /**
-     * providing different test cases for con
-     *
-     * @return array
-     */
-    public function conProvider()
-    {
-        return array(
-            array(1000, 70),
-            array(1050, 67),
-            array(2100, 24),
-            array(600, 90)
         );
     }
 

@@ -12,9 +12,11 @@ class EGFResultTest extends PHPUnit_Framework_TestCase
 {
     protected $data=array();
 
-    public function __construct() {
+    /**
+     * setUp
+     */
+    public function setUp() {
 
-        $user = new User();
 
         $this->data=array(
             'user' => new User(),
@@ -25,6 +27,9 @@ class EGFResultTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * testing no result
+     */
     public function testHasNoResult()
     {
         $user = new User();
@@ -37,6 +42,9 @@ class EGFResultTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * testing match was suspended
+     */
     public function testMatchSuspended()
     {
         $user = new User();
@@ -54,6 +62,9 @@ class EGFResultTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * testing match draw
+     */
     public function testMatchDraw()
     {
         $user = new User();
@@ -74,7 +85,9 @@ class EGFResultTest extends PHPUnit_Framework_TestCase
         );
     }
 
-
+    /**
+     * test win
+     */
     public function testWinResult()
     {
         $user = new User();
@@ -99,6 +112,9 @@ class EGFResultTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * test loss
+     */
     public function testLossResult()
     {
         $user = new User();

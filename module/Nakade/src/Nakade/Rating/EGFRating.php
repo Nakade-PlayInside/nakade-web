@@ -11,12 +11,11 @@ class EGFRating
 {
     const RATING_BASE = 100;
     const EPSILON = 0.016;
-    const CON_MAX = 10;
-    const CON_MIN = 116;
 
     private $ratingDifference;
     private $minWinningExpectancy;
     private $maxWinningExpectancy;
+    private $conFactor;
     private $playerA;
     private $playerB;
 
@@ -24,6 +23,7 @@ class EGFRating
     {
         $this->playerA = $playerA;
         $this->playerB = $playerB;
+        $this->conFactor = new EGFConFactor();
 
     }
 
@@ -90,7 +90,7 @@ class EGFRating
         $result = $player->getAchievedResult();
         $winningExpectancy = $this->getWinningExpectancyByPlayer($player);
 
-        $newRating = intval($rating + $this->getCon($rating) * ($result - $winningExpectancy));
+        $newRating = intval($rating + $this->getConFactor()->getCon($rating) * ($result - $winningExpectancy));
         $player->setNewRating($newRating);
 
         return $this;
@@ -146,9 +146,7 @@ class EGFRating
     {
         if (is_null($this->ratingDifference)) {
 
-            $ratingA = $this->getPlayerA()->getRating();
-            $ratingB = $this->getPlayerB()->getRating();
-            $diff = abs($ratingA-$ratingB);
+            $diff = abs($this->getPlayerA()->getRating() - $this->getPlayerB()->getRating());
             $this->ratingDifference = intval($diff);
         }
 
@@ -165,110 +163,14 @@ class EGFRating
         return (int) (self::RATING_BASE * 2) - ($rating - self::RATING_BASE)/20;
     }
 
-
     /**
-     *
-     * @param int $rating
-     *
-     * @return int
+     * @return EGFConFactor
      */
-    public function getCon($rating)
+    public function getConFactor()
     {
-        /*todo: determine factor by linear regression using pairs of values and polynomial term of 3rd grade
-          see http://www.arndt-bruenner.de/mathe/scripts/regr.htm, unfortunately it does not fit as proposed
-          on the site
-        */
-
-        $lowerCon = $this->getNormalizedCon($rating);
-
-        $upperRating = ceil($rating/100) *100;
-        $upperCon = $this->getNormalizedCon($upperRating);
-        $delta = $upperCon-$lowerCon;
-
-        return intval($lowerCon + $delta * ($upperRating - $rating)/100);
-
+        return $this->conFactor;
     }
 
-    /**
-     * @param int $rating
-     *
-     * @return int
-     */
-    private function getNormalizedCon($rating)
-    {
-        // formula is determined by linear regression using pairs of values and polynomial term of 3rd grade
-        // see more http://www.arndt-bruenner.de/mathe/scripts/regr.htm
-        $normalizedRating = intval($rating/100) *100;
-
-
-        switch ($normalizedRating) {
-            case 100: $con=116;
-                break;
-            case 200: $con=110;
-                break;
-            case 300: $con=105;
-                break;
-            case 400: $con=100;
-                break;
-            case 500: $con=95;
-                break;
-            case 600: $con=90;
-                break;
-            case 700: $con=85;
-                break;
-            case 800: $con=80;
-                break;
-            case 900: $con=75;
-                break;
-            case 1000: $con=70;
-                break;
-            case 1100: $con=65;
-                break;
-            case 1200: $con=60;
-                break;
-            case 1300: $con=55;
-                break;
-            case 1400: $con=51;
-                break;
-            case 1500: $con=47;
-                break;
-            case 1600: $con=43;
-                break;
-            case 1700: $con=39;
-                break;
-            case 1800: $con=35;
-                break;
-            case 1900: $con=31;
-                break;
-            case 2000: $con=27;
-                break;
-            case 2100: $con=24;
-                break;
-            case 2200: $con=21;
-                break;
-            case 2300: $con=18;
-                break;
-            case 2400: $con=15;
-                break;
-            case 2500: $con=13;
-                break;
-            case 2600: $con=11;
-                break;
-            case 2700: $con=10;
-                break;
-
-            default:
-                $con = 10;
-
-                if ($rating > 2700) {
-                    $con=self::CON_MAX;
-                } elseif ($rating < 100) {
-                    $con=self::CON_MIN;
-                }
-
-        }
-        return $con;
-    }
 
 
     /**
