@@ -14,11 +14,8 @@ namespace Nakade\Standings\Tiebreaker;
  *
  * @package Nakade\Standings\Tiebreaker
  */
-class HahnPoints extends TiebreakerStats
+class HahnPoints extends TiebreakerStats implements HahnPointInterface
 {
-    const MAX_POINTS=40;
-    const OFFSET_POINTS=20;
-
     /**
      * calculating the points
      *
