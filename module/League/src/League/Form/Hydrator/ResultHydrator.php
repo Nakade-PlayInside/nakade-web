@@ -82,8 +82,9 @@ class ResultHydrator implements HydratorInterface
         $data['enteredBy'] = $this->getEditor();
 
         $result->exchangeArray($data);
-        $this->getResultValidator()->validate($result);
 
+        //todo: isHalfPointKomi or isDrawPossible in entity
+        $this->getResultValidator()->validate($result, true);
         $match->setResult($result);
 
         return $match;
