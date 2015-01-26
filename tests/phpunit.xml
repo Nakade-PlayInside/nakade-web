@@ -5,5 +5,8 @@
         <testsuite name="NakadeTest">
             <directory>../module/Nakade/test</directory>
         </testsuite>
+        <testsuite name="LeagueTest">
+            <directory>../module/League/test</directory>
+        </testsuite>
     </testsuites>
 </phpunit>

@@ -18,6 +18,7 @@ class ResultHydrator implements HydratorInterface
 {
     private $entityManager;
     private $authenticationService;
+    private $resultValidator;
 
     /**
      * @param EntityManager         $em
@@ -27,6 +28,7 @@ class ResultHydrator implements HydratorInterface
     {
         $this->entityManager = $em;
         $this->authenticationService = $auth;
+        $this->resultValidator = new ResultValidator($em);
     }
 
     /**
@@ -74,12 +76,14 @@ class ResultHydrator implements HydratorInterface
             $data['winner'] = $this->getWinner($match, $data['winnerId']);
         }
         if (!empty($data['resultId'])) {
-            $data['result'] = $this->getResult($data['resultId']);
+            $data['result'] = $this->getResultValidator()->getResultTypeById($data['resultId']);
         }
         $data['date'] = new \DateTime();
         $data['enteredBy'] = $this->getEditor();
 
         $result->exchangeArray($data);
+        $this->getResultValidator()->validate($result);
+
         $match->setResult($result);
 
         return $match;
@@ -100,16 +104,6 @@ class ResultHydrator implements HydratorInterface
             $winner = $match->getWhite();
         }
         return $winner;
-    }
-
-    /**
-     * @param int $resultId
-     *
-     * @return null|\League\Entity\ResultType
-     */
-    private function getResult($resultId)
-    {
-        return $this->getEntityManager()->getReference('League\Entity\ResultType', intval($resultId));
     }
 
     /**
@@ -140,6 +134,14 @@ class ResultHydrator implements HydratorInterface
     public function getEntityManager()
     {
         return $this->entityManager;
+    }
+
+    /**
+     * @return ResultValidator
+     */
+    private function getResultValidator()
+    {
+        return $this->resultValidator;
     }
 
 
