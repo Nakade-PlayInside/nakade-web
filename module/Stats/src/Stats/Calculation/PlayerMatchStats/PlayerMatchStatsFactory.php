@@ -67,7 +67,6 @@ class PlayerMatchStatsFactory implements MatchTypeInterface, ResultInterface
      */
     private function evaluate($type)
     {
-
         $match = $this->getMatch();
 
         switch ($type) {
@@ -76,10 +75,10 @@ class PlayerMatchStatsFactory implements MatchTypeInterface, ResultInterface
                 Wins::getInstance()->addMatch($match);
                 ConsecutiveWins::getInstance()->addMatch($match);
                 break;
-            case self::MATCH_DRAW:
+            case self::MATCH_DEFEAT:
                 Defeats::getInstance()->addMatch($match);
                 break;
-            case self::MATCH_DEFEAT:
+            case self::MATCH_DRAW:
                 Draws::getInstance()->addMatch($match);
                 break;
         }
