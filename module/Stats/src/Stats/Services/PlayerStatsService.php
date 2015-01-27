@@ -2,6 +2,7 @@
 
 namespace Stats\Services;
 
+use Stats\Calculation\PlayerMatchStats\PlayerMatchStatsFactory;
 use Stats\Calculation\PlayerStatsFactory;
 use Stats\Entity\PlayerStats;
 use Zend\ServiceManager\FactoryInterface;
@@ -17,6 +18,7 @@ class PlayerStatsService extends AbstractStatsService
 
     private $standings;
     private $achievement;
+    private $factory;
 
     /**
      * @param ServiceLocatorInterface $services
@@ -50,22 +52,19 @@ class PlayerStatsService extends AbstractStatsService
      */
     public function getPlayerStats($userId)
     {
-        $tournaments = $this->getMapper()->getTournamentsByUser($userId);
-        $factory = $this->getPlayerStatsFactory($userId);
+        $matches = $this->getMapper()->getConsecutiveMatchesByUser($userId);
 
-        $stats = new PlayerStats();
+        $stats = $this
+            ->getFactoryByUser($userId)
+            ->doEvaluation($matches)
+            ->getPlayerStats();
+
+        $tournaments = $this->getMapper()->getTournamentsByUser($userId);
         $stats->setTournaments($tournaments);
-        $stats->setMatches($factory->getMatches());
-        $stats->setPlayed($factory->getMatches());
-        $stats->setWins($factory->getWin());
-        $stats->setConsecutiveWins($factory->getMaxConsecutiveWins());
-        $stats->setLoss($factory->getDefeat());
-        $stats->setDraws($factory->getDraw());
 
         $this->getAchievement()->getAchievements($userId);
-        $stats->setChampion($this->getAchievement()->getFactory()->getChampion());
-        $stats->setMedal($this->getAchievement()->getFactory()->getMedal());
-        $stats->setCup($this->getAchievement()->getFactory()->getCup());
+        $data = $this->getAchievement()->getFactory()->getData();
+        $stats->exchangeArray($data);
 
         return $stats;
     }
@@ -75,10 +74,13 @@ class PlayerStatsService extends AbstractStatsService
      *
      * @return PlayerStatsFactory
      */
-    private function getPlayerStatsFactory($userId)
+    public function getFactoryByUser($userId)
     {
-        $matches = $this->getMapper()->getConsecutiveMatchesByUser($userId);
-        return new PlayerStatsFactory($matches, $userId);
+        if (is_null($this->factory)) {
+            $playerStatsFactory = new PlayerMatchStatsFactory($userId);
+            $this->factory = new PlayerStatsFactory($playerStatsFactory);
+        }
+        return $this->factory;
     }
 
     /**
