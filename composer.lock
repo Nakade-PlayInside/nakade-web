@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "210b514f014608188fc1155146b6c0e4",
+    "hash": "948e36ff939719b5c0811a50f6a93e1b",
     "packages": [
         {
             "name": "dino/dompdf-module",
@@ -457,6 +457,50 @@
             "time": "2014-03-11 01:59:52"
         },
         {
+            "name": "geoip/geoip",
+            "version": "v1.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maxmind/geoip-api-php.git",
+                "reference": "465fe4d7e581871e9c8594adf3fb52268b253312"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maxmind/geoip-api-php/zipball/465fe4d7e581871e9c8594adf3fb52268b253312",
+                "reference": "465fe4d7e581871e9c8594adf3fb52268b253312",
+                "shasum": ""
+            },
+            "conflict": {
+                "ext-geoip": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/geoip.inc",
+                    "src/geoipcity.inc"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL 2.1+"
+            ],
+            "authors": [
+                {
+                    "name": "MaxMind, Inc.",
+                    "email": "support@maxmind.com",
+                    "homepage": "http://www.maxmind.com/"
+                }
+            ],
+            "description": "MaxMind GeoIP PHP API",
+            "homepage": "http://dev.maxmind.com/geoip/legacy/downloadable",
+            "keywords": [
+                "geoip",
+                "geolocation",
+                "maxmind"
+            ],
+            "time": "2013-11-05 21:52:33"
+        },
+        {
             "name": "highcharts",
             "version": "4.0.4",
             "source": {
@@ -501,18 +545,70 @@
             "time": "2014-02-01 15:22:28"
         },
         {
+            "name": "snapshotpl/zf-snap-geoip",
+            "version": "2.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/snapshotpl/ZfSnapGeoip.git",
+                "reference": "a9e013701477066eaa95e09bef120f37adab0c9f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/snapshotpl/ZfSnapGeoip/zipball/a9e013701477066eaa95e09bef120f37adab0c9f",
+                "reference": "a9e013701477066eaa95e09bef120f37adab0c9f",
+                "shasum": ""
+            },
+            "require": {
+                "geoip/geoip": "1.14",
+                "php": ">=5.3.3",
+                "zendframework/zend-console": "~2.2",
+                "zendframework/zend-eventmanager": "~2.2",
+                "zendframework/zend-modulemanager": "~2.2",
+                "zendframework/zend-servicemanager": "~2.2",
+                "zendframework/zend-view": "~2.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~3.7",
+                "zendframework/zendframework": "~2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ZfSnapGeoip": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Witold Wasiczko",
+                    "email": "witold@wasiczko.pl",
+                    "homepage": "http://www.psd2html.pl/"
+                }
+            ],
+            "description": "MaxMind GeoIP Module for Zend Framework 2",
+            "keywords": [
+                "geoip",
+                "maxmind",
+                "zf2"
+            ],
+            "time": "2015-01-24 14:35:26"
+        },
+        {
             "name": "symfony/console",
-            "version": "v2.6.1",
+            "version": "v2.6.3",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "ef825fd9f809d275926547c9e57cbf14968793e8"
+                "reference": "6ac6491ff60c0e5a941db3ccdc75a07adbb61476"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/ef825fd9f809d275926547c9e57cbf14968793e8",
-                "reference": "ef825fd9f809d275926547c9e57cbf14968793e8",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/6ac6491ff60c0e5a941db3ccdc75a07adbb61476",
+                "reference": "6ac6491ff60c0e5a941db3ccdc75a07adbb61476",
                 "shasum": ""
             },
             "require": {
@@ -555,7 +651,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-02 20:19:20"
+            "time": "2015-01-06 17:50:02"
         },
         {
             "name": "zendframework/zendframework",
@@ -766,12 +862,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ZF-Commons/zfc-rbac.git",
-                "reference": "39dd13bc70df040d9bfb49be4524042c23f786f3"
+                "reference": "42f466656ad9730025a6bbbfd4144ac2f3abb64c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ZF-Commons/zfc-rbac/zipball/39dd13bc70df040d9bfb49be4524042c23f786f3",
-                "reference": "39dd13bc70df040d9bfb49be4524042c23f786f3",
+                "url": "https://api.github.com/repos/ZF-Commons/zfc-rbac/zipball/42f466656ad9730025a6bbbfd4144ac2f3abb64c",
+                "reference": "42f466656ad9730025a6bbbfd4144ac2f3abb64c",
                 "shasum": ""
             },
             "require": {
@@ -834,7 +930,7 @@
                 "rbac",
                 "zf2"
             ],
-            "time": "2014-12-11 12:54:36"
+            "time": "2015-01-26 11:29:23"
         },
         {
             "name": "zfr/rbac",
@@ -895,6 +991,7 @@
         "zf-commons/zfc-rbac": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.4.0"
     },
