@@ -18,24 +18,17 @@ use Season\Entity\Match;
 abstract class AbstractPlayerMatchStats implements PlayerMatchStatsInterface
 {
 
-    private $temp = array();
-    private $matches = array();
-    protected static $instances=array();
-    protected $allMatches;
+    private $temp;
+    private $matches;
 
     /**
-     * Singleton Pattern for preventing object inflation.
-     * @return $this
+     * has to be a constructor prior to static because of the necessity to reset all vars in factory
      */
-    public static function getInstance()
+    public function __constructor()
     {
-        $cls = get_called_class(); // late-static-bound class name
-        if (!isset(self::$instances[$cls])) {
-            self::$instances[$cls] = new static();
-        }
-        return self::$instances[$cls];
+        $this->temp = array();
+        $this->matches = array();
     }
-
 
     /**
      * @param Match $match

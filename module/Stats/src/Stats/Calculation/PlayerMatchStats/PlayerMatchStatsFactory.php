@@ -11,7 +11,7 @@ namespace Stats\Calculation\PlayerMatchStats;
 use Nakade\Result\ResultInterface;
 use Season\Entity\Match;
 
-class PlayerMatchStatsFactory implements MatchTypeInterface, ResultInterface
+class PlayerMatchStatsFactory extends AbstractPlayerMatchStatsFactory implements MatchTypeInterface, ResultInterface
 {
 
     private $match;
@@ -23,6 +23,7 @@ class PlayerMatchStatsFactory implements MatchTypeInterface, ResultInterface
     public function __construct($userId)
     {
         $this->userId = $userId;
+        parent::__construct();
     }
 
 
@@ -40,6 +41,7 @@ class PlayerMatchStatsFactory implements MatchTypeInterface, ResultInterface
         }
 
         $type = $this->getType();
+        print_r($type);
         $this->evaluate($type);
         if (!$this->isWin()) {
             $this->resetConsecutiveWins();
@@ -72,17 +74,17 @@ class PlayerMatchStatsFactory implements MatchTypeInterface, ResultInterface
         switch ($type) {
 
             case self::MATCH_WIN:
-                Wins::getInstance()->addMatch($match);
-                ConsecutiveWins::getInstance()->addMatch($match);
+                $this->getWins()->addMatch($match);
+                $this->getConsecutiveWins()->addMatch($match);
                 break;
             case self::MATCH_DEFEAT:
-                Defeats::getInstance()->addMatch($match);
+                $this->getDefeats()->addMatch($match);
                 break;
             case self::MATCH_DRAW:
-                Draws::getInstance()->addMatch($match);
+                $this->getDraws()->addMatch($match);
                 break;
         }
-        Played::getInstance()->addMatch($match);
+        $this->getPlayed()->addMatch($match);
 
     }
 
@@ -92,11 +94,11 @@ class PlayerMatchStatsFactory implements MatchTypeInterface, ResultInterface
     public function getData()
     {
             return array(
-                'wins' => Wins::getInstance()->getMatches(),
-                'loss' => Defeats::getInstance()->getMatches(),
-                'draw' => Draws::getInstance()->getMatches(),
-                'consecutiveWins' => ConsecutiveWins::getInstance()->getMatches(),
-                'played' => Played::getInstance()->getMatches(),
+                'wins' => $this->getWins()->getMatches(), //Wins::getInstance()->getMatches(),
+                'loss' => $this->getDefeats()->getMatches(),
+                'draw' => $this->getDraws()->getMatches(),
+                'consecutiveWins' => $this->getConsecutiveWins()->getMatches(),
+                'played' => $this->getPlayed()->getMatches(),
             );
     }
 
@@ -105,13 +107,13 @@ class PlayerMatchStatsFactory implements MatchTypeInterface, ResultInterface
      */
     private function resetConsecutiveWins()
     {
-        ConsecutiveWins::getInstance()->resetMatches();
+        $this->getConsecutiveWins()->resetMatches();
     }
 
     /**
      * @return bool
      */
-    private function isWin()
+    public function isWin()
     {
         return $this->getMatch()->getResult()->hasWinner() &&
             $this->getMatch()->getResult()->getWinner()->getId() == $this->getUserId();
