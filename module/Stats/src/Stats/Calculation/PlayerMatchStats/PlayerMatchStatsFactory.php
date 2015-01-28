@@ -41,7 +41,6 @@ class PlayerMatchStatsFactory extends AbstractPlayerMatchStatsFactory implements
         }
 
         $type = $this->getType();
-        print_r($type);
         $this->evaluate($type);
         if (!$this->isWin()) {
             $this->resetConsecutiveWins();
@@ -94,7 +93,7 @@ class PlayerMatchStatsFactory extends AbstractPlayerMatchStatsFactory implements
     public function getData()
     {
             return array(
-                'wins' => $this->getWins()->getMatches(), //Wins::getInstance()->getMatches(),
+                'wins' => $this->getWins()->getMatches(),
                 'loss' => $this->getDefeats()->getMatches(),
                 'draw' => $this->getDraws()->getMatches(),
                 'consecutiveWins' => $this->getConsecutiveWins()->getMatches(),
@@ -113,7 +112,7 @@ class PlayerMatchStatsFactory extends AbstractPlayerMatchStatsFactory implements
     /**
      * @return bool
      */
-    public function isWin()
+    private function isWin()
     {
         return $this->getMatch()->getResult()->hasWinner() &&
             $this->getMatch()->getResult()->getWinner()->getId() == $this->getUserId();

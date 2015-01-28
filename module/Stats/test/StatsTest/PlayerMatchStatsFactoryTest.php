@@ -7,15 +7,6 @@ use PHPUnit_Framework_TestCase;
 
 class PlayerMatchStatsFactoryTest extends PHPUnit_Framework_TestCase implements ResultInterface
 {
-    protected $data=array();
-
-    /**
-     * setUp
-     */
-    public function setUp() {
-
-    }
-
     /**
      * testing userId
      */
@@ -50,13 +41,17 @@ class PlayerMatchStatsFactoryTest extends PHPUnit_Framework_TestCase implements 
 
         $match = $this->getMatchMock($uid, $resultTypeId);
         $obj->addMatch($match);
+        $data = $obj->getData();
 
         $this->assertTrue(
-            $obj->isWin(),
+            count($data['wins']) == 1,
             sprintf("Expected value not found.")
         );
     }
 
+    /**
+     * @return array
+     */
     public function provideWins()
     {
         return array(
@@ -67,34 +62,286 @@ class PlayerMatchStatsFactoryTest extends PHPUnit_Framework_TestCase implements 
         );
     }
 
-    public function testWin()
+    /**
+     * test number of wins
+     */
+    public function testNumberOfWins()
     {
-        $obj = new PlayerMatchStatsFactory(5);
+        $winnerId = 5;
+        $wins = array(
+            array($winnerId, self::BYPOINTS),
+            array($winnerId, self::RESIGNATION),
+            array($winnerId, self::ONTIME),
+            array($winnerId, self::FORFEIT),
+            array($winnerId, self::RESIGNATION),
+        );
 
-        $match = $this->getMatchMock(5, self::RESIGNATION);
+        $obj = new PlayerMatchStatsFactory($winnerId);
+        $matches = $this->getMatches($wins);
+
+        foreach ($matches as $match) {
+            $obj->addMatch($match);
+        }
+
+        $data = $obj->getData();
+        $this->assertSame(
+            count($wins),
+            count($data['wins']),
+            sprintf("Expected value not found.")
+        );
+    }
+
+    /**
+     * Making an array of matches from dataProviders.
+     * First value is uid, second resultTypeId
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function getMatches(array $data)
+    {
+        $matches = array();
+        foreach ($data as $matchData) {
+            $matches[] = $this->getMatchMock($matchData[0], $matchData[1]);
+        }
+
+        return $matches;
+    }
+
+    /**
+     * @dataProvider provideDraws
+     */
+    public function testIsDraw($uid, $resultTypeId)
+    {
+
+        $obj = new PlayerMatchStatsFactory($uid+2);
+
+        $match = $this->getMatchMock($uid, $resultTypeId);
         $obj->addMatch($match);
         $data = $obj->getData();
 
         $this->assertTrue(
-            count($data['wins']) == 1,
-            sprintf("Expected value not found. Found '%s'", count($data['wins']))
+            count($data['draw']) == 1,
+            sprintf("Expected value not found.")
         );
     }
 
-    public function testDefeat()
+    /**
+     * @return array
+     */
+    public function provideDraws()
     {
-        $obj = new PlayerMatchStatsFactory(4);
+        return array(
+            array(7, self::DRAW),
+            array(4, self::DRAW),
+            array(2, self::DRAW),
+            array(3, self::DRAW),
+        );
+    }
 
-        $match = $this->getMatchMock(6, self::RESIGNATION);
+    /**
+     * test number of draws
+     */
+    public function testNumberOfDraws()
+    {
+        $userId = 5;
+        $draws = array(
+            array(1, self::DRAW),
+            array(2, self::DRAW),
+            array(3, self::DRAW),
+            array(4, self::DRAW),
+            array(6, self::DRAW),
+        );
+
+        $obj = new PlayerMatchStatsFactory($userId);
+        $matches = $this->getMatches($draws);
+
+        foreach ($matches as $match) {
+            $obj->addMatch($match);
+        }
+
+        $data = $obj->getData();
+        $this->assertSame(
+            count($draws),
+            count($data['draw']),
+            sprintf("Expected value not found.")
+        );
+    }
+
+    /**
+     * @dataProvider provideWins
+     */
+    public function testIsDefeats($uid, $resultTypeId)
+    {
+
+        $obj = new PlayerMatchStatsFactory($uid+2);
+
+        $match = $this->getMatchMock($uid, $resultTypeId);
         $obj->addMatch($match);
         $data = $obj->getData();
 
-        $this->assertSame(
-            1,
-            count($data['loss']),
-            sprintf("Expected value not found. Found '%s'", count($data['loss']))
+        $this->assertTrue(
+            count($data['loss']) == 1,
+            sprintf("Expected value not found.")
         );
     }
+
+    /**
+     * test number of wins
+     */
+    public function testNumberOfDefeats()
+    {
+        $winnerId = 5;
+        $wins = array(
+            array($winnerId, self::BYPOINTS),
+            array($winnerId, self::RESIGNATION),
+            array($winnerId, self::ONTIME),
+            array($winnerId, self::FORFEIT),
+            array($winnerId, self::RESIGNATION),
+        );
+
+        $obj = new PlayerMatchStatsFactory($winnerId+1);
+        $matches = $this->getMatches($wins);
+
+        foreach ($matches as $match) {
+            $obj->addMatch($match);
+        }
+
+        $data = $obj->getData();
+        $this->assertSame(
+            count($wins),
+            count($data['loss']),
+            sprintf("Expected value not found.")
+        );
+    }
+
+    /**
+     * test number of games played
+     */
+    public function testSuspendedAndPlayed()
+    {
+        $winnerId = 5;
+        $wins = array(
+            array($winnerId, self::BYPOINTS),
+            array($winnerId, self::RESIGNATION),
+            array($winnerId, self::SUSPENDED),
+            array($winnerId, self::FORFEIT),
+            array($winnerId, self::RESIGNATION),
+        );
+
+        $obj = new PlayerMatchStatsFactory($winnerId+1);
+        $matches = $this->getMatches($wins);
+
+        foreach ($matches as $match) {
+            $obj->addMatch($match);
+        }
+        $data = $obj->getData();
+
+        $this->assertSame(
+            count($wins)-1,
+            count($data['played']),
+            sprintf("Expected value not found.")
+        );
+    }
+
+    /**
+     * test number of no of consecutive wins
+     */
+    public function testNoOfConsecutiveWins()
+    {
+        $winnerId = 5;
+        $wins = array(
+            array($winnerId, self::BYPOINTS),
+            array($winnerId+1, self::BYPOINTS),
+            array($winnerId, self::RESIGNATION),
+            array($winnerId, self::RESIGNATION),
+            array($winnerId, self::FORFEIT),
+            array($winnerId, self::RESIGNATION),
+            array($winnerId+1, self::RESIGNATION),
+            array($winnerId, self::RESIGNATION),
+            array($winnerId, self::FORFEIT),
+            array($winnerId, self::RESIGNATION),
+        );
+
+        $obj = new PlayerMatchStatsFactory($winnerId);
+        $matches = $this->getMatches($wins);
+
+        foreach ($matches as $match) {
+            $obj->addMatch($match);
+        }
+        $data = $obj->getData();
+
+        $this->assertSame(
+            4,
+            count($data['consecutiveWins']),
+            sprintf("Expected value not found.")
+        );
+    }
+
+
+    /**
+     * test number of no of consecutive wins
+     */
+    public function testAll()
+    {
+        $winnerId = 5;
+        $wins = array(
+            array($winnerId, self::BYPOINTS),
+            array($winnerId+1, self::BYPOINTS),
+            array($winnerId, self::RESIGNATION),
+            array($winnerId, self::SUSPENDED),
+            array($winnerId, self::RESIGNATION),
+            array($winnerId, self::FORFEIT),
+            array($winnerId, self::RESIGNATION),
+            array($winnerId+1, self::RESIGNATION),
+            array($winnerId, self::RESIGNATION),
+            array($winnerId, self::FORFEIT),
+            array($winnerId, self::RESIGNATION),
+            array($winnerId, self::SUSPENDED),
+            array($winnerId+1, self::DRAW),
+        );
+
+        $obj = new PlayerMatchStatsFactory($winnerId);
+        $matches = $this->getMatches($wins);
+
+        foreach ($matches as $match) {
+            $obj->addMatch($match);
+        }
+        $data = $obj->getData();
+
+        $this->assertSame(
+            8,
+            count($data['wins']),
+            sprintf("Expected number of wins not found.")
+        );
+
+        $this->assertSame(
+            2,
+            count($data['loss']),
+            sprintf("Expected number of defeats not found.")
+        );
+
+        $this->assertSame(
+            4,
+            count($data['consecutiveWins']),
+            sprintf("Expected number of consecutive wins not found.")
+        );
+
+        $this->assertSame(
+            1,
+            count($data['draw']),
+            sprintf("Expected number of draws not found.")
+        );
+
+        $this->assertSame(
+            11,
+            count($data['played']),
+            sprintf("Expected number of played matches not found.")
+        );
+
+    }
+
 
 
     private function getMatchMock($uid, $resultTypeId)
