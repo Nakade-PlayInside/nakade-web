@@ -8,5 +8,8 @@
         <testsuite name="LeagueTest">
             <directory>../module/League/test</directory>
         </testsuite>
+        <testsuite name="StatsTest">
+            <directory>../module/Stats/test</directory>
+        </testsuite>
     </testsuites>
 </phpunit>
