@@ -18,6 +18,7 @@ return array(
         'Arbitration',
         'Stats',
         'DOMPDFModule',
+        'ZfSnapGeoip',
 
         ),
     'module_listener_options' => array(

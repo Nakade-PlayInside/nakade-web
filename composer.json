@@ -31,6 +31,15 @@
         "dino/dompdf-module": "dev-master",
         "zendframework/zendservice-recaptcha": "2.0.1",
         "doctrine/doctrine-orm-module": "0.7.0",
-        "zf-commons/zfc-rbac": "dev-master"
+        "zf-commons/zfc-rbac": "dev-master",
+        "snapshotpl/zf-snap-geoip": "2.*"
+  },
+  "scripts": {
+        "post-install-cmd": [
+            "ZfSnapGeoip\\Composer\\ScriptHandler::downloadData"
+        ],
+        "post-update-cmd": [
+            "ZfSnapGeoip\\Composer\\ScriptHandler::downloadData"
+        ]
   }
 }
