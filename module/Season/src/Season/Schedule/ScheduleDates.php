@@ -8,22 +8,13 @@ use Season\Entity\Schedule;
  *
  * @package Season\Schedule
  */
-class ScheduleDates
+class ScheduleDates implements WeekdaysInterface
 {
     private $cycle;
     private $rounds;
     private $date;
     private $day;
-
-    private $weekDays = array(
-        1 => 'Monday',
-        2 => 'Tuesday',
-        3 => 'Wednesday',
-        4 => 'Thursday',
-        5 => 'Friday',
-        6 => 'Saturday',
-        7 => 'Sunday'
-    );
+    private $time;
 
     /**
      * @param Schedule $schedule
@@ -34,6 +25,7 @@ class ScheduleDates
         $this->date = $schedule->getDate();
         $this->day = $schedule->getDay();
         $this->cycle = $this->getRelativeDateFormat($schedule->getCycle());
+        $this->time = $schedule->getTime()->format('H:i:s');
 
         $startTime = $schedule->getTime()->format('H:i:s');
         $startModify = sprintf('%s %s', $this->getWeekday($this->day), $startTime);
@@ -49,13 +41,27 @@ class ScheduleDates
      */
     public function getWeekday($day)
     {
-        if (!array_key_exists($day, $this->weekDays)) {
-            throw new \RuntimeException(
+        switch ($day) {
+            case self::MONDAY: $weekday = 'Monday';
+                break;
+            case self::TUESDAY: $weekday = 'Tuesday';
+                break;
+            case self::WEDNESDAY: $weekday = 'Wednesday';
+                break;
+            case self::THURSDAY: $weekday = 'Thursday';
+                break;
+            case self::FRIDAY: $weekday = 'Friday';
+                break;
+            case self::SATURDAY: $weekday = 'Saturday';
+                break;
+            case self::SUNDAY: $weekday = 'Sunday';
+                break;
+            default: throw new \RuntimeException(
                 sprintf('The provided weekday does not exist: %s', $day)
             );
         }
 
-        return $this->weekDays[$day];
+        return $weekday;
     }
 
     /**
@@ -72,6 +78,7 @@ class ScheduleDates
             if ($round>1) {
                 $date->modify($this->getCycle());
             }
+            $date->modify($this->time);//correct the time
             $scheduleDates[$round]=$date;
             $this->setDate($date);
         }
