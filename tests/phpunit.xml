@@ -11,5 +11,8 @@
         <testsuite name="StatsTest">
             <directory>../module/Stats/test</directory>
         </testsuite>
+        <testsuite name="SeasonTest">
+            <directory>../module/Season/test</directory>
+        </testsuite>
     </testsuites>
 </phpunit>
