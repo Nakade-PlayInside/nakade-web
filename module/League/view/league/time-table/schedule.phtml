@@ -11,7 +11,7 @@ $title = str_replace("%no%", $league->getNumber(), $title);
 $this->headTitle('schedule');
 ?>
 <?php $this->placeholder('noSeason')->captureStart();?>
-    <h3><?php echo $this->translate('No season found')?></h3>
+    <h3><?php echo $this->translate('No schedule yet found.')?></h3>
 <?php $this->placeholder('noSeason')->captureEnd(); ?>
 
 <?php $this->placeholder('schedule')->captureStart();?>
@@ -39,7 +39,7 @@ $this->headTitle('schedule');
     </div>
 <?php $this->placeholder('schedule')->captureEnd();
 
-if (is_null($this->matches)) {
+if (empty($this->matches)) {
     echo $this->placeholder('noSeason');
 } else {
     echo $this->placeholder('schedule');
