@@ -113,6 +113,14 @@ class Schedule
     }
 
     /**
+     * @return string
+     */
+    public function getTimeAsString()
+    {
+        return $this->getTime()->format('H:i:s');
+    }
+
+    /**
      * Convert the object to an array.
      *
      * @return array
