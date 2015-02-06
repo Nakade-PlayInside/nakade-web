@@ -31,12 +31,12 @@ are detected automatically, while the user can override by editing the profile.
 
 Statistic & Rating
 ------------------
-Players can see their results, standings and their tournament achievments online
+Players can see their results, standings and their tournament achievements online
 and can download a certificate (PDF).
 All matches are statistically evaluated and are provided online to the player. In addition,
-serveral types of rating systems (EGF, AGA) are evalutated, too.
+several types of rating systems (EGF, AGA) are evaluated, too.
 
-Privacy Proctection
+Privacy Protection
 -------------------
 To protect the player's privacy, each player has the opportunity to anonymize providing
 a nick name. The complete name of a player is available to an admin only, so the player's
@@ -53,7 +53,7 @@ History
 -------
 The project was initiated by the Berlin Baduk Club e.V. in 12/2012. The first league started in 2013,
 named Nakade-League. In 09/2014 a closed-beta test started, inviting players in Europe to participate.
-In 2015, The Nakade-League started with 22 players particpating from 3 countries and 6 cities.
+In 2015, The Nakade-League started with 22 players participating from 3 countries and 6 cities.
 In 02/2015, the portal provides two languages, English and German and just a single system  - league!
 We hope to complete all requests in 2019.
 
@@ -64,4 +64,5 @@ For translation, we appreciate native speakers of English, French, Spanish, Ital
 Russian, Japanese, Korean and Chinese. Default language is English.
 
 *******************
+
 Dr. Holger Maerz, Lead Developer and Project Head
