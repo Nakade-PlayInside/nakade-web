@@ -1,0 +1,51 @@
+<?php
+$this->plugin('translate')->setTranslatorTextDomain('Stats');
+$this->headTitle('Stats');
+/* @var $egd \Stats\Entity\EGFData */
+?>
+
+
+<?php $this->placeholder('noData')->captureStart();?>
+   <?php echo $this->translate("No data found."); ?>
+<?php $this->placeholder('noData')->captureEnd();?>
+
+
+<?php $this->placeholder('EGD')->captureStart();?>
+<div class="widget">
+    <h3><?php echo $this->translate('My European Go Database Information');?></h3>
+<ul class="playerStats">
+    <li>
+        <?php echo $this->translate('Pin') .': ' . $egd->getPin(); ?>
+    </li>
+    <li>
+         <?php echo $this->translate('Country') .': '. $egd->getCountry(); ?>
+    </li>
+    <li>
+        <?php echo $this->translate('Club') .': '. $egd->getCity(); ?>
+    </li>
+    <li>
+        <?php echo $this->translate('Grade') .': '. $egd->getGrade(); ?>
+    </li>
+    <li>
+        <?php echo $this->translate('Rating') .': '. $egd->getRating(); ?>
+    </li>
+    <li>
+        <?php echo $this->translate('Tournaments') .': '. $egd->getNoTournaments(); ?>
+    </li>
+</ul>
+
+<a style="margin-top: 10px;" class="btn btn-success return" href="<?php
+    echo $this->url('stats'); ?>"><?php echo $this->translate("Return"); ?></a>
+
+</div>
+<?php $this->placeholder('EGD')->captureEnd(); ?>
+
+
+<?php
+
+ if (empty($this->egd)) {
+     echo $this->placeholder('noData');
+ } else {
+     echo $this->placeholder('EGD');
+ }
+

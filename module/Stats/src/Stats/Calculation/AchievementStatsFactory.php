@@ -67,6 +67,19 @@ class AchievementStatsFactory {
     }
 
     /**
+     * @return array
+     */
+    public function getData()
+    {
+        return array(
+            'champion' => $this->getChampion(),
+            'cup' => $this->getCup(),
+            'medal' => $this->getMedal()
+
+        );
+    }
+
+    /**
      * @return \Stats\Entity\Championship
      */
     public function getChampion()

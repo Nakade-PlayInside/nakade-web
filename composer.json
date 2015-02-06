@@ -22,6 +22,14 @@
         }
     }
   ],
+  "scripts": {
+        "post-install-cmd": [
+            "ZfSnapGeoip\\Composer\\ScriptHandler::downloadData"
+        ],
+        "post-update-cmd": [
+            "ZfSnapGeoip\\Composer\\ScriptHandler::downloadData"
+        ]
+  },
   "require": {
         "php": ">=5.4.0",
         "highcharts": "4.0.4",
@@ -31,6 +39,8 @@
         "dino/dompdf-module": "dev-master",
         "zendframework/zendservice-recaptcha": "2.0.1",
         "doctrine/doctrine-orm-module": "0.7.0",
-        "zf-commons/zfc-rbac": "dev-master"
+        "zf-commons/zfc-rbac": "dev-master",
+        "geoip/geoip": "~1.14",
+        "snapshotpl/zf-snap-geoip": "2.*"
   }
 }

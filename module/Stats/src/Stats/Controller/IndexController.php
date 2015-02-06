@@ -18,18 +18,32 @@ class IndexController extends DefaultController
      */
     public function indexAction()
     {
-        $service = $this->getEgdService();
-        $objA = $service->findByName('Gräf', 'Danny');
-        $service->findByPIN('14274590');
-
-        if ($objA!==false) {
-            var_dump($objA);
-        }
-
         //todo: caching of factory results
         return new ViewModel(
             array(
                 'player' => $this->getPlayerStats(),
+            )
+        );
+    }
+
+    /**
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function egdAction()
+    {
+        $service = $this->getEgdService();
+        $name = $this->identity()->getLastName();
+        $firstName = $this->identity()->getFirstName();
+
+        //todo: get PlayerName
+        $egd = $service->findByName($name, $firstName);
+        //$service->findByPIN('14274590');
+
+        //todo: caching of factory results
+        return new ViewModel(
+            array(
+                'egd' => $egd,
             )
         );
     }
