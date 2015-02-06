@@ -38,6 +38,11 @@ named Nakade-League. In 09/2014 a closed-beta test started, inviting players in 
 In 2015, The Nakade-League started with 22 players particpating from 3 countries and 6 cities.
 In 02/2015, the portal provides two languages, English and German and just a single system  - league!
 We hope to complete all requests in 2019. 
-If you want to provide help, you can directly apply to holger@nakade.de. We are looking for Open source
-developers in php or/and jQuery, Web Designers and Translators. 
 
+If you want to provide help, you can directly apply to holger@nakade.de.
+Next to experienced developers in php and/or JavaScript, we are looking for Web Designers and Translators.
+For translation, we appreciate native speakers of English, French, Spanish, Italian, Polish, Czech, Turkish,
+Russian, Japanese, Korean and Chinese. Default language is English.
+
+Dr. Holger Maerz
+Lead Developer and Project Head
